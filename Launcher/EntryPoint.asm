@@ -180,5 +180,23 @@ _Main:
     mov gs, ax
     mov ss, ax
     
-    jmp 0x201000
-    times 0x100000-($-$$) db 0
+    mov rsp,0x6400000
+    mov rbp,rsp
+
+    xor rax,rax
+    xor rcx,rcx
+    xor rdx,rdx
+    xor rbx,rbx
+    xor rdi,rdi
+    xor rsi,rsi
+    xor r8,r8
+    xor r9,r9
+    xor r10,r10
+    xor r11,r11
+    xor r12,r12
+    xor r13,r13
+    xor r14,r14
+    xor r15,r15
+
+    jmp End+0x1000
+End:
