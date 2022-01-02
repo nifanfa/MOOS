@@ -190,6 +190,6 @@ Main:
     mov ecx,[eax+40] 
     mov rax,End
     add rax,rcx
-    jmp rax
+    call rax
 End:
     
