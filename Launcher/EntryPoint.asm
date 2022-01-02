@@ -144,7 +144,7 @@ Enter_Long_Mode:
 
     sti
  
-    jmp 0x0008:_Main             ; Load CS with 64 bit segment and flush the instruction cache
+    jmp 0x0008:Main             ; Load CS with 64 bit segment and flush the instruction cache
  
  
     ; Global Descriptor Table
@@ -172,7 +172,7 @@ p2_table:
 resb 4096
 
 [BITS 64]      
-_Main:
+Main:
     mov ax, 0x0010
     mov ds, ax
     mov es, ax
@@ -183,6 +183,16 @@ _Main:
     mov rsp,0x6400000
     mov rbp,rsp
 
-    call End+ 0x1000
+    ;Get address of EntryPoint from PE Header
+    xor rbx,rbx
+    xor rax,rax
+    xor rcx,rcx
+    mov ebx,[End+60]
+    mov eax,End
+    add eax,ebx
+    mov ecx,[eax+40] 
+    mov rax,End
+    add rax,rcx
+    jmp rax
 End:
     
