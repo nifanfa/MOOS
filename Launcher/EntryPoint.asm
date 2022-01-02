@@ -180,6 +180,9 @@ _Main:
     mov gs, ax
     mov ss, ax
     
-    jmp 0x200000
-    times 0xFF000-($-$$) db 0
+    mov rsp,0x6400000
+    mov rbp,rsp
+
+    call End+ 0x1000
+End:
     
