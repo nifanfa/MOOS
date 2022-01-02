@@ -6,10 +6,20 @@ unsafe class Program
     static void Main()
     {
         //You don't need to build. Just save and run Launcher
-        ulong* p = (ulong*)0xb8000;
-        p[0] = 0x1F6C1F6C1F651F48;
-        p[1] = 0x1F6F1F571F201F6F;
-        p[2] = 0x1F211F641F6C1F72;
+        Console.Setup();
+        Console.Write('H');
+        Console.Write('e');
+        Console.Write('l');
+        Console.Write('l');
+        Console.Write('o');
+        Console.Write(',');
+        Console.Write(' ');
+        Console.Write('W');
+        Console.Write('o');
+        Console.Write('r');
+        Console.Write('l');
+        Console.Write('d');
+        Console.Write('!');
         for (; ; );
     }
 }

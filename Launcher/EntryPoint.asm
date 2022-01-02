@@ -180,9 +180,6 @@ Main:
     mov gs, ax
     mov ss, ax
     
-    mov rsp,0x6400000
-    mov rbp,rsp
-
     ;Get address of EntryPoint from PE Header
     xor rbx,rbx
     xor rax,rax
