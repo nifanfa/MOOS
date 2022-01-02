@@ -59,8 +59,7 @@ multiboot_entry:
 
         push   eax                     ;2nd argument is magic number
         push   ebx                     ;1st argument multiboot info pointer
-        call   LongMode                ;Call _Main 
-        ;add    esp, 8                  ;Cleanup 8 bytes pushed as arguments
+        jmp   Enter_Long_Mode          
 
 die:
         cli
@@ -80,7 +79,7 @@ IDT:
 ; es:edi    Should point to a valid page-aligned 16KiB buffer, for the PML4, PDPT, PD and a PT.
 ; ss:esp    Should point to memory that can be used as a small (1 uint32_t) stack
  
-LongMode:
+Enter_Long_Mode:
     mov edi, p4_table
     ; Zero out the 16KiB buffer.
     ; Since we are doing a rep stosd, count should be bytes/4.   
@@ -172,11 +171,6 @@ resb 4096
 p2_table:
 resb 4096
 
-stack_top:
-resb 8192
-stack_bottom:
-resb 8192
-
 [BITS 64]      
 _Main:
     mov ax, 0x0010
@@ -185,10 +179,6 @@ _Main:
     mov fs, ax
     mov gs, ax
     mov ss, ax
-
-    mov rbp,stack_bottom
-    mov rsp,rbp
-
+    
     jmp 0x201000
-
     times 0x100000-($-$$) db 0
