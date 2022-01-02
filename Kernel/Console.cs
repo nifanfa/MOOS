@@ -20,6 +20,14 @@ public static unsafe class Console
         ForegroundColor = ConsoleColor.White;
     }
 
+    public static void Write(string s) 
+    {
+        for(int i = 0; i < s.Length; i++) 
+        {
+            Write(s[i]);
+        }
+    }
+
     public static void Write(char chr)
     {
         byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
@@ -36,6 +44,13 @@ public static unsafe class Console
 
     public static void WriteLine()
     {
+        CursorX = 0;
+        CursorY++;
+    }
+
+    public static void WriteLine(string s)
+    {
+        Write(s);
         CursorX = 0;
         CursorY++;
     }

@@ -7,19 +7,8 @@ unsafe class Program
     {
         //You don't need to build. Just save and run Launcher
         Console.Setup();
-        Console.Write('H');
-        Console.Write('e');
-        Console.Write('l');
-        Console.Write('l');
-        Console.Write('o');
-        Console.Write(',');
-        Console.Write(' ');
-        Console.Write('W');
-        Console.Write('o');
-        Console.Write('r');
-        Console.Write('l');
-        Console.Write('d');
-        Console.Write('!');
+        Console.WriteLine("Hello, World!");
+        Console.WriteLine("Use Native AOT (Core RT) Technology.");
         for (; ; );
     }
 }
