@@ -51,6 +51,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\UnmanagedType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\RuntimeExportAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\String.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\_Types.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Types.cs" />
   </ItemGroup>
 </Project>

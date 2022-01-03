@@ -85,86 +85,86 @@ public static class IDT
     {
         switch (code)
         {
-            case 0: Console.WriteLine("!! DIVIDE BY ZERO !!"); break;
-            case 1: Console.WriteLine("!! SINGLE STEP !!"); break;
-            case 2: Console.WriteLine("!! NMI !!"); break;
-            case 3: Console.WriteLine("!! BREAKPOINT !!"); break;
-            case 4: Console.WriteLine("!! OVERFLOW !!"); break;
-            case 5: Console.WriteLine("!! BOUNDS CHECK !!"); break;
-            case 6: Console.WriteLine("!! INVALID OPCODE !!"); break;
-            case 7: Console.WriteLine("!! COPR UNAVAILABLE !!"); break;
-            case 8: Console.WriteLine("!! DOUBLE FAULT !!"); break;
-            case 9: Console.WriteLine("!! COPR SEGMENT OVERRUN !!"); break;
-            case 10: Console.WriteLine("!! INVALID TSS !!"); break;
-            case 11: Console.WriteLine("!! SEGMENT NOT FOUND !!"); break;
-            case 12: Console.WriteLine("!! STACK EXCEPTION !!"); break;
-            case 13: Console.WriteLine("!! GENERAL PROTECTION !!"); break;
-            case 14: Console.WriteLine("!! PAGE FAULT !!"); break;
-            case 16: Console.WriteLine("!! COPR ERROR !!"); break;
-            default: Console.WriteLine(" !! UNKNOWN EXCEPTION !!"); break;
+            case 0: Console.WriteLine("DIVIDE BY ZERO"); break;
+            case 1: Console.WriteLine("SINGLE STEP"); break;
+            case 2: Console.WriteLine("NMI"); break;
+            case 3: Console.WriteLine("BREAKPOINT"); break;
+            case 4: Console.WriteLine("OVERFLOW"); break;
+            case 5: Console.WriteLine("BOUNDS CHECK"); break;
+            case 6: Console.WriteLine("INVALID OPCODE"); break;
+            case 7: Console.WriteLine("COPR UNAVAILABLE"); break;
+            case 8: Console.WriteLine("DOUBLE FAULT"); break;
+            case 9: Console.WriteLine("COPR SEGMENT OVERRUN"); break;
+            case 10: Console.WriteLine("INVALID TSS"); break;
+            case 11: Console.WriteLine("SEGMENT NOT FOUND"); break;
+            case 12: Console.WriteLine("STACK EXCEPTION"); break;
+            case 13: Console.WriteLine("GENERAL PROTECTION"); break;
+            case 14: Console.WriteLine("PAGE FAULT"); break;
+            case 16: Console.WriteLine("COPR ERROR"); break;
+            default: Console.WriteLine(" UNKNOWN EXCEPTION"); break;
         }
     }
 
     [RuntimeExport("irq0_handler")]
     public static void IRQ0Handler()
     {
-        Console.WriteLine("! 0 !");
+        Console.WriteLine("IRQ 0");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq1_handler")]
     public static void IRQ1Handler()
     {
-        Console.WriteLine("! 1 !");
+        Console.WriteLine("IRQ 1");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq2_handler")]
     public static void IRQ2Handler()
     {
-        Console.WriteLine("! 2 !");
+        Console.WriteLine("IRQ 2");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq3_handler")]
     public static void IRQ3Handler()
     {
-        Console.WriteLine("! 3 !");
+        Console.WriteLine("IRQ 3");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq4_handler")]
     public static void IRQ4Handler()
     {
-        Console.WriteLine("! 4 !");
+        Console.WriteLine("IRQ 4");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq5_handler")]
     public static void IRQ5Handler()
     {
-        Console.WriteLine("! 5 !");
+        Console.WriteLine("IRQ 5");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq6_handler")]
     public static void IRQ6Handler()
     {
-        Console.WriteLine("! 6 !");
+        Console.WriteLine("IRQ 6");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq7_handler")]
     public static void IRQ7Handler()
     {
-        Console.WriteLine("! 7 !");
+        Console.WriteLine("IRQ 7");
         Native.outb(0x20, 0x20);
     }
 
     [RuntimeExport("irq8_handler")]
     public static void IRQ8Handler()
     {
-        Console.WriteLine("! 8 !");
+        Console.WriteLine("IRQ 8");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
@@ -172,7 +172,7 @@ public static class IDT
     [RuntimeExport("irq9_handler")]
     public static void IRQ9Handler()
     {
-        Console.WriteLine("! 9 !");
+        Console.WriteLine("IRQ 9");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
@@ -180,7 +180,7 @@ public static class IDT
     [RuntimeExport("irq10_handler")]
     public static void IRQ10Handler()
     {
-        Console.WriteLine("! 10 !");
+        Console.WriteLine("IRQ 10");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
@@ -188,7 +188,7 @@ public static class IDT
     [RuntimeExport("irq11_handler")]
     public static void IRQ11Handler()
     {
-        Console.WriteLine("! 11 !");
+        Console.WriteLine("IRQ 11");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
@@ -196,7 +196,7 @@ public static class IDT
     [RuntimeExport("irq12_handler")]
     public static void IRQ12Handler()
     {
-        Console.WriteLine("! 12 !");
+        Console.WriteLine("IRQ 12");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
@@ -204,7 +204,7 @@ public static class IDT
     [RuntimeExport("irq13_handler")]
     public static void IRQ13Handler()
     {
-        Console.WriteLine("! 13 !");
+        Console.WriteLine("IRQ 13");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
@@ -212,7 +212,7 @@ public static class IDT
     [RuntimeExport("irq14_handler")]
     public static void IRQ14Handler()
     {
-        Console.WriteLine("! 14 !");
+        Console.WriteLine("IRQ 14");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
@@ -220,7 +220,7 @@ public static class IDT
     [RuntimeExport("irq15_handler")]
     public static void IRQ15Handler()
     {
-        Console.WriteLine("! 15 !");
+        Console.WriteLine("IRQ 15");
         Native.outb(0xA0, 0x20);
         Native.outb(0x20, 0x20);
     }
