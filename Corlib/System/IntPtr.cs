@@ -1,9 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace System
-{
-	public unsafe struct IntPtr
-	{
+namespace System {
+	public unsafe struct IntPtr {
 		void* _value;
 
 		public IntPtr(void* value) { _value = value; }
@@ -31,8 +29,7 @@ namespace System
 		public static explicit operator IntPtr(void* value) => new IntPtr(value);
 		public static explicit operator void*(IntPtr value) => value._value;
 
-		public static explicit operator int(IntPtr value)
-		{
+		public static explicit operator int(IntPtr value) {
 			var l = (long)value._value;
 
 			return checked((int)l);

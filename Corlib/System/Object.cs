@@ -2,10 +2,8 @@
 using Internal.Runtime.CompilerServices;
 
 
-namespace System
-{
-	public class Object
-	{
+namespace System {
+	public class Object {
 		// The layout of object is a contract with the compiler.
 		internal unsafe EEType* m_pEEType;
 
@@ -24,8 +22,7 @@ namespace System
 			=> "{object}";
 
 
-		public void Dispose()
-		{
+		public void Dispose() {
 			var obj = this;
 			Platform.Free(Unsafe.As<object, IntPtr>(ref obj));
 		}
