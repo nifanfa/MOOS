@@ -3,10 +3,8 @@ using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
 
 
-namespace System
-{
-	public sealed class String
-	{
+namespace System {
+	public sealed class String {
 		[Intrinsic]
 		public static readonly string Empty = "";
 
@@ -16,18 +14,15 @@ namespace System
 		internal char _firstChar;
 
 
-		public int Length
-		{
+		public int Length {
 			[Intrinsic]
 			get { return _length; }
 			internal set { _length = value; }
 		}
 
-		public unsafe char this[int index]
-		{
+		public unsafe char this[int index] {
 			[Intrinsic]
-			get
-			{
+			get {
 				return Unsafe.Add(ref _firstChar, index);
 			}
 		}
@@ -42,8 +37,7 @@ namespace System
 #pragma warning restore 824
 
 
-		public unsafe static string FromASCII(IntPtr ptr, int length)
-		{
+		public unsafe static string FromASCII(IntPtr ptr, int length) {
 			var buf = new char[9];
 			buf[8] = '\0';
 			var _ptr = (byte*)ptr;
@@ -57,8 +51,7 @@ namespace System
 			return s;
 		}
 
-		static unsafe string Ctor(char* ptr)
-		{
+		static unsafe string Ctor(char* ptr) {
 			var i = 0;
 
 			while (ptr[i++] != '\0') { }
@@ -69,22 +62,19 @@ namespace System
 		static unsafe string Ctor(IntPtr ptr)
 			=> Ctor((char*)ptr);
 
-		static unsafe string Ctor(char[] buf)
-		{
+		static unsafe string Ctor(char[] buf) {
 			fixed (char* _buf = buf)
 				return Ctor(_buf, 0, buf.Length);
 		}
 
-		static unsafe string Ctor(char* ptr, int index, int length)
-		{
+		static unsafe string Ctor(char* ptr, int index, int length) {
 			var et = EETypePtr.EETypePtrOf<string>();
 
 			var start = ptr + index;
 			var data = StartupCodeHelpers.RhpNewArray(et.Value, length);
 			var s = Unsafe.As<object, string>(ref data);
 
-			fixed (char* c = &s._firstChar)
-			{
+			fixed (char* c = &s._firstChar) {
 				Platform.CopyMemory((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
 				c[length] = '\0';
 			}
@@ -92,32 +82,27 @@ namespace System
 			return s;
 		}
 
-		static unsafe string Ctor(char[] ptr, int index, int length)
-		{
+		static unsafe string Ctor(char[] ptr, int index, int length) {
 			fixed (char* _ptr = ptr)
 				return Ctor(_ptr, index, length);
 		}
 
-		public override string ToString()
-		{
+		public override string ToString() {
 			return this;
 		}
 
-		public override bool Equals(object obj)
-		{
+		public override bool Equals(object obj) {
 			if (obj is not string)
 				return false;
 
 			return Equals((string)obj);
 		}
 
-		public bool Equals(string val)
-		{
+		public bool Equals(string val) {
 			if (this.Length != val.Length)
 				return false;
 
-			for (int i = 0; i < this.Length; i++)
-			{
+			for (int i = 0; i < this.Length; i++) {
 				if (this[i] != val[i])
 					return false;
 			}
@@ -131,18 +116,15 @@ namespace System
 		public static bool operator !=(string a, string b)
 			=> !a.Equals(b);
 
-		public override int GetHashCode()
-		{
+		public override int GetHashCode() {
 			return 0;
 		}
 
 		// TODO: This
-		public static string Format(string format, params object[] args)
-		{
+		public static string Format(string format, params object[] args) {
 			var len = format.Length;
 
-			for (int i = 0; i < len; i++)
-			{
+			for (int i = 0; i < len; i++) {
 				args[0].ToString();
 			}
 

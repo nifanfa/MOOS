@@ -11,4 +11,10 @@ namespace System.Runtime.InteropServices {
 		public int Size;
 		public CharSet CharSet;
 	}
+
+	public enum LayoutKind {
+		Sequential = 0,
+		Explicit = 2,
+		Auto = 3,
+	}
 }
