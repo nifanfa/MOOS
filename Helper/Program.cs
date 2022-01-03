@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 
-namespace Launcher
+namespace Helper
 {
     class Program
     {

@@ -11,6 +11,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\StartupCodeHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\ThrowHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerServices\Unsafe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\EEType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Array.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Attribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Boolean.cs" />
@@ -19,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Delegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Double.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Enum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\FlagsAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Int16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Int32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Int64.cs" />
@@ -29,9 +34,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeFieldHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeMethodHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeTypeHandle.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\Array.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\IntrinsicAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\RuntimeHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\CallingConvention.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\CharSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\DllImportAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\FieldOffsetAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\LayoutKind.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\StructLayoutAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\UnmanagedType.cs" />
@@ -45,8 +53,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\UIntPtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ValueType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Void.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)System\" />
   </ItemGroup>
 </Project>

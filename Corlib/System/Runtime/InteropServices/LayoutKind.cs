@@ -1,6 +1,6 @@
 ﻿namespace System.Runtime.InteropServices
 {
-    internal enum LayoutKind
+    public enum LayoutKind
     {
         Sequential = 0, // 0x00000008,
         Explicit = 2, // 0x00000010,

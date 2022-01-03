@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Launcher
+namespace Helper
 {
     internal class Utility
     {
