@@ -9,9 +9,11 @@ unsafe class Program
         Console.Setup();
         Console.Write('o');
 
-        for (uint i = 512; i < 0x2000; i ++)
+        //                 10MiB                 512MiB                1MiB
+        for (uint i = 1024 * 1024 * 10; i < 1024 * 1024 * 512; i += 1024 * 1024)
         {
-            Allocator.AddFreePages((System.IntPtr)(i*4096), i-512);
+            //                                      1MiB / 4KiB
+            Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
 
         Console.Write('k');
