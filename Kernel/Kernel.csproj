@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-27912-01" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-29408-02" />
 	</ItemGroup>
 
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
