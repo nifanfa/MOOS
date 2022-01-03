@@ -609,8 +609,7 @@ void PREFIX(free)(void* ptr) {
 				__builtin_return_address(0));
 			FLUSH();
 #endif
-		}
-		else {
+		} else {
 #if defined DEBUG || defined INFO
 			printf("liballoc: ERROR: Bad PREFIX(free)( %x ) called from %x\n",
 				ptr,
@@ -658,8 +657,7 @@ void PREFIX(free)(void* ptr) {
 		l_allocated -= maj->size;
 
 		liballoc_free(maj, maj->pages);
-	}
-	else {
+	} else {
 		if (l_bestBet != NULL) {
 			int bestSize = l_bestBet->size - l_bestBet->usage;
 			int majSize = maj->size - maj->usage;
@@ -746,8 +744,7 @@ void* PREFIX(realloc)(void* p, size_t size) {
 				__builtin_return_address(0));
 			FLUSH();
 #endif
-		}
-		else {
+		} else {
 #if defined DEBUG || defined INFO
 			printf("liballoc: ERROR: Bad PREFIX(free)( %x ) called from %x\n",
 				ptr,

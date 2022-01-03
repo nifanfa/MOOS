@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="idt.c">
+    <ClCompile Include="interrupts.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="io.cpp">
+    <ClCompile Include="io.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="liballoc.c">
@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="idt.asm">
+    <MASM Include="interrupts_asm.asm">
       <Filter>源文件</Filter>
     </MASM>
   </ItemGroup>

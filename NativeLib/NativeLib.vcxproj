@@ -19,14 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="idt.c" />
-    <ClCompile Include="io.cpp" />
+    <ClCompile Include="interrupts.c" />
+    <ClCompile Include="io.c" />
     <ClCompile Include="liballoc.c" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="idt.asm">
-      <FileType>Document</FileType>
-    </MASM>
+    <MASM Include="interrupts_asm.asm" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="liballoc.h" />
@@ -55,7 +53,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
