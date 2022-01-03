@@ -15,6 +15,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerServices\Unsafe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\EEType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeTypeWrappers\NativeArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeTypeWrappers\NativeReference.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeTypeWrappers\NativeString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Array.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Attribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Boolean.cs" />
@@ -22,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Char.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Delegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Double.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\EETypePtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Enum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\FlagsAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Int16.cs" />
@@ -31,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\MulticastDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Nullable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Object.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ParamArrayAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeFieldHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeMethodHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeTypeHandle.cs" />
