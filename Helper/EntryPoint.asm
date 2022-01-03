@@ -179,6 +179,9 @@ Main:
     mov fs, ax
     mov gs, ax
     mov ss, ax
+
+    mov rsp,KERNEL_STACK
+    mov rbp,rsp
     
     ;Get address of EntryPoint from PE Header
     xor rbx,rbx
