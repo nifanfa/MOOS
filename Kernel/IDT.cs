@@ -1,4 +1,5 @@
 ﻿using Internal.Runtime.CompilerServices;
+using Kernel;
 using System.Runtime;
 using System.Runtime.InteropServices;
 
@@ -115,7 +116,9 @@ public static class IDT
     [RuntimeExport("irq1_handler")]
     public static void IRQ1Handler()
     {
-        Console.WriteLine("IRQ 1");
+        byte b = Native.inb(0x60);
+        char c = PS2Keyboard.ProcessKey(b);
+        if (c != '?') Console.Write(c);
         Native.outb(0x20, 0x20);
     }
 
