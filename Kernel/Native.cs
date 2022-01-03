@@ -6,6 +6,9 @@ public static class Native
     public static extern void outb(ushort port, byte value);
 
     [DllImport("*")]
+    public static extern byte inb(ushort port);
+
+    [DllImport("*")]
     public static extern void load_idt(ref IDT.IDTDescriptor idtr);
 
     [DllImport("*")]
