@@ -18,7 +18,7 @@
     <ClCompile Include="interrupts.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="io.c">
+    <ClCompile Include="io.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="liballoc.c">
