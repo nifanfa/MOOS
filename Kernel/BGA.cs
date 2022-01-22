@@ -14,7 +14,7 @@
 
         public static void Setup()
         {
-            Ptr = (uint*)0xFE000000;
+            Ptr = (uint*)0xFD000000;
         }
 
         public static void Clear(uint Color)

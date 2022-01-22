@@ -17,6 +17,9 @@ static class Native
     public static extern IntPtr kmalloc(ulong size);
 
     [DllImport("*")]
+    public extern static unsafe void Stosb(void* p, byte value, ulong count);
+
+    [DllImport("*")]
     public static extern IntPtr krealloc(IntPtr ptr, ulong newSize);
 
     [DllImport("*")]
@@ -32,6 +35,9 @@ static class Native
     public static extern void load_idt(ref IDT.IDTDescriptor idtr);
 
     [DllImport("*")]
+    public extern static unsafe void WriteCR3(ulong value);
+
+    [DllImport("*")]
     public static extern void _hlt();
 
     [DllImport("*")]
@@ -39,4 +45,7 @@ static class Native
 
     [DllImport("*")]
     public static extern void _sti();
+
+    [DllImport("*")]
+    public extern static void Invlpg(ulong physicalAddress);
 }
