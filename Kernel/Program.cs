@@ -1,5 +1,5 @@
 ﻿using ConsoleApp1;
-using System.Runtime;
+using Kernel;
 using System.Runtime.InteropServices;
 
 unsafe class Program
@@ -23,16 +23,21 @@ unsafe class Program
         GDT.Initialise();
         IDT.Initialise();
         IDT.Enable();
+        Serial.Initialise();
+        PageTable.Initialise();
+
+        Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
         BGA.Setup();
         BGA.SetVideoMode(640, 480);
+        BGA.Clear(0xFFFF0000);
 
         for (; ; );
     }
 
-    public class TestClass 
+    public class TestClass
     {
         public string TestString;
     }

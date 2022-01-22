@@ -79,9 +79,9 @@ IDT:
 ; es:edi    Should point to a valid page-aligned 16KiB buffer, for the PML4, PDPT, PD and a PT.
 ; ss:esp    Should point to memory that can be used as a small (1 uint32_t) stack
 
-P2_TABLE    equ 0x600000
-P3_TABLE    equ 0x601000
-P4_TABLE    equ 0x602000
+P2_TABLE    equ 0x6400000
+P3_TABLE    equ 0x6401000
+P4_TABLE    equ 0x6402000
  
 Enter_Long_Mode:
     mov edi, P4_TABLE
