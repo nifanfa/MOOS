@@ -18,17 +18,18 @@ unsafe class Program
             //                                      1MiB / 4KiB
             Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
+        Serial.WriteLine("Hello World");
+        Console.WriteLine("Hello, World!");
+        Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
+        /*
         IDT.Disable();
         GDT.Initialise();
         IDT.Initialise();
         IDT.Enable();
         Serial.Initialise();
         PageTable.Initialise();
-
-        Serial.WriteLine("Hello World");
-        Console.WriteLine("Hello, World!");
-        Console.WriteLine("Use Native AOT (Core RT) Technology.");
+        */
 
         /*
         BGA.Setup();
