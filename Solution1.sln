@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helper", "Helper\Helper.csproj", "{F74243B3-9AF2-457E-89AF-41D03C071C9F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kernel", "Kernel\Kernel.csproj", "{C63C2060-AEDD-4907-8EFA-70D8E9CE4A10}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Corlib", "Corlib\Corlib.shproj", "{2EA1F38F-F26E-4148-8FFD-38713478E015}"
@@ -25,18 +23,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Debug|x64.Build.0 = Debug|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Debug|x86.Build.0 = Debug|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Release|x64.ActiveCfg = Release|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Release|x64.Build.0 = Release|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Release|x86.ActiveCfg = Release|Any CPU
-		{F74243B3-9AF2-457E-89AF-41D03C071C9F}.Release|x86.Build.0 = Release|Any CPU
 		{C63C2060-AEDD-4907-8EFA-70D8E9CE4A10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C63C2060-AEDD-4907-8EFA-70D8E9CE4A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C63C2060-AEDD-4907-8EFA-70D8E9CE4A10}.Debug|x64.ActiveCfg = Debug|Any CPU

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "QEMU": {
+      "commandName": "Executable",
+      "executablePath": "cmd.exe",
+      "commandLineArgs": "/c dotnet publish -r win-x64 -c debug kernel",
+      "workingDirectory": "..\\..\\Solution1"
+    }
+  }
+}
