@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 
-static class Native
+static unsafe class Native
 {
     [DllImport("*")]
     public static extern void outb(ushort port, byte value);
@@ -38,14 +38,17 @@ static class Native
     public extern static unsafe void WriteCR3(ulong value);
 
     [DllImport("*")]
-    public static extern void _hlt();
+    public static extern void Hlt();
 
     [DllImport("*")]
-    public static extern void _cli();
+    public static extern void Cli();
 
     [DllImport("*")]
-    public static extern void _sti();
+    public static extern void Sti();
 
     [DllImport("*")]
     public extern static void Invlpg(ulong physicalAddress);
+
+    [DllImport("*")]
+    public extern static void Movsb(void* dest, void* source, ulong count);
 }
