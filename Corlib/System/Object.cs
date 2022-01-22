@@ -19,7 +19,7 @@ namespace System {
 			=> 0;
 
 		public virtual string ToString()
-			=> "System.Object";
+			=> "{object}";
 
 
 		public void Dispose() {
