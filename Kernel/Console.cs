@@ -6,8 +6,8 @@
         public const byte Height = 25;
 
         private static byte Color = 0;
-        public volatile static int CursorX = 0;
-        public volatile static int CursorY = 0;
+        public static int CursorX = 0;
+        public static int CursorY = 0;
 
         internal static void Setup()
         {
