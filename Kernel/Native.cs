@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 static unsafe class Native
 {
     [DllImport("*")]
+    public static extern ulong ReadCR2();
+
+    [DllImport("*")]
     public static extern void Out8(ushort port, byte value);
 
     [DllImport("*")]

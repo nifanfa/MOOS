@@ -100,7 +100,17 @@ public static class IDT
             case 11: Console.WriteLine("SEGMENT NOT FOUND"); break;
             case 12: Console.WriteLine("STACK EXCEPTION"); break;
             case 13: Console.WriteLine("GENERAL PROTECTION"); break;
-            case 14: Console.WriteLine("PAGE FAULT"); break;
+            case 14: 
+                ulong CR2 = Native.ReadCR2();
+                if ((CR2 >> 5) < 0x1000)
+                {
+                    Console.WriteLine("NULL POINTER");
+                }
+                else
+                {
+                    Console.WriteLine("PAGE FAULT");
+                }
+                break;
             case 16: Console.WriteLine("COPR ERROR"); break;
             default: Console.WriteLine(" UNKNOWN EXCEPTION"); break;
         }
