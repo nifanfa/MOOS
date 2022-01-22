@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Attribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\AttributeUsageAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\BitHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\List.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\Queue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EETypePtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EventArgs.cs" />
