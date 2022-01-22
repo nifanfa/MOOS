@@ -1,8 +1,8 @@
 ﻿namespace Kernel
 {
-    public static unsafe class BGA
+    public static unsafe class Framebuffer
     {
-        public static uint* Ptr;
+        public static uint* VideoMemory;
         public static ushort Width;
         public static ushort Height;
         public static uint* Buffer;
@@ -13,7 +13,7 @@
             {
                 if (PCI.Devices[i].VendorID == 0x1234)
                 {
-                    Ptr = (uint*)PCI.Devices[i].Bar0;
+                    VideoMemory = (uint*)PCI.Devices[i].Bar0;
                     return;
                 }
             }
@@ -32,7 +32,7 @@
 
         public static void Update()
         {
-            Native.Movsd(Ptr, Buffer, (ulong)(Width * Height));
+            Native.Movsd(VideoMemory, Buffer, (ulong)(Width * Height));
         }
 
         public static void WriteRegister(ushort IndexValue, ushort DataValue)
