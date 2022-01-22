@@ -135,12 +135,12 @@ exit:
 _reload_segreg ENDP
 
 
-PUBLIC load_idt
+PUBLIC Load_IDT
  
-load_idt PROC
+Load_IDT PROC
 	lidt FWORD PTR[rcx]
 	ret
-load_idt ENDP
+Load_IDT ENDP
 
 
 PUBLIC _cli
