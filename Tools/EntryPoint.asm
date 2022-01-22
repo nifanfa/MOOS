@@ -167,6 +167,8 @@ ALIGN 4
     dw $ - GDT - 1                    ; 16-bit Size (Limit) of GDT.
     dd GDT                            ; 32-bit Base Address of GDT. (CPU will zero extend to 64-bit)
 
+EndOfEntryPoint     EQU 0x200000
+
 [BITS 64]      
 Main:
     mov ax, 0x0010
@@ -183,12 +185,12 @@ Main:
     xor rbx,rbx
     xor rax,rax
     xor rcx,rcx
-    mov ebx,[End+60]
-    mov eax,End
+    mov ebx,[EndOfEntryPoint+60]
+    mov eax,EndOfEntryPoint
     add eax,ebx
     mov ecx,[eax+40] 
-    mov rax,End
+    mov rax,EndOfEntryPoint
     add rax,rcx
     call rax
-End:
+times 0x100000-($-$$)db 0xFF
     
