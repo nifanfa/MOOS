@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interrupts.c" />
-    <ClCompile Include="io.c" />
+    <ClCompile Include="io.cpp" />
     <ClCompile Include="liballoc.c" />
     <ClCompile Include="nativ.cpp" />
   </ItemGroup>
