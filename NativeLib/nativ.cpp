@@ -15,6 +15,11 @@ void WriteCR3(unsigned long value)
 	__writecr3(value);
 }
 
+unsigned long ReadCR2()
+{
+	return __readcr2();
+}
+
 void Movsb(void* dest, void* source, unsigned long count)
 {
 	__movsb(dest, source, count);
