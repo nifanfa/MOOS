@@ -6,8 +6,8 @@
         public const byte Height = 25;
 
         private static byte Color = 0;
-        public static ulong CursorX = 0;
-        public static ulong CursorY = 0;
+        public volatile static int CursorX = 0;
+        public volatile static int CursorY = 0;
 
         internal static void Setup()
         {
@@ -84,14 +84,14 @@
             if (CursorY >= Height - 1)
             {
                 Native.Movsb((void*)0xb8000, (void*)0xB80A0, 0xF00);
-                for (ulong i = 0; i < Width; i++) WriteAt(' ', i, CursorY);
+                for (int i = 0; i < Width; i++) WriteAt(' ', i, CursorY);
                 CursorY--;
             }
         }
 
         private static void UpdateCursor()
         {
-            ulong pos = (CursorY * Width) + CursorX;
+            int pos = (CursorY * Width) + CursorX;
             Native.Out8(0x3D4, 0x0F);
             Native.Out8(0x3D5, (byte)(pos & 0xFF));
             Native.Out8(0x3D4, 0x0E);
@@ -115,7 +115,7 @@
             UpdateCursor();
         }
 
-        public static void WriteAt(char chr, ulong x, ulong y)
+        public static void WriteAt(char chr, int x, int y)
         {
             byte* p = (byte*)0xb8000 + ((y * Width + x) * 2);
             *p = (byte)chr;
@@ -127,9 +127,9 @@
         {
             CursorX = 0;
             CursorY = 0;
-            for (ulong x = 0; x < Width; x++)
+            for (int x = 0; x < Width; x++)
             {
-                for (ulong y = 0; y < Height; y++)
+                for (int y = 0; y < Height; y++)
                 {
                     WriteAt(' ', x, y);
                 }
