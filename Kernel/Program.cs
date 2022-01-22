@@ -40,6 +40,7 @@ unsafe class Program
         IDT.Enable();
         Serial.Initialise();
         PageTable.Initialise();
+        PCI.Initialise();
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
