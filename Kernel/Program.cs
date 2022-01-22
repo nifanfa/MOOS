@@ -21,6 +21,12 @@ unsafe class Program
         IntPtr moduleSeg = IntPtr.Zero;
         for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++) 
         {
+            Console.Write("Loading ");
+            for(int k = 0; k < 8; k++)
+            {
+                Console.Write((char)sections[i].Name[k]);
+            }
+            Console.WriteLine();
             if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
             Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
         }
@@ -45,15 +51,6 @@ unsafe class Program
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
-
-        /*
-        IDT.Disable();
-        GDT.Initialise();
-        IDT.Initialise();
-        IDT.Enable();
-        Serial.Initialise();
-        PageTable.Initialise();
-        */
 
         /*
         BGA.Setup();
