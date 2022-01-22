@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="interrupts.c">
+    <ClCompile Include="interrupts.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="io.cpp">

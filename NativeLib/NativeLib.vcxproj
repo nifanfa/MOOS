@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="interrupts.c" />
+    <ClCompile Include="interrupts.cpp" />
     <ClCompile Include="io.cpp" />
     <ClCompile Include="liballoc.c" />
     <ClCompile Include="nativ.cpp" />
