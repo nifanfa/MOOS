@@ -44,11 +44,10 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
-        /*
         BGA.Setup();
         BGA.SetVideoMode(640, 480);
         BGA.Clear(0xFFFF0000);
-        */
+        BGA.Update();
 
         for (; ; );
     }

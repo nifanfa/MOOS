@@ -50,8 +50,7 @@
             WriteRegister(2, YRes);
             WriteRegister(3, 32);
             WriteRegister(4, (ushort)(1 | 0x40));
-            uint* p = stackalloc uint[XRes * YRes];
-            Buffer = p;
+            Buffer = (uint*)Platform.kmalloc((ulong)(XRes * YRes * 4));
         }
     }
 }
