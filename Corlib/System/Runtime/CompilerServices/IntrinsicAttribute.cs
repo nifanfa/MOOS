@@ -1,4 +1,5 @@
 ﻿
-namespace System.Runtime.CompilerServices {
-	internal sealed class IntrinsicAttribute : Attribute { }
+namespace System.Runtime.CompilerServices
+{
+    internal sealed class IntrinsicAttribute : Attribute { }
 }

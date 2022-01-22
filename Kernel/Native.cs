@@ -26,6 +26,9 @@ static unsafe class Native
     public static extern uint In32(ushort port);
 
     [DllImport("*")]
+    public static extern void Stosd(void* p, uint value, ulong count);
+
+    [DllImport("*")]
     public static extern IntPtr kmalloc(ulong size);
 
     [DllImport("*")]
@@ -33,6 +36,9 @@ static unsafe class Native
 
     [DllImport("*")]
     public static extern IntPtr krealloc(IntPtr ptr, ulong newSize);
+
+    [DllImport("*")]
+    public extern static void Movsd(uint* dest, uint* source, ulong count);
 
     [DllImport("*")]
     public static extern IntPtr kcalloc(ushort num, ushort size);

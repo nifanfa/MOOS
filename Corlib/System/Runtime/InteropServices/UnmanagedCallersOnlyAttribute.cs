@@ -1,6 +1,8 @@
 ﻿
-namespace System.Runtime.InteropServices {
-    public sealed class UnmanagedCallersOnlyAttribute : Attribute {
+namespace System.Runtime.InteropServices
+{
+    public sealed class UnmanagedCallersOnlyAttribute : Attribute
+    {
         public string EntryPoint;
         public CallingConvention CallingConvention;
 

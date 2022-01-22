@@ -1,3 +1,4 @@
-﻿namespace System.Runtime.InteropServices {
-	public class UnmanagedType { }
+﻿namespace System.Runtime.InteropServices
+{
+    public class UnmanagedType { }
 }

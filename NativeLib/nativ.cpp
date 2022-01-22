@@ -5,6 +5,11 @@ void Stosb(void* p, unsigned char value, unsigned long count)
 	__stosb(p, value, count);
 }
 
+void Stosd(void* p, unsigned int value, unsigned long count)
+{
+	__stosd(p, value, count);
+}
+
 void Invlpg(unsigned long physicalAddress)
 {
 	__invlpg(physicalAddress);
@@ -23,6 +28,11 @@ unsigned long ReadCR2()
 void Movsb(void* dest, void* source, unsigned long count)
 {
 	__movsb(dest, source, count);
+}
+
+void Movsd(void* dest, void* source, unsigned long count)
+{
+	__movsd(dest, source, count);
 }
 
 void Hlt()

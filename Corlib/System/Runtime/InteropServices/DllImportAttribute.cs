@@ -1,6 +1,8 @@
 ﻿
-namespace System.Runtime.InteropServices {
-    public sealed class DllImportAttribute : Attribute {
+namespace System.Runtime.InteropServices
+{
+    public sealed class DllImportAttribute : Attribute
+    {
         public string EntryPoint;
         public CharSet CharSet;
         public bool SetLastError;
@@ -12,12 +14,14 @@ namespace System.Runtime.InteropServices {
 
         public string Value { get; }
 
-        public DllImportAttribute(string dllName) {
+        public DllImportAttribute(string dllName)
+        {
             Value = dllName;
         }
     }
 
-    public enum CharSet {
+    public enum CharSet
+    {
         None = 1,
         Ansi = 2,
         Unicode = 3,
