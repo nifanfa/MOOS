@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x200000 /filealign:0x1000" />
+		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:kernel_main /fixed /safeseh:no /base:0x200000 /filealign:0x1000" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -42,5 +42,13 @@
 	</Target>
 
 	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
+	
+	<Target Name="CopyBinary" AfterTargets="Publish">
+	  <Exec Command="$(MSBuildStartupDirectory)\Tools\nasm.exe -fbin $(MSBuildStartupDirectory)\Tools\EntryPoint.asm -o $(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Exec>
+	  <Exec Command="cmd.exe /c copy /b $(MSBuildProjectDirectory)\$(NativeOutputPath)entry+$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt) $(MSBuildStartupDirectory)\Tools\grub2\boot\kernel"></Exec>
+	  <Delete Files="$(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Delete>
+	  <Exec Command="$(MSBuildStartupDirectory)\Tools\mkisofs.exe -relaxed-filenames -J -R -o $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table $(MSBuildStartupDirectory)\Tools\grub2"></Exec>
+	  <Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 8192 -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso"></Exec>
+  </Target>
 
 </Project>
