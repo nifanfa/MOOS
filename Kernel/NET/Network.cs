@@ -4,6 +4,11 @@
     {
         public static byte[] MAC;
         public static byte[] IP;
-        public static byte[] Boardcast = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+        public static byte[] Boardcast;
+
+        public static void Initialise() 
+        {
+            Boardcast = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+        }
     }
 }

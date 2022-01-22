@@ -1,5 +1,6 @@
 ﻿using Internal.Runtime.CompilerServices;
 using Kernel;
+using Kernel.NET;
 using System.Runtime;
 using System.Runtime.InteropServices;
 
@@ -187,7 +188,12 @@ public static class IDT
     [RuntimeExport("irq11_handler")]
     public static void IRQ11Handler()
     {
-        Console.WriteLine("IRQ 11");
+        //Console.WriteLine("IRQ 11");
+        if(RTL8139.IRQ == 0x2B)
+        {
+            RTL8139.OnInterrupt();
+        }
+
         PIC.EndOfInterrupt(0x2B);
     }
 

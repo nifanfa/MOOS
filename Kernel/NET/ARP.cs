@@ -35,13 +35,17 @@ namespace Kernel.NET
 
         public static List<ARPEntry> ARPEntries;
 
+        public static void Initialise() 
+        {
+            ARPEntries = new List<ARPEntry>(32);
+        }
+
         internal static void HandlePacket(byte* data, int length)
         {
             ARPHeader* hdr = (ARPHeader*)data;
 
             if (Ethernet.SwapLeftRight(hdr->Operation) == (ushort)ARPOperation.Reply)
             {
-                if (ARPEntries == null) ARPEntries = new List<ARPEntry>(32);
                 byte[] IP = new byte[4];
                 IP[0] = hdr->SourceIP[0];
                 IP[1] = hdr->SourceIP[1];
