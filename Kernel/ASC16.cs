@@ -21,7 +21,7 @@
                     {
                         if ((buffer[offset + i] & (0x80 >> (int)j)) != 0)
                         {
-                            BGA.DrawPoint(((x + j) + (c * 8)), (y + i), color);
+                            Framebuffer.DrawPoint(((x + j) + (c * 8)), (y + i), color);
                         }
                     }
                 }
