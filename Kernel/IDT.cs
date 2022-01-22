@@ -72,12 +72,12 @@ public static class IDT
 
     public static void Enable()
     {
-        Native._sti();
+        Native.Sti();
     }
 
     public static void Disable()
     {
-        Native._cli();
+        Native.Cli();
     }
 
 

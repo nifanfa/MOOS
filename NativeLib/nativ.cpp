@@ -14,3 +14,23 @@ void WriteCR3(unsigned long value)
 {
 	__writecr3(value);
 }
+
+void Movsb(void* dest, void* source, unsigned long count)
+{
+	__movsb(dest, source, count);
+}
+
+void Hlt()
+{
+	_hlt();
+}
+
+void Cli()
+{
+	_cli();
+}
+
+void Sti()
+{
+	_sti();
+}
