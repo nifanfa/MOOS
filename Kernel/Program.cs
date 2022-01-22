@@ -49,6 +49,7 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
+        for (; ; );
         /*
         VBEInfo* vbe = (VBEInfo*)info->VBEInfo;
         if (vbe->PhysBase != 0)
