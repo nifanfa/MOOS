@@ -1,4 +1,5 @@
-﻿using System.Runtime;
+﻿using ConsoleApp1;
+using System.Runtime;
 using System.Runtime.InteropServices;
 
 unsafe class Program
@@ -25,9 +26,8 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
-        TestClass[] tcs = new TestClass[2];
-        tcs[0] = new TestClass();
-        Console.WriteLine(tcs[0].ToString());
+        BGA.Setup();
+        BGA.SetVideoMode(640, 480);
 
         for (; ; );
     }
