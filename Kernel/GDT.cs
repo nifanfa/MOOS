@@ -115,6 +115,6 @@ static class GDT
             }
         }
 
-        Native.load_gdt(ref gdtr);
+        Native.Load_GDT(ref gdtr);
     }
 }

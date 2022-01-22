@@ -5,13 +5,22 @@ using System.Runtime.InteropServices;
 static unsafe class Native
 {
     [DllImport("*")]
-    public static extern void outb(ushort port, byte value);
+    public static extern void Out8(ushort port, byte value);
 
     [DllImport("*")]
-    public static extern void outw(ushort port, ushort value);
+    public static extern void Out16(ushort port, ushort value);
+
+    //[DllImport("*")]
+    //public static extern void Out32(ushort port, uint value);
 
     [DllImport("*")]
-    public static extern byte inb(ushort port);
+    public static extern byte In8(ushort port);
+
+    [DllImport("*")]
+    public static extern ushort In16(ushort port);
+
+    //[DllImport("*")]
+    //public static extern uint In32(ushort port);
 
     [DllImport("*")]
     public static extern IntPtr kmalloc(ulong size);
@@ -29,10 +38,10 @@ static unsafe class Native
     public static extern void kfree(IntPtr ptr);
 
     [DllImport("*")]
-    public static extern void load_gdt(ref GDT.GDTDescriptor gdtr);
+    public static extern void Load_GDT(ref GDT.GDTDescriptor gdtr);
 
     [DllImport("*")]
-    public static extern void load_idt(ref IDT.IDTDescriptor idtr);
+    public static extern void Load_IDT(ref IDT.IDTDescriptor idtr);
 
     [DllImport("*")]
     public extern static unsafe void WriteCR3(ulong value);

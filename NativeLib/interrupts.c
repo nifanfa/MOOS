@@ -25,7 +25,7 @@ int
 	irq8(), irq9(), irq10(), irq11(), irq12(), irq13(), irq14(), irq15();
 
 
-void load_gdt(void* gdtr) {
+void Load_GDT(void* gdtr) {
 	_lgdt(gdtr);
 	_reload_segreg();
 }

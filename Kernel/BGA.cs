@@ -30,8 +30,8 @@
 
         public static void WriteRegister(ushort IndexValue, ushort DataValue)
         {
-            Native.outw(0x01CE, IndexValue);
-            Native.outw(0x01CF, DataValue);
+            Native.Out16(0x01CE, IndexValue);
+            Native.Out16(0x01CF, DataValue);
         }
 
         public static void SetVideoMode(ushort XRes, ushort YRes)

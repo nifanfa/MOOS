@@ -40,16 +40,16 @@ public static class IDT
         idt = new IDTEntry[256];
 
         // Remap PIC
-        Native.outb(0x20, 0x11);
-        Native.outb(0xA0, 0x11);
-        Native.outb(0x21, 0x20);
-        Native.outb(0xA1, 40);
-        Native.outb(0x21, 0x04);
-        Native.outb(0xA1, 0x02);
-        Native.outb(0x21, 0x01);
-        Native.outb(0xA1, 0x01);
-        Native.outb(0x21, 0x0);
-        Native.outb(0xA1, 0x0);
+        Native.Out8(0x20, 0x11);
+        Native.Out8(0xA0, 0x11);
+        Native.Out8(0x21, 0x20);
+        Native.Out8(0xA1, 40);
+        Native.Out8(0x21, 0x04);
+        Native.Out8(0xA1, 0x02);
+        Native.Out8(0x21, 0x01);
+        Native.Out8(0xA1, 0x01);
+        Native.Out8(0x21, 0x0);
+        Native.Out8(0xA1, 0x0);
 
         // TODO: Figure out a way to do this in C#
         set_idt_entries(Unsafe.AsPointer(ref idt[0]));
@@ -61,11 +61,11 @@ public static class IDT
             idtr.Base = (ulong)_idt;
         }
 
-        Native.load_idt(ref idtr);
+        Native.Load_IDT(ref idtr);
 
         //Enable keyboard interrupts
-        Native.outb(0x21, 0xFD);
-        Native.outb(0xA1, 0xFF);
+        Native.Out8(0x21, 0xFD);
+        Native.Out8(0xA1, 0xFF);
 
         Initialised = true;
     }
@@ -110,121 +110,121 @@ public static class IDT
     public static void IRQ0Handler()
     {
         Console.WriteLine("IRQ 0");
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq1_handler")]
     public static void IRQ1Handler()
     {
-        byte b = Native.inb(0x60);
+        byte b = Native.In8(0x60);
         char c = PS2Keyboard.ProcessKey(b);
         if (c != '?') Console.Write(c);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq2_handler")]
     public static void IRQ2Handler()
     {
         Console.WriteLine("IRQ 2");
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq3_handler")]
     public static void IRQ3Handler()
     {
         Console.WriteLine("IRQ 3");
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq4_handler")]
     public static void IRQ4Handler()
     {
         Console.WriteLine("IRQ 4");
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq5_handler")]
     public static void IRQ5Handler()
     {
         Console.WriteLine("IRQ 5");
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq6_handler")]
     public static void IRQ6Handler()
     {
         Console.WriteLine("IRQ 6");
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq7_handler")]
     public static void IRQ7Handler()
     {
         Console.WriteLine("IRQ 7");
-        Native.outb(0x20, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq8_handler")]
     public static void IRQ8Handler()
     {
         Console.WriteLine("IRQ 8");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq9_handler")]
     public static void IRQ9Handler()
     {
         Console.WriteLine("IRQ 9");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq10_handler")]
     public static void IRQ10Handler()
     {
         Console.WriteLine("IRQ 10");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq11_handler")]
     public static void IRQ11Handler()
     {
         Console.WriteLine("IRQ 11");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq12_handler")]
     public static void IRQ12Handler()
     {
         Console.WriteLine("IRQ 12");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq13_handler")]
     public static void IRQ13Handler()
     {
         Console.WriteLine("IRQ 13");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq14_handler")]
     public static void IRQ14Handler()
     {
         Console.WriteLine("IRQ 14");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 
     [RuntimeExport("irq15_handler")]
     public static void IRQ15Handler()
     {
         Console.WriteLine("IRQ 15");
-        Native.outb(0xA0, 0x20);
-        Native.outb(0x20, 0x20);
+        Native.Out8(0xA0, 0x20);
+        Native.Out8(0x20, 0x20);
     }
 }

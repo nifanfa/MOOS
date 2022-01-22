@@ -20,17 +20,17 @@
 
         private static void SetCursorStyle(byte style)
         {
-            Native.outb(0x3D4, 0x0A);
-            Native.outb(0x3D5, style);
+            Native.Out8(0x3D4, 0x0A);
+            Native.Out8(0x3D5, style);
         }
 
         private static void EnableCursor()
         {
-            Native.outb(0x3D4, 0x0A);
-            Native.outb(0x3D5, (byte)((Native.inb(0x3D5) & 0xC0) | 0));
+            Native.Out8(0x3D4, 0x0A);
+            Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xC0) | 0));
 
-            Native.outb(0x3D4, 0x0B);
-            Native.outb(0x3D5, (byte)((Native.inb(0x3D5) & 0xE0) | 15));
+            Native.Out8(0x3D4, 0x0B);
+            Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xE0) | 15));
         }
 
         public static void Write(string s)
@@ -92,10 +92,10 @@
         private static void UpdateCursor()
         {
             ulong pos = (CursorY * Width) + CursorX;
-            Native.outb(0x3D4, 0x0F);
-            Native.outb(0x3D5, (byte)(pos & 0xFF));
-            Native.outb(0x3D4, 0x0E);
-            Native.outb(0x3D5, (byte)((pos >> 8) & 0xFF));
+            Native.Out8(0x3D4, 0x0F);
+            Native.Out8(0x3D5, (byte)(pos & 0xFF));
+            Native.Out8(0x3D4, 0x0E);
+            Native.Out8(0x3D5, (byte)((pos >> 8) & 0xFF));
         }
 
         public static void WriteLine(string s)
