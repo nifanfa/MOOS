@@ -24,8 +24,8 @@ namespace Kernel
 
         public static MouseStatus MouseStatus;
 
-        public static int X = 0;
-        public static int Y = 0;
+        public static int X = 200;
+        public static int Y = 200;
 
         public static int ScreenWidth = 0;
         public static int ScreenHeight = 0;
