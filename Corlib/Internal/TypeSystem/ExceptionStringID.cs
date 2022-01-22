@@ -1,4 +1,5 @@
 ﻿
-namespace Internal.TypeSystem {
-	public enum ExceptionStringID { }
+namespace Internal.TypeSystem
+{
+    public enum ExceptionStringID { }
 }

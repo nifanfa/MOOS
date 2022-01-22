@@ -1,5 +1,7 @@
 ﻿
-namespace System {
-	public class Exception {
-	}
+namespace System
+{
+    public class Exception
+    {
+    }
 }

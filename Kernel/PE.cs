@@ -1,9 +1,10 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
-namespace Kernel {
+namespace Kernel
+{
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct DOSHeader {
+    unsafe struct DOSHeader
+    {
         public ushort e_magic;              // Magic number
         public ushort e_cblp;               // Bytes on last page of file
         public ushort e_cp;                 // Pages in file
@@ -26,7 +27,8 @@ namespace Kernel {
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct FileHeader {
+    struct FileHeader
+    {
         public ushort Machine;
         public ushort NumberOfSections;
         public uint TimeDateStamp;
@@ -36,7 +38,8 @@ namespace Kernel {
         public ushort Characteristics;
     }
 
-    enum SubSystemType : ushort {
+    enum SubSystemType : ushort
+    {
         Unknown = 0,
         Native = 1,
         WindowsGUI = 2,
@@ -50,7 +53,8 @@ namespace Kernel {
         Xbox = 14
     }
 
-    enum DllCharacteristicsType : ushort {
+    enum DllCharacteristicsType : ushort
+    {
         RES_0 = 0x0001,
         RES_1 = 0x0002,
         RES_2 = 0x0004,
@@ -67,13 +71,15 @@ namespace Kernel {
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct DataDirectory {
+    struct DataDirectory
+    {
         public uint VirtualAddress;
         public uint Size;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct OptionalHeaders64 {
+    struct OptionalHeaders64
+    {
         public ushort Magic;
         public byte MajorLinkerVersion;
         public byte MinorLinkerVersion;
@@ -122,14 +128,16 @@ namespace Kernel {
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct NtHeaders64 {
+    struct NtHeaders64
+    {
         public uint Signature;
         public FileHeader FileHeader;
         public OptionalHeaders64 OptionalHeader;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct SectionHeader {
+    unsafe struct SectionHeader
+    {
         public fixed byte Name[8];
         public uint PhysicalAddress_VirtualSize;
         public uint VirtualAddress;

@@ -1,5 +1,4 @@
-﻿using System;
-
-namespace System {
-	public sealed class FlagsAttribute : Attribute { }
+﻿namespace System
+{
+    public sealed class FlagsAttribute : Attribute { }
 }

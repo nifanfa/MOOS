@@ -1,9 +1,7 @@
 ﻿using Internal.Runtime.CompilerHelpers;
-using Internal.Runtime.CompilerServices;
 using Kernel;
 using System;
 using System.Runtime;
-using System.Runtime.InteropServices;
 
 unsafe class Program
 {
@@ -17,7 +15,7 @@ unsafe class Program
         NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
         SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
         IntPtr moduleSeg = IntPtr.Zero;
-        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++) 
+        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
         {
             if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
             Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);

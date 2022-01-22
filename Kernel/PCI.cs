@@ -20,7 +20,7 @@
         public uint Bar4;
         public uint Bar5;
 
-        public void WriteRegister(ushort Register,ushort Value) 
+        public void WriteRegister(ushort Register, ushort Value)
         {
             PCI.WriteRegister16(Bus, Slot, Function, (byte)Register, (ushort)(ReadRegister(Register) | Value));
         }
@@ -36,15 +36,15 @@
         public static PCIDevice[] Devices = new PCIDevice[32];
         public static int index = 0;
 
-        public static PCIDevice GetDevice(ushort VendorID,ushort DeviceID) 
+        public static PCIDevice GetDevice(ushort VendorID, ushort DeviceID)
         {
-            for(int i = 0; i < Devices.Length; i++) 
+            for (int i = 0; i < Devices.Length; i++)
             {
                 if (
                     Devices[i] != null &&
                     Devices[i].VendorID == VendorID &&
                     Devices[i].DeviceID == DeviceID
-                    ) 
+                    )
                 {
                     return Devices[i];
                 }
@@ -112,7 +112,7 @@
                 Devices[index] = device;
                 index++;
 
-                if(device.ClassID == 0x06 && device.SubClassID == 0x04) 
+                if (device.ClassID == 0x06 && device.SubClassID == 0x04)
                 {
                     Console.WriteLine("TODO - This is a sub-PCI Controller");
                 }

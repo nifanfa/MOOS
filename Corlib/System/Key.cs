@@ -1,6 +1,8 @@
 ﻿
-namespace System {
-    public enum Key : byte {
+namespace System
+{
+    public enum Key : byte
+    {
         None = 0,
         Backspace = 8,
         Tab,

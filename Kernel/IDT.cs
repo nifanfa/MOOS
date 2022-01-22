@@ -100,7 +100,7 @@ public static class IDT
             case 11: Console.WriteLine("SEGMENT NOT FOUND"); break;
             case 12: Console.WriteLine("STACK EXCEPTION"); break;
             case 13: Console.WriteLine("GENERAL PROTECTION"); break;
-            case 14: 
+            case 14:
                 ulong CR2 = Native.ReadCR2();
                 if ((CR2 >> 5) < 0x1000)
                 {
