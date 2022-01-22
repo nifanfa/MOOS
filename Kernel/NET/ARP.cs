@@ -127,6 +127,32 @@ namespace Kernel.NET
             }
         }
 
+        internal static byte[] Lookup(byte[] destIP)
+        {
+            for(int i = 0; i < ARPEntries.Count; i++) 
+            {
+                if (
+                    ARPEntries[i].IP[0] == destIP[0] &&
+                    ARPEntries[i].IP[1] == destIP[1] &&
+                    ARPEntries[i].IP[2] == destIP[2] &&
+                    ARPEntries[i].IP[3] == destIP[3]
+                    ) return ARPEntries[i].MAC;
+            }
+
+            for (int i = 0; i < ARPEntries.Count; i++)
+            {
+                if (
+                    ARPEntries[i].IP[0] == Network.Gateway[0] &&
+                    ARPEntries[i].IP[1] == Network.Gateway[1] &&
+                    ARPEntries[i].IP[2] == Network.Gateway[2] &&
+                    ARPEntries[i].IP[3] == Network.Gateway[3]
+                    ) return ARPEntries[i].MAC;
+            }
+
+            Console.WriteLine("ARP entry not found!");
+            return null;
+        }
+
         internal static void Request(byte[] IP)
         {
             ARPHeader* hdr = (ARPHeader*)Platform.kmalloc((ulong)(sizeof(ARPHeader)));

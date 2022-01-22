@@ -5,6 +5,7 @@
         public static byte[] MAC;
         public static byte[] IP;
         public static byte[] Boardcast;
+        public static byte[] Gateway;
 
         public static void Initialise() 
         {
