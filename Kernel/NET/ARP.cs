@@ -153,7 +153,7 @@ namespace Kernel.NET
             return null;
         }
 
-        internal static void Request(byte[] IP)
+        internal static void Require(byte[] IP)
         {
             ARPHeader* hdr = (ARPHeader*)Platform.kmalloc((ulong)(sizeof(ARPHeader)));
             hdr->SourceMAC[0] = Network.MAC[0];
