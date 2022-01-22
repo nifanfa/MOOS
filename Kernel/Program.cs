@@ -12,8 +12,6 @@ unsafe class Program
     [RuntimeExport("Main")]
     static void Main()
     {
-        Console.Setup();
-
         #region Initializations
         DOSHeader* doshdr = (DOSHeader*)ImageBase;
         NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
@@ -21,12 +19,6 @@ unsafe class Program
         IntPtr moduleSeg = IntPtr.Zero;
         for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++) 
         {
-            Console.Write("Loading ");
-            for(int k = 0; k < 8; k++)
-            {
-                Console.Write((char)sections[i].Name[k]);
-            }
-            Console.WriteLine();
             if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
             Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
         }
@@ -41,6 +33,7 @@ unsafe class Program
         StartupCodeHelpers.InitialiseRuntime(moduleSeg);
         #endregion
 
+        Console.Setup();
         IDT.Disable();
         GDT.Initialise();
         IDT.Initialise();
