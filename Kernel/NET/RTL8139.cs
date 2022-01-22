@@ -9,13 +9,16 @@ namespace Kernel.NET
         public static uint RX = 0;
         public static byte IRQ = 0;
         public static byte[] MAC = null;
-        public static byte[] TSAD = { 0x20, 0x24, 0x28, 0x2C };
-        public static byte[] TSD = { 0x10, 0x14, 0x18, 0x1C };
+        public static byte[] TSAD = null;
+        public static byte[] TSD = null;
         private static ushort CurrentPointer = 0;
         private static int TXIndex = 0;
 
         public static void Initialise()
         {
+            TSAD = new byte[] { 0x20, 0x24, 0x28, 0x2C };
+            TSD = new byte[] { 0x10, 0x14, 0x18, 0x1C };
+
             PCIDevice dev = PCI.GetDevice(0x10EC, 0x8139);
             if (dev == null)
             {

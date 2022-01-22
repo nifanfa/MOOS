@@ -1,4 +1,6 @@
-﻿namespace System.Collections.Generic
+﻿using Kernel;
+
+namespace System.Collections.Generic
 {
     public class List<T>
     {
@@ -21,6 +23,7 @@
 
         public void Add(T t)
         {
+            return;
             value[Count] = t;
             Count++;
         }
