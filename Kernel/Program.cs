@@ -39,16 +39,63 @@ unsafe class Program
         Serial.Initialise();
         PageTable.Initialise();
         PCI.Initialise();
+        PIT.Initialise();
+        PS2Mouse.Initialise();
+        ASC16.Initialise();
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
         BGA.Setup();
-        BGA.SetVideoMode(640, 480);
-        BGA.Clear(0xFFFF0000);
-        BGA.Update();
+        BGA.SetVideoMode(800, 600);
 
-        for (; ; );
+        int[] cursor = new int[]
+            {
+                1,0,0,0,0,0,0,0,0,0,0,0,
+                1,1,0,0,0,0,0,0,0,0,0,0,
+                1,2,1,0,0,0,0,0,0,0,0,0,
+                1,2,2,1,0,0,0,0,0,0,0,0,
+                1,2,2,2,1,0,0,0,0,0,0,0,
+                1,2,2,2,2,1,0,0,0,0,0,0,
+                1,2,2,2,2,2,1,0,0,0,0,0,
+                1,2,2,2,2,2,2,1,0,0,0,0,
+                1,2,2,2,2,2,2,2,1,0,0,0,
+                1,2,2,2,2,2,2,2,2,1,0,0,
+                1,2,2,2,2,2,2,2,2,2,1,0,
+                1,2,2,2,2,2,2,2,2,2,2,1,
+                1,2,2,2,2,2,2,1,1,1,1,1,
+                1,2,2,2,1,2,2,1,0,0,0,0,
+                1,2,2,1,0,1,2,2,1,0,0,0,
+                1,2,1,0,0,1,2,2,1,0,0,0,
+                1,1,0,0,0,0,1,2,2,1,0,0,
+                0,0,0,0,0,0,1,2,2,1,0,0,
+                0,0,0,0,0,0,0,1,2,2,1,0,
+                0,0,0,0,0,0,0,1,2,2,1,0,
+                0,0,0,0,0,0,0,0,1,1,0,0
+            };
+
+        for (; ; )
+        {
+            BGA.Clear(0x0);
+            ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
+            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+            DrawCursor(cursor, PS2Mouse.X, PS2Mouse.Y);
+            BGA.Update();
+            FPSMeter.Update();
+        }
+    }
+
+    private static void DrawCursor(int[] cursor, int x, int y)
+    {
+        for (int h = 0; h < 21; h++)
+            for (int w = 0; w < 12; w++)
+            {
+                if (cursor[h * 12 + w] == 1)
+                    BGA.DrawPoint(w + x, h + y, 0xFFFFFFFF);
+
+                if (cursor[h * 12 + w] == 2)
+                    BGA.DrawPoint(w + x, h + y, 0x0);
+            }
     }
 }

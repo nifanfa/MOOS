@@ -39,17 +39,7 @@ public static class IDT
     {
         idt = new IDTEntry[256];
 
-        // Remap PIC
-        Native.Out8(0x20, 0x11);
-        Native.Out8(0xA0, 0x11);
-        Native.Out8(0x21, 0x20);
-        Native.Out8(0xA1, 40);
-        Native.Out8(0x21, 0x04);
-        Native.Out8(0xA1, 0x02);
-        Native.Out8(0x21, 0x01);
-        Native.Out8(0xA1, 0x01);
-        Native.Out8(0x21, 0x0);
-        Native.Out8(0xA1, 0x0);
+        PIC.Enable();
 
         // TODO: Figure out a way to do this in C#
         set_idt_entries(Unsafe.AsPointer(ref idt[0]));
@@ -64,8 +54,7 @@ public static class IDT
         Native.Load_IDT(ref idtr);
 
         //Enable keyboard interrupts
-        Native.Out8(0x21, 0xFD);
-        Native.Out8(0xA1, 0xFF);
+        PIC.ClearMask(0x21);
 
         Initialised = true;
     }
@@ -119,8 +108,8 @@ public static class IDT
     [RuntimeExport("irq0_handler")]
     public static void IRQ0Handler()
     {
-        Console.WriteLine("IRQ 0");
-        Native.Out8(0x20, 0x20);
+        PIT.OnInterrupt();
+        PIC.EndOfInterrupt(0x20);
     }
 
     [RuntimeExport("irq1_handler")]
@@ -129,112 +118,104 @@ public static class IDT
         byte b = Native.In8(0x60);
         char c = PS2Keyboard.ProcessKey(b);
         if (c != '?') Console.Write(c);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x21);
     }
 
     [RuntimeExport("irq2_handler")]
     public static void IRQ2Handler()
     {
         Console.WriteLine("IRQ 2");
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x22);
     }
 
     [RuntimeExport("irq3_handler")]
     public static void IRQ3Handler()
     {
         Console.WriteLine("IRQ 3");
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x23);
     }
 
     [RuntimeExport("irq4_handler")]
     public static void IRQ4Handler()
     {
         Console.WriteLine("IRQ 4");
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x24);
     }
 
     [RuntimeExport("irq5_handler")]
     public static void IRQ5Handler()
     {
         Console.WriteLine("IRQ 5");
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x25);
     }
 
     [RuntimeExport("irq6_handler")]
     public static void IRQ6Handler()
     {
         Console.WriteLine("IRQ 6");
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x26);
     }
 
     [RuntimeExport("irq7_handler")]
     public static void IRQ7Handler()
     {
         Console.WriteLine("IRQ 7");
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x27);
     }
 
     [RuntimeExport("irq8_handler")]
     public static void IRQ8Handler()
     {
         Console.WriteLine("IRQ 8");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x28);
     }
 
     [RuntimeExport("irq9_handler")]
     public static void IRQ9Handler()
     {
         Console.WriteLine("IRQ 9");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x29);
     }
 
     [RuntimeExport("irq10_handler")]
     public static void IRQ10Handler()
     {
         Console.WriteLine("IRQ 10");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x2A);
     }
 
     [RuntimeExport("irq11_handler")]
     public static void IRQ11Handler()
     {
         Console.WriteLine("IRQ 11");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x2B);
     }
 
     [RuntimeExport("irq12_handler")]
     public static void IRQ12Handler()
     {
-        Console.WriteLine("IRQ 12");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PS2Mouse.OnInterrupt();
+        PIC.EndOfInterrupt(0x2C);
     }
 
     [RuntimeExport("irq13_handler")]
     public static void IRQ13Handler()
     {
         Console.WriteLine("IRQ 13");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x2D);
     }
 
     [RuntimeExport("irq14_handler")]
     public static void IRQ14Handler()
     {
         Console.WriteLine("IRQ 14");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x2E);
     }
 
     [RuntimeExport("irq15_handler")]
     public static void IRQ15Handler()
     {
         Console.WriteLine("IRQ 15");
-        Native.Out8(0xA0, 0x20);
-        Native.Out8(0x20, 0x20);
+        PIC.EndOfInterrupt(0x2F);
     }
 }
