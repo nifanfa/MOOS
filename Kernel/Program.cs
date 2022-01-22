@@ -45,6 +45,11 @@ unsafe class Program
         PS2Mouse.Initialise();
         ASC16.Initialise();
 
+        Serial.WriteLine("Hello World");
+        Console.WriteLine("Hello, World!");
+        Console.WriteLine("Use Native AOT (Core RT) Technology.");
+
+        /*
         VBEInfo* vbe = (VBEInfo*)info->VBEInfo;
         if (vbe->PhysBase != 0)
         {
@@ -56,10 +61,6 @@ unsafe class Program
             Framebuffer.Setup();
             Framebuffer.SetVideoMode(800, 600);
         }
-
-        Serial.WriteLine("Hello World");
-        Console.WriteLine("Hello, World!");
-        Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
         int[] cursor = new int[]
             {
@@ -95,6 +96,7 @@ unsafe class Program
             Framebuffer.Update();
             FPSMeter.Update();
         }
+        */
     }
 
     private static void DrawCursor(int[] cursor, int x, int y)
