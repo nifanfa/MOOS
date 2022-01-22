@@ -190,6 +190,9 @@ Main:
     mov rax,EndOfEntryPoint
     add rax,rcx
     call rax
+    cli
+    hlt
+    jmp $
 
 ;64KB Entry Point
 times 0x10000-($-$$)db 0
