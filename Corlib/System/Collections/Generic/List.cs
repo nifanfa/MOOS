@@ -6,14 +6,14 @@ namespace System.Collections.Generic
     {
         private T[] value;
 
-        public ulong Count = 0;
+        public int Count = 0;
 
-        public List(ulong initsize)
+        public List(int initsize)
         {
             value = new T[initsize];
         }
 
-        public T this[ulong index]
+        public T this[int index]
         {
             get
             {
@@ -23,7 +23,6 @@ namespace System.Collections.Generic
 
         public void Add(T t)
         {
-            return;
             value[Count] = t;
             Count++;
         }

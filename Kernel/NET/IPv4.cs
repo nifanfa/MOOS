@@ -73,27 +73,8 @@ namespace Kernel.NET
             hdr->DestIP[3] = DestIP[3];
             hdr->HeaderChecksum = CalculateChecksum((byte*)hdr, sizeof(IPv4Header));
             Native.Movsb(((byte*)hdr) + sizeof(IPv4Header), Data, (ulong)Length);
-            byte[] MAC = null;
-            for (ulong i = 0; i < ARP.ARPEntries.Count; i++)
-            {
-                if (
-                    ARP.ARPEntries[i].IP[0] == DestIP[0] &&
-                    ARP.ARPEntries[i].IP[1] == DestIP[1] &&
-                    ARP.ARPEntries[i].IP[2] == DestIP[2] &&
-                    ARP.ARPEntries[i].IP[3] == DestIP[3]
-                    )
-                {
-                    MAC = ARP.ARPEntries[i].MAC;
-                }
-            }
-            if (MAC == null)
-            {
-                Console.WriteLine("Error: ARP entry not found! Packet cannot be sent!");
-            }
-            else
-            {
-                Ethernet.SendPacket(MAC, (ushort)Ethernet.EthernetType.IPv4, hdr, sizeof(IPv4Header) + Length);
-            }
+            byte[] MAC = ARP.Lookup(DestIP);
+            Ethernet.SendPacket(MAC, (ushort)Ethernet.EthernetType.IPv4, hdr, sizeof(IPv4Header) + Length);
             Platform.kfree((IntPtr)hdr);
         }
 
