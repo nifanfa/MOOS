@@ -45,6 +45,7 @@ unsafe class Program
         PCI.Initialise();
         PIT.Initialise();
         PS2Mouse.Initialise();
+        ACPI.Initialize();
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
