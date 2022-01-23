@@ -54,6 +54,14 @@ namespace Kernel.NET
                     Platform.kfree((IntPtr)p);
                 }
             }
+            else if (hdr->Protocol == (byte)IPv4Protocol.UDP) 
+            {
+                UDP.HandlePacket(data, length);
+            }
+            else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
+            {
+                Tcp.TcpRecv(data, length);
+            }
         }
 
         public static void SendPacket(byte[] DestIP, byte Protocol, byte* Data, int Length)
