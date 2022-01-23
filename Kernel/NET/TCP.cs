@@ -166,19 +166,11 @@ namespace Kernel.NET
             // Process segments not in the CLOSED, LISTEN, or SYN-SENT states.
 
             uint flags = hdr->flags;
-            // Unacceptable segment
-            if ((flags & (byte)TCPFlags.TCP_RST) != 0)
-            {
-                SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
-                Console.WriteLine("Unacceptable segment");
-                return;
-            }
-
-            // TODO - trim segment data?
 
             // Check RST bit
             if ((flags & (byte)TCPFlags.TCP_RST) != 0)
             {
+                SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                 RecvRst(conn, hdr);
                 return;
             }
