@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\BitHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\List.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\Queue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Debug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EETypePtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Exception.cs" />
