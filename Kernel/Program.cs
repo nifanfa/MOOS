@@ -63,6 +63,7 @@ unsafe class Program
             Framebuffer.Setup();
             Framebuffer.SetVideoMode(800, 600);
         }
+        Framebuffer.DoubleBuffered = true;
 
         int[] cursor = new int[]
             {
