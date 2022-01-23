@@ -118,7 +118,8 @@ public static class IDT
             case 0x21:
                 byte b = Native.In8(0x60);
                 char c = PS2Keyboard.ProcessKey(b);
-                if (c != '?') Console.Write(c);
+                if (c == '\n') Console.WriteLine();
+                else if (c != '?') Console.Write(c);
                 break;
             case 0x2B:
                 if (RTL8139.IRQ == 0x2B)

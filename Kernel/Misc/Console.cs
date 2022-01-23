@@ -65,6 +65,8 @@
 
         public static void Write(char chr)
         {
+            WriteFramebuffer(chr);
+
             byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
             *p = (byte)chr;
             p++;
@@ -79,13 +81,41 @@
             UpdateCursor();
         }
 
+        private static void WriteFramebuffer(char chr)
+        {
+            if (Framebuffer.VideoMemory != null)
+            {
+                ASC16.DrawChar(chr,
+                            (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8),
+                            (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
+                            0xFFFFFFFF
+                            );
+                Framebuffer.Update();
+            }
+        }
+
         private static void MoveUp()
         {
             if (CursorY >= Height - 1)
             {
                 Native.Movsb((void*)0xb8000, (void*)0xB80A0, 0xF00);
                 for (int i = 0; i < Width; i++) WriteAt(' ', i, CursorY);
+
+                MoveUpFramebuffer();
                 CursorY--;
+            }
+        }
+
+        private static void MoveUpFramebuffer()
+        {
+            if(Framebuffer.VideoMemory != null)
+            {
+                int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2);
+                Native.Movsb(
+                    (byte*)Framebuffer.VideoMemory + (Framebuffer.Width * Y * 4),
+                    (byte*)Framebuffer.VideoMemory + (Framebuffer.Width * (Y + 16) * 4),
+                    (ulong)(Framebuffer.Width * (Height * 16) * 4)
+                    );
             }
         }
 

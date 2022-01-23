@@ -13,16 +13,20 @@
         {
             for (int c = 0; c < text.Length; c++)
             {
-                int offset = (text[c] & 0xFF) * 16;
+                DrawChar(text[c], x + (c * 8), y, color);
+            }
+        }
 
-                for (int i = 0; i < 16; i++)
+        public static void DrawChar(char chr,int x, int y, uint color)
+        {
+            int offset = (chr & 0xFF) * 16;
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 8; j++)
                 {
-                    for (int j = 0; j < 8; j++)
+                    if ((buffer[offset + i] & (0x80 >> (int)j)) != 0)
                     {
-                        if ((buffer[offset + i] & (0x80 >> (int)j)) != 0)
-                        {
-                            Framebuffer.DrawPoint(((x + j) + (c * 8)), (y + i), color);
-                        }
+                        Framebuffer.DrawPoint((x + j), y + i, color);
                     }
                 }
             }
