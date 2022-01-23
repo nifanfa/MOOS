@@ -9,9 +9,7 @@ abstract class Allocator
         public fixed byte Data[BITMAP_LENGTH];
     }
 
-
-    const int BITMAP_LENGTH = 1024 * 16; // 16kb can hold enough bits to represent 131,072 pages, allowing up to 512mb to be allocated (assuming a page size of 4kb)
-
+    const int BITMAP_LENGTH = 32768 * 4; // 32kb can hold enough bits to represent 262,144 pages, allowing up to 1024mb to be allocated (assuming a page size of 4kb)
 
     static BitMap bitMap;
     static int totalPages = 0;
