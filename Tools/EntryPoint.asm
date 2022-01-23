@@ -23,7 +23,7 @@ MULTIBOOT_HEADER_MAGIC   equ  0x1BADB002
 ;magic number GRUB searches for in the first 8k
 ;of the kernel file GRUB is told to load
 
-MULTIBOOT_HEADER_FLAGS   equ  MULTIBOOT_AOUT_KLUDGE|MULTIBOOT_ALIGN|MULTIBOOT_MEMINFO;|MULTIBOOT_VBE_MODE
+MULTIBOOT_HEADER_FLAGS   equ  MULTIBOOT_AOUT_KLUDGE|MULTIBOOT_ALIGN|MULTIBOOT_MEMINFO|MULTIBOOT_VBE_MODE
 CHECKSUM                 equ  -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
 
 KERNEL_STACK             equ  0x00200000  
@@ -47,10 +47,10 @@ multiboot_header:
         dd   multiboot_entry           ;entry address GRUB will start at
 
         ; Uncomment this and "|MULTIBOOT_VBE_MODE" in MULTIBOOT_HEADER_FLAGS to enable VBE
-        ;dd 00
-        ;dd 1024
-        ;dd 768
-        ;dd 32
+        dd 00
+        dd 800
+        dd 600
+        dd 32
 
 multiboot_entry:
         mov    esp, KERNEL_STACK       ;Setup the stack
