@@ -66,5 +66,16 @@
             WriteRegister(4, (ushort)(1 | 0x40));
             */
         }
+
+        internal static void Fill(int X, int Y, int Width, int Height, uint Color)
+        {
+            for(int w = 0; w < Width; w++) 
+            {
+                for(int h = 0; h < Height; h++) 
+                {
+                    DrawPoint(X + w, Y + h, Color);
+                }
+            }
+        }
     }
 }
