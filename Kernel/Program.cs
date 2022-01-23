@@ -24,8 +24,8 @@ unsafe class Program
             Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
         }
 
-        //                 10MiB                 3072MiB                1MiB
-        for (uint i = 1024 * 1024 * 10; i < 1024 * 1024 * 3072UL; i += 1024 * 1024)
+        //                 10MiB                 512MiB                1MiB
+        for (uint i = 1024 * 1024 * 10; i < 1024 * 1024 * 512; i += 1024 * 1024)
         {
             //                                      1MiB / 4KiB
             Allocator.AddFreePages((System.IntPtr)(i), 256);
