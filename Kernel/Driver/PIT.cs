@@ -23,7 +23,7 @@
         public static void Wait(ulong millisecond)
         {
             ulong T = Tick;
-            while (Tick < (T + millisecond)) ;
+            while (Tick < (T + millisecond)) Native.Hlt();
         }
     }
 }
