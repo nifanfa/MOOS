@@ -24,7 +24,7 @@ unsafe class Program
             Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
         }
 
-        //                 10MiB                 512MiB                1MiB
+        //                 10MiB                 4096MiB                1MiB
         for (uint i = 1024 * 1024 * 10; i < 1024 * 1024 * 512; i += 1024 * 1024)
         {
             //                                      1MiB / 4KiB

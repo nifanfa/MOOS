@@ -4,26 +4,30 @@ namespace System.Collections.Generic
 {
     public class List<T>
     {
-        private T[] value;
+        private T[] _value;
 
         public int Count = 0;
 
         public List(int initsize)
         {
-            value = new T[initsize];
+            _value = new T[initsize];
         }
 
         public T this[int index]
         {
             get
             {
-                return value[index];
+                return _value[index];
+            }
+            set 
+            {
+                _value[index] = value;
             }
         }
 
         public void Add(T t)
         {
-            value[Count] = t;
+            _value[Count] = t;
             Count++;
         }
     }
