@@ -1,5 +1,6 @@
 ﻿using Internal.Runtime.CompilerHelpers;
 using Kernel;
+using Kernel.Driver;
 using System;
 using System.Runtime;
 
@@ -33,17 +34,17 @@ unsafe class Program
         StartupCodeHelpers.InitialiseRuntime(moduleSeg);
         #endregion
 
+        PageTable.Initialise();
+        VBE.Initialise((VBEInfo*)info->VBEInfo);
         Console.Setup();
         IDT.Disable();
         GDT.Initialise();
         IDT.Initialise();
         IDT.Enable();
         Serial.Initialise();
-        PageTable.Initialise();
         PCI.Initialise();
         PIT.Initialise();
         PS2Mouse.Initialise();
-        ASC16.Initialise();
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
