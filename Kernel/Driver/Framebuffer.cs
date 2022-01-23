@@ -1,4 +1,6 @@
-﻿namespace Kernel
+﻿using Kernel.Driver;
+
+namespace Kernel
 {
     public static unsafe class Framebuffer
     {
@@ -11,16 +13,17 @@
 
         public static void Setup()
         {
-            /*
-            for (int i = 0; i < PCI.Devices.Length; i++)
+            if (VBE.Info->PhysBase == 0)
             {
-                if (PCI.Devices[i].VendorID == 0x1234)
+                for (int i = 0; i < PCI.Devices.Length; i++)
                 {
-                    VideoMemory = (uint*)PCI.Devices[i].Bar0;
-                    return;
+                    if (PCI.Devices[i].VendorID == 0x1234)
+                    {
+                        VideoMemory = (uint*)PCI.Devices[i].Bar0;
+                        return;
+                    }
                 }
             }
-            */
         }
 
         public static void Clear(uint Color)
@@ -47,10 +50,11 @@
 
         public static void WriteRegister(ushort IndexValue, ushort DataValue)
         {
-            /*
-            Native.Out16(0x01CE, IndexValue);
-            Native.Out16(0x01CF, DataValue);
-            */
+            if (VBE.Info->PhysBase == 0)
+            {
+                Native.Out16(0x01CE, IndexValue);
+                Native.Out16(0x01CF, DataValue);
+            }
         }
 
         public static void SetVideoMode(ushort XRes, ushort YRes)
@@ -58,13 +62,15 @@
             Width = XRes;
             Height = YRes;
             Buffer = (uint*)Platform.kmalloc((ulong)(XRes * YRes * 4));
-            /*
-            WriteRegister(4, 0);
-            WriteRegister(1, XRes);
-            WriteRegister(2, YRes);
-            WriteRegister(3, 32);
-            WriteRegister(4, (ushort)(1 | 0x40));
-            */
+
+            if(VBE.Info->PhysBase == 0) 
+            {
+                WriteRegister(4, 0);
+                WriteRegister(1, XRes);
+                WriteRegister(2, YRes);
+                WriteRegister(3, 32);
+                WriteRegister(4, (ushort)(1 | 0x40));
+            }
         }
 
         internal static void Fill(int X, int Y, int Width, int Height, uint Color)
