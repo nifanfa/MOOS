@@ -4,7 +4,47 @@ using System.Runtime.InteropServices;
 
 namespace Kernel.NET
 {
-    internal unsafe class Tcp
+    public unsafe class TCPConnection
+    {
+        public void* link;
+        public uint state;
+        public void* intf;
+
+        public byte[] localAddr = new byte[4];
+        public byte[] nextAddr = new byte[4];
+        public byte[] remoteAddr = new byte[4];
+        public ushort localPort;
+        public ushort remotePort;
+
+        // send state
+        public uint sndUna;                         // send unacknowledged
+        public uint sndNxt;                         // send next
+        public uint sndWnd;                         // send window
+        public uint sndUP;                          // send urgent pointer
+        public uint sndWl1;                         // segment sequence number used for last window update
+        public uint sndWl2;                         // segment acknowledgment number used for last window update
+        public uint iss;                            // initial send sequence number
+
+        // receive state
+        public uint rcvNxt;                        // receive next
+        public uint rcvWnd;                        // receive window
+        public uint rcvUP;                         // receive urgent pointer
+        public uint irs;                            // initial receive sequence number
+
+        // queues
+        public void* resequence;
+
+        // timers
+        public uint mslWait;                       // when does the 2MSL time wait expire?
+
+        // callbacks
+        public void* ctx;
+        public void* onError;
+        public void* onState;
+        public void* onData;
+    }
+
+    internal unsafe class TCP
     {
         const byte TCP_CLOSED = 0;
         const byte TCP_LISTEN = 1;
@@ -62,47 +102,6 @@ namespace Kernel.NET
         const byte OPT_MSS = 2;
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct TcpConn
-        {
-            public void* link;
-            public uint state;
-            public void* intf;
-
-            public fixed byte localAddr[4];
-            public fixed byte nextAddr[4];
-            public fixed byte remoteAddr[4];
-            public ushort localPort;
-            public ushort remotePort;
-
-            // send state
-            public uint sndUna;                         // send unacknowledged
-            public uint sndNxt;                         // send next
-            public uint sndWnd;                         // send window
-            public uint sndUP;                          // send urgent pointer
-            public uint sndWl1;                         // segment sequence number used for last window update
-            public uint sndWl2;                         // segment acknowledgment number used for last window update
-            public uint iss;                            // initial send sequence number
-
-            // receive state
-            public uint rcvNxt;                        // receive next
-            public uint rcvWnd;                        // receive window
-            public uint rcvUP;                         // receive urgent pointer
-            public uint irs;                            // initial receive sequence number
-
-            // queues
-            public void* resequence;
-
-            // timers
-            public uint mslWait;                       // when does the 2MSL time wait expire?
-
-            // callbacks
-            public void* ctx;
-            public void* onError;
-            public void* onState;
-            public void* onData;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         struct ChecksumHeader
         {
             public fixed byte src[4];
@@ -135,7 +134,7 @@ namespace Kernel.NET
             TcpHeader* hdr = (TcpHeader*)buffer;
             buffer += sizeof(TcpHeader);
             length -= sizeof(TcpHeader);
-            TcpSwap(hdr);
+            Swap(hdr);
 
             if (currConn == null)
             {
@@ -143,26 +142,26 @@ namespace Kernel.NET
                 return;
             }
 
-            if (currConn->state == TCP_CLOSED)
+            if (currConn.state == TCP_CLOSED)
             {
                 //TO-DO send close ack
                 return;
             }
 
-            if (currConn->state == TCP_LISTEN)
+            if (currConn.state == TCP_LISTEN)
             {
             }
-            else if (currConn->state == TCP_SYN_SENT)
+            else if (currConn.state == TCP_SYN_SENT)
             {
-                TcpRecvSynSent(currConn, hdr);
+                RecvSynSent(currConn, hdr);
             }
             else
             {
-                TcpRecvGeneral(currConn, hdr, buffer, length);
+                RecvGeneral(currConn, hdr, buffer, length);
             }
         }
 
-        static void TcpRecvGeneral(TcpConn* conn, TcpHeader* hdr, byte* buffer, int length)
+        static void RecvGeneral(TCPConnection conn, TcpHeader* hdr, byte* buffer, int length)
         {
             // Process segments not in the CLOSED, LISTEN, or SYN-SENT states.
 
@@ -170,7 +169,7 @@ namespace Kernel.NET
             uint dataLen = (uint)length;
 
             // Check that sequence and segment data is acceptable
-            if (!((conn->rcvNxt - hdr->seq) <= 0 && (hdr->seq + dataLen - conn->rcvNxt + conn->rcvWnd) <= 0))
+            if (!((conn.rcvNxt - hdr->seq) <= 0 && (hdr->seq + dataLen - conn.rcvNxt + conn.rcvWnd) <= 0))
             {
                 Console.WriteLine("Unacceptable segment");
 
@@ -181,7 +180,7 @@ namespace Kernel.NET
                 // Unacceptable segment
                 if ((~flags & TCP_RST) != 0)
                 {
-                    SendPacket(conn, conn->sndNxt, TCP_ACK, null, 0);
+                    SendPacket(conn, conn.sndNxt, TCP_ACK, null, 0);
                 }
 
                 return;
@@ -192,7 +191,7 @@ namespace Kernel.NET
             // Check RST bit
             if ((flags & TCP_RST) != 0)
             {
-                TcpRecvRst(conn, hdr);
+                RecvRst(conn, hdr);
                 return;
             }
 
@@ -209,20 +208,20 @@ namespace Kernel.NET
                 return;
             }
 
-            TcpRecvAck(conn, hdr);
+            RecvAck(conn, hdr);
 
             // TODO - check URG
 
             // Process segment data
             if (dataLen != 0)
             {
-                TcpRecvData(conn, buffer, length);
+                RecvData(conn, buffer, length);
             }
 
             // Check FIN - TODO, needs to handle out of sequence
             if ((flags & TCP_FIN) != 0)
             {
-                TcpRecvFin(conn, hdr);
+                RecvFin(conn, hdr);
                 Console.WriteLine("Buffer Received");
 
                 for (int i = 0; i < bufferLength; i++)
@@ -231,39 +230,39 @@ namespace Kernel.NET
             }
         }
 
-        static void TcpRecvFin(TcpConn* conn, TcpHeader* hdr)
+        static void RecvFin(TCPConnection conn, TcpHeader* hdr)
         {
             // TODO - signal the user "connection closing" and return any pending receives
 
-            conn->rcvNxt = hdr->seq + 1;
-            SendPacket(conn, conn->sndNxt, TCP_ACK, (void*)0, 0);
+            conn.rcvNxt = hdr->seq + 1;
+            SendPacket(conn, conn.sndNxt, TCP_ACK, (void*)0, 0);
 
-            switch (conn->state)
+            switch (conn.state)
             {
                 case TCP_SYN_RECEIVED:
                 case TCP_ESTABLISHED:
-                    conn->state = TCP_CLOSE_WAIT;
+                    conn.state = TCP_CLOSE_WAIT;
                     break;
 
                 case TCP_FIN_WAIT_1:
-                    if ((hdr->ack - conn->sndNxt) >= 0)
+                    if ((hdr->ack - conn.sndNxt) >= 0)
                     {
                         // TODO - is this the right way to detect that our FIN has been ACK'd?
 
                         // TODO - turn off the other timers
-                        conn->state = TCP_TIME_WAIT;
-                        conn->mslWait = (uint)(PIT.Tick + 2 * 120000);
+                        conn.state = TCP_TIME_WAIT;
+                        conn.mslWait = (uint)(PIT.Tick + 2 * 120000);
                     }
                     else
                     {
-                        conn->state = TCP_CLOSING;
+                        conn.state = TCP_CLOSING;
                     }
                     break;
 
                 case TCP_FIN_WAIT_2:
                     // TODO - turn off the other timers
-                    conn->state = TCP_TIME_WAIT;
-                    conn->mslWait = (uint)(PIT.Tick + 2 * 120000);
+                    conn.state = TCP_TIME_WAIT;
+                    conn.mslWait = (uint)(PIT.Tick + 2 * 120000);
                     break;
 
                 case TCP_CLOSE_WAIT:
@@ -272,14 +271,14 @@ namespace Kernel.NET
                     break;
 
                 case TCP_TIME_WAIT:
-                    conn->mslWait = (uint)(PIT.Tick + 2 * 120000);
+                    conn.mslWait = (uint)(PIT.Tick + 2 * 120000);
                     break;
             }
         }
 
-        static void TcpRecvData(TcpConn* conn, byte* buffer, int length)
+        static void RecvData(TCPConnection conn, byte* buffer, int length)
         {
-            switch (conn->state)
+            switch (conn.state)
             {
                 case TCP_SYN_RECEIVED:
                     // TODO - can this happen? ACK processing would transition to ESTABLISHED state.
@@ -298,7 +297,7 @@ namespace Kernel.NET
                     }
 
                     // Acknowledge receipt of data
-                    SendPacket(conn, conn->sndNxt, TCP_ACK, (void*)0, 0);
+                    SendPacket(conn, conn.sndNxt, TCP_ACK, (void*)0, 0);
                     break;
 
                 default:
@@ -310,17 +309,17 @@ namespace Kernel.NET
         public static byte* bufferReceived;
         public static int bufferLength;
 
-        static void TcpRecvAck(TcpConn* conn, TcpHeader* hdr)
+        static void RecvAck(TCPConnection conn, TcpHeader* hdr)
         {
-            switch (conn->state)
+            switch (conn.state)
             {
                 case TCP_SYN_RECEIVED:
-                    if (conn->sndUna <= hdr->ack && hdr->ack <= conn->sndNxt)
+                    if (conn.sndUna <= hdr->ack && hdr->ack <= conn.sndNxt)
                     {
-                        conn->sndWnd = hdr->windowSize;
-                        conn->sndWl1 = hdr->seq;
-                        conn->sndWl2 = hdr->ack;
-                        conn->state = TCP_ESTABLISHED;
+                        conn.sndWnd = hdr->windowSize;
+                        conn.sndWl1 = hdr->seq;
+                        conn.sndWl2 = hdr->ack;
+                        conn.state = TCP_ESTABLISHED;
                     }
                     else
                     {
@@ -334,18 +333,18 @@ namespace Kernel.NET
                 case TCP_CLOSE_WAIT:
                 case TCP_CLOSING:
                     // Handle expected acks
-                    if ((conn->sndUna - hdr->ack) <= 0 && (hdr->ack - conn->sndNxt) <= 0)
+                    if ((conn.sndUna - hdr->ack) <= 0 && (hdr->ack - conn.sndNxt) <= 0)
                     {
                         // Update acknowledged pointer
-                        conn->sndUna = hdr->ack;
+                        conn.sndUna = hdr->ack;
 
                         // Update send window
-                        if ((conn->sndWl1 - hdr->seq) < 0 ||
-                            (conn->sndWl1 == hdr->seq && (conn->sndWl2 - hdr->ack) <= 0))
+                        if ((conn.sndWl1 - hdr->seq) < 0 ||
+                            (conn.sndWl1 == hdr->seq && (conn.sndWl2 - hdr->ack) <= 0))
                         {
-                            conn->sndWnd = hdr->windowSize;
-                            conn->sndWl1 = hdr->seq;
-                            conn->sndWl2 = hdr->ack;
+                            conn.sndWnd = hdr->windowSize;
+                            conn.sndWl1 = hdr->seq;
+                            conn.sndWl2 = hdr->ack;
                         }
 
                         // TODO - remove segments on the retransmission queue which have been ack'd
@@ -353,30 +352,30 @@ namespace Kernel.NET
                     }
 
                     // Check for duplicate ack
-                    if ((hdr->ack - conn->sndUna) <= 0)
+                    if ((hdr->ack - conn.sndUna) <= 0)
                     {
                         // TODO - anything to do here?
                     }
 
                     // Check for ack of unsent data
-                    if ((hdr->ack - conn->sndNxt) > 0)
+                    if ((hdr->ack - conn.sndNxt) > 0)
                     {
-                        SendPacket(conn, conn->sndNxt, TCP_ACK, (void*)0, 0);
+                        SendPacket(conn, conn.sndNxt, TCP_ACK, (void*)0, 0);
                         return;
                     }
 
                     // Check for ack of FIN
-                    if ((hdr->ack - conn->sndNxt) >= 0)
+                    if ((hdr->ack - conn.sndNxt) >= 0)
                     {
                         // TODO - is this the right way to detect that our FIN has been ACK'd?
-                        if (conn->state == TCP_FIN_WAIT_1)
+                        if (conn.state == TCP_FIN_WAIT_1)
                         {
-                            conn->state = TCP_FIN_WAIT_2;
+                            conn.state = TCP_FIN_WAIT_2;
                         }
-                        else if (conn->state == TCP_CLOSING)
+                        else if (conn.state == TCP_CLOSING)
                         {
-                            conn->state = TCP_TIME_WAIT;
-                            conn->mslWait = (uint)(PIT.Tick + 2 * 120000);
+                            conn.state = TCP_TIME_WAIT;
+                            conn.mslWait = (uint)(PIT.Tick + 2 * 120000);
                         }
                     }
 
@@ -384,7 +383,7 @@ namespace Kernel.NET
 
                 case TCP_LAST_ACK:
                     // Check for ack of FIN
-                    if ((hdr->ack - conn->sndNxt) >= 0)
+                    if ((hdr->ack - conn.sndNxt) >= 0)
                     {
                         // TODO - is this the right way to detect that our FIN has been ACK'd?
 
@@ -398,9 +397,9 @@ namespace Kernel.NET
             }
         }
 
-        static void TcpRecvRst(TcpConn* conn, TcpHeader* hdr)
+        static void RecvRst(TCPConnection conn, TcpHeader* hdr)
         {
-            switch (conn->state)
+            switch (conn.state)
             {
                 case TCP_SYN_RECEIVED:
                     // TODO - All segments on the retransmission queue should be removed
@@ -431,14 +430,14 @@ namespace Kernel.NET
         const byte TCP_CONN_REFUSED = 2;
         const byte TCP_CONN_CLOSING = 3;
 
-        static void TcpRecvSynSent(TcpConn* conn, TcpHeader* hdr)
+        static void RecvSynSent(TCPConnection conn, TcpHeader* hdr)
         {
             byte flags = hdr->flags;
 
             // Check for bad ACK first.
             if ((flags & TCP_ACK) != 0)
             {
-                if ((hdr->ack - conn->iss) <= 0 || (hdr->ack - conn->sndNxt) > 0)
+                if ((hdr->ack - conn.iss) <= 0 || (hdr->ack - conn.sndNxt) > 0)
                 {
                     if ((~flags & TCP_RST) != 0)
                     {
@@ -455,7 +454,7 @@ namespace Kernel.NET
             {
                 if ((flags & TCP_ACK) != 0)
                 {
-                    conn->state = TCP_CONN_RESET;
+                    conn.state = TCP_CONN_RESET;
                     Console.WriteLine("TCP Reset");
                 }
 
@@ -467,20 +466,20 @@ namespace Kernel.NET
             {
                 // SYN is set.  ACK is either ok or there was no ACK.  No RST.
 
-                conn->irs = hdr->seq;
-                conn->rcvNxt = hdr->seq + 1;
+                conn.irs = hdr->seq;
+                conn.rcvNxt = hdr->seq + 1;
 
                 if ((flags & TCP_ACK) != 0)
                 {
-                    conn->sndUna = hdr->ack;
-                    conn->sndWnd = hdr->windowSize;
-                    conn->sndWl1 = hdr->seq;
-                    conn->sndWl2 = hdr->ack;
+                    conn.sndUna = hdr->ack;
+                    conn.sndWnd = hdr->windowSize;
+                    conn.sndWl1 = hdr->seq;
+                    conn.sndWl2 = hdr->ack;
 
                     // TODO - Segments on the retransmission queue which are ack'd should be removed
 
-                    conn->state = TCP_ESTABLISHED;
-                    SendPacket(conn, conn->sndNxt, TCP_ACK, null, 0);
+                    conn.state = TCP_ESTABLISHED;
+                    SendPacket(conn, conn.sndNxt, TCP_ACK, null, 0);
                     Console.WriteLine("Connection established");
 
 
@@ -492,94 +491,96 @@ namespace Kernel.NET
                 {
                     Console.WriteLine("No response");
 
-                    conn->state = TCP_SYN_RECEIVED;
+                    conn.state = TCP_SYN_RECEIVED;
 
                     // Resend ISS
-                    --conn->sndNxt;
-                    SendPacket(conn, conn->sndNxt, TCP_SYN | TCP_ACK, null, 0);
+                    --conn.sndNxt;
+                    SendPacket(conn, conn.sndNxt, TCP_SYN | TCP_ACK, null, 0);
                 }
             }
         }
 
-        static TcpConn* currConn;
+        static TCPConnection currConn;
 
-        public static bool TcpConnect(TcpConn* conn, byte[] addr, ushort port, ushort localPort)
+        public static TCPConnection Connect(byte[] addr, ushort port, ushort localPort)
         {
             bufferReceived = (byte*)Platform.kmalloc(8192);
+
+            TCPConnection conn = new TCPConnection();
 
             currConn = conn;
 
             // Initialize connection
-            conn->localAddr[0] = Network.IP[0];
-            conn->localAddr[1] = Network.IP[1];
-            conn->localAddr[2] = Network.IP[2];
-            conn->localAddr[3] = Network.IP[3];
+            conn.localAddr[0] = Network.IP[0];
+            conn.localAddr[1] = Network.IP[1];
+            conn.localAddr[2] = Network.IP[2];
+            conn.localAddr[3] = Network.IP[3];
 
-            conn->nextAddr[0] = addr[0];
-            conn->nextAddr[1] = addr[1];
-            conn->nextAddr[2] = addr[2];
-            conn->nextAddr[3] = addr[3];
+            conn.nextAddr[0] = addr[0];
+            conn.nextAddr[1] = addr[1];
+            conn.nextAddr[2] = addr[2];
+            conn.nextAddr[3] = addr[3];
 
-            conn->remoteAddr[0] = addr[0];
-            conn->remoteAddr[1] = addr[1];
-            conn->remoteAddr[2] = addr[2];
-            conn->remoteAddr[3] = addr[3];
+            conn.remoteAddr[0] = addr[0];
+            conn.remoteAddr[1] = addr[1];
+            conn.remoteAddr[2] = addr[2];
+            conn.remoteAddr[3] = addr[3];
 
-            conn->localPort = localPort;
-            conn->remotePort = port;
+            conn.localPort = localPort;
+            conn.remotePort = port;
 
             var isn = s_baseIsn + PIT.Tick * 250;
 
-            conn->sndUna = (uint)isn;
-            conn->sndNxt = (uint)isn;
-            conn->sndWnd = TCP_WINDOW_SIZE;
-            conn->sndUP = 0;
-            conn->sndWl1 = 0;
-            conn->sndWl2 = 0;
-            conn->iss = (uint)isn;
+            conn.sndUna = (uint)isn;
+            conn.sndNxt = (uint)isn;
+            conn.sndWnd = TCP_WINDOW_SIZE;
+            conn.sndUP = 0;
+            conn.sndWl1 = 0;
+            conn.sndWl2 = 0;
+            conn.iss = (uint)isn;
 
-            conn->rcvNxt = 0;
-            conn->rcvWnd = TCP_WINDOW_SIZE;
-            conn->rcvUP = 0;
-            conn->irs = 0;
+            conn.rcvNxt = 0;
+            conn.rcvWnd = TCP_WINDOW_SIZE;
+            conn.rcvUP = 0;
+            conn.irs = 0;
 
             // Issue SYN segment
-            SendPacket(conn, conn->sndNxt, TCP_SYN);
+            SendPacket(conn, conn.sndNxt, TCP_SYN);
             //TcpSetState(conn, TCP_SYN_SENT);
-            conn->state = TCP_SYN_SENT;
+            conn.state = TCP_SYN_SENT;
 
             ulong t = PIT.Tick + 3000;
             while(PIT.Tick < t) 
             {
                 Native.Hlt();
             }
-            if (conn->state == TCP_SYN_SENT) Console.WriteLine("Failed to connect");
+            if (conn.state == TCP_SYN_SENT) Console.WriteLine("Failed to connect");
 
-            return true;
+            return conn;
         }
 
-        public static void SendPacket(TcpConn* conn, uint seq, byte flags)
+        public static void SendPacket(TCPConnection conn, uint seq, byte flags)
         {
-            SendPacket(conn, conn->sndNxt, (byte)TCP_SYN, (void*)0, 0);
+            SendPacket(conn, conn.sndNxt, (byte)TCP_SYN, (void*)0, 0);
         }
 
-        public static void SendPacket(TcpConn* conn, uint seq, byte flags, void* data, uint count)
+        public static void SendPacket(TCPConnection conn, uint seq, byte flags, void* data, uint count)
         {
             NetBuf* pkt = NetAllocBuf();
 
             // Header
             TcpHeader* hdr = (TcpHeader*)pkt->start;
-            hdr->srcPort = conn->localPort;
+            hdr->srcPort = conn.localPort;
 
-            hdr->dstPort = conn->remotePort;
+            hdr->dstPort = conn.remotePort;
             hdr->seq = seq;
-            hdr->ack = ((flags & TCP_ACK) != 0) ? conn->rcvNxt : 0;
+            hdr->ack = ((flags & TCP_ACK) != 0) ? conn.rcvNxt : 0;
             hdr->off = 0;
             hdr->flags = flags;
             hdr->windowSize = TCP_WINDOW_SIZE;
             hdr->checksum = 0;
             hdr->urgent = 0;
-            TcpSwap(hdr);
+            Swap(hdr);
 
             byte* p = pkt->start + sizeof(TcpHeader);
 
@@ -607,14 +608,14 @@ namespace Kernel.NET
 
             // Pseudo Header
             ChecksumHeader* phdr = (ChecksumHeader*)(pkt->start - sizeof(ChecksumHeader));
-            phdr->src[0] = conn->localAddr[0];
-            phdr->src[1] = conn->localAddr[1];
-            phdr->src[2] = conn->localAddr[2];
-            phdr->src[3] = conn->localAddr[3];
-            phdr->dst[0] = conn->remoteAddr[0];
-            phdr->dst[1] = conn->remoteAddr[1];
-            phdr->dst[2] = conn->remoteAddr[2];
-            phdr->dst[3] = conn->remoteAddr[3];
+            phdr->src[0] = conn.localAddr[0];
+            phdr->src[1] = conn.localAddr[1];
+            phdr->src[2] = conn.localAddr[2];
+            phdr->src[3] = conn.localAddr[3];
+            phdr->dst[0] = conn.remoteAddr[0];
+            phdr->dst[1] = conn.remoteAddr[1];
+            phdr->dst[2] = conn.remoteAddr[2];
+            phdr->dst[3] = conn.remoteAddr[3];
             phdr->reserved = 0;
             phdr->protocol = (byte)IPv4.IPv4Protocol.TCP;
             phdr->len = Ethernet.SwapLeftRight((ushort)((uint)pkt->end - (uint)pkt->start));
@@ -627,17 +628,17 @@ namespace Kernel.NET
             // Transmit
             IPv4.SendPacket(new byte[]
             {
-                conn->remoteAddr [0],
-                conn->remoteAddr [1],
-                conn->remoteAddr [2],
-                conn->remoteAddr [3]
+                conn.remoteAddr [0],
+                conn.remoteAddr [1],
+                conn.remoteAddr [2],
+                conn.remoteAddr [3]
             }, (byte)IPv4.IPv4Protocol.TCP, pkt->start, (int)pkt->end - (int)pkt->start);
 
             // Update State
-            conn->sndNxt += count;
+            conn.sndNxt += count;
             if ((flags & (TCP_SYN | TCP_FIN)) != 0)
             {
-                ++conn->sndNxt;
+                ++conn.sndNxt;
             }
         }
 
@@ -649,7 +650,7 @@ namespace Kernel.NET
             return buf;
         }
 
-        static void TcpSwap(TcpHeader* hdr)
+        static void Swap(TcpHeader* hdr)
         {
             hdr->srcPort = Ethernet.SwapLeftRight(hdr->srcPort);
             hdr->dstPort = Ethernet.SwapLeftRight(hdr->dstPort);
@@ -662,9 +663,9 @@ namespace Kernel.NET
             hdr->urgent = Ethernet.SwapLeftRight(hdr->urgent);
         }
 
-        public static void TcpSend(TcpConn* conn, byte* data, int count)
+        public static void Send(TCPConnection conn, byte* data, int count)
         {
-            SendPacket(conn, conn->sndNxt, TCP_ACK | TCP_PSH, data, (uint)count);
+            SendPacket(conn, conn.sndNxt, TCP_ACK | TCP_PSH, data, (uint)count);
         }
 
         public static ushort NetChecksum(byte* data, byte* end)
