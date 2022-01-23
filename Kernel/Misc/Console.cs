@@ -85,11 +85,10 @@
         {
             if (Framebuffer.VideoMemory != null)
             {
-                ASC16.DrawChar(chr,
-                            (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8),
-                            (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
-                            0xFFFFFFFF
-                            );
+                int X = (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
+                int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
+                Framebuffer.Fill(X, Y, 8, 16, 0x0);
+                ASC16.DrawChar(chr, X, Y, 0xFFFFFFFF);
                 Framebuffer.Update();
             }
         }
@@ -126,11 +125,25 @@
             Native.Out8(0x3D5, (byte)(pos & 0xFF));
             Native.Out8(0x3D4, 0x0E);
             Native.Out8(0x3D5, (byte)((pos >> 8) & 0xFF));
+            UpdateCursorFramebuffer();
+        }
+
+        private static void UpdateCursorFramebuffer()
+        {
+            if (Framebuffer.VideoMemory != null)
+            {
+                ASC16.DrawChar('_',
+                            (Framebuffer.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),
+                            (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
+                            0xFFFFFFFF
+                            );
+            }
         }
 
         public static void WriteLine(string s)
         {
             Write(s);
+            WriteFramebuffer(' ');
             CursorX = 0;
             CursorY++;
             MoveUp();
@@ -139,6 +152,7 @@
 
         public static void WriteLine()
         {
+            WriteFramebuffer(' ');
             CursorX = 0;
             CursorY++;
             MoveUp();
