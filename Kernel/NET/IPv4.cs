@@ -33,34 +33,43 @@ namespace Kernel.NET
             IPv4Header* hdr = (IPv4Header*)data;
             data += sizeof(IPv4Header);
             length -= sizeof(IPv4Header);
-            if (hdr->Protocol == (byte)IPv4Protocol.ICMP)
-            {
-                if (data[0] == 8)
-                {
-                    byte* p = (byte*)Platform.kmalloc((ulong)length);
-                    Native.Movsb(p, data, (ulong)length);
-                    p[0] = 0;
-                    *(ushort*)(p + 2) = 0;
-                    *(ushort*)(p + 2) = CalculateChecksum(p, length);
 
-                    byte[] srcIP = new byte[]
+            if(
+                hdr->DestIP[0] == Network.IP[0] &&
+                hdr->DestIP[1] == Network.IP[1] &&
+                hdr->DestIP[2] == Network.IP[2] &&
+                hdr->DestIP[3] == Network.IP[3]
+                ) 
+            {
+                if (hdr->Protocol == (byte)IPv4Protocol.ICMP)
+                {
+                    if (data[0] == 8)
                     {
+                        byte* p = (byte*)Platform.kmalloc((ulong)length);
+                        Native.Movsb(p, data, (ulong)length);
+                        p[0] = 0;
+                        *(ushort*)(p + 2) = 0;
+                        *(ushort*)(p + 2) = CalculateChecksum(p, length);
+
+                        byte[] srcIP = new byte[]
+                        {
                             hdr->SourceIP[0],
                             hdr->SourceIP[1],
                             hdr->SourceIP[2],
                             hdr->SourceIP[3]
-                    };
-                    SendPacket(srcIP, 1, p, length);
-                    Platform.kfree((IntPtr)p);
+                        };
+                        SendPacket(srcIP, 1, p, length);
+                        Platform.kfree((IntPtr)p);
+                    }
                 }
-            }
-            else if (hdr->Protocol == (byte)IPv4Protocol.UDP) 
-            {
-                UDP.HandlePacket(data, length);
-            }
-            else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
-            {
-                TCP.TcpRecv(data, length);
+                else if (hdr->Protocol == (byte)IPv4Protocol.UDP)
+                {
+                    UDP.HandlePacket(data, length);
+                }
+                else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
+                {
+                    TCP.TcpRecv(data, length);
+                }
             }
         }
 
