@@ -130,12 +130,11 @@ namespace Kernel.NET
         internal static void TcpRecv(byte* buffer, int length)
         {
             TCPHeader* hdr = (TCPHeader*)buffer;
-            buffer += sizeof(TCPHeader);
-            length -= sizeof(TCPHeader);
-            length -= 6;
+            buffer += hdr->off >> 2;
+            length -= hdr->off >> 2;
+            length -= 4;
 
             Swap(hdr);
-
 
             if (currConn == null)
             {
@@ -167,12 +166,12 @@ namespace Kernel.NET
             // Process segments not in the CLOSED, LISTEN, or SYN-SENT states.
 
             uint flags = hdr->flags;
-            uint dataLen = (uint)length;
-
             // Unacceptable segment
-            if ((~flags & (byte)TCPFlags.TCP_RST) != 0)
+            if ((flags & (byte)TCPFlags.TCP_RST) != 0)
             {
                 SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
+                Console.WriteLine("Unacceptable segment");
+                return;
             }
 
             // TODO - trim segment data?
@@ -197,19 +196,20 @@ namespace Kernel.NET
                 return;
             }
 
-
             RecvAck(conn, hdr);
 
             // TODO - check URG
 
             // Process segment data
-            if (dataLen != 0)
+            if (length != 0)
             {
+                if ((flags & (byte)TCPFlags.TCP_PSH) != 0)
+                {
+                    for (int i = 0; i < length; i++)
+                        Console.Write((char)buffer[i]);
+                    Console.WriteLine();
+                }
                 RecvData(conn, buffer, length);
-
-                for (int i = 0; i < length; i++)
-                    Console.Write((char)buffer[i]);
-                Console.WriteLine();
             }
 
             // Check FIN - TODO, needs to handle out of sequence
@@ -524,11 +524,11 @@ namespace Kernel.NET
             conn.State = TCPStatus.SynSent;
 
             ulong t = PIT.Tick + 3000;
-            while (PIT.Tick < t)
+            while ((PIT.Tick < t) && !conn.Connected)
             {
                 Native.Hlt();
             }
-            if (conn.State == TCPStatus.SynSent) Console.WriteLine("Failed to connect");
+            if (conn.State == TCPStatus.SynSent) Console.WriteLine("Connection timeout");
 
             return conn;
         }
