@@ -664,7 +664,7 @@ namespace Kernel.NET
 
         public static void TcpSend(TcpConn* conn, byte* data, int count)
         {
-            SendPacket(conn, conn->sndNxt, TCP_ACK, data, (uint)count);
+            SendPacket(conn, conn->sndNxt, TCP_ACK | TCP_PSH, data, (uint)count);
         }
 
         public static ushort NetChecksum(byte* data, byte* end)
