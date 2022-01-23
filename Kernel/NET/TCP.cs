@@ -71,6 +71,9 @@ namespace Kernel.NET
         TCP_URG = (1 << 5),
     }
 
+    /// <summary>
+    /// Incompleted TCP
+    /// </summary>
     internal unsafe class TCP
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
