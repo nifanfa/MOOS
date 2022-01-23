@@ -23,7 +23,7 @@
             }
         }
 
-        private static void Write(char c)
+        public static void Write(char c)
         {
             while ((Native.In8(COM1 + 5) & 0x20) == 0) { }
             Native.Out8(COM1, (byte)(c & 0xFF));
