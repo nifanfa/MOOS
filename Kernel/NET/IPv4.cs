@@ -60,7 +60,7 @@ namespace Kernel.NET
             }
             else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
             {
-                Tcp.TcpRecv(data, length);
+                TCP.TcpRecv(data, length);
             }
         }
 
