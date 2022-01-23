@@ -9,6 +9,9 @@ namespace Kernel
         public static ushort Height;
         public static uint* Buffer;
 
+        /// <summary>
+        /// Since you enabled DoubleBuffered you have to call Framebuffer.Update() in order to make it display
+        /// </summary>
         public static bool DoubleBuffered = false;
 
         public static void Setup()
