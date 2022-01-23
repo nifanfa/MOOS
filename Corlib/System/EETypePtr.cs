@@ -7,6 +7,48 @@ namespace System
     {
         internal EEType* Value;
 
+        public bool IsSzArray 
+        {
+            get 
+            {
+                return Value->IsSzArray;
+            }
+        }
+
+        public EETypePtr ArrayElementType 
+        {
+            get 
+            {
+                return new EETypePtr(Value->RelatedParameterType);
+            }
+        }
+
+        internal int ArrayRank
+        {
+            get
+            {
+                return Value->ArrayRank;
+            }
+        }
+
+        public IntPtr RawValue 
+        {
+            get 
+            {
+                return (IntPtr)Value;
+            }
+        }
+
+        public EETypePtr(IntPtr value)
+        {
+            Value = (EEType*)value;
+        }
+
+        public EETypePtr(EEType* value)
+        {
+            Value = value;
+        }
+
         [Intrinsic]
         internal static EETypePtr EETypePtrOf<T>()
         {

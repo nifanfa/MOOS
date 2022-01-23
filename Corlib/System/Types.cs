@@ -37,6 +37,8 @@ namespace System
 
     public struct Int32
     {
+        public const int MaxValue = 0x7FFFFFFF;
+
         // TODO: ToString for all other primitives
         public unsafe override string ToString()
         {
@@ -191,7 +193,15 @@ namespace System
 
     public struct Nullable<T> where T : struct { }
 
-    public struct RuntimeTypeHandle { }
+    public struct RuntimeTypeHandle 
+    {
+        IntPtr Value;
+
+        public RuntimeTypeHandle(EETypePtr ptr)
+        {
+            Value = ptr.RawValue;
+        }
+    }
     public struct RuntimeMethodHandle { }
     public struct RuntimeFieldHandle { }
 }
