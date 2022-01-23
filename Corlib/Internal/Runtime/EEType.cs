@@ -216,7 +216,7 @@ namespace Internal.Runtime
     //    }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe struct EEType
+    public unsafe struct EEType
     {
         private const int POINTER_SIZE = 8;
         private const int PADDING = 1; // _numComponents is padded by one Int32 to make the first element pointer-aligned
@@ -360,11 +360,12 @@ namespace Internal.Runtime
 
         //// Mark or determine that a type is generic and one or more of it's type parameters is co- or
         //// contra-variant. This only applies to interface and delegate types.
-        //internal bool HasGenericVariance {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.GenericVarianceFlag) != 0);
-        //	}
-        //}
+        internal bool HasGenericVariance 
+        {
+        	get {
+        		return ((_usFlags & (ushort)EETypeFlags.GenericVarianceFlag) != 0);
+        	}
+        }
 
         //internal bool IsFinalizable {
         //	get {
@@ -378,11 +379,13 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsCloned {
-        //	get {
-        //		return Kind == EETypeKind.ClonedEEType;
-        //	}
-        //}
+        internal bool IsCloned 
+        {
+        	get 
+            {
+        		return Kind == EETypeKind.ClonedEEType;
+            }
+        }
 
         //internal bool IsCanonical {
         //	get {
@@ -408,26 +411,46 @@ namespace Internal.Runtime
             }
         }
 
+        internal static class WellKnownEETypes
+        {
+            // Returns true if the passed in EEType is the EEType for System.Object
+            // This is recognized by the fact that System.Object and interfaces are the only ones without a base type
+            internal static unsafe bool IsSystemObject(EEType* pEEType)
+            {
+                if (pEEType->IsArray)
+                    return false;
+                return (pEEType->NonArrayBaseType == null) && !pEEType->IsInterface;
+            }
 
-        //internal int ArrayRank {
-        //	get {
-        //		Debug.Assert(this.IsArray);
+            // Returns true if the passed in EEType is the EEType for System.Array.
+            // The binder sets a special CorElementType for this well known type
+            internal static unsafe bool IsSystemArray(EEType* pEEType)
+            {
+                return (pEEType->ElementType == EETypeElementType.SystemArray);
+            }
+        }
 
-        //		int boundsSize = (int)this.ParameterizedTypeShape - SZARRAY_BASE_SIZE;
-        //		if (boundsSize > 0) {
-        //			// Multidim array case: Base size includes space for two Int32s
-        //			// (upper and lower bound) per each dimension of the array.
-        //			return boundsSize / (2 * sizeof(int));
-        //		}
-        //		return 1;
-        //	}
-        //}
+        internal int ArrayRank 
+        {
+        	get 
+            {
+        		int boundsSize = (int)this.ParameterizedTypeShape - SZARRAY_BASE_SIZE;
+        		if (boundsSize > 0) {
+        			// Multidim array case: Base size includes space for two Int32s
+        			// (upper and lower bound) per each dimension of the array.
+        			return boundsSize / (2 * sizeof(int));
+        		}
+        		return 1;
+        	}
+        }
 
-        //internal bool IsSzArray {
-        //	get {
-        //		return ElementType == EETypeElementType.SzArray;
-        //	}
-        //}
+        internal bool IsSzArray 
+        {
+            get 
+            {
+                return ElementType == EETypeElementType.SzArray;
+            }
+        }
 
         //internal bool IsGeneric {
         //	get {
@@ -518,11 +541,13 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsInterface {
-        //	get {
-        //		return ElementType == EETypeElementType.Interface;
-        //	}
-        //}
+        internal bool IsInterface 
+        {
+        	get 
+            {
+        		return ElementType == EETypeElementType.Interface;
+        	}
+        }
 
         //internal bool IsAbstract {
         //	get {
@@ -559,17 +584,19 @@ namespace Internal.Runtime
         //// Currently, the meaning is a shape of 0 indicates that this is a Pointer,
         //// shape of 1 indicates a ByRef, and >=SZARRAY_BASE_SIZE indicates that this is an array.
         //// Two types are not equivalent if their shapes do not exactly match.
-        //internal uint ParameterizedTypeShape {
-        //	get {
-        //		return _uBaseSize;
-        //	}
-        //}
+        internal uint ParameterizedTypeShape {
+        	get 
+            {
+        		return _uBaseSize;
+        	}
+        }
 
-        //internal bool IsRelatedTypeViaIAT {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.RelatedTypeViaIATFlag) != 0);
-        //	}
-        //}
+        internal bool IsRelatedTypeViaIAT {
+            get 
+            {
+        		return ((_usFlags & (ushort)EETypeFlags.RelatedTypeViaIATFlag) != 0);
+        	}
+        }
 
         //internal bool RequiresAlign8 {
         //	get {
@@ -782,38 +809,31 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal EEType* NonArrayBaseType {
-        //	get {
-        //		Debug.Assert(!IsArray, "array type not supported in BaseType");
+        internal EEType* NonArrayBaseType {
+        	get {
+        		if (IsCloned) {
+        			// Assuming that since this is not an Array, the CanonicalEEType is also not an array
+        			return CanonicalEEType->NonArrayBaseType;
+        		}
 
-        //		if (IsCloned) {
-        //			// Assuming that since this is not an Array, the CanonicalEEType is also not an array
-        //			return CanonicalEEType->NonArrayBaseType;
-        //		}
+        		if (IsRelatedTypeViaIAT) {
+        			return *_relatedType._ppBaseTypeViaIAT;
+        		}
 
-        //		Debug.Assert(IsCanonical, "we expect canonical types here");
+        		return _relatedType._pBaseType;
+        	}
+        }
 
-        //		if (IsRelatedTypeViaIAT) {
-        //			return *_relatedType._ppBaseTypeViaIAT;
-        //		}
+        internal EEType* NonClonedNonArrayBaseType 
+        {
+        	get {
+        		if (IsRelatedTypeViaIAT) {
+        			return *_relatedType._ppBaseTypeViaIAT;
+        		}
 
-        //		return _relatedType._pBaseType;
-        //	}
-        //}
-
-        //internal EEType* NonClonedNonArrayBaseType {
-        //	get {
-        //		Debug.Assert(!IsArray, "array type not supported in NonArrayBaseType");
-        //		Debug.Assert(!IsCloned, "cloned type not supported in NonClonedNonArrayBaseType");
-        //		Debug.Assert(IsCanonical || IsGenericTypeDefinition, "we expect canonical types here");
-
-        //		if (IsRelatedTypeViaIAT) {
-        //			return *_relatedType._ppBaseTypeViaIAT;
-        //		}
-
-        //		return _relatedType._pBaseType;
-        //	}
-        //}
+        		return _relatedType._pBaseType;
+        	}
+        }
 
         internal EEType* RawBaseType
         {
@@ -828,16 +848,15 @@ namespace Internal.Runtime
             }
         }
 
-        //internal EEType* CanonicalEEType {
-        //	get {
-        //		// cloned EETypes must always refer to types in other modules
-        //		Debug.Assert(IsCloned);
-        //		if (IsRelatedTypeViaIAT)
-        //			return *_relatedType._ppCanonicalTypeViaIAT;
-        //		else
-        //			return _relatedType._pCanonicalType;
-        //	}
-        //}
+        internal EEType* CanonicalEEType {
+        	get {
+        		// cloned EETypes must always refer to types in other modules
+        		if (IsRelatedTypeViaIAT)
+        			return *_relatedType._ppCanonicalTypeViaIAT;
+        		else
+        			return _relatedType._pCanonicalType;
+        	}
+        }
 
         //internal EEType* NullableType {
         //	get {
@@ -867,16 +886,16 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal EEType* RelatedParameterType {
-        //	get {
-        //		Debug.Assert(IsParameterizedType);
-
-        //		if (IsRelatedTypeViaIAT)
-        //			return *_relatedType._ppRelatedParameterTypeViaIAT;
-        //		else
-        //			return _relatedType._pRelatedParameterType;
-        //	}
-        //}
+        internal EEType* RelatedParameterType
+        {
+            get
+            {
+                if (IsRelatedTypeViaIAT)
+                    return *_relatedType._ppRelatedParameterTypeViaIAT;
+                else
+                    return _relatedType._pRelatedParameterType;
+            }
+        }
 
         //internal unsafe IntPtr* GetVTableStartAddress() {
         //	byte* pResult;

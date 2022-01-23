@@ -22,5 +22,19 @@ namespace Internal.Runtime.CompilerServices
 
         [Intrinsic]
         public static extern int SizeOf<T>();
+
+        [Intrinsic]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ref T AddByteOffset<T>(ref T source, IntPtr byteOffset)
+        {
+            for (; ; );
+        }
+
+        [Intrinsic]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static ref T AddByteOffset<T>(ref T source, nuint byteOffset)
+        {
+            return ref AddByteOffset(ref source, (IntPtr)(void*)byteOffset);
+        }
     }
 }

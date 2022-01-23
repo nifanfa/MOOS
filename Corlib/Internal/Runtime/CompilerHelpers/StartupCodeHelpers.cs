@@ -98,7 +98,7 @@ namespace Internal.Runtime.CompilerHelpers
         }
 
         [RuntimeExport("RhTypeCast_IsInstanceOfClass")]
-        static unsafe object RhTypeCast_IsInstanceOfClass(EEType* pTargetType, object obj)
+        public static unsafe object RhTypeCast_IsInstanceOfClass(EEType* pTargetType, object obj)
         {
             if (obj == null)
                 return null;
