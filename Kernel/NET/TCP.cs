@@ -178,7 +178,7 @@ namespace Kernel.NET
             // Check SYN bit
             if ((flags & (byte)TCPFlags.TCP_SYN) != 0)
             {
-                SendPacket(conn, 0, (byte)TCPFlags.TCP_RST | (byte)TCPFlags.TCP_ACK, (void*)0, 0);
+                SendPacket(conn, 0, (byte)TCPFlags.TCP_RST | (byte)TCPFlags.TCP_ACK, null, 0);
                 Console.WriteLine("Error: connection reset");
             }
 
@@ -216,7 +216,7 @@ namespace Kernel.NET
             // TODO - signal the user "connection closing" and return any pending receives
 
             conn.rcvNxt = hdr->seq + 1;
-            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, (void*)0, 0);
+            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
 
             switch (conn.State)
             {
@@ -270,7 +270,7 @@ namespace Kernel.NET
                     //Do something
 
                     // Acknowledge receipt of data
-                    SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, (void*)0, 0);
+                    SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                     break;
 
                 default:
@@ -293,7 +293,7 @@ namespace Kernel.NET
                     }
                     else
                     {
-                        SendPacket(conn, hdr->ack, (byte)TCPFlags.TCP_RST, (void*)0, 0);
+                        SendPacket(conn, hdr->ack, (byte)TCPFlags.TCP_RST, null, 0);
                     }
                     break;
 
@@ -330,7 +330,7 @@ namespace Kernel.NET
                     // Check for ack of unsent data
                     if ((hdr->ack - conn.sndNxt) > 0)
                     {
-                        SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, (void*)0, 0);
+                        SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                         return;
                     }
 
@@ -527,7 +527,7 @@ namespace Kernel.NET
 
         public static void SendPacket(TCPConnection conn, uint seq, byte flags)
         {
-            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_SYN, (void*)0, 0);
+            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_SYN, null, 0);
         }
 
         public static void SendPacket(TCPConnection conn, uint seq, byte flags, void* data, uint count)
