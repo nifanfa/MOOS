@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 Tools/grub2/boot/kernel
+Tools/grub2/boot/grub/i386-pc/eltorito.img
