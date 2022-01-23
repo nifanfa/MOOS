@@ -8,6 +8,14 @@ namespace Kernel.NET
     {
         public TCPStatus State;
 
+        public bool Connected
+        {
+            get
+            {
+                return State != TCPStatus.SynSent;
+            }
+        }
+
         public byte[] localAddr = new byte[4];
         public byte[] nextAddr = new byte[4];
         public byte[] remoteAddr = new byte[4];
@@ -630,7 +638,10 @@ namespace Kernel.NET
 
         public static void Send(TCPConnection conn, byte* data, int count)
         {
-            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
+            if (conn.Connected)
+                SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
+            else
+                Console.WriteLine("Connection havn't established yet");
         }
 
         public static ushort NetChecksum(byte* data, byte* end)
