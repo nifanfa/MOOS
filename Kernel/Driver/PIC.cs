@@ -16,7 +16,7 @@
             Native.Out8(0xA1, 0x0);
         }
 
-        public static void EndOfInterrupt(ulong irq)
+        public static void EndOfInterrupt(int irq)
         {
             if (irq >= 40)
                 Native.Out8(0xA0, 0x20);
