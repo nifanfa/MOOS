@@ -133,6 +133,7 @@ namespace Kernel.NET
             buffer += sizeof(TCPHeader);
             length -= sizeof(TCPHeader);
             length -= 6;
+
             Swap(hdr);
 
 
@@ -595,7 +596,7 @@ namespace Kernel.NET
 
             // Checksum
             //ushort checksum = NetChecksum(pkt->start - sizeof(ChecksumHeader), pkt->end);
-            ushort checksum = NetChecksum(pkt->start - sizeof(ChecksumHeader), pkt->end);
+            ushort checksum = TCPChecksum(pkt->start - sizeof(ChecksumHeader), pkt->end);
             hdr->checksum = Ethernet.SwapLeftRight(checksum);
 
             // Transmit
@@ -644,22 +645,12 @@ namespace Kernel.NET
                 Console.WriteLine("Connection havn't established yet");
         }
 
-        public static ushort NetChecksum(byte* data, byte* end)
-        {
-            uint sum = NetChecksumAcc(data, end, 0);
-            return NetChecksumFinal(sum);
-        }
-
-        public static ushort NetChecksum(byte* data, int count)
-        {
-            uint sum = NetChecksumAcc(data, data + count, 0);
-            return NetChecksumFinal(sum);
-        }
-
-        static uint NetChecksumAcc(byte* data, byte* end, uint sum)
+        public static ushort TCPChecksum(byte* data, byte* end)
         {
             uint len = (uint)(end - data);
             ushort* p = (ushort*)data;
+
+            uint sum = 0;
 
             while (len > 1)
             {
@@ -672,11 +663,6 @@ namespace Kernel.NET
                 sum += *(byte*)p;
             }
 
-            return sum;
-        }
-
-        static ushort NetChecksumFinal(uint sum)
-        {
             sum = (sum & 0xffff) + (sum >> 16);
             sum += (sum >> 16);
 
