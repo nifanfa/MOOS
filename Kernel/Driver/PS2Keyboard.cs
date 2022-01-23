@@ -42,7 +42,9 @@
                 case 0x09: return '8';
                 case 0x0A: return '9';
                 case 0x0B: return '0';
+                case 0x39: return ' ';
                 case 0x1C: return '\n';
+                case 0x0E: return '\b';
                 default: return '?';
             }
         }

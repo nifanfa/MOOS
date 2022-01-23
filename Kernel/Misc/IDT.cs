@@ -119,6 +119,7 @@ public static class IDT
                 byte b = Native.In8(0x60);
                 char c = PS2Keyboard.ProcessKey(b);
                 if (c == '\n') Console.WriteLine();
+                else if (c == '\b') Console.Back();
                 else if (c != '?') Console.Write(c);
                 break;
             case 0x2B:
