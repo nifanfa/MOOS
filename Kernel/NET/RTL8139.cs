@@ -1,4 +1,5 @@
 ﻿using Kernel;
+using System.Diagnostics;
 using static Native;
 
 namespace Kernel.NET
@@ -79,10 +80,12 @@ namespace Kernel.NET
             ushort Status = In16((ushort)(IOBase + 0x3E));
             if ((Status & (1 << 2)) != 0)
             {
-                //Console.WriteLine("Transmit OK");
+                //Debug.WriteLine("Transmit OK");
             }
             if ((Status & (1 << 0)) != 0)
             {
+                //Debug.WriteLine("Receive OK");
+
                 ushort* t = (ushort*)(RX + CurrentPointer);
                 ushort length = *(t + 1);
                 t += 2;

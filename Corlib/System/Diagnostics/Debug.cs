@@ -6,7 +6,7 @@ namespace System.Diagnostics
     {
         public static void WriteLine(string s) 
         {
-            Serial.Write(s);
+            Serial.WriteLine(s);
             s.Dispose();
         }
 
