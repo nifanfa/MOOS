@@ -1,4 +1,6 @@
-﻿namespace Kernel
+﻿using Kernel.Misc;
+
+namespace Kernel
 {
     public class PCIDevice
     {
@@ -70,12 +72,13 @@
                     Console.Write("Func:");
                     Console.Write(((ulong)Devices[i].Function).ToString());
                     Console.Write(" ");
-                    Console.Write("Bar0:0x");
-                    Console.Write(((ulong)Devices[i].Bar0).ToStringHex());
-                    Console.Write(" ");
-                    Console.Write("VendorID:0x");
-                    Console.Write(((ulong)Devices[i].VendorID).ToStringHex());
-                    Console.WriteLine();
+                    Console.Write("Class:");
+                    Console.Write(ClassID.GetName(Devices[i].ClassID));
+                    Console.Write(' ');
+                    Console.Write("Vendor:");
+                    Console.Write(VendorID.GetName(Devices[i].VendorID));
+                    if(Console.CursorX != 0)
+                        Console.WriteLine();
                 }
             }
         }
