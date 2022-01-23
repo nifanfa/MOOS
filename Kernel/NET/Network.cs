@@ -1,4 +1,6 @@
-﻿namespace Kernel.NET
+﻿using System.Net;
+
+namespace Kernel.NET
 {
     public static class Network
     {
@@ -7,9 +9,12 @@
         public static byte[] Boardcast;
         public static byte[] Gateway;
 
-        public static void Initialise() 
+        public static void Initialise(IPAddress IPAddress, IPAddress GatewayAddress)
         {
             Boardcast = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+            Gateway = GatewayAddress.Address;
+            IP = IPAddress.Address;
+            ARP.Initialise();
         }
     }
 }

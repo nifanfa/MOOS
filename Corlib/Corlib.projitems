@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\KeyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\KeyModifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\KeyState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Net\IPAddress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Object.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ParamArrayAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\ClassConstructorRunner.cs" />
