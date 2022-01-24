@@ -48,8 +48,8 @@ multiboot_header:
 
         ; Uncomment this and "|MULTIBOOT_VBE_MODE" in MULTIBOOT_HEADER_FLAGS to enable VBE
         dd 00
-        dd 800
-        dd 600
+        dd 00
+        dd 00
         dd 32
 
 multiboot_entry:
