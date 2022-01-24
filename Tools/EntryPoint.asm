@@ -256,6 +256,7 @@ Main:
     mov ecx,[eax+NTHeader.AddressOfEntryPoint] 
     mov rax,EXE
     add rax,rcx
+    
     mov rcx,[multiboot_pointer]
     call rax
     jmp die
