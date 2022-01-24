@@ -115,10 +115,10 @@ namespace Kernel.Driver
             Console.WriteLine("SMBIOS Entry Found");
 
             SMBIOSEntryPoint* entry = (SMBIOSEntryPoint*)p;
-            NewMethod(entry);
+            InfoEntries(entry);
         }
 
-        private static byte* NewMethod(SMBIOSEntryPoint* entry)
+        private static byte* InfoEntries(SMBIOSEntryPoint* entry)
         {
             byte* p = (byte*)entry->TableAddress;
             while ((uint)p < (entry->TableAddress + entry->TableLength))
