@@ -76,41 +76,33 @@ public static class IDT
     {
         switch (code)
         {
-            case 0: Console.WriteLine("Divide-by-zero Error"); break;
-            case 1: Console.WriteLine("Debug"); break;
-            case 2: Console.WriteLine("Non-maskable Interrupt"); break;
-            case 3: Console.WriteLine("Breakpoint"); break;
-            case 4: Console.WriteLine("Overflow"); break;
-            case 5: Console.WriteLine("Bound Range Exceeded"); break;
-            case 6: Console.WriteLine("Invalid Opcode"); break;
-            case 7: Console.WriteLine("Device Not Available"); break;
-            case 8: Console.WriteLine("Double Fault"); break;
-            case 9: Console.WriteLine("Coprocessor Segment Overrun"); break;
-            case 10: Console.WriteLine("Invalid TSS"); break;
-            case 11: Console.WriteLine("Segment Not Present"); break;
-            case 12: Console.WriteLine("Stack-Segment Fault"); break;
-            case 13: Console.WriteLine("Stack-Segment Fault"); break;
+            case 0: Console.WriteLine("DIVIDE BY ZERO"); break;
+            case 1: Console.WriteLine("SINGLE STEP"); break;
+            case 2: Console.WriteLine("NMI"); break;
+            case 3: Console.WriteLine("BREAKPOINT"); break;
+            case 4: Console.WriteLine("OVERFLOW"); break;
+            case 5: Console.WriteLine("BOUNDS CHECK"); break;
+            case 6: Console.WriteLine("INVALID OPCODE"); break;
+            case 7: Console.WriteLine("COPR UNAVAILABLE"); break;
+            case 8: Console.WriteLine("DOUBLE FAULT"); break;
+            case 9: Console.WriteLine("COPR SEGMENT OVERRUN"); break;
+            case 10: Console.WriteLine("INVALID TSS"); break;
+            case 11: Console.WriteLine("SEGMENT NOT FOUND"); break;
+            case 12: Console.WriteLine("STACK EXCEPTION"); break;
+            case 13: Console.WriteLine("GENERAL PROTECTION"); break;
             case 14:
                 ulong CR2 = Native.ReadCR2();
                 if ((CR2 >> 5) < 0x1000)
                 {
-                    Console.WriteLine("Null Pointer");
+                    Console.WriteLine("NULL POINTER");
                 }
                 else
                 {
-                    Console.WriteLine("Page Fault");
+                    Console.WriteLine("PAGE FAULT");
                 }
                 break;
-            case 16: Console.WriteLine("x87 Floating-Point Exception"); break;
-            case 17: Console.WriteLine("Alignment Check"); break;
-            case 18: Console.WriteLine("Machine Check"); break;
-            case 19: Console.WriteLine("SIMD Floating-Point Exception"); break;
-            case 20: Console.WriteLine("Virtualization Exception"); break;
-            case 21: Console.WriteLine("Control Protection Exception"); break;
-            case 28: Console.WriteLine("Hypervisor Injection Exception"); break;
-            case 29: Console.WriteLine("VMM Communication Exception"); break;
-            case 30: Console.WriteLine("Security Exception"); break;
-            default: Console.WriteLine("Unknown Exception"); break;
+            case 16: Console.WriteLine("COPR ERROR"); break;
+            default: Console.WriteLine(" UNKNOWN EXCEPTION"); break;
         }
     }
 
