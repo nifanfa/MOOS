@@ -234,6 +234,19 @@ struc NTHeader
         .Tables: resb 128
 endstruc
 
+struc SectionHeader
+        .Name: resb 8
+        .PhysicalAddress_VirtualSize: resb 4
+        .VirtualAddress: resb 4
+        .SizeOfRawData: resb 4
+        .PointerToRawData: resb 4
+        .PointerToRelocations: resb 4
+        .PointerToLineNumbers: resb 4
+        .NumberOfRelocations: resb 2
+        .NumberOfLineNumbers: resb 2
+        .Characteristics: resb 4
+endstruc
+
 [BITS 64]      
 Main:
     mov ax, 0x0010
