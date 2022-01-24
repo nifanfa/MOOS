@@ -246,16 +246,10 @@ Main:
     mov rsp,KERNEL_STACK
     mov rbp,rsp
     
-    xor rbx,rbx
-    xor rax,rax
-    xor rcx,rcx
-    ;Get address of EntryPoint from PE Header
     mov ebx,[EXE+DOSHeader.e_lfanew]
-    mov eax,EXE
-    add eax,ebx
-    mov ecx,[eax+NTHeader.AddressOfEntryPoint] 
-    mov rax,EXE
-    add rax,rcx
+    lea ebx,[ebx+EXE+NTHeader.AddressOfEntryPoint]
+    mov ebx,[ebx]
+    lea rax,[EXE+ebx]
     
     mov rcx,[multiboot_pointer]
     call rax
