@@ -1,5 +1,8 @@
 ﻿namespace Kernel
 {
+    /// <summary>
+    /// Do not initialize it again if you've already initialized
+    /// </summary>
     public static unsafe class PageTable
     {
         public enum PageSize
@@ -8,11 +11,11 @@
             Huge = 0x200000
         }
 
-        public static ulong* PML4 = (ulong*)0x300000;
+        public const ulong PML4 = 0xA00000;
 
         internal static void Initialise()
         {
-            Native.Stosb(PML4, 0x00, 4096);
+            Native.Stosb((void*)PML4, 0x00, 4096);
 
             ulong i = 0;
             //Map the first 4KiB-2MiB
@@ -27,7 +30,7 @@
                 Map(i, i);
             }
 
-            void* p = PML4;
+            void* p = (void*)PML4;
             Native.WriteCR3((ulong)p);
         }
 
@@ -43,7 +46,7 @@
             ulong pml2_entry = (VirtualAddress & ((ulong)0x1ff << 21)) >> 21;
             ulong pml1_entry = (VirtualAddress & ((ulong)0x1ff << 12)) >> 12;
 
-            ulong* pml3 = Next(PML4, pml4_entry);
+            ulong* pml3 = Next((ulong*)PML4, pml4_entry);
             ulong* pml2 = Next(pml3, pml3_entry);
 
             if (pageSize == PageSize.Huge)
@@ -80,7 +83,7 @@
 
         public static ulong* AllocateTable()
         {
-            ulong* r = (PML4 + 4096) + (p * 4096);
+            ulong* r = (ulong*)((PML4 + 4096) + (p * 4096));
             Native.Stosb(r, 0x00, 4096);
             p++;
             return r;
