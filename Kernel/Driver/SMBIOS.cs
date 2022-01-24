@@ -166,7 +166,7 @@ namespace Kernel.Driver
             return p;
         }
 
-        private static void PrintIndex(SMBIOSHeader* hdr, byte index)
+        private static void PrintIndex(SMBIOSHeader* hdr, byte index, bool ignoreSpace = false)
         {
             byte* p = (byte*)hdr;
             p += hdr->Length;
@@ -178,7 +178,10 @@ namespace Kernel.Driver
             }
             while (*p != 0)
             {
-                Console.Write((char)*p++);
+                char c;
+                c = (char)*p++;
+                if (ignoreSpace && c == ' ') continue;
+                Console.Write(c);
             }
             Console.Write(' ');
         }
