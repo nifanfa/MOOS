@@ -265,10 +265,10 @@ Main:
     lea rax,[EXE+ebx]
     
     mov rcx,[multiboot_pointer]
+    mov rdx,EXE
+    mov r8,0
     call rax
     jmp die
-
-;64KB Entry Point
-times 0x10000-($-$$)db 0
+    
 EXE:
     
