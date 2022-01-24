@@ -21,6 +21,7 @@
             {
                 Write(s[i]);
             }
+            s.Dispose();
         }
 
         public static void Write(char c)
@@ -33,6 +34,7 @@
         {
             Write(s);
             WriteLine();
+            s.Dispose();
         }
 
         public static void WriteLine()

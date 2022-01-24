@@ -39,6 +39,7 @@
             {
                 Console.Write(s[i]);
             }
+            s.Dispose();
         }
 
         public static void Back()
@@ -149,6 +150,7 @@
             CursorY++;
             MoveUp();
             UpdateCursor();
+            s.Dispose();
         }
 
         public static void WriteLine()
