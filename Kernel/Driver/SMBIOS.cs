@@ -182,7 +182,7 @@ namespace Kernel.Driver
                 c = (char)*p++;
                 if (ignoreSpace && c == ' ') continue;
                 Console.Write(c);
-            } Console.Write((char)*p++);
+            }
             Console.Write(' ');
         }
     }
