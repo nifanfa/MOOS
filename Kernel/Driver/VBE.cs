@@ -10,7 +10,7 @@
             ASC16.Initialise();
             if (info->PhysBase != 0) 
             {
-                Framebuffer.VideoMemory = (uint*)info->PhysBase;
+                Framebuffer.VideoMemory = (uint*)(info->PhysBase & ~0xF);
                 Framebuffer.SetVideoMode(info->ScreenWidth, info->ScreenHeight);
                 Framebuffer.Clear(0x0);
             }
