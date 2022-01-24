@@ -89,12 +89,24 @@ namespace Kernel.Driver
         {
             public byte Location;
             public byte Use;
-            public byte MemoryErrorCorrection;
+            public ErrorCorrectionTypes MemoryErrorCorrection;
             public uint MaximumCapacity;
             public ushort MemoryErrorInformationHandle;
             public ushort NumberofMemoryDevices;
             public ulong ExtendedMaximumCapacity;
         }
+
+        public enum ErrorCorrectionTypes : byte 
+        {
+            Other = 0x01,
+            Unknown = 0x02,
+            None = 0x03,
+            Parity = 0x04,
+            SinglebitECC = 0x05,
+            MultibitECC = 0x06,
+            CRC = 0x07,
+        }
+
 
         public static void Initialise()
         {
@@ -121,7 +133,7 @@ namespace Kernel.Driver
                         PrintIndex(hdr, pinfo->PartNumber);
                         PrintIndex(hdr, pinfo->SocketDesignation);
                         PrintIndex(hdr, pinfo->ProcessorManufacturer);
-                        Console.Write("Speed: ");
+                        Console.Write(", Speed: ");
                         Console.Write(((uint)pinfo->CurrentSpeed).ToString());
                         Console.Write("Mhz ");
                         Console.WriteLine();
@@ -130,7 +142,21 @@ namespace Kernel.Driver
                         PhysicalMemoryArray* minfo = (PhysicalMemoryArray*)((byte*)hdr + sizeof(SMBIOSHeader));
                         Console.Write("Installed RAM: ");
                         Console.Write((minfo->MaximumCapacity + minfo->ExtendedMaximumCapacity).ToString());
-                        Console.WriteLine("MiB");
+                        Console.Write("MiB"); 
+                        Console.Write(", Number of Memory Devices: ");
+                        Console.Write(((uint)minfo->NumberofMemoryDevices).ToString());
+                        Console.Write(", Memory Correction:");
+                        switch (minfo->MemoryErrorCorrection) 
+                        {
+                            case ErrorCorrectionTypes.Other: Console.Write("Other"); break;
+                            case ErrorCorrectionTypes.Unknown: Console.Write("Unknown"); break;
+                            case ErrorCorrectionTypes.None: Console.Write("None"); break;
+                            case ErrorCorrectionTypes.Parity: Console.Write("Parity"); break;
+                            case ErrorCorrectionTypes.SinglebitECC: Console.Write("SinglebitECC"); break;
+                            case ErrorCorrectionTypes.MultibitECC: Console.Write("MultibitECC"); break;
+                            case ErrorCorrectionTypes.CRC: Console.Write("CRC"); break;
+                        }
+                        Console.WriteLine();
                         break;
                 }
 
@@ -141,7 +167,7 @@ namespace Kernel.Driver
             return p;
         }
 
-        private static void PrintIndex(SMBIOSHeader* hdr, byte index)
+        private static void PrintIndex(SMBIOSHeader* hdr, byte index, bool ignoreSpace = false)
         {
             byte* p = (byte*)hdr;
             p += hdr->Length;
@@ -151,7 +177,13 @@ namespace Kernel.Driver
                 while (*p++ != 0) ;
                 count++;
             }
-            while (*p != 0) Console.Write((char)*p++);
+            while (*p != 0) 
+            {
+                char c;
+                c = (char)*p++;
+                if (ignoreSpace && c == ' ') continue;
+                Console.Write(c);
+            } Console.Write((char)*p++);
             Console.Write(' ');
         }
     }
