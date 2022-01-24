@@ -8,6 +8,8 @@ unsafe class Program
 {
     static void Main() { }
 
+    //Minimum system requirement:
+    //1GiB of RAM
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info,byte* File,IntPtr Modules)
     {
