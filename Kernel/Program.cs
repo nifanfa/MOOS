@@ -6,22 +6,26 @@ using System.Runtime;
 
 unsafe class Program
 {
-    public const int ImageBase = 0x110000; //Do not modify
-
     static void Main() { }
 
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* info)
+    static void Main(MultibootInfo* Info,byte* File,IntPtr Modules)
     {
         #region Initializations
-        DOSHeader* doshdr = (DOSHeader*)ImageBase;
-        NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
-        SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
-        IntPtr moduleSeg = IntPtr.Zero;
-        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
+        if (File != null) 
         {
-            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
-            Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
+            DOSHeader* doshdr = (DOSHeader*)File;
+            NtHeaders64* nthdr = (NtHeaders64*)(File + doshdr->e_lfanew);
+            SectionHeader* sections = ((SectionHeader*)(File + doshdr->e_lfanew + sizeof(NtHeaders64)));
+            IntPtr moduleSeg = IntPtr.Zero;
+            for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
+            {
+                if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
+                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), File + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+            }
+            delegate*<void*, byte*, IntPtr, void> entry = (delegate*<void*, byte*, IntPtr, void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
+            entry(Info, null, moduleSeg);
+            return;
         }
 
         //                 10MiB                 512MiB                1MiB
@@ -31,11 +35,11 @@ unsafe class Program
             Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
 
-        StartupCodeHelpers.InitialiseRuntime(moduleSeg);
+        StartupCodeHelpers.InitialiseRuntime(Modules);
         #endregion
 
         PageTable.Initialise();
-        VBE.Initialise((VBEInfo*)info->VBEInfo);
+        VBE.Initialise((VBEInfo*)Info->VBEInfo);
         Console.Setup();
         IDT.Disable();
         GDT.Initialise();
