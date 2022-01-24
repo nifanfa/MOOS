@@ -258,9 +258,7 @@ Main:
     add rax,rcx
     mov rcx,[multiboot_pointer]
     call rax
-    cli
-    hlt
-    jmp $
+    jmp die
 
 ;64KB Entry Point
 times 0x10000-($-$$)db 0
