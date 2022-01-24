@@ -89,24 +89,12 @@ namespace Kernel.Driver
         {
             public byte Location;
             public byte Use;
-            public ErrorCorrectionTypes MemoryErrorCorrection;
+            public byte MemoryErrorCorrection;
             public uint MaximumCapacity;
             public ushort MemoryErrorInformationHandle;
             public ushort NumberofMemoryDevices;
             public ulong ExtendedMaximumCapacity;
         }
-
-        public enum ErrorCorrectionTypes : byte 
-        {
-            Other = 0x01,
-            Unknown = 0x02,
-            None = 0x03,
-            Parity = 0x04,
-            SinglebitECC = 0x05,
-            MultibitECC = 0x06,
-            CRC = 0x07,
-        }
-
 
         public static void Initialise()
         {
@@ -115,10 +103,10 @@ namespace Kernel.Driver
             Console.WriteLine("SMBIOS Entry Found");
 
             SMBIOSEntryPoint* entry = (SMBIOSEntryPoint*)p;
-            InfoEntries(entry);
+            NewMethod(entry);
         }
 
-        private static byte* InfoEntries(SMBIOSEntryPoint* entry)
+        private static byte* NewMethod(SMBIOSEntryPoint* entry)
         {
             byte* p = (byte*)entry->TableAddress;
             while ((uint)p < (entry->TableAddress + entry->TableLength))
@@ -133,7 +121,7 @@ namespace Kernel.Driver
                         PrintIndex(hdr, pinfo->PartNumber);
                         PrintIndex(hdr, pinfo->SocketDesignation);
                         PrintIndex(hdr, pinfo->ProcessorManufacturer);
-                        Console.Write(" Speed: ");
+                        Console.Write("Speed: ");
                         Console.Write(((uint)pinfo->CurrentSpeed).ToString());
                         Console.Write("Mhz ");
                         Console.WriteLine();
@@ -142,20 +130,10 @@ namespace Kernel.Driver
                         PhysicalMemoryArray* minfo = (PhysicalMemoryArray*)((byte*)hdr + sizeof(SMBIOSHeader));
                         Console.Write("Installed RAM: ");
                         Console.Write((minfo->MaximumCapacity + minfo->ExtendedMaximumCapacity).ToString());
-                        Console.WriteLine("MiB"); 
-                        Console.Write("Number of Memory Devices: ");
-                        Console.WriteLine(((uint)minfo->NumberofMemoryDevices).ToString());
-                        Console.Write("Memory Correction: ");
-                        switch (minfo->MemoryErrorCorrection) 
-                        {
-                            case ErrorCorrectionTypes.Other: Console.WriteLine("Other"); break;
-                            case ErrorCorrectionTypes.Unknown: Console.WriteLine("Unknown"); break;
-                            case ErrorCorrectionTypes.None: Console.WriteLine("None"); break;
-                            case ErrorCorrectionTypes.Parity: Console.WriteLine("Parity"); break;
-                            case ErrorCorrectionTypes.SinglebitECC: Console.WriteLine("SinglebitECC"); break;
-                            case ErrorCorrectionTypes.MultibitECC: Console.WriteLine("MultibitECC"); break;
-                            case ErrorCorrectionTypes.CRC: Console.WriteLine("CRC"); break;
-                        }
+                        Console.Write('M');
+                        Console.Write('i');
+                        Console.Write('B');
+                        Console.WriteLine();
                         break;
                 }
 
@@ -166,7 +144,7 @@ namespace Kernel.Driver
             return p;
         }
 
-        private static void PrintIndex(SMBIOSHeader* hdr, byte index, bool ignoreSpace = false)
+        private static void PrintIndex(SMBIOSHeader* hdr, byte index)
         {
             byte* p = (byte*)hdr;
             p += hdr->Length;
@@ -176,13 +154,7 @@ namespace Kernel.Driver
                 while (*p++ != 0) ;
                 count++;
             }
-            while (*p != 0) 
-            {
-                char c;
-                c = (char)*p++;
-                if (ignoreSpace && c == ' ') continue;
-                Console.Write(c);
-            }
+            while (*p != 0) Console.Write((char)*p++);
             Console.Write(' ');
         }
     }

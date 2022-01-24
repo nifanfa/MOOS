@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x01000000 /filealign:0x1000" />
+		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x110000 /filealign:0x1000" />
 	</ItemGroup>
 
 	<ItemGroup>
