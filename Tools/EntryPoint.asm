@@ -171,6 +171,69 @@ ALIGN 4
     dw $ - GDT - 1                    ; 16-bit Size (Limit) of GDT.
     dd GDT                            ; 32-bit Base Address of GDT. (CPU will zero extend to 64-bit)
 
+struc DOSHeader
+        .e_magic: resb 2
+        .e_cblp: resb 2
+        .e_cp: resb 2
+        .e_crlc: resb 2
+        .e_cparhdr: resb 2
+        .e_minalloc: resb 2
+        .e_maxalloc: resb 2
+        .e_ss: resb 2
+        .e_sp: resb 2
+        .e_csum: resb 2
+        .e_ip: resb 2
+        .e_cs: resb 2
+        .e_lfarlc: resb 2
+        .e_ovno: resb 2
+        .e_res1: resb 8
+        .e_oemid: resb 2
+        .e_oeminfo: resb 2
+        .e_res2: resb 20
+        .e_lfanew: resb 4
+endstruc
+
+struc NTHeader
+        .Signature: resb 4
+        .Machine: resb 2
+        .NumberOfSections: resb 2
+        .TimeDateStamp: resb 4
+        .PointerToSymbolTable: resb 4
+        .NumberOfSymbols: resb 4
+        .SizeOfOptionalHeader: resb 2
+        .Characteristics: resb 2
+        .Magic: resb 2
+        .MajorLinkerVersion: resb 1
+        .MinorLinkerVersion: resb 1
+        .SizeOfCode: resb 4
+        .SizeOfInitializedData: resb 4
+        .SizeOfUninitializedData: resb 4
+        .AddressOfEntryPoint: resb 4
+        .BaseOfCode: resb 4
+        .ImageBase: resb 8
+        .SectionAlignment: resb 4
+        .FileAlignment: resb 4
+        .MajorOperatingSystemVersion: resb 2
+        .MinorOperatingSystemVersion: resb 2
+        .MajorImageVersion: resb 2
+        .MinorImageVersion: resb 2
+        .MajorSubsystemVersion: resb 2
+        .MinorSubsystemVersion: resb 2
+        .Win32VersionValue: resb 4
+        .SizeOfImage: resb 4
+        .SizeOfHeaders: resb 4
+        .CheckSum: resb 4
+        .Subsystem: resb 2
+        .DllCharacteristics: resb 2
+        .SizeOfStackReserve: resb 8
+        .SizeOfStackCommit: resb 8
+        .SizeOfHeapReserve: resb 8
+        .SizeOfHeapCommit: resb 8
+        .LoaderFlags: resb 4
+        .NumberOfRvaAndSizes: resb 4
+        .Tables: resb 128
+endstruc
+
 [BITS 64]      
 Main:
     mov ax, 0x0010
@@ -183,15 +246,15 @@ Main:
     mov rsp,KERNEL_STACK
     mov rbp,rsp
     
-    ;Get address of EntryPoint from PE Header
     xor rbx,rbx
     xor rax,rax
     xor rcx,rcx
-    mov ebx,[EndOfEntryPoint+60]
-    mov eax,EndOfEntryPoint
+    ;Get address of EntryPoint from PE Header
+    mov ebx,[EXE+DOSHeader.e_lfanew]
+    mov eax,EXE
     add eax,ebx
-    mov ecx,[eax+40] 
-    mov rax,EndOfEntryPoint
+    mov ecx,[eax+NTHeader.AddressOfEntryPoint] 
+    mov rax,EXE
     add rax,rcx
     mov rcx,[multiboot_pointer]
     call rax
@@ -201,5 +264,5 @@ Main:
 
 ;64KB Entry Point
 times 0x10000-($-$$)db 0
-EndOfEntryPoint:
+EXE:
     
