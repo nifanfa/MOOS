@@ -6,41 +6,36 @@ using System.Runtime;
 
 unsafe class Program
 {
+    public const int ImageBase = 0x110000; //Do not modify
+
     static void Main() { }
 
-    //Minimum system requirement: 512MiB of RAM
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info, int EndOfEntryPoint,IntPtr Module)
+    static void Main(MultibootInfo* info)
     {
-        #region Loader
-        if (EndOfEntryPoint != 0)
-        {
-            PageTable.Initialise();
-            DOSHeader* doshdr = (DOSHeader*)EndOfEntryPoint;
-            NtHeaders64* nthdr = (NtHeaders64*)(EndOfEntryPoint + doshdr->e_lfanew);
-            SectionHeader* sections = ((SectionHeader*)(EndOfEntryPoint + doshdr->e_lfanew + sizeof(NtHeaders64)));
-            IntPtr moduleSeg = IntPtr.Zero;
-            for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
-            {
-                if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
-                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), (void*)(EndOfEntryPoint + sections[i].PointerToRawData), sections[i].SizeOfRawData);
-            }
-            delegate* <MultibootInfo*, int, IntPtr, void> entry = (delegate*<MultibootInfo*, int, IntPtr, void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
-            entry(Info, 0, moduleSeg);
-            return;
-        }
-        #endregion
-
         #region Initializations
-        //32MiB - 512MiB
-        for (uint i = 1024 * 1024 * 32; i < 1024 * 1024 * 512; i += 1024 * 1024)
+        DOSHeader* doshdr = (DOSHeader*)ImageBase;
+        NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
+        SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
+        IntPtr moduleSeg = IntPtr.Zero;
+        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
         {
+            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
+            Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
+        }
+
+        //                 10MiB                 512MiB                1MiB
+        for (uint i = 1024 * 1024 * 10; i < 1024 * 1024 * 512; i += 1024 * 1024)
+        {
+            //                                      1MiB / 4KiB
             Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
-        StartupCodeHelpers.InitialiseRuntime(Module);
+
+        StartupCodeHelpers.InitialiseRuntime(moduleSeg);
         #endregion
 
-        VBE.Initialise((VBEInfo*)Info->VBEInfo);
+        PageTable.Initialise();
+        VBE.Initialise((VBEInfo*)info->VBEInfo);
         Console.Setup();
         IDT.Disable();
         GDT.Initialise();
