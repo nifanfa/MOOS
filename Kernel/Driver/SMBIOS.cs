@@ -133,7 +133,7 @@ namespace Kernel.Driver
                         PrintIndex(hdr, pinfo->PartNumber);
                         PrintIndex(hdr, pinfo->SocketDesignation);
                         PrintIndex(hdr, pinfo->ProcessorManufacturer);
-                        Console.Write(", Speed: ");
+                        Console.Write(" Speed: ");
                         Console.Write(((uint)pinfo->CurrentSpeed).ToString());
                         Console.Write("Mhz ");
                         Console.WriteLine();
@@ -142,21 +142,20 @@ namespace Kernel.Driver
                         PhysicalMemoryArray* minfo = (PhysicalMemoryArray*)((byte*)hdr + sizeof(SMBIOSHeader));
                         Console.Write("Installed RAM: ");
                         Console.Write((minfo->MaximumCapacity + minfo->ExtendedMaximumCapacity).ToString());
-                        Console.Write("MiB"); 
-                        Console.Write(", Number of Memory Devices: ");
-                        Console.Write(((uint)minfo->NumberofMemoryDevices).ToString());
-                        Console.Write(", Memory Correction:");
+                        Console.WriteLine("MiB"); 
+                        Console.Write("Number of Memory Devices: ");
+                        Console.WriteLine(((uint)minfo->NumberofMemoryDevices).ToString());
+                        Console.Write("Memory Correction: ");
                         switch (minfo->MemoryErrorCorrection) 
                         {
-                            case ErrorCorrectionTypes.Other: Console.Write("Other"); break;
-                            case ErrorCorrectionTypes.Unknown: Console.Write("Unknown"); break;
-                            case ErrorCorrectionTypes.None: Console.Write("None"); break;
-                            case ErrorCorrectionTypes.Parity: Console.Write("Parity"); break;
-                            case ErrorCorrectionTypes.SinglebitECC: Console.Write("SinglebitECC"); break;
-                            case ErrorCorrectionTypes.MultibitECC: Console.Write("MultibitECC"); break;
-                            case ErrorCorrectionTypes.CRC: Console.Write("CRC"); break;
+                            case ErrorCorrectionTypes.Other: Console.WriteLine("Other"); break;
+                            case ErrorCorrectionTypes.Unknown: Console.WriteLine("Unknown"); break;
+                            case ErrorCorrectionTypes.None: Console.WriteLine("None"); break;
+                            case ErrorCorrectionTypes.Parity: Console.WriteLine("Parity"); break;
+                            case ErrorCorrectionTypes.SinglebitECC: Console.WriteLine("SinglebitECC"); break;
+                            case ErrorCorrectionTypes.MultibitECC: Console.WriteLine("MultibitECC"); break;
+                            case ErrorCorrectionTypes.CRC: Console.WriteLine("CRC"); break;
                         }
-                        Console.WriteLine();
                         break;
                 }
 
