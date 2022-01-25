@@ -98,9 +98,14 @@ namespace Kernel.Driver
 
         public static void Initialise()
         {
-            byte* p = (byte*)0xF0000;
-            while (*(uint*)p != 0x5F4D535F) p++;
-            Console.WriteLine("SMBIOS Entry Found");
+            int p = 0xF0000;
+            while (*(uint*)p != 0x5F4D535F && p < 0xFFFFF) p++;
+            if(p>= 0xFFFFF) 
+            {
+                Console.WriteLine("[SMBIOS]: Entry not found!");
+                return;
+            }
+            Console.WriteLine("[SMBIOS]: Entry found!");
 
             SMBIOSEntryPoint* entry = (SMBIOSEntryPoint*)p;
             NewMethod(entry);
