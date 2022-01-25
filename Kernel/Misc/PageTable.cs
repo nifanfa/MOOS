@@ -12,7 +12,7 @@
 
         internal static void Initialise()
         {
-            PML4 = (ulong*)((ulong)Platform.kmalloc(1048576+0x1000) & 0xFFFFFFFFFFFFF000);
+            PML4 = (ulong*)((ulong)Allocator.Allocate(1048576+0x1000) & 0xFFFFFFFFFFFFF000);
 
             Native.Stosb(PML4, 0x00, 4096);
 

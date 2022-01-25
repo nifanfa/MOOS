@@ -27,7 +27,7 @@ namespace System
         public void Dispose()
         {
             var obj = this;
-            Platform.Free(Unsafe.As<object, IntPtr>(ref obj));
+            Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
         }
     }
 }

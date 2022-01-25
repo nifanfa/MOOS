@@ -45,7 +45,7 @@ namespace Kernel.NET
                 {
                     if (data[0] == 8)
                     {
-                        byte* p = (byte*)Platform.kmalloc((ulong)length);
+                        byte* p = (byte*)Allocator.Allocate((ulong)length);
                         Native.Movsb(p, data, (ulong)length);
                         p[0] = 0;
                         *(ushort*)(p + 2) = 0;
@@ -59,7 +59,7 @@ namespace Kernel.NET
                             hdr->SourceIP[3]
                         };
                         SendPacket(srcIP, 1, p, length);
-                        Platform.kfree((IntPtr)p);
+                        Allocator.Free((IntPtr)p);
                     }
                 }
                 else if (hdr->Protocol == (byte)IPv4Protocol.UDP)
@@ -75,7 +75,7 @@ namespace Kernel.NET
 
         public static void SendPacket(byte[] DestIP, byte Protocol, byte* Data, int Length)
         {
-            IPv4Header* hdr = (IPv4Header*)Platform.kmalloc((ulong)(sizeof(IPv4Header) + Length));
+            IPv4Header* hdr = (IPv4Header*)Allocator.Allocate((ulong)(sizeof(IPv4Header) + Length));
             hdr->VersionAndIHL = 0x45;
             hdr->TotalLength = Ethernet.SwapLeftRight((uint)(sizeof(IPv4Header) + Length));
             hdr->TimeToLive = 255;
@@ -92,7 +92,7 @@ namespace Kernel.NET
             Native.Movsb(((byte*)hdr) + sizeof(IPv4Header), Data, (ulong)Length);
             byte[] MAC = ARP.Lookup(DestIP);
             Ethernet.SendPacket(MAC, (ushort)Ethernet.EthernetType.IPv4, hdr, sizeof(IPv4Header) + Length);
-            Platform.kfree((IntPtr)hdr);
+            Allocator.Free((IntPtr)hdr);
         }
 
         public static ushort CalculateChecksum(byte* addr, int count)

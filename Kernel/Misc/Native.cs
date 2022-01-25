@@ -29,22 +29,10 @@ static unsafe class Native
     public static extern void Stosd(void* p, uint value, ulong count);
 
     [DllImport("*")]
-    public static extern IntPtr kmalloc(ulong size);
-
-    [DllImport("*")]
     public extern static unsafe void Stosb(void* p, byte value, ulong count);
 
     [DllImport("*")]
-    public static extern IntPtr krealloc(IntPtr ptr, ulong newSize);
-
-    [DllImport("*")]
     public extern static void Movsd(uint* dest, uint* source, ulong count);
-
-    [DllImport("*")]
-    public static extern IntPtr kcalloc(ushort num, ushort size);
-
-    [DllImport("*")]
-    public static extern void kfree(IntPtr ptr);
 
     [DllImport("*")]
     public static extern void Load_GDT(ref GDT.GDTDescriptor gdtr);

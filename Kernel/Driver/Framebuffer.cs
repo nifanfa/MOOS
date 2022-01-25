@@ -112,8 +112,8 @@ namespace Kernel
         {
             Width = XRes;
             Height = YRes;
-            FirstBuffer = (uint*)Platform.kmalloc((ulong)(XRes * YRes * 4));
-            SecondBuffer = (uint*)Platform.kmalloc((ulong)(XRes * YRes * 4));
+            FirstBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
+            SecondBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
 
             if(VBE.Info->PhysBase == 0) 
             {

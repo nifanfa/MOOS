@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Kernel.NET;
+using System;
 using System.Runtime;
-
+using System.Runtime.InteropServices;
 
 abstract class Allocator
 {
@@ -33,8 +34,7 @@ abstract class Allocator
 
         return true;
     }
-
-
+    
     [RuntimeExport("liballoc_lock")]
     public static int Lock()
     {
@@ -138,4 +138,30 @@ abstract class Allocator
 
     public static ulong Allocations
         => (ulong)allocations;
+
+    internal static unsafe void ZeroMemory(IntPtr data, ulong size)
+    {
+        Native.Stosb((void*)data, 0, size);
+    }
+
+    internal static void Free(IntPtr intPtr)
+    {
+        kfree(intPtr);
+    }
+
+    internal static unsafe IntPtr Allocate(ulong size)
+    {
+        return kmalloc(size);
+    }
+
+    internal static unsafe void CopyMemory(IntPtr dst, IntPtr src, ulong size)
+    {
+        Native.Movsb((void*)dst, (void*)src, size);
+    }
+
+    [DllImport("*")]
+    public static extern IntPtr kmalloc(ulong size);
+
+    [DllImport("*")]
+    public static extern void kfree(IntPtr ptr);
 }
