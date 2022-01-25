@@ -126,15 +126,6 @@ namespace Kernel.Driver
                         Console.Write("Mhz ");
                         Console.WriteLine();
                         break;
-                    case HeaderTypes.PhysicalMemoryArray:
-                        PhysicalMemoryArray* minfo = (PhysicalMemoryArray*)((byte*)hdr + sizeof(SMBIOSHeader));
-                        Console.Write("Installed RAM: ");
-                        Console.Write((minfo->MaximumCapacity + minfo->ExtendedMaximumCapacity).ToString());
-                        Console.Write('M');
-                        Console.Write('i');
-                        Console.Write('B');
-                        Console.WriteLine();
-                        break;
                 }
 
                 while (*(ushort*)p != 0) p++;
