@@ -51,6 +51,9 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
+        Console.WriteLine("Enter GUI in 2 seconds");
+        PIT.Wait(2000);
+
         VBEInfo* vbe = (VBEInfo*)Info->VBEInfo;
         if (vbe->PhysBase != 0)
         {
