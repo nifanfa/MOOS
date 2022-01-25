@@ -26,9 +26,6 @@ MULTIBOOT_HEADER_MAGIC   equ  0x1BADB002
 MULTIBOOT_HEADER_FLAGS   equ  MULTIBOOT_AOUT_KLUDGE|MULTIBOOT_ALIGN|MULTIBOOT_MEMINFO|MULTIBOOT_VBE_MODE
 CHECKSUM                 equ  -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
 
-KERNEL_STACK             equ  0x00200000  
-;Stack starts at the 2mb address & grows down
-
 _start:
         xor    eax, eax                ;Clear eax and ebx in the event
         xor    ebx, ebx                ;we are not loaded by GRUB.
@@ -53,7 +50,7 @@ multiboot_header:
         dd 32
 
 multiboot_entry:
-        mov    esp, KERNEL_STACK       ;Setup the stack
+        mov    esp, STACKTOP       ;Setup the stack
         push   0                       ;Reset EFLAGS
         popf
 
@@ -83,10 +80,6 @@ IDT:
 ; es:edi    Should point to a valid page-aligned 16KiB buffer, for the PML4, PDPT, PD and a PT.
 ; ss:esp    Should point to memory that can be used as a small (1 uint32_t) stack
 
-P2_TABLE    equ 0x6400000
-P3_TABLE    equ 0x6401000
-P4_TABLE    equ 0x6402000
- 
 Enter_Long_Mode:
     mov edi, P4_TABLE
     ; Zero out the 16KiB buffer.
@@ -243,7 +236,7 @@ Main:
     mov gs, ax
     mov ss, ax
 
-    mov rsp,KERNEL_STACK
+    mov rsp,STACKTOP
     mov rbp,rsp
     
     mov ebx,[EXE+DOSHeader.e_lfanew]
@@ -254,7 +247,21 @@ Main:
     mov rcx,[multiboot_pointer]
     call rax
     jmp die
-    
+
+align 4096
+
+STACKBOTTOM:
+resb 4096 
+STACKTOP:
+
+P4_TABLE:
+resb 4096
+P3_TABLE:
+resb 4096
+P2_TABLE:
+resb 4096
+
 times 0x10000-($-$$)db 0xFF
+
 EXE:
     
