@@ -8,10 +8,12 @@
             Huge = 0x200000
         }
 
-        public static ulong* PML4 = (ulong*)0x300000;
+        public static ulong* PML4;
 
         internal static void Initialise()
         {
+            PML4 = (ulong*)((ulong)Platform.kmalloc(1048576+0x1000) & 0xFFFFFFFFFFFFF000);
+
             Native.Stosb(PML4, 0x00, 4096);
 
             ulong i = 0;
