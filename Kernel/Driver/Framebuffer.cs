@@ -58,30 +58,35 @@ namespace Kernel
 
         public static void Clear(uint Color)
         {
-            Native.Stosd(FirstBuffer, Color, (ulong)(Width * Height));
+            Native.Stosd(TripleBuffered ? FirstBuffer : VideoMemory, Color, (ulong)(Width * Height));
         }
 
         public static void DrawPoint(int X, int Y, uint Color)
         {
             if (X > 0 && Y > 0 && X < Width && Y < Height)
             {
-                FirstBuffer[Width * Y + X] = Color;
+                if(TripleBuffered)
+                    FirstBuffer[Width * Y + X] = Color;
+                else
+                    VideoMemory[Width * Y + X] = Color;
             }
-            if (!_TripleBuffered) Update();
         }
 
         public static uint GetPoint(int X, int Y)
         {
             if (X > 0 && Y > 0 && X < Width && Y < Height)
             {
-                return FirstBuffer[Width * Y + X];
+                if (TripleBuffered)
+                    return FirstBuffer[Width * Y + X];
+                else
+                    return VideoMemory[Width * Y + X];
             }
             return 0;
         }
 
         public static void Update()
         {
-            if (_TripleBuffered)
+            if (TripleBuffered)
             {
                 for(int i = 0; i < Width * Height; i++) 
                 {
