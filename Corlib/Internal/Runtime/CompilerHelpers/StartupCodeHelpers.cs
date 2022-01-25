@@ -29,9 +29,9 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Platform.Allocate(size);
+            var data = Allocator.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Platform.ZeroMemory(data, size);
+            Allocator.ZeroMemory(data, size);
             SetEEType(data, pEEType);
 
             return obj;
@@ -46,14 +46,14 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Platform.Allocate(size);
+            var data = Allocator.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Platform.ZeroMemory(data, size);
+            Allocator.ZeroMemory(data, size);
             SetEEType(data, pEEType);
 
             var b = (byte*)data;
             b += sizeof(IntPtr);
-            Platform.CopyMemory((IntPtr)b, (IntPtr)(&length), sizeof(int));
+            Allocator.CopyMemory((IntPtr)b, (IntPtr)(&length), sizeof(int));
 
             return obj;
         }
@@ -122,7 +122,7 @@ namespace Internal.Runtime.CompilerHelpers
 
         internal static unsafe void SetEEType(IntPtr obj, EEType* type)
         {
-            Platform.CopyMemory(obj, (IntPtr)(&type), (ulong)sizeof(IntPtr));
+            Allocator.CopyMemory(obj, (IntPtr)(&type), (ulong)sizeof(IntPtr));
         }
 
         public static unsafe void InitialiseRuntime(IntPtr modulesSeg)
@@ -165,7 +165,7 @@ namespace Internal.Runtime.CompilerHelpers
                 if ((blockAddr & 1) == 1)
                 { // GCStaticRegionConstants.Uninitialized
                     var obj = RhpNewFast((EEType*)new IntPtr(blockAddr & ~(1 | 2)));
-                    var handle = Platform.Allocate((ulong)sizeof(IntPtr));
+                    var handle = Allocator.Allocate((ulong)sizeof(IntPtr));
                     *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
                     *pBlock = handle;
                 }

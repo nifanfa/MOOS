@@ -85,7 +85,7 @@ namespace System
 
             fixed (char* c = &s._firstChar)
             {
-                Platform.CopyMemory((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
+                Allocator.CopyMemory((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
                 c[length] = '\0';
             }
 
