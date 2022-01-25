@@ -111,11 +111,15 @@
         {
             if(Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
-                int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2);
-                Native.Movsb(
-                    (byte*)Framebuffer.VideoMemory + (Framebuffer.Width * Y * 4),
-                    (byte*)Framebuffer.VideoMemory + (Framebuffer.Width * (Y + 16) * 4),
-                    (ulong)(Framebuffer.Width * (Height * 16) * 4)
+                Framebuffer.Copy(
+                    (Framebuffer.Width / 2) - (Width * 8 / 2),
+                    (Framebuffer.Height / 2) - (Height * 16 / 2),
+
+                    (Framebuffer.Width / 2) - (Width * 8 / 2),
+                    (Framebuffer.Height / 2) - (Height * 16 / 2) + 16,
+
+                    Width * 8,
+                    Height * 16
                     );
             }
         }
