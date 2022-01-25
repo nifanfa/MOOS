@@ -86,7 +86,7 @@
 
         private static void WriteFramebuffer(char chr)
         {
-            if (Framebuffer.VideoMemory != null && !Framebuffer.DoubleBuffered)
+            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
                 int X = (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
@@ -109,7 +109,7 @@
 
         private static void MoveUpFramebuffer()
         {
-            if(Framebuffer.VideoMemory != null && !Framebuffer.DoubleBuffered)
+            if(Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
                 int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2);
                 Native.Movsb(
@@ -132,7 +132,7 @@
 
         private static void UpdateCursorFramebuffer()
         {
-            if (Framebuffer.VideoMemory != null && !Framebuffer.DoubleBuffered)
+            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
                 ASC16.DrawChar('_',
                             (Framebuffer.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),

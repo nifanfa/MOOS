@@ -51,9 +51,7 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
-        for (; ; );
-        /*
-        VBEInfo* vbe = (VBEInfo*)info->VBEInfo;
+        VBEInfo* vbe = (VBEInfo*)Info->VBEInfo;
         if (vbe->PhysBase != 0)
         {
             Framebuffer.VideoMemory = (uint*)vbe->PhysBase;
@@ -64,7 +62,7 @@ unsafe class Program
             Framebuffer.Setup();
             Framebuffer.SetVideoMode(800, 600);
         }
-        Framebuffer.DoubleBuffered = true;
+        Framebuffer.TripleBuffered = true;
 
         int[] cursor = new int[]
             {
@@ -100,7 +98,6 @@ unsafe class Program
             Framebuffer.Update();
             FPSMeter.Update();
         }
-        */
     }
 
     private static void DrawCursor(int[] cursor, int x, int y)
