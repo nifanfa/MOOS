@@ -15,7 +15,7 @@ namespace Kernel
         static bool _TripleBuffered = false;
 
         /// <summary>
-        /// Since you enabled DoubleBuffered you have to call Framebuffer.Update() in order to make it display
+        /// Since you enabled TripleBuffered you have to call Framebuffer.Update() in order to make it display
         /// </summary>
         public static bool TripleBuffered 
         {
