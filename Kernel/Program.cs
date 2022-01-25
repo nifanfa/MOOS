@@ -9,7 +9,7 @@ unsafe class Program
     static void Main() { }
 
     //Minimum system requirement:
-    //1GiB of RAM
+    //8MiB of RAM
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info)
     {
@@ -25,7 +25,7 @@ unsafe class Program
             Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ImageBase + sections[i].PointerToRawData, sections[i].SizeOfRawData);
         }
 
-        for (uint i = 1024 * 1024 * 10; i < 1024 * 1024 * 512; i += 1024 * 1024)
+        for (uint i = 1024 * 1024 * 6; i < 1024 * 1024 * 512; i += 1024 * 1024)
         {
             Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
