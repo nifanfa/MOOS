@@ -4,15 +4,31 @@ namespace Kernel
 {
     public static unsafe class Framebuffer
     {
-        public static uint* VideoMemory;
         public static ushort Width;
         public static ushort Height;
-        public static uint* Buffer;
+
+        public static uint* VideoMemory;
+
+        public static uint* FirstBuffer;
+        public static uint* SecondBuffer;
+
+        static bool _TripleBuffered = false;
 
         /// <summary>
         /// Since you enabled DoubleBuffered you have to call Framebuffer.Update() in order to make it display
         /// </summary>
-        public static bool DoubleBuffered = false;
+        public static bool TripleBuffered 
+        {
+            get 
+            {
+                return _TripleBuffered;
+            }
+            set 
+            {
+                Clear(0x0);
+                _TripleBuffered = value;
+            }
+        }
 
         public static void Setup()
         {
@@ -31,15 +47,15 @@ namespace Kernel
 
         public static void Clear(uint Color)
         {
-            Native.Stosd(DoubleBuffered ? Buffer : VideoMemory, Color, (ulong)(Width * Height));
+            Native.Stosd(TripleBuffered ? FirstBuffer : VideoMemory, Color, (ulong)(Width * Height));
         }
 
         public static void DrawPoint(int X, int Y, uint Color)
         {
             if (X > 0 && Y > 0 && X < Width && Y < Height)
             {
-                if(DoubleBuffered)
-                    Buffer[Width * Y + X] = Color;
+                if(TripleBuffered)
+                    FirstBuffer[Width * Y + X] = Color;
                 else
                     VideoMemory[Width * Y + X] = Color;
             }
@@ -47,8 +63,17 @@ namespace Kernel
 
         public static void Update()
         {
-            if(DoubleBuffered)
-                Native.Movsd(VideoMemory, Buffer, (ulong)(Width * Height));
+            if (TripleBuffered)
+            {
+                for(int i = 0; i < Width * Height; i++) 
+                {
+                    if(FirstBuffer[i] != SecondBuffer[i]) 
+                    {
+                        VideoMemory[i] = FirstBuffer[i];
+                    }
+                }
+                Native.Movsd(SecondBuffer, FirstBuffer, (ulong)(Width * Height));
+            }
         }
 
         public static void WriteRegister(ushort IndexValue, ushort DataValue)
@@ -64,7 +89,8 @@ namespace Kernel
         {
             Width = XRes;
             Height = YRes;
-            Buffer = (uint*)Platform.kmalloc((ulong)(XRes * YRes * 4));
+            FirstBuffer = (uint*)Platform.kmalloc((ulong)(XRes * YRes * 4));
+            SecondBuffer = (uint*)Platform.kmalloc((ulong)(XRes * YRes * 4));
 
             if(VBE.Info->PhysBase == 0) 
             {
