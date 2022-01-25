@@ -100,7 +100,7 @@ namespace Kernel.Driver
         {
             byte* p = (byte*)0xF0000;
             while (*(uint*)p != 0x5F4D535F) p++;
-            Console.WriteLine("[SMBIOS]: Entry found!");
+            Console.WriteLine("SMBIOS entry found!");
 
             SMBIOSEntryPoint* entry = (SMBIOSEntryPoint*)p;
             NewMethod(entry);
