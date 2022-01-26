@@ -8,11 +8,20 @@ namespace Internal.Runtime.CompilerHelpers
     //[McgIntrinsics]
     class StartupCodeHelpers
     {
+        [RuntimeExport("RhpFallbackFailFast")]
+        static void RhpFallbackFailFast() { while (true) ; }
+
         [RuntimeExport("RhpReversePInvoke2")]
         static void RhpReversePInvoke2(IntPtr frame) { }
 
         [RuntimeExport("RhpReversePInvokeReturn2")]
         static void RhpReversePInvokeReturn2(IntPtr frame) { }
+
+        [RuntimeExport("RhpReversePInvoke")]
+        static void RhpReversePInvoke(IntPtr frame) { }
+
+        [RuntimeExport("RhpReversePInvokeReturn")]
+        static void RhpReversePInvokeReturn(IntPtr frame) { }
 
         [RuntimeExport("RhpPInvoke")]
         static void RhpPinvoke(IntPtr frame) { }
