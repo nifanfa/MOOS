@@ -5,26 +5,21 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
-		
+
+		<IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+		<IlcInvariantGlobalization>true</IlcInvariantGlobalization>
+		<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
 		<NoStdLib>true</NoStdLib>
 		<NoConfig>true</NoConfig>
 		<RuntimeMetadataVersion>v4.0.30319</RuntimeMetadataVersion>
 		<Optimize>true</Optimize>
+		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
+		<IlcDisableReflection>true</IlcDisableReflection>
 		<IncludePal>true</IncludePal>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-		
 		<IlcSystemModule>Kernel</IlcSystemModule>
-		<EntryPointSymbol>Main</EntryPointSymbol>
-		<LinkerSubsystem>EFI_APPLICATION</LinkerSubsystem>
-		
-		<IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-		<InvariantGlobalization>true</InvariantGlobalization>
-		<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
-		<IlcDisableReflection>true</IlcDisableReflection>
-		<IlcTrimMetadata>true</IlcTrimMetadata>
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,11 +27,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/fixed /safeseh:no /base:0x110000 /filealign:0x1000" />
+		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x1000000 /filealign:0x1000" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-29408-02" />
 	</ItemGroup>
 
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
@@ -47,13 +42,13 @@
 	</Target>
 
 	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
-	
+
 	<Target Name="CopyBinary" AfterTargets="Publish">
-	  <Exec Command="$(MSBuildStartupDirectory)\Tools\nasm.exe -fbin $(MSBuildStartupDirectory)\Tools\EntryPoint.asm -o $(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Exec>
-	  <Exec Command="cmd.exe /c copy /b $(MSBuildProjectDirectory)\$(NativeOutputPath)entry+$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt) $(MSBuildStartupDirectory)\Tools\grub2\boot\kernel"></Exec>
-	  <Delete Files="$(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Delete>
-	  <Exec Command="$(MSBuildStartupDirectory)\Tools\mkisofs.exe -relaxed-filenames -J -R -o $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table $(MSBuildStartupDirectory)\Tools\grub2"></Exec>
-	  <Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 8192 -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -d guest_errors -serial stdio"></Exec>
-  </Target>
+		<Exec Command="$(MSBuildStartupDirectory)\Tools\nasm.exe -fbin $(MSBuildStartupDirectory)\Tools\EntryPoint.asm -o $(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Exec>
+		<Exec Command="cmd.exe /c copy /b $(MSBuildProjectDirectory)\$(NativeOutputPath)entry+$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt) $(MSBuildStartupDirectory)\Tools\grub2\boot\kernel"></Exec>
+		<Delete Files="$(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Delete>
+		<Exec Command="$(MSBuildStartupDirectory)\Tools\mkisofs.exe -relaxed-filenames -J -R -o $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table $(MSBuildStartupDirectory)\Tools\grub2"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 8192 -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -d guest_errors -serial stdio -net nic,model=rtl8139 -net tap,ifname=tap"></Exec>
+	</Target>
 
 </Project>
