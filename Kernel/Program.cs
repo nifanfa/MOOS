@@ -10,8 +10,14 @@ unsafe class Program
 {
     static void Main() { }
 
-    //Minimum system requirement:
-    //64MiB of RAM
+    /*
+     * Minimum system requirement:
+     * 64MiB of RAM
+     * Memory Map:
+     * 0x100000 - 0xEFFFFF -> Load data
+     * 0x1000000 - 0x2000000 -> System
+     * 0x2000000 - ∞ -> Free to use
+     */
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info,IntPtr Mod)
     {
@@ -61,12 +67,14 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
+        /*
         ARP.Initialise();
         Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
         RTL8139.Initialise();
         ARP.Require(Network.Gateway);
 
         for (; ; );
+        */
 
         PIT.Wait(1000);
 
