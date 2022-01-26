@@ -159,12 +159,12 @@ namespace Internal.Runtime.CompilerHelpers
                 if (sections[i].SectionId != 201)   // We only care about GCStaticRegion right now
                     continue;
 
-                InitialiseStatics(sections[i].Start, sections[i].End);
+                InitializeStatics(sections[i].Start, sections[i].End);
                 break;
             }
         }
 
-        static unsafe void InitialiseStatics(IntPtr rgnStart, IntPtr rgnEnd)
+        static unsafe void InitializeStatics(IntPtr rgnStart, IntPtr rgnEnd)
         {
             for (var block = (IntPtr*)rgnStart; block < (IntPtr*)rgnEnd; block++)
             {
