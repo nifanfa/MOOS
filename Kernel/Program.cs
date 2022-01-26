@@ -30,7 +30,7 @@ unsafe class Program
             Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
 
-        StartupCodeHelpers.InitialiseRuntime(moduleSeg);
+        StartupCodeHelpers.InitializeRuntime(moduleSeg);
         #endregion
 
         PageTable.Initialise();
