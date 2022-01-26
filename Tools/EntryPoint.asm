@@ -245,6 +245,7 @@ Main:
     lea rax,[EXE+ebx]
     
     mov rcx,[multiboot_pointer]
+    xor rdx,rdx
     call rax
     jmp die
 

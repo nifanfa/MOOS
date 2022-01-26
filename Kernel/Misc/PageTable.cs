@@ -12,7 +12,9 @@
 
         internal static void Initialise()
         {
-            PML4 = (ulong*)((ulong)Allocator.Allocate(1048576+0x1000) & 0xFFFFFFFFFFFFF000);
+            ulong p = (ulong)Allocator.Allocate(0x100000 + 0x1000);
+            p &= 0xFFFF_FFFF_FFFF_F000;
+            PML4 = (ulong*)p;
 
             Native.Stosb(PML4, 0x00, 4096);
 
@@ -29,8 +31,7 @@
                 Map(i, i);
             }
 
-            void* p = PML4;
-            Native.WriteCR3((ulong)p);
+            Native.WriteCR3(p);
         }
 
         /// <summary>
