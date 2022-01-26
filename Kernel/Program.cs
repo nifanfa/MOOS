@@ -45,7 +45,7 @@ unsafe class Program
         PIT.Initialise();
         PS2Mouse.Initialise();
         ACPI.Initialize();
-        SMBIOS.Initialise();
+        //SMBIOS.Initialise();
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
