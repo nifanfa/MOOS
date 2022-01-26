@@ -32,11 +32,7 @@ namespace System.Runtime.CompilerServices
             context.initialized = 1;
 
             // Run the class constructor.
-            Call<int>(context.cctorMethodAddress);
+            ((delegate*<void>)context.cctorMethodAddress)();
         }
-
-        // This is a special compiler intrinsic that calls method pointed to by pfn.
-        [Intrinsic]
-        public static extern T Call<T>(IntPtr pfn);
     }
 }
