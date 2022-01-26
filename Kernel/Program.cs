@@ -1,36 +1,46 @@
 ﻿using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using Kernel.Driver;
+using Kernel.NET;
 using System;
 using System.Runtime;
+using System.Net;
 
 unsafe class Program
 {
     static void Main() { }
 
     //Minimum system requirement:
-    //8MiB of RAM
+    //64MiB of RAM
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info)
+    static void Main(MultibootInfo* Info,IntPtr Mod)
     {
         #region Initializations
-        byte* ImageBase = (byte*)0x110000; //Do not modify it
-        DOSHeader* doshdr = (DOSHeader*)ImageBase;
-        NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
-        SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
-        IntPtr moduleSeg = IntPtr.Zero;
-        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
+        if (Mod == IntPtr.Zero) 
         {
-            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
-            Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ImageBase + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+            byte* ImageBase = (byte*)0x110000; //Do not modify it
+            DOSHeader* doshdr = (DOSHeader*)ImageBase;
+            NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
+            SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
+            IntPtr moduleSeg = IntPtr.Zero;
+            for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
+            {
+                if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
+                Native.Stosb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), 0, sections[i].SizeOfRawData);
+                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ImageBase + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+            }
+            delegate*<MultibootInfo*, IntPtr, void> p = (delegate*<MultibootInfo*, IntPtr, void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
+            p(Info, moduleSeg);
+            return;
         }
+        
 
-        for (uint i = 1024 * 1024 * 6; i < 1024 * 1024 * 512; i += 1024 * 1024)
+        for (uint i = 1024 * 1024 * 32; i < 1024 * 1024 * 512; i += 1024 * 1024)
         {
             Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
 
-        StartupCodeHelpers.InitializeRuntime(moduleSeg);
+        StartupCodeHelpers.InitializeRuntime(Mod);
         #endregion
 
         PageTable.Initialise();
@@ -50,6 +60,11 @@ unsafe class Program
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
+
+        ARP.Initialise();
+        Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
+        RTL8139.Initialise();
+        ARP.Require(Network.Gateway);
 
         for (; ; );
 
