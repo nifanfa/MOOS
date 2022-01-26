@@ -46,5 +46,15 @@ namespace System
 
         public static IntPtr operator +(IntPtr a, ulong b)
             => new IntPtr((byte*)a._value + b);
+
+        public static bool operator == (IntPtr a,IntPtr b) 
+        {
+            return a._value == b._value;
+        }
+
+        public static bool operator !=(IntPtr a, IntPtr b)
+        {
+            return !(a._value == b._value);
+        }
     }
 }
