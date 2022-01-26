@@ -104,6 +104,7 @@ public static class IDT
             case 16: Console.WriteLine("COPR ERROR"); break;
             default: Console.WriteLine(" UNKNOWN EXCEPTION"); break;
         }
+        while (true) ;
     }
 
     [RuntimeExport("irq_handler")]
