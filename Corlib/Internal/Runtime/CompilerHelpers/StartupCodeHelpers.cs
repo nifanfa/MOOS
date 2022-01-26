@@ -1,11 +1,12 @@
 ﻿using Internal.Runtime.CompilerServices;
+using Kernel;
 using System;
 using System.Runtime;
 using System.Runtime.InteropServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
-    //[McgIntrinsics]
+    [McgIntrinsics]
     class StartupCodeHelpers
     {
         [RuntimeExport("RhpFallbackFailFast")]
@@ -66,14 +67,6 @@ namespace Internal.Runtime.CompilerHelpers
 
             return obj;
         }
-
-        //[RuntimeExport("RhpAssignRef")]
-        //static unsafe void RhpAssignRef(ref object address, object obj) {
-        //	var pAddr = (void**)Unsafe.AsPointer(ref address);
-        //	var pObj = (void*)Unsafe.As<object, IntPtr>(ref obj);
-        //	*pAddr = pObj;
-        //	//address = obj;
-        //}
 
         [RuntimeExport("RhpAssignRef")]
         static unsafe void RhpAssignRef(void** address, void* obj)
@@ -156,11 +149,24 @@ namespace Internal.Runtime.CompilerHelpers
 
             for (int i = 0; i < header->NumberOfSections; i++)
             {
-                if (sections[i].SectionId != 201)   // We only care about GCStaticRegion right now
-                    continue;
+                if (sections[i].SectionId == (int)ReadyToRunSectionType.GCStaticRegion)
+                    InitializeStatics(sections[i].Start, sections[i].End);
 
-                InitializeStatics(sections[i].Start, sections[i].End);
-                break;
+                if (sections[i].SectionId == (int)ReadyToRunSectionType.EagerCctor)
+                    InitializeEagerClassConstructorsForModule(sections[i].Start, sections[i].End);
+            }
+        }
+
+        static unsafe void InitializeEagerClassConstructorsForModule(IntPtr rgnStart, IntPtr rgnEnd) 
+        {
+            RunEagerClassConstructors(rgnStart, rgnEnd);
+        }
+
+        private static unsafe void RunEagerClassConstructors(IntPtr cctorTableStart, IntPtr cctorTableEnd)
+        {
+            for (IntPtr* tab = (IntPtr*)cctorTableStart; tab < (IntPtr*)cctorTableEnd; tab++)
+            {
+                ((delegate*<void>)*tab)();
             }
         }
 
@@ -171,38 +177,14 @@ namespace Internal.Runtime.CompilerHelpers
                 var pBlock = (IntPtr*)*block;
                 var blockAddr = (long)(*pBlock);
 
-                if ((blockAddr & 1) == 1)
+                if ((blockAddr & GCStaticRegionConstants.Uninitialized) == GCStaticRegionConstants.Uninitialized)
                 { // GCStaticRegionConstants.Uninitialized
-                    var obj = RhpNewFast((EEType*)new IntPtr(blockAddr & ~(1 | 2)));
+                    var obj = RhpNewFast((EEType*)new IntPtr(blockAddr & ~(GCStaticRegionConstants.Uninitialized | GCStaticRegionConstants.HasPreInitializedData)));
                     var handle = Allocator.Allocate((ulong)sizeof(IntPtr));
                     *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
                     *pBlock = handle;
                 }
             }
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct ReadyToRunHeader
-        {
-            public uint Signature;  // "RTR"
-            public ushort MajorVersion;
-            public ushort MinorVersion;
-            public uint Flags;
-            public ushort NumberOfSections;
-            public byte EntrySize;
-            public byte EntryType;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct ModuleInfoRow
-        {
-            public int SectionId;
-            public int Flags;
-            public IntPtr Start;
-            public IntPtr End;
-
-            public bool HasEndPointer => !End.Equals(IntPtr.Zero);
-            public int Length => (int)((ulong)End - (ulong)Start);
         }
     }
 }
