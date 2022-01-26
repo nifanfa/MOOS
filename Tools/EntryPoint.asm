@@ -245,7 +245,8 @@ Main:
     lea rax,[EXE+ebx]
     
     mov rcx,[multiboot_pointer]
-    xor rdx,rdx
+    mov rdx,EXE
+    xor r8,r8
     call rax
     jmp die
 
@@ -261,8 +262,6 @@ P3_TABLE:
 resb 4096
 P2_TABLE:
 resb 4096
-
-times 0x10000-($-$$)db 0xFF
 
 EXE:
     

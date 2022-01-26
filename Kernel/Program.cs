@@ -14,39 +14,37 @@ unsafe class Program
      * Minimum system requirement:
      * 64MiB of RAM
      * Memory Map:
-     * 0x100000 - 0xEFFFFF -> Load data
-     * 0x1000000 - 0x2000000 -> System
-     * 0x2000000 - ∞ -> Free to use
+     * 1MiB  - ???    -> Load data
+     * 32MiB - 48MiB  -> System
+     * 48MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info,IntPtr Mod)
+    static void Main(MultibootInfo* Info, byte* RAW, IntPtr Modules)
     {
         #region Initializations
-        if (Mod == IntPtr.Zero) 
+        if (Modules == IntPtr.Zero) 
         {
-            byte* ImageBase = (byte*)0x110000; //Do not modify it
-            DOSHeader* doshdr = (DOSHeader*)ImageBase;
-            NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
-            SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
+            DOSHeader* doshdr = (DOSHeader*)RAW;
+            NtHeaders64* nthdr = (NtHeaders64*)(RAW + doshdr->e_lfanew);
+            SectionHeader* sections = ((SectionHeader*)(RAW + doshdr->e_lfanew + sizeof(NtHeaders64)));
             IntPtr moduleSeg = IntPtr.Zero;
             for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
             {
                 if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
                 Native.Stosb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), 0, sections[i].SizeOfRawData);
-                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ImageBase + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), RAW + sections[i].PointerToRawData, sections[i].SizeOfRawData);
             }
-            delegate*<MultibootInfo*, IntPtr, void> p = (delegate*<MultibootInfo*, IntPtr, void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
-            p(Info, moduleSeg);
+            delegate*<MultibootInfo*, byte*, IntPtr, void> p = (delegate*<MultibootInfo*, byte*, IntPtr, void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
+            p(Info, null, moduleSeg);
             return;
         }
         
-
-        for (uint i = 1024 * 1024 * 32; i < 1024 * 1024 * 512; i += 1024 * 1024)
+        for (uint i = 1024 * 1024 * 48; i < 1024 * 1024 * 512; i += 1024 * 1024)
         {
             Allocator.AddFreePages((System.IntPtr)(i), 256);
         }
 
-        StartupCodeHelpers.InitializeRuntime(Mod);
+        StartupCodeHelpers.InitializeRuntime(Modules);
         #endregion
 
         PageTable.Initialise();
