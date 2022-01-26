@@ -134,7 +134,7 @@ namespace Internal.Runtime.CompilerHelpers
             Allocator.CopyMemory(obj, (IntPtr)(&type), (ulong)sizeof(IntPtr));
         }
 
-        public static unsafe void InitialiseRuntime(IntPtr modulesSeg)
+        public static unsafe void InitializeRuntime(IntPtr modulesSeg)
         {
             var modules = (IntPtr*)modulesSeg;
 
@@ -145,11 +145,11 @@ namespace Internal.Runtime.CompilerHelpers
                 if (addr.Equals(IntPtr.Zero))
                     break;
 
-                InitialiseModule(addr, i);
+                InitializeModules(addr, i);
             }
         }
 
-        static unsafe void InitialiseModule(IntPtr addr, int index)
+        static unsafe void InitializeModules(IntPtr addr, int index)
         {
             var header = (ReadyToRunHeader*)addr;
             var sections = (ModuleInfoRow*)(header + 1);
