@@ -1,4 +1,5 @@
 ﻿using Kernel.Driver;
+using System.Windows.Forms;
 
 namespace Kernel
 {
@@ -116,6 +117,8 @@ namespace Kernel
             SecondBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
             Native.Stosd(FirstBuffer, 0, (ulong)(XRes * YRes));
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
+            Control.MousePosition.X = XRes / 2;
+            Control.MousePosition.Y = YRes / 2;
 
             if(VBE.Info->PhysBase == 0) 
             {
