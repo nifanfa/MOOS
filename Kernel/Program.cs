@@ -120,10 +120,12 @@ unsafe class Program
 
         for (; ; )
         {
-            Framebuffer.Clear(0x0);
+            Framebuffer.Clear(0xFF323232);
             Form.UpdateAll();
+            /*
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
             ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+            */
             DrawCursor(cursor, Control.MousePosition.X, Control.MousePosition.Y);
             Framebuffer.Update();
             FPSMeter.Update();
