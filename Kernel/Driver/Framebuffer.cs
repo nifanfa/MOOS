@@ -116,7 +116,6 @@ namespace Kernel
             SecondBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
             Native.Stosd(FirstBuffer, 0, (ulong)(XRes * YRes));
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
-            Native.Stosd(VideoMemory, 0, (ulong)(XRes * YRes));
 
             if(VBE.Info->PhysBase == 0) 
             {
