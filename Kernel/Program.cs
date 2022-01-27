@@ -33,7 +33,6 @@ unsafe class Program
             for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
             {
                 if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
-                Native.Stosb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), 0, sections[i].SizeOfRawData);
                 Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), RAW + sections[i].PointerToRawData, sections[i].SizeOfRawData);
             }
             delegate*<MultibootInfo*, byte*, IntPtr, void> p = (delegate*<MultibootInfo*, byte*, IntPtr, void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
