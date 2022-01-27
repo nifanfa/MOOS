@@ -32,7 +32,7 @@ namespace Kernel.GUI
             Title = "Form1";
         }
 
-        public int BarHeight = 20;
+        public int BarHeight = 25;
         public string Title;
 
         bool Move;
@@ -61,7 +61,7 @@ namespace Kernel.GUI
                 Y = Control.MousePosition.Y - OffsetY;
             }
 
-            Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF0078D4);
+            Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF101010);
             ASC16.DrawString("Form1", X + (BarHeight/4), Y - (BarHeight / 2) - (16 / 2), 0xFFFFFFFF);
             Framebuffer.Fill(X, Y, Width, Height, 0xFFFFFFFF);
         }
