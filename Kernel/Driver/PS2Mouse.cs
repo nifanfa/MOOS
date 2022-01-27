@@ -1,14 +1,8 @@
-﻿using static Native;
+﻿using System.Windows.Forms;
+using static Native;
 
 namespace Kernel
 {
-    public enum MouseStatus
-    {
-        Left,
-        Right,
-        None
-    }
-
     public static class PS2Mouse
     {
         private const byte Data = 0x60;
@@ -21,11 +15,6 @@ namespace Kernel
         public static byte[] MData;
         private static int aX;
         private static int aY;
-
-        public static MouseStatus MouseStatus;
-
-        public static int X = 200;
-        public static int Y = 200;
 
         public static int ScreenWidth = 0;
         public static int ScreenHeight = 0;
@@ -59,7 +48,7 @@ namespace Kernel
 
             WriteRegister(0xF2);
 
-            MouseStatus = MouseStatus.None;
+            Control.MouseButtons = MouseButtons.None;
         }
 
         public static void WriteRegister(byte value)
@@ -107,14 +96,14 @@ namespace Kernel
 
                 MData[0] &= 0x07;
 
-                MouseStatus = MouseStatus.None;
+                Control.MouseButtons = MouseButtons.None;
                 if (MData[0] == 0x01)
                 {
-                    MouseStatus = MouseStatus.Left;
+                    Control.MouseButtons = MouseButtons.Left;
                 }
                 if (MData[0] == 0x02)
                 {
-                    MouseStatus = MouseStatus.Right;
+                    Control.MouseButtons = MouseButtons.Right;
                 }
 
                 if (MData[1] > 127)
@@ -127,8 +116,8 @@ namespace Kernel
                 else
                     aY = MData[2];
 
-                X = X + aX;
-                Y = Y - aY;
+                Control.MousePosition.X += aX;
+                Control.MousePosition.Y -= aY;
             }
         }
     }

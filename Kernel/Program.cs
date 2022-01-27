@@ -5,6 +5,8 @@ using Kernel.NET;
 using System;
 using System.Runtime;
 using System.Net;
+using Kernel.GUI;
+using System.Windows.Forms;
 
 unsafe class Program
 {
@@ -88,6 +90,7 @@ unsafe class Program
             Framebuffer.SetVideoMode(800, 600);
         }
         Framebuffer.TripleBuffered = true;
+        Framebuffer.FPSLimitation = 24;
 
         int[] cursor = new int[]
             {
@@ -114,12 +117,16 @@ unsafe class Program
                 0,0,0,0,0,0,0,0,1,1,0,0
             };
 
+        Form.Initialize();
+        new Form(100, 100, 300, 200);
+
         for (; ; )
         {
             Framebuffer.Clear(0x0);
+            Form.UpdateAll();
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
             ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
-            DrawCursor(cursor, PS2Mouse.X, PS2Mouse.Y);
+            DrawCursor(cursor, Control.MousePosition.X, Control.MousePosition.Y);
             Framebuffer.Update();
             FPSMeter.Update();
         }
