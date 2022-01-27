@@ -90,7 +90,6 @@ unsafe class Program
             Framebuffer.SetVideoMode(800, 600);
         }
         Framebuffer.TripleBuffered = true;
-        Framebuffer.FPSLimitation = 24;
 
         int[] cursor = new int[]
             {
