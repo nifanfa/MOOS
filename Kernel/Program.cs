@@ -41,9 +41,9 @@ unsafe class Program
             return;
         }
         
-        for (uint i = 1024 * 1024 * 48; i < 1024 * 1024 * 512; i += 1024 * 1024)
+        for (uint i = 1024 * 1024 * 6; i < 1024 * 1024 * 512; i += 4096)
         {
-            Allocator.AddFreePages((System.IntPtr)(i), 256);
+            Allocator.AddFreePages((IntPtr)i, 1);
         }
 
         StartupCodeHelpers.InitializeRuntime(Modules);
