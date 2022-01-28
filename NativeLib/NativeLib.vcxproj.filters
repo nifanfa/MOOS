@@ -24,7 +24,7 @@
     <ClCompile Include="liballoc.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="nativ.cpp">
+    <ClCompile Include="native.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
