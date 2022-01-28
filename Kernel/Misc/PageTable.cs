@@ -12,8 +12,7 @@
 
         internal static void Initialise()
         {
-            ulong p = (ulong)liballoc.aligned_alloc(0x200000, 0x1000);
-            PML4 = (ulong*)p;
+            PML4 = (ulong*)liballoc.aligned_alloc(0x1000, 0x1000);
 
             Native.Stosb(PML4, 0x00, 4096);
 
@@ -30,7 +29,7 @@
                 Map(i, i);
             }
 
-            Native.WriteCR3(p);
+            Native.WriteCR3((ulong)PML4);
         }
 
         /// <summary>
@@ -71,21 +70,11 @@
             }
             else
             {
-                p = AllocateTable();
+                p = (ulong*)liballoc.aligned_alloc(0x1000, 0x1000);
                 Directory[Entry] = (((ulong)p) & 0x000F_FFFF_FFFF_F000) | 0b11;
             }
 
             return p;
-        }
-
-        private static ulong p = 0;
-
-        public static ulong* AllocateTable()
-        {
-            ulong* r = (PML4 + 4096) + (p * 4096);
-            Native.Stosb(r, 0x00, 4096);
-            p++;
-            return r;
         }
     }
 }
