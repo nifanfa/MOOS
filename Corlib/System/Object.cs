@@ -27,7 +27,7 @@ namespace System
         public void Dispose()
         {
             var obj = this;
-            liballoc.free(Unsafe.As<object, IntPtr>(ref obj));
+            Memory.Free(Unsafe.As<object, IntPtr>(ref obj));
         }
     }
 }
