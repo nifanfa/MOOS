@@ -47,7 +47,7 @@ unsafe class Program
         }
         */
 
-        Memory.Initialize((IntPtr)0x600000);
+        Heap.Initialize((IntPtr)0x600000);
 
         StartupCodeHelpers.InitializeRuntime(Modules);
         #endregion
@@ -69,8 +69,6 @@ unsafe class Program
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
-
-        Console.WriteLine(((ulong)Memory.Allocate(0x1000)).ToStringHex());
 
         for (; ; );
 

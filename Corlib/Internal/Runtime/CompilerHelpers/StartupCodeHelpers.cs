@@ -39,9 +39,9 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Memory.Allocate(size);
+            var data = Heap.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Memory.Zero(data, size);
+            Heap.ZeroMemory(data, size);
             SetEEType(data, pEEType);
 
             return obj;
@@ -56,14 +56,14 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Memory.Allocate(size);
+            var data = Heap.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Memory.Zero(data, size);
+            Heap.ZeroMemory(data, size);
             SetEEType(data, pEEType);
 
             var b = (byte*)data;
             b += sizeof(IntPtr);
-            Memory.Copy((IntPtr)b, (IntPtr)(&length), sizeof(int));
+            Heap.MemoryCopy((IntPtr)b, (IntPtr)(&length), sizeof(int));
 
             return obj;
         }
@@ -124,7 +124,7 @@ namespace Internal.Runtime.CompilerHelpers
 
         internal static unsafe void SetEEType(IntPtr obj, EEType* type)
         {
-            Memory.Copy(obj, (IntPtr)(&type), (ulong)sizeof(IntPtr));
+            Heap.MemoryCopy(obj, (IntPtr)(&type), (ulong)sizeof(IntPtr));
         }
 
         public static unsafe void InitializeRuntime(IntPtr modulesSeg)
@@ -180,7 +180,7 @@ namespace Internal.Runtime.CompilerHelpers
                 if ((blockAddr & GCStaticRegionConstants.Uninitialized) == GCStaticRegionConstants.Uninitialized)
                 { // GCStaticRegionConstants.Uninitialized
                     var obj = RhpNewFast((EEType*)new IntPtr(blockAddr & ~(GCStaticRegionConstants.Uninitialized | GCStaticRegionConstants.HasPreInitializedData)));
-                    var handle = Memory.Allocate((ulong)sizeof(IntPtr));
+                    var handle = Heap.Allocate((ulong)sizeof(IntPtr));
                     *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
                     *pBlock = handle;
                 }
