@@ -6,20 +6,14 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 
-		<IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-		<IlcInvariantGlobalization>true</IlcInvariantGlobalization>
-		<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-		<NoStdLib>true</NoStdLib>
-		<NoConfig>true</NoConfig>
-		<RuntimeMetadataVersion>v4.0.30319</RuntimeMetadataVersion>
 		<Optimize>true</Optimize>
-		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
-		<IlcDisableReflection>true</IlcDisableReflection>
-		<IncludePal>true</IncludePal>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<IlcSystemModule>Kernel</IlcSystemModule>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+
+		<IlcSystemModule>Kernel</IlcSystemModule>
+		<EntryPointSymbol>Main</EntryPointSymbol>
+		<LinkerSubsystem>EFI_APPLICATION</LinkerSubsystem>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,11 +21,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x400000 /filealign:0x1000" />
+		<LinkerArg Include="/fixed /safeseh:no /base:0x400000 /filealign:0x1000" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-29408-02" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
@@ -49,6 +43,34 @@
 		<Delete Files="$(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Delete>
 		<Exec Command="$(MSBuildStartupDirectory)\Tools\mkisofs.exe -relaxed-filenames -J -R -o $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table $(MSBuildStartupDirectory)\Tools\grub2"></Exec>
 		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 8192 -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -d guest_errors -serial stdio"></Exec>
+	</Target>
+
+	<Target Name="RemoveHostConfigurationOptions" BeforeTargets="WriteIlcRspFileForCompilation" DependsOnTargets="PrepareForILLink">
+		<ItemGroup>
+			<RuntimeHostConfigurationOption Remove="@(RuntimeHostConfigurationOption)" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="CustomizeLinkedLibs" BeforeTargets="LinkNative" AfterTargets="SetupOSSpecificProps">
+		<ItemGroup>
+			<LinkerArg Remove="advapi32.lib" />
+			<LinkerArg Remove="bcrypt.lib" />
+			<LinkerArg Remove="crypt32.lib" />
+			<LinkerArg Remove="iphlpapi.lib" />
+			<LinkerArg Remove="kernel32.lib" />
+			<LinkerArg Remove="mswsock.lib" />
+			<LinkerArg Remove="ncrypt.lib" />
+			<LinkerArg Remove="normaliz.lib" />
+			<LinkerArg Remove="ntdll.lib" />
+			<LinkerArg Remove="ole32.lib" />
+			<LinkerArg Remove="oleaut32.lib" />
+			<LinkerArg Remove="secur32.lib" />
+			<LinkerArg Remove="user32.lib" />
+			<LinkerArg Remove="version.lib" />
+			<LinkerArg Remove="ws2_32.lib" />
+			<LinkerArg Remove="$(IlcSdkPath)$(BootstrapperName)$(LibrarySuffix)" />
+			<LinkerArg Remove="$(IlcSdkPath)$(FullRuntimeName)$(LibrarySuffix)" />
+		</ItemGroup>
 	</Target>
 
 </Project>
