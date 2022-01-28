@@ -21,9 +21,6 @@
     <ClCompile Include="io.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="liballoc.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="native.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -32,10 +29,5 @@
     <MASM Include="interrupts_asm.asm">
       <Filter>源文件</Filter>
     </MASM>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="liballoc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
