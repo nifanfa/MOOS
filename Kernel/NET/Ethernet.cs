@@ -35,7 +35,7 @@ namespace Kernel.NET
 
         internal static void SendPacket(byte[] DestMAC, ushort Type, void* Data, int Length)
         {
-            ulong p = (ulong)liballoc.alloc((ulong)(Length + sizeof(EthernetHeader)));
+            ulong p = (ulong)Memory.Allocate((ulong)(Length + sizeof(EthernetHeader)));
             EthernetHeader* hdr = (EthernetHeader*)p;
             hdr->DestMAC[0] = DestMAC[0];
             hdr->DestMAC[1] = DestMAC[1];

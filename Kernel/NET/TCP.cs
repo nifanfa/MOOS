@@ -613,7 +613,7 @@ namespace Kernel.NET
 
         private static NetBuf* NetAllocBuf()
         {
-            NetBuf* buf = (NetBuf*)liballoc.alloc(2048);
+            NetBuf* buf = (NetBuf*)Memory.Allocate(2048);
             buf->start = (byte*)buf + 256;
             buf->end = (byte*)buf + 256;
             return buf;
