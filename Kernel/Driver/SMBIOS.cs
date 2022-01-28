@@ -120,6 +120,8 @@ namespace Kernel.Driver
                         Console.Write("Speed: ");
                         Console.Write(((ulong)pinfo->CurrentSpeed).ToString());
                         Console.Write("Mhz ");
+                        Console.Write("Number of Core: ");
+                        Console.Write(((ulong)pinfo->CoreCount).ToString());
                         Console.WriteLine();
                         break;
                 }
