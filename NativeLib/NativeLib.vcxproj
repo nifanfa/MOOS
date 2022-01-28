@@ -22,7 +22,7 @@
     <ClCompile Include="interrupts.cpp" />
     <ClCompile Include="io.cpp" />
     <ClCompile Include="liballoc.c" />
-    <ClCompile Include="nativ.cpp" />
+    <ClCompile Include="native.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm" />
