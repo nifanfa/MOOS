@@ -36,7 +36,7 @@ abstract class Allocator
     }
     
     [RuntimeExport("liballoc_lock")]
-    public static int Lock()
+    private static int Lock()
     {
         if (IDT.Initialised)
             IDT.Disable();
@@ -45,7 +45,7 @@ abstract class Allocator
     }
 
     [RuntimeExport("liballoc_unlock")]
-    public static int Unlock()
+    private static int Unlock()
     {
         if (IDT.Initialised)
             IDT.Enable();
@@ -54,7 +54,7 @@ abstract class Allocator
     }
 
     [RuntimeExport("liballoc_alloc")]
-    public static unsafe IntPtr Alloc(ulong pages)
+    private static unsafe IntPtr Alloc(ulong pages)
     {
         var count = 0;
         var index = 0;
@@ -103,7 +103,7 @@ abstract class Allocator
     }
 
     [RuntimeExport("liballoc_free")]
-    public static unsafe int Free(IntPtr ptr, ulong pages)
+    private static unsafe int Free(IntPtr ptr, ulong pages)
     {
         AddFreePages(ptr, (uint)pages);
         allocations--;
@@ -154,14 +154,23 @@ abstract class Allocator
         return kmalloc(size);
     }
 
+    internal static unsafe IntPtr Allocate_Aligned(ulong size, ulong alignment)
+    {
+        ulong offset = alignment - 1 + (ulong)sizeof(void*);
+        void* p1 = (void*)kmalloc(size + offset);
+        void** p2 = (void**)(((ulong)p1 + offset) & ~(alignment - 1));
+        p2[-1] = p1;
+        return (IntPtr)p2;
+    }
+
     internal static unsafe void CopyMemory(IntPtr dst, IntPtr src, ulong size)
     {
         Native.Movsb((void*)dst, (void*)src, size);
     }
 
     [DllImport("*")]
-    public static extern IntPtr kmalloc(ulong size);
+    private static extern IntPtr kmalloc(ulong size);
 
     [DllImport("*")]
-    public static extern void kfree(IntPtr ptr);
+    private static extern void kfree(IntPtr ptr);
 }
