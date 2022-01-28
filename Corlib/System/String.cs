@@ -85,7 +85,7 @@ namespace System
 
             fixed (char* c = &s._firstChar)
             {
-                Allocator.CopyMemory((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
+                liballoc.memcpy((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
                 c[length] = '\0';
             }
 
