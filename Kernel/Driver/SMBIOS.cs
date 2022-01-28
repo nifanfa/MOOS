@@ -118,7 +118,7 @@ namespace Kernel.Driver
                         PrintIndex(hdr, pinfo->SocketDesignation);
                         PrintIndex(hdr, pinfo->ProcessorManufacturer);
                         Console.Write("Speed: ");
-                        Console.Write(((uint)pinfo->CurrentSpeed).ToString());
+                        Console.Write(((ulong)pinfo->CurrentSpeed).ToString());
                         Console.Write("Mhz ");
                         Console.WriteLine();
                         break;
