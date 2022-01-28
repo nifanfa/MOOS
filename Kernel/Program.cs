@@ -70,6 +70,10 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
+        Console.WriteLine(((ulong)Memory.Allocate(0x1000)).ToStringHex());
+
+        for (; ; );
+
         /*
         ARP.Initialise();
         Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));

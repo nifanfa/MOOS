@@ -18,9 +18,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\ModuleHeaders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\RuntimeConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NativeTypeWrappers\NativeArray.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NativeTypeWrappers\NativeReference.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NativeTypeWrappers\NativeString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Stubs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\AppContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Array.cs" />
