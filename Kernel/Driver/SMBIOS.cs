@@ -103,12 +103,8 @@ namespace Kernel.Driver
             Console.WriteLine("SMBIOS entry found!");
 
             SMBIOSEntryPoint* entry = (SMBIOSEntryPoint*)p;
-            NewMethod(entry);
-        }
 
-        private static byte* NewMethod(SMBIOSEntryPoint* entry)
-        {
-            byte* p = (byte*)entry->TableAddress;
+            p = (byte*)entry->TableAddress;
             while ((uint)p < (entry->TableAddress + entry->TableLength))
             {
                 SMBIOSHeader* hdr = (SMBIOSHeader*)p;
@@ -131,8 +127,6 @@ namespace Kernel.Driver
                 while (*(ushort*)p != 0) p++;
                 p += 0x02;
             }
-
-            return p;
         }
 
         private static void PrintIndex(SMBIOSHeader* hdr, byte index)
