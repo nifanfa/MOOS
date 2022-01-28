@@ -42,7 +42,7 @@ unsafe class Program
         
         for (uint i = 1024 * 1024 * 6; i < 1024 * 1024 * 512; i += 4096)
         {
-            Allocator.AddFreePages((IntPtr)i, 1);
+            liballoc.AddFreePages((IntPtr)i, 1);
         }
 
         StartupCodeHelpers.InitializeRuntime(Modules);

@@ -3,7 +3,7 @@ using System;
 using System.Runtime;
 using System.Runtime.InteropServices;
 
-abstract class Allocator
+abstract class liballoc
 {
     unsafe struct BitMap
     {
@@ -139,22 +139,22 @@ abstract class Allocator
     public static ulong Allocations
         => (ulong)allocations;
 
-    internal static unsafe void ZeroMemory(IntPtr data, ulong size)
+    internal static unsafe void zeromemory(IntPtr data, ulong size)
     {
         Native.Stosb((void*)data, 0, size);
     }
 
-    internal static void Free(IntPtr intPtr)
+    internal static void free(IntPtr intPtr)
     {
         kfree(intPtr);
     }
 
-    internal static unsafe IntPtr Allocate(ulong size)
+    internal static unsafe IntPtr alloc(ulong size)
     {
         return kmalloc(size);
     }
 
-    internal static unsafe IntPtr Allocate_Aligned(ulong size, ulong alignment)
+    internal static unsafe IntPtr aligned_alloc(ulong size, ulong alignment)
     {
         ulong offset = alignment - 1 + (ulong)sizeof(void*);
         void* p1 = (void*)kmalloc(size + offset);
@@ -163,7 +163,7 @@ abstract class Allocator
         return (IntPtr)p2;
     }
 
-    internal static unsafe void CopyMemory(IntPtr dst, IntPtr src, ulong size)
+    internal static unsafe void memcpy(IntPtr dst, IntPtr src, ulong size)
     {
         Native.Movsb((void*)dst, (void*)src, size);
     }

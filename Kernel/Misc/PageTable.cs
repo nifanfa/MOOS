@@ -12,7 +12,7 @@
 
         internal static void Initialise()
         {
-            ulong p = (ulong)Allocator.Allocate_Aligned(0x200000, 0x1000);
+            ulong p = (ulong)liballoc.aligned_alloc(0x200000, 0x1000);
             PML4 = (ulong*)p;
 
             Native.Stosb(PML4, 0x00, 4096);
