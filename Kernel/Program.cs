@@ -40,13 +40,6 @@ unsafe class Program
             return;
         }
         
-        /*
-        for (uint i = 1024 * 1024 * 6; i < 1024 * 1024 * 512; i += 4096)
-        {
-            liballoc.AddFreePages((IntPtr)i, 1);
-        }
-        */
-
         Heap.Initialize((IntPtr)0x600000);
 
         StartupCodeHelpers.InitializeRuntime(Modules);
