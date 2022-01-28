@@ -47,6 +47,11 @@ abstract unsafe class Heap
         _Info.Start = Start;
     }
 
+    /// <summary>
+    /// Returns a 4KB aligned address
+    /// </summary>
+    /// <param name="size"></param>
+    /// <returns></returns>
     //If bit63 is set so it means the page is using
     internal static unsafe IntPtr Allocate(ulong size)
     {
@@ -86,15 +91,6 @@ abstract unsafe class Heap
 
         IntPtr ptr = _Info.Start + (i * PageSize);
         return ptr;
-    }
-
-    internal static unsafe IntPtr AlignedAllocate(ulong size, ulong alignment)
-    {
-        ulong offset = alignment - 1 + (ulong)sizeof(void*);
-        void* p1 = (void*)Allocate(size + offset);
-        void** p2 = (void**)(((ulong)p1 + offset) & ~(alignment - 1));
-        p2[-1] = p1;
-        return (IntPtr)p2;
     }
 
     internal static unsafe void MemoryCopy(IntPtr dst, IntPtr src, ulong size)
