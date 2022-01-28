@@ -21,14 +21,10 @@
   <ItemGroup>
     <ClCompile Include="interrupts.cpp" />
     <ClCompile Include="io.cpp" />
-    <ClCompile Include="liballoc.c" />
     <ClCompile Include="native.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="liballoc.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
