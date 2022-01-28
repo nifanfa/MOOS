@@ -6,25 +6,20 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 
+		<IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+		<IlcInvariantGlobalization>true</IlcInvariantGlobalization>
+		<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
 		<NoStdLib>true</NoStdLib>
 		<NoConfig>true</NoConfig>
 		<RuntimeMetadataVersion>v4.0.30319</RuntimeMetadataVersion>
 		<Optimize>true</Optimize>
+		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
+		<IlcDisableReflection>true</IlcDisableReflection>
 		<IncludePal>true</IncludePal>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-
 		<IlcSystemModule>Kernel</IlcSystemModule>
-		<EntryPointSymbol>Main</EntryPointSymbol>
-		<LinkerSubsystem>EFI_APPLICATION</LinkerSubsystem>
-
-		<IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-		<InvariantGlobalization>true</InvariantGlobalization>
-		<IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
-		<IlcDisableReflection>true</IlcDisableReflection>
-		<IlcTrimMetadata>true</IlcTrimMetadata>
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,11 +27,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/fixed /safeseh:no /base:0x400000 /filealign:0x1000" />
+		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x400000 /filealign:0x1000" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-29408-02" />
 	</ItemGroup>
 
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
