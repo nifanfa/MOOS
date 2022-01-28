@@ -13,8 +13,7 @@
         internal static void Initialise()
         {
             PML4 = (ulong*)liballoc.aligned_alloc(0x1000, 0x1000);
-
-            Native.Stosb(PML4, 0x00, 4096);
+            Native.Stosb(PML4, 0, 0x1000);
 
             ulong i = 0;
             //Map the first 4KiB-2MiB
@@ -71,6 +70,8 @@
             else
             {
                 p = (ulong*)liballoc.aligned_alloc(0x1000, 0x1000);
+                Native.Stosb(p, 0, 0x1000);
+
                 Directory[Entry] = (((ulong)p) & 0x000F_FFFF_FFFF_F000) | 0b11;
             }
 
