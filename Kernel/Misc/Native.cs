@@ -5,6 +5,24 @@ using System.Runtime.InteropServices;
 static unsafe class Native
 {
     [DllImport("*")]
+    public static extern void Insd(ushort Port, uint* Data, ulong Count);
+
+    [DllImport("*")]
+    public static extern void Outsd(ushort Port, uint* Data, ulong Count);
+
+    [DllImport("*")]
+    public static extern void Insw(ushort Port, ushort* Data, ulong Count);
+
+    [DllImport("*")]
+    public static extern void Outsw(ushort Port, ushort* Data, ulong Count);
+
+    [DllImport("*")]
+    public static extern void Insb(ushort Port, byte* Data, ulong Count);
+
+    [DllImport("*")]
+    public static extern void Outsb(ushort Port, byte* Data, ulong Count);
+
+    [DllImport("*")]
     public static extern ulong ReadCR2();
 
     [DllImport("*")]
