@@ -2,6 +2,8 @@
 {
     public static class PS2Keyboard
     {
+        public static char Key;
+
         public static char ProcessKey(byte b)
         {
             switch (b)

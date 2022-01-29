@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kernel;
+using System;
 
 abstract unsafe class Heap
 {
@@ -82,7 +83,13 @@ abstract unsafe class Heap
                 if (found) break;
             }
         }
-        if (!found) return IntPtr.Zero;
+        if (!found) 
+        {
+            Console.WriteLine("Out of Memory!");
+            Native.Cli();
+            for (; ; ) Native.Hlt();
+            return IntPtr.Zero; 
+        }
 
         for (ulong k = 0; k < pages; k++)
         {
