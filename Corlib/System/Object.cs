@@ -24,7 +24,7 @@ namespace System
             => "{object}";
 
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             var obj = this;
             Heap.Free(Unsafe.As<object, IntPtr>(ref obj));
