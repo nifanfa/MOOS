@@ -19,13 +19,15 @@ abstract unsafe class Heap
          */
         //p &= ~PageSize; 
         p /= PageSize;
-        ulong pages = _Info.Pages[p] & ~(1UL << 63);
-        if (pages != 0)
+        ulong pages = _Info.Pages[p];
+        if (pages != 0 && pages != PageSignature)
         {
             for (ulong i = 0; i < pages; i++)
                 _Info.Pages[p + i] = 0;
         }
     }
+
+    public const ulong PageSignature = 0x2E61666E6166696E;
 
     /*
      * NumPages = Memory Size / PageSize
@@ -52,7 +54,6 @@ abstract unsafe class Heap
     /// </summary>
     /// <param name="size"></param>
     /// <returns></returns>
-    //If bit63 is set so it means the page is using
     internal static unsafe IntPtr Allocate(ulong size)
     {
         ulong pages = 1;
@@ -67,12 +68,12 @@ abstract unsafe class Heap
 
         for (i = 0; i < NumPages; i++)
         {
-            if (!BitHelpers.IsBitSet(_Info.Pages[i], 63))
+            if (_Info.Pages[i] == 0)
             {
                 found = true;
                 for (ulong k = 0; k < pages; k++)
                 {
-                    if (BitHelpers.IsBitSet(_Info.Pages[i + k], 63))
+                    if (_Info.Pages[i] != 0)
                     {
                         found = false;
                         break;
@@ -85,9 +86,9 @@ abstract unsafe class Heap
 
         for (ulong k = 0; k < pages; k++)
         {
-            _Info.Pages[i + k] |= (1UL << 63);
+            _Info.Pages[i + k] = PageSignature;
         }
-        _Info.Pages[i] |= pages;
+        _Info.Pages[i] = pages;
 
         IntPtr ptr = _Info.Start + (i * PageSize);
         return ptr;
