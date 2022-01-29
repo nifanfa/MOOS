@@ -1,5 +1,6 @@
 ﻿using Internal.Runtime.CompilerServices;
 using Kernel;
+using Kernel.Driver;
 using Kernel.NET;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -123,15 +124,17 @@ public static class IDT
                 else if (c == '\b') Console.Back();
                 else if (c != '?') Console.Write(c);
                 break;
-            case 0x2B:
-                if (RTL8139.IRQ == 0x2B)
-                {
-                    RTL8139.OnInterrupt();
-                }
-                break;
             case 0x2C:
                 PS2Mouse.OnInterrupt();
                 break;
+        }
+        if (irq == RTL8139.IRQ)
+        {
+            RTL8139.OnInterrupt();
+        }
+        if (irq == Intel8254X.IRQ)
+        {
+            Intel8254X.OnInterrupt();
         }
         PIC.EndOfInterrupt(irq);
     }
