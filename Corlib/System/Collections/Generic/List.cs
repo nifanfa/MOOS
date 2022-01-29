@@ -30,5 +30,15 @@ namespace System.Collections.Generic
             _value[Count] = t;
             Count++;
         }
+
+        public void Insert(int index,T item) 
+        {
+            for(int i = Count; i > index; i--) 
+            {
+                _value[i] = _value[i - 1];
+            }
+            _value[index] = item;
+            Count++;
+        }
     }
 }
