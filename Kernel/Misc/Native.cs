@@ -75,4 +75,7 @@ static unsafe class Native
 
     [DllImport("*")]
     public extern static void Movsb(void* dest, void* source, ulong count);
+
+    [DllImport("*")]
+    public extern static void Nop();
 }

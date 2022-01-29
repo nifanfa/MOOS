@@ -120,6 +120,7 @@ public static class IDT
             case 0x21:
                 byte b = Native.In8(0x60);
                 char c = PS2Keyboard.ProcessKey(b);
+                PS2Keyboard.Key = c;
                 if (c == '\n') Console.WriteLine();
                 else if (c == '\b') Console.Back();
                 else if (c != '?') Console.Write(c);

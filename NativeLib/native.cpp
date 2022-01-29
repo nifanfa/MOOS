@@ -1,5 +1,10 @@
 #include <intrin.h>
 
+void Nop()
+{
+	__nop();
+}
+
 void Stosb(void* p, unsigned char value, unsigned long count)
 {
 	__stosb(p, value, count);
