@@ -132,6 +132,20 @@ namespace System
             return new string(x + i, 0, 20 - i);
         }
 
+        public unsafe string ToString(string format) 
+        {
+            if(format == "x2")
+            {
+                format.Dispose();
+                return this.ToStringHex();
+            }
+            else
+            {
+                format.Dispose();
+                return this.ToString();
+            }
+        }
+
         public unsafe string ToStringHex()
         {
             var val = this;
