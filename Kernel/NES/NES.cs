@@ -32,8 +32,8 @@ namespace NES
 
         public void runGame()
         {
-            if (PS2Keyboard.Key == '?') NES_KeyUp();
-            else NES_KeyDown(PS2Keyboard.Key);
+            NES_KeyUp(PS2Keyboard.Key);
+            NES_KeyDown(PS2Keyboard.Key);
 
             if (bolRunGame && !cpu.badOpCode)
             {
@@ -193,17 +193,40 @@ namespace NES
         }
 #endregion
 
-        private void NES_KeyUp()
+        private void NES_KeyUp(char c)
         {
-            //Release all keys. I havn't implemented key up so...
-            input.joypadOne &= 0xFE;
-            input.joypadOne &= 0xFD;
-            input.joypadOne &= 0xFB;
-            input.joypadOne &= 0xF7;
-            input.joypadOne &= 0xEF;
-            input.joypadOne &= 0xDF;
-            input.joypadOne &= 0xBF;
-            input.joypadOne &= 0x7F;
+            if (c == 'q')        // A
+            {
+                input.joypadOne &= 0xFE;
+            }
+            else if (c == 'e')   // B
+            {
+                input.joypadOne &= 0xFD;
+            }
+            else if (c == 'z')   // Select
+            {
+                input.joypadOne &= 0xFB;
+            }
+            else if (c == 'c')   // Start
+            {
+                input.joypadOne &= 0xF7;
+            }
+            else if (c == 'w')   // Up
+            {
+                input.joypadOne &= 0xEF;
+            }
+            else if (c == 's')   // Down
+            {
+                input.joypadOne &= 0xDF;
+            }
+            else if (c == 'a')   // Left
+            {
+                input.joypadOne &= 0xBF;
+            }
+            else if (c == 'd')   // Right
+            {
+                input.joypadOne &= 0x7F;
+            }
         }
 
         public void NMIHandler()
