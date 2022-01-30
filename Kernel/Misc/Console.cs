@@ -95,6 +95,13 @@
             }
         }
 
+        internal static char ReadKey()
+        {
+            char Key = '?';
+            while ((Key = PS2Keyboard.Key) == '?') Native.Hlt();
+            return Key;
+        }
+
         private static void MoveUp()
         {
             if (CursorY >= Height - 1)
