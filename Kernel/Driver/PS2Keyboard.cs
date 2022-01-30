@@ -1,4 +1,6 @@
-﻿namespace Kernel
+﻿//http://cc.etsii.ull.es/ftp/antiguo/EC/AOA/APPND/Apndxc.pdf
+
+namespace Kernel
 {
     public static class PS2Keyboard
     {
