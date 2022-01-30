@@ -79,7 +79,7 @@ unsafe class Program
         for (; ; )
         {
             nes.runGame();
-            for (int i = 0; i < 32; i++) Native.Nop();
+            for (int i = 0; i < 128; i++) Native.Nop();
         }
 
         /*
