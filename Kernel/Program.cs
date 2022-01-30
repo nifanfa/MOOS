@@ -42,7 +42,7 @@ unsafe class Program
             return;
         }
         
-        Heap.Initialize((IntPtr)0x600000);
+        Heap.Initialize((IntPtr)0x1000000);
 
         StartupCodeHelpers.InitializeRuntime(Modules);
         #endregion
