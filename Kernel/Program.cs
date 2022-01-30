@@ -16,11 +16,11 @@ unsafe class Program
 
     /*
      * Minimum system requirement:
-     * 8MiB of RAM
+     * 32MiB of RAM
      * Memory Map:
      * 1 MiB - ???    -> Load data
-     * 4 MiB - 6MiB   -> System
-     * 6 MiB - ∞     -> Free to use
+     * 8 MiB - 6MiB   -> System
+     * 16 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info, byte* RAW, IntPtr Modules)
