@@ -19,7 +19,7 @@ unsafe class Program
      * 32MiB of RAM
      * Memory Map:
      * 1 MiB - ???    -> Load data
-     * 8 MiB - 6MiB   -> System
+     * 8 MiB - 16MiB   -> System
      * 16 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
