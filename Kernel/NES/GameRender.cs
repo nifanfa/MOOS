@@ -27,7 +27,7 @@ namespace NES
                 Color color = Color.FromArgb(byteToWrite[i + 3], byteToWrite[i + 2], byteToWrite[i + 1], byteToWrite[i + 0]);
                 if (color.A != 0)
                 {
-                    Framebuffer.DrawPoint(w, h, color.ToArgb());
+                    Framebuffer.DrawPoint(((Framebuffer.Width/2)-(256/2))+w, ((Framebuffer.Height / 2) - (240 / 2)) + h, color.ToArgb());
                 }
                 //
                 w++;
