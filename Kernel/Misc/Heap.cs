@@ -47,6 +47,8 @@ abstract unsafe class Heap
 
     public static void Initialize(IntPtr Start)
     {
+        fixed (Info* pInfo = &_Info)
+            Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
         _Info.Start = Start;
     }
 
@@ -85,9 +87,6 @@ abstract unsafe class Heap
         }
         if (!found) 
         {
-            Console.WriteLine("Out of Memory!");
-            Native.Cli();
-            for (; ; ) Native.Hlt();
             return IntPtr.Zero; 
         }
 
