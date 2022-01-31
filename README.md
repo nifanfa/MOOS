@@ -3,7 +3,7 @@ C# operating system demo, Using Native AOT (Core RT) boot via bios instead of UE
 ❓TCP  ✔UDP  ✔ARP  ✔IPv4  ❌IPv6  
 ✔SMBIOS  ✔ACPI  ✔VBE  
 ✔PIC  ✔PIT  ✔RTC  ✔GDT  ✔IDT  ✔PageTable  
-✔PS2 Keyboard/Mouse  ✔Realtek RTL8139  ✔Intel® Gigabit Ethernet Network Controller  ✔Serial  
+✔PS2 Keyboard/Mouse  ✔SATA  ✔Realtek RTL8139  ✔Intel® Gigabit Ethernet Network Controller  ✔Serial  
 ✔Lan  ❌Wan  
-❌Storage  
+❌File Systems  
 ![image](https://github.com/nifanfa/Solution1/blob/master/Screenshot.png)

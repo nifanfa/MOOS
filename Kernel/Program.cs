@@ -60,6 +60,12 @@ unsafe class Program
         PS2Mouse.Initialise();
         ACPI.Initialize();
         SMBIOS.Initialise();
+        SATA.Initialize();
+        
+        /*
+        ushort* _P = (ushort*)0x40000000;
+        Console.WriteLine(SATA.Ports[0].Read(0, 1, _P) ? "SATA Success" : "SATA Failed");
+        */
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
