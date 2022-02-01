@@ -8,16 +8,11 @@ namespace Kernel
         public ushort Slot;
         public ushort Function;
         public ushort VendorID;
-        public byte SubordinateBusNumber;
 
         public ushort DeviceID;
 
         public byte ClassID;
         public byte SubClassID;
-
-        /// <summary>
-        /// 0x20 Added
-        /// </summary>
         public byte IRQ;
 
         public uint Bar0;
@@ -61,7 +56,7 @@ namespace Kernel
 
         public static void Initialise()
         {
-            if ((GetHeaderType(0, 0, 0) & 0x80) == 0)
+            if (GetHeaderType(0, 0, 0) == 0)
             {
                 CheckBus(0);
 
@@ -84,16 +79,6 @@ namespace Kernel
                     Console.Write(VendorID.GetName(Devices[i].VendorID));
                     if(Console.CursorX != 0)
                         Console.WriteLine();
-                }
-            }
-            else 
-            {
-                for (ushort Func = 0; Func < 8; Func++)
-                {
-                    if (GetVendorID(0x0, 0x0, Func) != 0xFFFF)
-                        break;
-
-                    CheckBus(Func);
                 }
             }
         }
@@ -123,7 +108,6 @@ namespace Kernel
 
                 device.ClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 11);
                 device.SubClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 10);
-                device.SubordinateBusNumber = ReadRegister8(device.Bus, device.Slot, device.Function, 25);
                 device.IRQ = (byte)(0x20 + ReadRegister8(device.Bus, device.Slot, device.Function, 60));
 
                 device.DeviceID = ReadRegister16(device.Bus, device.Slot, device.Function, 2);
@@ -133,7 +117,7 @@ namespace Kernel
 
                 if (device.ClassID == 0x06 && device.SubClassID == 0x04)
                 {
-                    CheckBus(device.SubordinateBusNumber);
+                    Console.WriteLine("TODO - This is a sub-PCI Controller");
                 }
                 continue; //Must exist
             }
