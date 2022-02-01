@@ -58,8 +58,6 @@ namespace Kernel
         {
             Devices = new List<PCIDevice>();
             CheckBus(0);
-            Console.Write("PCI Initialized, Number of Devices: ");
-            Console.WriteLine(((ulong)Devices.Count).ToString());
         }
 
         private static void CheckBus(ushort Bus)
