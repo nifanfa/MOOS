@@ -239,21 +239,22 @@ Main:
     mov rsp,STACKTOP
     mov rbp,rsp
     
+    xor rbx,rbx
     mov ebx,[EXE+DOSHeader.e_lfanew]
     lea ebx,[ebx+EXE+NTHeader.AddressOfEntryPoint]
     mov ebx,[ebx]
-    lea rax,[EXE+ebx]
+    lea ebx,[EXE+ebx]
     
     mov rcx,[multiboot_pointer]
     mov rdx,EXE
     xor r8,r8
-    call rax
+    call rbx
     jmp die
 
 align 4096
 
 STACKBOTTOM:
-resb 4096 
+resb 32768 
 STACKTOP:
 
 P4_TABLE:
