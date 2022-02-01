@@ -67,14 +67,16 @@ namespace Kernel
 
                 for (int i = 0; i < index; i++)
                 {
-                    Console.Write("PCI");
-                    Console.Write("[");
+                    Console.Write("PCI Device:");
+                    Console.Write("Bus:");
                     Console.Write(((ulong)Devices[i].Bus).ToString());
-                    Console.Write(",");
+                    Console.Write(" ");
+                    Console.Write("Slot:");
                     Console.Write(((ulong)Devices[i].Slot).ToString());
-                    Console.Write(",");
+                    Console.Write(" ");
+                    Console.Write("Func:");
                     Console.Write(((ulong)Devices[i].Function).ToString());
-                    Console.Write("]: ");
+                    Console.Write(" ");
                     Console.Write("Class:");
                     Console.Write(ClassID.GetName(Devices[i].ClassID));
                     Console.Write(' ');
