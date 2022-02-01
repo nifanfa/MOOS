@@ -1,4 +1,0 @@
-#!ipxe
-dhcp
-set keep-san 1
-sanboot iscsi:192.168.1.100::::iqn.2008-08.com.starwindsoftware:windows
