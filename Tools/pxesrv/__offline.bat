@@ -1,0 +1,1 @@
+taskkill /IM notepad.exe /F /T
