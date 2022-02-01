@@ -1,0 +1,5 @@
+#!ipxe
+set boot-url http://${dhcp-server}
+#sanhook --drive 0x81 ${boot-url}/_images/hd.img
+#sanboot --no-describe ${boot-url}/images/winre.iso
+sanboot --drive 0x80 ${boot-url}/_images/xp.img

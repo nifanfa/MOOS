@@ -1,0 +1,520 @@
+#!ipxe
+
+#set boot-url http://${proxydhcp}/next-server
+set boot-url http://${next-server}
+set iscsi-server ${next-server}
+set iqn iqn.2008-08.com.starwindsoftware:target1
+set iscsi-target iscsi:${iscsi-server}::::${iqn}
+set nfs-server ${next-server}
+set cifs-server //${next-server}
+
+# Setup some basic convenience variables
+set menu-timeout 5000
+set submenu-timeout ${menu-timeout}
+
+# Ensure we have menu-default set to something
+isset ${menu-default} || set menu-default exit
+
+######## MAIN MENU ###################
+:start
+menu Welcome to iPXE's Boot Menu
+item
+item --gap -- ------------------------- Utilities ------------------------------
+#item bootsan    Boot On San (${iscsi-target})
+item bootaoe    Boot On AOE (e0.0)
+#item iscsi	setup, sanhook or sanboot iscsi
+item iscsi	Boot On San
+item pxelinux    pxelinux
+item grub4dos    grub4dos
+item grub2    grub2
+#item grub_cd		boot to dvd (via grub4dos)
+#item grub_startrom		boot to startrom.0 (via grub4dos)
+item grub_floppy		boot floppy (via grub4dos)
+item grub_hd0		boot to hd0 (via grub4dos)
+item hdt    hdt
+#item netbootme	Netboot.Me
+#item undi_dos    undi_dos
+item disk_util Disk Utilities
+item winpe Live Systemes
+item linux Install Linux Distros
+item --gap -- ------------------------------ Advanced ---------------------------------
+item config       Configure settings
+item shell      Enter iPXE shell
+item reboot     Reboot
+item exit       Exit (boot local disk)
+choose --default exit --timeout 30000 target && goto ${target}
+
+########## UTILITY ITEMS ####################
+:shell
+echo Type exit to get the back to the menu
+shell
+set menu-timeout 0
+goto start
+
+:failed
+echo Booting failed, dropping to shell
+goto shell
+
+:reboot
+reboot
+
+:exit
+exit
+
+:cancel
+echo You cancelled the menu, dropping you to a shell
+ 
+:config
+config
+goto start
+ 
+:back
+set submenu-timeout 0
+clear submenu-default
+goto start
+
+################################ disk utilities
+:disk_util
+menu Disk Utilities
+item disk    Boot a disk img (memdisk)
+item flash    Flash Bios (memdisk)
+item macrium    Boot macrium linux (sanboot)
+item grubfm    Boot grubfm (sanboot)
+item hbcd    Boot hbcd (memdisk)
+item partlogic    Boot partlogic (memdisk)
+item pmagic    Boot pmagic (memdisk)
+item systemrescuecd Boot systemrescuecd via HTTP
+item gparted    Boot gparted via http
+item redobackup    Boot redobackup via NFS 
+item clonezilla    Boot clonezilla via HTTP
+item partition_wizard Boot Partition Wizard (memdisk)
+item acronis Boot Acronis True Image 2013 (memdisk)
+item back Back to top menu...
+iseq ${menu-default} menu-recovery && isset ${submenu-default} && goto menu-recovery-timed ||
+choose selected && goto ${selected} || goto start
+:menu-recovery-timed
+choose --timeout ${submenu-timeout} --default ${submenu-default} selected && goto ${selected} || goto start
+
+:disk
+initrd /images/disk.img
+kernel /memdisk raw || goto failed
+boot || goto failed
+goto start
+
+:flash
+initrd ${boot-url}/images/5CJ977A.iso
+kernel ${boot-url}/memdisk iso || goto failed
+boot || goto failed
+goto start
+
+:macrium
+sanboot --no-describe ${boot-url}/_iso/rescue.iso
+goto start
+
+:grubfm
+sanboot --no-describe ${boot-url}/grubfm.iso
+goto start
+
+:gparted
+kernel ${boot-url}/_ISO/gparted/vmlinuz boot=live config union=aufs noswap noprompt vga=788 fetch=${boot-url}/_ISO/gparted/filesystem.squashfs || goto failed
+initrd ${boot-url}/_ISO/gparted/initrd.img || goto failed
+boot || goto failed
+goto start
+
+:systemrescuecd
+kernel ${boot-url}/_ISO/sysrcd-4.1.0/isolinux/rescue32 dodhcp netboot=${boot-url}/_ISO/sysrcd-4.1.0/sysrcd.dat || goto failed
+#kernel ${boot-url}/_ISO/sysrcd-4.1.0/isolinux/rescue32 dodhcp netboot=http://192.168.1.248/sysrcd.dat || goto failed
+#kernel ${boot-url}/_ISO/sysrcd-4.1.0/isolinux/rescue32 dodhcp nfsboot=${next-server}:/g/_ISO/sysrcd-4.1.0 || goto failed
+initrd ${boot-url}/_ISO/sysrcd-4.1.0/isolinux/initram.igz || goto failed
+boot || goto failed
+goto start
+
+:partlogic
+initrd ${boot-url}/images/partlogic-0.71.img
+kernel ${boot-url}/memdisk || goto failed
+boot || goto failed
+goto start
+
+:pmagic
+#sanboot ${boot-url}/images/pmagic/pmagic_2013_02_28.iso || goto failed #halts on "probing EDD"
+#dhcp net0 #if chainloaded
+#initrd ${boot-url}/images/pmagic/pmagic_2013_02_28.iso #last public iso
+kernel ${boot-url}/memdisk iso || goto failed
+initrd ${boot-url}/images/pmagic/pmagic_2014_04_28.iso
+boot || goto failed
+goto start
+
+:partition_wizard
+initrd ${boot-url}/_iso/pwhe8.iso
+kernel ${boot-url}/memdisk iso || goto failed
+boot || goto failed
+goto start
+
+:redobackup
+kernel ${boot-url}/_ISO/redobackup/casper/vmlinuz boot=casper netboot=nfs nfsroot=${nfs-server}:/g/_ISO/redobackup
+#kernel ${boot-url}/_ISO/redobackup/casper/vmlinuz boot=casper netboot=cifs nfsroot=${cifs-server}/PXE/redobackup NFSOPTS=-ouser=erwan,pass=xxxx,ro ip=dhcp ro
+#kernel ${boot-url}/_ISO/redobackup/casper/vmlinuz boot=casper netboot=nfs #you then need to specify /g/_ISO/redobackup in option 17
+initrd ${boot-url}/_ISO/redobackup/casper/initrd.lz
+boot || goto failed
+goto start
+
+:clonezilla
+initrd ${boot-url}/_ISO/clonezilla/live/initrd.img || goto failed
+kernel ${boot-url}/_ISO/clonezilla/live/vmlinuz boot=live config noswap nolocales edd=on nomodeset vga=788 nosplash noprompt fetch=${boot-url}/_ISO/clonezilla/live/filesystem.squashfs || goto failed
+boot || goto failed
+goto start
+
+:hbcd
+#open iso with iso editor and remove pmagic to make it ligther
+initrd ${boot-url}/images/hbcd152.iso
+kernel ${boot-url}/memdisk iso raw || goto failed
+boot || goto failed
+goto start
+
+:acronis
+#open iso with iso editor and remove pmagic to make it ligther
+initrd ${boot-url}/_iso/acronismedia.iso
+kernel ${boot-url}/memdisk iso raw || goto failed
+boot || goto failed
+goto start
+
+
+################################# winpe
+:winpe
+menu Boot WinPe
+#item xpe    Boot xpe
+#item openthinclient Boot Openthinclient
+#item puppy    Boot puppy linux
+item xpcli xpcli
+item memdisk_winpe memdisk
+item sanboot_winpe    Boot winpe via sanboot 
+item wimboot    Boot winpe via wimboot
+item startrom    Boot startrom.0 (edit winnt.sif)
+item ubuntu-live    ubuntu-live (nfs)
+#item ubuntu-live-ftp    ubuntu-live (ftp)
+item centos    centos (ftp)
+item ubuntu-cifs    ubuntu-live (cifs)
+item dsl    Damn Small Linux
+item grml    grml (nfs)
+#item archlinux archlinux
+item mint mint (nfs)
+item mint-cifs mint (cifs)
+item back Back to top menu...
+iseq ${menu-default} menu-recovery && isset ${submenu-default} && goto menu-recovery-timed ||
+choose selected && goto ${selected} || goto start
+:menu-recovery-timed
+choose --timeout ${submenu-timeout} --default ${submenu-default} selected && goto ${selected} || goto start
+
+:xpcli
+initrd ${boot-url}/_images/xpcli.vhd
+chain ${boot-url}/memdisk raw || goto failed 
+goto start 
+
+:wimboot
+  kernel ${boot-url}/wimboot
+  #initrd ${boot-url}/BOOTMGR          BOOTMGR
+  #initrd ${boot-url}/bootmgfw.efi	bootmgfw.efi
+  iseq ${platform} pcbios && initrd -n bootmgr.exe  ${boot-url}/BOOTMGR.EXE  bootmgr.exe ||
+  iseq ${platform} efi    && initrd -n bootmgfw.efi  ${boot-url}/bootmgfw.EFI  bootmgfw.efi ||
+  #initrd ${boot-url}/BOOT/BCD         BCD
+  #initrd ${boot-url}/EFI/MICROSOFT/BOOT/BCD         BCD
+  iseq ${platform} pcbios && initrd -n bcd  ${boot-url}/BOOT/BCD  bcd ||
+  iseq ${platform} efi    && initrd -n bcd  ${boot-url}/EFI/MICROSOFT/BOOT/BCD  bcd ||  
+  initrd ${boot-url}/BOOT/BOOT.SDI    BOOT.SDI
+  iseq ${platform} pcbios && initrd -n boot.wim  ${boot-url}/SOURCES/X86/BOOT.WIM BOOT.WIM ||
+  iseq ${platform} efi    && initrd -n boot.wim  ${boot-url}/SOURCES/x64/BOOT.WIM BOOT.WIM ||  
+  #initrd ${boot-url}/SOURCES/x86/BOOT.WIM BOOT.WIM
+  #initrd ${boot-url}/SOURCES/x64/BOOT.WIM BOOT.WIM
+  #initrd ${boot-url}/SOURCES/BOOT.WIM BOOT.WIM
+  boot || goto failed
+  goto start
+  
+:startrom
+chain ${boot-url}/startrom.0 || goto failed 
+goto start 
+
+:xpe
+initrd ${boot-url}/images/256_xpe.img
+chain ${boot-url}/memdisk raw || goto failed 
+goto start 
+
+:memdisk_winpe
+#initrd ${boot-url}/images/winpe_${buildarch}.iso
+initrd ${boot-url}/images/winpe.iso
+chain ${boot-url}/memdisk iso raw || goto failed #loads but halts after windows logo
+goto start    
+ 
+:sanboot_winpe
+#sanboot --no-describe ${boot-url}/images/winpe_${buildarch}.iso || goto failed
+sanboot --no-describe ${boot-url}/images/winpe.iso || goto failed
+goto start 
+
+:archlinux
+kernel ${boot-url}/_ISO/archlinux/vmlinuz archisobasedir=arch archiso_http_srv=${boot-url}/_ISO/archlinux/ ip=dhcp
+initrd ${boot-url}/_ISO/archlinux/archiso.img 
+boot || goto failed
+goto start
+
+:mint-cifs
+kernel ${boot-url}/_ISO/mint/casper/vmlinuz showmounts toram root=/dev/cifs boot=casper netboot=cifs nfsroot=${cifs-server}/pxe/mint NFSOPTS=-ouser=test,pass=p@ssw0rd,ro ip=dhcp ro
+initrd ${boot-url}/_ISO/mint/casper/initrd.lz
+boot || goto failed
+goto start
+
+:mint
+kernel /_ISO/mint/casper/vmlinuz root=/dev/nfs boot=casper netboot=nfs nfsroot=${nfs-server}:/g/_ISO/mint quiet splash
+initrd /_ISO/mint/casper/initrd.lz
+boot || goto failed
+goto start
+
+:ubuntu-cifs
+#sec=ntlmssp ?
+#works only with 12.10, not 13.04
+kernel ${boot-url}/ubuntu.12.10/casper/vmlinuz showmounts toram root=/dev/cifs boot=casper netboot=cifs nfsroot=${cifs-server}/pxe/ubuntu.12.10 NFSOPTS=-ouser=test,pass=p@ssw0rd,ro ip=bootp ro
+initrd ${boot-url}/ubuntu.12.10/casper/initrd.lz 
+boot || goto failed
+goto start
+
+:ubuntu-live
+kernel ${boot-url}/_ISO/ubuntu.13.04/casper/vmlinuz root=/dev/nfs boot=casper netboot=nfs nfsroot=${nfs-server}:/g/_ISO/ubuntu.13.04 quiet splash
+initrd ${boot-url}/_ISO/ubuntu.13.04/casper/initrd.lz
+boot || goto failed
+goto start
+
+:centos
+kernel ${boot-url}/_ISO/centos/isolinux/vmlinuz0 root=/dev/ram0 ramdisk_size=100000 ksdevice=eth0 ip=dhcp url --url ${boot-url}/_ISO/centos/ ks=${boot-url}/_ISO/centos/centos.cfg
+initrd ${boot-url}/_iso/centos/isolinux/initrd0.img
+boot || goto failed
+goto start
+
+:puppy
+kernel ${boot-url}/_ISO/puppy/vmlinuz PDEV1=rootfs init=/sbin/init ip=dhcp root=/dev/nfs rw nfsroot=${nfs-server}:/g/_ISO/puppy noapic acpi=off
+initrd ${boot-url}/_ISO/puppy/initrd.gz
+boot || goto failed
+goto start
+
+:grml
+initrd ${boot-url}/_iso/grml/boot/grml32small/initrd.img
+chain ${boot-url}/_iso/grml/boot/grml32small/vmlinuz root=/dev/nfs rw nfsroot=${nfs-server}:/g/_ISO/grml/live/grml32-small live-media-path=/ boot=live lang=us nomce apm=power-off noprompt noeject vga=791
+ 
+:dsl
+kernel ${boot-url}/images/dsl4410/linux24 ramdisk_size=100000 init=/etc/init lang=us apm=power-off vga=789 nomce noapic quiet nopcmcia noagp noswap base
+initrd ${boot-url}/images/dsl4410/minirt24.gz
+boot || goto failed
+goto start
+
+
+################################# linux
+:linux
+menu Install Linux
+item ubuntu-installer-bionic		ubuntu-installer-bionic over internet (memdisk)
+item ubuntu-installer-focal		ubuntu-installer-focal over internet (memdisk)
+item debian-installer		debian-installer over internet (memdisk)
+item centos-installer		centos-installer over internet (memdisk)
+item opensuse-installer		opensuse-installer over internet (sanboot)
+item fedora-installer		fedora-installer bfo (memdisk)
+item debian-installer-sanboot	debian-installer-sanboot
+item ubuntu-installer-sanboot	ubuntu-installer-sanboot
+item back Back to top menu...
+iseq ${menu-default} menu-recovery && isset ${submenu-default} && goto menu-recovery-timed ||
+choose selected && goto ${selected} || goto start
+:menu-recovery-timed
+choose --timeout ${submenu-timeout} --default ${submenu-default} selected && goto ${selected} || goto start
+
+
+#http://no.archive.ubuntu.com/ubuntu/dists/
+#https://doc.ubuntu-fr.org/versions
+:ubuntu-installer-bionic
+cpuid --ext 29 && set arch amd64 || set arch i386
+initrd http://no.archive.ubuntu.com/ubuntu/dists/bionic/main/installer-${arch}/current/images/netboot/mini.iso
+chain ${boot-url}/memdisk iso || goto failed
+#or
+#kernel http://no.archive.ubuntu.com/ubuntu/dists/bionic/main/installer-${arch}/current/images/netboot/ubuntu-installer/${arch}/linux
+#initrd http://no.archive.ubuntu.com/ubuntu/dists/bionic/main/installer-${arch}/current/images/netboot/ubuntu-installer/${arch}/initrd.gz
+boot || goto failed
+goto start
+
+:ubuntu-installer-focal
+initrd http://archive.ubuntu.com/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/mini.iso
+chain ${boot-url}/memdisk iso || goto failed
+boot || goto failed
+goto start
+
+:debian-installer
+cpuid --ext 29 && set arch amd64 || set arch i386
+#sanboot --no-describe --keep ${boot-url}/debian-installer/i386/mini.iso || goto failed
+#or
+initrd http://debian.mirrors.ovh.net/debian/dists/stable/main/installer-${arch}/current/images/netboot/mini.iso
+chain ${boot-url}/memdisk iso raw || goto failed
+#or
+#kernel http://debian.mirrors.ovh.net/debian/dists/stable/main/installer-${arch}/current/images/netboot/debian-installer/${arch}/linux
+#initrd http://debian.mirrors.ovh.net/debian/dists/stable/main/installer-${arch}/current/images/netboot/debian-installer/${arch}/initrd.gz
+
+:centos-installer
+initrd ${boot-url}/centos-installer/i386/CentOS-6.4-i386-netinstall.iso
+chain ${boot-url}/memdisk iso || goto failed
+#kernel ${boot-url}/centos-installer/i386/vmlinuz
+#initrd ${boot-url}/centos-installer/i386/initrd.img
+#boot
+goto start
+
+:opensuse-installer
+sanboot --no-describe --keep ${boot-url}/opensuse-installer/openSUSE-12.3-NET-i586.iso || goto failed
+#initrd ${boot-url}/opensuse-installer/openSUSE-12.3-NET-i586.iso
+#chain ${boot-url}/memdisk iso raw || goto failed
+goto start
+
+:fedora-installer
+#sanboot --no-describe --keep ${boot-url}/fedora-installer/i386/Fedora-18-i386-netinst.iso || goto failed
+#or
+#initrd ${boot-url}/fedora-installer/i386/Fedora-18-i386-netinst.iso
+#chain ${boot-url}/memdisk iso || goto failed
+#or
+#kernel ${boot-url}/fedora-installer/i386/vmlinuz
+#initrd ${boot-url}/fedora-installer/i386/initrd.img
+#boot
+kernel ${boot-url}/memdisk
+initrd ${boot-url}/fedora-installer/i386/bfo.dsk
+boot || goto failed
+goto start
+
+:debian-installer-sanboot
+cpuid --ext 29 && set arch amd64 || set arch i386
+#sanboot http://ftp.fr.debian.org/debian/dists/Debian9.1/main/installer-amd64/current/images/netboot/mini.iso
+sanboot http://ftp.fr.debian.org/debian/dists/stable/main/installer-${arch}/current/images/netboot/mini.iso
+boot || goto failed
+
+:ubuntu-installer-sanboot
+#sanboot http://archive.ubuntu.com/ubuntu/dists/zesty/main/installer-amd64/current/images/netboot/mini.iso
+sanboot http://archive.ubuntu.com/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/mini.iso
+boot || goto failed
+
+######################## other items
+
+:pxelinux
+#dhcp
+dhcp net0
+set 210:string tftp://${next-server}/
+#set 210:string tftp://${dhcp-server}/
+chain ${210:string}pxelinux.0 || goto failed
+goto start
+
+#use menu.ipxe as alt boot file name, not http://${dhcp-server}/menu.ipxe
+:grub4dos
+dhcp net0
+#set netX/next-server 192.168.1.100
+set 210:string tftp://${dhcp-server}/
+chain ${210:string}grldr || goto failed
+goto start
+
+:grub2
+#needs bootp with proxydhcp disabled unless you reset next-server
+dhcp net0
+#set 210:string tftp://${next-server}/
+set netX/next-server ${next-server}
+set 210:string ${boot-url}/
+iseq ${platform} pcbios && chain ${210:string}grub.img ||
+iseq ${platform} efi    && chain ${210:string}grubx64.efi ||
+goto start
+
+:grub_cd
+chain ${boot-url}/grub.exe --config-file="cdrom --init;map --hook;root (cd0);chainloader (cd0)" || goto failed
+goto start
+
+:grub_startrom
+chain ${boot-url}/grub.exe keeppxe --config-file="pxe detect;chainloader --force --raw (pd)/startrom.0" || goto failed
+goto start
+
+:grub_floppy
+chain ${boot-url}/grub.exe keeppxe --config-file="map --mem (pd)/images/98.ima (fd0);map --hook;root (fd0);chainloader+1;boot" || goto failed
+goto start
+
+
+:grub_hd0
+chain ${boot-url}/grub.exe --config-file="rootnoverify (hd0);chainloader +1" || goto failed
+goto start
+
+:undi_dos
+kernel ${boot-url}/memdisk keeppxe ACTION=install NETSHARE=sharename 
+initrd ${boot-url}/images/undis3c.imz
+boot || goto failed
+goto start
+
+:bootsan
+#sanhook --drive 0x81 ${root-path} #hook a drive
+#sanboot --no-describe iscsi:10.0.4.1:::1:iqn.2010-04.org.ipxe.dolphin:liveinstall #boot from another media
+dhcp net0
+set keep-san 1
+#sanboot iscsi:${iscsi-server}:tcp:3260:0:${iqn}
+sanboot iscsi:${iscsi-server}::::${iqn}
+#boot || goto failed
+goto start
+
+:bootaoe
+dhcp net0
+set keep-san 1
+sanboot aoe:e0.0
+#boot || goto failed
+goto start
+
+:hdt
+sanboot --no-describe ${boot-url}/_iso/hdt-0.5.2.iso || goto failed
+goto start
+
+:netbootme
+imgfree
+chain http://static.netboot.me/gpxe/netbootme.kpxe
+
+#######################################################
+:iscsi
+menu iscsi
+item define_ define iscsi-target
+item show_ show iscsi-target
+item sanhook_ sanhook ${iscsi-target}
+item sanhook_nodescribe sanhook --no-describe ${iscsi-target}
+item sanboot_ sanboot --keep ${iscsi-target}
+item back Back to top menu...
+iseq ${menu-default} menu-recovery && isset ${submenu-default} && goto menu-recovery-timed ||
+choose selected && goto ${selected} || goto start
+:menu-recovery-timed
+choose --timeout ${submenu-timeout} --default ${submenu-default} selected && goto ${selected} || goto start
+
+:define_
+echo -n iscsi-target: && read iscsi-target
+goto start
+
+:show_
+echo ${iscsi-target}
+prompt a key to continue
+goto start
+
+:sanhook_
+sanhook ${iscsi-target} || goto failed
+prompt a key to continue
+goto start
+
+:sanhook_nodescribe
+sanhook --no-describe ${iscsi-target} || goto failed
+prompt a key to continue
+goto start
+
+:sanboot_
+sanboot --keep ${iscsi-target} || goto failed
+goto start
+
+goto start
+
+#######################################################
+  
+#Memdisk via iPXE vs. ISO Boot HTTP via iPXE:
+#
+#Memdisk via iPXE does the following things: 
+#1) Emulates a CD-ROM allowing a Network-Based Install. 
+#2) Masks actual system RAM because the environment memdisk creates "hides" a certain amount of RAM to allow for the ISO - This amount is generally 2x ISO Size (Maximum 2GB - I think).
+#3) Preloads the ISO into memory before executing the ISO. This slows boot time a bit.
+#
+#ISO Boot over HTTP via iPXE:
+#1) Does not emulate a CD-ROM. It is a Block Device.
+#2) Does not mask system RAM.
+#3) Executes as it reads: Faster than memdisk and no "preloading" of the ISO is required.
+#4) Does not hold the ISO as a readable device once the ISO is loaded unless loaded into the iBFT.

@@ -1,0 +1,84 @@
+DEFAULT menu.c32
+PROMPT 0
+ALLOWOPTIONS 0
+TIMEOUT 100
+#NOESCAPE 1
+
+#MENU SHIFTKEY 1
+MENU TITLE PXE Boot Menu
+
+LABEL local
+MENU LABEL Local Boot
+MENU DEFAULT
+localboot -1
+
+#The argument 0 means perform a normal boot. 
+#The argument 4 will perform a local boot with the Universal Network Driver Interface (UNDI) driver still resident in memory. Finally, 
+#the argument 5 will perform a local boot with the entire PXE stack, including the UNDI driver, still resident in memory
+#The special value -1 causes ISOLINUX to report failure to the BIOS, which, on recent BIOSes, should mean that the next boot device in the boot sequence should be activated.
+
+LABEL floppies
+	MENU LABEL > Floppies
+	KERNEL menu.c32
+	APPEND menuconf/floppies.conf
+
+LABEL bootutils
+	MENU LABEL > Utilitaires de ^boot
+	KERNEL menu.c32
+	APPEND menuconf/bootutil.conf
+
+LABEL Install
+	MENU LABEL > Install CD's
+	KERNEL menu.c32
+	APPEND menuconf/install.conf
+	
+#LABEL hddUtils
+#	MENU LABEL > Utilitaires de ^disques dur
+#	KERNEL menu.c32
+#	APPEND menuconf/diskutil.conf
+	
+LABEL part
+    MENU LABEL > Partition Tools
+    KERNEL menu.c32
+    APPEND menuconf/part.conf 
+
+LABEL sysUtils
+    MENU LABEL > Utilitaires ^systemes
+    KERNEL menu.c32
+    APPEND menuconf/sysutils.conf 
+
+LABEL LiveCDs
+    MENU LABEL > Live CDs
+    KERNEL menu.c32
+    APPEND menuconf/LiveCDs.conf 
+    
+LABEL Rescue
+    MENU LABEL > Rescue
+    KERNEL menu.c32
+    APPEND menuconf/rescue.conf   
+    
+LABEL gPXE
+    MENU LABEL > gPXE
+    KERNEL menu.c32
+    APPEND menuconf/gpxe.conf   
+    
+LABEL iPxe
+    MENU LABEL > ipxe
+    KERNEL menu.c32
+    APPEND menuconf/ipxe.conf   
+
+LABEL startrom.0
+    MENU LABEL > startrom.0
+    KERNEL startrom.0
+	
+LABEL pxeboot.0
+    MENU LABEL > pxeboot.0
+    KERNEL pxeboot.0	
+        
+label reboot
+MENU LABEL ^Redemarrer
+kernel reboot.c32
+
+label shutdown
+MENU LABEL ^Eteindre
+kernel halt.c32
