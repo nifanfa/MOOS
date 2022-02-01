@@ -1,27 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-
+/// <summary>
+/// Warning: Try your best to not use(implement) c/c++ libs because it may cause triple fault like __movsb
+/// </summary>
 static unsafe class Native
 {
-    [DllImport("*")]
-    public static extern void Insd(ushort Port, uint* Data, ulong Count);
-
-    [DllImport("*")]
-    public static extern void Outsd(ushort Port, uint* Data, ulong Count);
-
-    [DllImport("*")]
-    public static extern void Insw(ushort Port, ushort* Data, ulong Count);
-
-    [DllImport("*")]
-    public static extern void Outsw(ushort Port, ushort* Data, ulong Count);
-
-    [DllImport("*")]
-    public static extern void Insb(ushort Port, byte* Data, ulong Count);
-
-    [DllImport("*")]
-    public static extern void Outsb(ushort Port, byte* Data, ulong Count);
-
     [DllImport("*")]
     public static extern ulong ReadCR2();
 
@@ -43,14 +27,31 @@ static unsafe class Native
     [DllImport("*")]
     public static extern uint In32(ushort port);
 
-    [DllImport("*")]
-    public static extern void Stosd(void* p, uint value, ulong count);
+    public static void Stosd(void* p, uint value, ulong count)
+    {
+        uint* pp = (uint*)p;
+        for (ulong u = 0; u < count; u++) pp[u] = value;
+    }
 
-    [DllImport("*")]
-    public extern static unsafe void Stosb(void* p, byte value, ulong count);
+    public static unsafe void Stosb(void* p, byte value, ulong count) 
+    {
+        byte* pp = (byte*)p;
+        for (ulong u = 0; u < count; u++) pp[u] = value;
+    }
 
-    [DllImport("*")]
-    public extern static void Movsd(uint* dest, uint* source, ulong count);
+    public static void Movsb(void* dest, void* source, ulong count)
+    {
+        byte* pd = (byte*)dest;
+        byte* ps = (byte*)source;
+        for (ulong c = 0; c < count; c++) pd[c] = ps[c];
+    }
+
+    public static void Movsd(uint* dest, uint* source, ulong count)
+    {
+        uint* pd = (uint*)dest;
+        uint* ps = (uint*)source;
+        for (ulong c = 0; c < count; c++) pd[c] = ps[c];
+    }
 
     [DllImport("*")]
     public static extern void Load_GDT(ref GDT.GDTDescriptor gdtr);
@@ -72,9 +73,6 @@ static unsafe class Native
 
     [DllImport("*")]
     public extern static void Invlpg(ulong physicalAddress);
-
-    [DllImport("*")]
-    public extern static void Movsb(void* dest, void* source, ulong count);
 
     [DllImport("*")]
     public extern static void Nop();

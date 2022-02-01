@@ -179,7 +179,7 @@ namespace Kernel
         {
             PCIDevice dev = null;
             #region FindDev
-            for (int i = 0; i < PCI.Devices.Length; i++)
+            for (int i = 0; i < PCI.Devices.Count; i++)
             {
                 if (
                     PCI.Devices[i] != null &&
