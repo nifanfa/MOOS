@@ -35,7 +35,7 @@ namespace Kernel
         {
             if (VBE.Info->PhysBase == 0)
             {
-                for (int i = 0; i < PCI.Devices.Length; i++)
+                for (int i = 0; i < PCI.Devices.Count; i++)
                 {
                     if (PCI.Devices[i].VendorID == 0x1234)
                     {

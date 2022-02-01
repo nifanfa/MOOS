@@ -1,4 +1,5 @@
 ﻿using Kernel.Misc;
+using System.Collections.Generic;
 
 namespace Kernel
 {
@@ -35,12 +36,11 @@ namespace Kernel
 
     public static unsafe class PCI
     {
-        public static PCIDevice[] Devices = new PCIDevice[32];
-        public static int index = 0;
+        public static List<PCIDevice> Devices;
 
         public static PCIDevice GetDevice(ushort VendorID, ushort DeviceID)
         {
-            for (int i = 0; i < Devices.Length; i++)
+            for (int i = 0; i < Devices.Count; i++)
             {
                 if (
                     Devices[i] != null &&
@@ -56,31 +56,10 @@ namespace Kernel
 
         public static void Initialise()
         {
-            if (GetHeaderType(0, 0, 0) == 0)
-            {
-                CheckBus(0);
-
-                for (int i = 0; i < index; i++)
-                {
-                    Console.Write("PCI Device:");
-                    Console.Write("Bus:");
-                    Console.Write(((ulong)Devices[i].Bus).ToString());
-                    Console.Write(" ");
-                    Console.Write("Slot:");
-                    Console.Write(((ulong)Devices[i].Slot).ToString());
-                    Console.Write(" ");
-                    Console.Write("Func:");
-                    Console.Write(((ulong)Devices[i].Function).ToString());
-                    Console.Write(" ");
-                    Console.Write("Class:");
-                    Console.Write(ClassID.GetName(Devices[i].ClassID));
-                    Console.Write(' ');
-                    Console.Write("Vendor:");
-                    Console.Write(VendorID.GetName(Devices[i].VendorID));
-                    if(Console.CursorX != 0)
-                        Console.WriteLine();
-                }
-            }
+            Devices = new List<PCIDevice>();
+            CheckBus(0);
+            Console.Write("PCI Initialized, Number of Devices: ");
+            Console.WriteLine(((ulong)Devices.Count).ToString());
         }
 
         private static void CheckBus(ushort Bus)
@@ -112,15 +91,12 @@ namespace Kernel
 
                 device.DeviceID = ReadRegister16(device.Bus, device.Slot, device.Function, 2);
 
-                Devices[index] = device;
-                index++;
+                Devices.Add(device);
 
                 if (device.ClassID == 0x06 && device.SubClassID == 0x04)
                 {
-                    Console.WriteLine("TODO - This is a sub-PCI Controller");
-                    //CheckBus(ReadRegister8(device.Bus, device.Slot, device.Function, 25));
+                    CheckBus(ReadRegister8(device.Bus, device.Slot, device.Function, 25));
                 }
-                continue; //Must exist
             }
         }
 
