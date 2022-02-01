@@ -117,7 +117,7 @@ namespace Kernel
 
                 if (device.ClassID == 0x06 && device.SubClassID == 0x04)
                 {
-                    CheckBus(ReadRegister8(device.Bus, device.Slot, device.Function, 25));
+                    Console.WriteLine("TODO - This is a sub-PCI Controller");
                 }
                 continue; //Must exist
             }
