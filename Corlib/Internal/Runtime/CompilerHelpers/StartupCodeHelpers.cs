@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
-    [McgIntrinsics]
     class StartupCodeHelpers
     {
         [RuntimeExport("__fail_fast")]
@@ -161,22 +160,6 @@ namespace Internal.Runtime.CompilerHelpers
             {
                 if (sections[i].SectionId == (int)ReadyToRunSectionType.GCStaticRegion)
                     InitializeStatics(sections[i].Start, sections[i].End);
-
-                if (sections[i].SectionId == (int)ReadyToRunSectionType.EagerCctor)
-                    InitializeEagerClassConstructorsForModule(sections[i].Start, sections[i].End);
-            }
-        }
-
-        static unsafe void InitializeEagerClassConstructorsForModule(IntPtr rgnStart, IntPtr rgnEnd) 
-        {
-            RunEagerClassConstructors(rgnStart, rgnEnd);
-        }
-
-        private static unsafe void RunEagerClassConstructors(IntPtr cctorTableStart, IntPtr cctorTableEnd)
-        {
-            for (IntPtr* tab = (IntPtr*)cctorTableStart; tab < (IntPtr*)cctorTableEnd; tab++)
-            {
-                ((delegate*<void>)*tab)();
             }
         }
 
