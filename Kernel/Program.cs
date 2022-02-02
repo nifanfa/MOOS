@@ -14,29 +14,30 @@ unsafe class Program
 {
     static void Main() { }
 
+    public const int ImageBase = 0x110000;
+
     /*
      * Minimum system requirement:
-     * 32MiB of RAM
+     * 128MiB of RAM
      * Memory Map:
-     * 1 MiB - ???    -> Load data
-     * 8 MiB - 16MiB   -> System
-     * 16 MiB - ∞     -> Free to use
+     * 1 MiB - 16MiB   -> System
+     * 64 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info, byte* RAW, IntPtr Ptr)
+    static void Main(MultibootInfo* Info)
     {
         #region Initializations
-        DOSHeader* doshdr = (DOSHeader*)RAW;
-        NtHeaders64* nthdr = (NtHeaders64*)(RAW + doshdr->e_lfanew);
-        SectionHeader* sections = ((SectionHeader*)(RAW + doshdr->e_lfanew + sizeof(NtHeaders64)));
+        DOSHeader* doshdr = (DOSHeader*)ImageBase;
+        NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
+        SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
         IntPtr moduleSeg = IntPtr.Zero;
         for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
         {
-            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
-            Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), RAW + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
+            Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
         }
 
-        Heap.Initialize((IntPtr)0x1000000);
+        Heap.Initialize((IntPtr)0x6400000);
 
         StartupCodeHelpers.InitializeModules(moduleSeg);
         #endregion
