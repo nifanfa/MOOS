@@ -13,7 +13,7 @@
 
 		<IlcSystemModule>Kernel</IlcSystemModule>
 		<EntryPointSymbol>Main</EntryPointSymbol>
-		<LinkerSubsystem>EFI_APPLICATION</LinkerSubsystem>
+		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 	</PropertyGroup>
 
 	<ItemGroup>
