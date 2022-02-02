@@ -23,28 +23,22 @@ unsafe class Program
      * 16 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info, byte* RAW, IntPtr Modules)
+    static void Main(MultibootInfo* Info, byte* RAW, IntPtr Ptr)
     {
         #region Initializations
-        if (Modules == IntPtr.Zero) 
+        DOSHeader* doshdr = (DOSHeader*)RAW;
+        NtHeaders64* nthdr = (NtHeaders64*)(RAW + doshdr->e_lfanew);
+        SectionHeader* sections = ((SectionHeader*)(RAW + doshdr->e_lfanew + sizeof(NtHeaders64)));
+        IntPtr moduleSeg = IntPtr.Zero;
+        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
         {
-            DOSHeader* doshdr = (DOSHeader*)RAW;
-            NtHeaders64* nthdr = (NtHeaders64*)(RAW + doshdr->e_lfanew);
-            SectionHeader* sections = ((SectionHeader*)(RAW + doshdr->e_lfanew + sizeof(NtHeaders64)));
-            IntPtr moduleSeg = IntPtr.Zero;
-            for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
-            {
-                if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
-                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), RAW + sections[i].PointerToRawData, sections[i].SizeOfRawData);
-            }
-            delegate*<MultibootInfo*, byte*, IntPtr, void> p = (delegate*<MultibootInfo*, byte*, IntPtr, void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
-            p(Info, null, moduleSeg);
-            return;
+            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
+            Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), RAW + sections[i].PointerToRawData, sections[i].SizeOfRawData);
         }
 
         Heap.Initialize((IntPtr)0x1000000);
 
-        StartupCodeHelpers.InitializeModules(Modules);
+        StartupCodeHelpers.InitializeModules(moduleSeg);
         #endregion
 
         PageTable.Initialise();
