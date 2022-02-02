@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
-    class StartupCodeHelpers
+    unsafe class StartupCodeHelpers
     {
         [RuntimeExport("__fail_fast")]
         static void FailFast() { while (true) ; }
@@ -16,6 +16,12 @@ namespace Internal.Runtime.CompilerHelpers
         {
             for (byte* p = ptr; p < ptr + count; p++)
                 *p = (byte)c;
+        }
+
+        [RuntimeExport("memcpy")]
+        static unsafe void MemCpy(byte* dest, byte* src, ulong count)
+        {
+            for (ulong i = 0; i < count; i++) dest[i] = src[i];
         }
 
         [RuntimeExport("RhpFallbackFailFast")]
@@ -51,7 +57,7 @@ namespace Internal.Runtime.CompilerHelpers
             var data = Heap.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
             Heap.ZeroMemory(data, size);
-            SetEEType(data, pEEType);
+            *(IntPtr*)data = (IntPtr)pEEType;
 
             return obj;
         }
@@ -68,7 +74,7 @@ namespace Internal.Runtime.CompilerHelpers
             var data = Heap.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
             Heap.ZeroMemory(data, size);
-            SetEEType(data, pEEType);
+            *(IntPtr*)data = (IntPtr)pEEType;
 
             var b = (byte*)data;
             b += sizeof(IntPtr);
@@ -131,51 +137,45 @@ namespace Internal.Runtime.CompilerHelpers
             }
         }
 
-        internal static unsafe void SetEEType(IntPtr obj, EEType* type)
+        public static void InitializeModules(IntPtr Modules) 
         {
-            Heap.MemoryCopy(obj, (IntPtr)(&type), (ulong)sizeof(IntPtr));
-        }
-
-        public static unsafe void InitializeRuntime(IntPtr modulesSeg)
-        {
-            var modules = (IntPtr*)modulesSeg;
-
             for (int i = 0; ; i++)
             {
-                var addr = modules[i];
-
-                if (addr.Equals(IntPtr.Zero))
+                if (((IntPtr*)Modules)[i].Equals(IntPtr.Zero))
                     break;
 
-                InitializeModules(addr, i);
-            }
-        }
+                var header = (ReadyToRunHeader*)((IntPtr*)Modules)[i];
+                var sections = (ModuleInfoRow*)(header + 1);
 
-        static unsafe void InitializeModules(IntPtr addr, int index)
-        {
-            var header = (ReadyToRunHeader*)addr;
-            var sections = (ModuleInfoRow*)(header + 1);
-
-            for (int i = 0; i < header->NumberOfSections; i++)
-            {
-                if (sections[i].SectionId == (int)ReadyToRunSectionType.GCStaticRegion)
-                    InitializeStatics(sections[i].Start, sections[i].End);
+                for (int k = 0; k < header->NumberOfSections; k++)
+                {
+                    if (sections[k].SectionId == ReadyToRunSectionType.GCStaticRegion)
+                        InitializeStatics(sections[k].Start, sections[k].End);
+                }
             }
         }
 
         static unsafe void InitializeStatics(IntPtr rgnStart, IntPtr rgnEnd)
         {
-            for (var block = (IntPtr*)rgnStart; block < (IntPtr*)rgnEnd; block++)
+            for (IntPtr* block = (IntPtr*)rgnStart; block < (IntPtr*)rgnEnd; block++)
             {
                 var pBlock = (IntPtr*)*block;
                 var blockAddr = (long)(*pBlock);
 
                 if ((blockAddr & GCStaticRegionConstants.Uninitialized) == GCStaticRegionConstants.Uninitialized)
-                { // GCStaticRegionConstants.Uninitialized
-                    var obj = RhpNewFast((EEType*)new IntPtr(blockAddr & ~(GCStaticRegionConstants.Uninitialized | GCStaticRegionConstants.HasPreInitializedData)));
-                    var handle = Heap.Allocate((ulong)sizeof(IntPtr));
-                    *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
-                    *pBlock = handle;
+                {
+                    var obj = RhpNewFast((EEType*)(blockAddr & ~GCStaticRegionConstants.Mask));
+
+                    if ((blockAddr & GCStaticRegionConstants.HasPreInitializedData) == GCStaticRegionConstants.HasPreInitializedData)
+                    {
+                        IntPtr pPreInitDataAddr = *(pBlock + 1);
+                        fixed(byte* p = &obj.GetRawData())
+                        {
+                            MemCpy(p, (byte*)pPreInitDataAddr, obj.GetRawDataSize());
+                        }
+                    }
+
+                    *pBlock = *(IntPtr*)Unsafe.AsPointer(ref obj);
                 }
             }
         }

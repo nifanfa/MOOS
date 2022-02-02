@@ -131,11 +131,12 @@ namespace Internal.Runtime
     }
 
 
-    //    [StructLayout(LayoutKind.Sequential)]
-    //    internal struct ObjHeader {
-    //        // Contents of the object header
-    //        private IntPtr _objHeaderContents;
-    //    }
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ObjHeader 
+    {
+        // Contents of the object header
+        private IntPtr _objHeaderContents;
+    }
 
     //    [StructLayout(LayoutKind.Sequential)]
     //    internal unsafe struct EEInterfaceInfo {

@@ -31,21 +31,6 @@ namespace Kernel
             }
         }
 
-        public static void Setup()
-        {
-            if (VBE.Info->PhysBase == 0)
-            {
-                for (int i = 0; i < PCI.Devices.Count; i++)
-                {
-                    if (PCI.Devices[i].VendorID == 0x1234)
-                    {
-                        VideoMemory = (uint*)PCI.Devices[i].Bar0;
-                        return;
-                    }
-                }
-            }
-        }
-
         public static void Copy(int dX,int dY,int sX,int sY,int Width,int Height)
         {
             for(int w = 0; w < Width; w++) 
@@ -100,15 +85,6 @@ namespace Kernel
             }
         }
 
-        public static void WriteRegister(ushort IndexValue, ushort DataValue)
-        {
-            if (VBE.Info->PhysBase == 0)
-            {
-                Native.Out16(0x01CE, IndexValue);
-                Native.Out16(0x01CF, DataValue);
-            }
-        }
-
         public static void SetVideoMode(ushort XRes, ushort YRes)
         {
             Width = XRes;
@@ -119,15 +95,6 @@ namespace Kernel
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
             Control.MousePosition.X = XRes / 2;
             Control.MousePosition.Y = YRes / 2;
-
-            if(VBE.Info->PhysBase == 0) 
-            {
-                WriteRegister(4, 0);
-                WriteRegister(1, XRes);
-                WriteRegister(2, YRes);
-                WriteRegister(3, 32);
-                WriteRegister(4, (ushort)(1 | 0x40));
-            }
         }
 
         internal static void Fill(int X, int Y, int Width, int Height, uint Color)
