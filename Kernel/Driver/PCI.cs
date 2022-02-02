@@ -58,6 +58,13 @@ namespace Kernel
         {
             Devices = new List<PCIDevice>();
             CheckBus(0);
+            for(int i = 0;i<Devices.Count;i++)
+            {
+                if (Devices[i].ClassID == 0x06 && Devices[i].SubClassID == 0x04)
+                {
+                    CheckBus(ReadRegister8(Devices[i].Bus, Devices[i].Slot, Devices[i].Function, 25));
+                }
+            }
         }
 
         private static void CheckBus(ushort Bus)
@@ -90,11 +97,6 @@ namespace Kernel
                 device.DeviceID = ReadRegister16(device.Bus, device.Slot, device.Function, 2);
 
                 Devices.Add(device);
-
-                if (device.ClassID == 0x06 && device.SubClassID == 0x04)
-                {
-                    CheckBus(ReadRegister8(device.Bus, device.Slot, device.Function, 25));
-                }
             }
         }
 
