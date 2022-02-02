@@ -175,7 +175,9 @@ namespace Internal.Runtime.CompilerHelpers
                         }
                     }
 
-                    *pBlock = *(IntPtr*)Unsafe.AsPointer(ref obj);
+                    var handle = Heap.Allocate((ulong)sizeof(IntPtr));
+                    *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
+                    *pBlock = handle;
                 }
             }
         }
