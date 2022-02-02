@@ -7,7 +7,7 @@ namespace Internal.Runtime
     [StructLayout(LayoutKind.Sequential)]
     struct ModuleInfoRow
     {
-        public int SectionId;
+        public ReadyToRunSectionType SectionId;
         public int Flags;
         public IntPtr Start;
         public IntPtr End;
@@ -51,7 +51,7 @@ namespace Internal.Runtime
     // This list should be kept in sync with the runtime version at
     // https://github.com/dotnet/coreclr/blob/master/src/inc/readytorun.h
     //
-    public enum ReadyToRunSectionType
+    public enum ReadyToRunSectionType : int
     {
         //
         // CoreCLR ReadyToRun sections

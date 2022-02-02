@@ -41,10 +41,10 @@ unsafe class Program
             p(Info, null, moduleSeg);
             return;
         }
-        
+
         Heap.Initialize((IntPtr)0x1000000);
 
-        StartupCodeHelpers.InitializeRuntime(Modules);
+        StartupCodeHelpers.InitializeModules(Modules);
         #endregion
 
         PageTable.Initialise();
@@ -54,14 +54,16 @@ unsafe class Program
         GDT.Initialise();
         IDT.Initialise();
         IDT.Enable();
+
         Serial.Initialise();
-        PCI.Initialise();
         PIT.Initialise();
         PS2Mouse.Initialise();
         ACPI.Initialize();
         SMBIOS.Initialise();
-        SATA.Initialize();
-        
+
+        PCI.Initialise();
+        SATA.Initialize(); 
+
         /*
         ushort* _P = (ushort*)0x40000000;
         Console.WriteLine(SATA.Ports[0].Read(0, 1, _P) ? "SATA Success" : "SATA Failed");
@@ -115,19 +117,6 @@ unsafe class Program
         else
 
         {
-            PIT.Wait(1000);
-
-            VBEInfo* vbe = (VBEInfo*)Info->VBEInfo;
-            if (vbe->PhysBase != 0)
-            {
-                Framebuffer.VideoMemory = (uint*)vbe->PhysBase;
-                Framebuffer.SetVideoMode(vbe->ScreenWidth, vbe->ScreenHeight);
-            }
-            else
-            {
-                Framebuffer.Setup();
-                Framebuffer.SetVideoMode(800, 600);
-            }
             Framebuffer.TripleBuffered = true;
 
             int[] cursor = new int[]
