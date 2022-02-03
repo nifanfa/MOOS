@@ -8,6 +8,12 @@ namespace Internal.Runtime.CompilerHelpers
 {
     unsafe class StartupCodeHelpers
     {
+        [RuntimeExport("__imp_GetCurrentThreadId")]
+        public static int __imp_GetCurrentThreadId() => 0;
+
+        [RuntimeExport("__CheckForDebuggerJustMyCode")]
+        public static int __CheckForDebuggerJustMyCode() => 0;
+
         [RuntimeExport("__fail_fast")]
         static void FailFast() { while (true) ; }
 

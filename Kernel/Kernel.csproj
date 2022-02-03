@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/fixed /safeseh:no /base:0x110000 /filealign:0x1000" />
+		<LinkerArg Include="/fixed /safeseh:no /base:0x110000 /filealign:0x1000 /map:Kernel.map" />
 	</ItemGroup>
 
 	<ItemGroup>
