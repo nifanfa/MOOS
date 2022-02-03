@@ -1,14 +1,10 @@
 ﻿using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using Kernel.Driver;
-using Kernel.NET;
+using Kernel.GUI;
 using System;
 using System.Runtime;
-using System.Net;
-using Kernel.GUI;
 using System.Windows.Forms;
-using NES;
-using System.Diagnostics;
 
 unsafe class Program
 {
@@ -57,7 +53,14 @@ unsafe class Program
         SMBIOS.Initialise();
 
         PCI.Initialise();
-        SATA.Initialize(); 
+        SATA.Initialize();
+
+        IDE.Initialize();
+        
+        /*
+        Console.WriteLine(
+            IDE.Controllers[0].ReadOrWrite(IDE.Drive.Master, 0, (byte*)0x2000_0000, false) ? "IDE success" : "IDE failed");
+        */
 
         /*
         ushort* _P = (ushort*)0x40000000;

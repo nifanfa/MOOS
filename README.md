@@ -4,9 +4,10 @@ C# operating system demo, Using Native AOT (Core RT) boot via bios instead of UE
  - [x] Intel® Gigabit Ethernet Network 
  - [x] Realtek RTL8139
  - [ ] File Systems 
+ - [x] SATA
+ - [x] IDE
  - [x] SMBIOS
  - [x] ACPI
- - [x] SATA
  - [x] IPv4
  - [ ] IPv6
  - [x] TCP
