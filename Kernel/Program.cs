@@ -20,7 +20,7 @@ unsafe class Program
      * Minimum system requirement:
      * 128MiB of RAM
      * Memory Map:
-     * 1 MiB - 16MiB   -> System
+     * 1 MiB - 64MiB   -> System
      * 64 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
