@@ -29,6 +29,11 @@ void Insd(unsigned short port,unsigned int* data,unsigned long count)
 	__indwordstring(port, data, count);
 }
 
+void Insw(unsigned short port, unsigned short* data, unsigned long count)
+{
+	__inwordstring(port, data, count);
+}
+
 void Insb(unsigned short port, unsigned char* data, unsigned long count)
 {
 	__inbytestring(port, data, count);
@@ -37,6 +42,11 @@ void Insb(unsigned short port, unsigned char* data, unsigned long count)
 void Outsd(unsigned short port, unsigned int* data, unsigned long count)
 {
 	__outdwordstring(port, data, count);
+}
+
+void Outsw(unsigned short port, unsigned short* data, unsigned long count)
+{
+	__outwordstring(port, data, count);
 }
 
 void Outsb(unsigned short port, unsigned char* data, unsigned long count)
