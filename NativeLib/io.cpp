@@ -23,3 +23,23 @@ unsigned short In16(unsigned short port) {
 unsigned int In32(unsigned short port) {
 	return __indword(port);
 }
+
+void Insd(unsigned short port,unsigned int* data,unsigned long count)
+{
+	__indwordstring(port, data, count);
+}
+
+void Insb(unsigned short port, unsigned char* data, unsigned long count)
+{
+	__inbytestring(port, data, count);
+}
+
+void Outsd(unsigned short port, unsigned int* data, unsigned long count)
+{
+	__outdwordstring(port, data, count);
+}
+
+void Outsb(unsigned short port, unsigned char* data, unsigned long count)
+{
+	__outbytestring(port, data, count);
+}

@@ -4,6 +4,18 @@ using System.Runtime.InteropServices;
 static unsafe class Native
 {
     [DllImport("*")]
+    public static extern void Insb(ushort port, byte* data, ulong count);
+
+    [DllImport("*")]
+    public static extern void Insd(ushort port, uint* data, ulong count);
+
+    [DllImport("*")]
+    public static extern void Outsb(ushort port, byte* data, ulong count);
+
+    [DllImport("*")]
+    public static extern void Outsd(ushort port, uint* data, ulong count);
+
+    [DllImport("*")]
     public static extern ulong ReadCR2();
 
     [DllImport("*")]
