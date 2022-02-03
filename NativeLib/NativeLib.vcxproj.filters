@@ -24,6 +24,9 @@
     <ClCompile Include="native.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="mem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm">

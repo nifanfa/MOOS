@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-/// <summary>
-/// Warning: Try your best to not use(implement) c/c++ libs because it may cause triple fault like __movsb
-/// </summary>
 static unsafe class Native
 {
     [DllImport("*")]
@@ -27,31 +24,17 @@ static unsafe class Native
     [DllImport("*")]
     public static extern uint In32(ushort port);
 
-    public static void Stosd(void* p, uint value, ulong count)
-    {
-        uint* pp = (uint*)p;
-        for (ulong u = 0; u < count; u++) pp[u] = value;
-    }
+    [DllImport("*")]
+    public static extern void Stosd(void* p, uint value, ulong count);
 
-    public static unsafe void Stosb(void* p, byte value, ulong count) 
-    {
-        byte* pp = (byte*)p;
-        for (ulong u = 0; u < count; u++) pp[u] = value;
-    }
+    [DllImport("*")]
+    public static extern unsafe void Stosb(void* p, byte value, ulong count);
 
-    public static void Movsb(void* dest, void* source, ulong count)
-    {
-        byte* pd = (byte*)dest;
-        byte* ps = (byte*)source;
-        for (ulong c = 0; c < count; c++) pd[c] = ps[c];
-    }
+    [DllImport("*")]
+    public static extern void Movsb(void* dest, void* source, ulong count);
 
-    public static void Movsd(uint* dest, uint* source, ulong count)
-    {
-        uint* pd = (uint*)dest;
-        uint* ps = (uint*)source;
-        for (ulong c = 0; c < count; c++) pd[c] = ps[c];
-    }
+    [DllImport("*")]
+    public static extern void Movsd(uint* dest, uint* source, ulong count);
 
     [DllImport("*")]
     public static extern void Load_GDT(ref GDT.GDTDescriptor gdtr);

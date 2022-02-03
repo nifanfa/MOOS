@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="interrupts.cpp" />
     <ClCompile Include="io.cpp" />
+    <ClCompile Include="mem.cpp" />
     <ClCompile Include="native.cpp" />
   </ItemGroup>
   <ItemGroup>
