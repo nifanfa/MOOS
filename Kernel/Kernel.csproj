@@ -16,10 +16,6 @@
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<DefineConstants>PLATFORM_KERNEL</DefineConstants>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<NativeLibrary Include="$(MSBuildStartupDirectory)\x64\Debug\NativeLib.lib" />
 	</ItemGroup>

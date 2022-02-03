@@ -1,7 +1,7 @@
 ﻿using Kernel;
 using System;
 
-abstract unsafe class Platform
+abstract unsafe class Heap
 {
     internal static unsafe void ZeroMemory(IntPtr data, ulong size)
     {

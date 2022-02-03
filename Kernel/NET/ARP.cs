@@ -89,7 +89,7 @@ namespace Kernel.NET
             {
                 if (Ethernet.SwapLeftRight(hdr->Operation) == (ushort)ARPOperation.Request)
                 {
-                    ARPHeader* _hdr = (ARPHeader*)Platform.Allocate((ulong)(sizeof(ARPHeader)));
+                    ARPHeader* _hdr = (ARPHeader*)Heap.Allocate((ulong)(sizeof(ARPHeader)));
                     Native.Movsb(_hdr, hdr, (ulong)(sizeof(ARPHeader)));
 
                     _hdr->Operation = Ethernet.SwapLeftRight((uint)ARPOperation.Reply);
@@ -122,7 +122,7 @@ namespace Kernel.NET
                     DestMAC[5] = _hdr->DestMAC[5];
                     Ethernet.SendPacket(DestMAC, (ushort)Ethernet.EthernetType.ARP, _hdr, sizeof(ARPHeader));
                     DestMAC.Dispose();
-                    Platform.Free((IntPtr)_hdr);
+                    Heap.Free((IntPtr)_hdr);
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace Kernel.NET
 
         internal static void Require(byte[] IP)
         {
-            ARPHeader* hdr = (ARPHeader*)Platform.Allocate((ulong)(sizeof(ARPHeader)));
+            ARPHeader* hdr = (ARPHeader*)Heap.Allocate((ulong)(sizeof(ARPHeader)));
             hdr->SourceMAC[0] = Network.MAC[0];
             hdr->SourceMAC[1] = Network.MAC[1];
             hdr->SourceMAC[2] = Network.MAC[2];
@@ -176,7 +176,7 @@ namespace Kernel.NET
             hdr->HardwareType = Ethernet.SwapLeftRight(1);
             hdr->Protocol = Ethernet.SwapLeftRight((uint)Ethernet.EthernetType.IPv4);
             Ethernet.SendPacket(Network.Boardcast, (ushort)Ethernet.EthernetType.ARP, hdr, sizeof(ARPHeader));
-            Platform.Free((IntPtr)hdr);
+            Heap.Free((IntPtr)hdr);
         }
     }
 }
