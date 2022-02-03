@@ -58,12 +58,19 @@ namespace Kernel
         {
             Devices = new List<PCIDevice>();
             CheckBus(0);
-            for(int i = 0;i<Devices.Count;i++)
+            for(int i = 0; i < Devices.Count; i++)
             {
-                if (Devices[i].ClassID == 0x06 && Devices[i].SubClassID == 0x04)
-                {
-                    CheckBus(ReadRegister8(Devices[i].Bus, Devices[i].Slot, Devices[i].Function, 25));
-                }
+                Console.Write("PCI");
+                Console.Write("[");
+                Console.Write(((ulong)Devices[i].Bus).ToString());
+                Console.Write(",");
+                Console.Write(((ulong)Devices[i].Slot).ToString());
+                Console.Write(",");
+                Console.Write(((ulong)Devices[i].Function).ToString());
+                Console.Write("]");
+                Console.Write(VendorID.GetName(Devices[i].VendorID));
+                Console.Write(" ");
+                Console.WriteLine(ClassID.GetName(Devices[i].ClassID));
             }
         }
 
@@ -97,6 +104,11 @@ namespace Kernel
                 device.DeviceID = ReadRegister16(device.Bus, device.Slot, device.Function, 2);
 
                 Devices.Add(device);
+
+                if (device.ClassID == 0x06 && device.SubClassID == 0x04)
+                {
+                    CheckBus(ReadRegister8(device.Bus, device.Slot, device.Function, 25));
+                }
             }
         }
 
