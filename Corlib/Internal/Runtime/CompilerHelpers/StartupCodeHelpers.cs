@@ -2,7 +2,6 @@
 using Kernel;
 using System;
 using System.Runtime;
-using System.Runtime.InteropServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
@@ -54,9 +53,9 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Heap.Allocate(size);
+            var data = Platform.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Heap.ZeroMemory(data, size);
+            Platform.ZeroMemory(data, size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             return obj;
@@ -71,14 +70,14 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Heap.Allocate(size);
+            var data = Platform.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Heap.ZeroMemory(data, size);
+            Platform.ZeroMemory(data, size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             var b = (byte*)data;
             b += sizeof(IntPtr);
-            Heap.MemoryCopy((IntPtr)b, (IntPtr)(&length), sizeof(int));
+            Platform.MemoryCopy((IntPtr)b, (IntPtr)(&length), sizeof(int));
 
             return obj;
         }
@@ -137,7 +136,7 @@ namespace Internal.Runtime.CompilerHelpers
             }
         }
 
-        public static void InitializeModules(IntPtr Modules) 
+        public static void InitializeModules(IntPtr Modules)
         {
             for (int i = 0; ; i++)
             {
@@ -169,13 +168,13 @@ namespace Internal.Runtime.CompilerHelpers
                     if ((blockAddr & GCStaticRegionConstants.HasPreInitializedData) == GCStaticRegionConstants.HasPreInitializedData)
                     {
                         IntPtr pPreInitDataAddr = *(pBlock + 1);
-                        fixed(byte* p = &obj.GetRawData())
+                        fixed (byte* p = &obj.GetRawData())
                         {
                             MemCpy(p, (byte*)pPreInitDataAddr, obj.GetRawDataSize());
                         }
                     }
 
-                    var handle = Heap.Allocate((ulong)sizeof(IntPtr));
+                    var handle = Platform.Allocate((ulong)sizeof(IntPtr));
                     *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
                     *pBlock = handle;
                 }

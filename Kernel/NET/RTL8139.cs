@@ -35,7 +35,7 @@ namespace Kernel.NET
             while ((In8((ushort)(IOBase + 0x37)) & 0x10) != 0) ;
             Console.WriteLine("Soft-Reset Done");
 
-            uint p = (uint)Heap.Allocate(8192 + 16 + 1500 + 0xF);
+            uint p = (uint)Platform.Allocate(8192 + 16 + 1500 + 0xF);
             p = p & ~0xFU;
             Console.Write("RX is at:");
             Console.WriteLine(((ulong)p).ToStringHex());

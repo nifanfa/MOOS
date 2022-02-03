@@ -1,5 +1,6 @@
 ﻿using Internal.Runtime;
 using Internal.Runtime.CompilerServices;
+using Kernel;
 using System.Runtime.InteropServices;
 
 namespace System
@@ -42,7 +43,7 @@ namespace System
         public virtual void Dispose()
         {
             var obj = this;
-            Heap.Free(Unsafe.As<object, IntPtr>(ref obj));
+            Platform.Free(Unsafe.As<object, IntPtr>(ref obj));
         }
     }
 }
