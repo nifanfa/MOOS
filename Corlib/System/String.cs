@@ -1,6 +1,5 @@
 ﻿using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
-using Kernel;
 using System.Runtime.CompilerServices;
 
 
@@ -86,7 +85,7 @@ namespace System
 
             fixed (char* c = &s._firstChar)
             {
-                Platform.MemoryCopy((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
+                Heap.MemoryCopy((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
                 c[length] = '\0';
             }
 
