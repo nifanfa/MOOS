@@ -89,8 +89,8 @@ namespace Kernel
         {
             Width = XRes;
             Height = YRes;
-            FirstBuffer = (uint*)Heap.Allocate((ulong)(XRes * YRes * 4));
-            SecondBuffer = (uint*)Heap.Allocate((ulong)(XRes * YRes * 4));
+            FirstBuffer = (uint*)Platform.Allocate((ulong)(XRes * YRes * 4));
+            SecondBuffer = (uint*)Platform.Allocate((ulong)(XRes * YRes * 4));
             Native.Stosd(FirstBuffer, 0, (ulong)(XRes * YRes));
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
             Control.MousePosition.X = XRes / 2;

@@ -1,7 +1,9 @@
 ﻿using Internal.Runtime.CompilerServices;
 using Kernel;
+#if PLATFORM_KERNEL
 using Kernel.Driver;
 using Kernel.NET;
+#endif
 using System.Runtime;
 using System.Runtime.InteropServices;
 
@@ -112,6 +114,7 @@ public static class IDT
     public static void IRQHandler(int irq) 
     {
         irq += 0x20;
+#if PLATFORM_KERNEL
         switch (irq)
         {
             case 0x20:
@@ -138,5 +141,6 @@ public static class IDT
             Intel8254X.OnInterrupt();
         }
         PIC.EndOfInterrupt(irq);
+#endif
     }
 }

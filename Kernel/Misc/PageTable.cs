@@ -12,7 +12,7 @@
 
         internal static void Initialise()
         {
-            PML4 = (ulong*)Heap.Allocate(0x1000);
+            PML4 = (ulong*)Platform.Allocate(0x1000);
             Native.Stosb(PML4, 0, 0x1000);
 
             ulong i = 0;
@@ -69,7 +69,7 @@
             }
             else
             {
-                p = (ulong*)Heap.Allocate(0x1000);
+                p = (ulong*)Platform.Allocate(0x1000);
                 Native.Stosb(p, 0, 0x1000);
 
                 Directory[Entry] = (((ulong)p) & 0x000F_FFFF_FFFF_F000) | 0b11;
