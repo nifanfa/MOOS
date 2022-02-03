@@ -7,10 +7,16 @@ static unsafe class Native
     public static extern void Insb(ushort port, byte* data, ulong count);
 
     [DllImport("*")]
+    public static extern void Insw(ushort port, ushort* data, ulong count);
+
+    [DllImport("*")]
     public static extern void Insd(ushort port, uint* data, ulong count);
 
     [DllImport("*")]
     public static extern void Outsb(ushort port, byte* data, ulong count);
+
+    [DllImport("*")]
+    public static extern void Outsw(ushort port, ushort* data, ulong count);
 
     [DllImport("*")]
     public static extern void Outsd(ushort port, uint* data, ulong count);

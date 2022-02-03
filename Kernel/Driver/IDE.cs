@@ -133,7 +133,7 @@ namespace Kernel.Driver
                 var DriveInfo = new byte[4096];
                 fixed (byte* p = DriveInfo)
                 {
-                    Native.Insd(DataPort, (uint*)p, (ulong)DriveInfo.Length);
+                    Native.Insw(DataPort, (ushort*)p, (ulong)(DriveInfo.Length / 2));
 
                     Ports[port].Size = (*(uint*)(p + MaxLBA28)) * SectorSize;
 
@@ -205,7 +205,7 @@ namespace Kernel.Driver
 
             if (write)
             {
-                Native.Outsd(DataPort, (uint*)data, SectorSize / 4);
+                Native.Outsw(DataPort, (ushort*)data, SectorSize / 2);
 
                 Native.Out8(CommandPort, CacheFlush);
 
@@ -213,7 +213,7 @@ namespace Kernel.Driver
             }
             else
             {
-                Native.Insd(DataPort, (uint*)data, SectorSize / 4);
+                Native.Insw(DataPort, (ushort*)data, SectorSize / 2);
             }
 
             if ((Native.In8(StatusPort) & 0x1) != 0)
