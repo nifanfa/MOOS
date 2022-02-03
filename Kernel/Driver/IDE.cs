@@ -28,10 +28,11 @@ namespace Kernel.Driver
         public static void Initialize()
         {
             Controllers = new List<IDE>(2);
-            IDE one = new IDE(Channels.Primary);
-            IDE two = new IDE(Channels.Secondary);
-            Controllers.Add(one);
-            Controllers.Add(two);
+            IDE primary = new IDE(Channels.Primary);
+            IDE secondary = new IDE(Channels.Secondary);
+            Controllers.Add(primary);
+            Controllers.Add(secondary);
+            if(primary.Available() || secondary.Available())
             Console.WriteLine("IDE controller Initialized");
         }
 
