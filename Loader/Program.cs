@@ -1,9 +1,7 @@
 ﻿using Internal.Runtime.CompilerServices;
 using Kernel;
-using NativeTypeWrappers;
 using System;
 using System.Runtime;
-using System.Runtime.CompilerServices;
 
 public static class EntryPoint
 {
@@ -18,35 +16,14 @@ public static class EntryPoint
 
         Allocator.ClearConsole();
 
-#if DEBUG
         bs->SetWatchdogTimer(0, 0, 0, IntPtr.Zero);
-        Allocator.PrintLine("SeeSharpOS Loader (DEBUG)");
-#else
-		Platform.PrintLine("SeeSharpOS Loader");
-#endif
 
-        Allocator.PrintLine("=================\r\n");
-
-        PrintLine("Loader Version:         ", LOADER_VERSION >> 16, ".", (LOADER_VERSION & 0xFF00) >> 8, ".", LOADER_VERSION & 0xFF);
-        var vendor = st->FirmwareVendor.ToString();
-        PrintLine("UEFI Firmware Vendor:   ", vendor);
-        vendor.Dispose(); vendor = null;
-        var rev = st->FirmwareRevision;
-        PrintLine("UEFI Firmware Revision: ", rev >> 16, ".", (rev & 0xFF00) >> 8, ".", rev & 0xFF);
-        var ver = st->Hdr.Revision;
-
-        if ((ver & 0xFFFF) % 10 == 0)
-            PrintLine("UEFI Version:           ", ver >> 16, ".", (ver & 0xFFFF) / 10);
-        else
-            PrintLine("UEFI Version:           ", ver >> 16, ".", (ver & 0xFFFF) / 10, ".", (ver & 0xFFFF) % 10);
-
-        Allocator.PrintLine();
         EFI.Status res;
 
         res = bs->OpenProtocol(
             imageHandle,
             ref EFI.Guid.LoadedImageProtocol,
-            out ReadonlyNativeReference<EFI.LoadedImageProtocol> li,
+            out EFI.LoadedImageProtocol* li,
             imageHandle, EFI.Handle.Zero, EFI.EFI.OPEN_PROTOCOL_GET_PROTOCOL
         );
 
@@ -54,38 +31,38 @@ public static class EntryPoint
             Error("OpenProtocol(LoadedImage) failed!", res);
 
         res = bs->OpenProtocol(
-            li.Ref.DeviceHandle,
+            li->DeviceHandle,
             ref EFI.Guid.SimpleFileSystemProtocol,
-            out ReadonlyNativeReference<EFI.SimpleFileSystemProtocol> fs,
+            out EFI.SimpleFileSystemProtocol* fs,
             imageHandle, EFI.Handle.Zero, EFI.EFI.OPEN_PROTOCOL_GET_PROTOCOL
         );
 
         if (res != EFI.Status.Success)
             Error("OpenProtocol(SimpleFileSystem) failed!", res);
 
-        res = fs.Ref.OpenVolume(out var rDrive);
+        res = fs->OpenVolume(out var rDrive);
 
         if (res != EFI.Status.Success)
             Error("OpenVolume failed!", res);
 
-        ref var drive = ref rDrive.Ref;
-        res = drive.Open(out var rKernel, "Kernel", EFI.FileMode.Read, EFI.FileAttribute.ReadOnly);
+        ref var drive = ref rDrive;
+        res = drive->Open(out var rKernel, "Kernel", EFI.FileMode.Read, EFI.FileAttribute.ReadOnly);
 
         if (res != EFI.Status.Success)
             Error("Open failed!", res);
 
-        ref var kernel = ref rKernel.Ref;
+        ref var kernel = ref rKernel;
         var fileInfoSize = (ulong)Unsafe.SizeOf<EFI.FileInfo>();
-        kernel.GetInfo(ref EFI.Guid.FileInfo, ref fileInfoSize, out EFI.FileInfo fileInfo);
+        kernel->GetInfo(ref EFI.Guid.FileInfo, ref fileInfoSize, out EFI.FileInfo fileInfo);
         PrintLine("Kernel File Size: ", (uint)fileInfo.FileSize, " bytes");
 
-        kernel.Read(out PE.DOSHeader dosHdr);
+        kernel->Read(out PE.DOSHeader dosHdr);
 
         if (dosHdr.e_magic != 0x5A4D) // IMAGE_DOS_SIGNATURE ("MZ")
             return Error("'kernel.bin' is not a valid PE image!");
 
-        kernel.SetPosition((ulong)dosHdr.e_lfanew);
-        kernel.Read(out PE.NtHeaders64 ntHdr);
+        kernel->SetPosition((ulong)dosHdr.e_lfanew);
+        kernel->Read(out PE.NtHeaders64 ntHdr);
 
         if (ntHdr.Signature != 0x4550) // IMAGE_NT_SIGNATURE ("PE\0\0")
             return Error("'kernel.bin' is not a valid NT image!");
@@ -95,7 +72,7 @@ public static class EntryPoint
 
         ulong sectionCount = ntHdr.FileHeader.NumberOfSections;
         ulong virtSize = 0;
-        kernel.Read(out PE.SectionHeader[] sectionHdrs, (int)sectionCount);
+        kernel->Read(out PE.SectionHeader[] sectionHdrs, (int)sectionCount);
 
         for (var i = 0U; i < sectionCount; i++)
         {
@@ -117,8 +94,8 @@ public static class EntryPoint
             return Error("Failed to allocate memory for kernel!", res);
 
         Allocator.ZeroFill(mem, pages << 12);
-        kernel.SetPosition(0U);
-        kernel.Read(ref hdrSize, mem);
+        kernel->SetPosition(0U);
+        kernel->Read(ref hdrSize, mem);
 
         var modulesSeg = IntPtr.Zero;
 
@@ -142,20 +119,20 @@ public static class EntryPoint
             name.Dispose();
 
             var addr = mem + sec.VirtualAddress;
-            res = kernel.SetPosition(sec.PointerToRawData);
+            res = kernel->SetPosition(sec.PointerToRawData);
 
             if (res != EFI.Status.Success)
                 Allocator.PrintLine("Failed to set position!");
 
             var len = (ulong)sec.SizeOfRawData;
-            res = kernel.Read(ref len, addr);
+            res = kernel->Read(ref len, addr);
 
             if (res != EFI.Status.Success)
                 Allocator.PrintLine("Failed to read section!");
         }
 
-        kernel.Close();
-        drive.Close();
+        kernel->Close();
+        drive->Close();
         Allocator.PrintLine("Finished reading sections");
         sectionHdrs.Dispose();
 
@@ -164,23 +141,23 @@ public static class EntryPoint
         bs->OpenProtocol(
             gopHandles[0],
             ref EFI.Guid.GraphicsOutputProtocol,
-            out ReadonlyNativeReference<EFI.GraphicsOutputProtocol> rGop,
+            out EFI.GraphicsOutputProtocol* rGop,
             imageHandle, EFI.Handle.Zero, EFI.EFI.OPEN_PROTOCOL_GET_PROTOCOL
         );
-        ref var gop = ref rGop.Ref;
-        ref var gopMode = ref gop.Mode.Ref;
+        ref var gop = ref rGop;
+        var gopMode = gop->Mode;
         Allocator.PrintLine("GPU Modes:");
 
-        for (var j = 0U; j < gopMode.MaxMode; j++)
+        for (var j = 0U; j < gopMode->MaxMode; j++)
         {
-            gop.QueryMode(j, out var size, out var rInfo);
-            ref var info = ref rInfo.Ref;
+            gop->QueryMode(j, out var size, out var rInfo);
+            ref var info = ref rInfo;
 
-            Allocator.Print((ushort)info.HorizontalResolution);
+            Allocator.Print((ushort)info->HorizontalResolution);
             Allocator.Print('x');
-            Allocator.Print((ushort)info.VerticalResolution);
+            Allocator.Print((ushort)info->VerticalResolution);
 
-            if (j != gopMode.MaxMode - 1)
+            if (j != gopMode->MaxMode - 1)
                 Allocator.Print(", ");
         }
 
@@ -188,13 +165,13 @@ public static class EntryPoint
 
         var gpuMode = 0U;
 
-        gop.SetMode(gpuMode);
+        gop->SetMode(gpuMode);
         Allocator.ClearConsole();
-        gopMode = ref gop.Mode.Ref;
+        gopMode = gop->Mode;
         var mmap = new MemoryMap();
         mmap.Retrieve();
 
-        IntPtr ptr = (IntPtr)((((ulong)Allocator.Allocate(0x6400000))+0x100000)&~0x100000UL);
+        IntPtr ptr = (IntPtr)((((ulong)Allocator.Allocate(0x6400000)) + 0x100000) & ~0x100000UL);
 
 #if DEBUG
         Allocator.Print("Unfreed allocations: ");
@@ -224,9 +201,9 @@ public static class EntryPoint
         var epLoc = mem + ntHdr.OptionalHeader.AddressOfEntryPoint;
         delegate*<IntPtr, uint, uint, IntPtr, IntPtr, void> entry = (delegate*<IntPtr, uint, uint, IntPtr, IntPtr, void>)epLoc;
         entry(
-            (IntPtr)gopMode.FrameBufferBase,
-            gopMode.Info.Ref.HorizontalResolution,
-            gopMode.Info.Ref.VerticalResolution,
+            (IntPtr)gopMode->FrameBufferBase,
+            gopMode->Info->HorizontalResolution,
+            gopMode->Info->VerticalResolution,
             ptr,
             modulesSeg
             );

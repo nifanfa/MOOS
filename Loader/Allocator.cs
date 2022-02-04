@@ -20,19 +20,19 @@ namespace Kernel
 		public unsafe static void Print(string msg)
 		{
 			fixed (char* c = msg)
-				EFI.EFI.ST->ConOut.Ref.OutputString(c);
+				EFI.EFI.ST->ConOut->OutputString(c);
 		}
 
 		public unsafe static void Print(char c)
 		{
-			EFI.EFI.ST->ConOut.Ref.OutputString(&c);
+			EFI.EFI.ST->ConOut->OutputString(&c);
 		}
 
 		public unsafe static void Print(ushort c)
 		{
 			string s = ((ulong)c).ToString();
 			fixed (char* p = s)
-				EFI.EFI.ST->ConOut.Ref.OutputString(p);
+				EFI.EFI.ST->ConOut->OutputString(p);
 			s.Dispose();
 		}
 
@@ -51,7 +51,7 @@ namespace Kernel
 			x[0] = '\r';
 			x[1] = '\n';
 			x[2] = '\0';
-			EFI.EFI.ST->ConOut.Ref.OutputString(x);
+			EFI.EFI.ST->ConOut->OutputString(x);
 		}
 
 		public unsafe static void PrintLine()
@@ -60,7 +60,7 @@ namespace Kernel
 			x[0] = '\r';
 			x[1] = '\n';
 			x[2] = '\0';
-			EFI.EFI.ST->ConOut.Ref.OutputString(x);
+			EFI.EFI.ST->ConOut->OutputString(x);
 		}
 
 		//public unsafe static void PrintLine(char* msg, int len) {
@@ -85,7 +85,7 @@ namespace Kernel
 
 		public static void ClearConsole()
 		{
-			EFI.EFI.ST->ConOut.Ref.ClearScreen();
+			EFI.EFI.ST->ConOut->ClearScreen();
 		}
 
 		public static unsafe void ZeroFill(IntPtr ptr, ulong len)
