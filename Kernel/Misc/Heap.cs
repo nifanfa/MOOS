@@ -1,5 +1,6 @@
 ﻿using Kernel;
 using System;
+using System.Runtime;
 
 abstract unsafe class Heap
 {
@@ -8,6 +9,7 @@ abstract unsafe class Heap
         Native.Stosb((void*)data, 0, size);
     }
 
+    [RuntimeExport("free")]
     internal static void Free(IntPtr intPtr)
     {
         ulong p = (ulong)intPtr;
@@ -69,6 +71,7 @@ abstract unsafe class Heap
     /// </summary>
     /// <param name="size"></param>
     /// <returns></returns>
+    [RuntimeExport("malloc")]
     internal static unsafe IntPtr Allocate(ulong size)
     {
         ulong pages = 1;
