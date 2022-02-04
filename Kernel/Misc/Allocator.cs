@@ -4,7 +4,7 @@ using System.Runtime;
 
 abstract unsafe class Allocator
 {
-    internal static unsafe void ZeroMemory(IntPtr data, ulong size)
+    internal static unsafe void ZeroFill(IntPtr data, ulong size)
     {
         Native.Stosb((void*)data, 0, size);
     }
