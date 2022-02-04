@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace System
 {
-    public sealed class String
+    public sealed unsafe class String
     {
         [Intrinsic]
         public static readonly string Empty = "";
@@ -136,17 +136,76 @@ namespace System
             return 0;
         }
 
-        // TODO: This
+        public static string Concat(string a, string b) 
+        {
+            int Length = a.Length + b.Length;
+            char* ptr = stackalloc char[Length];
+            int currentIndex = 0;
+            for(int i = 0; i < a.Length; i++) 
+            {
+                ptr[currentIndex] = a[i];
+                currentIndex++;
+            }
+            for (int i = 0; i < b.Length; i++)
+            {
+                ptr[currentIndex] = b[i];
+                currentIndex++;
+            }
+            return new string(ptr, 0, Length);
+        }
+
+        public static string Concat(string a, string b,string c)
+        {
+            string p1 = a + b;
+            string p2 = p1 + c;
+            p1.Dispose();
+            return p2;
+        }
+
+        public static string Concat(string a, string b, string c, string d)
+        {
+            string p1 = a + b;
+            string p2 = p1 + c;
+            string p3 = p2 + d;
+            p1.Dispose();
+            p2.Dispose();
+            return p3;
+        }
+
+        public static string Concat(params string[] vs)
+        {
+            string s = "";
+            for(int i = 0; i < vs.Length; i++) 
+            {
+                string tmp = s + vs[i];
+                s.Dispose();
+                s = tmp;
+            }
+            vs.Dispose();
+            return s;
+        }
+
         public static string Format(string format, params object[] args)
         {
-            var len = format.Length;
-
-            for (int i = 0; i < len; i++)
+            string result = "";
+            for (int i = 0; i < format.Length; i++)
             {
-                args[0].ToString();
+                if (format[i] == '{' && format[i + 2] == '}')
+                {
+                    //ASCII
+                    string tmp = result + args[format[i + 1] - 0x30];
+                    result.Dispose();
+                    result = tmp;
+                    i += 2;
+                    continue;
+                }
+                string atmp = result + format[i];
+                result.Dispose();
+                result = atmp;
             }
-
-            return format;
+            args.Dispose();
+            format.Dispose();
+            return result;
         }
     }
 }

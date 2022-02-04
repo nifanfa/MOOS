@@ -23,8 +23,18 @@ abstract unsafe class Heap
         ulong pages = _Info.Pages[p];
         if (pages != 0 && pages != PageSignature)
         {
+            _Info.PageInUse -= pages;
+            Native.Stosb((void*)intPtr, 0, pages * PageSize);
             for (ulong i = 0; i < pages; i++)
                 _Info.Pages[p + i] = 0;
+        }
+    }
+
+    public static ulong MemoryInUse 
+    {
+        get 
+        {
+            return _Info.PageInUse * PageSize;
         }
     }
 
@@ -40,6 +50,7 @@ abstract unsafe class Heap
     public struct Info
     {
         public IntPtr Start;
+        public UInt64 PageInUse;
         public fixed ulong Pages[NumPages]; //Max 512MiB
     }
 
@@ -50,6 +61,7 @@ abstract unsafe class Heap
         fixed (Info* pInfo = &_Info)
             Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
         _Info.Start = Start;
+        _Info.PageInUse = 0;
     }
 
     /// <summary>
@@ -95,6 +107,7 @@ abstract unsafe class Heap
             _Info.Pages[i + k] = PageSignature;
         }
         _Info.Pages[i] = pages;
+        _Info.PageInUse += pages;
 
         IntPtr ptr = _Info.Start + (i * PageSize);
         return ptr;
