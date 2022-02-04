@@ -33,7 +33,7 @@ unsafe class Program
             Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
         }
 
-        Heap.Initialize((IntPtr)0x6400000);
+        Allocator.Initialize((IntPtr)0x6400000);
 
         StartupCodeHelpers.InitializeModules(moduleSeg);
         #endregion

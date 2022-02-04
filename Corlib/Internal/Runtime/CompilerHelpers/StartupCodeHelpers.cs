@@ -60,9 +60,9 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Heap.Allocate(size);
+            var data = Allocator.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Heap.ZeroMemory(data, size);
+            Allocator.ZeroMemory(data, size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             return obj;
@@ -77,14 +77,14 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Heap.Allocate(size);
+            var data = Allocator.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Heap.ZeroMemory(data, size);
+            Allocator.ZeroMemory(data, size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             var b = (byte*)data;
             b += sizeof(IntPtr);
-            Heap.MemoryCopy((IntPtr)b, (IntPtr)(&length), sizeof(int));
+            Allocator.MemoryCopy((IntPtr)b, (IntPtr)(&length), sizeof(int));
 
             return obj;
         }
@@ -181,7 +181,7 @@ namespace Internal.Runtime.CompilerHelpers
                         }
                     }
 
-                    var handle = Heap.Allocate((ulong)sizeof(IntPtr));
+                    var handle = Allocator.Allocate((ulong)sizeof(IntPtr));
                     *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
                     *pBlock = handle;
                 }

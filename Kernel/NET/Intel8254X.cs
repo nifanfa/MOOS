@@ -129,7 +129,7 @@ namespace Kernel.Driver
 
         private static void TXInitialize()
         {
-            TXDescs = (uint)Heap.Allocate(8 * 16);
+            TXDescs = (uint)Allocator.Allocate(8 * 16);
 
             for (int i = 0; i < 8; i++)
             {
@@ -152,12 +152,12 @@ namespace Kernel.Driver
 
         private static void RXInitialize()
         {
-            RXDescs = (uint)Heap.Allocate(32 * 16);
+            RXDescs = (uint)Allocator.Allocate(32 * 16);
 
             for (uint i = 0; i < 32; i++)
             {
                 RXDesc* desc = (RXDesc*)(RXDescs + (i * 16));
-                desc->addr = (ulong)(void*)Heap.Allocate(2048 + 16);
+                desc->addr = (ulong)(void*)Allocator.Allocate(2048 + 16);
                 desc->status = 0;
             }
 
