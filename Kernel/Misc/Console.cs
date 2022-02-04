@@ -14,8 +14,8 @@
             ResetColor();
             Clear();
 
-            EnableCursor();
-            SetCursorStyle(0b1110);
+            //EnableCursor();
+            //SetCursorStyle(0b1110);
         }
 
         private static void SetCursorStyle(byte style)
@@ -70,10 +70,12 @@
         {
             WriteFramebuffer(chr);
 
+            /*
             byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
             *p = (byte)chr;
             p++;
             *p = Color;
+            */
             CursorX++;
             if (CursorX == Width)
             {
@@ -106,8 +108,8 @@
         {
             if (CursorY >= Height - 1)
             {
-                Native.Movsb((void*)0xb8000, (void*)0xB80A0, 0xF00);
-                for (int i = 0; i < Width; i++) WriteAt(' ', i, CursorY);
+                //Native.Movsb((void*)0xb8000, (void*)0xB80A0, 0xF00);
+                //for (int i = 0; i < Width; i++) WriteAt(' ', i, CursorY);
 
                 MoveUpFramebuffer();
                 CursorY--;
@@ -175,10 +177,12 @@
 
         public static void WriteAt(char chr, int x, int y)
         {
+            /*
             byte* p = (byte*)0xb8000 + ((y * Width + x) * 2);
             *p = (byte)chr;
             p++;
             *p = Color;
+            */
         }
 
         public static void Clear()

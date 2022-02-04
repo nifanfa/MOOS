@@ -5,8 +5,8 @@ namespace Kernel
 {
     public static unsafe class Framebuffer
     {
-        public static ushort Width;
-        public static ushort Height;
+        public static int Width;
+        public static int Height;
 
         public static uint* VideoMemory;
 
@@ -85,16 +85,16 @@ namespace Kernel
             }
         }
 
-        public static void SetVideoMode(ushort XRes, ushort YRes)
+        public static void SetVideoMode(uint XRes, uint YRes)
         {
-            Width = XRes;
-            Height = YRes;
+            Width = (int)XRes;
+            Height = (int)YRes;
             FirstBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
             SecondBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
             Native.Stosd(FirstBuffer, 0, (ulong)(XRes * YRes));
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
-            Control.MousePosition.X = XRes / 2;
-            Control.MousePosition.Y = YRes / 2;
+            Control.MousePosition.X = (int)(XRes / 2);
+            Control.MousePosition.Y = (int)(YRes / 2);
         }
 
         internal static void Fill(int X, int Y, int Width, int Height, uint Color)

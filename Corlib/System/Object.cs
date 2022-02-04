@@ -1,5 +1,6 @@
 ﻿using Internal.Runtime;
 using Internal.Runtime.CompilerServices;
+using Kernel;
 using System.Runtime.InteropServices;
 
 namespace System

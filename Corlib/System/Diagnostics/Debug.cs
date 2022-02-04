@@ -1,5 +1,6 @@
 ﻿using Kernel;
 
+#if KERNEL
 namespace System.Diagnostics
 {
     public static class Debug
@@ -27,3 +28,4 @@ namespace System.Diagnostics
         }
     }
 }
+#endif

@@ -4,6 +4,7 @@ using Kernel.Driver;
 using Kernel.GUI;
 using System;
 using System.Runtime;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 unsafe class Program
@@ -19,32 +20,23 @@ unsafe class Program
      * 1 MiB - 64MiB   -> System
      * 64 MiB - ∞     -> Free to use
      */
-    [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info)
+    [UnmanagedCallersOnly(EntryPoint = "Main", CallingConvention = CallingConvention.StdCall)]
+    static void Main(IntPtr VieoMemory, uint Width, uint Height, IntPtr AvailableMemory, IntPtr Modules)
     {
-        #region Initializations
-        DOSHeader* doshdr = (DOSHeader*)ImageBase;
-        NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
-        SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
-        IntPtr moduleSeg = IntPtr.Zero;
-        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
-        {
-            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
-            Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
-        }
+        Allocator.Initialize(AvailableMemory);
 
-        Allocator.Initialize((IntPtr)0x6400000);
+        StartupCodeHelpers.InitializeModules(Modules);
 
-        StartupCodeHelpers.InitializeModules(moduleSeg);
-        #endregion
-
-        PageTable.Initialise();
-        VBE.Initialise((VBEInfo*)Info->VBEInfo);
-        Console.Setup();
+        ASC16.Initialise();
+        Framebuffer.VideoMemory = (uint*)VieoMemory;
+        Framebuffer.SetVideoMode(Width, Height);
+        Framebuffer.Clear(0x0);
+        Console.WriteLine("Hello");
         IDT.Disable();
         GDT.Initialise();
         IDT.Initialise();
         IDT.Enable();
+        //PageTable.Initialise();
 
         Serial.Initialise();
         PIT.Initialise();

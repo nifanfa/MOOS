@@ -3,9 +3,6 @@
 
 using Internal.Runtime.CompilerServices;
 using System;
-using System.Runtime;
-
-using Debug = System.Diagnostics.Debug;
 
 namespace Internal.Runtime.CompilerHelpers
 {
@@ -54,7 +51,7 @@ namespace Internal.Runtime.CompilerHelpers
                     {
                         if (pDimensions[2 * i] != 0)
                             return null;
-                            //throw new PlatformNotSupportedException(SR.Arg_NotSupportedNonZeroLowerBound);
+                        //throw new PlatformNotSupportedException(SR.Arg_NotSupportedNonZeroLowerBound);
 
                         pDimensions[i] = pDimensions[2 * i + 1];
                     }

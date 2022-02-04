@@ -6,15 +6,6 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 
-		<NoStdLib>true</NoStdLib>
-		<NoConfig>true</NoConfig>
-		<RuntimeMetadataVersion>v4.0.30319</RuntimeMetadataVersion>
-		<Optimize>true</Optimize>
-		<IncludePal>true</IncludePal>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-
 		<Optimize>true</Optimize>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
@@ -23,15 +14,15 @@
 		<IlcGenerateMapFile>true</IlcGenerateMapFile>
 		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
 		<IlcDisableReflection>true</IlcDisableReflection>
-		<IlcSystemModule>Kernel</IlcSystemModule>
+		<IlcSystemModule>Loader</IlcSystemModule>
 	</PropertyGroup>
+	
+	<ItemGroup>
+		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:EfiMain" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<NativeLibrary Include="$(MSBuildStartupDirectory)\x64\Debug\NativeLib.lib" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x110000 /filealign:0x1000" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -48,7 +39,7 @@
 	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
 
 	<Target Name="CopyBinary" AfterTargets="Publish">
-		<Copy SourceFiles="$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)" DestinationFiles="$(MSBuildStartupDirectory)\Drive\Kernel"></Copy>
+		<Copy SourceFiles="$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)" DestinationFiles="$(MSBuildStartupDirectory)\Drive\EFI\BOOT\BOOTX64.EFI"></Copy>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -bios $(MSBuildStartupDirectory)\Tools\OVMF.fd -m 8192 -boot d -drive file=fat:rw:$(MSBuildStartupDirectory)\Drive -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\vdisk.img,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0"></Exec>
 	</Target>
-
 </Project>
