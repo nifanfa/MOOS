@@ -22,17 +22,9 @@ struct MemoryMap {
 			fixed (IntPtr* p = &_pointer)
 				res = bs->AllocatePool(EFI.MemoryType.LoaderData, size, p);
 
-			if (res != EFI.Status.Success)
-				Allocator.PrintLine("WHOOPS");
-
 			size += descriptorSize;
 			res = bs->GetMemoryMap(ref size, _pointer, out key, out descriptorSize, out descripterVersion);
-
-			if (res != EFI.Status.Success)
-				Allocator.PrintLine("oh no");
 		}
-		else
-			Allocator.PrintLine("WTF?");
 
 		Length = (int)(size / descriptorSize);
 		Key = key;
