@@ -5,8 +5,6 @@ using System.Runtime;
 
 public static class EntryPoint
 {
-    const uint LOADER_VERSION = 0x00010000; // 1.0.0
-
     [RuntimeExport("EfiMain")]
     unsafe static long EfiMain(EFI.Handle imageHandle, EFI.SystemTable* systemTable)
     {
@@ -182,12 +180,6 @@ public static class EntryPoint
             ptr,
             modulesSeg
             );
-
-        // We should never get here!
-        // QEMU shutdown
-        //Native.outw(0xB004, 0x2000);
-        //Platform.PrintLine("\r\n\r\nPress any key to quit...");
-        //Console.ReadKey();
 
         return 0;
     }
