@@ -98,6 +98,9 @@ abstract unsafe class Allocator
                     }
                 }
                 if (found) break;
+            }else if(_Info.Pages[i] != PageSignature) 
+            {
+                i += _Info.Pages[i];
             }
         }
         if (!found) 
