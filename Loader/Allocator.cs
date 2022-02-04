@@ -7,32 +7,32 @@ namespace Kernel
 		public static IntPtr Allocate(ulong size)
 		{
 			IntPtr ptr = default;
-			EFI.EFI.ST.Ref.BootServices.Ref.AllocatePool(EFI.MemoryType.LoaderData, size, &ptr);
+			EFI.EFI.ST->BootServices->AllocatePool(EFI.MemoryType.LoaderData, size, &ptr);
 
 			return ptr;
 		}
 
 		public static void Free(IntPtr buf)
 		{
-			EFI.EFI.ST.Ref.BootServices.Ref.FreePool(buf);
+			EFI.EFI.ST->BootServices->FreePool(buf);
 		}
 
 		public unsafe static void Print(string msg)
 		{
 			fixed (char* c = msg)
-				EFI.EFI.ST.Ref.ConOut.Ref.OutputString(c);
+				EFI.EFI.ST->ConOut.Ref.OutputString(c);
 		}
 
 		public unsafe static void Print(char c)
 		{
-			EFI.EFI.ST.Ref.ConOut.Ref.OutputString(&c);
+			EFI.EFI.ST->ConOut.Ref.OutputString(&c);
 		}
 
 		public unsafe static void Print(ushort c)
 		{
 			string s = ((ulong)c).ToString();
 			fixed (char* p = s)
-				EFI.EFI.ST.Ref.ConOut.Ref.OutputString(p);
+				EFI.EFI.ST->ConOut.Ref.OutputString(p);
 			s.Dispose();
 		}
 
@@ -51,7 +51,7 @@ namespace Kernel
 			x[0] = '\r';
 			x[1] = '\n';
 			x[2] = '\0';
-			EFI.EFI.ST.Ref.ConOut.Ref.OutputString(x);
+			EFI.EFI.ST->ConOut.Ref.OutputString(x);
 		}
 
 		public unsafe static void PrintLine()
@@ -60,7 +60,7 @@ namespace Kernel
 			x[0] = '\r';
 			x[1] = '\n';
 			x[2] = '\0';
-			EFI.EFI.ST.Ref.ConOut.Ref.OutputString(x);
+			EFI.EFI.ST->ConOut.Ref.OutputString(x);
 		}
 
 		//public unsafe static void PrintLine(char* msg, int len) {
@@ -85,17 +85,17 @@ namespace Kernel
 
 		public static void ClearConsole()
 		{
-			EFI.EFI.ST.Ref.ConOut.Ref.ClearScreen();
+			EFI.EFI.ST->ConOut.Ref.ClearScreen();
 		}
 
 		public static unsafe void ZeroFill(IntPtr ptr, ulong len)
 		{
-			EFI.EFI.ST.Ref.BootServices.Ref.SetMem(ptr, len, 0);
+			EFI.EFI.ST->BootServices->SetMem(ptr, len, 0);
 		}
 
 		public static unsafe void MemoryCopy(IntPtr dst, IntPtr src, ulong len)
 		{
-			EFI.EFI.ST.Ref.BootServices.Ref.CopyMem(dst, src, len);
+			EFI.EFI.ST->BootServices->CopyMem(dst, src, len);
 		}
 	}
 }

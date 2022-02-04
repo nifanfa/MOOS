@@ -14,19 +14,19 @@ struct MemoryMap {
 	public unsafe void Retrieve() {
 		_pointer = IntPtr.Zero;
 		ulong size = 0;
-		ref var bs = ref EFI.EFI.ST.Ref.BootServices.Ref;
+		var bs = EFI.EFI.ST->BootServices;
 
-		var res = bs.GetMemoryMap(ref size, _pointer, out var key, out descriptorSize, out var descripterVersion);
+		var res = bs->GetMemoryMap(ref size, _pointer, out var key, out descriptorSize, out var descripterVersion);
 
 		if (res == EFI.Status.BufferTooSmall) {
 			fixed (IntPtr* p = &_pointer)
-				res = bs.AllocatePool(EFI.MemoryType.LoaderData, size, p);
+				res = bs->AllocatePool(EFI.MemoryType.LoaderData, size, p);
 
 			if (res != EFI.Status.Success)
 				Allocator.PrintLine("WHOOPS");
 
 			size += descriptorSize;
-			res = bs.GetMemoryMap(ref size, _pointer, out key, out descriptorSize, out descripterVersion);
+			res = bs->GetMemoryMap(ref size, _pointer, out key, out descriptorSize, out descripterVersion);
 
 			if (res != EFI.Status.Success)
 				Allocator.PrintLine("oh no");
@@ -38,7 +38,7 @@ struct MemoryMap {
 		Key = key;
 	}
 
-	public void Free() {
-		EFI.EFI.ST.Ref.BootServices.Ref.FreePool(_pointer);
+	public unsafe void Free() {
+		EFI.EFI.ST->BootServices->FreePool(_pointer);
 	}
 }

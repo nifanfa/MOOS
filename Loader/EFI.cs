@@ -92,7 +92,7 @@ namespace EFI {
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public readonly struct SystemTable {
+	public unsafe readonly struct SystemTable {
 		public readonly TableHeader Hdr;
 		public readonly ReadonlyNativeString FirmwareVendor;
 		public readonly uint FirmwareRevision;
@@ -103,7 +103,7 @@ namespace EFI {
 		public readonly Handle StandardErrorHandle;
 		public readonly ReadonlyNativeReference<SimpleTextOutputProtocol> StdErr;
 		public readonly ReadonlyNativeReference<RuntimeServices> RuntimeServices;
-		public readonly ReadonlyNativeReference<BootServices> BootServices;
+		public readonly BootServices* BootServices;
 		public readonly ulong NumberOfTableEntries;
 		public readonly IntPtr ConfigurationTable;
 	}
@@ -634,10 +634,22 @@ namespace EFI {
 	public unsafe static class EFI {
 		public const uint OPEN_PROTOCOL_GET_PROTOCOL = 0x00000002;
 
-		public static ReadonlyNativeReference<SystemTable> ST { get; private set; }
+		static IntPtr pST;
+
+		public static SystemTable* ST 
+		{
+            get 
+			{
+				return (SystemTable*)pST;
+			}
+            set 
+			{
+				pST = (IntPtr)value;
+			}
+		}
 
 
-		public static void Initialise(ReadonlyNativeReference<SystemTable> systemTable) {
+		public static void Initialise(SystemTable* systemTable) {
 			ST = systemTable;
 			Guid.Initialise();
 		}

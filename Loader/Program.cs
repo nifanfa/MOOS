@@ -10,16 +10,16 @@ public static class EntryPoint
     const uint LOADER_VERSION = 0x00010000; // 1.0.0
 
     [RuntimeExport("EfiMain")]
-    unsafe static long EfiMain(EFI.Handle imageHandle, ReadonlyNativeReference<EFI.SystemTable> systemTable)
+    unsafe static long EfiMain(EFI.Handle imageHandle, EFI.SystemTable* systemTable)
     {
         EFI.EFI.Initialise(systemTable);
-        ref var st = ref systemTable.Ref;
-        ref var bs = ref st.BootServices.Ref;
+        ref var st = ref systemTable;
+        var bs = st->BootServices;
 
         Allocator.ClearConsole();
 
 #if DEBUG
-        bs.SetWatchdogTimer(0, 0, 0, IntPtr.Zero);
+        bs->SetWatchdogTimer(0, 0, 0, IntPtr.Zero);
         Allocator.PrintLine("SeeSharpOS Loader (DEBUG)");
 #else
 		Platform.PrintLine("SeeSharpOS Loader");
@@ -28,12 +28,12 @@ public static class EntryPoint
         Allocator.PrintLine("=================\r\n");
 
         PrintLine("Loader Version:         ", LOADER_VERSION >> 16, ".", (LOADER_VERSION & 0xFF00) >> 8, ".", LOADER_VERSION & 0xFF);
-        var vendor = st.FirmwareVendor.ToString();
+        var vendor = st->FirmwareVendor.ToString();
         PrintLine("UEFI Firmware Vendor:   ", vendor);
         vendor.Dispose(); vendor = null;
-        var rev = st.FirmwareRevision;
+        var rev = st->FirmwareRevision;
         PrintLine("UEFI Firmware Revision: ", rev >> 16, ".", (rev & 0xFF00) >> 8, ".", rev & 0xFF);
-        var ver = st.Hdr.Revision;
+        var ver = st->Hdr.Revision;
 
         if ((ver & 0xFFFF) % 10 == 0)
             PrintLine("UEFI Version:           ", ver >> 16, ".", (ver & 0xFFFF) / 10);
@@ -43,7 +43,7 @@ public static class EntryPoint
         Allocator.PrintLine();
         EFI.Status res;
 
-        res = bs.OpenProtocol(
+        res = bs->OpenProtocol(
             imageHandle,
             ref EFI.Guid.LoadedImageProtocol,
             out ReadonlyNativeReference<EFI.LoadedImageProtocol> li,
@@ -53,7 +53,7 @@ public static class EntryPoint
         if (res != EFI.Status.Success)
             Error("OpenProtocol(LoadedImage) failed!", res);
 
-        res = bs.OpenProtocol(
+        res = bs->OpenProtocol(
             li.Ref.DeviceHandle,
             ref EFI.Guid.SimpleFileSystemProtocol,
             out ReadonlyNativeReference<EFI.SimpleFileSystemProtocol> fs,
@@ -110,7 +110,7 @@ public static class EntryPoint
         ulong pages = ((virtSize) >> 12) + (((virtSize) & 0xFFF) > 0 ? 1U : 0U);
         PrintLine("Virtual Size: ", virtSize, ", Pages: ", pages);
         var mem = (IntPtr)ntHdr.OptionalHeader.ImageBase;
-        res = bs.AllocatePages(EFI.AllocateType.Address, EFI.MemoryType.LoaderData, pages, ref mem);
+        res = bs->AllocatePages(EFI.AllocateType.Address, EFI.MemoryType.LoaderData, pages, ref mem);
         PrintLine("mem: ", (ulong)mem);
 
         if (res != EFI.Status.Success)
@@ -160,8 +160,8 @@ public static class EntryPoint
         sectionHdrs.Dispose();
 
         ulong numHandles = 0;
-        bs.LocateHandleBuffer(EFI.LocateSearchType.ByProtocol, ref EFI.Guid.GraphicsOutputProtocol, IntPtr.Zero, ref numHandles, out var gopHandles);
-        bs.OpenProtocol(
+        bs->LocateHandleBuffer(EFI.LocateSearchType.ByProtocol, ref EFI.Guid.GraphicsOutputProtocol, IntPtr.Zero, ref numHandles, out var gopHandles);
+        bs->OpenProtocol(
             gopHandles[0],
             ref EFI.Guid.GraphicsOutputProtocol,
             out ReadonlyNativeReference<EFI.GraphicsOutputProtocol> rGop,
@@ -202,7 +202,7 @@ public static class EntryPoint
         Allocator.PrintLine("\r\nPress any key to continue to kernel...");
 #endif
 
-        res = bs.ExitBootServices(imageHandle, mmap.Key);
+        res = bs->ExitBootServices(imageHandle, mmap.Key);
 
         // No Platform.Print* after this point!
 
@@ -211,7 +211,7 @@ public static class EntryPoint
             mmap.Free();
             mmap.Retrieve();
 
-            res = bs.ExitBootServices(imageHandle, mmap.Key);
+            res = bs->ExitBootServices(imageHandle, mmap.Key);
 
             if (res != EFI.Status.Success)
             {
