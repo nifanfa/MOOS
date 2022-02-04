@@ -62,7 +62,7 @@ namespace Internal.Runtime.CompilerHelpers
 
             var data = Allocator.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Allocator.ZeroMemory(data, size);
+            Allocator.ZeroFill(data, size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             return obj;
@@ -79,7 +79,7 @@ namespace Internal.Runtime.CompilerHelpers
 
             var data = Allocator.Allocate(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Allocator.ZeroMemory(data, size);
+            Allocator.ZeroFill(data, size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             var b = (byte*)data;
