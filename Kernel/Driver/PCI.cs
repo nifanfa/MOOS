@@ -57,21 +57,24 @@ namespace Kernel
         public static void Initialise()
         {
             Devices = new List<PCIDevice>();
-            CheckBus(0);
-            for(int i = 0; i < Devices.Count; i++)
+            if ((GetHeaderType(0x0, 0x0, 0x0) & 0x80) == 0)
             {
-                Console.Write("PCI");
-                Console.Write("[");
-                Console.Write(((ulong)Devices[i].Bus).ToString());
-                Console.Write(",");
-                Console.Write(((ulong)Devices[i].Slot).ToString());
-                Console.Write(",");
-                Console.Write(((ulong)Devices[i].Function).ToString());
-                Console.Write("]");
-                Console.Write(VendorID.GetName(Devices[i].VendorID));
-                Console.Write(" ");
-                Console.WriteLine(ClassID.GetName(Devices[i].ClassID));
+                CheckBus(0);
             }
+            else 
+            {
+                for (ushort fn = 0; fn < 8; fn++)
+                {
+                    if (GetVendorID(0x0, 0x0, fn) != 0xFFFF)
+                        break;
+
+                    CheckBus(fn);
+                }
+            }
+
+            Console.Write("PCI Initialized. ");
+            Console.Write(((ulong)Devices.Count).ToString());
+            Console.WriteLine(" Devices");
         }
 
         private static void CheckBus(ushort Bus)
