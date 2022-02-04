@@ -184,28 +184,5 @@ namespace System
             vs.Dispose();
             return s;
         }
-
-        public static string Format(string format, params object[] args)
-        {
-            string result = "";
-            for (int i = 0; i < format.Length; i++)
-            {
-                if (format[i] == '{' && format[i + 2] == '}')
-                {
-                    //ASCII
-                    string tmp = result + args[format[i + 1] - 0x30];
-                    result.Dispose();
-                    result = tmp;
-                    i += 2;
-                    continue;
-                }
-                string atmp = result + format[i];
-                result.Dispose();
-                result = atmp;
-            }
-            args.Dispose();
-            format.Dispose();
-            return result;
-        }
     }
 }
