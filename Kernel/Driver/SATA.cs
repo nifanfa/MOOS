@@ -356,11 +356,11 @@ namespace Kernel
             {
                 StopCMD();
 
-                ulong newBase = (ulong)Heap.Allocate(1024);
+                ulong newBase = (ulong)Allocator.Allocate(1024);
                 HBAPort->CommandListBase = (uint)newBase;
                 HBAPort->CommandListBaseUpper = (uint)(newBase >> 32);
 
-                ulong fisBase = (ulong)Heap.Allocate(256);
+                ulong fisBase = (ulong)Allocator.Allocate(256);
                 HBAPort->FISBaseAddress = (uint)fisBase;
                 HBAPort->FISBaseAddressUpper = (uint)(fisBase >> 32);
 
@@ -369,7 +369,7 @@ namespace Kernel
                 for (int i = 0; i < 32; i++)
                 {
                     cmdhdr[i].PRDTLength = 8;
-                    ulong cmdTableAddr = (ulong)Heap.Allocate(256);
+                    ulong cmdTableAddr = (ulong)Allocator.Allocate(256);
                     cmdTableAddr += (ulong)(i << 8);
                     cmdhdr[i].CommandTableBaseAddress = (uint)cmdTableAddr;
                     cmdhdr[i].CommandTableBaseAddressUpper = (uint)(cmdTableAddr >> 32);

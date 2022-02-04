@@ -18,7 +18,7 @@ namespace Kernel
         public static void SendPacket(byte[] DestIP, ushort SourcePort, ushort DestPort, byte[] Data)
         {
             int PacketLen = (sizeof(UDPHeader) + Data.Length);
-            byte* Buffer = (byte*)Heap.Allocate((ulong)PacketLen);
+            byte* Buffer = (byte*)Allocator.Allocate((ulong)PacketLen);
             UDPHeader* header = (UDPHeader*)Buffer;
             Native.Stosb(header, 0, (ulong)PacketLen);
             header->SrcPort = Ethernet.SwapLeftRight(SourcePort);

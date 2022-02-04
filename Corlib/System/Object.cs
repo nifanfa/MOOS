@@ -42,7 +42,7 @@ namespace System
         public virtual void Dispose()
         {
             var obj = this;
-            Heap.Free(Unsafe.As<object, IntPtr>(ref obj));
+            Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
         }
     }
 }

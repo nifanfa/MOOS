@@ -2,7 +2,7 @@
 using System;
 using System.Runtime;
 
-abstract unsafe class Heap
+abstract unsafe class Allocator
 {
     internal static unsafe void ZeroMemory(IntPtr data, ulong size)
     {
