@@ -95,6 +95,7 @@ namespace Kernel
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
             Control.MousePosition.X = (int)(XRes / 2);
             Control.MousePosition.Y = (int)(YRes / 2);
+            _TripleBuffered = false;
         }
 
         internal static void Fill(int X, int Y, int Width, int Height, uint Color)

@@ -9,6 +9,16 @@ using System.Windows.Forms;
 
 unsafe class Program
 {
+    [StructLayout(LayoutKind.Sequential,Pack = 1)]
+    struct BOOTINFO
+    {
+        public ulong Framebuffer;
+        public uint Width;
+        public uint Height;
+        public ulong MemoryStart;
+        public ulong Modules;
+    }
+
     static void Main() { }
 
     public const int ImageBase = 0x110000;
@@ -20,23 +30,25 @@ unsafe class Program
      * 1 MiB - 64MiB   -> System
      * 64 MiB - ∞     -> Free to use
      */
-    [UnmanagedCallersOnly(EntryPoint = "Main", CallingConvention = CallingConvention.StdCall)]
-    static void Main(IntPtr VieoMemory, uint Width, uint Height, IntPtr AvailableMemory, IntPtr Modules)
+    [RuntimeExport("Main")]
+    static void Main(BOOTINFO* bootinfo)
     {
-        Allocator.Initialize(AvailableMemory);
+        Allocator.Initialize((IntPtr)bootinfo->MemoryStart);
 
-        StartupCodeHelpers.InitializeModules(Modules);
+        StartupCodeHelpers.InitializeModules((IntPtr)bootinfo->Modules);
 
         ASC16.Initialise();
-        Framebuffer.VideoMemory = (uint*)VieoMemory;
-        Framebuffer.SetVideoMode(Width, Height);
+
+        Framebuffer.VideoMemory = (uint*)bootinfo->Framebuffer;
+        Framebuffer.SetVideoMode(bootinfo->Width, bootinfo->Height);
         Framebuffer.Clear(0x0);
+
+        Console.Setup();
         Console.WriteLine("Hello");
         IDT.Disable();
         GDT.Initialise();
         IDT.Initialise();
         IDT.Enable();
-        //PageTable.Initialise();
 
         Serial.Initialise();
         PIT.Initialise();
