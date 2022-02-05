@@ -21,15 +21,6 @@ unsafe class Program
 
     static void Main() { }
 
-    public const int ImageBase = 0x110000;
-
-    /*
-     * Minimum system requirement:
-     * 128MiB of RAM
-     * Memory Map:
-     * 1 MiB - 64MiB   -> System
-     * 64 MiB - ∞     -> Free to use
-     */
     [RuntimeExport("Main")]
     static void Main(BootInfo* bootinfo)
     {
