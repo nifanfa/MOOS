@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="源文件\arm">
+      <UniqueIdentifier>{20c8e9bd-0fa8-46d3-b825-e3eebd64ab3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\x86_64">
+      <UniqueIdentifier>{87122940-e80f-416d-a840-5e32f703f3ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ia32">
+      <UniqueIdentifier>{e6e3d25a-4fce-4036-bef9-3cfbafc4baaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\aarch64">
+      <UniqueIdentifier>{cf7e7031-77e5-4827-9aa6-f996fc4b3d06}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="lib\aarch64\initplat.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\aarch64\math.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arm\initplat.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arm\math.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\boxdraw.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\cmdline.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\console.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\crc.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\data.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\debug.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\dpath.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\error.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\event.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\guid.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\hand.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\hw.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ia32\initplat.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ia32\math.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\init.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\lock.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\misc.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\print.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\runtime\efirtlib.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\runtime\rtdata.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\runtime\rtlock.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\runtime\rtstr.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\runtime\vm.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\smbios.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\sread.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\str.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\x86_64\initplat.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\x86_64\math.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
