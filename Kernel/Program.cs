@@ -16,6 +16,7 @@ unsafe class Program
         public uint Width;
         public uint Height;
         public ulong MemoryStart;
+        public ulong NumPages;
         public ulong Modules;
     }
 
@@ -35,7 +36,6 @@ unsafe class Program
         Framebuffer.Clear(0x0);
 
         Console.Setup();
-        Console.WriteLine("Hello");
         IDT.Disable();
         GDT.Initialise();
         IDT.Initialise();
@@ -51,7 +51,7 @@ unsafe class Program
         SATA.Initialize();
 
         IDE.Initialize();
-        
+
         /*
         Console.WriteLine(
             IDE.Controllers[0].ReadOrWrite(IDE.Drive.Master, 0, (byte*)0x2000_0000, false) ? "IDE success" : "IDE failed");
@@ -62,6 +62,8 @@ unsafe class Program
         Console.WriteLine(SATA.Ports[0].Read(0, 1, _P) ? "SATA Success" : "SATA Failed");
         */
 
+        Console.Write("Num Pages: ");
+        Console.WriteLine(bootinfo->NumPages.ToString());
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");

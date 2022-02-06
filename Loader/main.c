@@ -27,6 +27,7 @@ struct BOOTINFO
 	UINT32 Width;
 	UINT32 Height;
 	UINT64 MemoryStart;
+	UINT64 NumPages;
 	UINT64 Modules;
 } bootinfo;
 
@@ -178,6 +179,7 @@ EFI_STATUS efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
 	bootinfo.Width = width;
 	bootinfo.Height = height;
 	bootinfo.MemoryStart = best_alloc_start;
+	bootinfo.NumPages = best_number_of_pages;
 	bootinfo.Modules = modules;
 
 	void (*entry)(struct BOOTINFO*) = (nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
