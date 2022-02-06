@@ -50,6 +50,7 @@
 	<Target Name="Check" BeforeTargets="BeforeCompile">
 		<Error Condition="!Exists('..\x64\Debug\NativeLib.lib')" Text="Error! NativeLib.lib Please compile NativeLib"></Error>
 		<Error Condition="!Exists('..\x64\Debug\Loader.efi')" Text="Error! Loader.efi Please compile Loader"></Error>
+		<Error Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')" Text="Error! QEMU not installed"></Error>
 	</Target>
 
 	<Target Name="CopyBinary" AfterTargets="Publish">
