@@ -1,4 +1,4 @@
-C# operating system demo, Using Native AOT (Core RT) boot via bios instead of UEFI **works fine on real hardware (newer change may cause it reboot on real hardware. i'll fix that as soon as possible)**  
+C# operating system demo, Using Native AOT (Core RT) boot using UEFI(there's also multiboot version. check out multiboot branch) **works fine on real hardware (newer change may cause it reboot on real hardware. i'll fix that as soon as possible)**  
  - [x] PS2 Keyboard/Mouse(USB Compatible)
  - [x] Nintendo Family Computer Emulator
  - [x] Intel® Gigabit Ethernet Network 
