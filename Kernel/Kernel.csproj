@@ -53,7 +53,7 @@
 		<Message Text="Warning: Running qemu will corrupt the kernel binaries. If you want to run it on real hardware, remove the exec qemu task, then run and copy it to your drive" Importance="high"></Message>
 		<Message Text="Warning: Running qemu will corrupt the kernel binaries. If you want to run it on real hardware, remove the exec qemu task, then run and copy it to your drive" Importance="high"></Message>
 		<Message Text="Warning: Running qemu will corrupt the kernel binaries. If you want to run it on real hardware, remove the exec qemu task, then run and copy it to your drive" Importance="high"></Message>
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -bios $(MSBuildStartupDirectory)\Tools\OVMF.fd -m 8192 -boot d -hda fat:rw:$(MSBuildStartupDirectory)\Drive -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\vdisk.img,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -net nic,model=rtl8139 -net tap,ifname=tap"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -bios $(MSBuildStartupDirectory)\Tools\OVMF.fd -m 8192 -boot d -hda fat:rw:$(MSBuildStartupDirectory)\Drive -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\vdisk.img,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0"></Exec>
 	</Target>
 
 </Project>
