@@ -14,15 +14,9 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-
-		<Optimize>true</Optimize>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-		<IlcGenerateDgmlFile>true</IlcGenerateDgmlFile>
-		<IlcGenerateMapFile>true</IlcGenerateMapFile>
-		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
-		<IlcDisableReflection>true</IlcDisableReflection>
+		
+		<EntryPointSymbol>Main</EntryPointSymbol>
+		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 		<IlcSystemModule>Kernel</IlcSystemModule>
 	</PropertyGroup>
 
@@ -31,11 +25,11 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<LinkerArg Include="/subsystem:EFI_APPLICATION /entry:Main /fixed /safeseh:no /base:0x110000 /filealign:0x1000" />
+		<LinkerArg Include="/fixed /safeseh:no /base:0x110000 /filealign:0x1000 /map:Kernel.map" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
@@ -59,7 +53,7 @@
 		<Message Text="Warning: Running qemu will corrupt the kernel binaries. If you want to run it on real hardware, remove the exec qemu task, then run and copy it to your drive" Importance="high"></Message>
 		<Message Text="Warning: Running qemu will corrupt the kernel binaries. If you want to run it on real hardware, remove the exec qemu task, then run and copy it to your drive" Importance="high"></Message>
 		<Message Text="Warning: Running qemu will corrupt the kernel binaries. If you want to run it on real hardware, remove the exec qemu task, then run and copy it to your drive" Importance="high"></Message>
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -bios $(MSBuildStartupDirectory)\Tools\OVMF.fd -m 8192 -boot d -hda fat:rw:$(MSBuildStartupDirectory)\Drive -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\vdisk.img,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -bios $(MSBuildStartupDirectory)\Tools\OVMF.fd -m 8192 -boot d -hda fat:rw:$(MSBuildStartupDirectory)\Drive -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\vdisk.img,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -net nic,model=rtl8139 -net tap,ifname=tap"></Exec>
 	</Target>
 
 </Project>
