@@ -47,6 +47,11 @@
 
 	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
 
+	<Target Name="Check" BeforeTargets="BeforeCompile">
+		<Error Condition="!Exists('..\x64\Debug\NativeLib.lib')" Text="Error! NativeLib.lib Please compile NativeLib"></Error>
+		<Error Condition="!Exists('..\x64\Debug\Loader.efi')" Text="Error! Loader.efi Please compile Loader"></Error>
+	</Target>
+
 	<Target Name="CopyBinary" AfterTargets="Publish">
 		<Copy SourceFiles="$(MSBuildStartupDirectory)\x64\Debug\Loader.efi" DestinationFiles="$(MSBuildStartupDirectory)\Drive\EFI\BOOT\BOOTX64.efi"></Copy>
 		<Copy SourceFiles="$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)" DestinationFiles="$(MSBuildStartupDirectory)\Drive\Kernel"></Copy>
