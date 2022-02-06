@@ -1,106 +1,23 @@
 ﻿#include <efi.h>
 #include <efilib.h>
 #include <libsmbios.h>
+#include <ia64/pe.h>
 
-#pragma region PE
-struct DOSHeader
-{
-	UINT16 e_magic;              // Magic number
-	UINT16 e_cblp;               // Bytes on last page of file
-	UINT16 e_cp;                 // Pages in file
-	UINT16 e_crlc;               // Relocations
-	UINT16 e_cparhdr;            // Size of header in paragraphs
-	UINT16 e_minalloc;           // Minimum extra paragraphs needed
-	UINT16 e_maxalloc;           // Maximum extra paragraphs needed
-	UINT16 e_ss;                 // Initial (relative) SS value
-	UINT16 e_sp;                 // Initial SP value
-	UINT16 e_csum;               // Checksum
-	UINT16 e_ip;                 // Initial IP value
-	UINT16 e_cs;                 // Initial (relative) CS value
-	UINT16 e_lfarlc;             // File address of relocation table
-	UINT16 e_ovno;               // Overlay number
-	UINT16 e_res1[4];            // Reserved words
-	UINT16 e_oemid;              // OEM identifier (for e_oeminfo)
-	UINT16 e_oeminfo;            // OEM information; e_oemid specific
-	UINT16 e_res2[10];           // Reserved words
-	UINT32 e_lfanew;             // File address of new exe header
-};
-
-struct DataDirectory {
-	UINT32 VirtualAddress;
-	UINT32 Size;
-};
-
-struct NtHeaders64
-{
-	UINT32 Signature;
-	UINT16 Machine;
-	UINT16 NumberOfSections;
-	UINT32 TimeDateStamp;
-	UINT32 PointerToSymbolTable;
-	UINT32 NumberOfSymbols;
-	UINT16 SizeOfOptionalHeader;
-	UINT16 Characteristics;
-	UINT16 Magic;
-	UINT8 MajorLinkerVersion;
-	UINT8 MinorLinkerVersion;
-	UINT32 SizeOfCode;
-	UINT32 SizeOfInitializedData;
-	UINT32 SizeOfUninitializedData;
-	UINT32 AddressOfEntryPoint;
-	UINT32 BaseOfCode;
-	UINT64 ImageBase;
-	UINT32 SectionAlignment;
-	UINT32 FileAlignment;
-	UINT16 MajorOperatingSystemVersion;
-	UINT16 MinorOperatingSystemVersion;
-	UINT16 MajorImageVersion;
-	UINT16 MinorImageVersion;
-	UINT16 MajorSubsystemVersion;
-	UINT16 MinorSubsystemVersion;
-	UINT32 Win32VersionValue;
-	UINT32 SizeOfImage;
-	UINT32 SizeOfHeaders;
-	UINT32 CheckSum;
-	UINT16 Subsystem;
-	UINT16 DllCharacteristics;
-	UINT64 SizeOfStackReserve;
-	UINT64 SizeOfStackCommit;
-	UINT64 SizeOfHeapReserve;
-	UINT64 SizeOfHeapCommit;
-	UINT32 LoaderFlags;
-	UINT32 NumberOfRvaAndSizes;
-	struct DataDirectory ExportTable;
-	struct DataDirectory ImportTable;
-	struct DataDirectory ResourceTable;
-	struct DataDirectory ExceptionTable;
-	struct DataDirectory CertificateTable;
-	struct DataDirectory BaseRelocationTable;
-	struct DataDirectory Debug;
-	struct DataDirectory Architecture;
-	struct DataDirectory GlobalPtr;
-	struct DataDirectory TLSTable;
-	struct DataDirectory LoadConfigTable;
-	struct DataDirectory BoundImport;
-	struct DataDirectory IAT;
-	struct DataDirectory DelayImportDescriptor;
-	struct DataDirectory CLRRuntimeHeader;
-	struct DataDirectory Reserved;
-};
-
-struct SectionHeader {
-	UINT8  Name[8];
-	UINT32 PhysicalAddress_VirtualSize;
-	UINT32 VirtualAddress;
-	UINT32 SizeOfRawData;
-	UINT32 PointerToRawData;
-	UINT32 PointerToRelocations;
-	UINT32 PointerToLineNumbers;
-	UINT16 NumberOfRelocations;
-	UINT16 NumberOfLineNumbers;
-	UINT32 Characteristics;
-};
-#pragma endregion
+#if defined(_M_X64) || defined(__x86_64__)
+static CHAR16* Arch = L"x64";
+static CHAR16* ArchName = L"64-bit x86";
+#elif defined(_M_IX86) || defined(__i386__)
+static CHAR16* Arch = L"ia32";
+static CHAR16* ArchName = L"32-bit x86";
+#elif defined (_M_ARM64) || defined(__aarch64__)
+static CHAR16* Arch = L"aa64";
+static CHAR16* ArchName = L"64-bit ARM";
+#elif defined (_M_ARM) || defined(__arm__)
+static CHAR16* Arch = L"arm";
+static CHAR16* ArchName = L"32-bit ARM";
+#else
+#  error Unsupported architecture
+#endif
 
 #define PAGES(size)					(size >> 12)+((size & 0xFFF)==0 ? 0:1)
 
@@ -121,6 +38,19 @@ struct uefi_mmap {
 	uint64_t desc_size;
 	uint32_t desc_version;
 } uefi_mmap;
+
+struct _MY_IMAGE_SECTION_HEADER {
+	UINT8  Name[8];
+	UINT32 PhysicalAddress_VirtualSize;
+	UINT32 VirtualAddress;
+	UINT32 SizeOfRawData;
+	UINT32 PointerToRawData;
+	UINT32 PointerToRelocations;
+	UINT32 PointerToLineNumbers;
+	UINT16 NumberOfRelocations;
+	UINT16 NumberOfLineNumbers;
+	UINT32 Characteristics;
+};
 
 // Application entrypoint (must be set to 'efi_main' for gnu-efi crt0 compatibility)
 EFI_STATUS efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
@@ -167,17 +97,17 @@ EFI_STATUS efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
 
 	Print(L"Kernel read at: 0x%x\r\n", kernel);
 #pragma endregion
+	
+	struct _IMAGE_DOS_HEADER* dos = kernel;
+	struct _IMAGE_NT_HEADERS* nthdr = kernel + dos->e_lfanew;
 
-	struct DOSHeader* dos = kernel;
-	struct NtHeaders64* nthdr = kernel + dos->e_lfanew;
-
-	EFI_PHYSICAL_ADDRESS base = nthdr->ImageBase;
+	EFI_PHYSICAL_ADDRESS base = nthdr->OptionalHeader.ImageBase;
 	Print(L"Image base: 0x%x\r\n", base);
-
-	struct SectionHeader* sec = kernel + dos->e_lfanew + sizeof(struct NtHeaders64);
+	
+	struct _MY_IMAGE_SECTION_HEADER* sec = kernel + dos->e_lfanew + sizeof(struct _IMAGE_NT_HEADERS);
 
 	UINT64 virtSize = 0;
-	for (INT32 i = 0; i < nthdr->NumberOfSections; i++)
+	for (INT32 i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
 	{
 		virtSize = virtSize > sec[i].VirtualAddress + sec[i].PhysicalAddress_VirtualSize
 			? virtSize
@@ -191,7 +121,7 @@ EFI_STATUS efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
 	uefi_call_wrapper(BS->CopyMem, 3, base, kernel, finfo->FileSize);
 
 	UINT64 modules = NULL;
-	for (INT32 i = 0; i < nthdr->NumberOfSections; i++)
+	for (INT32 i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
 	{
 		Print(L"Loading Section: ");
 		for (INT32 k = 0; k < 8; k++)
@@ -250,7 +180,7 @@ EFI_STATUS efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
 	bootinfo.MemoryStart = best_alloc_start;
 	bootinfo.Modules = modules;
 
-	void (*entry)(struct BOOTINFO*) = (nthdr->ImageBase + nthdr->AddressOfEntryPoint);
+	void (*entry)(struct BOOTINFO*) = (nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
 	(*entry)(&bootinfo);
 
 	for (;;);
