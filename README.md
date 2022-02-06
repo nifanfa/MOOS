@@ -14,4 +14,4 @@ C# operating system demo, Using Native AOT (Core RT) boot via bios instead of UE
  - [x] UDP
  - [x] Lan
  - [ ] Wan  
-![image](https://github.com/nifanfa/Solution1/blob/master/Screenshot.png)
+![image](https://github.com/nifanfa/Solution1/blob/multiboot/Screenshot.png)
