@@ -10,7 +10,7 @@ using System.Windows.Forms;
 unsafe class Program
 {
     [StructLayout(LayoutKind.Sequential,Pack = 1)]
-    struct BOOTINFO
+    struct BootInfo
     {
         public ulong Framebuffer;
         public uint Width;
@@ -21,17 +21,8 @@ unsafe class Program
 
     static void Main() { }
 
-    public const int ImageBase = 0x110000;
-
-    /*
-     * Minimum system requirement:
-     * 128MiB of RAM
-     * Memory Map:
-     * 1 MiB - 64MiB   -> System
-     * 64 MiB - ∞     -> Free to use
-     */
     [RuntimeExport("Main")]
-    static void Main(BOOTINFO* bootinfo)
+    static void Main(BootInfo* bootinfo)
     {
         Allocator.Initialize((IntPtr)bootinfo->MemoryStart);
 
