@@ -33,11 +33,10 @@ namespace Kernel.NET
             while ((In8((ushort)(IOBase + 0x37)) & 0x10) != 0) ;
             Console.WriteLine("Soft-Reset Done");
 
-            uint p = (uint)Allocator.Allocate(8192 + 16 + 1500 + 0xF);
-            p = p & ~0xFU;
+            ulong p = (ulong)Allocator.Allocate(8192 + 16 + 1500);
             Console.Write("RX is at:");
             Console.WriteLine(((ulong)p).ToStringHex());
-            RX = p;
+            RX = (uint)p;
 
             Out32((ushort)(IOBase + 0x30), (uint)p);
 
