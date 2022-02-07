@@ -271,7 +271,8 @@ Main:
     mov ebx,[EXE+DOSHeader.e_lfanew]
     lea ebx,[ebx+EXE+NTHeader.AddressOfEntryPoint]
     mov ebx,[ebx]
-    add rbx,[rsp+24]
+    mov rax,[rsp+24]
+    add rbx,rax
     mov [rsp+8],rbx
 
     xor rbx,rbx
@@ -290,7 +291,8 @@ LoadSection:
     mov ecx,[ecx]
     lea edi,[ebx+SectionHeader.VirtualAddress]
     mov edi,[edi]
-    add rdi,[rsp+24]
+    mov rax,[rsp+24]
+    add rdi,rax
     lea r13d,[ebx+SectionHeader.Name]
     mov r13,[r13]
     mov qword r14,0x73656C75646F6D2E
