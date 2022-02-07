@@ -227,6 +227,19 @@ struc NTHeader
         .Tables: resb 128
 endstruc
 
+struc SectionHeader
+        .Name: resb 8
+        .PhysicalAddress_VirtualSize: resb 4
+        .VirtualAddress: resb 4
+        .SizeOfRawData: resb 4
+        .PointerToRawData: resb 4
+        .PointerToRelocations: resb 4
+        .PointerToLineNumbers: resb 4
+        .NumberOfRelocations: resb 2
+        .NumberOfLineNumbers: resb 2
+        .Characteristics: resb 4
+endstruc
+
 [BITS 64]      
 Main:
     mov ax, 0x0010
@@ -238,17 +251,64 @@ Main:
 
     mov rsp,STACKTOP
     mov rbp,rsp
+
+    sub rsp,64
     
+    xor rbx,rbx
+    mov ebx,[EXE+DOSHeader.e_lfanew]
+    lea ebx,[ebx+EXE+NTHeader.NumberOfSections]
+    xor rcx,rcx
+    mov cx,[rbx]
+    mov [rsp+16],rcx
+    
+    xor rbx,rbx
+    mov ebx,[EXE+DOSHeader.e_lfanew]
+    lea ebx,[ebx+EXE+NTHeader.ImageBase]
+    mov rbx,[rbx]
+    mov [rsp+24],rbx
+
     xor rbx,rbx
     mov ebx,[EXE+DOSHeader.e_lfanew]
     lea ebx,[ebx+EXE+NTHeader.AddressOfEntryPoint]
     mov ebx,[ebx]
-    lea ebx,[EXE+ebx]
+    add rbx,[rsp+24]
+    mov [rsp+8],rbx
+
+    xor rbx,rbx
+    mov ebx,[EXE+DOSHeader.e_lfanew]
+    lea ebx,[ebx+EXE+NTHeader_size]
+    mov r15,0
+LoadSection:
+    xor rsi,rsi
+    xor rdi,rdi
+    xor rcx,rcx
+    xor r13,r13
+    lea esi,[ebx+SectionHeader.PointerToRawData]
+    mov esi,[esi]
+    add rsi,EXE
+    lea ecx,[ebx+SectionHeader.SizeOfRawData]
+    mov ecx,[ecx]
+    lea edi,[ebx+SectionHeader.VirtualAddress]
+    mov edi,[edi]
+    add rdi,[rsp+24]
+    lea r13d,[ebx+SectionHeader.Name]
+    mov r13,[r13]
+    mov qword r14,0x73656C75646F6D2E
+    cmp qword r13,r14
+    jne Skip
+    mov qword [rsp+32],rdi
+Skip:
+    rep movsb
+    inc r15
+    add ebx,SectionHeader_size
+    mov r14,[rsp+16]
+    cmp r15,r14
+    jne LoadSection
     
     mov rcx,[multiboot_pointer]
-    mov rdx,EXE
-    xor r8,r8
-    call rbx
+    mov rdx,[rsp+32]
+    mov rax,[rsp+8]
+    call rax
     jmp die
 
 align 4096
