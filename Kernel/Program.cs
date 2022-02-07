@@ -10,8 +10,6 @@ unsafe class Program
 {
     static void Main() { }
 
-    public const int ImageBase = 0x110000;
-
     /*
      * Minimum system requirement:
      * 128MiB of RAM
@@ -20,23 +18,11 @@ unsafe class Program
      * 64 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info)
+    static void Main(MultibootInfo* Info, IntPtr Modules)
     {
-        #region Initializations
-        DOSHeader* doshdr = (DOSHeader*)ImageBase;
-        NtHeaders64* nthdr = (NtHeaders64*)(ImageBase + doshdr->e_lfanew);
-        SectionHeader* sections = ((SectionHeader*)(ImageBase + doshdr->e_lfanew + sizeof(NtHeaders64)));
-        IntPtr moduleSeg = IntPtr.Zero;
-        for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
-        {
-            if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(ImageBase + sections[i].VirtualAddress);
-            Native.Movsb((void*)(ImageBase + sections[i].VirtualAddress), (void*)(ImageBase + sections[i].PointerToRawData), sections[i].SizeOfRawData);
-        }
-
         Allocator.Initialize((IntPtr)0x6400000);
 
-        StartupCodeHelpers.InitializeModules(moduleSeg);
-        #endregion
+        StartupCodeHelpers.InitializeModules(Modules);
 
         PageTable.Initialise();
         VBE.Initialise((VBEInfo*)Info->VBEInfo);
