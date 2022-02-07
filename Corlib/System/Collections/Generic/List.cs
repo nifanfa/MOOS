@@ -1,4 +1,4 @@
-﻿using Kernel;
+using Kernel;
 
 namespace System.Collections.Generic
 {
@@ -39,6 +39,16 @@ namespace System.Collections.Generic
             }
             _value[index] = item;
             Count++;
+        }
+         
+        public T[] ToArray()
+        {
+            T[] array = new T[Count];
+            for (int i = 0; i < Count; i++)
+            {
+                array[i] = this[i];
+            }
+            return array;
         }
     }
 }
