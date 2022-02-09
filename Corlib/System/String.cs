@@ -57,6 +57,27 @@ namespace System
             return s;
         }
 
+        public unsafe static string FromASCII(IntPtr ptr, int length, byte ignore)
+        {
+            var buf = new char[9];
+            buf[8] = '\0';
+            var _ptr = (byte*)ptr;
+
+            int len = 0;
+
+            for (int i = 0; i < length; i++)
+                if (_ptr[i] != ignore)
+                {
+                    buf[i] = (char)_ptr[i];
+                    len++;
+                }
+
+            var s = new string(buf, 0, len);
+            buf.Dispose();
+
+            return s;
+        }
+
         static unsafe string Ctor(char* ptr)
         {
             var i = 0;
@@ -136,12 +157,12 @@ namespace System
             return 0;
         }
 
-        public static string Concat(string a, string b) 
+        public static string Concat(string a, string b)
         {
             int Length = a.Length + b.Length;
             char* ptr = stackalloc char[Length];
             int currentIndex = 0;
-            for(int i = 0; i < a.Length; i++) 
+            for (int i = 0; i < a.Length; i++)
             {
                 ptr[currentIndex] = a[i];
                 currentIndex++;
@@ -154,7 +175,7 @@ namespace System
             return new string(ptr, 0, Length);
         }
 
-        public static string Concat(string a, string b,string c)
+        public static string Concat(string a, string b, string c)
         {
             string p1 = a + b;
             string p2 = p1 + c;
@@ -175,7 +196,7 @@ namespace System
         public static string Concat(params string[] vs)
         {
             string s = "";
-            for(int i = 0; i < vs.Length; i++) 
+            for (int i = 0; i < vs.Length; i++)
             {
                 string tmp = s + vs[i];
                 s.Dispose();

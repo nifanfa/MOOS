@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kernel.FS;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -245,7 +246,7 @@ namespace Kernel
             }
         }
 
-        public class SATADevice
+        public class SATADevice : Disk
         {
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             struct FIS_REG_H2D
@@ -398,14 +399,16 @@ namespace Kernel
                 }
             }
 
-            public bool Read(ulong Sector, uint Count, ushort* Buffer) 
+            public override bool Read(ulong sector, uint count, byte[] data) 
             {
-                return ReadOrWrite(Sector, Count, Buffer, false);
+                fixed (byte* p = data)
+                    return ReadOrWrite(sector, count, (ushort*)p, false);
             }
 
-            public bool Write(ulong Sector, uint Count, ushort* Buffer)
+            public override bool Write(ulong sector, uint count, byte[] data)
             {
-                return ReadOrWrite(Sector, Count, Buffer, true);
+                fixed (byte* p = data)
+                    return ReadOrWrite(sector, count, (ushort*)p, true);
             }
 
             private bool ReadOrWrite(ulong Sector, uint Count, ushort* Buffer, bool Write)
