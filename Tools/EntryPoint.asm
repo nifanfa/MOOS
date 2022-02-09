@@ -46,8 +46,8 @@ multiboot_header:
         ; Uncomment this and "|MULTIBOOT_VBE_MODE" in MULTIBOOT_HEADER_FLAGS to enable VBE
         dd 00
         ; Safe resolution
-        dd 640
-        dd 480
+        dd 1024
+        dd 768
         dd 32
 
 multiboot_entry:
