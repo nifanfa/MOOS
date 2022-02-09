@@ -27,7 +27,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\Queue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Convert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Debug.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Bitmap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Color.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Image.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Point.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EETypePtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EventArgs.cs" />
