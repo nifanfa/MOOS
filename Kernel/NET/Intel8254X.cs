@@ -123,7 +123,7 @@ namespace Kernel.Driver
             Console.WriteLine("Configuration Done");
 
             Network.MAC = MAC;
-            PIC.ClearMask(device.IRQ);
+            IOAPIC.SetEntry(device.IRQ);
             IRQ = device.IRQ;
         }
 

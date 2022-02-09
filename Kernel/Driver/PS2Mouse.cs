@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Kernel.Driver;
+using System.Windows.Forms;
 using static Native;
 
 namespace Kernel
@@ -22,7 +23,7 @@ namespace Kernel
         public static void Initialise()
         {
             MData = new byte[3];
-            PIC.ClearMask(0x2c);
+            IOAPIC.SetEntry(0x2c);
 
             byte _status;
 
