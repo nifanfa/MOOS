@@ -1,4 +1,6 @@
-﻿namespace Kernel
+﻿using Kernel.Driver;
+
+namespace Kernel
 {
     public class PIT
     {
@@ -12,7 +14,7 @@
             Native.Out8(0x40, (byte)(timerCount & 0xFF));
             Native.Out8(0x40, (byte)((timerCount & 0xFF00) >> 8));
 
-            PIC.ClearMask(0x20);
+            IOAPIC.SetEntry(0x20);
         }
 
         internal static void OnInterrupt()

@@ -32,10 +32,17 @@ unsafe class Program
         IDT.Initialise();
         IDT.Enable();
 
+        ACPI.Initialize();
+        PIC.Disable();
+        LocalAPIC.Initialize();
+        IOAPIC.Initialize();
+
+        //Enable keyboard interrupts
+        IOAPIC.SetEntry(0x21);
+
         Serial.Initialise();
         PIT.Initialise();
         PS2Mouse.Initialise();
-        ACPI.Initialize();
         SMBIOS.Initialise();
 
         PCI.Initialise();
