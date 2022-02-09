@@ -1,8 +1,10 @@
 ﻿using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using Kernel.Driver;
+using Kernel.FS;
 using Kernel.GUI;
 using System;
+using System.Drawing;
 using System.Runtime;
 using System.Windows.Forms;
 
@@ -58,6 +60,16 @@ unsafe class Program
         /*
         ushort* _P = (ushort*)0x40000000;
         Console.WriteLine(SATA.Ports[0].Read(0, 1, _P) ? "SATA Success" : "SATA Failed");
+        */
+
+        /*
+        FAT32 fat = new FAT32(SATA.Ports[0], 2048);
+        for(int i = 0; i < fat.Items.Count; i++) 
+        {
+            Console.WriteLine($"{fat.Items[i].Parent}{fat.Items[i].Name}");
+        }
+        Bitmap bitmap = new Bitmap(fat.ReadAllBytes("/CURSOR.BMP"));
+        Framebuffer.DrawImage(0, 0, bitmap);
         */
 
         Serial.WriteLine("Hello World");

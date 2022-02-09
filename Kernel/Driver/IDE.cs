@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Kernel.FS;
+using System.Collections.Generic;
 
 namespace Kernel.Driver
 {
-    public unsafe class IDE
+    public unsafe class IDE : Disk
     {
         public const byte ReadSectorsWithRetry = 0x20;
         public const byte WriteSectorsWithRetry = 0x30;
@@ -223,6 +224,34 @@ namespace Kernel.Driver
             }
 
             return true;
+        }
+
+        public override bool Read(ulong sector, uint count, byte[] data) 
+        {
+            bool b = false;
+            fixed(byte* p = data)
+            {
+                for (int i = 0; i < data.Length; i += 512)
+                {
+                    b = ReadOrWrite(Drive.Master, (uint)sector, p + i, false);
+                    sector++;
+                }
+            }
+            return b;
+        }
+
+        public override bool Write(ulong sector, uint count, byte[] data)
+        {
+            bool b = false;
+            fixed (byte* p = data)
+            {
+                for (int i = 0; i < data.Length; i += 512)
+                {
+                    b = ReadOrWrite(Drive.Master, (uint)sector, p + i, true);
+                    sector++;
+                }
+            }
+            return b;
         }
     }
 }

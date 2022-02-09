@@ -40,5 +40,10 @@ namespace System.Collections.Generic
             _value[index] = item;
             Count++;
         }
+
+        public void Clear()
+        {
+            Count = 0;
+        }
     }
 }
