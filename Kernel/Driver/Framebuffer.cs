@@ -1,4 +1,5 @@
 ﻿using Kernel.Driver;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Kernel
@@ -31,45 +32,6 @@ namespace Kernel
             }
         }
 
-        public static void Copy(int dX,int dY,int sX,int sY,int Width,int Height)
-        {
-            for(int w = 0; w < Width; w++) 
-            {
-                for(int h = 0; h < Height; h++) 
-                {
-                    DrawPoint(dX + w, dY + h, GetPoint(sX + w, sY + h));
-                }
-            }
-        }
-
-        public static void Clear(uint Color)
-        {
-            Native.Stosd(TripleBuffered ? FirstBuffer : VideoMemory, Color, (ulong)(Width * Height));
-        }
-
-        public static void DrawPoint(int X, int Y, uint Color)
-        {
-            if (X > 0 && Y > 0 && X < Width && Y < Height)
-            {
-                if(TripleBuffered)
-                    FirstBuffer[Width * Y + X] = Color;
-                else
-                    VideoMemory[Width * Y + X] = Color;
-            }
-        }
-
-        public static uint GetPoint(int X, int Y)
-        {
-            if (X > 0 && Y > 0 && X < Width && Y < Height)
-            {
-                if (TripleBuffered)
-                    return FirstBuffer[Width * Y + X];
-                else
-                    return VideoMemory[Width * Y + X];
-            }
-            return 0;
-        }
-
         public static void Update()
         {
             if (TripleBuffered)
@@ -97,6 +59,24 @@ namespace Kernel
             Control.MousePosition.Y = YRes / 2;
         }
 
+        //
+
+        public static void Clear(uint Color)
+        {
+            Native.Stosd(TripleBuffered ? FirstBuffer : VideoMemory, Color, (ulong)(Width * Height));
+        }
+
+        public static void Copy(int dX, int dY, int sX, int sY, int Width, int Height)
+        {
+            for (int w = 0; w < Width; w++)
+            {
+                for (int h = 0; h < Height; h++)
+                {
+                    DrawPoint(dX + w, dY + h, GetPoint(sX + w, sY + h));
+                }
+            }
+        }
+
         internal static void Fill(int X, int Y, int Width, int Height, uint Color)
         {
             for(int w = 0; w < Width; w++) 
@@ -106,6 +86,36 @@ namespace Kernel
                     DrawPoint(X + w, Y + h, Color);
                 }
             }
+        }
+        
+        public static void DrawPoint(int X, int Y, uint Color)
+        {
+            if (X > 0 && Y > 0 && X < Width && Y < Height)
+            {
+                if (TripleBuffered)
+                    FirstBuffer[Width * Y + X] = Color;
+                else
+                    VideoMemory[Width * Y + X] = Color;
+            }
+        }
+
+        public static uint GetPoint(int X, int Y)
+        {
+            if (X > 0 && Y > 0 && X < Width && Y < Height)
+            {
+                if (TripleBuffered)
+                    return FirstBuffer[Width * Y + X];
+                else
+                    return VideoMemory[Width * Y + X];
+            }
+            return 0;
+        }
+
+        public static void DrawImage(int X, int Y, Image image)
+        {
+            for (int h = 0; h < image.Height; h++)
+                for (int w = 0; w < image.Width; w++)
+                    DrawPoint(X + w, Y + h, image.RawData[image.Width * h + w]);
         }
     }
 }
