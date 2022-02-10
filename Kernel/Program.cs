@@ -3,6 +3,7 @@ using Kernel;
 using Kernel.Driver;
 using Kernel.FS;
 using Kernel.GUI;
+using Kernel.USB;
 using System;
 using System.Drawing;
 using System.Runtime;
@@ -51,6 +52,8 @@ unsafe class Program
         SATA.Initialize();
 
         IDE.Initialize();
+
+        EHCI.Initialize();
         
         /*
         Console.WriteLine(
