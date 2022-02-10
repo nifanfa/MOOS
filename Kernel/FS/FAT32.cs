@@ -39,7 +39,7 @@ namespace Kernel.FS
 
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct DirectoryItem
+        public struct Entry
         {
             public fixed byte Name[11];
             public byte Attribute;
@@ -55,11 +55,24 @@ namespace Kernel.FS
             public uint Size;
         }
 
-        public class ADirectoryItem
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct EntryLong
+        {
+            public byte Attrbute;
+            public fixed char Name1[5];
+            public byte Signature;
+            public byte Rsvd;
+            public byte Checksum;
+            public fixed char Name2[6];
+            public ushort Cluster;
+            public fixed char Name3[2];
+        }
+
+        public class AEntry
         {
             public string Name;
             public string Parent;
-            public DirectoryItem* Item;
+            public Entry* Item;
 
             public uint FountAtSec;
             public uint FountAtOffset;
@@ -108,14 +121,14 @@ namespace Kernel.FS
 
         public const ushort SectorSize = 512;
 
-        public List<ADirectoryItem> Items;
+        public List<AEntry> Items;
 
         public Disk Disk;
 
         public FAT32(Disk disk, ulong lba)
         {
             Disk = disk;
-            Items = new List<ADirectoryItem>();
+            Items = new List<AEntry>();
 
             byte[] Buffer = new byte[512];
             disk.Read(lba, 1, Buffer);
@@ -124,6 +137,8 @@ namespace Kernel.FS
             if (DBR->BS_FilSysType1[3] != '3' && DBR->BS_FilSysType1[4] != '2') { Console.WriteLine("This is not a fat32 partition!"); return; }
 
             RootDirectorySector = (uint)(lba + DBR->BPB_RsvdSecCnt + DBR->BPB_FATSz32 * DBR->BPB_NumFATs + (DBR->BPB_RootClus - 2u) * DBR->BPB_SecPerClus);
+
+            LongNameCache = null;
 
             ReadList(RootDirectorySector, "/");
         }
@@ -176,6 +191,8 @@ namespace Kernel.FS
             return result;
         }
 
+        public string LongNameCache;
+
         private void ReadList(uint sector, string parent)
         {
             if (parent == "/")
@@ -210,10 +227,24 @@ namespace Kernel.FS
                                 continue;
                         }
                         LastIsEmpty = false;
-                        DirectoryItem* item = (DirectoryItem*)Allocator.Allocate((uint)sizeof(DirectoryItem));
+                        Entry* item = (Entry*)Allocator.Allocate((uint)sizeof(Entry));
                         Allocator.MemoryCopy((System.IntPtr)item, (System.IntPtr)(P + i), 32);
+                        EntryLong* itemlong = (EntryLong*)item;
 
-                        ADirectoryItem aDirectoryItem = new ADirectoryItem()
+                        if(itemlong->Signature == 0x0F) 
+                        {
+                            if (LongNameCache == null) LongNameCache = "";
+                            string Cache0 = new string(itemlong->Name1, 0, 5);
+                            string Cache1 = new string(itemlong->Name2, 0, 6);
+                            string Cache2 = new string(itemlong->Name3, 0, 2);
+                            LongNameCache = (Cache0 + Cache1 + Cache2) + LongNameCache;
+                            Cache0.Dispose();
+                            Cache1.Dispose();
+                            Cache2.Dispose();
+                            continue;
+                        }
+
+                        AEntry aDirectoryItem = new AEntry()
                         {
                             Item = item,
                             Parent = parent,
@@ -223,13 +254,30 @@ namespace Kernel.FS
                         };
                         if (item->Attribute == Attributes.SubDirectory)
                         {
-                            aDirectoryItem.Name = string.FromASCII((System.IntPtr)item->Name, 8, 0x20) + string.FromASCII((System.IntPtr)(item->Name + 8), 3, 0x20);
+                            if(LongNameCache != null)
+                            {
+                                aDirectoryItem.Name = LongNameCache;
+                            }
+                            else
+                            {
+                                aDirectoryItem.Name = string.FromASCII((System.IntPtr)item->Name, 8, 0x20) + string.FromASCII((System.IntPtr)(item->Name + 8), 3, 0x20);
+                            }
                         }
                         else
                         {
-                            aDirectoryItem.Name = string.FromASCII((System.IntPtr)item->Name, 8, 0x20) + "." + string.FromASCII((System.IntPtr)(item->Name + 8), 3, 0x20);
+                            if (LongNameCache != null)
+                            {
+                                aDirectoryItem.Name = LongNameCache;
+                            }
+                            else
+                            {
+                                aDirectoryItem.Name = string.FromASCII((System.IntPtr)item->Name, 8, 0x20) + "." + string.FromASCII((System.IntPtr)(item->Name + 8), 3, 0x20);
+                            }
                         }
                         Items.Add(aDirectoryItem);
+
+                        if (LongNameCache != null) LongNameCache = "";
+                        LongNameCache = null;
 
                         if (item->Attribute == Attributes.SubDirectory)
                         {
