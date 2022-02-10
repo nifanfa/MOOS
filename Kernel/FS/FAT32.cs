@@ -233,11 +233,40 @@ namespace Kernel.FS
 
                         if(itemlong->Signature == 0x0F) 
                         {
-                            if (LongNameCache == null) LongNameCache = "";
-                            string Cache0 = new string(itemlong->Name1, 0, 5);
-                            string Cache1 = new string(itemlong->Name2, 0, 6);
-                            string Cache2 = new string(itemlong->Name3, 0, 2);
-                            LongNameCache = (Cache0 + Cache1 + Cache2) + LongNameCache;
+                            if (LongNameCache == null) LongNameCache = string.Empty;
+
+                            int p = 0;
+                            for (p = 0; p < 5; p++) 
+                            {
+                                if(itemlong->Name1[p] == 0 || itemlong->Name1[p] == 0xFFFF) 
+                                {
+                                    break;
+                                }
+                            }
+                            string Cache0 = new string(itemlong->Name1, 0, p);
+
+                            for (p = 0; p < 6; p++)
+                            {
+                                if (itemlong->Name2[p] == 0 || itemlong->Name2[p] == 0xFFFF)
+                                {
+                                    break;
+                                }
+                            }
+                            string Cache1 = new string(itemlong->Name2, 0, p);
+
+                            for (p = 0; p < 2; p++)
+                            {
+                                if (itemlong->Name3[p] == 0 || itemlong->Name3[p] == 0xFFFF)
+                                {
+                                    break;
+                                }
+                            }
+                            string Cache2 = new string(itemlong->Name3, 0, p);
+
+                            string prev = LongNameCache;
+                            LongNameCache = (Cache0 + Cache1 + Cache2) + prev;
+
+                            prev.Dispose();
                             Cache0.Dispose();
                             Cache1.Dispose();
                             Cache2.Dispose();
@@ -276,7 +305,7 @@ namespace Kernel.FS
                         }
                         Items.Add(aDirectoryItem);
 
-                        if (LongNameCache != null) LongNameCache = "";
+                        if (LongNameCache != null) LongNameCache = string.Empty;
                         LongNameCache = null;
 
                         if (item->Attribute == Attributes.SubDirectory)
