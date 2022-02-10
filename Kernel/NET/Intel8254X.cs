@@ -46,6 +46,8 @@ namespace Kernel.Driver
         {
             PCIDevice device = PCI.GetDevice(0x8086, 0x100E);
 
+            if (device == null) return;
+
             Console.WriteLine("Intel 8254X Series Gigabit Ethernet Controller Found");
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
