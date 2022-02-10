@@ -24,22 +24,22 @@ namespace System
         //public override int GetHashCode()
         //	=> (int)_value;
 
-        public static implicit operator IntPtr(int value) => new IntPtr(value);
-        public static implicit operator IntPtr(uint value) => new IntPtr(value);
-        public static implicit operator IntPtr(long value) => new IntPtr(value);
-        public static implicit operator IntPtr(ulong value) => new IntPtr(value);
-        public static implicit operator IntPtr(void* value) => new IntPtr(value);
-        public static implicit operator void*(IntPtr value) => value._value;
+        public static explicit operator IntPtr(int value) => new IntPtr(value);
+        public static explicit operator IntPtr(uint value) => new IntPtr(value);
+        public static explicit operator IntPtr(long value) => new IntPtr(value);
+        public static explicit operator IntPtr(ulong value) => new IntPtr(value);
+        public static explicit operator IntPtr(void* value) => new IntPtr(value);
+        public static explicit operator void*(IntPtr value) => value._value;
 
-        public static implicit operator int(IntPtr value)
+        public static explicit operator int(IntPtr value)
         {
             var l = (long)value._value;
 
             return checked((int)l);
         }
 
-        public static implicit operator long(IntPtr value) => (long)value._value;
-        public static implicit operator ulong(IntPtr value) => (ulong)value._value;
+        public static explicit operator long(IntPtr value) => (long)value._value;
+        public static explicit operator ulong(IntPtr value) => (ulong)value._value;
 
         public static IntPtr operator +(IntPtr a, uint b)
             => new IntPtr((byte*)a._value + b);
