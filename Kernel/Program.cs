@@ -1,11 +1,8 @@
 ﻿using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using Kernel.Driver;
-using Kernel.FS;
 using Kernel.GUI;
-using Kernel.USB;
 using System;
-using System.Drawing;
 using System.Runtime;
 using System.Windows.Forms;
 
@@ -53,8 +50,6 @@ unsafe class Program
 
         IDE.Initialize();
 
-        EHCI.Initialize();
-        
         /*
         Console.WriteLine(
             IDE.Controllers[0].ReadOrWrite(IDE.Drive.Master, 0, (byte*)0x2000_0000, false) ? "IDE success" : "IDE failed");
