@@ -195,6 +195,7 @@ namespace Kernel
             if (dev == null) return;
             Ports = new List<SATADevice>();
             Console.WriteLine("SATA Controller Found!");
+            dev.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
             Controller = (HBA*)dev.Bar5;
             for (int i = 0; i < 32; i++)
             {
