@@ -72,6 +72,12 @@ unsafe class Program
         Framebuffer.DrawImage(0, 0, bitmap);
         */
 
+        /*
+        FAT32 fat = new FAT32(SATA.Ports[0], 2048);
+        AC97.Initialize();
+        AC97.Play(fat.ReadAllBytes("/TEST.PCM"));
+        */
+
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
