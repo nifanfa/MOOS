@@ -29,11 +29,33 @@ namespace System
 
     public struct SByte { }
 
-    public struct Byte { }
+    public struct Byte
+    {
+        public unsafe override string ToString()
+        {
+            return ((ulong)this).ToString();
+        }
+
+        public string ToString(string format)
+        {
+            return ((ulong)this).ToString(format);
+        }
+    }
 
     public struct Int16 { }
 
-    public struct UInt16 { }
+    public struct UInt16 
+    {
+        public unsafe override string ToString()
+        {
+            return ((ulong)this).ToString();
+        }
+
+        public string ToString(string format)
+        {
+            return ((ulong)this).ToString(format);
+        }
+    }
 
     public struct Int32
     {
@@ -85,24 +107,12 @@ namespace System
     {
         public unsafe override string ToString()
         {
-            var val = this;
-            char* x = stackalloc char[11];
-            var i = 9;
+            return ((ulong)this).ToString();
+        }
 
-            x[10] = '\0';
-
-            do
-            {
-                var d = val % 10;
-                val /= 10;
-
-                d += 0x30;
-                x[i--] = (char)d;
-            } while (val > 0);
-
-            i++;
-
-            return new string(x + i, 0, 10 - i);
+        public string ToString(string format)
+        {
+            return ((ulong)this).ToString(format);
         }
     }
 
