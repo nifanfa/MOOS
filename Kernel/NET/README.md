@@ -1,4 +1,5 @@
 ```
+ARP.Initialise();
 Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
 RTL8139.Initialise();
 ARP.Require(Network.Gateway);
