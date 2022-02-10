@@ -401,14 +401,38 @@ namespace Kernel
 
             public override bool Read(ulong sector, uint count, byte[] data) 
             {
+                bool b = false;
+                fixed (byte* p = data)
+                {
+                    for (int i = 0; i < data.Length; i += 512)
+                    {
+                        b = ReadOrWrite((uint)sector,1, (ushort*)(p + i), false);
+                        sector++;
+                    }
+                }
+                return b;
+                /*
                 fixed (byte* p = data)
                     return ReadOrWrite(sector, count, (ushort*)p, false);
+                */
             }
 
             public override bool Write(ulong sector, uint count, byte[] data)
             {
+                bool b = false;
+                fixed (byte* p = data)
+                {
+                    for (int i = 0; i < data.Length; i += 512)
+                    {
+                        b = ReadOrWrite((uint)sector, 1, (ushort*)(p + i), true);
+                        sector++;
+                    }
+                }
+                return b;
+                /*
                 fixed (byte* p = data)
                     return ReadOrWrite(sector, count, (ushort*)p, true);
+                */
             }
 
             private bool ReadOrWrite(ulong Sector, uint Count, ushort* Buffer, bool Write)
