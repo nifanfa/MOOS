@@ -14,6 +14,7 @@ namespace Kernel
 
         public byte ClassID;
         public byte SubClassID;
+        public byte ProgIF;
         public byte IRQ;
 
         public uint Bar0;
@@ -102,6 +103,7 @@ namespace Kernel
 
                 device.ClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 11);
                 device.SubClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 10);
+                device.ProgIF = ReadRegister8(device.Bus, device.Slot, device.Function, 9);
                 device.IRQ = (byte)(0x20 + ReadRegister8(device.Bus, device.Slot, device.Function, 60));
 
                 device.DeviceID = ReadRegister16(device.Bus, device.Slot, device.Function, 2);
