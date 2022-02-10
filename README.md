@@ -4,7 +4,9 @@ C# operating system demo, Using Native AOT (Core RT) boot via multiboot
  - [x] Nintendo Family Computer Emulator
  - [x] Intel® Gigabit Ethernet Network 
  - [x] Realtek RTL8139
- - [ ] File Systems 
+ - [x] FAT32(Read only) 
+ - [x] I/O APIC 
+ - [x] Local APIC 
  - [x] SATA
  - [x] IDE
  - [x] SMBIOS
