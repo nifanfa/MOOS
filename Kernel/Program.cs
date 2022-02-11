@@ -1,7 +1,9 @@
 ﻿using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using Kernel.Driver;
+using Kernel.FS;
 using Kernel.GUI;
+using Kernel.Misc;
 using System;
 using System.Runtime;
 using System.Windows.Forms;
@@ -12,15 +14,15 @@ unsafe class Program
 
     /*
      * Minimum system requirement:
-     * 128MiB of RAM
+     * 32MiB of RAM
      * Memory Map:
-     * 1 MiB - 64MiB   -> System
-     * 64 MiB - ∞     -> Free to use
+     * 1 MiB - 6MiB   -> System
+     * 6 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info, IntPtr Modules)
     {
-        Allocator.Initialize((IntPtr)0x6400000);
+        Allocator.Initialize((IntPtr)0x600000);
 
         StartupCodeHelpers.InitializeModules(Modules);
 
@@ -74,6 +76,15 @@ unsafe class Program
         FAT32 fat = new FAT32(SATA.Ports[0], 2048);
         AC97.Initialize();
         AC97.Play(fat.ReadAllBytes("/TEST.PCM"));
+        */
+
+        /*
+        //FIXME - the png decoder can't decode large file
+        FAT32 fat = new FAT32(SATA.Ports[0], 2048);
+        byte[] buffer = fat.ReadAllBytes("/IMAGE.PNG");
+        Console.WriteLine("File read");
+        PNG png = new PNG(buffer);
+        Framebuffer.DrawImage(0, 0, png);
         */
 
         Serial.WriteLine("Hello World");
