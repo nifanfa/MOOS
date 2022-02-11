@@ -27,10 +27,18 @@
     <ClCompile Include="mem.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lodepng.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm">
       <Filter>源文件</Filter>
     </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lodepng.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
