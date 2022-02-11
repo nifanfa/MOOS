@@ -1,7 +1,9 @@
-﻿using Kernel;
-using System;
+﻿using System;
 using System.Runtime;
 
+/// <summary>
+/// Nifanfa's Super Fast Memory Allocation Lib
+/// </summary>
 abstract unsafe class Allocator
 {
     internal static unsafe void ZeroFill(IntPtr data, ulong size)
@@ -9,7 +11,7 @@ abstract unsafe class Allocator
         Native.Stosb((void*)data, 0, size);
     }
 
-    [RuntimeExport("free")]
+    [RuntimeExport("__imp_free")]
     internal static void Free(IntPtr intPtr)
     {
         ulong p = (ulong)intPtr;
@@ -32,9 +34,9 @@ abstract unsafe class Allocator
         }
     }
 
-    public static ulong MemoryInUse 
+    public static ulong MemoryInUse
     {
-        get 
+        get
         {
             return _Info.PageInUse * PageSize;
         }
@@ -71,7 +73,7 @@ abstract unsafe class Allocator
     /// </summary>
     /// <param name="size"></param>
     /// <returns></returns>
-    [RuntimeExport("malloc")]
+    [RuntimeExport("__imp_malloc")]
     internal static unsafe IntPtr Allocate(ulong size)
     {
         ulong pages = 1;
@@ -98,14 +100,15 @@ abstract unsafe class Allocator
                     }
                 }
                 if (found) break;
-            }else if(_Info.Pages[i] != PageSignature) 
+            }
+            else if (_Info.Pages[i] != PageSignature)
             {
                 i += _Info.Pages[i];
             }
         }
-        if (!found) 
+        if (!found)
         {
-            return IntPtr.Zero; 
+            return IntPtr.Zero;
         }
 
         for (ulong k = 0; k < pages; k++)
@@ -117,6 +120,43 @@ abstract unsafe class Allocator
 
         IntPtr ptr = _Info.Start + (i * PageSize);
         return ptr;
+    }
+
+    [RuntimeExport("__imp_realloc")]
+    public static IntPtr Reallocate(IntPtr intPtr, ulong size)
+    {
+        if (intPtr == IntPtr.Zero)
+            return Allocate(size);
+        if (size == 0)
+        {
+            Free(intPtr);
+            return IntPtr.Zero;
+        }
+
+        ulong p = (ulong)intPtr;
+        if (p < (ulong)_Info.Start) return intPtr;
+        p -= (ulong)_Info.Start;
+        if ((p % PageSize) != 0) return intPtr;
+        /*
+         * This will get wrong if the size is larger than PageSize
+         * and however the allocated address should be aligned
+         */
+        //p &= ~PageSize; 
+        p /= PageSize;
+
+        ulong pages = 1;
+
+        if (size > PageSize)
+        {
+            pages = (size / PageSize) + ((size % 4096) != 0 ? 1UL : 0);
+        }
+
+        if (_Info.Pages[p] == pages) return intPtr;
+
+        IntPtr newptr = Allocate(size);
+        MemoryCopy(newptr, intPtr, size);
+        Free(intPtr);
+        return newptr;
     }
 
     internal static unsafe void MemoryCopy(IntPtr dst, IntPtr src, ulong size)
