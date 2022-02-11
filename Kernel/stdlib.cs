@@ -10,7 +10,7 @@ namespace Kernel
             return (void*)Allocator.Allocate(size);
         }
 
-        [RuntimeExport("__imp_malloc")]
+        [RuntimeExport("__imp_free")]
         public static void free(void* ptr) 
         {
             Allocator.Free((System.IntPtr)ptr);
