@@ -19,7 +19,7 @@ namespace Kernel
         [RuntimeExport("__imp_realloc")]
         public static void* realloc(void* ptr, ulong size) 
         {
-            return Allocator.Reallocate(ptr, size);
+            return (void*)Allocator.Reallocate((System.IntPtr)ptr, size);
         }
     }
 }
