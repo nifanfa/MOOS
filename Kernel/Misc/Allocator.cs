@@ -11,7 +11,6 @@ abstract unsafe class Allocator
         Native.Stosb((void*)data, 0, size);
     }
 
-    [RuntimeExport("__imp_free")]
     internal static void Free(IntPtr intPtr)
     {
         ulong p = (ulong)intPtr;
@@ -73,7 +72,6 @@ abstract unsafe class Allocator
     /// </summary>
     /// <param name="size"></param>
     /// <returns></returns>
-    [RuntimeExport("__imp_malloc")]
     internal static unsafe IntPtr Allocate(ulong size)
     {
         ulong pages = 1;
@@ -122,7 +120,6 @@ abstract unsafe class Allocator
         return ptr;
     }
 
-    [RuntimeExport("__imp_realloc")]
     public static IntPtr Reallocate(IntPtr intPtr, ulong size)
     {
         if (intPtr == IntPtr.Zero)
