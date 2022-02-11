@@ -253,6 +253,8 @@ Main:
     mov rsp,STACKTOP
     mov rbp,rsp
 
+    fninit
+
     sub rsp,64
     
     xor rbx,rbx
