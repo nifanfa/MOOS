@@ -99,6 +99,7 @@
         {
             char Key = '?';
             while ((Key = PS2Keyboard.Key) == '?') Native.Hlt();
+            PS2Keyboard.Key = '?';
             return Key;
         }
 
