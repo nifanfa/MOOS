@@ -78,10 +78,11 @@ unsafe class Program
         AC97.Play(fat.ReadAllBytes("/TEST.PCM"));
         */
 
-        /*
         //FIXME - the png decoder can't decode large file
+        /*
         FAT32 fat = new FAT32(SATA.Ports[0], 2048);
-        byte[] buffer = fat.ReadAllBytes("/IMAGE.PNG");
+        //byte[] buffer = fat.ReadAllBytes("/IMAGE.PNG");
+        byte[] buffer = fat.ReadAllBytes("/CURS.PNG");
         Console.WriteLine("File read");
         PNG png = new PNG(buffer);
         Framebuffer.DrawImage(0, 0, png);

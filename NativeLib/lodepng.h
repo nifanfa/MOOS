@@ -38,6 +38,7 @@ freely, subject to the following restrictions:
 #define LODEPNG_VERSION_STRING "20141130"
 
 #define LODEPNG_NO_COMPILE_DISK
+#define LODEPNG_NO_COMPILE_ENCODER
 
 /*
 The following #defines are used to create code sections. They can be disabled
