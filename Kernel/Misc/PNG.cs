@@ -5,13 +5,21 @@ namespace Kernel.Misc
 {
     public unsafe class PNG : Image
     {
-        public PNG(byte[] file)
+        public enum LodePNGColorType
+        {
+            LCT_GREY = 0, /*greyscale: 1,2,4,8,16 bit*/
+            LCT_RGB = 2, /*RGB: 8,16 bit*/
+            LCT_PALETTE = 3, /*palette: 1,2,4,8 bit*/
+            LCT_GREY_ALPHA = 4, /*greyscale with alpha: 8,16 bit*/
+            LCT_RGBA = 6 /*RGB with alpha: 8,16 bit*/
+        }
+
+        public PNG(byte[] file,LodePNGColorType type = LodePNGColorType.LCT_RGBA ,uint bitDepth = 8)
         {
             fixed (byte* p = file)
             {
-                uint w, h;
-                uint* _out = null;
-                lodepng_decode32(&_out, &w, &h, p, file.Length);
+                lodepng_decode_memory(out uint* _out, out uint w, out uint h, p, file.Length, type, bitDepth);
+
                 if (_out == null) for (; ; ) Native.Hlt();
                 RawData = new uint[w * h];
                 fixed (uint* pdata = RawData)
@@ -24,6 +32,6 @@ namespace Kernel.Misc
         }
 
         [DllImport("*")]
-        public extern static uint lodepng_decode32(uint** _out, uint* w, uint* h, byte* _in, int insize);
+        public static extern void lodepng_decode_memory(out uint* _out, out uint w, out uint h, byte* _in, int insize, LodePNGColorType colortype, uint bitdepth);
     }
 }
