@@ -96,10 +96,12 @@ unsafe class Program
 
         Console.WriteLine("Execute Nintendo Family Computer Emulator? Y/N");
 
+        /*
         for(; ; ) 
         {
             Console.WriteLine(Console.ReadLine());
         }
+        */
 
         ConsoleKeyInfo Key = Console.ReadKey();
 
