@@ -30,6 +30,11 @@ namespace System
             {
                 return Unsafe.Add(ref _firstChar, index);
             }
+
+            set 
+            {
+                fixed (char* p = &_firstChar) p[index] = value;
+            }
         }
 
 

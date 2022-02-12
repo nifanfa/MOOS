@@ -195,7 +195,88 @@ namespace System
     }
 
     public struct UIntPtr { }
-    public struct Single { }
+
+    public struct Single 
+    {
+        public override unsafe string ToString()
+        {
+            char* p = stackalloc char[21];
+            string s = new string(p, 0, 21);
+            float_to_string(this, s);
+            return s;
+        }
+
+        //https://stackoverflow.com/questions/7228438/convert-double-float-to-string
+        /** Number on countu **/
+
+        static int n_tu(int number, int count)
+        {
+            int result = 1;
+            while (count-- > 0)
+                result *= number;
+
+            return result;
+        }
+
+        /*** Convert float to string ***/
+        static void float_to_string(float f, string r)
+        {
+            long length, length2, number, position, sign;
+            int i;
+            float number2;
+
+            sign = -1;   // -1 == positive number
+            if (f < 0)
+            {
+                sign = '-';
+                f *= -1;
+            }
+
+            number2 = f;
+            number = (long)f;
+            length = 0;  // Size of decimal part
+            length2 = 0; // Size of tenth
+
+            /* Calculate length2 tenth part */
+            while ((number2 - (float)number) != 0.0 && !((number2 - (float)number) < 0.0))
+            {
+                number2 = f * (n_tu((int)10.0f, (int)(length2 + 1)));
+                number = (long)number2;
+
+                length2++;
+            }
+
+            /* Calculate length decimal part */
+            for (length = (f > 1) ? 0 : 1; f > 1; length++)
+                f /= 10;
+
+            position = length;
+            length = length + 1 + length2;
+            number = (long)number2;
+            if (sign == '-')
+            {
+                length++;
+                position++;
+            }
+
+            for (i = (int)length; i >= 0; i--)
+            {
+                if (i == (length))
+                    r[i] = '\0';
+                else if (i == (position))
+                    r[i] = '.';
+                else if (sign == '-' && i == 0)
+                    r[i] = '-';
+                else
+                {
+                    r[i] = (char)((number % 10) + '0');
+                    number /= 10;
+                }
+            }
+            r.Length = (int)length;
+        }
+    }
+
     public struct Double { }
 
     public abstract class ValueType { }
