@@ -99,10 +99,20 @@ namespace Kernel.Driver
         public static void Initialise()
         {
             byte* p = (byte*)0xF0000;
-            while (*(uint*)p != 0x5F4D535F) p++;
-            Console.WriteLine("SMBIOS entry found!");
+            while (*(uint*)p != 0x5F4D535F)
+            {
+                p++;
+                if((ulong)p > 0xFFFFF) 
+                {
+                    Console.WriteLine("SMBIOS not found!");
+                    return;
+                }
+            }
 
             SMBIOSEntryPoint* entry = (SMBIOSEntryPoint*)p;
+
+            Console.Write("SMBIOS Version: ");
+            Console.WriteLine(entry->MajorVersion.ToString());
 
             p = (byte*)entry->TableAddress;
             while ((uint)p < (entry->TableAddress + entry->TableLength))
