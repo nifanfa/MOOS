@@ -36,7 +36,7 @@ namespace System
             => 0;
 
         public virtual string ToString()
-            => "{object}";
+            => "System.Object";
 
 
         public virtual void Dispose()
