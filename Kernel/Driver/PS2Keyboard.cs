@@ -55,10 +55,10 @@ namespace Kernel
             SetIfKeyModifier(b, 0x38, ConsoleModifiers.Alt);
 
             if (b < keyChars.Length)
-            {
-                KeyInfo.Key = keys[b];
                 KeyInfo.KeyChar = keyChars[b];
-            }
+
+            if (b < keys.Length)
+                KeyInfo.Key = keys[b];
         }
 
         private static void SetIfKeyModifier(byte scanCode, byte pressedScanCode, ConsoleModifiers modifier)
