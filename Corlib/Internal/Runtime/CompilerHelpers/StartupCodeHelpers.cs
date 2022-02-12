@@ -113,7 +113,7 @@ namespace Internal.Runtime.CompilerHelpers
             fixed (int* n = &array._numComponents)
             {
                 var ptr = (byte*)n;
-                ptr += 8;   // Array length is padded to 8 bytes on 64-bit
+                ptr += sizeof(void*);   // Array length is padded to 8 bytes on 64-bit
                 ptr += index * array.m_pEEType->ComponentSize;  // Component size should always be 8, seeing as it's a pointer...
                 var pp = (IntPtr*)ptr;
                 *pp = Unsafe.As<object, IntPtr>(ref obj);
