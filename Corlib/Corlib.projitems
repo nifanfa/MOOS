@@ -36,10 +36,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\EventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\FlagsAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\IntPtr.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Key.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\KeyInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\KeyModifier.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\KeyState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleModifiers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Math.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Net\IPAddress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Object.cs" />

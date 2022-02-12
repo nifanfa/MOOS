@@ -5,6 +5,7 @@ using Kernel.FS;
 using Kernel.GUI;
 using Kernel.Misc;
 using System;
+using System.Diagnostics;
 using System.Runtime;
 using System.Windows.Forms;
 
@@ -39,6 +40,7 @@ unsafe class Program
         LocalAPIC.Initialize();
         IOAPIC.Initialize();
 
+        PS2Keyboard.Initialize();
         //Enable keyboard interrupts
         IOAPIC.SetEntry(0x21);
 
@@ -93,9 +95,15 @@ unsafe class Program
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
         Console.WriteLine("Execute Nintendo Family Computer Emulator? Y/N");
-        char Key = Console.ReadKey();
 
-        if (Key == 'Y')
+        for(; ; ) 
+        {
+            Console.WriteLine(Console.ReadLine());
+        }
+
+        ConsoleKeyInfo Key = Console.ReadKey();
+
+        if (Key.Key == ConsoleKey.Y)
 
         {
 

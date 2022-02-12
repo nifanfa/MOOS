@@ -1,4 +1,6 @@
-﻿namespace Kernel
+﻿using System;
+
+namespace Kernel
 {
     public static unsafe class Console
     {
@@ -95,12 +97,33 @@
             }
         }
 
-        internal static char ReadKey()
+        public static ConsoleKeyInfo ReadKey(bool echoOff = false)
         {
-            char Key = '?';
-            while ((Key = PS2Keyboard.Key) == '?') Native.Hlt();
-            PS2Keyboard.Key = '?';
-            return Key;
+            PS2Keyboard.CleanKeyInfo();
+            while (PS2Keyboard.KeyInfo.KeyChar == '\0') Native.Hlt();
+            if (!echoOff)
+            {
+                if (PS2Keyboard.KeyInfo.Key != ConsoleKey.Enter) Console.Write(PS2Keyboard.KeyInfo.KeyChar);
+                else Console.WriteLine();
+            }
+
+            return PS2Keyboard.KeyInfo;
+        }
+
+        public static string ReadLine() 
+        {
+            string s = string.Empty;
+            ConsoleKeyInfo key;
+            while ((key = Console.ReadKey()).Key != ConsoleKey.Enter)
+            {
+                string cache1 = key.KeyChar.ToString();
+                string cache2 = s + cache1;
+                s.Dispose();
+                cache1.Dispose();
+                s = cache2;
+                Native.Hlt();
+            }
+            return s;
         }
 
         private static void MoveUp()

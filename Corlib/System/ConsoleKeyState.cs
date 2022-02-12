@@ -1,9 +1,9 @@
 ﻿
 namespace System
 {
-    public enum KeyState
+    public enum ConsoleKeyState
     {
-        Unknown,
+        None,
         Pressed,
         Released,
     }
