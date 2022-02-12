@@ -97,11 +97,11 @@ namespace Kernel
             }
         }
 
-        public static ConsoleKeyInfo ReadKey(bool echoOff = false)
+        public static ConsoleKeyInfo ReadKey(bool intercept = false)
         {
             PS2Keyboard.CleanKeyInfo(true);
             while (PS2Keyboard.KeyInfo.KeyChar == '\0') Native.Hlt();
-            if (!echoOff)
+            if (!intercept)
             {
                 switch (PS2Keyboard.KeyInfo.Key) 
                 {
