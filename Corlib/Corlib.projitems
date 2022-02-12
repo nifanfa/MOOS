@@ -34,7 +34,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Point.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EETypePtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Exception.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\FlagsAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\IntPtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Key.cs" />
