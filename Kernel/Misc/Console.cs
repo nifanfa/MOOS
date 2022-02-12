@@ -109,6 +109,7 @@ namespace Kernel
                         Console.WriteLine();
                         break;
                     case ConsoleKey.Delete:
+                    case ConsoleKey.Backspace:
                         Console.Back();
                         break;
                     default:
@@ -116,7 +117,6 @@ namespace Kernel
                         break;
                 }
             }
-
             return PS2Keyboard.KeyInfo;
         }
 
@@ -126,11 +126,22 @@ namespace Kernel
             ConsoleKeyInfo key;
             while ((key = Console.ReadKey()).Key != ConsoleKey.Enter)
             {
-                string cache1 = key.KeyChar.ToString();
-                string cache2 = s + cache1;
-                s.Dispose();
-                cache1.Dispose();
-                s = cache2;
+                switch (key.Key) 
+                {
+                    case ConsoleKey.Delete:
+                    case ConsoleKey.Backspace:
+                        if (s.Length == 0) continue;
+                        s.Length -= 1;
+                        break;
+                    default:
+                        string cache1 = key.KeyChar.ToString();
+                        string cache2 = s + cache1;
+                        s.Dispose();
+                        cache1.Dispose();
+                        s = cache2;
+                        break;
+
+                }
                 Native.Hlt();
             }
             return s;
