@@ -13,6 +13,9 @@ namespace Kernel
         private static char[] keyCharsShift;
         private static ConsoleKey[] keys;
 
+        public delegate void OnKeyHandler(ConsoleKeyInfo key);
+        public static event OnKeyHandler OnKeyChanged;
+
         public static void Initialize()
         {
             keyChars = new char[]
@@ -79,8 +82,9 @@ namespace Kernel
                 KeyInfo.KeyChar = keyCharsShift[b];
             }
 
-            if (b < keys.Length)
-                KeyInfo.Key = keys[b];
+            KeyInfo.Key = keys[b < keys.Length ? b : b - 0x80];
+
+            OnKeyChanged?.Invoke(KeyInfo);
         }
 
         private static void SetIfKeyModifier(byte scanCode, byte pressedScanCode, ConsoleModifiers modifier)
