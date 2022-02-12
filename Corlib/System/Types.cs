@@ -39,7 +39,13 @@ namespace System
             => c >= '0' && c <= '9';
     }
 
-    public struct SByte { }
+    public struct SByte
+    {
+        public override string ToString()
+        {
+            return ((long)this).ToString();
+        }
+    }
 
     public struct Byte
     {
@@ -54,7 +60,13 @@ namespace System
         }
     }
 
-    public struct Int16 { }
+    public struct Int16 
+    {
+        public override string ToString()
+        {
+            return ((long)this).ToString();
+        }
+    }
 
     public struct UInt16 
     {
@@ -69,49 +81,11 @@ namespace System
         }
     }
 
-    public struct Int32
+    public struct Int32 
     {
-        public const int MaxValue = 0x7FFFFFFF;
-
-        // TODO: ToString for all other primitives
-        public unsafe override string ToString()
+        public override string ToString()
         {
-            var val = this;
-            bool isNeg = BitHelpers.IsBitSet(val, 31);
-            char* x = stackalloc char[12];
-            var i = 10;
-
-            x[11] = '\0';
-
-            do
-            {
-                var d = val % 10;
-                val /= 10;
-
-                d += 0x30;
-                x[i--] = (char)d;
-            } while (val > 0);
-
-            if (isNeg)
-                x[i] = '-';
-            else
-                i++;
-
-            return new string(x + i, 0, 11 - i);
-        }
-
-        public static int Parse(string val)
-        {
-            // TODO: Throw an error on incorrect format
-            int r = 0;
-
-            for (var i = 0; i < val.Length; i++)
-            {
-                r *= 10;
-                r += val[i] - 48;
-            }
-
-            return r;
+            return ((long)this).ToString();
         }
     }
 
@@ -128,7 +102,42 @@ namespace System
         }
     }
 
-    public struct Int64 { }
+    public unsafe struct Int64 
+    {
+        public override string ToString()
+        {
+            var val = this;
+            bool isNeg = BitHelpers.IsBitSet(val, 63);
+            char* x = stackalloc char[22];
+            var i = 20;
+
+            x[21] = '\0';
+
+            if (isNeg)
+            {
+                ulong _val = (ulong)val;
+                _val = 0xFFFFFFFFFFFFFFFF - _val;
+                _val += 1;
+                val = (long)_val;
+            }
+
+            do
+            {
+                var d = val % 10;
+                val /= 10;
+
+                d += 0x30;
+                x[i--] = (char)d;
+            } while (val > 0);
+
+            if (isNeg)
+                x[i] = '-';
+            else
+                i++;
+
+            return new string(x + i, 0, 21 - i);
+        }
+    }
 
     public struct UInt64
     {
