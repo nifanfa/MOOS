@@ -94,7 +94,7 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
-        Console.WriteLine("Execute Nintendo Family Computer Emulator? Y/N");
+        Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
         /*
         for(; ; ) 
@@ -105,7 +105,7 @@ unsafe class Program
 
         ConsoleKeyInfo Key = Console.ReadKey();
 
-        if (Key.Key == ConsoleKey.Y)
+        if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
 
         {
 
