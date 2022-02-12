@@ -15,20 +15,19 @@ namespace System
         [Intrinsic]
         public static readonly IntPtr Zero;
 
-        //public override bool Equals(object o)
-        //	=> _value == ((IntPtr)o)._value;
-
         public bool Equals(IntPtr ptr)
             => _value == ptr._value;
 
-        //public override int GetHashCode()
-        //	=> (int)_value;
-
         public static explicit operator IntPtr(int value) => new IntPtr(value);
+
         public static explicit operator IntPtr(uint value) => new IntPtr(value);
+
         public static explicit operator IntPtr(long value) => new IntPtr(value);
+
         public static explicit operator IntPtr(ulong value) => new IntPtr(value);
+
         public static explicit operator IntPtr(void* value) => new IntPtr(value);
+
         public static explicit operator void*(IntPtr value) => value._value;
 
         public static explicit operator int(IntPtr value)
@@ -39,7 +38,10 @@ namespace System
         }
 
         public static explicit operator long(IntPtr value) => (long)value._value;
+
         public static explicit operator ulong(IntPtr value) => (ulong)value._value;
+
+        public static explicit operator IntPtr(UIntPtr ptr) => new IntPtr() { _value = (void*)ptr };
 
         public static IntPtr operator +(IntPtr a, uint b)
             => new IntPtr((byte*)a._value + b);
@@ -55,6 +57,11 @@ namespace System
         public static bool operator !=(IntPtr a, IntPtr b)
         {
             return !(a._value == b._value);
+        }
+
+        public override string ToString()
+        {
+            return ((UIntPtr)this).ToString();
         }
     }
 }
