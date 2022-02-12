@@ -10,6 +10,7 @@ namespace Kernel
         public static ConsoleKeyInfo KeyInfo;
 
         private static char[] keyChars;
+        private static char[] keyCharsShift;
         private static ConsoleKey[] keys;
 
         public static void Initialize()
@@ -20,6 +21,17 @@ namespace Kernel
                 'q','w','e','r','t','y','u','i','o','p','[',']','\n','\0',
                 'a','s','d','f','g','h','j','k','l',';','\'','`','\0','\\',
                 'z','x','c','v','b','n','m',',','.','/','\0','\0','\0',' ','\0',
+                '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','-',
+                '\0','\0','\0','+','\0','\0','\0','\0','\b','/','\n','\0','\0','\0','\b','\0','\0'
+                ,'\0','\0','\0','\0','\0','\0','\0','\0','\0'
+            };
+
+            keyCharsShift = new char[]
+            {
+                '\0','\0','!','@','#','$','%','^','&','*','(',')','_','+','\b',' ',
+                'q','w','e','r','t','y','u','i','o','p','{','}','\n','\0',
+                'a','s','d','f','g','h','j','k','l',':','\"','~','\0','|',
+                'z','x','c','v','b','n','m','<','>','?','\0','\0','\0',' ','\0',
                 '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','-',
                 '\0','\0','\0','+','\0','\0','\0','\0','\b','/','\n','\0','\0','\0','\b','\0','\0'
                 ,'\0','\0','\0','\0','\0','\0','\0','\0','\0'
@@ -37,12 +49,15 @@ namespace Kernel
             CleanKeyInfo();
         }
 
-        public static void CleanKeyInfo()
+        public static void CleanKeyInfo(bool NoModifiers = false)
         {
             KeyInfo.KeyChar = '\0';
             KeyInfo.ScanCode = 0;
             KeyInfo.KeyState = ConsoleKeyState.None;
-            KeyInfo.Modifiers = ConsoleModifiers.None;
+            if (!NoModifiers)
+            {
+                KeyInfo.Modifiers = ConsoleModifiers.None;
+            }
         }
 
         public static void ProcessKey(byte b)
@@ -52,10 +67,17 @@ namespace Kernel
 
             SetIfKeyModifier(b, 0x1D, ConsoleModifiers.Ctrl);
             SetIfKeyModifier(b, 0x2A, ConsoleModifiers.Shift);
+            SetIfKeyModifier(b, 0x36, ConsoleModifiers.Shift);
             SetIfKeyModifier(b, 0x38, ConsoleModifiers.Alt);
 
             if (b < keyChars.Length)
+            {
                 KeyInfo.KeyChar = keyChars[b];
+            }
+            if (b < keyCharsShift.Length && KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Shift))
+            {
+                KeyInfo.KeyChar = keyCharsShift[b];
+            }
 
             if (b < keys.Length)
                 KeyInfo.Key = keys[b];

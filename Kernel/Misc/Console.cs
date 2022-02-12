@@ -99,12 +99,22 @@ namespace Kernel
 
         public static ConsoleKeyInfo ReadKey(bool echoOff = false)
         {
-            PS2Keyboard.CleanKeyInfo();
+            PS2Keyboard.CleanKeyInfo(true);
             while (PS2Keyboard.KeyInfo.KeyChar == '\0') Native.Hlt();
             if (!echoOff)
             {
-                if (PS2Keyboard.KeyInfo.Key != ConsoleKey.Enter) Console.Write(PS2Keyboard.KeyInfo.KeyChar);
-                else Console.WriteLine();
+                switch (PS2Keyboard.KeyInfo.Key) 
+                {
+                    case ConsoleKey.Enter:
+                        Console.WriteLine();
+                        break;
+                    case ConsoleKey.Delete:
+                        Console.Back();
+                        break;
+                    default:
+                        Console.Write(PS2Keyboard.KeyInfo.KeyChar);
+                        break;
+                }
             }
 
             return PS2Keyboard.KeyInfo;
