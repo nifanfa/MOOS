@@ -203,90 +203,176 @@ namespace System
         }
     }
 
-    public struct UIntPtr { }
+    public unsafe struct UIntPtr
+    {
+        void* _value;
+
+        public UIntPtr(void* value) { _value = value; }
+        public UIntPtr(int value) { _value = (void*)value; }
+        public UIntPtr(uint value) { _value = (void*)value; }
+        public UIntPtr(long value) { _value = (void*)value; }
+        public UIntPtr(ulong value) { _value = (void*)value; }
+
+        [Intrinsic]
+        public static readonly UIntPtr Zero;
+
+        public bool Equals(UIntPtr ptr)
+            => _value == ptr._value;
+
+        public static explicit operator UIntPtr(int value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(uint value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(long value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(ulong value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(void* value) => new UIntPtr(value);
+
+        public static explicit operator void*(UIntPtr value) => value._value;
+
+        public static explicit operator int(UIntPtr value)
+        {
+            var l = (long)value._value;
+
+            return checked((int)l);
+        }
+
+        public static explicit operator long(UIntPtr value) => (long)value._value;
+
+        public static explicit operator ulong(UIntPtr value) => (ulong)value._value;
+
+        public static explicit operator UIntPtr(IntPtr ptr) => new UIntPtr() { _value = (void*)ptr };
+
+        public static UIntPtr operator +(UIntPtr a, uint b)
+            => new UIntPtr((byte*)a._value + b);
+
+        public static UIntPtr operator +(UIntPtr a, ulong b)
+            => new UIntPtr((byte*)a._value + b);
+
+        public static bool operator ==(UIntPtr a, UIntPtr b)
+        {
+            return a._value == b._value;
+        }
+
+        public static bool operator !=(UIntPtr a, UIntPtr b)
+        {
+            return !(a._value == b._value);
+        }
+
+        public override string ToString()
+        {
+            return ((ulong)_value).ToString();
+        }
+    }
 
     public struct Single 
     {
         public override unsafe string ToString()
         {
-            char* p = stackalloc char[21];
-            string s = new string(p, 0, 21);
-            float_to_string(this, s);
-            return s;
-        }
-
-        //https://stackoverflow.com/questions/7228438/convert-double-float-to-string
-        /** Number on countu **/
-
-        static int n_tu(int number, int count)
-        {
-            int result = 1;
-            while (count-- > 0)
-                result *= number;
-
-            return result;
-        }
-
-        /*** Convert float to string ***/
-        static void float_to_string(float f, string r)
-        {
-            long length, length2, number, position, sign;
-            int i;
-            float number2;
-
-            sign = -1;   // -1 == positive number
-            if (f < 0)
-            {
-                sign = '-';
-                f *= -1;
-            }
-
-            number2 = f;
-            number = (long)f;
-            length = 0;  // Size of decimal part
-            length2 = 0; // Size of tenth
-
-            /* Calculate length2 tenth part */
-            while ((number2 - (float)number) != 0.0 && !((number2 - (float)number) < 0.0))
-            {
-                number2 = f * (n_tu((int)10.0f, (int)(length2 + 1)));
-                number = (long)number2;
-
-                length2++;
-            }
-
-            /* Calculate length decimal part */
-            for (length = (f > 1) ? 0 : 1; f > 1; length++)
-                f /= 10;
-
-            position = length;
-            length = length + 1 + length2;
-            number = (long)number2;
-            if (sign == '-')
-            {
-                length++;
-                position++;
-            }
-
-            for (i = (int)length; i >= 0; i--)
-            {
-                if (i == (length))
-                    r[i] = '\0';
-                else if (i == (position))
-                    r[i] = '.';
-                else if (sign == '-' && i == 0)
-                    r[i] = '-';
-                else
-                {
-                    r[i] = (char)((number % 10) + '0');
-                    number /= 10;
-                }
-            }
-            r.Length = (int)length;
+            return ((double)this).ToString();
         }
     }
 
-    public struct Double { }
+    public unsafe struct Double
+    {
+        public override string ToString()
+        {
+            char* p = stackalloc char[22];
+            string s = new string(p, 0, 22);
+            dtoa(s, this);
+            return s;
+
+        }
+
+        static void dtoa(string c, double d)
+        {
+            int i = 0, e = 0, n = 0, flag = 0;//flag=0E+;1E-
+
+            if (d < 0)
+            {
+                c[i++] = '-';
+                d = -d;
+            }
+            while (d >= 10)
+            {
+                d /= 10;//here is the problem
+                e++;
+            }
+            while (d < 1)
+            {
+                d *= 10;
+                e++;
+                flag = 1;
+            }
+            int v = (int)d, dot;
+            c[i++] = (char)('0' + v);//the integer part
+            dot = i;
+            n++;
+            c[i++] = '.';
+            d -= v;
+            while (d != 0 && n < 10)
+            {
+                d *= 10;
+                v = (int)d;
+                c[i++] = (char)('0' + v);
+                n++;
+                d -= v;
+            }
+            if (d != 0)
+            {
+
+                if (d * 10 >= 5)//rounding
+                {
+                    int j = i - 1;
+                    c[j]++;
+                    while (c[j] > '9')
+                    {
+                        c[j] = '0';
+                        if (j - 1 == dot)
+                            j--;
+                        c[--j]++;
+                    }
+                }
+            }
+            else
+            {
+                while (n < 10)
+                {
+                    c[i++] = '0';
+                    n++;
+                }
+            }
+
+            if (e != 0)
+            {
+                c[i++] = 'E';
+                c[i++] = (flag == 0) ? '+' : '-';
+                if (e >= 100)
+                {
+                    int tmp = e / 100;
+                    c[i++] = (char)('0' + tmp);
+                    e -= (tmp * 100);
+                    c[i++] = (char)('0' + e / 10);
+                    c[i++] = (char)('0' + e % 10);
+                }
+                else if (e <= 9)
+                {
+                    c[i++] = '0';
+                    c[i++] = '0';
+                    c[i++] = (char)('0' + e);
+                }
+                else
+                {
+                    c[i++] = '0';
+                    c[i++] = (char)('0' + e / 10);
+                    c[i++] = (char)('0' + e % 10);
+                }
+            }
+            c[i] = '\0';
+            c.Length = i;
+        }
+    }
 
     public abstract class ValueType { }
 
