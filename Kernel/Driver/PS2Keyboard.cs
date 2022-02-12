@@ -1,86 +1,70 @@
 ﻿//http://cc.etsii.ull.es/ftp/antiguo/EC/AOA/APPND/Apndxc.pdf
 
+using System;
+using static System.ConsoleKey;
+
 namespace Kernel
 {
     public static class PS2Keyboard
     {
-        public static char Key;
+        public static ConsoleKeyInfo KeyInfo;
 
-        public static char ProcessKey(byte b)
+        private static char[] keyChars;
+        private static ConsoleKey[] keys;
+
+        public static void Initialize()
         {
-            switch (b)
+            keyChars = new char[]
             {
-                //Key Down
-                case 0x1E: return 'A';
-                case 0x30: return 'B';
-                case 0x2E: return 'C';
-                case 0x20: return 'D';
-                case 0x12: return 'E';
-                case 0x21: return 'F';
-                case 0x22: return 'G';
-                case 0x23: return 'H';
-                case 0x17: return 'I';
-                case 0x24: return 'J';
-                case 0x25: return 'K';
-                case 0x26: return 'L';
-                case 0x32: return 'M';
-                case 0x31: return 'N';
-                case 0x18: return 'O';
-                case 0x19: return 'P';
-                case 0x10: return 'Q';
-                case 0x13: return 'R';
-                case 0x1F: return 'S';
-                case 0x14: return 'T';
-                case 0x16: return 'U';
-                case 0x2F: return 'V';
-                case 0x11: return 'W';
-                case 0x2D: return 'X';
-                case 0x15: return 'Y';
-                case 0x2C: return 'Z';
+                '\0','\0','1','2','3','4','5','6','7','8','9','0','-','=','\b',' ',
+                'q','w','e','r','t','y','u','i','o','p','[',']','\n','\0',
+                'a','s','d','f','g','h','j','k','l',';','\'','`','\0','\\',
+                'z','x','c','v','b','n','m',',','.','/','\0','\0','\0',' ','\0',
+                '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','-',
+                '\0','\0','\0','+','\0','\0','\0','\0','\b','/','\n','\0','\0','\0','\b','\0','\0'
+                ,'\0','\0','\0','\0','\0','\0','\0','\0','\0'
+            };
 
-                //Key Up
-                case 0x80 + 0x1E: return 'a';
-                case 0x80 + 0x30: return 'b';
-                case 0x80 + 0x2E: return 'c';
-                case 0x80 + 0x20: return 'd';
-                case 0x80 + 0x12: return 'e';
-                case 0x80 + 0x21: return 'f';
-                case 0x80 + 0x22: return 'g';
-                case 0x80 + 0x23: return 'h';
-                case 0x80 + 0x17: return 'i';
-                case 0x80 + 0x24: return 'j';
-                case 0x80 + 0x25: return 'k';
-                case 0x80 + 0x26: return 'l';
-                case 0x80 + 0x32: return 'm';
-                case 0x80 + 0x31: return 'n';
-                case 0x80 + 0x18: return 'o';
-                case 0x80 + 0x19: return 'p';
-                case 0x80 + 0x10: return 'q';
-                case 0x80 + 0x13: return 'r';
-                case 0x80 + 0x1F: return 's';
-                case 0x80 + 0x14: return 't';
-                case 0x80 + 0x16: return 'u';
-                case 0x80 + 0x2F: return 'v';
-                case 0x80 + 0x11: return 'w';
-                case 0x80 + 0x2D: return 'x';
-                case 0x80 + 0x15: return 'y';
-                case 0x80 + 0x2C: return 'z';
+            keys = new[] {
+                None, Escape, D1, D2, D3, D4, D5, D6, D7, D8, D9, D0, OemMinus, OemPlus, Backspace, Tab,
+                Q, W, E, R, T, Y, U, I, O, P, Oem4, Oem6, Return, LControlKey,
+                A, S, D, F, G, H, J, K, L, Oem1, Oem7, Oem3, LShiftKey, Oem8,
+                Z, X, C, V, B, N, M, OemComma, OemPeriod, Oem2, RShiftKey, Multiply, LMenu, Space, Capital, F1, F2, F3, F4, F5,
+                F6, F7, F8, F9, F10, NumLock, Scroll, Home, Up, Prior, Subtract, Left, Clear, Right, Add, End,
+                Down, Next, Insert, Delete, Snapshot, None, Oem5, F11, F12
+            };
 
-                case 0x02: return '1';
-                case 0x03: return '2';
-                case 0x04: return '3';
-                case 0x05: return '4';
-                case 0x06: return '5';
-                case 0x07: return '6';
-                case 0x08: return '7';
-                case 0x09: return '8';
-                case 0x0A: return '9';
-                case 0x0B: return '0';
-                case 0x39: return ' ';
-                case 0x1C: return '\n';
-                case 0x0E: return '\b';
-                default: return '?';
+            CleanKeyInfo();
+        }
+
+        public static void CleanKeyInfo()
+        {
+            KeyInfo.KeyChar = '\0';
+            KeyInfo.ScanCode = 0;
+            KeyInfo.KeyState = ConsoleKeyState.None;
+            KeyInfo.Modifiers = ConsoleModifiers.None;
+        }
+
+        public static void ProcessKey(byte b)
+        {
+            KeyInfo.ScanCode = b;
+            KeyInfo.KeyState = b > 0x80 ? ConsoleKeyState.Released : ConsoleKeyState.Pressed;
+
+            SetIfKeyModifier(b, 0x1D, ConsoleModifiers.Ctrl);
+            SetIfKeyModifier(b, 0x2A, ConsoleModifiers.Shift);
+            SetIfKeyModifier(b, 0x38, ConsoleModifiers.Alt);
+
+            if (b < keyChars.Length)
+            {
+                KeyInfo.Key = keys[b];
+                KeyInfo.KeyChar = keyChars[b];
             }
+        }
+
+        private static void SetIfKeyModifier(byte scanCode, byte pressedScanCode, ConsoleModifiers modifier)
+        {
+            if (scanCode == pressedScanCode) KeyInfo.Modifiers |= modifier;
+            if (scanCode == pressedScanCode + 0x80) KeyInfo.Modifiers &= ~modifier;
         }
     }
 }

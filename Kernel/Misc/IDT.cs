@@ -75,7 +75,7 @@ public static class IDT
             case 0: Console.WriteLine("DIVIDE BY ZERO"); break;
             case 1: Console.WriteLine("SINGLE STEP"); break;
             case 2: Console.WriteLine("NMI"); break;
-            case 3: Console.WriteLine("BREAKPOINT"); break;
+            case 3: Console.WriteLine("BREAKPOINT: CHECK YOUR CODE!"); break;
             case 4: Console.WriteLine("OVERFLOW"); break;
             case 5: Console.WriteLine("BOUNDS CHECK"); break;
             case 6: Console.WriteLine("INVALID OPCODE"); break;
@@ -114,11 +114,7 @@ public static class IDT
                 break;
             case 0x21:
                 byte b = Native.In8(0x60);
-                char c = PS2Keyboard.ProcessKey(b);
-                PS2Keyboard.Key = c;
-                if (c == '\n') Console.WriteLine();
-                else if (c == '\b') Console.Back();
-                else if (c != '?') Console.Write(c);
+                PS2Keyboard.ProcessKey(b);
                 break;
             case 0x2C:
                 PS2Mouse.OnInterrupt();

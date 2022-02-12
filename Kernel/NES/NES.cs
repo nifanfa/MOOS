@@ -32,8 +32,8 @@ namespace NES
 
         public void runGame()
         {
-            NES_KeyUp(PS2Keyboard.Key);
-            NES_KeyDown(PS2Keyboard.Key);
+            NES_KeyUp(PS2Keyboard.KeyInfo);
+            NES_KeyDown(PS2Keyboard.KeyInfo);
 
             if (bolRunGame && !cpu.badOpCode)
             {
@@ -156,45 +156,49 @@ namespace NES
         }
         
         #region Keyboard Input
-        public void NES_KeyDown(char c)
+        public void NES_KeyDown(ConsoleKeyInfo key)
         {
-            if (c == 'Q')        // A
+            if (key.KeyState != ConsoleKeyState.Pressed) return;
+            char c = key.KeyChar;
+            if (c == 'q')        // A
             {
                 input.joypadOne |= 0x01;
             }
-            else if (c == 'E')   // B
+            else if (c == 'e')   // B
             {
                 input.joypadOne |= 0x02;
             }
-            else if (c == 'Z')   // Select
+            else if (c == 'z')   // Select
             {
                 input.joypadOne |= 0x04;
             }
-            else if (c == 'C')   // Start
+            else if (c == 'c')   // Start
             {
                 input.joypadOne |= 0x08;
             }
-            else if (c == 'W')   // Up
+            else if (c == 'w')   // Up
             {
                 input.joypadOne |= 0x10;
             }
-            else if (c == 'S')   // Down
+            else if (c == 's')   // Down
             {
                 input.joypadOne |= 0x20;
             }
-            else if (c == 'A')   // Left
+            else if (c == 'a')   // Left
             {
                 input.joypadOne |= 0x40;
             }
-            else if (c == 'D')   // Right
+            else if (c == 'd')   // Right
             {
                 input.joypadOne |= 0x80;
             }
         }
 #endregion
 
-        private void NES_KeyUp(char c)
+        private void NES_KeyUp(ConsoleKeyInfo key)
         {
+            if (key.KeyState == ConsoleKeyState.Pressed) return;
+            char c = key.KeyChar;
             if (c == 'q')        // A
             {
                 input.joypadOne &= 0xFE;

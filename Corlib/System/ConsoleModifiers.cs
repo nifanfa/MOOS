@@ -2,7 +2,7 @@
 namespace System
 {
     [Flags]
-    public enum KeyModifier
+    public enum ConsoleModifiers
     {
         None = 0,
         Alt = 1,
