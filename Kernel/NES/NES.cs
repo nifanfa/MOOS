@@ -32,9 +32,6 @@ namespace NES
 
         public void runGame()
         {
-            NES_KeyUp(PS2Keyboard.KeyInfo);
-            NES_KeyDown(PS2Keyboard.KeyInfo);
-
             if (bolRunGame && !cpu.badOpCode)
             {
                 if (cpu.intTotalCpuCycles < intMaxCPUCycles)
@@ -153,83 +150,81 @@ namespace NES
 
             bolStartFrame = true;
             bolReset = true;
-        }
-        
-        #region Keyboard Input
-        public void NES_KeyDown(ConsoleKeyInfo key)
-        {
-            if (key.KeyState != ConsoleKeyState.Pressed) return;
-            char c = key.KeyChar;
-            if (c == 'q')        // A
-            {
-                input.joypadOne |= 0x01;
-            }
-            else if (c == 'e')   // B
-            {
-                input.joypadOne |= 0x02;
-            }
-            else if (c == 'z')   // Select
-            {
-                input.joypadOne |= 0x04;
-            }
-            else if (c == 'c')   // Start
-            {
-                input.joypadOne |= 0x08;
-            }
-            else if (c == 'w')   // Up
-            {
-                input.joypadOne |= 0x10;
-            }
-            else if (c == 's')   // Down
-            {
-                input.joypadOne |= 0x20;
-            }
-            else if (c == 'a')   // Left
-            {
-                input.joypadOne |= 0x40;
-            }
-            else if (c == 'd')   // Right
-            {
-                input.joypadOne |= 0x80;
-            }
-        }
-#endregion
 
-        private void NES_KeyUp(ConsoleKeyInfo key)
+            PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChangedHandler;
+        }
+
+        private void PS2Keyboard_OnKeyChangedHandler(ConsoleKeyInfo key)
         {
-            if (key.KeyState == ConsoleKeyState.Pressed) return;
-            char c = key.KeyChar;
-            if (c == 'q')        // A
+            ConsoleKey c = key.Key;
+            if (key.KeyState == ConsoleKeyState.Pressed)
             {
-                input.joypadOne &= 0xFE;
-            }
-            else if (c == 'e')   // B
+                if (c == ConsoleKey.Q)        // A
+                {
+                    input.joypadOne |= 0x01;
+                }
+                else if (c == ConsoleKey.E)   // B
+                {
+                    input.joypadOne |= 0x02;
+                }
+                else if (c == ConsoleKey.Z)   // Select
+                {
+                    input.joypadOne |= 0x04;
+                }
+                else if (c == ConsoleKey.C)   // Start
+                {
+                    input.joypadOne |= 0x08;
+                }
+                else if (c == ConsoleKey.W)   // Up
+                {
+                    input.joypadOne |= 0x10;
+                }
+                else if (c == ConsoleKey.S)   // Down
+                {
+                    input.joypadOne |= 0x20;
+                }
+                else if (c == ConsoleKey.A)   // Left
+                {
+                    input.joypadOne |= 0x40;
+                }
+                else if (c == ConsoleKey.D)   // Right
+                {
+                    input.joypadOne |= 0x80;
+                }
+            }else
             {
-                input.joypadOne &= 0xFD;
-            }
-            else if (c == 'z')   // Select
-            {
-                input.joypadOne &= 0xFB;
-            }
-            else if (c == 'c')   // Start
-            {
-                input.joypadOne &= 0xF7;
-            }
-            else if (c == 'w')   // Up
-            {
-                input.joypadOne &= 0xEF;
-            }
-            else if (c == 's')   // Down
-            {
-                input.joypadOne &= 0xDF;
-            }
-            else if (c == 'a')   // Left
-            {
-                input.joypadOne &= 0xBF;
-            }
-            else if (c == 'd')   // Right
-            {
-                input.joypadOne &= 0x7F;
+                if (c == ConsoleKey.Q)        // A
+                {
+                    input.joypadOne &= 0xFE;
+                }
+                else if (c == ConsoleKey.E)   // B
+                {
+                    input.joypadOne &= 0xFD;
+                }
+                else if (c == ConsoleKey.Z)   // Select
+                {
+                    input.joypadOne &= 0xFB;
+                }
+                else if (c == ConsoleKey.C)   // Start
+                {
+                    input.joypadOne &= 0xF7;
+                }
+                else if (c == ConsoleKey.W)   // Up
+                {
+                    input.joypadOne &= 0xEF;
+                }
+                else if (c == ConsoleKey.S)   // Down
+                {
+                    input.joypadOne &= 0xDF;
+                }
+                else if (c == ConsoleKey.A)   // Left
+                {
+                    input.joypadOne &= 0xBF;
+                }
+                else if (c == ConsoleKey.D)   // Right
+                {
+                    input.joypadOne &= 0x7F;
+                }
             }
         }
 
