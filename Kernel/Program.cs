@@ -61,6 +61,7 @@ unsafe class Program
         if(SATA.Ports.Count)
         {
             FAT32 fat = new FAT32(SATA.Ports[0], 2048);
+            //byte[] data = File.Instance.ReadAllBytes("TEST1.TXT");
         }
 
         /*
