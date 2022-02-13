@@ -7,11 +7,15 @@ using Kernel.Misc;
 using System;
 using System.Diagnostics;
 using System.Runtime;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 unsafe class Program
 {
     static void Main() { }
+
+    [DllImport("*")]
+    public static extern void test();
 
     /*
      * Minimum system requirement:
@@ -54,6 +58,11 @@ unsafe class Program
 
         IDE.Initialize();
 
+        if(SATA.Ports.Count)
+        {
+            FAT32 fat = new FAT32(SATA.Ports[0], 2048);
+        }
+
         /*
         Console.WriteLine(
             IDE.Controllers[0].ReadOrWrite(IDE.Drive.Master, 0, (byte*)0x2000_0000, false) ? "IDE success" : "IDE failed");
@@ -93,6 +102,8 @@ unsafe class Program
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
+
+        test();
 
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 

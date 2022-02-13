@@ -49,8 +49,7 @@ namespace System
 
         public unsafe static string FromASCII(IntPtr ptr, int length)
         {
-            var buf = new char[9];
-            buf[8] = '\0';
+            var buf = new char[length];
             var _ptr = (byte*)ptr;
 
             for (int i = 0; i < length; i++)
@@ -64,8 +63,7 @@ namespace System
 
         public unsafe static string FromASCII(IntPtr ptr, int length, byte ignore)
         {
-            var buf = new char[9];
-            buf[8] = '\0';
+            var buf = new char[length];
             var _ptr = (byte*)ptr;
 
             int len = 0;

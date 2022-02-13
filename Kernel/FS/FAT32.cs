@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Kernel.FS
 {
-    public unsafe class FAT32
+    public unsafe class FAT32 : File
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         struct FAT32_DBR
@@ -150,7 +150,7 @@ namespace Kernel.FS
             return RootDirectorySector + ((Cluster - 2) * DBR->BPB_SecPerClus);
         }
 
-        public byte[] ReadAllBytes(string FileName)
+        public override byte[] ReadAllBytes(string FileName)
         {
             if (FileName[0] != '/') FileName = "/" + FileName;
 
