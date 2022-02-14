@@ -44,8 +44,5 @@ int sprintf(char* buffer, const char* fmt, ...);
 int vsnprintf(char* buffer, int size, const char* fmt, va_list args);
 
 int strcmp(const char* l, const char* r);
-int strlen(const char* str);
-
-char getch();
 
 #define NULL 0
