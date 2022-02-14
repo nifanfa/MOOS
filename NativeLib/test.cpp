@@ -1,7 +1,11 @@
-#include <stdio.h>
+#include "libcore.h"
 
 void test()
 {
+	int i = 0x2000;
+	printf("hello world %x\n", i);
+
+	/*
 	FILE* fp;
 	fp = fopen("TEST1.TXT", "r");
 	fseek(fp, 0, SEEK_SET);
@@ -9,4 +13,5 @@ void test()
 	fread(&buffer, 20, 1, fp);
 	print(&buffer);
 	print("\n");
+	*/
 }

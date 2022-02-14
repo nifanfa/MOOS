@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\libcore">
+      <UniqueIdentifier>{e2705c22-a4dd-4e20-9582-3620cbfcf7b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\libcore">
+      <UniqueIdentifier>{f053fcac-97b7-4ee9-9b43-2618b534e7e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interrupts.cpp">
@@ -33,6 +39,9 @@
     <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="printf.cpp">
+      <Filter>源文件\libcore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm">
@@ -42,6 +51,9 @@
   <ItemGroup>
     <ClInclude Include="lodepng.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcore.h">
+      <Filter>头文件\libcore</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

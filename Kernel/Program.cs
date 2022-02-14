@@ -104,7 +104,7 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
-        //test();
+        test();
 
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 

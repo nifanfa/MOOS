@@ -7,6 +7,7 @@ namespace Kernel
 {
     internal unsafe class stdio
     {
+        //Not really stdio thing
         [RuntimeExport("print")]
         public static void print(byte* msg) 
         {
