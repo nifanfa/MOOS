@@ -178,6 +178,12 @@ namespace System
             return new string(ptr, 0, Length);
         }
 
+        internal int IndexOf(char j)
+        {
+            for (int i = 0; i < this.Length; i++) if (this[i] == j) return i;
+            return -1;
+        }
+
         public static string Concat(string a, string b, string c)
         {
             string p1 = a + b;
