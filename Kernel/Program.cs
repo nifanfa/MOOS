@@ -27,10 +27,7 @@ unsafe class Program
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info, IntPtr Modules)
     {
-        for (uint i = 1024 * 1024 * 48; i < 1024 * 1024 * 512; i += 4096)
-        {
-            Allocator.AddFreePages((IntPtr)i, 1);
-        }
+        Allocator.Initialize((IntPtr)0x3000000);
 
         StartupCodeHelpers.InitializeModules(Modules);
 
