@@ -29,6 +29,14 @@ namespace Kernel
         public uint VBEInterfaceSeg;
         public uint VBEInterfaceOff;
         public uint VBEInterfaceLen;
+
+        public uint* Mods 
+        {
+            get 
+            {
+                return (uint*)ModAddr;
+            }
+        }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

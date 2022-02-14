@@ -19,15 +19,15 @@ unsafe class Program
 
     /*
      * Minimum system requirement:
-     * 32MiB of RAM
+     * 64MiB of RAM
      * Memory Map:
-     * 1 MiB - 6MiB   -> System
-     * 6 MiB - ∞     -> Free to use
+     * 16 MiB - 32MiB   -> System
+     * 32 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info, IntPtr Modules)
     {
-        Allocator.Initialize((IntPtr)0x600000);
+        Allocator.Initialize((IntPtr)0x2000000);
 
         StartupCodeHelpers.InitializeModules(Modules);
 
@@ -58,11 +58,18 @@ unsafe class Program
 
         IDE.Initialize();
 
+        Console.Write("Initrd: 0x");
+        Console.WriteLine((Info->Mods[0]).ToString("x2"));
+        Console.WriteLine("Initializing Ramdisk");
+        FAT32 fat = new FAT32(new Ramdisk((IntPtr)Info->Mods[0]), 2048);
+
+        /*
         if(SATA.Ports.Count)
         {
             FAT32 fat = new FAT32(SATA.Ports[0], 2048);
             //byte[] data = File.Instance.ReadAllBytes("TEST1.TXT");
         }
+        */
 
         /*
         Console.WriteLine(

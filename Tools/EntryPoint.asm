@@ -334,6 +334,6 @@ resb 4096
 P2_TABLE:
 resb 4096
 
-times 0x10000-($-$$)db 0
+align 4096
 EXE:
     
