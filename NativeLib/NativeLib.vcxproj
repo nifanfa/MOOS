@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="interrupts.cpp" />
     <ClCompile Include="io.cpp" />
-    <ClCompile Include="liballoc.cpp" />
     <ClCompile Include="lodepng.c" />
     <ClCompile Include="mem.cpp" />
     <ClCompile Include="native.cpp" />
@@ -32,7 +31,6 @@
     <MASM Include="interrupts_asm.asm" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="liballoc.h" />
     <ClInclude Include="libcore.h" />
     <ClInclude Include="lodepng.h" />
   </ItemGroup>

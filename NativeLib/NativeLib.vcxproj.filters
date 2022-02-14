@@ -25,12 +25,6 @@
     <Filter Include="源文件\lodepng">
       <UniqueIdentifier>{6a7b206b-51a7-4d5f-9591-7b1309281e86}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\liballoc">
-      <UniqueIdentifier>{590bad39-8ee1-4695-a47c-26ab8ca3256e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\liballoc">
-      <UniqueIdentifier>{2895c673-fa6b-4249-bfa3-ab2d2168c58e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interrupts.cpp">
@@ -54,9 +48,6 @@
     <ClCompile Include="lodepng.c">
       <Filter>源文件\lodepng</Filter>
     </ClCompile>
-    <ClCompile Include="liballoc.cpp">
-      <Filter>源文件\liballoc</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm">
@@ -69,9 +60,6 @@
     </ClInclude>
     <ClInclude Include="lodepng.h">
       <Filter>头文件\lodepng</Filter>
-    </ClInclude>
-    <ClInclude Include="liballoc.h">
-      <Filter>头文件\liballoc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
