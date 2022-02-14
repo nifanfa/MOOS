@@ -205,6 +205,7 @@ namespace Kernel
         public static void WriteLine(string s)
         {
             Write(s);
+            OnWrite?.Invoke('\n');
             WriteFramebuffer(' ');
             CursorX = 0;
             CursorY++;
@@ -215,6 +216,7 @@ namespace Kernel
 
         public static void WriteLine()
         {
+            OnWrite?.Invoke('\n');
             WriteFramebuffer(' ');
             CursorX = 0;
             CursorY++;
