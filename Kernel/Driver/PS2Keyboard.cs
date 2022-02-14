@@ -69,17 +69,24 @@ namespace Kernel
             KeyInfo.KeyState = b > 0x80 ? ConsoleKeyState.Released : ConsoleKeyState.Pressed;
 
             SetIfKeyModifier(b, 0x1D, ConsoleModifiers.Ctrl);
-            SetIfKeyModifier(b, 0x2A, ConsoleModifiers.Shift);
+            SetIfKeyModifier(b, 0x2A, ConsoleModifiers.Shift); 
             SetIfKeyModifier(b, 0x36, ConsoleModifiers.Shift);
             SetIfKeyModifier(b, 0x38, ConsoleModifiers.Alt);
 
+            if(b == 0x3A) 
+            {
+                if (KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock))
+                    KeyInfo.Modifiers &= ~ConsoleModifiers.CapsLock;
+                else KeyInfo.Modifiers |= ConsoleModifiers.CapsLock;
+            }
+
             if (b < keyChars.Length)
             {
-                KeyInfo.KeyChar = keyChars[b];
+                KeyInfo.KeyChar = KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock)? keyChars[b].ToUpper() : keyChars[b];
             }
             if (b < keyCharsShift.Length && KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Shift))
             {
-                KeyInfo.KeyChar = keyCharsShift[b];
+                KeyInfo.KeyChar = KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock) ? keyCharsShift[b].ToUpper() : keyCharsShift[b];
             }
 
             KeyInfo.Key = keys[b < keys.Length ? b : b - 0x80];
