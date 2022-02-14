@@ -6,6 +6,7 @@ namespace Kernel.GUI
     internal class Form
     {
         public static List<Form> Forms;
+        public static uint BackgroundColor;
 
         public static void Initialize() 
         {
@@ -20,7 +21,7 @@ namespace Kernel.GUI
             }
         }
 
-        int X, Y, Width, Height;
+        public int X, Y, Width, Height;
 
         public Form(int X,int Y,int Width,int Height)
         {
@@ -63,8 +64,8 @@ namespace Kernel.GUI
 
             Framebuffer.Fill(X, Y - BarHeight - 5, Width, 5, 0xFF1B5DAA);
             Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF3C3C3C);
-            ASC16.DrawString("Form1", X + (BarHeight/4), Y - (BarHeight / 2) - (16 / 2), 0xFFFFFFFF);
-            Framebuffer.Fill(X, Y, Width, Height, 0xFFFFFFFF);
+            ASC16.DrawString(Title, X + (BarHeight/4), Y - (BarHeight / 2) - (16 / 2), 0xFFFFFFFF);
+            Framebuffer.Fill(X, Y, Width, Height, BackgroundColor);
         }
     }
 }

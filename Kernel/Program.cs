@@ -171,11 +171,14 @@ unsafe class Program
             Framebuffer.TripleBuffered = true;
 
             Form.Initialize();
-            new Form(100, 100, 300, 200);
+
+            new FConsole(100, 100);
+
+            Console.WriteLine("Hello, World!");
 
             for (; ; )
             {
-                Framebuffer.DrawImage(0, 0, bmp);
+                Framebuffer.DrawImage(0, 0, bmp,false);
                 Form.UpdateAll();
                 /*
                 ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
