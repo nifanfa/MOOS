@@ -21,13 +21,13 @@ unsafe class Program
      * Minimum system requirement:
      * 64MiB of RAM
      * Memory Map:
-     * 16 MiB - 32MiB   -> System
-     * 32 MiB - ∞     -> Free to use
+     * 32 MiB - 48MiB   -> System
+     * 48 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
     static void Main(MultibootInfo* Info, IntPtr Modules)
     {
-        Allocator.Initialize((IntPtr)0x2000000);
+        Allocator.Initialize((IntPtr)0x3000000);
 
         StartupCodeHelpers.InitializeModules(Modules);
 
