@@ -24,12 +24,14 @@
     <ClCompile Include="lodepng.c" />
     <ClCompile Include="mem.cpp" />
     <ClCompile Include="native.cpp" />
+    <ClCompile Include="printf.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="libcore.h" />
     <ClInclude Include="lodepng.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
