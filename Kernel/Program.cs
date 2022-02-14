@@ -124,10 +124,10 @@ unsafe class Program
         }
         */
 
-        //ConsoleKeyInfo Key = Console.ReadKey();
+        ConsoleKeyInfo Key = Console.ReadKey();
 
-        if (false)
-        //if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
+        //if (false)
+        if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
 
         {
 
