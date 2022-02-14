@@ -44,5 +44,7 @@ namespace System
             var obj = this;
             Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
         }
+
+        public static implicit operator bool(object obj)=>((ulong)Unsafe.AsPointer(ref obj))>= (ulong)Allocator._Info.Start;
     }
 }
