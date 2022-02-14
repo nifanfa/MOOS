@@ -19,6 +19,12 @@
     <Filter Include="头文件\libcore">
       <UniqueIdentifier>{f053fcac-97b7-4ee9-9b43-2618b534e7e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\lodepng">
+      <UniqueIdentifier>{744b81dd-0afe-4e84-adba-9a9adec3f09c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\lodepng">
+      <UniqueIdentifier>{6a7b206b-51a7-4d5f-9591-7b1309281e86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interrupts.cpp">
@@ -33,14 +39,14 @@
     <ClCompile Include="mem.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="lodepng.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="printf.cpp">
       <Filter>源文件\libcore</Filter>
+    </ClCompile>
+    <ClCompile Include="lodepng.c">
+      <Filter>源文件\lodepng</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,11 +55,11 @@
     </MASM>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lodepng.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="libcore.h">
       <Filter>头文件\libcore</Filter>
+    </ClInclude>
+    <ClInclude Include="lodepng.h">
+      <Filter>头文件\lodepng</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
