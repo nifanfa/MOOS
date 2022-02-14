@@ -33,7 +33,7 @@ namespace Kernel.GUI
             Title = "Form1";
         }
 
-        public int BarHeight = 30;
+        public int BarHeight = 35;
         public string Title;
 
         bool Move;
