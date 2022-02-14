@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Kernel.NET;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace Kernel.Misc
@@ -22,8 +23,16 @@ namespace Kernel.Misc
 
                 if (_out == null) for (; ; ) Native.Hlt();
                 RawData = new uint[w * h];
-                fixed (uint* pdata = RawData)
-                    Native.Movsd(pdata, _out, w * h);
+                fixed (uint* pdata = RawData) 
+                {
+                    for (int x = 0; x < w; x++)
+                    {
+                        for (int y = 0; y < h; y++)
+                        {
+                            RawData[y * w + x] = (_out[y * w + x] & 0xFF000000) | (Ethernet.SwapLeftRight32(_out[y * w + x] & 0x00FFFFFF)) >> 8;
+                        }
+                    }
+                }
                 Allocator.Free((System.IntPtr)_out);
                 Width = (int)w;
                 Height = (int)h;
