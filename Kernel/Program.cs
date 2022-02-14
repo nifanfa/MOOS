@@ -6,6 +6,7 @@ using Kernel.GUI;
 using Kernel.Misc;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -97,7 +98,6 @@ unsafe class Program
         AC97.Play(fat.ReadAllBytes("/TEST.PCM"));
         */
 
-        //FIXME - the png decoder can't decode large file
         /*
         byte[] buffer = File.Instance.ReadAllBytes("/CURS.PNG");
         Console.WriteLine("File read");
@@ -105,8 +105,9 @@ unsafe class Program
         Framebuffer.DrawImage(0, 0, png);
         */
 
-        byte[] buffer = File.Instance.ReadAllBytes("/CURS.PNG");
-        PNG png = new PNG(buffer);
+        PNG png = new PNG(File.Instance.ReadAllBytes("/CURS.PNG"));
+        //Image from unsplash
+        PNG bmp = new PNG(File.Instance.ReadAllBytes("/WALLP.PNG"));
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
@@ -123,9 +124,10 @@ unsafe class Program
         }
         */
 
-        ConsoleKeyInfo Key = Console.ReadKey();
+        //ConsoleKeyInfo Key = Console.ReadKey();
 
-        if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
+        if (false)
+        //if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
 
         {
 
@@ -173,7 +175,7 @@ unsafe class Program
 
             for (; ; )
             {
-                Framebuffer.Clear(0xFF323232);
+                Framebuffer.DrawImage(0, 0, bmp);
                 Form.UpdateAll();
                 /*
                 ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
