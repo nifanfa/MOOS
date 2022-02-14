@@ -30,6 +30,7 @@ abstract unsafe class Allocator
             Native.Stosb((void*)intPtr, 0, pages * PageSize);
             for (ulong i = 0; i < pages; i++)
                 _Info.Pages[p + i] = 0;
+            _Info.Pages[p] = 0;
         }
     }
 
@@ -91,7 +92,7 @@ abstract unsafe class Allocator
                 found = true;
                 for (ulong k = 0; k < pages; k++)
                 {
-                    if (_Info.Pages[i] != 0)
+                    if (_Info.Pages[i+k] != 0)
                     {
                         found = false;
                         break;
