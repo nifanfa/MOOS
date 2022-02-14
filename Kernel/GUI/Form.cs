@@ -64,7 +64,7 @@ namespace Kernel.GUI
 
             Framebuffer.Fill(X, Y - BarHeight - 5, Width, 5, 0xFF1B5DAA);
             Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF3C3C3C);
-            ASC16.DrawString(Title, X + (BarHeight/4), Y - (BarHeight / 2) - (16 / 2), 0xFFFFFFFF);
+            ASC16.DrawString(Title, X + (BarHeight/4), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
             Framebuffer.Fill(X, Y, Width, Height, BackgroundColor);
         }
     }
