@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Runtime;
+using System.Runtime.InteropServices;
 
-/// <summary>
-/// Nifanfa's Super Fast Memory Allocation Lib
-/// </summary>
 abstract unsafe class Allocator
 {
     internal static unsafe void ZeroFill(IntPtr data, ulong size)
@@ -11,150 +9,183 @@ abstract unsafe class Allocator
         Native.Stosb((void*)data, 0, size);
     }
 
-    internal static void Free(IntPtr intPtr)
+
+    unsafe struct BitMap
     {
-        ulong p = (ulong)intPtr;
-        if (p < (ulong)_Info.Start) return;
-        p -= (ulong)_Info.Start;
-        if ((p % PageSize) != 0) return;
-        /*
-         * This will get wrong if the size is larger than PageSize
-         * and however the allocated address should be aligned
-         */
-        //p &= ~PageSize; 
-        p /= PageSize;
-        ulong pages = _Info.Pages[p];
-        if (pages != 0 && pages != PageSignature)
+        public fixed byte Data[BITMAP_LENGTH];
+    }
+
+    const int BITMAP_LENGTH = 1024 * 16; // 16kb can hold enough bits to represent 131,072 pages, allowing up to 512mb to be allocated (assuming a page size of 4kb)
+
+    internal static IntPtr Reallocate(IntPtr ptr, ulong size)
+    {
+        return krealloc(ptr, size);
+    }
+
+    static BitMap bitMap;
+    static int totalPages = 0;
+    static uint allocations = 0;
+
+
+    public static unsafe bool AddFreePages(IntPtr address, uint pages)
+    {
+        var startPage = (int)((ulong)address / 4096);
+
+        for (int i = 0; i < pages; i++)
         {
-            _Info.PageInUse -= pages;
-            Native.Stosb((void*)intPtr, 0, pages * PageSize);
-            for (ulong i = 0; i < pages; i++)
-                _Info.Pages[p + i] = 0;
+            if (totalPages < startPage + i)
+                totalPages = startPage + i;
+
+            var index = (startPage + i) / 8;
+            var bit = (startPage + i) % 8;
+
+            bitMap.Data[index] |= (byte)(1 << bit);
+        }
+
+        return true;
+    }
+
+    [RuntimeExport("liballoc_lock")]
+    private static int Lock()
+    {
+        if (IDT.Initialised)
+            IDT.Disable();
+
+        return 0;
+    }
+
+    [RuntimeExport("liballoc_unlock")]
+    private static int Unlock()
+    {
+        if (IDT.Initialised)
+            IDT.Enable();
+
+        return 0;
+    }
+
+    [RuntimeExport("liballoc_alloc")]
+    private static unsafe IntPtr Alloc(ulong pages)
+    {
+        var count = 0;
+        var index = 0;
+
+        for (; ; )
+        {
+            if (index >= totalPages)
+                return IntPtr.Zero;
+
+            if (count == (int)pages)
+            {
+                for (int i = 0; i < (int)pages; i++)
+                {
+                    var _off = (index + i) / 8;
+                    var _bit = (index + i) % 8;
+                    bitMap.Data[_off] &= (byte)~(1 << _bit);
+                }
+
+                allocations++;
+
+                return (IntPtr)(index * 4096);
+            }
+
+            if (count == 0)
+            {
+                for (; ; )
+                {
+                    var _off = index / 8;
+                    var _bit = index % 8;
+
+                    if ((bitMap.Data[_off] & (1 << _bit)) == (1 << _bit))
+                        break;
+
+                    index++;
+                }
+            }
+
+            var off = (index + count) / 8;
+            var bit = (index + count) % 8;
+
+            if ((bitMap.Data[off] & (1 << bit)) != (1 << bit))
+                count = 0;
+
+            count++;
         }
     }
 
-    public static ulong MemoryInUse
+    [RuntimeExport("liballoc_free")]
+    private static unsafe int Free(IntPtr ptr, ulong pages)
+    {
+        AddFreePages(ptr, (uint)pages);
+        allocations--;
+
+        return 0;
+    }
+
+    public static ulong TotalMemory
+        => (ulong)totalPages * 4096;
+
+    public static unsafe ulong UsedMemory
     {
         get
         {
-            return _Info.PageInUse * PageSize;
+            var r = 0UL;
+
+            for (int i = 0; i < totalPages / 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if ((bitMap.Data[i] & (1 << j)) != (1 << j))
+                        r++;
+                }
+            }
+
+            return r * 4096;
         }
     }
 
-    public const ulong PageSignature = 0x2E61666E6166696E;
+    public static ulong FreeMemory
+        => TotalMemory - UsedMemory;
 
-    /*
-     * NumPages = Memory Size / PageSize
-     * This should be a const because there will be allocations during initializing modules 👇_Info
-     */
-    public const int NumPages = 131072;
-    public const ulong PageSize = 4096;
+    public static ulong Allocations
+        => (ulong)allocations;
 
-    public struct Info
+    internal static unsafe void ZeroMemory(IntPtr data, ulong size)
     {
-        public IntPtr Start;
-        public UInt64 PageInUse;
-        public fixed ulong Pages[NumPages]; //Max 512MiB
+        Native.Stosb((void*)data, 0, size);
     }
 
-    public static Info _Info;
-
-    public static void Initialize(IntPtr Start)
+    internal static void Free(IntPtr intPtr)
     {
-        fixed (Info* pInfo = &_Info)
-            Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
-        _Info.Start = Start;
-        _Info.PageInUse = 0;
+        kfree(intPtr);
     }
 
-    /// <summary>
-    /// Returns a 4KB aligned address
-    /// </summary>
-    /// <param name="size"></param>
-    /// <returns></returns>
     internal static unsafe IntPtr Allocate(ulong size)
     {
-        ulong pages = 1;
-
-        if (size > PageSize)
-        {
-            pages = (size / PageSize) + ((size % 4096) != 0 ? 1UL : 0);
-        }
-
-        ulong i = 0;
-        bool found = false;
-
-        for (i = 0; i < NumPages; i++)
-        {
-            if (_Info.Pages[i] == 0)
-            {
-                found = true;
-                for (ulong k = 0; k < pages; k++)
-                {
-                    if (_Info.Pages[i] != 0)
-                    {
-                        found = false;
-                        break;
-                    }
-                }
-                if (found) break;
-            }
-            else if (_Info.Pages[i] != PageSignature)
-            {
-                i += _Info.Pages[i];
-            }
-        }
-        if (!found)
-        {
-            return IntPtr.Zero;
-        }
-
-        for (ulong k = 0; k < pages; k++)
-        {
-            _Info.Pages[i + k] = PageSignature;
-        }
-        _Info.Pages[i] = pages;
-        _Info.PageInUse += pages;
-
-        IntPtr ptr = _Info.Start + (i * PageSize);
-        return ptr;
+        return Allocate_Aligned(size,0x1000);
     }
 
-    public static IntPtr Reallocate(IntPtr intPtr, ulong size)
+    internal static unsafe IntPtr Allocate_Aligned(ulong size, ulong alignment)
     {
-        if (intPtr == IntPtr.Zero)
-            return Allocate(size);
-        if (size == 0)
-        {
-            Free(intPtr);
-            return IntPtr.Zero;
-        }
-
-        ulong p = (ulong)intPtr;
-        if (p < (ulong)_Info.Start) return intPtr;
-        p -= (ulong)_Info.Start;
-        if ((p % PageSize) != 0) return intPtr;
-        /*
-         * This will get wrong if the size is larger than PageSize
-         * and however the allocated address should be aligned
-         */
-        //p &= ~PageSize; 
-        p /= PageSize;
-
-        ulong pages = 1;
-
-        if (size > PageSize)
-        {
-            pages = (size / PageSize) + ((size % 4096) != 0 ? 1UL : 0);
-        }
-
-        if (_Info.Pages[p] == pages) return intPtr;
-
-        IntPtr newptr = Allocate(size);
-        MemoryCopy(newptr, intPtr, size);
-        Free(intPtr);
-        return newptr;
+        ulong offset = alignment - 1 + (ulong)sizeof(void*);
+        void* p1 = (void*)kmalloc(size + offset);
+        void** p2 = (void**)(((ulong)p1 + offset) & ~(alignment - 1));
+        p2[-1] = p1;
+        return (IntPtr)p2;
     }
+
+    internal static unsafe void CopyMemory(IntPtr dst, IntPtr src, ulong size)
+    {
+        Native.Movsb((void*)dst, (void*)src, size);
+    }
+
+    [DllImport("*")]
+    private static extern IntPtr kmalloc(ulong size);
+
+    [DllImport("*")]
+    private static extern IntPtr krealloc(IntPtr ptr, ulong size);
+
+    [DllImport("*")]
+    private static extern void kfree(IntPtr ptr);
 
     internal static unsafe void MemoryCopy(IntPtr dst, IntPtr src, ulong size)
     {
