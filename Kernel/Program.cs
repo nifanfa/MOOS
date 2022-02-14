@@ -105,6 +105,9 @@ unsafe class Program
         Framebuffer.DrawImage(0, 0, png);
         */
 
+        byte[] buffer = File.Instance.ReadAllBytes("/CURS.PNG");
+        PNG png = new PNG(buffer);
+
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
@@ -165,31 +168,6 @@ unsafe class Program
         {
             Framebuffer.TripleBuffered = true;
 
-            int[] cursor = new int[]
-                {
-                1,0,0,0,0,0,0,0,0,0,0,0,
-                1,1,0,0,0,0,0,0,0,0,0,0,
-                1,2,1,0,0,0,0,0,0,0,0,0,
-                1,2,2,1,0,0,0,0,0,0,0,0,
-                1,2,2,2,1,0,0,0,0,0,0,0,
-                1,2,2,2,2,1,0,0,0,0,0,0,
-                1,2,2,2,2,2,1,0,0,0,0,0,
-                1,2,2,2,2,2,2,1,0,0,0,0,
-                1,2,2,2,2,2,2,2,1,0,0,0,
-                1,2,2,2,2,2,2,2,2,1,0,0,
-                1,2,2,2,2,2,2,2,2,2,1,0,
-                1,2,2,2,2,2,2,2,2,2,2,1,
-                1,2,2,2,2,2,2,1,1,1,1,1,
-                1,2,2,2,1,2,2,1,0,0,0,0,
-                1,2,2,1,0,1,2,2,1,0,0,0,
-                1,2,1,0,0,1,2,2,1,0,0,0,
-                1,1,0,0,0,0,1,2,2,1,0,0,
-                0,0,0,0,0,0,1,2,2,1,0,0,
-                0,0,0,0,0,0,0,1,2,2,1,0,
-                0,0,0,0,0,0,0,1,2,2,1,0,
-                0,0,0,0,0,0,0,0,1,1,0,0
-                };
-
             Form.Initialize();
             new Form(100, 100, 300, 200);
 
@@ -201,23 +179,10 @@ unsafe class Program
                 ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
                 ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
                 */
-                DrawCursor(cursor, Control.MousePosition.X, Control.MousePosition.Y);
+                Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, png);
                 Framebuffer.Update();
                 FPSMeter.Update();
             }
         }
-    }
-
-    private static void DrawCursor(int[] cursor, int x, int y)
-    {
-        for (int h = 0; h < 21; h++)
-            for (int w = 0; w < 12; w++)
-            {
-                if (cursor[h * 12 + w] == 1)
-                    Framebuffer.DrawPoint(w + x, h + y, 0xFFFFFFFF);
-
-                if (cursor[h * 12 + w] == 2)
-                    Framebuffer.DrawPoint(w + x, h + y, 0x0);
-            }
     }
 }
