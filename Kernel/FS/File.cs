@@ -2,6 +2,9 @@
 {
     public abstract class File
     {
+        /// <summary>
+        /// This will be overwritten if you initialize file system
+        /// </summary>
         public static File Instance;
 
         public File()
