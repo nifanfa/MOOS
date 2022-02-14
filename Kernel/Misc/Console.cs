@@ -11,6 +11,9 @@ namespace Kernel
         public static int CursorX = 0;
         public static int CursorY = 0;
 
+        public delegate void OnWriteHandler(char chr);
+        public static event OnWriteHandler OnWrite;
+
         internal static void Setup()
         {
             ResetColor();
@@ -70,6 +73,7 @@ namespace Kernel
 
         public static void Write(char chr)
         {
+            OnWrite?.Invoke(chr);
             WriteFramebuffer(chr);
 
             byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
