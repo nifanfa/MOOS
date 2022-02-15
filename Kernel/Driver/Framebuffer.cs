@@ -27,8 +27,14 @@ namespace Kernel
             }
             set 
             {
+                if (_TripleBuffered == value) return;
                 Clear(0x0);
                 _TripleBuffered = value;
+                if (!_TripleBuffered)
+                {
+                    Console.Clear();
+                    Clear(0x0);
+                }
             }
         }
 

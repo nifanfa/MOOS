@@ -21,7 +21,7 @@ namespace Kernel.Misc
             {
                 lodepng_decode_memory(out uint* _out, out uint w, out uint h, p, file.Length, type, bitDepth);
 
-                if (_out == null) for (; ; ) Native.Hlt();
+                if (_out == null) Panic.Error("lodepng error");
                 RawData = new uint[w * h];
                 fixed (uint* pdata = RawData) 
                 {

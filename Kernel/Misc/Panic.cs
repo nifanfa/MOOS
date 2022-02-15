@@ -4,6 +4,7 @@
     {
         public static void Error(string msg) 
         {
+            Framebuffer.TripleBuffered = false;
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
             IDT.Disable();
