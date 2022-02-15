@@ -76,6 +76,12 @@ namespace Kernel.GUI
                     w += font.Width;
                     font.DrawChar(X + w, Y + h, Data[i]);
                 }
+                if (h + (font.Height * 2.5f) > Height) 
+                {
+                    Data.Dispose();
+                    Data = string.Empty;
+                    break;
+                }
             }
             
             if(w == Width) { w = 0;h += (int)(font.Height); } else { w += font.Width; }
