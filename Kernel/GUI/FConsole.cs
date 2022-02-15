@@ -1,4 +1,5 @@
-﻿using Kernel.FS;
+﻿using Kernel.Driver;
+using Kernel.FS;
 using Kernel.Misc;
 using System.Drawing;
 
@@ -20,6 +21,7 @@ namespace Kernel.GUI
 
             Console.OnWrite += Console_OnWrite;
             PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
+            Console.WriteLine("Type help to get information!");
         }
 
         private void PS2Keyboard_OnKeyChanged(System.ConsoleKeyInfo key)
@@ -48,6 +50,36 @@ namespace Kernel.GUI
                     {
                         case "hello":
                             Panic.Error(": )");
+                            break;
+
+                        case "help":
+                            Console.WriteLine("nes: exec built-in nes emulator");
+                            break;
+
+                        case "nes":
+                            Console.WriteLine("Emulator Keymap:");
+                            Console.WriteLine("A = Q");
+                            Console.WriteLine("B = E");
+                            Console.WriteLine("Z = Select");
+                            Console.WriteLine("C = Start");
+                            Console.WriteLine("W = Up");
+                            Console.WriteLine("A = Left");
+                            Console.WriteLine("S = Down");
+                            Console.WriteLine("D = Right");
+                            Console.WriteLine("Game Will Start After 2 Seconds");
+                            Console.OnWrite -= Console_OnWrite;
+                            PS2Keyboard.OnKeyChanged -= PS2Keyboard_OnKeyChanged;
+                            Program.DoGUI();
+                            HPET.Wait(2000);
+                            NES.NES nes = new NES.NES();
+                            nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
+                            Console.WriteLine("Nintendo Family Computer Emulator Initialized");
+                            Framebuffer.TripleBuffered = true;
+                            for (; ; )
+                            {
+                                nes.runGame();
+                                for (int i = 0; i < 128; i++) Native.Nop();
+                            }
                             break;
 
                         default:
