@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using Kernel.FS;
+using Kernel.Misc;
+using System.Drawing;
 
 namespace Kernel.GUI
 {
@@ -13,6 +15,7 @@ namespace Kernel.GUI
             Data = string.Empty;
             BackgroundColor = 0x0;
             ScreenBuf = new Image(640, 320);
+
             Console.OnWrite += Console_OnWrite;
             PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
         }
@@ -40,16 +43,16 @@ namespace Kernel.GUI
             for(int i = 0; i < Data.Length; i++) 
             {
 
-                if (w == Width ||i %Width == 0 || Data[i]=='\n') { w = 0; h += 16; }
+                if (w == Width ||i %Width == 0 || Data[i]=='\n') { w = 0; h += (int)(font.Height); }
                 if (Data[i] != '\n')
                 {
-                    w += 8;
-                    ASC16.DrawChar(Data[i], X + w, Y + h, 0xFFFFFFFF);
+                    w += font.Width;
+                    font.DrawChar(X + w, Y + h, Data[i]);
                 }
             }
             
-            if(w == Width) { w = 0;h += 16; } else { w += 8; }
-            ASC16.DrawChar('_', X + w, Y + h, 0xFFFFFFFF);
+            if(w == Width) { w = 0;h += (int)(font.Height); } else { w += font.Width; }
+            font.DrawChar(X + w, Y + h, '_');
         }
 
         private void Console_OnWrite(char chr)
