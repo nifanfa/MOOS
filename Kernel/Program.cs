@@ -105,7 +105,7 @@ unsafe class Program
         Framebuffer.DrawImage(0, 0, png);
         */
 
-        PNG png = new PNG(File.Instance.ReadAllBytes("/CURS.PNG"));
+        PNG png = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
         //Image from unsplash
         PNG bmp = new PNG(File.Instance.ReadAllBytes("/WALLP.PNG"));
 
