@@ -44,6 +44,7 @@ unsafe class Program
         PIC.Disable();
         LocalAPIC.Initialize();
         IOAPIC.Initialize();
+        HPET.Initialize();
 
         PS2Keyboard.Initialize();
         //Enable keyboard interrupts
