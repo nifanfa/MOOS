@@ -118,6 +118,12 @@ unsafe class Program
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
         /*
+        byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
+        AC97.Initialize();
+        AC97.Play(buffer);
+        */
+
+        /*
         for(; ; ) 
         {
             Console.WriteLine(Console.ReadLine());
