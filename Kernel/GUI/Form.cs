@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Kernel.FS;
+using Kernel.Misc;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Kernel.GUI
@@ -8,9 +10,16 @@ namespace Kernel.GUI
         public static List<Form> Forms;
         public static uint BackgroundColor;
 
+        /// <summary>
+        /// Fontsize: 10px*16px
+        /// </summary>
+        public static IFont font;
+
         public static void Initialize() 
         {
             Forms = new List<Form>();
+            PNG yehei = new PNG(File.Instance.ReadAllBytes("/FONT.PNG"));
+            font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
         }
 
         public static void UpdateAll() 
@@ -64,7 +73,8 @@ namespace Kernel.GUI
 
             Framebuffer.Fill(X, Y - BarHeight - 5, Width, 5, 0xFF1B5DAA);
             Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF3C3C3C);
-            ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
+            //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
+            font.DrawString(X + ((Width / 2) - ((Title.Length * font.Width) / 2)), Y - BarHeight + (BarHeight / 4), Title);
             Framebuffer.Fill(X, Y, Width, Height, BackgroundColor);
         }
     }
