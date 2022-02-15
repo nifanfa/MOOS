@@ -55,86 +55,91 @@ namespace NES
             }
         }
 
-        public unsafe void openROM(byte* rom)
+        public unsafe void openROM(byte[] buffer)
         {
-            byte[] temp = new byte[16];
-
-            fixed (byte* p = temp)
-                Native.Movsb(p, rom, (ulong)temp.Length);
-            rom += temp.Length;
-            memory.byteMirror = (byte)(temp[6] & 0x01);
-
-            mappers.MapperNumber = (byte)((temp[6] >> 0x04) | (temp[7] & 0xF0));
-            memory.MapperNumber = mappers.MapperNumber;
-
-            byte byteNumPRGBanks = temp[4];
-            byte byteNumCHRBanks = temp[5];
-
-            memory.memPRG = new List<byte[]>(byteNumPRGBanks);
-            memory.memPRG.Count = byteNumPRGBanks;
-            if (byteNumPRGBanks == 0x01)
+            fixed(byte* prom = buffer) 
             {
-                fixed (byte* p = memory.memCPU)
-                    Native.Movsb(p + 0xC000, rom, 0x4000);
-                rom += 0x4000;
+                byte* rom = prom;
 
-                for (int i = 0x0000; i < 0x4000; i++)
-                {
-                    memory.memCPU[0x8000 + i] = memory.memCPU[0xC000 + i];
-                }
-            }
-            else
-            {
-                for (int j = 0; j < memory.memPRG.Count; j++)
-                {
-                    memory.memPRG[j] = new byte[0x4000];
-                }
+                byte[] temp = new byte[16];
 
-                for (int k = 0; k < memory.memPRG.Count; k++)
+                fixed (byte* p = temp)
+                    Native.Movsb(p, rom, (ulong)temp.Length);
+                rom += temp.Length;
+                memory.byteMirror = (byte)(temp[6] & 0x01);
+
+                mappers.MapperNumber = (byte)((temp[6] >> 0x04) | (temp[7] & 0xF0));
+                memory.MapperNumber = mappers.MapperNumber;
+
+                byte byteNumPRGBanks = temp[4];
+                byte byteNumCHRBanks = temp[5];
+
+                memory.memPRG = new List<byte[]>(byteNumPRGBanks);
+                memory.memPRG.Count = byteNumPRGBanks;
+                if (byteNumPRGBanks == 0x01)
                 {
-                    fixed (byte* p = memory.memPRG[k])
-                        Native.Movsb(p, rom, 0x4000);
+                    fixed (byte* p = memory.memCPU)
+                        Native.Movsb(p + 0xC000, rom, 0x4000);
                     rom += 0x4000;
+
+                    for (int i = 0x0000; i < 0x4000; i++)
+                    {
+                        memory.memCPU[0x8000 + i] = memory.memCPU[0xC000 + i];
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < memory.memPRG.Count; j++)
+                    {
+                        memory.memPRG[j] = new byte[0x4000];
+                    }
+
+                    for (int k = 0; k < memory.memPRG.Count; k++)
+                    {
+                        fixed (byte* p = memory.memPRG[k])
+                            Native.Movsb(p, rom, 0x4000);
+                        rom += 0x4000;
+                    }
+
+                    for (int l = 0; l < 0x4000; l++)
+                    {
+                        memory.memCPU[l + 0x8000] = memory.memPRG[0][l];
+                        memory.memCPU[l + 0xC000] = memory.memPRG[memory.memPRG.Count - 1][l];
+                    }
                 }
 
-                for (int l = 0; l < 0x4000; l++)
+                if (byteNumCHRBanks != 0)
                 {
-                    memory.memCPU[l + 0x8000] = memory.memPRG[0][l];
-                    memory.memCPU[l + 0xC000] = memory.memPRG[memory.memPRG.Count - 1][l];
+                    memory.memCHR = new List<byte[]>(byteNumCHRBanks);
+                    memory.memCHR.Count = byteNumCHRBanks;
+
+
+                    for (int x = 0; x < memory.memCHR.Count; x++)
+                    {
+                        memory.memCHR[x] = new byte[0x2000];
+                    }
+
+                    for (int y = 0; y < memory.memCHR.Count; y++)
+                    {
+                        fixed (byte* p = memory.memCHR[y])
+                            Native.Movsb(p, rom, 0x2000);
+                        rom += 0x2000;
+                    }
+
+                    for (int z = 0; z < 0x2000; z++)
+                    {
+                        memory.memPPU[z] = memory.memCHR[0][z];
+                    }
                 }
+
+                registers.regPC = memory.memCPU[0xFFFC] + memory.memCPU[0xFFFD] * 16 * 16;
+
+
+                memory.memCPU[0x4016] = 0x40;
+                memory.memCPU[0x4017] = 0x40;
+
+                bolRunGame = true;
             }
-
-            if (byteNumCHRBanks != 0)
-            {
-                memory.memCHR = new List<byte[]>(byteNumCHRBanks);
-                memory.memCHR.Count = byteNumCHRBanks;
-
-
-                for (int x = 0; x < memory.memCHR.Count; x++)
-                {
-                    memory.memCHR[x] = new byte[0x2000];
-                }
-
-                for (int y = 0; y < memory.memCHR.Count; y++)
-                {
-                    fixed (byte* p = memory.memCHR[y])
-                        Native.Movsb(p, rom, 0x2000);
-                    rom += 0x2000;
-                }
-
-                for (int z = 0; z < 0x2000; z++)
-                {
-                    memory.memPPU[z] = memory.memCHR[0][z];
-                }
-            }
-
-            registers.regPC = memory.memCPU[0xFFFC] + memory.memCPU[0xFFFD] * 16 * 16;
-
-
-            memory.memCPU[0x4016] = 0x40;
-            memory.memCPU[0x4017] = 0x40;
-
-            bolRunGame = true;
         }
 
         public void resetGame()

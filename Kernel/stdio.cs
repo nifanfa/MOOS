@@ -62,8 +62,7 @@ namespace Kernel
             }
             else 
             {
-                Console.WriteLine("Unknown seek");
-                for (; ; );
+                Panic.Error("Unknown seek");
             }
         }
 

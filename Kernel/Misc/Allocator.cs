@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kernel.Misc;
+using System;
 using System.Runtime;
 
 /// <summary>
@@ -107,6 +108,7 @@ abstract unsafe class Allocator
         }
         if (!found)
         {
+            Panic.Error("Memory leak");
             return IntPtr.Zero;
         }
 

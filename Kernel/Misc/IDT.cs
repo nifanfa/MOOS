@@ -1,6 +1,7 @@
 ﻿using Internal.Runtime.CompilerServices;
 using Kernel;
 using Kernel.Driver;
+using Kernel.Misc;
 using Kernel.NET;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -72,35 +73,34 @@ public static class IDT
     {
         switch (code)
         {
-            case 0: Console.WriteLine("DIVIDE BY ZERO"); break;
-            case 1: Console.WriteLine("SINGLE STEP"); break;
-            case 2: Console.WriteLine("NMI"); break;
-            case 3: Console.WriteLine("BREAKPOINT: CHECK YOUR CODE!"); break;
-            case 4: Console.WriteLine("OVERFLOW"); break;
-            case 5: Console.WriteLine("BOUNDS CHECK"); break;
-            case 6: Console.WriteLine("INVALID OPCODE"); break;
-            case 7: Console.WriteLine("COPR UNAVAILABLE"); break;
-            case 8: Console.WriteLine("DOUBLE FAULT"); break;
-            case 9: Console.WriteLine("COPR SEGMENT OVERRUN"); break;
-            case 10: Console.WriteLine("INVALID TSS"); break;
-            case 11: Console.WriteLine("SEGMENT NOT FOUND"); break;
-            case 12: Console.WriteLine("STACK EXCEPTION"); break;
-            case 13: Console.WriteLine("GENERAL PROTECTION"); break;
+            case 0: Panic.Error("DIVIDE BY ZERO"); break;
+            case 1: Panic.Error("SINGLE STEP"); break;
+            case 2: Panic.Error("NMI"); break;
+            case 3: Panic.Error("BREAKPOINT: CHECK YOUR CODE!"); break;
+            case 4: Panic.Error("OVERFLOW"); break;
+            case 5: Panic.Error("BOUNDS CHECK"); break;
+            case 6: Panic.Error("INVALID OPCODE"); break;
+            case 7: Panic.Error("COPR UNAVAILABLE"); break;
+            case 8: Panic.Error("DOUBLE FAULT"); break;
+            case 9: Panic.Error("COPR SEGMENT OVERRUN"); break;
+            case 10: Panic.Error("INVALID TSS"); break;
+            case 11: Panic.Error("SEGMENT NOT FOUND"); break;
+            case 12: Panic.Error("STACK EXCEPTION"); break;
+            case 13: Panic.Error("GENERAL PROTECTION"); break;
             case 14:
                 ulong CR2 = Native.ReadCR2();
                 if ((CR2 >> 5) < 0x1000)
                 {
-                    Console.WriteLine("NULL POINTER");
+                    Panic.Error("NULL POINTER");
                 }
                 else
                 {
-                    Console.WriteLine("PAGE FAULT");
+                    Panic.Error("PAGE FAULT");
                 }
                 break;
-            case 16: Console.WriteLine("COPR ERROR"); break;
-            default: Console.WriteLine(" UNKNOWN EXCEPTION"); break;
+            case 16: Panic.Error("COPR ERROR"); break;
+            default: Panic.Error(" UNKNOWN EXCEPTION"); break;
         }
-        while (true) ;
     }
 
     [RuntimeExport("irq_handler")]
