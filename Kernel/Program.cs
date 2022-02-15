@@ -143,7 +143,7 @@ unsafe class Program
             Console.WriteLine("Game Will Start After 2 Seconds");
             PIT.Wait(2000);
             NES.NES nes = new NES.NES();
-            nes.openROM(File.Instance.ReadAllBytes("MARIO.NES"));
+            nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
             Console.WriteLine("Nintendo Family Computer Emulator Initialized");
             Framebuffer.TripleBuffered = true;
             for (; ; )
