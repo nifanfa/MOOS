@@ -43,7 +43,7 @@ namespace Kernel.GUI
             for(int i = 0; i < Data.Length; i++) 
             {
 
-                if (w == Width ||i %Width == 0 || Data[i]=='\n') { w = 0; h += (int)(font.Height); }
+                if ((w + font.Width*2.5f) >= Width ||i %Width == 0 || Data[i]=='\n') { w = 0; h += (int)(font.Height); }
                 if (Data[i] != '\n')
                 {
                     w += font.Width;
