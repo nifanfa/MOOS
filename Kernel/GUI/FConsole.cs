@@ -8,10 +8,12 @@ namespace Kernel.GUI
     {
         string Data;
         public Image ScreenBuf;
+        string Cmd;
 
         public FConsole(int X, int Y) : base(X, Y, 640, 320)
         {
             Title = "Console";
+            Cmd = string.Empty;
             Data = string.Empty;
             BackgroundColor = 0x0;
             ScreenBuf = new Image(640, 320);
@@ -32,7 +34,32 @@ namespace Kernel.GUI
                 else if (key.KeyChar != '\0')
                 {
                     Console_OnWrite(key.KeyChar);
+
+                    string cs = key.KeyChar.ToString();
+                    string cache1 = Cmd;
+                    Cmd = cache1 + cs;
+                    cache1.Dispose();
                 }
+
+                if (key.Key == System.ConsoleKey.Enter)
+                {
+                    if(Cmd.Length!=0) Cmd.Length -= 1;
+                    switch (Cmd)
+                    {
+                        case "hello":
+                            Panic.Error(": )");
+                            break;
+
+                        default:
+                            Console.Write("No such command: \"");
+                            Console.Write(Cmd);
+                            Console.WriteLine("\"");
+                            break;
+                    }
+                    Cmd.Dispose();
+                    Cmd = string.Empty;
+                }
+                else if (key.Key == System.ConsoleKey.Backspace) if (Cmd.Length != 0) Cmd.Length -= 1;
             }
         }
 
