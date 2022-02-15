@@ -21,11 +21,10 @@ namespace Kernel.Driver
             Console.WriteLine(ACPI.HPET->Addresses.Address.ToString("x2"));
 
             //1 Femtosecond= 1e15 sec
-            Clock = In64((ulong*)(ACPI.HPET->Addresses.Address + 0)) >> 32;
+            Clock = 1000000000000000UL / (In64((ulong*)(ACPI.HPET->Addresses.Address + 0)) >> 32);
             Console.Write("One HPET period is ");
             Console.Write(Clock.ToString());
             Console.WriteLine("fs");
-            Clock = 1000000000000000UL / Clock;
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0x10), 0);
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0xF0), 0);
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0x10), 1);
