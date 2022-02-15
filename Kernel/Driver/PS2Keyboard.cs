@@ -89,7 +89,8 @@ namespace Kernel
                 KeyInfo.KeyChar = KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock) ? keyCharsShift[b].ToUpper() : keyCharsShift[b];
             }
 
-            KeyInfo.Key = keys[b < keys.Length ? b : b - 0x80];
+            if (b - 0x80 < keys.Length)
+                KeyInfo.Key = keys[b < keys.Length ? b : b - 0x80];
 
             OnKeyChanged?.Invoke(KeyInfo);
         }
