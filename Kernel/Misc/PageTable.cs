@@ -1,4 +1,6 @@
-﻿namespace Kernel
+﻿using Kernel.Misc;
+
+namespace Kernel
 {
     public static unsafe class PageTable
     {
@@ -18,26 +20,18 @@
             ulong i = 0;
             //Map the first 4KiB-2MiB
             //Reserve 4KiB for null reference exception
-            for (i = (ulong)PageSize.Typical; i < (ulong)PageSize.Huge; i += (ulong)PageSize.Typical)
+            for (i = (ulong)PageSize.Typical; i < 1024 * 1024 * 1024 * 4UL; i += (ulong)PageSize.Typical)
             {
                 Map(i, i, PageSize.Typical);
-            }
-            //Map the first 2MiB-4GiB
-            for (i = (ulong)PageSize.Huge; i < 1024UL * 1024UL * 1024UL * 4UL; i += (ulong)PageSize.Huge)
-            {
-                Map(i, i);
             }
 
             Native.WriteCR3((ulong)PML4);
         }
 
-        /// <summary>
-        /// Map Physical Address At Virtual Address Specificed
-        /// </summary>
-        /// <param name="VirtualAddress"></param>
-        /// <param name="PhysicalAddress"></param>
-        public static void Map(ulong VirtualAddress, ulong PhysicalAddress, PageSize pageSize = PageSize.Huge)
+        public static ulong* GetPage(ulong VirtualAddress, PageSize pageSize = PageSize.Typical)
         {
+            if((VirtualAddress % (ulong)PageSize.Typical) != 0) Panic.Error("Invalid address");
+
             ulong pml4_entry = (VirtualAddress & ((ulong)0x1ff << 39)) >> 39;
             ulong pml3_entry = (VirtualAddress & ((ulong)0x1ff << 30)) >> 30;
             ulong pml2_entry = (VirtualAddress & ((ulong)0x1ff << 21)) >> 21;
@@ -48,12 +42,30 @@
 
             if (pageSize == PageSize.Huge)
             {
-                pml2[pml2_entry] = PhysicalAddress | 0b10000011;
+                return &pml2[pml2_entry];
             }
             else if (pageSize == PageSize.Typical)
             {
                 ulong* pml1 = Next(pml2, pml2_entry);
-                pml1[pml1_entry] = PhysicalAddress | 0b11;
+                return &pml1[pml1_entry];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Map Physical Address At Virtual Address Specificed
+        /// </summary>
+        /// <param name="VirtualAddress"></param>
+        /// <param name="PhysicalAddress"></param>
+        public static void Map(ulong VirtualAddress, ulong PhysicalAddress, PageSize pageSize = PageSize.Typical)
+        {
+            if (pageSize == PageSize.Huge)
+            {
+                *GetPage(VirtualAddress, pageSize) = PhysicalAddress | 0b10000011;
+            }
+            else if (pageSize == PageSize.Typical)
+            {
+                *GetPage(VirtualAddress, pageSize) = PhysicalAddress | 0b11;
             }
 
             Native.Invlpg(PhysicalAddress);

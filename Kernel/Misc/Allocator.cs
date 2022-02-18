@@ -1,5 +1,7 @@
-﻿using Kernel.Misc;
+﻿using Kernel;
+using Kernel.Misc;
 using System;
+using System.Diagnostics;
 using System.Runtime;
 
 /// <summary>
@@ -12,12 +14,49 @@ abstract unsafe class Allocator
         Native.Stosb((void*)data, 0, size);
     }
 
-    internal static void Free(IntPtr intPtr)
+    public static sbyte CollectIf;
+    public static bool AllowCollect;
+    public static sbyte NotCollectIf;
+
+    public static void Collect() 
+    {
+        ulong addr;
+        for(ulong i = 0; i < NumPages; i++) 
+        {
+            if (_Info.GCInfos[i] == NotCollectIf) continue;
+
+            addr = (ulong)(_Info.Start + (i * PageSize));
+            ulong* page = PageTable.GetPage(addr);
+            if (BitHelpers.IsBitSet(*page, 5)) //Accessed bit
+            {
+                *page &= ~(1UL << 5);
+                _Info.GCInfos[i]++;
+            }
+            else
+            {
+                _Info.GCInfos[i]--;
+            }
+        }
+        ulong memSaved = 0;
+        for (ulong i = 0; i < NumPages; i++)
+        {
+            addr = (ulong)(_Info.Start + (i * PageSize));
+            if (_Info.GCInfos[i] < CollectIf)
+            {
+                memSaved += Free((IntPtr)addr);
+            }
+        }
+        Console.Write("GC Collected: ");
+        Console.Write((memSaved / 1048576).ToString());
+        Console.WriteLine("MiB");
+    }
+
+    internal static ulong Free(IntPtr intPtr)
     {
         ulong p = (ulong)intPtr;
-        if (p < (ulong)_Info.Start) return;
+        if (p < (ulong)_Info.Start) return 0;
         p -= (ulong)_Info.Start;
-        if ((p % PageSize) != 0) return;
+        if ((p % PageSize) != 0) return 0;
         /*
          * This will get wrong if the size is larger than PageSize
          * and however the allocated address should be aligned
@@ -32,7 +71,9 @@ abstract unsafe class Allocator
             for (ulong i = 0; i < pages; i++)
                 _Info.Pages[p + i] = 0;
             _Info.Pages[p] = 0;
+            return pages * PageSize;
         }
+        return 0;
     }
 
     public static ulong MemoryInUse
@@ -57,6 +98,7 @@ abstract unsafe class Allocator
         public IntPtr Start;
         public UInt64 PageInUse;
         public fixed ulong Pages[NumPages]; //Max 512MiB
+        public fixed sbyte GCInfos[NumPages]; //Max 512MiB
     }
 
     public static Info _Info;
@@ -65,8 +107,11 @@ abstract unsafe class Allocator
     {
         fixed (Info* pInfo = &_Info)
             Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
+        CollectIf = -4;
+        NotCollectIf = 127;
         _Info.Start = Start;
         _Info.PageInUse = 0;
+        AllowCollect = false;
     }
 
     /// <summary>
@@ -115,6 +160,15 @@ abstract unsafe class Allocator
         for (ulong k = 0; k < pages; k++)
         {
             _Info.Pages[i + k] = PageSignature;
+
+            if(!AllowCollect)
+            {
+                _Info.GCInfos[i + k] = NotCollectIf;
+            }
+            else
+            {
+                _Info.GCInfos[i + k] = 0;
+            }
         }
         _Info.Pages[i] = pages;
         _Info.PageInUse += pages;
