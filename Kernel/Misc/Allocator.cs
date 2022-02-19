@@ -46,6 +46,8 @@ abstract unsafe class Allocator
                 counter++;
                 memSaved += Free((IntPtr)addr);
             }
+
+            i += _Info.Pages[i];
         }
         Console.Write("GC Collected: ");
         Console.Write(counter.ToString());
