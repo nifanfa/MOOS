@@ -121,6 +121,8 @@ unsafe class Program
 
         test();
 
+        Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
+
         /*
         byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
         AC97.Initialize();
@@ -134,37 +136,67 @@ unsafe class Program
         }
         */
 
+        ConsoleKeyInfo Key = Console.ReadKey();
+
+        //if (false)
+        if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
+
+        {
+
+            Console.WriteLine("Emulator Keymap:");
+            Console.WriteLine("A = Q");
+            Console.WriteLine("B = E");
+            Console.WriteLine("Z = Select");
+            Console.WriteLine("C = Start");
+            Console.WriteLine("W = Up");
+            Console.WriteLine("A = Left");
+            Console.WriteLine("S = Down");
+            Console.WriteLine("D = Right");
+            Console.WriteLine("Game Will Start After 2 Seconds");
+            PIT.Wait(2000);
+            NES.NES nes = new NES.NES();
+            nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
+            Console.WriteLine("Nintendo Family Computer Emulator Initialized");
+            Framebuffer.TripleBuffered = true;
+            for (; ; )
+            {
+                nes.runGame();
+                for (int i = 0; i < 128; i++) Native.Nop();
+            }
+        }
+
+
         /*
         ARP.Initialise();
         Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
         RTL8139.Initialise();
         ARP.Require(Network.Gateway);
-
         for (; ; );
         */
 
-        Framebuffer.TripleBuffered = true;
+        else
 
-        Form.Initialize();
-
-        new FConsole(100, 100);
-
-        for (; ; )
         {
-            DoGUI();
-        }
-    }
+            Framebuffer.TripleBuffered = true;
 
-    public static void DoGUI()
-    {
-        Framebuffer.DrawImage(0, 0, Wallpaper, false);
-        Form.UpdateAll();
-        /*
-        ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
-        ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
-        */
-        Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
-        Framebuffer.Update();
-        FPSMeter.Update();
+            Form.Initialize();
+
+            new FConsole(100, 100);
+
+            Console.WriteLine("Hello, World!");
+
+            for (; ; )
+            {
+                Framebuffer.DrawImage(0, 0, Wallpaper, false);
+                Form.UpdateAll();
+                /*
+                ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
+                ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+                */
+                Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+                Framebuffer.Update();
+                FPSMeter.Update();
+            }
+        }
     }
 }
