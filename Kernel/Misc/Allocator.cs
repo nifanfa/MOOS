@@ -21,8 +21,12 @@ abstract unsafe class Allocator
     public static void Collect() 
     {
         ulong addr;
-        for(ulong i = 0; i < NumPages; i++) 
+        ulong memSaved = 0;
+        ulong counter = 0;
+        for (ulong i = 0; i < NumPages; i++)
         {
+            if (_Info.Pages[i] == 0) continue;
+            if (_Info.Pages[i] == PageSignature) continue;
             if (_Info.GCInfos[i] == NotCollectIf) continue;
 
             addr = (ulong)(_Info.Start + (i * PageSize));
@@ -36,17 +40,16 @@ abstract unsafe class Allocator
             {
                 _Info.GCInfos[i]--;
             }
-        }
-        ulong memSaved = 0;
-        for (ulong i = 0; i < NumPages; i++)
-        {
-            addr = (ulong)(_Info.Start + (i * PageSize));
-            if (_Info.GCInfos[i] < CollectIf)
+
+            if(_Info.GCInfos[i] < CollectIf) 
             {
+                counter++;
                 memSaved += Free((IntPtr)addr);
             }
         }
         Console.Write("GC Collected: ");
+        Console.Write(counter.ToString());
+        Console.Write(" Unused Handle(s) ");
         Console.Write((memSaved / 1048576).ToString());
         Console.WriteLine("MiB");
     }
@@ -69,7 +72,11 @@ abstract unsafe class Allocator
             _Info.PageInUse -= pages;
             Native.Stosb((void*)intPtr, 0, pages * PageSize);
             for (ulong i = 0; i < pages; i++)
+            {
                 _Info.Pages[p + i] = 0;
+                _Info.GCInfos[p + i] = 0;
+            }
+
             _Info.Pages[p] = 0;
             return pages * PageSize;
         }
@@ -161,14 +168,7 @@ abstract unsafe class Allocator
         {
             _Info.Pages[i + k] = PageSignature;
 
-            if(!AllowCollect)
-            {
-                _Info.GCInfos[i + k] = NotCollectIf;
-            }
-            else
-            {
-                _Info.GCInfos[i + k] = 0;
-            }
+            _Info.GCInfos[i + k] = AllowCollect ? (sbyte)0 : NotCollectIf;
         }
         _Info.Pages[i] = pages;
         _Info.PageInUse += pages;

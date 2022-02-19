@@ -121,6 +121,12 @@ unsafe class Program
 
         test();
 
+        for(; ; ) 
+        {
+            Console.ReadKey(true);
+            Allocator.Collect();
+        }
+
         /*
         byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
         AC97.Initialize();
