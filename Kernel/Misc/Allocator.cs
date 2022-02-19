@@ -80,6 +80,7 @@ abstract unsafe class Allocator
             }
 
             _Info.Pages[p] = 0;
+            _Info.GCInfos[p] = 0;
             return pages * PageSize;
         }
         return 0;
@@ -172,6 +173,7 @@ abstract unsafe class Allocator
             _Info.GCInfos[i + k] = AllowCollect ? (sbyte)0 : NotCollectIf;
         }
         _Info.Pages[i] = pages;
+        _Info.GCInfos[i] = AllowCollect ? (sbyte)0 : NotCollectIf;
         _Info.PageInUse += pages;
 
         IntPtr ptr = _Info.Start + (i * PageSize);
