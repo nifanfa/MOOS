@@ -49,11 +49,14 @@ abstract unsafe class Allocator
 
             i += _Info.Pages[i];
         }
-        Console.Write("GC Collected: ");
-        Console.Write(counter.ToString());
-        Console.Write(" Unused Handle(s) ");
-        Console.Write((memSaved / 1048576).ToString());
-        Console.WriteLine("MiB");
+        if (memSaved != 0)
+        {
+            Console.Write("GC Collected: ");
+            Console.Write(counter.ToString());
+            Console.Write(" Unused Handle(s) ");
+            Console.Write((memSaved / 1048576).ToString());
+            Console.WriteLine("MiB");
+        }
     }
 
     internal static ulong Free(IntPtr intPtr)
