@@ -117,7 +117,7 @@ abstract unsafe class Allocator
     {
         fixed (Info* pInfo = &_Info)
             Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
-        CollectIf = -4;
+        CollectIf = -12;
         NotCollectIf = 127;
         _Info.Start = Start;
         _Info.PageInUse = 0;
