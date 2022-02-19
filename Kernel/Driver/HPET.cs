@@ -20,7 +20,7 @@ namespace Kernel.Driver
             Console.Write("HPET is at: ");
             Console.WriteLine(ACPI.HPET->Addresses.Address.ToString("x2"));
 
-            //1 Femtosecond= 1e15 sec
+            //1 Femtosecond= 1e-15 sec
             Clock = (In64((ulong*)(ACPI.HPET->Addresses.Address + 0)) >> 32);
             Console.Write("One HPET period is ");
             Console.Write(Clock.ToString());
