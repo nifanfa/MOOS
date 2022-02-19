@@ -167,7 +167,6 @@ abstract unsafe class Allocator
         for (ulong k = 0; k < pages; k++)
         {
             _Info.Pages[i + k] = PageSignature;
-
             _Info.GCInfos[i + k] = AllowCollect ? (sbyte)0 : NotCollectIf;
         }
         _Info.Pages[i] = pages;
