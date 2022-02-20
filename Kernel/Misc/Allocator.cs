@@ -51,11 +51,11 @@ abstract unsafe class Allocator
         }
         if (memSaved != 0)
         {
-            Console.Write("GC Collected: ");
-            Console.Write(counter.ToString());
-            Console.Write(" Unused Handle(s) ");
-            Console.Write((memSaved / 1048576).ToString());
-            Console.WriteLine("MiB");
+            Debug.Write("GC Collected: ");
+            Debug.Write(counter.ToString());
+            Debug.Write(" Unused Handle(s) ");
+            Debug.Write((memSaved / 1048576).ToString());
+            Debug.WriteLine("MiB");
         }
     }
 
