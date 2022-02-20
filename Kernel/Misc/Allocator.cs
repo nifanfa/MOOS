@@ -62,12 +62,12 @@ abstract unsafe class Allocator
 
     public static void KeepAlive(object obj)
     {
-        ulong p = GetPageStart((IntPtr)Unsafe.AsPointer(ref obj));
+        ulong p = GetPageIndexStart((IntPtr)Unsafe.AsPointer(ref obj));
         if (p == 0xFFFFFFFFFFFFFFFF) return;
         _Info.GCInfos[p] = NotCollectIf;
     }
 
-    private static ulong GetPageStart(IntPtr ptr)
+    private static ulong GetPageIndexStart(IntPtr ptr)
     {
         ulong p = (ulong)ptr;
         if (p < (ulong)_Info.Start) return 0xFFFFFFFFFFFFFFFF;
@@ -84,7 +84,7 @@ abstract unsafe class Allocator
 
     internal static ulong Free(IntPtr intPtr)
     {
-        ulong p = GetPageStart(intPtr);
+        ulong p = GetPageIndexStart(intPtr);
         if (p == 0xFFFFFFFFFFFFFFFF) return 0;
         ulong pages = _Info.Pages[p];
         if (pages != 0 && pages != PageSignature)
@@ -208,7 +208,7 @@ abstract unsafe class Allocator
             return IntPtr.Zero;
         }
 
-        ulong p = GetPageStart(intPtr);
+        ulong p = GetPageIndexStart(intPtr);
         if (p == 0xFFFFFFFFFFFFFFFF) return intPtr;
 
         ulong pages = 1;
