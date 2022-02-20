@@ -69,25 +69,8 @@ namespace Kernel.GUI
         {
             base.Update();
             int w = 0, h = 0;
-            for(int i = 0; i < Data.Length; i++) 
-            {
 
-                if ((w + font.Width*2.5f) >= Width ||i %Width == 0 || Data[i]=='\n') { w = 0; h += (int)(font.Height); }
-                if (Data[i] != '\n')
-                {
-                    w += font.Width;
-                    font.DrawChar(X + w, Y + h, Data[i]);
-                }
-                if (h + (font.Height * 2.5f) > Height) 
-                {
-                    Data.Dispose();
-                    Data = string.Empty;
-                    break;
-                }
-            }
-            
-            if(w == Width) { w = 0;h += (int)(font.Height); } else { w += font.Width; }
-            font.DrawChar(X + w, Y + h, '_');
+            BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
         }
 
         private void Console_OnWrite(char chr)
