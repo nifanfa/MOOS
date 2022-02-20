@@ -1,4 +1,5 @@
-﻿using Kernel;
+﻿using Internal.Runtime.CompilerServices;
+using Kernel;
 using Kernel.Misc;
 using System;
 using System.Diagnostics;
@@ -59,18 +60,32 @@ abstract unsafe class Allocator
         }
     }
 
-    internal static ulong Free(IntPtr intPtr)
+    public static void KeepAlive(object obj)
     {
-        ulong p = (ulong)intPtr;
-        if (p < (ulong)_Info.Start) return 0;
+        ulong p = GetPageStart((IntPtr)Unsafe.AsPointer(ref obj));
+        if (p == 0xFFFFFFFFFFFFFFFF) return;
+        _Info.GCInfos[p] = NotCollectIf;
+    }
+
+    private static ulong GetPageStart(IntPtr ptr)
+    {
+        ulong p = (ulong)ptr;
+        if (p < (ulong)_Info.Start) return 0xFFFFFFFFFFFFFFFF;
         p -= (ulong)_Info.Start;
-        if ((p % PageSize) != 0) return 0;
+        if ((p % PageSize) != 0) return 0xFFFFFFFFFFFFFFFF;
         /*
          * This will get wrong if the size is larger than PageSize
          * and however the allocated address should be aligned
          */
         //p &= ~PageSize; 
         p /= PageSize;
+        return p;
+    }
+
+    internal static ulong Free(IntPtr intPtr)
+    {
+        ulong p = GetPageStart(intPtr);
+        if (p == 0xFFFFFFFFFFFFFFFF) return 0;
         ulong pages = _Info.Pages[p];
         if (pages != 0 && pages != PageSignature)
         {
@@ -193,16 +208,8 @@ abstract unsafe class Allocator
             return IntPtr.Zero;
         }
 
-        ulong p = (ulong)intPtr;
-        if (p < (ulong)_Info.Start) return intPtr;
-        p -= (ulong)_Info.Start;
-        if ((p % PageSize) != 0) return intPtr;
-        /*
-         * This will get wrong if the size is larger than PageSize
-         * and however the allocated address should be aligned
-         */
-        //p &= ~PageSize; 
-        p /= PageSize;
+        ulong p = GetPageStart(intPtr);
+        if (p == 0xFFFFFFFFFFFFFFFF) return intPtr;
 
         ulong pages = 1;
 
