@@ -1,4 +1,5 @@
-C# operating system demo, Using Native AOT (Core RT) boot via multiboot
+~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
+C# operating system demo, Using Native AOT (Core RT) boot via multiboot  
  - [x] GC
  - [x] PS2 Keyboard/Mouse(USB Compatible)
  - [x] Nintendo Family Computer Emulator
@@ -16,4 +17,6 @@ C# operating system demo, Using Native AOT (Core RT) boot via multiboot
  - [x] TCP
  - [x] UDP
  - [x] Lan
- - [ ] Wan
+ - [ ] Wan  
+![image](https://github.com/nifanfa/Solution1/blob/multiboot/QQ截图20220212073734.png)
+![image](https://github.com/nifanfa/Solution1/blob/multiboot/VirtualBox_NativeAOT_21_02_2022_00_11_51.png)
