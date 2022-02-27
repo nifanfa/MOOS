@@ -1,4 +1,5 @@
-﻿//https://wiki.osdev.org/HPET#Interrupt_routing
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+//https://wiki.osdev.org/HPET#Interrupt_routing
 
 using System.Diagnostics;
 using static Kernel.Misc.MMIO;

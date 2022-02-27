@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using System.Runtime.CompilerServices;
 namespace System
 {
     public abstract class Enum : ValueType

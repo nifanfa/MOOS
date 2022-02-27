@@ -1,4 +1,5 @@
-﻿using Kernel.Misc;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using Kernel.Misc;
 using System.Collections.Generic;
 
 namespace Kernel

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using System.Runtime.InteropServices;
 
 namespace System.Runtime.CompilerServices
 {

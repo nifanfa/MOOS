@@ -1,4 +1,5 @@
-﻿namespace System
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+namespace System
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum |
         AttributeTargets.Interface | AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Delegate,

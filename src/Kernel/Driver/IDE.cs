@@ -1,4 +1,5 @@
-﻿using Kernel.FS;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using Kernel.FS;
 using System.Collections.Generic;
 
 namespace Kernel.Driver

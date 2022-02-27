@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
@@ -15,7 +16,7 @@ namespace System
         // The layout of the string type is a contract with the compiler.
         private int _length;
         internal char _firstChar;
-        public static string Join(object[] x, string c)
+        public static string Join<T>(T[] x, string c)
         {
             string o = string.Empty;
             for (int i = 0; i < x.Length; i++)

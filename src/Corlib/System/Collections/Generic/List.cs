@@ -1,10 +1,9 @@
-using Kernel;
-
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
 namespace System.Collections.Generic
 {
     public class List<T>
     {
-        private T[] _value;
+        private readonly T[] _value;
 
         public int Count = 0;
 
@@ -15,14 +14,8 @@ namespace System.Collections.Generic
 
         public T this[int index]
         {
-            get
-            {
-                return _value[index];
-            }
-            set 
-            {
-                _value[index] = value;
-            }
+            get => _value[index];
+            set => _value[index] = value;
         }
 
         public void Add(T t)
@@ -31,14 +24,19 @@ namespace System.Collections.Generic
             Count++;
         }
 
-        public void Insert(int index,T item) 
+        public void Insert(int index, T item)
         {
-            for(int i = Count; i > index; i--) 
+            for (int i = Count; i > index; i--)
             {
                 _value[i] = _value[i - 1];
             }
             _value[index] = item;
             Count++;
+        }
+
+        public bool Contains(T item)
+        {
+            return IndexOf(item) != -1;
         }
 
         public T[] ToArray()
@@ -53,23 +51,16 @@ namespace System.Collections.Generic
 
         public int IndexOf(T item)
         {
-            for(int i = 0; i < Count;i++)
-            {
-                object first =  this[i];
-                object second = item;
-
-                if (first == second)
-                    return i;
-            }
-
-            return -1;
+            return Array.IndexOf(_value, item);
         }
         public bool Remove(T item)
         {
             int at = IndexOf(item);
 
             if (at < 0)
+            {
                 return false;
+            }
 
             RemoveAt(at);
 
@@ -85,7 +76,7 @@ namespace System.Collections.Generic
                 _value[i] = _value[i + 1];
             }
 
-            _value[Count] = default(T);
+            _value[Count] = default;
         }
 
         public void Clear()

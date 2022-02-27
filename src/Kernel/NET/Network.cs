@@ -1,4 +1,5 @@
-﻿using System.Net;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using System.Net;
 
 namespace Kernel.NET
 {

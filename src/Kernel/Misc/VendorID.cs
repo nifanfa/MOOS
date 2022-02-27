@@ -1,4 +1,5 @@
-﻿namespace Kernel.Misc
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+namespace Kernel.Misc
 {
     public static class VendorID
     {
@@ -822,7 +823,7 @@
             if (id == 0x13B1) return "Tamura Corporation";
             if (id == 0x13B4) return "Wellbean Co Inc";
             if (id == 0x13B5) return "ARM Ltd";
-            if (id == 0x13B6) return "DLoG Gesellschaft für elektronische Datentechnik mbH";
+            if (id == 0x13B6) return "DLoG Gesellschaft f�r elektronische Datentechnik mbH";
             if (id == 0x13B8) return "Nokia Telecommunications OY";
             if (id == 0x13BD) return "Sharp Corporation";
             if (id == 0x13BF) return "Sharewave Inc";

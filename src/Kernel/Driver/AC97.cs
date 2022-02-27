@@ -1,6 +1,4 @@
-﻿using Kernel;
-using Kernel.Driver;
-using System;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
 using System.Runtime.InteropServices;
 using static Native;
 
@@ -11,14 +9,16 @@ namespace Kernel
         private static uint NAM, NABM;
         public static int NumDescriptors;
         public static int IRQ;
-
-        static BufferDescriptor* BufferDescriptors;
+        private static BufferDescriptor* BufferDescriptors;
 
         public static unsafe void Initialize()
         {
             PCIDevice device = PCI.GetDevice(0x8086, 0x2415);
 
-            if (device == null) return;
+            if (device == null)
+            {
+                return;
+            }
 
             Console.WriteLine("Intel 82801AA AC97 Audio Controller Found");
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
@@ -43,18 +43,21 @@ namespace Kernel
 
         public static byte Index = 0;
 
-        public static void OnInterrupt() 
+        public static void OnInterrupt()
         {
             ushort Status = In16((ushort)(NABM + 0x16));
-            if((Status & (1 << 3)) != 0)
+            if ((Status & (1 << 3)) != 0)
             {
                 Out8((ushort)(NABM + 0x15), Index++);
-                if (Index > NumDescriptors) Index = 0;
+                if (Index > NumDescriptors)
+                {
+                    Index = 0;
+                }
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct BufferDescriptor
+        private struct BufferDescriptor
         {
             public uint Address;
             public ushort SampleRate;
@@ -64,7 +67,7 @@ namespace Kernel
         public static unsafe void Play(byte[] PCM, ushort SampleRate = 48000, bool DualChannel = true)
         {
             int index = 0;
-            fixed (byte* buffer = PCM) 
+            fixed (byte* buffer = PCM)
             {
                 for (int i = 0; i < PCM.Length; i += SampleRate * (DualChannel ? 2 : 1))
                 {

@@ -1,4 +1,5 @@
-﻿//https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+//https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf
 
 using System;
 using System.Runtime.InteropServices;

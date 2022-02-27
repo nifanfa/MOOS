@@ -1,4 +1,5 @@
-﻿using System;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using System;
 
 namespace Kernel
 {
@@ -35,11 +36,11 @@ namespace Kernel
             Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xE0) | 15));
         }
 
-        public static void Write(string s)
+        public static void Write(object s)
         {
-            for (byte i = 0; i < s.Length; i++)
+            for (byte i = 0; i < s.ToString().Length; i++)
             {
-                Console.Write(s[i]);
+                Console.Write(s.ToString()[i]);
             }
             s.Dispose();
         }

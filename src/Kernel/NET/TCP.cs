@@ -1,4 +1,5 @@
-﻿//https://github.com/pdoane/osdev/blob/master/net/tcp.c
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+//https://github.com/pdoane/osdev/blob/master/net/tcp.c
 
 using System.Runtime.InteropServices;
 

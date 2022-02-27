@@ -1,4 +1,5 @@
-﻿using Kernel.NET;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using Kernel.NET;
 using System.Drawing;
 using System.Runtime.InteropServices;
 

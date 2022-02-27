@@ -1,22 +1,17 @@
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
 using Internal.Runtime.CompilerServices;
 
 namespace System.Collections.Generic
 {
-    class Dictionary<TKey, TValue>
+    public class Dictionary<TKey, TValue>
     {
         public TValue this[TKey key]
         {
-            get
-            {
-                return values[keys.IndexOf(key)];
-            }
-            set
-            {
-                values[keys.IndexOf(key)] = value;
-            }
+            get => values[keys.IndexOf(key)];
+            set => values[keys.IndexOf(key)] = value;
         }
 
-        public int Count { get { return values.Count; } }
+        public int Count => values.Count;
 
         public void Remove(TKey key)
         {
@@ -33,12 +28,12 @@ namespace System.Collections.Generic
 
         public bool ContainsKey(TKey key)
         {
-            return keys.IndexOf(key) != -1;
+            return keys.Contains(key);
         }
 
         public bool ContainsValue(TValue value)
         {
-            return values.IndexOf(value) != -1;
+            return values.Contains(value);
         }
 
         public void Add(TKey key, TValue value)
@@ -53,7 +48,7 @@ namespace System.Collections.Generic
             values.Clear();
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             keys.Clear();
             values.Clear();
@@ -63,7 +58,7 @@ namespace System.Collections.Generic
             Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
         }
 
-        List<TKey> keys;
-        List<TValue> values;
+        private readonly List<TKey> keys;
+        private readonly List<TValue> values;
     }
 }

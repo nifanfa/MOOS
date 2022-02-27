@@ -1,4 +1,5 @@
-﻿using Internal.Runtime;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using Internal.Runtime;
 using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using static Internal.Runtime.EEType;

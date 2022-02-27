@@ -1,3 +1,4 @@
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
 using Kernel.NET;
 using System.Diagnostics;
 using System.Runtime.InteropServices;

@@ -1,4 +1,5 @@
-﻿using Internal.Runtime.CompilerServices;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using Internal.Runtime.CompilerServices;
 using Kernel;
 using Kernel.Misc;
 using System;
@@ -116,7 +117,7 @@ abstract unsafe class Allocator
 
     /*
      * NumPages = Memory Size / PageSize
-     * This should be a const because there will be allocations during initializing modules 👇_Info
+     * This should be a const because there will be allocations during initializing modules ??_Info
      */
     public const int NumPages = 131072;
     public const ulong PageSize = 4096;

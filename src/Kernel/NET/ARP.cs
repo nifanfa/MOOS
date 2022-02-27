@@ -1,4 +1,5 @@
-﻿using Kernel;
+// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+using Kernel;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
