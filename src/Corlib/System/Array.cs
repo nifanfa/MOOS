@@ -1,4 +1,63 @@
-// Copywrite (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+/*
+using System.Runtime.CompilerServices;
+using Internal.Runtime.CompilerHelpers;
+using Internal.Runtime.CompilerServices;
+
+namespace System
+{
+    public abstract unsafe class Array
+    {
+#pragma warning disable 649
+        // This field should be the first field in Array as the runtime/compilers depend on it
+        internal int _numComponents;
+#pragma warning restore
+
+        public int Length =>
+                // NOTE: The compiler has assumptions about the implementation of this method.
+                // Changing the implementation here (or even deleting this) will NOT have the desired impact
+                _numComponents;
+
+        public const int MaxArrayLength = 0x7FEFFFFF;
+
+        internal static unsafe Array NewMultiDimArray(EETypePtr eeType, int* pLengths, int rank)
+        {
+            ulong totalLength = 1;
+
+            for (int i = 0; i < rank; i++)
+            {
+                int length = pLengths[i];
+                if (length > MaxArrayLength)
+                {
+                    throw new Exception("Length of array is too large, Max: " + MaxArrayLength);
+                }
+
+                totalLength *= (ulong)length;
+            }
+
+            object v = StartupCodeHelpers.RhpNewArray(eeType.Value, (int)totalLength);
+            Array ret = Unsafe.As<object, Array>(ref v);
+
+            ref int bounds = ref ret.GetRawMultiDimArrayBounds();
+            for (int i = 0; i < rank; i++)
+            {
+                Unsafe.Add(ref bounds, i) = pLengths[i];
+            }
+
+            return ret;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ref int GetRawMultiDimArrayBounds()
+        {
+            return ref Unsafe.AddByteOffset(ref _numComponents, (nuint)sizeof(void*));
+        }
+    }
+
+    public class Array<T> : Array { }
+}*/
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 using System.Runtime.CompilerServices;
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;

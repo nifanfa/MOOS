@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>e95441c8-8670-43d6-b505-1fae13898e38</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>OS_Sharp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\AC97.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\Framebuffer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\HPET.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\IDE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\Intel8254X.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\IOAPIC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\LocalAPIC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\PCI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\PIC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\PIT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\PS2Keyboard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\PS2Mouse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\Ramdisk.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\RTC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\RTL8139.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\SATA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\Serial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\SMBIOS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\VBE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileSystem\Disk.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileSystem\FAT32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileSystem\File.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Allocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\ASC16.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\BitFont.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\ClassID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Console.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\ConsoleColor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\FPSMeter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\GDT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\IDT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\IFont.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\MMIO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Multiboot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Native.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\PageTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\PE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Networking\ARP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Networking\Ethernet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Networking\IPv4.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Networking\Network.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Networking\TCP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Networking\UDP.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Networking\README.md" />
+  </ItemGroup>
+</Project>
