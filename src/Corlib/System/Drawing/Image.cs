@@ -39,7 +39,7 @@ namespace System.Drawing
                 }
             }
 
-            Image image = new Image()
+            Image image = new()
             {
                 Width = NewWidth,
                 Height = NewHeight,
@@ -53,7 +53,7 @@ namespace System.Drawing
         public override void Dispose()
         {
             RawData.Dispose();
-            this.Dispose();
+            Dispose();
         }
     }
 }

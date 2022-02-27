@@ -29,7 +29,7 @@ namespace System
                 int length = pLengths[i];
                 if (length > MaxArrayLength)
                 {
-                    throw new Exception("Length of array is too large, Max: " + MaxArrayLength);
+                    /*throw new ExceptionKernel.Misc.Panic.Error("Length of array is too large, Max: " + MaxArrayLength);
                 }
 
                 totalLength *= (ulong)length;
@@ -66,6 +66,8 @@ namespace System
 {
     public abstract unsafe partial class Array
     {
+        internal int _numComponents;
+
         // We impose limits on maximum array length in each dimension to allow efficient
         // implementation of advanced range check elimination in future.
         // Keep in sync with vm\gcscan.cpp and HashHelpers.MaxPrimeArrayLength.
@@ -82,12 +84,10 @@ namespace System
         // This ctor exists solely to prevent C# from generating a protected .ctor that violates the surface area.
         private protected Array() { }
 
-        internal int _length;
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ref int GetRawMultiDimArrayBounds()
         {
-            return ref Unsafe.AddByteOffset(ref _length, (nuint)sizeof(void*));
+            return ref Unsafe.AddByteOffset(ref _numComponents, (nuint)sizeof(void*));
         }
         public static unsafe Array NewMultiDimArray(EETypePtr eeType, int* pLengths, int rank)
         {
@@ -98,7 +98,8 @@ namespace System
                 int length = pLengths[i];
                 if (length > MaxArrayLength)
                 {
-                    throw new Exception("Length of array is too large, Max: " + MaxArrayLength);
+                    /*throw new Exception*/
+                    Kernel.Misc.Panic.Error("Length of array is too large, Max: " + MaxArrayLength);
                 }
 
                 totalLength *= (ulong)length;
@@ -116,18 +117,7 @@ namespace System
             return ret;
         }
 
-        public int Length
-        {
-            get => _length;
-            private set
-            {
-                if (value > MaxArrayLength)
-                {
-                    throw new Exception("Argument out of range");
-                }
-                _length = value;
-            }
-        }
+        public int Length => _numComponents;
 
 #nullable enable
         public object? this[int i]
@@ -143,7 +133,8 @@ namespace System
         {
             if (newSize < 0)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
 
@@ -174,7 +165,8 @@ namespace System
             int ilength = (int)length;
             if (length != ilength)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             Copy(sourceArray, destinationArray, ilength);
@@ -188,17 +180,20 @@ namespace System
 
             if (sourceIndex != isourceIndex)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (destinationIndex != idestinationIndex)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (length != ilength)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             Copy(sourceArray, isourceIndex, destinationArray, idestinationIndex, ilength);
@@ -211,7 +206,8 @@ namespace System
             int iindex = (int)index;
             if (index != iindex)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             return GetValue(iindex);
@@ -226,12 +222,14 @@ namespace System
 
             if (index1 != iindex1)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             return GetValue(iindex1, iindex2);
@@ -247,17 +245,20 @@ namespace System
 
             if (index1 != iindex1)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (index3 != iindex3)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             return GetValue(iindex1, iindex2, iindex3);
@@ -271,7 +272,8 @@ namespace System
 
             if (index != iindex)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             SetValue(value, iindex);
@@ -286,12 +288,14 @@ namespace System
 
             if (index1 != iindex1)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             SetValue(value, iindex1, iindex2);
@@ -307,17 +311,20 @@ namespace System
 
             if (index1 != iindex1)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (index3 != iindex3)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             SetValue(value, iindex1, iindex2, iindex3);
@@ -360,7 +367,8 @@ namespace System
             int iindex = (int)index;
             if (index != iindex)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             CopyTo(array, iindex);
@@ -387,7 +395,8 @@ namespace System
         {
             if (array == null)
             {
-                throw new Exception("Argument null");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument null");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -400,17 +409,20 @@ namespace System
         {
             if (array == null)
             {
-                throw new Exception("Argument null");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument null");
             }
 
             if (startIndex < 0 || startIndex > array.Length)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (count < 0 || startIndex > array.Length - count)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             for (int i = startIndex; i < startIndex + count; i++)
@@ -436,12 +448,14 @@ namespace System
         {
             if (array == null)
             {
-                throw new Exception("Argument null");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument null");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             for (int i = startIndex; i < array.Length; i++)
@@ -453,6 +467,8 @@ namespace System
             }
 
             return -1;
+
+
         }
 
         public static int IndexOf<T>(T[] array, T value)
@@ -464,22 +480,23 @@ namespace System
         {
             if (array == null)
             {
-                throw new Exception("Argument null");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument null");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
-            for (int i = startIndex; i < array.Length; i++)
+            for (int i = startIndex; i < startIndex + array.Length; i++)
             {
-                if (array.GetValue(i).Equals(value))
+                if (array[i].Equals(value))
                 {
                     return i;
                 }
             }
-
             return -1;
         }
         // Reverses all elements of the given array. Following a call to this
@@ -502,22 +519,26 @@ namespace System
         {
             if (array == null)
             {
-                throw new Exception("Argument null");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument null");
             }
 
             if (index < 0)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (length < 0)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (array.Length - index < length)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (length <= 1)
@@ -543,22 +564,26 @@ namespace System
         {
             if (array == null)
             {
-                throw new Exception("Argument null");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument null");
             }
 
             if (index < 0)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (length < 0)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (array.Length - index < length)
             {
-                throw new Exception("Argument out of range");
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
             }
 
             if (length <= 1)

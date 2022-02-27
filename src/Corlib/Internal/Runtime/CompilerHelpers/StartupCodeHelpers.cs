@@ -136,7 +136,7 @@ namespace Internal.Runtime.CompilerHelpers
         [RuntimeExport("RhpStelemRef")]
         private static unsafe void RhpStelemRef(Array array, int index, object obj)
         {
-            fixed (int* n = &array._length)
+            fixed (int* n = &array._numComponents)
             {
                 byte* ptr = (byte*)n;
                 ptr += sizeof(void*);   // Array length is padded to 8 bytes on 64-bit

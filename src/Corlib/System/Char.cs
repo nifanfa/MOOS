@@ -168,12 +168,14 @@ namespace System
         {
             if (s == null)
             {
-                throw new Exception(nameof(s));
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error(nameof(s));
             }
 
             if (((uint)index) >= ((uint)s.Length))
             {
-                throw new Exception(nameof(index));
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error(nameof(index));
             }
 
             return IsSurrogate(s[index]);
@@ -188,12 +190,14 @@ namespace System
         {
             if (s == null)
             {
-                throw new Exception(nameof(s));
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error(nameof(s));
             }
 
             if (index < 0 || index >= s.Length)
             {
-                throw new Exception(nameof(index));
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error(nameof(index));
             }
 
             return IsHighSurrogate(s[index]);
@@ -208,12 +212,14 @@ namespace System
         {
             if (s == null)
             {
-                throw new Exception(nameof(s));
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error(nameof(s));
             }
 
             if (index < 0 || index >= s.Length)
             {
-                throw new Exception(nameof(index));
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error(nameof(index));
             }
 
             return IsLowSurrogate(s[index]);

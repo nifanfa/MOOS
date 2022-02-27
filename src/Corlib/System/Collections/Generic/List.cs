@@ -3,7 +3,7 @@ namespace System.Collections.Generic
 {
     public class List<T>
     {
-        private readonly T[] _value;
+        internal T[] _value;
 
         public int Count = 0;
 
@@ -36,7 +36,7 @@ namespace System.Collections.Generic
 
         public bool Contains(T item)
         {
-            return IndexOf(item) != -1;
+            return Array.Exists(ToArray(), item);
         }
 
         public T[] ToArray()
@@ -51,7 +51,7 @@ namespace System.Collections.Generic
 
         public int IndexOf(T item)
         {
-            return Array.IndexOf(_value, item);
+            return Array.IndexOf(ToArray(), item);
         }
         public bool Remove(T item)
         {

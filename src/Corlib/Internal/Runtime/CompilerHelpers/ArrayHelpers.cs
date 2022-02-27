@@ -2,11 +2,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Internal.Runtime.CompilerServices;
 using System;
-using System.Runtime;
-
-using Debug = System.Diagnostics.Debug;
+using Internal.Runtime.CompilerServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
@@ -21,13 +18,13 @@ namespace Internal.Runtime.CompilerHelpers
         /// </summary>
         public static unsafe Array NewObjArray(IntPtr pEEType, int nDimensions, int* pDimensions)
         {
-            EETypePtr eeType = new EETypePtr(pEEType);
+            EETypePtr eeType = new(pEEType);
             //Debug.Assert(eeType.IsArray);
             //Debug.Assert(nDimensions > 0);
 
             if (eeType.IsSzArray)
             {
-                var v = StartupCodeHelpers.RhpNewArray(eeType.Value, pDimensions[0]);
+                object v = StartupCodeHelpers.RhpNewArray(eeType.Value, pDimensions[0]);
                 Array ret = Unsafe.As<object, Array>(ref v);
 
                 if (nDimensions > 1)
@@ -38,7 +35,9 @@ namespace Internal.Runtime.CompilerHelpers
 
                     Array[] arrayOfArrays = (Array[])ret;
                     for (int i = 0; i < arrayOfArrays.Length; i++)
+                    {
                         arrayOfArrays[i] = NewObjArray(elementType.RawValue, nDimensions - 1, pDimensions + 1);
+                    }
                 }
 
                 return ret;
@@ -54,8 +53,10 @@ namespace Internal.Runtime.CompilerHelpers
                     for (int i = 0; i < rank; i++)
                     {
                         if (pDimensions[2 * i] != 0)
+                        {
                             return null;
-                            //throw new PlatformNotSupportedException(SR.Arg_NotSupportedNonZeroLowerBound);
+                        }
+                        //throw new PlatformNotSupportedException(SR.Arg_NotSupportedNonZeroLowerBound);
 
                         pDimensions[i] = pDimensions[2 * i + 1];
                     }
@@ -72,7 +73,7 @@ namespace Internal.Runtime.CompilerHelpers
                         //throw new OverflowException();
                     }
 
-                    RuntimeTypeHandle elementTypeHandle = new RuntimeTypeHandle(eeType.ArrayElementType);
+                    RuntimeTypeHandle elementTypeHandle = new(eeType.ArrayElementType);
                     return null;
                     //return Array.CreateInstance(Type.GetTypeFromHandle(elementTypeHandle), length);
                 }
