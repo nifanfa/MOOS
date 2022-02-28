@@ -1,5 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel.Misc;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Collections.Generic;
 
 namespace Kernel
@@ -63,12 +62,14 @@ namespace Kernel
             {
                 CheckBus(0);
             }
-            else 
+            else
             {
                 for (ushort fn = 0; fn < 8; fn++)
                 {
                     if (GetVendorID(0x0, 0x0, fn) != 0xFFFF)
+                    {
                         break;
+                    }
 
                     CheckBus(fn);
                 }

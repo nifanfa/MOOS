@@ -1,6 +1,6 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel.Driver;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Windows.Forms;
+using Kernel.Driver;
 using static Native;
 
 namespace Kernel
@@ -78,7 +78,9 @@ namespace Kernel
             if (Phase == 0)
             {
                 if (D == 0xfa)
+                {
                     Phase = 1;
+                }
             }
             else if (Phase == 1)
             {
@@ -111,14 +113,22 @@ namespace Kernel
                 }
 
                 if (MData[1] > 127)
+                {
                     aX = -(255 - MData[1]);
+                }
                 else
+                {
                     aX = MData[1];
+                }
 
                 if (MData[2] > 127)
+                {
                     aY = -(255 - MData[2]);
+                }
                 else
+                {
                     aY = MData[2];
+                }
 
                 Control.MousePosition.X += aX;
                 Control.MousePosition.Y -= aY;

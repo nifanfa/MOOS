@@ -1,7 +1,7 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+using System.Runtime.InteropServices;
 using Internal.Runtime;
 using Internal.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace System
 {
@@ -31,21 +31,29 @@ namespace System
 
 
         public virtual bool Equals(object o)
-            => false;
+        {
+            return false;
+        }
 
         public virtual int GetHashCode()
-            => 0;
+        {
+            return 0;
+        }
 
         public virtual string ToString()
-            => "System.Object";
-
+        {
+            return "System.Object";
+        }
 
         public virtual void Dispose()
         {
-            var obj = this;
+            object obj = this;
             Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
         }
 
-        public static implicit operator bool(object obj)=>((ulong)Unsafe.AsPointer(ref obj))>= (ulong)Allocator._Info.Start;
+        public static implicit operator bool(object obj)
+        {
+            return ((ulong)Unsafe.AsPointer(ref obj)) >= (ulong)Allocator._Info.Start;
+        }
     }
 }

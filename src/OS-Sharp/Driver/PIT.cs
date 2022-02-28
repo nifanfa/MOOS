@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using Kernel.Driver;
 
 namespace Kernel
@@ -28,7 +28,10 @@ namespace Kernel
         public static void Wait(ulong millisecond)
         {
             ulong T = Tick;
-            while (Tick < (T + millisecond)) Native.Hlt();
+            while (Tick < (T + millisecond))
+            {
+                Native.Hlt();
+            }
         }
     }
 }

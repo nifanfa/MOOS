@@ -1,8 +1,8 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel.FileSystem;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Kernel.FileSystem;
 
 namespace Kernel
 {
@@ -52,7 +52,7 @@ namespace Kernel
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct HBACommandHeader
+        private struct HBACommandHeader
         {
             public byte P1;
             public byte P2;
@@ -64,10 +64,7 @@ namespace Kernel
 
             public byte CommandFISLength
             {
-                get
-                {
-                    return (byte)(P1 & 0x1F);
-                }
+                get => (byte)(P1 & 0x1F);
 
                 set
                 {
@@ -76,20 +73,11 @@ namespace Kernel
                 }
             }
 
-            public bool ATAPI
-            {
-                get
-                {
-                    return BitHelpers.IsBitSet(P1, 5);
-                }
-            }
+            public bool ATAPI => BitHelpers.IsBitSet(P1, 5);
 
             public bool Write
             {
-                get
-                {
-                    return BitHelpers.IsBitSet(P1, 6);
-                }
+                get => BitHelpers.IsBitSet(P1, 6);
 
                 set
                 {
@@ -104,36 +92,15 @@ namespace Kernel
                 }
             }
 
-            public bool Prefetchable
-            {
-                get
-                {
-                    return BitHelpers.IsBitSet(P1, 7);
-                }
-            }
+            public bool Prefetchable => BitHelpers.IsBitSet(P1, 7);
 
-            public bool Reset
-            {
-                get
-                {
-                    return BitHelpers.IsBitSet(P2, 0);
-                }
-            }
+            public bool Reset => BitHelpers.IsBitSet(P2, 0);
 
-            public bool BIST
-            {
-                get
-                {
-                    return BitHelpers.IsBitSet(P2, 1);
-                }
-            }
+            public bool BIST => BitHelpers.IsBitSet(P2, 1);
 
             public bool ClearBusy
             {
-                get
-                {
-                    return BitHelpers.IsBitSet(P2, 2);
-                }
+                get => BitHelpers.IsBitSet(P2, 2);
 
                 set
                 {
@@ -148,21 +115,9 @@ namespace Kernel
                 }
             }
 
-            public bool Reserved0
-            {
-                get
-                {
-                    return BitHelpers.IsBitSet(P2, 3);
-                }
-            }
+            public bool Reserved0 => BitHelpers.IsBitSet(P2, 3);
 
-            public byte PortMultiplier
-            {
-                get
-                {
-                    return (byte)((P2 & 0xF0) >> 4);
-                }
-            }
+            public byte PortMultiplier => (byte)((P2 & 0xF0) >> 4);
         };
 
         public enum SATAPortType
@@ -193,7 +148,11 @@ namespace Kernel
                 }
             }
             #endregion
-            if (dev == null) return false;
+            if (dev == null)
+            {
+                return false;
+            }
+
             Ports = new List<SATADevice>();
             dev.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
             Controller = (HBA*)dev.Bar5;
@@ -211,7 +170,11 @@ namespace Kernel
                     }
                 }
             }
-            for (int i = 0; i < Ports.Count; i++) Ports[i].Configure();
+            for (int i = 0; i < Ports.Count; i++)
+            {
+                Ports[i].Configure();
+            }
+
             return true;
         }
 
@@ -222,9 +185,15 @@ namespace Kernel
             byte devdetect = (byte)(statStat & 0b111);
 
             //Not Present
-            if (devdetect != 0x3) return SATAPortType.NONE;
+            if (devdetect != 0x3)
+            {
+                return SATAPortType.NONE;
+            }
             //Not Active
-            if (intpowman != 0x1) return SATAPortType.NONE;
+            if (intpowman != 0x1)
+            {
+                return SATAPortType.NONE;
+            }
 
             return port->Signature switch
             {
@@ -239,10 +208,10 @@ namespace Kernel
         public class SATADevice : Disk
         {
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            struct FIS_REG_H2D
+            private struct FIS_REG_H2D
             {
                 public byte FISType;
-                byte PortMultiplier_Reserved0_CommandControl;
+                private byte PortMultiplier_Reserved0_CommandControl;
                 public byte Command;
                 public byte FeatureLow;
                 public byte LBA0;
@@ -259,20 +228,11 @@ namespace Kernel
                 public byte Control;
                 public fixed byte Reserved1[4];
 
-                public byte PortMultiplier
-                {
-                    get
-                    {
-                        return (byte)(PortMultiplier_Reserved0_CommandControl & 0xF);
-                    }
-                }
+                public byte PortMultiplier => (byte)(PortMultiplier_Reserved0_CommandControl & 0xF);
 
                 public bool CommandControl
                 {
-                    get
-                    {
-                        return BitHelpers.IsBitSet(PortMultiplier_Reserved0_CommandControl, 7);
-                    }
+                    get => BitHelpers.IsBitSet(PortMultiplier_Reserved0_CommandControl, 7);
 
                     set
                     {
@@ -289,7 +249,7 @@ namespace Kernel
             }
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            struct HBACommandTable
+            private struct HBACommandTable
             {
                 public fixed byte CommandFIS[64];
                 public fixed byte ATAPICommand[16];
@@ -298,7 +258,7 @@ namespace Kernel
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            struct HBAPRDTEntry
+            private struct HBAPRDTEntry
             {
                 public uint DataBaseAddress;
                 public uint DataBaseAddressUpper;
@@ -307,10 +267,7 @@ namespace Kernel
 
                 public bool InterruptOnCompletion
                 {
-                    get
-                    {
-                        return BitHelpers.IsBitSet(ByteCount_Reserved1_InterruptOnCompletion, 31);
-                    }
+                    get => BitHelpers.IsBitSet(ByteCount_Reserved1_InterruptOnCompletion, 31);
 
                     set
                     {
@@ -327,10 +284,7 @@ namespace Kernel
 
                 public uint ByteCount
                 {
-                    get
-                    {
-                        return ByteCount_Reserved1_InterruptOnCompletion & 0x3FFFFF;
-                    }
+                    get => ByteCount_Reserved1_InterruptOnCompletion & 0x3FFFFF;
 
                     set
                     {
@@ -371,7 +325,11 @@ namespace Kernel
 
             public void StartCMD()
             {
-                while ((HBAPort->CommandStatus & 0x8000) != 0) ;
+                while ((HBAPort->CommandStatus & 0x8000) != 0)
+                {
+                    ;
+                }
+
                 HBAPort->CommandStatus |= 0x0010;
                 HBAPort->CommandStatus |= 0x0001;
             }
@@ -383,20 +341,28 @@ namespace Kernel
 
                 while (true)
                 {
-                    if ((HBAPort->CommandStatus & 0x4000) != 0) continue;
-                    if ((HBAPort->CommandStatus & 0x8000) != 0) continue;
+                    if ((HBAPort->CommandStatus & 0x4000) != 0)
+                    {
+                        continue;
+                    }
+
+                    if ((HBAPort->CommandStatus & 0x8000) != 0)
+                    {
+                        continue;
+                    }
+
                     break;
                 }
             }
 
-            public override bool Read(ulong sector, uint count, byte[] data) 
+            public override bool Read(ulong sector, uint count, byte[] data)
             {
                 bool b = false;
                 fixed (byte* p = data)
                 {
                     for (int i = 0; i < data.Length; i += 512)
                     {
-                        b = ReadOrWrite((uint)sector,1, (ushort*)(p + i), false);
+                        b = ReadOrWrite((uint)sector, 1, (ushort*)(p + i), false);
                         sector++;
                     }
                 }
@@ -427,11 +393,18 @@ namespace Kernel
 
             private bool ReadOrWrite(ulong Sector, uint Count, ushort* Buffer, bool Write)
             {
-                if (PortType == SATAPortType.ATAPI && Write) return false;
+                if (PortType == SATAPortType.ATAPI && Write)
+                {
+                    return false;
+                }
+
                 unchecked { HBAPort->InterruptStatus = (uint)-1; }
                 ulong Spin = 0;
                 int Slot = FindSlot();
-                if (Slot == -1) return false;
+                if (Slot == -1)
+                {
+                    return false;
+                }
 
                 HBACommandHeader* hdr = ((HBACommandHeader*)(HBAPort->CommandListBase | (ulong)HBAPort->CommandListBaseUpper << 32));
                 hdr += Slot;
@@ -481,19 +454,26 @@ namespace Kernel
                 //Wait for 2 seconds if fail
                 while ((HBAPort->TaskFileData & (0x80 | 0x08)) != 0 && Spin < 2000)
                 {
-                    Spin++; 
+                    Spin++;
                     Native.Hlt();
                 }
 
-                if (Spin == 2000) return false;
+                if (Spin == 2000)
+                {
+                    return false;
+                }
 
                 HBAPort->CommandIssue = (uint)(1 << Slot);
 
                 while (true)
                 {
                     Native.Hlt();
-                    if ((HBAPort->CommandIssue & (1 << Slot)) == 0) break;
-                    if ((HBAPort->InterruptStatus & ((1 << 30))) != 0) 
+                    if ((HBAPort->CommandIssue & (1 << Slot)) == 0)
+                    {
+                        break;
+                    }
+
+                    if ((HBAPort->InterruptStatus & ((1 << 30))) != 0)
                     {
                         return false;
                     }
@@ -504,7 +484,11 @@ namespace Kernel
                     return false;
                 }
 
-                while (HBAPort->CommandIssue != 0) Native.Hlt();
+                while (HBAPort->CommandIssue != 0)
+                {
+                    Native.Hlt();
+                }
+
                 return true;
             }
 
@@ -513,7 +497,10 @@ namespace Kernel
                 uint Slots = HBAPort->SataActive | HBAPort->CommandIssue;
                 for (int i = 0; i < 32; i++)
                 {
-                    if ((Slots & (1 << i)) == 0) return i;
+                    if ((Slots & (1 << i)) == 0)
+                    {
+                        return i;
+                    }
                 }
                 return -1;
             }

@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace System.Collections.Generic
 {
     public class List<T>
@@ -42,10 +42,7 @@ namespace System.Collections.Generic
         public T[] ToArray()
         {
             T[] array = new T[Count];
-            for (int i = 0; i < Count; i++)
-            {
-                array[i] = this[i];
-            }
+            Array.Copy(_value, ref array, 0, Count);
             return array;
         }
 

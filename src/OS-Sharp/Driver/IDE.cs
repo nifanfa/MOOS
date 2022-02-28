@@ -1,6 +1,6 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel.FileSystem;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Collections.Generic;
+using Kernel.FileSystem;
 
 namespace Kernel.Driver
 {
@@ -19,31 +19,30 @@ namespace Kernel.Driver
         public const uint MaxLBA28 = 60 * 2;
 
         public const uint DrivesPerConroller = 2;
-
-        ushort DataPort;
-        ushort FeaturePort;
-        ushort ErrorPort;
-        ushort SectorCountPort;
+        private readonly ushort DataPort;
+        private readonly ushort FeaturePort;
+        private readonly ushort ErrorPort;
+        private readonly ushort SectorCountPort;
 
         public static List<IDE> Controllers;
 
         public static bool Initialize()
         {
             Controllers = new List<IDE>(2);
-            IDE primary = new IDE(Channels.Primary);
-            IDE secondary = new IDE(Channels.Secondary);
+            IDE primary = new(Channels.Primary);
+            IDE secondary = new(Channels.Secondary);
             Controllers.Add(primary);
             Controllers.Add(secondary);
             return primary.Available() || secondary.Available();
         }
 
-        ushort LBALowPort;
-        ushort LBAMidPort;
-        ushort LBAHighPort;
-        ushort DeviceHeadPort;
-        ushort StatusPort;
-        ushort CommandPort;
-        ushort AltStatusPort;
+        private readonly ushort LBALowPort;
+        private readonly ushort LBAMidPort;
+        private readonly ushort LBAHighPort;
+        private readonly ushort DeviceHeadPort;
+        private readonly ushort StatusPort;
+        private readonly ushort CommandPort;
+        private readonly ushort AltStatusPort;
 
         private struct DriveInfo
         {
@@ -51,7 +50,7 @@ namespace Kernel.Driver
             public ulong Size;
         }
 
-        private DriveInfo[] Ports;
+        private readonly DriveInfo[] Ports;
 
         public enum Drive
         {
@@ -97,13 +96,16 @@ namespace Kernel.Driver
 
             Ports = new DriveInfo[DrivesPerConroller];
 
-            for (var drive = 0; drive < DrivesPerConroller; drive++)
+            for (int drive = 0; drive < DrivesPerConroller; drive++)
             {
                 Ports[drive].Present = false;
                 Ports[drive].Size = 0;
             }
 
-            if (!Available()) return;
+            if (!Available())
+            {
+                return;
+            }
 
             //Start Device
             Native.Out8(ControlPort, 0);
@@ -131,7 +133,7 @@ namespace Kernel.Driver
                 }
                 Ports[port].Present = true;
 
-                var DriveInfo = new byte[4096];
+                byte[] DriveInfo = new byte[4096];
                 fixed (byte* p = DriveInfo)
                 {
                     Native.Insw(DataPort, (ushort*)p, (ulong)(DriveInfo.Length / 2));
@@ -139,11 +141,14 @@ namespace Kernel.Driver
                     Ports[port].Size = (*(uint*)(p + MaxLBA28)) * SectorSize;
 
                     Console.Write("[IDE] ");
-                    byte* pName = ((byte*)p) + ModelNumber;
+                    byte* pName = p + ModelNumber;
                     for (int i = 0; i < 40; i++)
                     {
                         Console.Write((char)pName[i]);
-                        if (pName[i + 1] == 0x20 && pName[i + 2] == 0x20) break;
+                        if (pName[i + 1] == 0x20 && pName[i + 2] == 0x20)
+                        {
+                            break;
+                        }
                     }
                     Console.Write(' ');
 
@@ -188,7 +193,9 @@ namespace Kernel.Driver
         {
             uint drive = (uint)adrive;
             if (drive >= 2 || !Ports[drive].Present)
+            {
                 return false;
+            }
 
             Native.Out8(DeviceHeadPort, (byte)(0xE0 | (drive << 4) | ((sector >> 24) & 0x0F)));
             //Native.Out8(FeaturePort, 0);
@@ -200,9 +207,14 @@ namespace Kernel.Driver
             Native.Out8(CommandPort, (write) ? WriteSectorsWithRetry : ReadSectorsWithRetry);
 
             if (!WaitForReadyStatus())
+            {
                 return false;
+            }
 
-            while ((Native.In8(StatusPort) & 0x80) != 0) ;
+            while ((Native.In8(StatusPort) & 0x80) != 0)
+            {
+                ;
+            }
 
             if (write)
             {
@@ -226,10 +238,10 @@ namespace Kernel.Driver
             return true;
         }
 
-        public override bool Read(ulong sector, uint count, byte[] data) 
+        public override bool Read(ulong sector, uint count, byte[] data)
         {
             bool b = false;
-            fixed(byte* p = data)
+            fixed (byte* p = data)
             {
                 for (int i = 0; i < data.Length; i += 512)
                 {

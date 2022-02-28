@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace Kernel.Driver
 {
     public static unsafe class VBE
@@ -9,7 +9,7 @@ namespace Kernel.Driver
         {
             Info = info;
             ASC16.Initialise();
-            if (info->PhysBase != 0) 
+            if (info->PhysBase != 0)
             {
                 Framebuffer.VideoMemory = (uint*)info->PhysBase;
                 Framebuffer.SetVideoMode(info->ScreenWidth, info->ScreenHeight);

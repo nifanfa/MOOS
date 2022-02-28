@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System;
 using System.Runtime.InteropServices;
 
@@ -133,10 +133,10 @@ namespace Internal.Runtime
 
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct ObjHeader 
+    internal struct ObjHeader
     {
         // Contents of the object header
-        private IntPtr _objHeaderContents;
+        private readonly IntPtr _objHeaderContents;
     }
 
     //    [StructLayout(LayoutKind.Sequential)]
@@ -278,13 +278,13 @@ namespace Internal.Runtime
         //    }
         //}
 
-        private ushort _usComponentSize;
-        private ushort _usFlags;
-        private uint _uBaseSize;
+        private readonly ushort _usComponentSize;
+        private readonly ushort _usFlags;
+        private readonly uint _uBaseSize;
         private RelatedTypeUnion _relatedType;
-        private ushort _usNumVtableSlots;
-        private ushort _usNumInterfaces;
-        private uint _uHashCode;
+        private readonly ushort _usNumVtableSlots;
+        private readonly ushort _usNumInterfaces;
+        private readonly uint _uHashCode;
 
         // vtable follows
 
@@ -299,13 +299,7 @@ namespace Internal.Runtime
         private const uint ValueTypePaddingAlignmentMask = 0xF8;
         private const int ValueTypePaddingAlignmentShift = 3;
 
-        internal ushort ComponentSize
-        {
-            get
-            {
-                return _usComponentSize;
-            }
-        }
+        internal ushort ComponentSize => _usComponentSize;
 
         //internal ushort GenericArgumentCount {
         //	get {
@@ -320,13 +314,7 @@ namespace Internal.Runtime
         //	}
         //}
 
-        internal uint BaseSize
-        {
-            get
-            {
-                return _uBaseSize;
-            }
-        }
+        internal uint BaseSize => _uBaseSize;
 
         //internal ushort NumVtableSlots {
         //	get {
@@ -346,13 +334,7 @@ namespace Internal.Runtime
         //	}
         //}
 
-        private EETypeKind Kind
-        {
-            get
-            {
-                return (EETypeKind)(_usFlags & (ushort)EETypeFlags.EETypeKindMask);
-            }
-        }
+        private EETypeKind Kind => (EETypeKind)(_usFlags & (ushort)EETypeFlags.EETypeKindMask);
 
         //internal bool HasOptionalFields {
         //	get {
@@ -362,12 +344,7 @@ namespace Internal.Runtime
 
         //// Mark or determine that a type is generic and one or more of it's type parameters is co- or
         //// contra-variant. This only applies to interface and delegate types.
-        internal bool HasGenericVariance 
-        {
-        	get {
-        		return ((_usFlags & (ushort)EETypeFlags.GenericVarianceFlag) != 0);
-        	}
-        }
+        internal bool HasGenericVariance => ((_usFlags & (ushort)EETypeFlags.GenericVarianceFlag) != 0);
 
         //internal bool IsFinalizable {
         //	get {
@@ -381,13 +358,7 @@ namespace Internal.Runtime
         //	}
         //}
 
-        internal bool IsCloned 
-        {
-        	get 
-            {
-        		return Kind == EETypeKind.ClonedEEType;
-            }
-        }
+        internal bool IsCloned => Kind == EETypeKind.ClonedEEType;
 
         //internal bool IsCanonical {
         //	get {
@@ -395,14 +366,9 @@ namespace Internal.Runtime
         //	}
         //}
 
-        internal bool IsString
-        {
-            get
-            {
+        internal bool IsString =>
                 // String is currently the only non-array type with a non-zero component size.
-                return ComponentSize == sizeof(char) && !IsArray && !IsGenericTypeDefinition;
-            }
-        }
+                ComponentSize == sizeof(char) && !IsArray && !IsGenericTypeDefinition;
 
         internal bool IsArray
         {
@@ -420,7 +386,10 @@ namespace Internal.Runtime
             internal static unsafe bool IsSystemObject(EEType* pEEType)
             {
                 if (pEEType->IsArray)
+                {
                     return false;
+                }
+
                 return (pEEType->NonArrayBaseType == null) && !pEEType->IsInterface;
             }
 
@@ -432,27 +401,22 @@ namespace Internal.Runtime
             }
         }
 
-        internal int ArrayRank 
+        internal int ArrayRank
         {
-        	get 
+            get
             {
-        		int boundsSize = (int)this.ParameterizedTypeShape - SZARRAY_BASE_SIZE;
-        		if (boundsSize > 0) {
-        			// Multidim array case: Base size includes space for two Int32s
-        			// (upper and lower bound) per each dimension of the array.
-        			return boundsSize / (2 * sizeof(int));
-        		}
-        		return 1;
-        	}
-        }
-
-        internal bool IsSzArray 
-        {
-            get 
-            {
-                return ElementType == EETypeElementType.SzArray;
+                int boundsSize = (int)ParameterizedTypeShape - SZARRAY_BASE_SIZE;
+                if (boundsSize > 0)
+                {
+                    // Multidim array case: Base size includes space for two Int32s
+                    // (upper and lower bound) per each dimension of the array.
+                    return boundsSize / (2 * sizeof(int));
+                }
+                return 1;
             }
         }
+
+        internal bool IsSzArray => ElementType == EETypeElementType.SzArray;
 
         //internal bool IsGeneric {
         //	get {
@@ -460,13 +424,7 @@ namespace Internal.Runtime
         //	}
         //}
 
-        internal bool IsGenericTypeDefinition
-        {
-            get
-            {
-                return Kind == EETypeKind.GenericTypeDefEEType;
-            }
-        }
+        internal bool IsGenericTypeDefinition => Kind == EETypeKind.GenericTypeDefEEType;
 
         //internal EEType* GenericDefinition {
         //	get {
@@ -543,13 +501,7 @@ namespace Internal.Runtime
         //	}
         //}
 
-        internal bool IsInterface 
-        {
-        	get 
-            {
-        		return ElementType == EETypeElementType.Interface;
-        	}
-        }
+        internal bool IsInterface => ElementType == EETypeElementType.Interface;
 
         //internal bool IsAbstract {
         //	get {
@@ -586,19 +538,9 @@ namespace Internal.Runtime
         //// Currently, the meaning is a shape of 0 indicates that this is a Pointer,
         //// shape of 1 indicates a ByRef, and >=SZARRAY_BASE_SIZE indicates that this is an array.
         //// Two types are not equivalent if their shapes do not exactly match.
-        internal uint ParameterizedTypeShape {
-        	get 
-            {
-        		return _uBaseSize;
-        	}
-        }
+        internal uint ParameterizedTypeShape => _uBaseSize;
 
-        internal bool IsRelatedTypeViaIAT {
-            get 
-            {
-        		return ((_usFlags & (ushort)EETypeFlags.RelatedTypeViaIATFlag) != 0);
-        	}
-        }
+        internal bool IsRelatedTypeViaIAT => ((_usFlags & (ushort)EETypeFlags.RelatedTypeViaIATFlag) != 0);
 
         //internal bool RequiresAlign8 {
         //	get {
@@ -811,53 +753,60 @@ namespace Internal.Runtime
         //	}
         //}
 
-        internal EEType* NonArrayBaseType {
-        	get {
-        		if (IsCloned) {
-        			// Assuming that since this is not an Array, the CanonicalEEType is also not an array
-        			return CanonicalEEType->NonArrayBaseType;
-        		}
-
-        		if (IsRelatedTypeViaIAT) {
-        			return *_relatedType._ppBaseTypeViaIAT;
-        		}
-
-        		return _relatedType._pBaseType;
-        	}
-        }
-
-        internal EEType* NonClonedNonArrayBaseType 
-        {
-        	get {
-        		if (IsRelatedTypeViaIAT) {
-        			return *_relatedType._ppBaseTypeViaIAT;
-        		}
-
-        		return _relatedType._pBaseType;
-        	}
-        }
-
-        internal EEType* RawBaseType
+        internal EEType* NonArrayBaseType
         {
             get
             {
-                //Debug.Assert(!IsParameterizedType, "array type not supported in NonArrayBaseType");
-                //Debug.Assert(!IsCloned, "cloned type not supported in NonClonedNonArrayBaseType");
-                //Debug.Assert(IsCanonical, "we expect canonical types here");
-                //Debug.Assert(!IsRelatedTypeViaIAT, "Non IAT");
+                if (IsCloned)
+                {
+                    // Assuming that since this is not an Array, the CanonicalEEType is also not an array
+                    return CanonicalEEType->NonArrayBaseType;
+                }
+
+                if (IsRelatedTypeViaIAT)
+                {
+                    return *_relatedType._ppBaseTypeViaIAT;
+                }
 
                 return _relatedType._pBaseType;
             }
         }
 
-        internal EEType* CanonicalEEType {
-        	get {
-        		// cloned EETypes must always refer to types in other modules
-        		if (IsRelatedTypeViaIAT)
-        			return *_relatedType._ppCanonicalTypeViaIAT;
-        		else
-        			return _relatedType._pCanonicalType;
-        	}
+        internal EEType* NonClonedNonArrayBaseType
+        {
+            get
+            {
+                if (IsRelatedTypeViaIAT)
+                {
+                    return *_relatedType._ppBaseTypeViaIAT;
+                }
+
+                return _relatedType._pBaseType;
+            }
+        }
+
+        internal EEType* RawBaseType =>
+                //Debug.Assert(!IsParameterizedType, "array type not supported in NonArrayBaseType");
+                //Debug.Assert(!IsCloned, "cloned type not supported in NonClonedNonArrayBaseType");
+                //Debug.Assert(IsCanonical, "we expect canonical types here");
+                //Debug.Assert(!IsRelatedTypeViaIAT, "Non IAT");
+
+                _relatedType._pBaseType;
+
+        internal EEType* CanonicalEEType
+        {
+            get
+            {
+                // cloned EETypes must always refer to types in other modules
+                if (IsRelatedTypeViaIAT)
+                {
+                    return *_relatedType._ppCanonicalTypeViaIAT;
+                }
+                else
+                {
+                    return _relatedType._pCanonicalType;
+                }
+            }
         }
 
         //internal EEType* NullableType {
@@ -893,9 +842,13 @@ namespace Internal.Runtime
             get
             {
                 if (IsRelatedTypeViaIAT)
+                {
                     return *_relatedType._ppRelatedParameterTypeViaIAT;
+                }
                 else
+                {
                     return _relatedType._pRelatedParameterType;
+                }
             }
         }
 
@@ -1031,13 +984,7 @@ namespace Internal.Runtime
         //	}
         //}
 
-        internal EETypeElementType ElementType
-        {
-            get
-            {
-                return (EETypeElementType)((_usFlags & (ushort)EETypeFlags.ElementTypeMask) >> (ushort)EETypeFlags.ElementTypeShift);
-            }
-        }
+        internal EETypeElementType ElementType => (EETypeElementType)((_usFlags & (ushort)EETypeFlags.ElementTypeMask) >> (ushort)EETypeFlags.ElementTypeShift);
 
         //public bool HasCctor {
         //	get {

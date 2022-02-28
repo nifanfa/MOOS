@@ -50,6 +50,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\CPU.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\GameRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Input.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Mappers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Memory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\NES.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\PPU.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Registers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\ARP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\Ethernet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\IPv4.cs" />

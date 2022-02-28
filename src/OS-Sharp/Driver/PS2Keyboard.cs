@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 //http://cc.etsii.ull.es/ftp/antiguo/EC/AOA/APPND/Apndxc.pdf
 
 using System;

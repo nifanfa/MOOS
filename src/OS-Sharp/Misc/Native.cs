@@ -1,8 +1,7 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using System;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.InteropServices;
 
-static unsafe class Native
+internal static unsafe class Native
 {
     [DllImport("*")]
     public static extern void Insb(ushort port, byte* data, ulong count);
@@ -62,7 +61,7 @@ static unsafe class Native
     public static extern void Load_IDT(ref IDT.IDTDescriptor idtr);
 
     [DllImport("*")]
-    public extern static unsafe void WriteCR3(ulong value);
+    public static extern unsafe void WriteCR3(ulong value);
 
     [DllImport("*")]
     public static extern void Hlt();
@@ -74,8 +73,8 @@ static unsafe class Native
     public static extern void Sti();
 
     [DllImport("*")]
-    public extern static void Invlpg(ulong physicalAddress);
+    public static extern void Invlpg(ulong physicalAddress);
 
     [DllImport("*")]
-    public extern static void Nop();
+    public static extern void Nop();
 }

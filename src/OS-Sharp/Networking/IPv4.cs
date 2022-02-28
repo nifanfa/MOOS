@@ -1,5 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System;
 using System.Runtime.InteropServices;
 
@@ -7,7 +6,7 @@ namespace Kernel.Networking
 {
     public static unsafe class IPv4
     {
-        [StructLayout(LayoutKind.Sequential,Pack = 1)]
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public unsafe struct IPv4Header
         {
             public byte VersionAndIHL;
@@ -35,12 +34,12 @@ namespace Kernel.Networking
             data += sizeof(IPv4Header);
             length -= sizeof(IPv4Header);
 
-            if(
+            if (
                 hdr->DestIP[0] == Network.IP[0] &&
                 hdr->DestIP[1] == Network.IP[1] &&
                 hdr->DestIP[2] == Network.IP[2] &&
                 hdr->DestIP[3] == Network.IP[3]
-                ) 
+                )
             {
                 if (hdr->Protocol == (byte)IPv4Protocol.ICMP)
                 {
@@ -108,10 +107,14 @@ namespace Kernel.Networking
             }
 
             if (count > 0)
+            {
                 sum += *(byte*)ptr;
+            }
 
             while ((sum >> 16) != 0)
+            {
                 sum = (sum & 0xffff) + (sum >> 16);
+            }
 
             return (ushort)~sum;
         }

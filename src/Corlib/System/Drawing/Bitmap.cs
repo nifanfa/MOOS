@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using Kernel;
 
 namespace System.Drawing
@@ -7,7 +7,7 @@ namespace System.Drawing
     {
         public Bitmap(byte[] data)
         {
-            fixed(byte* p = data)
+            fixed (byte* p = data)
             {
 
                 uint _Size;
@@ -34,15 +34,15 @@ namespace System.Drawing
                     return;
                 }
 
-                this.Width = (int)_Width;
-                this.Height = (int)_Height;
-                this.Bpp = (int)_Bpp;
-                this.RawData = new uint[_Width * _Height];
+                Width = (int)_Width;
+                Height = (int)_Height;
+                Bpp = (int)_Bpp;
+                RawData = new uint[_Width * _Height];
 
                 uint[] temp = new uint[Width];
                 uint w = 0;
                 uint h = (uint)Height - 1;
-                for (uint i = 0; i < this.Width * this.Height * (_Bpp / 8); i += (_Bpp / 8))
+                for (uint i = 0; i < Width * Height * (_Bpp / 8); i += (_Bpp / 8))
                 {
                     if (w == Width)
                     {

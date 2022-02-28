@@ -1,10 +1,10 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.InteropServices;
 
 namespace Kernel
 {
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct DOSHeader
+    internal unsafe struct DOSHeader
     {
         public ushort e_magic;              // Magic number
         public ushort e_cblp;               // Bytes on last page of file
@@ -28,7 +28,7 @@ namespace Kernel
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct FileHeader
+    internal struct FileHeader
     {
         public ushort Machine;
         public ushort NumberOfSections;
@@ -39,7 +39,7 @@ namespace Kernel
         public ushort Characteristics;
     }
 
-    enum SubSystemType : ushort
+    internal enum SubSystemType : ushort
     {
         Unknown = 0,
         Native = 1,
@@ -54,7 +54,7 @@ namespace Kernel
         Xbox = 14
     }
 
-    enum DllCharacteristicsType : ushort
+    internal enum DllCharacteristicsType : ushort
     {
         RES_0 = 0x0001,
         RES_1 = 0x0002,
@@ -72,14 +72,14 @@ namespace Kernel
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct DataDirectory
+    internal struct DataDirectory
     {
         public uint VirtualAddress;
         public uint Size;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct OptionalHeaders64
+    internal struct OptionalHeaders64
     {
         public ushort Magic;
         public byte MajorLinkerVersion;
@@ -129,7 +129,7 @@ namespace Kernel
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct NtHeaders64
+    internal struct NtHeaders64
     {
         public uint Signature;
         public FileHeader FileHeader;
@@ -137,7 +137,7 @@ namespace Kernel
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct SectionHeader
+    internal unsafe struct SectionHeader
     {
         public fixed byte Name[8];
         public uint PhysicalAddress_VirtualSize;

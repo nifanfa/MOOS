@@ -1,7 +1,7 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel.Networking;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Drawing;
 using System.Runtime.InteropServices;
+using Kernel.Networking;
 
 namespace Kernel.Misc
 {
@@ -16,15 +16,19 @@ namespace Kernel.Misc
             LCT_RGBA = 6 /*RGB with alpha: 8,16 bit*/
         }
 
-        public PNG(byte[] file,LodePNGColorType type = LodePNGColorType.LCT_RGBA ,uint bitDepth = 8)
+        public PNG(byte[] file, LodePNGColorType type = LodePNGColorType.LCT_RGBA, uint bitDepth = 8)
         {
             fixed (byte* p = file)
             {
                 lodepng_decode_memory(out uint* _out, out uint w, out uint h, p, file.Length, type, bitDepth);
 
-                if (_out == null) Panic.Error("lodepng error");
+                if (_out == null)
+                {
+                    Panic.Error("lodepng error");
+                }
+
                 RawData = new uint[w * h];
-                fixed (uint* pdata = RawData) 
+                fixed (uint* pdata = RawData)
                 {
                     for (int x = 0; x < w; x++)
                     {

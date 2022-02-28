@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using Kernel.Misc;
 
 namespace Kernel.Driver
@@ -50,57 +50,63 @@ namespace Kernel.Driver
         public const int ICR_ALL_EXCLUDING_SELF = 0x000c0000;
         public const int ICR_DESTINATION_SHIFT = 24;
 
-        static uint In(uint reg)
+        private static uint In(uint reg)
         {
             return MMIO.In32((uint*)(ACPI.MADT->LocalAPICAddress + reg));
         }
 
-        static void Out(uint reg, uint data)
+        private static void Out(uint reg, uint data)
         {
             MMIO.Out32((uint*)(ACPI.MADT->LocalAPICAddress + reg), data);
         }
 
         public static void EndOfInterrupt()
         {
-            Out((uint)LAPIC_EOI, 0);
+            Out(LAPIC_EOI, 0);
         }
 
         public static bool Initialize(uint CPUForIRQHandlingIndex = 0)
         {
             //Enable All Interrupts
-            Out((uint)LAPIC_TPR, 0);
+            Out(LAPIC_TPR, 0);
 
             // Logical Destination Mode
-            Out((uint)LAPIC_DFR, 0xffffffff);   // Flat mode
-            Out((uint)LAPIC_LDR, CPUForIRQHandlingIndex << 24);   // All cpus use logical id CPUforIRQHandlingIndex
+            Out(LAPIC_DFR, 0xffffffff);   // Flat mode
+            Out(LAPIC_LDR, CPUForIRQHandlingIndex << 24);   // All cpus use logical id CPUforIRQHandlingIndex
 
             // Configure Spurious Interrupt Vector Register
-            Out((uint)LAPIC_SVR, 0x100 | 0xff);
+            Out(LAPIC_SVR, 0x100 | 0xff);
 
             return true;
         }
 
         public static uint GetId()
         {
-            return In((uint)LAPIC_ID) >> 24;
+            return In(LAPIC_ID) >> 24;
         }
 
         public static void SendInit(uint apic_id)
         {
-            Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
-            Out((uint)LAPIC_ICRLO, (uint)(ICR_INIT | ICR_PHYSICAL
-                | ICR_ASSERT | ICR_EDGE | ICR_NO_SHORTHAND));
+            Out(LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
+            Out(LAPIC_ICRLO, ICR_INIT | ICR_PHYSICAL
+                | ICR_ASSERT | ICR_EDGE | ICR_NO_SHORTHAND);
 
-            while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
+            while ((In(LAPIC_ICRLO) & ICR_SEND_PENDING) != 0)
+            {
+                ;
+            }
         }
 
         public static void SendStartup(uint apic_id, uint vector)
         {
-            Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
-            Out((uint)LAPIC_ICRLO, vector | (uint)ICR_STARTUP
-                | (uint)ICR_PHYSICAL | (uint)ICR_ASSERT | (uint)ICR_EDGE | (uint)ICR_NO_SHORTHAND);
+            Out(LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
+            Out(LAPIC_ICRLO, vector | ICR_STARTUP
+                | ICR_PHYSICAL | ICR_ASSERT | ICR_EDGE | ICR_NO_SHORTHAND);
 
-            while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
+            while ((In(LAPIC_ICRLO) & ICR_SEND_PENDING) != 0)
+            {
+                ;
+            }
         }
     }
 }

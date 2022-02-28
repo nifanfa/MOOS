@@ -1,7 +1,6 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel.Networking;
-using System.Diagnostics;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.InteropServices;
+using Kernel.Networking;
 
 namespace Kernel
 {
@@ -26,7 +25,10 @@ namespace Kernel
             header->DestPort = Ethernet.SwapLeftRight(DestPort);
             header->Length = Ethernet.SwapLeftRight(((ushort)PacketLen));
             header->Checksum = 0;
-            for (int i = 0; i < Data.Length; i++) (Buffer + sizeof(UDPHeader))[i] = Data[i];
+            for (int i = 0; i < Data.Length; i++)
+            {
+                (Buffer + sizeof(UDPHeader))[i] = Data[i];
+            }
 
             IPv4.SendPacket(DestIP, 17, Buffer, PacketLen);
 

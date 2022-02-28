@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 
 namespace System.Collections.Generic
 {
@@ -6,7 +6,7 @@ namespace System.Collections.Generic
     /// <typeparam name="T">The type of the object held by the queue.</typeparam>
     public class Queue<T>
     {
-        class Entry
+        private class Entry
         {
             public T Value;
             public Entry Next;
@@ -17,9 +17,8 @@ namespace System.Collections.Generic
             }
         }
 
-
-        Entry head;
-        Entry tail;
+        private Entry head;
+        private Entry tail;
 
 
         public int Length { get; private set; }
@@ -36,7 +35,7 @@ namespace System.Collections.Generic
                 return;
             }
 
-            var entry = new Entry(item);
+            Entry entry = new Entry(item);
             tail.Next = entry;
             tail = entry;
             Length++;
@@ -44,8 +43,8 @@ namespace System.Collections.Generic
 
         public T Dequeue()
         {
-            var value = head.Value;
-            var next = head.Next;
+            T value = head.Value;
+            Entry next = head.Next;
             head.Dispose();
             head = next;
             Length--;

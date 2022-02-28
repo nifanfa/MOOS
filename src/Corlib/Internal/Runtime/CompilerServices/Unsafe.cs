@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System;
 using System.Runtime.CompilerServices;
 
@@ -22,7 +22,9 @@ namespace Internal.Runtime.CompilerServices
         public static extern ref T AsRef<T>(void* pointer);
 
         public static ref T AsRef<T>(IntPtr pointer)
-            => ref AsRef<T>((void*)pointer);
+        {
+            return ref AsRef<T>((void*)pointer);
+        }
 
         [Intrinsic]
         public static extern int SizeOf<T>();
@@ -31,7 +33,10 @@ namespace Internal.Runtime.CompilerServices
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref T AddByteOffset<T>(ref T source, IntPtr byteOffset)
         {
-            for (; ; );
+            for (; ; )
+            {
+                ;
+            }
         }
 
         [Intrinsic]

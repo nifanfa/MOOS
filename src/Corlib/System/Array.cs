@@ -1,63 +1,5 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-/*
-using System.Runtime.CompilerServices;
-using Internal.Runtime.CompilerHelpers;
-using Internal.Runtime.CompilerServices;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 
-namespace System
-{
-    public abstract unsafe class Array
-    {
-#pragma warning disable 649
-        // This field should be the first field in Array as the runtime/compilers depend on it
-        internal int _numComponents;
-#pragma warning restore
-
-        public int Length =>
-                // NOTE: The compiler has assumptions about the implementation of this method.
-                // Changing the implementation here (or even deleting this) will NOT have the desired impact
-                _numComponents;
-
-        public const int MaxArrayLength = 0x7FEFFFFF;
-
-        internal static unsafe Array NewMultiDimArray(EETypePtr eeType, int* pLengths, int rank)
-        {
-            ulong totalLength = 1;
-
-            for (int i = 0; i < rank; i++)
-            {
-                int length = pLengths[i];
-                if (length > MaxArrayLength)
-                {
-                    /*throw new ExceptionKernel.Misc.Panic.Error("Length of array is too large, Max: " + MaxArrayLength);
-                }
-
-                totalLength *= (ulong)length;
-            }
-
-            object v = StartupCodeHelpers.RhpNewArray(eeType.Value, (int)totalLength);
-            Array ret = Unsafe.As<object, Array>(ref v);
-
-            ref int bounds = ref ret.GetRawMultiDimArrayBounds();
-            for (int i = 0; i < rank; i++)
-            {
-                Unsafe.Add(ref bounds, i) = pLengths[i];
-            }
-
-            return ret;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ref int GetRawMultiDimArrayBounds()
-        {
-            return ref Unsafe.AddByteOffset(ref _numComponents, (nuint)sizeof(void*));
-        }
-    }
-
-    public class Array<T> : Array { }
-}*/
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
 using System.Runtime.CompilerServices;
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
@@ -150,53 +92,114 @@ namespace System
             if (larray.Length != newSize)
             {
                 T[] newArray = new T[newSize];
-                Copy(larray, 0, newArray, 0, larray.Length > newSize ? newSize : larray.Length);
+                Copy(larray, ref newArray, 0, larray.Length > newSize ? newSize : larray.Length);
                 array = newArray;
             }
         }
 
         public static Array CreateInstance<T>(uint length)
         {
+            if (length < MaxArrayLength)
+            {
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
             return new T[length];
         }
 
-        public static void Copy(Array sourceArray, Array destinationArray, long length)
+        public static void Copy(Array sourceArray, ref Array destinationArray)
         {
-            int ilength = (int)length;
-            if (length != ilength)
-            {
-                /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
-            }
-
-            Copy(sourceArray, destinationArray, ilength);
+            Copy(sourceArray, ref destinationArray, 0);
         }
 
-        public static void Copy(Array sourceArray, long sourceIndex, Array destinationArray, long destinationIndex, long length)
+        public static void Copy<T>(T[] sourceArray, ref T[] destinationArray)
         {
-            int isourceIndex = (int)sourceIndex;
-            int idestinationIndex = (int)destinationIndex;
-            int ilength = (int)length;
+            Copy(sourceArray, ref destinationArray, 0);
+        }
 
-            if (sourceIndex != isourceIndex)
+        public static void Copy(Array sourceArray, ref Array destinationArray, int startIndex)
+        {
+            Copy(sourceArray, ref destinationArray, startIndex, sourceArray.Length);
+        }
+
+        public static void Copy<T>(T[] sourceArray, ref T[] destinationArray, int startIndex)
+        {
+            Copy(sourceArray, ref destinationArray, startIndex, sourceArray.Length);
+        }
+
+        public static void Copy(Array sourceArray, ref Array destinationArray, int startIndex, int count)
+        {
+            if (sourceArray == null)
             {
                 /*throw new Exception*/
                 Kernel.Misc.Panic.Error("Argument out of range");
             }
-
-            if (destinationIndex != idestinationIndex)
+            if (destinationArray == null)
             {
                 /*throw new Exception*/
                 Kernel.Misc.Panic.Error("Argument out of range");
             }
-
-            if (length != ilength)
+            if (startIndex < 0)
             {
                 /*throw new Exception*/
                 Kernel.Misc.Panic.Error("Argument out of range");
             }
+            if (destinationArray.Length < sourceArray.Length - count)
+            {
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
+            if (count <= 0)
+            {
+                return;
+            }
 
-            Copy(sourceArray, isourceIndex, destinationArray, idestinationIndex, ilength);
+            int x = 0;
+            object[] temp = new object[count];
+            for (int i = startIndex; i < startIndex + count; i++)
+            {
+                Kernel.Console.WriteLine(i);
+                temp[x] = sourceArray[i];
+                x++;
+            }
+            destinationArray = temp;
+        }
+
+        public static void Copy<T>(T[] sourceArray, ref T[] destinationArray, int startIndex, int count)
+        {
+            if (sourceArray == null)
+            {
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
+            if (destinationArray == null)
+            {
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
+            if (startIndex < 0)
+            {
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
+            if (destinationArray.Length > sourceArray.Length - count)
+            {
+                /*throw new Exception*/
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
+            if (count <= 0)
+            {
+                return;
+            }
+
+            int x = 0;
+            T[] temp = new T[count];
+            for (int i = startIndex; i < startIndex + count; i++)
+            {
+                temp[x] = sourceArray[i];
+                x++;
+            }
+            destinationArray = temp;
         }
 
 #nullable enable
@@ -340,39 +343,8 @@ namespace System
 
         public static bool IsFixedSize => true;
 
-        // Is this Array synchronized (i.e., thread-safe)?  If you want a synchronized
-        // collection, you can use SyncRoot as an object to synchronize your
-        // collection with.  You could also call GetSynchronized()
-        // to get a synchronized wrapper around the Array.
         public static bool IsSynchronized => false;
 
-        // CopyTo copies a collection into an Array, starting at a particular
-        // index into the array.
-        //
-        // This method is to support the ICollection interface, and calls
-        // Array.Copy internally.  If you aren't using ICollection explicitly,
-        // call Array.Copy to avoid an extra indirection.
-        //
-        public void CopyTo(Array array, int index)
-        {
-            Copy(this, 0, array!, index, Length);
-        }
-
-        public void CopyTo(Array array)
-        {
-            Copy(this, 0, array!, 0, Length);
-        }
-        public void CopyTo(Array array, long index)
-        {
-            int iindex = (int)index;
-            if (index != iindex)
-            {
-                /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
-            }
-
-            CopyTo(array, iindex);
-        }
 
         private static class EmptyArray<T>
         {

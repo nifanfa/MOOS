@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.InteropServices;
 
 namespace Kernel.Networking
@@ -30,8 +30,15 @@ namespace Kernel.Networking
             EthernetHeader* hdr = (EthernetHeader*)Data;
             Data += sizeof(EthernetHeader);
             Length -= sizeof(EthernetHeader);
-            if (SwapLeftRight(hdr->EthernetType) == (ushort)EthernetType.ARP) ARP.HandlePacket(Data, Length);
-            if (SwapLeftRight(hdr->EthernetType) == (ushort)EthernetType.IPv4) IPv4.HandlePacket(Data, Length);
+            if (SwapLeftRight(hdr->EthernetType) == (ushort)EthernetType.ARP)
+            {
+                ARP.HandlePacket(Data, Length);
+            }
+
+            if (SwapLeftRight(hdr->EthernetType) == (ushort)EthernetType.IPv4)
+            {
+                IPv4.HandlePacket(Data, Length);
+            }
         }
 
         internal static void SendPacket(byte[] DestMAC, ushort Type, void* Data, int Length)

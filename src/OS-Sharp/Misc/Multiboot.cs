@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.InteropServices;
 
 namespace Kernel
@@ -31,13 +31,7 @@ namespace Kernel
         public uint VBEInterfaceOff;
         public uint VBEInterfaceLen;
 
-        public uint* Mods 
-        {
-            get 
-            {
-                return (uint*)ModAddr;
-            }
-        }
+        public uint* Mods => (uint*)ModAddr;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

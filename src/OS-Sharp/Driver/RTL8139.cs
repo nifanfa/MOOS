@@ -1,7 +1,5 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Kernel;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using Kernel.Driver;
-using System.Diagnostics;
 using static Native;
 
 namespace Kernel.Networking
@@ -34,7 +32,11 @@ namespace Kernel.Networking
 
             Out8((ushort)(IOBase + 0x52), 0x00);
             Out8((ushort)(IOBase + 0x37), 0x10);
-            while ((In8((ushort)(IOBase + 0x37)) & 0x10) != 0) ;
+            while ((In8((ushort)(IOBase + 0x37)) & 0x10) != 0)
+            {
+                ;
+            }
+
             Console.WriteLine("Soft-Reset Done");
 
             uint p = (uint)Allocator.Allocate(8192 + 16 + 1500 + 0xF);
@@ -43,7 +45,7 @@ namespace Kernel.Networking
             Console.WriteLine(((ulong)p).ToStringHex());
             RX = p;
 
-            Out32((ushort)(IOBase + 0x30), (uint)p);
+            Out32((ushort)(IOBase + 0x30), p);
 
             Out16((ushort)(IOBase + 0x3C), 0x5);
             Out32((ushort)(IOBase + 0x44), 0xF | (1 << 7));
@@ -104,7 +106,10 @@ namespace Kernel.Networking
         {
             Out32((ushort)(IOBase + TSAD[TXIndex]), (uint)Data);
             Out32((ushort)(IOBase + TSD[TXIndex++]), (uint)Length);
-            if (TXIndex > 3) TXIndex = 0;
+            if (TXIndex > 3)
+            {
+                TXIndex = 0;
+            }
         }
     }
 }

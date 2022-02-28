@@ -1,14 +1,15 @@
-﻿using Kernel;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Drawing;
+using Kernel;
 
 namespace NES
 {
     public class GameRender
     {
-        NES NES;
+        private readonly NES NES;
 
         // Setup background color to use with Alpha
-        Color colorBG;
+        private Color colorBG;
 
         public void InitializeGame()
         {

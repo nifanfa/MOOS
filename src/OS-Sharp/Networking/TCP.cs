@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 //https://github.com/pdoane/osdev/blob/master/net/tcp.c
 
 using System.Runtime.InteropServices;
@@ -9,13 +9,7 @@ namespace Kernel.Networking
     {
         public TCPStatus State;
 
-        public bool Connected
-        {
-            get
-            {
-                return State != TCPStatus.SynSent;
-            }
-        }
+        public bool Connected => State != TCPStatus.SynSent;
 
         public byte[] localAddr = new byte[4];
         public byte[] nextAddr = new byte[4];
@@ -101,10 +95,10 @@ namespace Kernel.Networking
             public ushort urgent;
         }
 
-        const ushort TCP_WINDOW_SIZE = 8192;
+        private const ushort TCP_WINDOW_SIZE = 8192;
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct ChecksumHeader
+        private struct ChecksumHeader
         {
             public fixed byte src[4];
             public uint bits1;
@@ -115,7 +109,7 @@ namespace Kernel.Networking
             public ushort len;
         }
 
-        static ulong s_baseIsn = 0;
+        private static ulong s_baseIsn = 0;
 
         public static void Init()
         {
@@ -165,7 +159,7 @@ namespace Kernel.Networking
             }
         }
 
-        static void RecvGeneral(TCPConnection conn, TCPHeader* hdr, byte* buffer, int length)
+        private static void RecvGeneral(TCPConnection conn, TCPHeader* hdr, byte* buffer, int length)
         {
             // Process segments not in the CLOSED, LISTEN, or SYN-SENT states.
 
@@ -202,7 +196,10 @@ namespace Kernel.Networking
                 if ((flags & (byte)TCPFlags.TCP_PSH) != 0)
                 {
                     for (int i = 0; i < length; i++)
+                    {
                         Console.Write((char)buffer[i]);
+                    }
+
                     Console.WriteLine();
                 }
                 RecvData(conn, buffer, length);
@@ -215,7 +212,7 @@ namespace Kernel.Networking
             }
         }
 
-        static void RecvFin(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvFin(TCPConnection conn, TCPHeader* hdr)
         {
             // TODO - signal the user "connection closing" and return any pending receives
 
@@ -258,7 +255,7 @@ namespace Kernel.Networking
             }
         }
 
-        static void RecvData(TCPConnection conn, byte* buffer, int length)
+        private static void RecvData(TCPConnection conn, byte* buffer, int length)
         {
             switch (conn.State)
             {
@@ -283,7 +280,7 @@ namespace Kernel.Networking
             }
         }
 
-        static void RecvAck(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvAck(TCPConnection conn, TCPHeader* hdr)
         {
             switch (conn.State)
             {
@@ -370,7 +367,7 @@ namespace Kernel.Networking
             }
         }
 
-        static void RecvRst(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvRst(TCPConnection conn, TCPHeader* hdr)
         {
             switch (conn.State)
             {
@@ -399,11 +396,11 @@ namespace Kernel.Networking
             }
         }
 
-        const byte TCP_CONN_RESET = 1;
-        const byte TCP_CONN_REFUSED = 2;
-        const byte TCP_CONN_CLOSING = 3;
+        private const byte TCP_CONN_RESET = 1;
+        private const byte TCP_CONN_REFUSED = 2;
+        private const byte TCP_CONN_CLOSING = 3;
 
-        static void RecvSynSent(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvSynSent(TCPConnection conn, TCPHeader* hdr)
         {
             byte flags = hdr->flags;
 
@@ -472,7 +469,7 @@ namespace Kernel.Networking
             }
         }
 
-        static TCPConnection currConn;
+        private static TCPConnection currConn;
 
         public static TCPConnection Connect(byte[] addr, ushort port, ushort localPort)
         {
@@ -499,7 +496,7 @@ namespace Kernel.Networking
             conn.localPort = localPort;
             conn.remotePort = port;
 
-            var isn = s_baseIsn + PIT.Tick * 250;
+            ulong isn = s_baseIsn + PIT.Tick * 250;
 
             conn.sndUna = (uint)isn;
             conn.sndNxt = (uint)isn;
@@ -524,7 +521,10 @@ namespace Kernel.Networking
             {
                 Native.Hlt();
             }
-            if (conn.State == TCPStatus.SynSent) Console.WriteLine("Connection timeout");
+            if (conn.State == TCPStatus.SynSent)
+            {
+                Console.WriteLine("Connection timeout");
+            }
 
             return conn;
         }
@@ -573,7 +573,10 @@ namespace Kernel.Networking
 
             // Data
             if (data != null)
+            {
                 Native.Movsb(p, data, count);
+            }
+
             pkt->end = p + count;
 
             // Pseudo Header
@@ -620,7 +623,7 @@ namespace Kernel.Networking
             return buf;
         }
 
-        static void Swap(TCPHeader* hdr)
+        private static void Swap(TCPHeader* hdr)
         {
             hdr->srcPort = Ethernet.SwapLeftRight(hdr->srcPort);
             hdr->dstPort = Ethernet.SwapLeftRight(hdr->dstPort);
@@ -636,9 +639,13 @@ namespace Kernel.Networking
         public static void Send(TCPConnection conn, byte* data, int count)
         {
             if (conn.Connected)
+            {
                 SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
+            }
             else
+            {
                 Console.WriteLine("Connection havn't established yet");
+            }
         }
 
         public static ushort TCPChecksum(byte* data, byte* end)

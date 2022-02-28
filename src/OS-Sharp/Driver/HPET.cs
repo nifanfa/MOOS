@@ -1,7 +1,6 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 //https://wiki.osdev.org/HPET#Interrupt_routing
 
-using System.Diagnostics;
 using static Kernel.Misc.MMIO;
 
 namespace Kernel.Driver
@@ -12,7 +11,7 @@ namespace Kernel.Driver
 
         public static bool Initialize()
         {
-            if (ACPI.HPET == null) 
+            if (ACPI.HPET == null)
             {
                 return false;
             }
@@ -29,7 +28,7 @@ namespace Kernel.Driver
             return In64((ulong*)(ACPI.HPET->Addresses.Address + 0xF0));
         }
 
-        public static void Wait(ulong Millionseconds) 
+        public static void Wait(ulong Millionseconds)
         {
             WaitMicrosecond(Millionseconds * 10000);
         }
@@ -37,7 +36,10 @@ namespace Kernel.Driver
         public static void WaitMicrosecond(ulong Microsecond)
         {
             ulong Until = GetTickCount() + (Microsecond * 1000000000) / Clock;
-            while ((GetTickCount()) < Until) Native.Nop();
+            while ((GetTickCount()) < Until)
+            {
+                Native.Nop();
+            }
         }
     }
 }

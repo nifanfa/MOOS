@@ -1,8 +1,6 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using Internal.Runtime;
 using Internal.Runtime.CompilerHelpers;
-using Kernel;
-using static Internal.Runtime.EEType;
 
 namespace System.Runtime
 {
@@ -13,7 +11,9 @@ namespace System.Runtime
         {
             // a null value can be cast to anything
             if (obj == null)
+            {
                 return null;
+            }
 
             object result = StartupCodeHelpers.RhTypeCast_IsInstanceOfClass(pTargetEEType, obj);
 
@@ -34,7 +34,9 @@ namespace System.Runtime
         {
             // a null value can be cast to anything
             if (obj == null)
+            {
                 return null;
+            }
 
             object result = IsInstanceOfArray(pTargetEEType, obj);
 

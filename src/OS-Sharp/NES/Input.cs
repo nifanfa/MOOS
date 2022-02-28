@@ -1,9 +1,10 @@
-﻿namespace NES
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+namespace NES
 {
     public class Input
     {
         public byte joypadOne = 0x00;
-        byte j, joypad;
+        private byte j, joypad;
 
         public byte ReadJoypad()
         {

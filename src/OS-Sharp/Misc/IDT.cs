@@ -1,19 +1,19 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+using System.Runtime;
+using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerServices;
 using Kernel;
 using Kernel.Driver;
 using Kernel.Misc;
 using Kernel.Networking;
-using System.Runtime;
-using System.Runtime.InteropServices;
 
 public static class IDT
 {
     [DllImport("*")]
-    static unsafe extern void set_idt_entries(void* idt);
+    private static extern unsafe void set_idt_entries(void* idt);
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct IDTEntry
+    private struct IDTEntry
     {
         public ushort BaseLow;
         public ushort Selector;
@@ -31,15 +31,14 @@ public static class IDT
         public ulong Base;
     }
 
-
-    static IDTEntry[] idt;
-    static IDTDescriptor idtr;
+    private static IDTEntry[] idt;
+    private static IDTDescriptor idtr;
 
 
     public static bool Initialised { get; private set; }
 
 
-    public unsafe static bool Initialize()
+    public static unsafe bool Initialize()
     {
         idt = new IDTEntry[256];
 
@@ -106,7 +105,7 @@ public static class IDT
     }
 
     [RuntimeExport("irq_handler")]
-    public static void IRQHandler(int irq) 
+    public static void IRQHandler(int irq)
     {
         irq += 0x20;
         switch (irq)

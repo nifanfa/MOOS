@@ -1,9 +1,9 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace Kernel.Misc
 {
     public static unsafe class MMIO
     {
-        public static byte In8(byte* p) 
+        public static byte In8(byte* p)
         {
             return *p;
         }
@@ -23,7 +23,7 @@ namespace Kernel.Misc
             return *p;
         }
 
-        public static void Out8(byte* p,byte value) 
+        public static void Out8(byte* p, byte value)
         {
             *p = value;
         }

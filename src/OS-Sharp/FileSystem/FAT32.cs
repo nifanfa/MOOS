@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -7,7 +7,7 @@ namespace Kernel.FileSystem
     public unsafe class FAT32 : File
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct FAT32_DBR
+        private struct FAT32_DBR
         {
             public fixed byte BS_jmpBoot[3];
             public fixed byte BS_OEMName[8];
@@ -78,25 +78,13 @@ namespace Kernel.FileSystem
             public ulong FountAtSec;
             public ulong FountAtOffset;
 
-            public uint Cluster
-            {
-                get
-                {
-                    return (uint)(Item->ClusterHigh << 16 | Item->ClusterLow);
-                }
-            }
-            public uint Size
-            {
-                get
-                {
-                    return Item->Size;
-                }
-            }
+            public uint Cluster => (uint)(Item->ClusterHigh << 16 | Item->ClusterLow);
+            public uint Size => Item->Size;
 
             public void Free()
             {
                 Allocator.Free((System.IntPtr)Item);
-                this.Dispose();
+                Dispose();
             }
         }
 
@@ -118,7 +106,7 @@ namespace Kernel.FileSystem
             public const byte SpecialFile = 0x2E;
         }
 
-        FAT32_DBR* DBR;
+        private readonly FAT32_DBR* DBR;
 
         public const ushort SectorSize = 512;
 
@@ -133,7 +121,10 @@ namespace Kernel.FileSystem
 
             byte[] Buffer = new byte[512];
             disk.Read(lba, 1, Buffer);
-            fixed (byte* P = Buffer) DBR = (FAT32_DBR*)P;
+            fixed (byte* P = Buffer)
+            {
+                DBR = (FAT32_DBR*)P;
+            }
 
             if (DBR->BS_FilSysType1[3] != '3' && DBR->BS_FilSysType1[4] != '2') { Console.WriteLine("This is not a fat32 partition!"); return; }
 
@@ -144,7 +135,7 @@ namespace Kernel.FileSystem
             ReadList(RootDirectorySector, "/");
         }
 
-        private uint RootDirectorySector;
+        private readonly uint RootDirectorySector;
 
         private uint GetSectorOffset(uint Cluster)
         {
@@ -153,7 +144,10 @@ namespace Kernel.FileSystem
 
         public override byte[] ReadAllBytes(string FileName)
         {
-            if (FileName[0] != '/') FileName = "/" + FileName;
+            if (FileName[0] != '/')
+            {
+                FileName = "/" + FileName;
+            }
 
             for (int i = 0; i < Items.Count; i++)
             {
@@ -232,14 +226,17 @@ namespace Kernel.FileSystem
                         Allocator.MemoryCopy((System.IntPtr)item, (System.IntPtr)(P + i), 32);
                         EntryLong* itemlong = (EntryLong*)item;
 
-                        if(itemlong->Signature == 0x0F) 
+                        if (itemlong->Signature == 0x0F)
                         {
-                            if (LongNameCache == null) LongNameCache = string.Empty;
+                            if (LongNameCache == null)
+                            {
+                                LongNameCache = string.Empty;
+                            }
 
                             int p = 0;
-                            for (p = 0; p < 5; p++) 
+                            for (p = 0; p < 5; p++)
                             {
-                                if(itemlong->Name1[p] == 0 || itemlong->Name1[p] == 0xFFFF) 
+                                if (itemlong->Name1[p] == 0 || itemlong->Name1[p] == 0xFFFF)
                                 {
                                     break;
                                 }
@@ -284,7 +281,7 @@ namespace Kernel.FileSystem
                         };
                         if (item->Attribute == Attributes.SubDirectory)
                         {
-                            if(LongNameCache != null)
+                            if (LongNameCache != null)
                             {
                                 aDirectoryItem.Name = LongNameCache;
                             }
@@ -306,7 +303,11 @@ namespace Kernel.FileSystem
                         }
                         Items.Add(aDirectoryItem);
 
-                        if (LongNameCache != null) LongNameCache = string.Empty;
+                        if (LongNameCache != null)
+                        {
+                            LongNameCache = string.Empty;
+                        }
+
                         LongNameCache = null;
 
                         if (item->Attribute == Attributes.SubDirectory)
@@ -315,7 +316,10 @@ namespace Kernel.FileSystem
                         }
                     }
                     Buffer.Dispose();
-                    if (LastIsEmpty) return;
+                    if (LastIsEmpty)
+                    {
+                        return;
+                    }
                 }
             } while (Index++ != -1);
         }

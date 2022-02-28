@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace Kernel
 {
     public static class PIC
@@ -30,7 +30,7 @@ namespace Kernel
             Native.Out8(0xA1, 0x02);
             Native.Out8(0x21, 0x01);
             Native.Out8(0xA1, 0x01);
-            
+
             Native.Out8(0x21, 0xFF);
             Native.Out8(0xA1, 0xFF);
         }
@@ -38,7 +38,9 @@ namespace Kernel
         public static void EndOfInterrupt(int irq)
         {
             if (irq >= 40)
+            {
                 Native.Out8(0xA0, 0x20);
+            }
 
             Native.Out8(0x20, 0x20);
         }

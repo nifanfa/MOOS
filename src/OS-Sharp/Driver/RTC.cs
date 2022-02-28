@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace Kernel
 {
     public static class RTC
@@ -88,6 +88,6 @@ namespace Kernel
             }
         }
 
-        public static bool BCD { get { return (Get(0x0B) & 0x04) == 0x00; } }
+        public static bool BCD => (Get(0x0B) & 0x04) == 0x00;
     }
 }

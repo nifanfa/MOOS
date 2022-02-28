@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System;
 using System.Runtime.InteropServices;
 
@@ -6,7 +6,7 @@ namespace Internal.Runtime
 {
 
     [StructLayout(LayoutKind.Sequential)]
-    struct ModuleInfoRow
+    internal struct ModuleInfoRow
     {
         public ReadyToRunSectionType SectionId;
         public int Flags;

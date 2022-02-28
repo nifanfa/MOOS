@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -55,7 +55,7 @@ namespace Kernel.Driver
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct APIC_LOCAL_APIC
+        private struct APIC_LOCAL_APIC
         {
             public APIC_HEADER Header;
             public byte AcpiProcessorId;
@@ -74,7 +74,7 @@ namespace Kernel.Driver
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct APIC_INTERRUPT_OVERRIDE
+        private struct APIC_INTERRUPT_OVERRIDE
         {
             public APIC_HEADER Header;
             public byte Bus;
@@ -83,8 +83,8 @@ namespace Kernel.Driver
             public ushort Flags;
         }
 
-        [StructLayout(LayoutKind.Sequential,Pack = 1)]
-        public struct ACPI_HPET 
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ACPI_HPET
         {
             public ACPI_HEADER Header;
             public byte HardwareRevisionID;
@@ -97,7 +97,7 @@ namespace Kernel.Driver
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct ACPI_HPET_ADDRESS_STRUCTURE 
+        public struct ACPI_HPET_ADDRESS_STRUCTURE
         {
             public byte AddressSpaceID;
             public byte RegisterBitWidth;
@@ -231,7 +231,10 @@ namespace Kernel.Driver
                     while (0 < dsdtLength--)
                     {
                         if (*(uint*)S5Addr == 0x5f35535f) //_S5_
+                        {
                             break;
+                        }
+
                         S5Addr++;
                     }
 
@@ -242,11 +245,17 @@ namespace Kernel.Driver
                             S5Addr += 5;
                             S5Addr += ((*S5Addr & 0xC0) >> 6) + 2;
                             if (*S5Addr == 0x0A)
+                            {
                                 S5Addr++;
+                            }
+
                             SLP_TYPa = (short)(*(S5Addr) << 10);
                             S5Addr++;
                             if (*S5Addr == 0x0A)
+                            {
                                 S5Addr++;
+                            }
+
                             SLP_TYPb = (short)(*(S5Addr) << 10);
                             SLP_EN = 1 << 13;
 
@@ -287,7 +296,7 @@ namespace Kernel.Driver
                     p += length;
                 }
             }
-            else if (*(uint*)hdr->Signature == 0x54455048) 
+            else if (*(uint*)hdr->Signature == 0x54455048)
             {
                 HPET = (ACPI_HPET*)hdr;
             }

@@ -1,7 +1,6 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 //https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace Kernel.Driver
@@ -9,7 +8,7 @@ namespace Kernel.Driver
     public static unsafe class SMBIOS
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct SMBIOSEntryPoint
+        private struct SMBIOSEntryPoint
         {
             public fixed byte EntryPointString[4];
             public byte Checksum;
@@ -28,7 +27,7 @@ namespace Kernel.Driver
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct SMBIOSHeader
+        private struct SMBIOSHeader
         {
             public HeaderTypes Type;
             public byte Length;
@@ -86,7 +85,7 @@ namespace Kernel.Driver
 
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct PhysicalMemoryArray 
+        public struct PhysicalMemoryArray
         {
             public byte Location;
             public byte Use;
@@ -103,7 +102,7 @@ namespace Kernel.Driver
             while (*(uint*)p != 0x5F4D535F)
             {
                 p++;
-                if((ulong)p > 0xFFFFF) 
+                if ((ulong)p > 0xFFFFF)
                 {
                     return false;
                 }
@@ -124,7 +123,11 @@ namespace Kernel.Driver
                         break;
                 }
 
-                while (*(ushort*)p != 0) p++;
+                while (*(ushort*)p != 0)
+                {
+                    p++;
+                }
+
                 p += 0x02;
             }
             return true;

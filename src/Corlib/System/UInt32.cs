@@ -1,9 +1,9 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace System
 {
     public struct UInt32
     {
-        public unsafe override string ToString()
+        public override unsafe string ToString()
         {
             return ((ulong)this).ToString();
         }

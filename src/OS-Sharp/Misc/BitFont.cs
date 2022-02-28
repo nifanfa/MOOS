@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -40,15 +40,20 @@ namespace Kernel.Misc
         private static int DrawBitFontChar(byte[] Raw, int Size, int Size8, uint Color, int Index, int X, int Y, bool Calculate = false, bool AntiAliasing = true)
         {
             if (Index < 0)
+            {
                 return Size / 2;
+            }
 
             int MaxX = 0;
             int SizePerFont = Size * Size8 * Index;
             AtEdge = false;
 
             for (int h = 0; h < Size; h++)
+            {
                 for (int aw = 0; aw < Size8; aw++)
+                {
                     for (int ww = 0; ww < 8; ww++)
+                    {
                         if ((Raw[SizePerFont + (h * Size8) + aw] & (0x80 >> ww)) != 0)
                         {
                             int max = (aw * 8) + ww;
@@ -76,12 +81,18 @@ namespace Kernel.Misc
                             }
 
                             if (max > MaxX)
+                            {
                                 MaxX = max;
+                            }
                         }
                         else
                         {
                             AtEdge = true;
                         }
+                    }
+                }
+            }
+
             return MaxX;
         }
 

@@ -1,10 +1,10 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace System
 {
     public partial class Exception
     {
-        private string _message;
-        private Exception _innerException;
+        private readonly string _message;
+        private readonly Exception _innerException;
 
 #nullable enable
         public Exception(string? message)
@@ -43,6 +43,9 @@ namespace System
         public Exception? InnerException => _innerException;
 #nullable disable
 
-        public override string ToString() => _message;
+        public override string ToString()
+        {
+            return _message;
+        }
     }
 }

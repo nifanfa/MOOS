@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using Internal.Runtime.CompilerServices;
 
 namespace System.Collections.Generic
@@ -12,6 +12,16 @@ namespace System.Collections.Generic
         }
 
         public int Count => values.Count;
+
+        public TKey[] ToKeyArray()
+        {
+            return keys.ToArray();
+        }
+
+        public TValue[] ToValuesArray()
+        {
+            return values.ToArray();
+        }
 
         public void Remove(TKey key)
         {

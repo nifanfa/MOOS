@@ -1,13 +1,14 @@
-﻿using System;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+using System;
 
 namespace NES
 {
     public class CPU
     {
-        MemoryMap memory;
-        Registers registers;
-        Input input;
-        PPU ppu;
+        private readonly MemoryMap memory;
+        private readonly Registers registers;
+        private readonly Input input;
+        private readonly PPU ppu;
 
         #region Local Variables
         public int intTotalCpuCycles = 0;
@@ -19,11 +20,11 @@ namespace NES
         public bool badOpCode = false;
 
         // Joypad Variables
-        byte joypad;
-        int j = 0;
+        private readonly byte joypad;
+        private readonly int j = 0;
         #endregion
 
-        #region /* ----- OpCodes ----- */
+        #region OpCodes
         public int execOpCode()
         {
             // N Z C I D V (sigN Zero Carry InterDis Decim oVerflow)
@@ -54,10 +55,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + byteOne + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, byteOne);
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = (int)intRegA >= 256;
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, byteOne);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -84,10 +85,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + addrAbsZP(byteOne) + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, addrAbsZP(byteOne));
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = ((int)intRegA);
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, addrAbsZP(byteOne));
 
                         //if (registers.statusOverflow)
                         //{
@@ -114,10 +115,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + addrIdxZP(byteOne, registers.regX) + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, addrIdxZP(byteOne, registers.regX));
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = (int)intRegA >= 256;
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, addrIdxZP(byteOne, registers.regX));
 
                         //if (registers.statusOverflow)
                         //{
@@ -144,10 +145,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + addrAbs(byteOne, byteTwo) + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, addrAbs(byteOne, byteTwo));
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = (int)intRegA >= 256;
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, addrAbs(byteOne, byteTwo));
 
                         //if (registers.statusOverflow)
                         //{
@@ -174,10 +175,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + addrIdx(byteOne, byteTwo, registers.regX) + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regX));
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = (int)intRegA >= 256;
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regX));
 
                         //if (registers.statusOverflow)
                         //{
@@ -205,10 +206,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + addrIdx(byteOne, byteTwo, registers.regY) + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regY));
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = (int)intRegA >= 256;
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regY));
 
                         //if (registers.statusOverflow)
                         //{
@@ -236,10 +237,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + addrIndX(byteOne, registers.regX) + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, addrIndX(byteOne, registers.regX));
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = (int)intRegA >= 256;
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, addrIndX(byteOne, registers.regX));
 
                         //if (registers.statusOverflow)
                         //{
@@ -266,10 +267,10 @@ namespace NES
                         intRegA = (uint)(registers.regA + addrIndY(byteOne, registers.regY) + Convert.ToUInt16(registers.statusCarry));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((int)(intRegA & 0xFF));
-                        registers.statusCarry = checkStatusCarry((int)intRegA);
-                        registers.statusOverflow = checkStatusOverflowADC(registers.regA, intRegA, addrIndY(byteOne, registers.regY));
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (int)(intRegA & 0xFF) == 0;
+                        registers.statusCarry = (int)intRegA >= 256;
+                        registers.statusOverflow = CheckStatusOverflowADC(registers.regA, intRegA, addrIndY(byteOne, registers.regY));
 
                         //if (registers.statusOverflow)
                         //{
@@ -302,9 +303,8 @@ namespace NES
                         intRegA = registers.regA & byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
-
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (intRegA & 0xFF) == 0;
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
                         // Update CPU Cycles
@@ -323,8 +323,8 @@ namespace NES
                         intRegA = registers.regA & addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -344,8 +344,8 @@ namespace NES
                         intRegA = registers.regA & addrIdxZP(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -365,8 +365,8 @@ namespace NES
                         intRegA = registers.regA & addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -386,8 +386,8 @@ namespace NES
                         intRegA = registers.regA & addrIdx(byteOne, byteTwo, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -408,8 +408,8 @@ namespace NES
                         intRegA = registers.regA & addrIdx(byteOne, byteTwo, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -430,8 +430,8 @@ namespace NES
                         intRegA = registers.regA & addrIndX(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -451,8 +451,8 @@ namespace NES
                         intRegA = registers.regA & addrIndY(byteOne, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -477,9 +477,9 @@ namespace NES
                         intRegA = registers.regA << 1;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
-                        registers.statusCarry = checkStatusCarry(intRegA);
+                        registers.statusNegative = ((intRegA & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (intRegA & 0xFF) == 0;
+                        registers.statusCarry = intRegA >= 256;
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -499,9 +499,9 @@ namespace NES
                         intMem = addrAbsZP(byteOne) << 1;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
-                        registers.statusCarry = checkStatusCarry(intMem);
+                        registers.statusNegative = ((intMem & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (intMem & 0xFF) == 0;
+                        registers.statusCarry = intMem >= 256;
 
                         memory.WritePRG(byteOne, (Convert.ToByte(intMem & 0xFF)));
 
@@ -521,9 +521,9 @@ namespace NES
                         intMem = addrIdxZP(byteOne, registers.regX) * 2;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
-                        registers.statusCarry = checkStatusCarry(intMem);
+                        registers.statusNegative = ((intMem & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (intMem & 0xFF) == 0;
+                        registers.statusCarry = intMem >= 256;
 
                         memory.WritePRG((byte)(byteOne + registers.regX), (Convert.ToByte(intMem & 0xFF)));
 
@@ -543,9 +543,9 @@ namespace NES
                         intMem = addrAbs(byteOne, byteTwo) * 2;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
-                        registers.statusCarry = checkStatusCarry(intMem);
+                        registers.statusNegative = ((intMem & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (intMem & 0xFF) == 0;
+                        registers.statusCarry = intMem >= 256;
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16), (Convert.ToByte(intMem & 0xFF)));
 
@@ -565,9 +565,9 @@ namespace NES
                         intMem = addrIdx(byteOne, byteTwo, registers.regX) << 1;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
-                        registers.statusCarry = checkStatusCarry(intMem);
+                        registers.statusNegative = ((intMem & 0xFF) & 0x80) == 0x80;
+                        registers.statusZero = (intMem & 0xFF) == 0;
+                        registers.statusCarry = intMem >= 256;
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16) + registers.regX, (Convert.ToByte(intMem & 0xFF)));
 
@@ -1106,7 +1106,7 @@ namespace NES
                         intRegA = registers.regA - byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, byteOne);
 
                         // Update CPU Cycles
@@ -1125,7 +1125,7 @@ namespace NES
                         intRegA = registers.regA - addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, addrAbsZP(byteOne));
 
                         // Update CPU Cycles
@@ -1144,7 +1144,7 @@ namespace NES
                         intRegA = registers.regA - addrIdxZP(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, addrIdxZP(byteOne, registers.regX));
 
                         // Update CPU Cycles
@@ -1163,7 +1163,7 @@ namespace NES
                         intRegA = registers.regA - addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, addrAbs(byteOne, byteTwo));
 
                         // Update CPU Cycles
@@ -1182,7 +1182,7 @@ namespace NES
                         intRegA = registers.regA - addrIdx(byteOne, byteTwo, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, addrIdx(byteOne, byteTwo, registers.regX));
 
                         // Update CPU Cycles
@@ -1202,7 +1202,7 @@ namespace NES
                         intRegA = registers.regA - addrIdx(byteOne, byteTwo, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, addrIdx(byteOne, byteTwo, registers.regY));
 
                         // Update CPU Cycles
@@ -1222,7 +1222,7 @@ namespace NES
                         intRegA = registers.regA - addrIndX(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, addrIndX(byteOne, registers.regX));
 
                         // Update CPU Cycles
@@ -1241,7 +1241,7 @@ namespace NES
                         intRegA = registers.regA - addrIndY(byteOne, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
                         setCompareFlags(registers.regA, addrIndY(byteOne, registers.regY));
 
                         // Update CPU Cycles
@@ -1266,7 +1266,7 @@ namespace NES
                         intRegX = registers.regX - byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
                         setCompareFlags(registers.regX, byteOne);
 
                         // Update CPU Cycles
@@ -1285,7 +1285,7 @@ namespace NES
                         intRegX = registers.regX - addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
                         setCompareFlags(registers.regX, addrAbsZP(byteOne));
 
                         // Update CPU Cycles
@@ -1304,7 +1304,7 @@ namespace NES
                         intRegX = registers.regX - addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
                         setCompareFlags(registers.regX, addrAbs(byteOne, byteTwo));
 
                         // Update CPU Cycles
@@ -1328,7 +1328,7 @@ namespace NES
                         intRegY = registers.regY - byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
                         setCompareFlags(registers.regY, byteOne);
 
                         // Update CPU Cycles
@@ -1347,7 +1347,7 @@ namespace NES
                         intRegY = registers.regY - addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
                         setCompareFlags(registers.regY, addrAbsZP(byteOne));
 
                         // Update CPU Cycles
@@ -1366,7 +1366,7 @@ namespace NES
                         intRegY = registers.regY - addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
                         setCompareFlags(registers.regY, addrAbs(byteOne, byteTwo));
 
                         // Update CPU Cycles
@@ -1390,8 +1390,8 @@ namespace NES
                         byteMem = (byte)(addrAbsZP(byteOne) - 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write decremented value back to memory
                         memory.WritePRG(byteOne, (byte)(byteMem & 0xFF));
@@ -1412,8 +1412,8 @@ namespace NES
                         byteMem = (byte)(addrIdxZP(byteOne, registers.regX) - 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write decremented value back to memory
                         memory.WritePRG((byte)(byteOne + registers.regX), (byte)(byteMem & 0xFF));
@@ -1434,8 +1434,8 @@ namespace NES
                         byteMem = (byte)(addrAbs(byteOne, byteTwo) - 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write decremented value back to memory
                         memory.WritePRG((byteOne + byteTwo * 16 * 16), (byte)(byteMem & 0xFF));
@@ -1456,8 +1456,8 @@ namespace NES
                         byteMem = (byte)(addrIdx(byteOne, byteTwo, registers.regX) - 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write decremented value back to memory
                         memory.WritePRG((byteOne + byteTwo * 16 * 16) + registers.regX, (byte)(byteMem & 0xFF));
@@ -1484,8 +1484,8 @@ namespace NES
                         registers.regX = (byte)(registers.regX - 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(registers.regX & 0xFF);
-                        registers.statusZero = checkStatusZero(registers.regX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(registers.regX & 0xFF);
+                        registers.statusZero = CheckStatusZero(registers.regX & 0xFF);
 
                         // Update CPU Cycles
                         intCpuCycles = 2;
@@ -1509,8 +1509,8 @@ namespace NES
                         registers.regY = (byte)(registers.regY - 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(registers.regY & 0xFF);
-                        registers.statusZero = checkStatusZero(registers.regY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(registers.regY & 0xFF);
+                        registers.statusZero = CheckStatusZero(registers.regY & 0xFF);
 
                         // Update CPU Cycles
                         intCpuCycles = 2;
@@ -1533,8 +1533,8 @@ namespace NES
                         intRegA = registers.regA ^ byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1554,8 +1554,8 @@ namespace NES
                         intRegA = registers.regA ^ addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1575,8 +1575,8 @@ namespace NES
                         intRegA = registers.regA ^ addrIdxZP(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1596,8 +1596,8 @@ namespace NES
                         intRegA = registers.regA ^ addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1617,8 +1617,8 @@ namespace NES
                         intRegA = registers.regA ^ addrIdx(byteOne, byteTwo, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1639,8 +1639,8 @@ namespace NES
                         intRegA = registers.regA ^ addrIdx(byteOne, byteTwo, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1661,8 +1661,8 @@ namespace NES
                         intRegA = registers.regA ^ addrIndX(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1682,8 +1682,8 @@ namespace NES
                         intRegA = registers.regA ^ addrIndY(byteOne, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1709,8 +1709,8 @@ namespace NES
                         byteMem = (byte)(addrAbsZP(byteOne) + 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write incremented value back to memory
                         memory.WritePRG(byteOne, (byte)(byteMem & 0xFF));
@@ -1731,8 +1731,8 @@ namespace NES
                         byteMem = (byte)(addrIdxZP(byteOne, registers.regX) + 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write incremented value back to memory
                         memory.WritePRG((byte)(byteOne + registers.regX), (byte)(byteMem & 0xFF));
@@ -1753,8 +1753,8 @@ namespace NES
                         byteMem = (byte)(addrAbs(byteOne, byteTwo) + 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write incremented value back to memory
                         memory.WritePRG((byteOne + byteTwo * 16 * 16), (byte)(byteMem & 0xFF));
@@ -1775,8 +1775,8 @@ namespace NES
                         byteMem = (byte)(addrIdx(byteOne, byteTwo, registers.regX) + 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(byteMem & 0xFF);
-                        registers.statusZero = checkStatusZero(byteMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(byteMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(byteMem & 0xFF);
 
                         // Write decremented value back to memory
                         memory.WritePRG((byteOne + byteTwo * 16 * 16) + registers.regX, (byte)(byteMem & 0xFF));
@@ -1803,8 +1803,8 @@ namespace NES
                         registers.regX = (byte)(registers.regX + 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(registers.regX & 0xFF);
-                        registers.statusZero = checkStatusZero(registers.regX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(registers.regX & 0xFF);
+                        registers.statusZero = CheckStatusZero(registers.regX & 0xFF);
 
                         // Update CPU Cycles
                         intCpuCycles = 2;
@@ -1828,8 +1828,8 @@ namespace NES
                         registers.regY = (byte)(registers.regY + 1);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(registers.regY & 0xFF);
-                        registers.statusZero = checkStatusZero(registers.regY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(registers.regY & 0xFF);
+                        registers.statusZero = CheckStatusZero(registers.regY & 0xFF);
 
                         // Update CPU Cycles
                         intCpuCycles = 2;
@@ -1921,8 +1921,8 @@ namespace NES
                         intRegA = byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1942,8 +1942,8 @@ namespace NES
                         intRegA = addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1963,8 +1963,8 @@ namespace NES
                         intRegA = addrIdxZP(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -1984,8 +1984,8 @@ namespace NES
                         intRegA = addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2005,8 +2005,8 @@ namespace NES
                         intRegA = addrIdx(byteOne, byteTwo, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2032,8 +2032,8 @@ namespace NES
                         intRegA = addrIdx(byteOne, byteTwo, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2054,8 +2054,8 @@ namespace NES
                         intRegA = addrIndX(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2075,8 +2075,8 @@ namespace NES
                         intRegA = addrIndY(byteOne, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2102,8 +2102,8 @@ namespace NES
                         intRegX = byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegX & 0xFF);
 
                         registers.regX = Convert.ToByte(intRegX & 0xFF);
 
@@ -2123,8 +2123,8 @@ namespace NES
                         intRegX = addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegX & 0xFF);
 
                         registers.regX = Convert.ToByte(intRegX & 0xFF);
 
@@ -2144,8 +2144,8 @@ namespace NES
                         intRegX = addrIdxZP(byteOne, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegX & 0xFF);
 
                         registers.regX = Convert.ToByte(intRegX & 0xFF);
 
@@ -2165,8 +2165,8 @@ namespace NES
                         intRegX = addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegX & 0xFF);
 
                         registers.regX = Convert.ToByte(intRegX & 0xFF);
 
@@ -2186,8 +2186,8 @@ namespace NES
                         intRegX = addrIdx(byteOne, byteTwo, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegX & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegX & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegX & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegX & 0xFF);
 
                         registers.regX = Convert.ToByte(intRegX & 0xFF);
 
@@ -2213,8 +2213,8 @@ namespace NES
                         intRegY = byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegY & 0xFF);
 
                         registers.regY = Convert.ToByte(intRegY & 0xFF);
 
@@ -2234,8 +2234,8 @@ namespace NES
                         intRegY = addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegY & 0xFF);
 
                         registers.regY = Convert.ToByte(intRegY & 0xFF);
 
@@ -2255,8 +2255,8 @@ namespace NES
                         intRegY = addrIdxZP(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegY & 0xFF);
 
                         registers.regY = Convert.ToByte(intRegY & 0xFF);
 
@@ -2276,8 +2276,8 @@ namespace NES
                         intRegY = addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegY & 0xFF);
 
                         registers.regY = Convert.ToByte(intRegY & 0xFF);
 
@@ -2297,8 +2297,8 @@ namespace NES
                         intRegY = addrIdx(byteOne, byteTwo, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegY & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegY & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegY & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegY & 0xFF);
 
                         registers.regY = Convert.ToByte(intRegY & 0xFF);
 
@@ -2332,7 +2332,7 @@ namespace NES
 
                         // Set status bits
                         registers.statusNegative = false;
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2363,7 +2363,7 @@ namespace NES
 
                         // Set status bits
                         registers.statusNegative = false;
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
 
                         memory.WritePRG(Convert.ToInt16(byteOne), (Convert.ToByte(intMem & 0xFF)));
 
@@ -2394,7 +2394,7 @@ namespace NES
 
                         // Set status bits
                         registers.statusNegative = false;
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
 
                         memory.WritePRG((byte)(byteOne + registers.regX), (Convert.ToByte(intMem & 0xFF)));
 
@@ -2425,7 +2425,7 @@ namespace NES
 
                         // Set status bits
                         registers.statusNegative = false;
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16), (Convert.ToByte(intMem & 0xFF)));
 
@@ -2456,7 +2456,7 @@ namespace NES
 
                         // Set status bits
                         registers.statusNegative = false;
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16) + registers.regX, (Convert.ToByte(intMem & 0xFF)));
 
@@ -2542,8 +2542,8 @@ namespace NES
                         intRegA = registers.regA | byteOne;
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2563,8 +2563,8 @@ namespace NES
                         intRegA = registers.regA | addrAbsZP(byteOne);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2584,8 +2584,8 @@ namespace NES
                         intRegA = registers.regA | addrIdxZP(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2605,8 +2605,8 @@ namespace NES
                         intRegA = registers.regA | addrAbs(byteOne, byteTwo);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2626,8 +2626,8 @@ namespace NES
                         intRegA = registers.regA | addrIdx(byteOne, byteTwo, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2648,8 +2648,8 @@ namespace NES
                         intRegA = registers.regA | addrIdx(byteOne, byteTwo, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2670,8 +2670,8 @@ namespace NES
                         intRegA = registers.regA | addrIndX(byteOne, registers.regX);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2691,8 +2691,8 @@ namespace NES
                         intRegA = registers.regA | addrIndY(byteOne, registers.regY);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
 
@@ -2770,8 +2770,8 @@ namespace NES
                         registers.setStatusRegisterWithRegStatusByte();
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(registers.regA);
-                        registers.statusZero = checkStatusZero(registers.regA);
+                        registers.statusNegative = CheckStatusNegative(registers.regA);
+                        registers.statusZero = CheckStatusZero(registers.regA);
 
                         // Update CPU Cycles
                         intCpuCycles = 4;
@@ -2847,8 +2847,8 @@ namespace NES
                         intRegA = intRegA * 2 + Convert.ToInt16(registers.statusCarry);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
@@ -2886,8 +2886,8 @@ namespace NES
                         intMem = addrAbsZP(byteOne) * 2 + Convert.ToInt16(registers.statusCarry);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG(Convert.ToInt16(byteOne), (Convert.ToByte(intMem & 0xFF)));
@@ -2925,8 +2925,8 @@ namespace NES
                         intMem = addrIdxZP(byteOne, registers.regX) * 2 + Convert.ToInt16(registers.statusCarry);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG((byte)(byteOne + registers.regX), (Convert.ToByte(intMem & 0xFF)));
@@ -2964,8 +2964,8 @@ namespace NES
                         intMem = addrAbs(byteOne, byteTwo) * 2 + Convert.ToInt16(registers.statusCarry);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16), (Convert.ToByte(intMem & 0xFF)));
@@ -3003,8 +3003,8 @@ namespace NES
                         intMem = addrIdx(byteOne, byteTwo, registers.regX) * 2 + Convert.ToInt16(registers.statusCarry);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16) + registers.regX, (Convert.ToByte(intMem & 0xFF)));
@@ -3048,8 +3048,8 @@ namespace NES
                         intRegA = intRegA / 2 + (Convert.ToInt16(registers.statusCarry) * 128);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero(intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero(intRegA & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         registers.regA = Convert.ToByte(intRegA & 0xFF);
@@ -3088,8 +3088,8 @@ namespace NES
                         intMem = addrAbsZP(byteOne) / 2 + (Convert.ToInt16(registers.statusCarry) * 128);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG(Convert.ToInt16(byteOne), (Convert.ToByte(intMem & 0xFF)));
@@ -3128,8 +3128,8 @@ namespace NES
                         intMem = addrIdxZP(byteOne, registers.regX) / 2 + (Convert.ToInt16(registers.statusCarry) * 128);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG((byte)(byteOne + registers.regX), (Convert.ToByte(intMem & 0xFF)));
@@ -3168,8 +3168,8 @@ namespace NES
                         intMem = addrAbs(byteOne, byteTwo) / 2 + (Convert.ToInt16(registers.statusCarry) * 128);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16), (Convert.ToByte(intMem & 0xFF)));
@@ -3208,8 +3208,8 @@ namespace NES
                         intMem = addrIdx(byteOne, byteTwo, registers.regX) / 2 + (Convert.ToInt16(registers.statusCarry) * 128);
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative(intMem & 0xFF);
-                        registers.statusZero = checkStatusZero(intMem & 0xFF);
+                        registers.statusNegative = CheckStatusNegative(intMem & 0xFF);
+                        registers.statusZero = CheckStatusZero(intMem & 0xFF);
                         registers.statusCarry = bolRegACarry;
 
                         memory.WritePRG((byteOne + byteTwo * 16 * 16) + registers.regX, (Convert.ToByte(intMem & 0xFF)));
@@ -3297,10 +3297,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - byteOne - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, intRegA, byteOne);
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, intRegA, byteOne);
 
                         //if (intRegA >= 0)
                         //{
@@ -3335,10 +3335,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - addrAbsZP(byteOne) - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, intRegA, addrAbsZP(byteOne));
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, intRegA, addrAbsZP(byteOne));
 
                         //if (intRegA > 0xFF)
                         //{
@@ -3365,10 +3365,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - addrIdxZP(byteOne, registers.regX) - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, intRegA, addrIdxZP(byteOne, registers.regX));
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, intRegA, addrIdxZP(byteOne, registers.regX));
 
                         //if (intRegA > 0xFF)
                         //{
@@ -3395,10 +3395,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - addrAbs(byteOne, byteTwo) - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, intRegA, addrAbs(byteOne, byteTwo));
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, intRegA, addrAbs(byteOne, byteTwo));
 
                         //if (intRegA > 0xFF)
                         //{
@@ -3425,10 +3425,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - addrIdx(byteOne, byteTwo, registers.regX) - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regX));
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regX));
 
                         //if (intRegA > 0xFF)
                         //{
@@ -3456,10 +3456,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - addrIdx(byteOne, byteTwo, registers.regY) - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regY));
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, intRegA, addrIdx(byteOne, byteTwo, registers.regY));
 
                         //if (intRegA > 0xFF)
                         //{
@@ -3487,10 +3487,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - addrIndX(byteOne, registers.regX) - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, (byte)intRegA, addrIndX(byteOne, registers.regX));
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, (byte)intRegA, addrIndX(byteOne, registers.regX));
 
                         //if (intRegA > 0xFF)
                         //{
@@ -3517,10 +3517,10 @@ namespace NES
                         intRegA = (uint)(registers.regA - addrIndY(byteOne, registers.regY) - (1 - Convert.ToInt16(registers.statusCarry)));
 
                         // Set status bits
-                        registers.statusNegative = checkStatusNegative((byte)intRegA & 0xFF);
-                        registers.statusZero = checkStatusZero((byte)intRegA & 0xFF);
+                        registers.statusNegative = CheckStatusNegative((byte)intRegA & 0xFF);
+                        registers.statusZero = CheckStatusZero((byte)intRegA & 0xFF);
                         //registers.statusCarry = checkStatusCarry(intRegA);
-                        registers.statusOverflow = checkStatusOverflowSBC(registers.regA, intRegA, addrIndY(byteOne, registers.regY));
+                        registers.statusOverflow = CheckStatusOverflowSBC(registers.regA, intRegA, addrIndY(byteOne, registers.regY));
 
                         //if (intRegA > 0xFF)
                         //{
@@ -3809,8 +3809,8 @@ namespace NES
                         uint intRegA = registers.regA;
 
                         // Check Status Registers
-                        registers.statusNegative = checkStatusNegative(intRegA);
-                        registers.statusZero = checkStatusZero(registers.regA);
+                        registers.statusNegative = CheckStatusNegative(intRegA);
+                        registers.statusZero = CheckStatusZero(registers.regA);
 
                         // Transfer Axxumulator to Register X
                         registers.regX = registers.regA;
@@ -3833,8 +3833,8 @@ namespace NES
                         uint intRegA = registers.regA;
 
                         // Check Status Registers
-                        registers.statusNegative = checkStatusNegative(intRegA);
-                        registers.statusZero = checkStatusZero(registers.regA);
+                        registers.statusNegative = CheckStatusNegative(intRegA);
+                        registers.statusZero = CheckStatusZero(registers.regA);
 
                         // Transfer Axxumulator to Register X
                         registers.regY = registers.regA;
@@ -3857,8 +3857,8 @@ namespace NES
                         uint intRegSP = registers.regSP;
 
                         // Check Status Registers
-                        registers.statusNegative = checkStatusNegative(intRegSP);
-                        registers.statusZero = checkStatusZero(registers.regSP);
+                        registers.statusNegative = CheckStatusNegative(intRegSP);
+                        registers.statusZero = CheckStatusZero(registers.regSP);
 
                         // Transfer Stack Pointer to Register X
                         registers.regX = Convert.ToByte(registers.regSP);
@@ -3881,8 +3881,8 @@ namespace NES
                         uint intRegX = registers.regX;
 
                         // Check Status Registers
-                        registers.statusNegative = checkStatusNegative(intRegX);
-                        registers.statusZero = checkStatusZero(registers.regX);
+                        registers.statusNegative = CheckStatusNegative(intRegX);
+                        registers.statusZero = CheckStatusZero(registers.regX);
 
                         // Transfer Register X to Accumulator
                         registers.regA = registers.regX;
@@ -3923,8 +3923,8 @@ namespace NES
                         uint intRegY = registers.regY;
 
                         // Check Status Registers
-                        registers.statusNegative = checkStatusNegative(intRegY);
-                        registers.statusZero = checkStatusZero(registers.regY);
+                        registers.statusNegative = CheckStatusNegative(intRegY);
+                        registers.statusZero = CheckStatusZero(registers.regY);
 
                         // Transfer Register Y to Accumulator
                         registers.regA = registers.regY;
@@ -4053,38 +4053,18 @@ namespace NES
         #endregion
 
         #region /* ----- Check Status Flag Bits ----- */
-        bool checkStatusCarry(int result)           // Check to see if result had a Carry
+        /*private static bool CheckStatusCarry(int result)           // Check to see if result had a Carry
         {
-            if (result >= 256)
-            {
-                return true;
-            }
-            return false;
+            return result >= 256;
+        }*/
+
+        private static bool CheckStatusZero(int result)            // Check to see if result was Zero
+        {
+            return result == 0;
         }
 
-        bool checkStatusZero(int result)            // Check to see if result was Zero
-        {
-            if (result == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
-        bool checkStatusInterrupt(int result)       // Check for Interrupt
-        {
-            return Convert.ToBoolean(result);
-        }
-
-        bool checkStatusBreak(int result)           // Check Break
-        {
-            return Convert.ToBoolean(result);
-        }
-
-        bool checkStatusOverflowADC(byte regA, uint result, byte byteOne)        // Check for Overflow
+        private static bool CheckStatusOverflowADC(byte regA, uint result, byte byteOne)        // Check for Overflow
         {
             /*The overflow flag is only set under two circumstances:
                 1. There is a Carry from D6 to D7, but no Carry out of D7 (CF=0)
@@ -4094,15 +4074,10 @@ namespace NES
                 D6 to D7 or from D7 out, BUT NOT BOTH.
              */
 
-            if ((((regA ^ byteOne) & 0x80) == 0) && (((regA ^ result) & 0x80) != 0))
-            {
-                /* MessageBox.Show("True"); */
-                return true;
-            }
-            else { /* MessageBox.Show("False");*/ return false; }
+            return (((regA ^ byteOne) & 0x80) == 0) && (((regA ^ result) & 0x80) != 0);
         }
 
-        bool checkStatusOverflowSBC(byte regA, uint result, byte byteOne)        // Check for Overflow
+        private static bool CheckStatusOverflowSBC(byte regA, uint result, byte byteOne)        // Check for Overflow
         {
             /*The overflow flag is only set under two circumstances:
                 1. There is a Carry from D6 to D7, but no Carry out of D7 (CF=0)
@@ -4120,27 +4095,19 @@ namespace NES
             else { /* MessageBox.Show("False");*/ return false; }
         }
 
-        bool checkStatusNegative(int result)        // Check Sign
+        private static bool CheckStatusNegative(int result)        // Check Sign
         {
-            if ((result & 0x80) == 0x80)
-            {
-                return true;
-            }
-            else { return false; }
+            return (result & 0x80) == 0x80;
         }
 
-        bool checkStatusNegative(uint result)        // Check Sign
+        private static bool CheckStatusNegative(uint result)        // Check Sign
         {
-            if ((result & 0x80) == 0x80)
-            {
-                return true;
-            }
-            else { return false; }
+            return (result & 0x80) == 0x80;
         }
         #endregion
 
         #region /* ----- Set intCpuCyclesOffset ----- */
-        void pageChangeCheck()
+        private void pageChangeCheck()
         {
             /* Insert code here to check to see if the memory page changes
                so that the number of CPU Cycles can be modified with the 
@@ -4150,7 +4117,7 @@ namespace NES
         #endregion
 
         #region /* ----- Check for Page Crossing to update intCpuCyclesOffset ----- */
-        void pageChangeCheck(int intAddr)
+        private void pageChangeCheck(int intAddr)
         {
             /* Insert code here to check to see if the memory page changes
                so that the number of CPU Cycles can be modified with the 

@@ -1,9 +1,9 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 namespace Kernel
 {
     public static unsafe class ASC16
     {
-        static string buffer;
+        private static string buffer;
 
         internal static void Initialise()
         {
@@ -18,14 +18,14 @@ namespace Kernel
             }
         }
 
-        public static void DrawChar(char chr,int x, int y, uint color)
+        public static void DrawChar(char chr, int x, int y, uint color)
         {
             int offset = (chr & 0xFF) * 16;
             for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if ((buffer[offset + i] & (0x80 >> (int)j)) != 0)
+                    if ((buffer[offset + i] & (0x80 >> j)) != 0)
                     {
                         Framebuffer.DrawPoint((x + j), y + i, color);
                     }

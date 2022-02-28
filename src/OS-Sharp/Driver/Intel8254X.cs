@@ -1,8 +1,8 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 //Reference: https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
 
-using Kernel.Networking;
 using System.Runtime.InteropServices;
+using Kernel.Networking;
 using static Kernel.Misc.MMIO;
 
 namespace Kernel.Driver
@@ -16,13 +16,7 @@ namespace Kernel.Driver
         public static byte[] MAC;
         public static int IRQ;
 
-        public static bool FullDuplex
-        {
-            get
-            {
-                return (ReadRegister(8) & (1 << 0)) != 0;
-            }
-        }
+        public static bool FullDuplex => (ReadRegister(8) & (1 << 0)) != 0;
         public static int Speed
         {
             get
@@ -47,7 +41,10 @@ namespace Kernel.Driver
         {
             PCIDevice device = PCI.GetDevice(0x8086, 0x100E);
 
-            if (device == null) return;
+            if (device == null)
+            {
+                return;
+            }
 
             Console.WriteLine("Intel 8254X Series Gigabit Ethernet Controller Found");
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
@@ -106,7 +103,9 @@ namespace Kernel.Driver
 
             Linkup();
             for (int i = 0; i < 0x80; i++)
+            {
                 WriteRegister((ushort)(0x5200 + i * 4), 0);
+            }
 
             Console.Write("IRQ: ");
             Console.WriteLine(((ulong)device.IRQ).ToString("x2"));
@@ -122,7 +121,7 @@ namespace Kernel.Driver
             Console.Write(((ulong)Speed).ToString());
             Console.Write(' ');
             Console.Write("FullDuplex: ");
-            Console.WriteLine(FullDuplex?"Yes":"No");
+            Console.WriteLine(FullDuplex ? "Yes" : "No");
             Console.WriteLine("Configuration Done");
 
             Network.MAC = MAC;
@@ -221,7 +220,11 @@ namespace Kernel.Driver
         {
             uint Temp;
             WriteRegister(0x14, 1 | (Addr << 8));
-            while (((Temp = ReadRegister(0x14)) & 0x10) == 0) ;
+            while (((Temp = ReadRegister(0x14)) & 0x10) == 0)
+            {
+                ;
+            }
+
             return ((ushort)((Temp >> 16) & 0xFFFF));
         }
 
@@ -271,7 +274,10 @@ namespace Kernel.Driver
             byte _TXCurr = (byte)TXCurr;
             TXCurr = (TXCurr + 1) % 8;
             WriteRegister(0x3818, TXCurr);
-            while ((desc->status & 0xff) == 0) ;
+            while ((desc->status & 0xff) == 0)
+            {
+                ;
+            }
         }
     }
 }

@@ -1,15 +1,14 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+using System;
+using System.Diagnostics;
 using Internal.Runtime.CompilerServices;
 using Kernel;
 using Kernel.Misc;
-using System;
-using System.Diagnostics;
-using System.Runtime;
 
 /// <summary>
 /// Nifanfa's Super Fast Memory Allocation Lib
 /// </summary>
-abstract unsafe class Allocator
+internal abstract unsafe class Allocator
 {
     internal static unsafe void ZeroFill(IntPtr data, ulong size)
     {
@@ -20,16 +19,27 @@ abstract unsafe class Allocator
     public static bool AllowCollect;
     public static sbyte NotCollectIf;
 
-    public static void Collect() 
+    public static void Collect()
     {
         ulong addr;
         ulong memSaved = 0;
         ulong counter = 0;
         for (ulong i = 0; i < NumPages; i++)
         {
-            if (_Info.Pages[i] == 0) continue;
-            if (_Info.Pages[i] == PageSignature) continue;
-            if (_Info.GCInfos[i] == NotCollectIf) continue;
+            if (_Info.Pages[i] == 0)
+            {
+                continue;
+            }
+
+            if (_Info.Pages[i] == PageSignature)
+            {
+                continue;
+            }
+
+            if (_Info.GCInfos[i] == NotCollectIf)
+            {
+                continue;
+            }
 
             addr = (ulong)(_Info.Start + (i * PageSize));
             ulong* page = PageTable.GetPage(addr);
@@ -43,7 +53,7 @@ abstract unsafe class Allocator
                 _Info.GCInfos[i]--;
             }
 
-            if(_Info.GCInfos[i] < CollectIf) 
+            if (_Info.GCInfos[i] < CollectIf)
             {
                 counter++;
                 memSaved += Free((IntPtr)addr);
@@ -64,20 +74,31 @@ abstract unsafe class Allocator
     public static void KeepAlive(object obj)
     {
         ulong p = GetPageIndexStart((IntPtr)Unsafe.AsPointer(ref obj));
-        if (p == 0xFFFFFFFFFFFFFFFF) return;
+        if (p == 0xFFFFFFFFFFFFFFFF)
+        {
+            return;
+        }
+
         _Info.GCInfos[p] = NotCollectIf;
     }
 
     private static ulong GetPageIndexStart(IntPtr ptr)
     {
         ulong p = (ulong)ptr;
-        if (p < (ulong)_Info.Start) return 0xFFFFFFFFFFFFFFFF;
+        if (p < (ulong)_Info.Start)
+        {
+            return 0xFFFFFFFFFFFFFFFF;
+        }
+
         p -= (ulong)_Info.Start;
-        if ((p % PageSize) != 0) return 0xFFFFFFFFFFFFFFFF;
+        if ((p % PageSize) != 0)
+        {
+            return 0xFFFFFFFFFFFFFFFF;
+        }
         /*
-         * This will get wrong if the size is larger than PageSize
-         * and however the allocated address should be aligned
-         */
+* This will get wrong if the size is larger than PageSize
+* and however the allocated address should be aligned
+*/
         //p &= ~PageSize; 
         p /= PageSize;
         return p;
@@ -86,7 +107,11 @@ abstract unsafe class Allocator
     internal static ulong Free(IntPtr intPtr)
     {
         ulong p = GetPageIndexStart(intPtr);
-        if (p == 0xFFFFFFFFFFFFFFFF) return 0;
+        if (p == 0xFFFFFFFFFFFFFFFF)
+        {
+            return 0;
+        }
+
         ulong pages = _Info.Pages[p];
         if (pages != 0 && pages != PageSignature)
         {
@@ -105,13 +130,7 @@ abstract unsafe class Allocator
         return 0;
     }
 
-    public static ulong MemoryInUse
-    {
-        get
-        {
-            return _Info.PageInUse * PageSize;
-        }
-    }
+    public static ulong MemoryInUse => _Info.PageInUse * PageSize;
 
     public const ulong PageSignature = 0x2E61666E6166696E;
 
@@ -125,7 +144,7 @@ abstract unsafe class Allocator
     public struct Info
     {
         public IntPtr Start;
-        public UInt64 PageInUse;
+        public ulong PageInUse;
         public fixed ulong Pages[NumPages]; //Max 512MiB
         public fixed sbyte GCInfos[NumPages]; //Max 512MiB
     }
@@ -135,7 +154,10 @@ abstract unsafe class Allocator
     public static void Initialize(IntPtr Start)
     {
         fixed (Info* pInfo = &_Info)
+        {
             Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
+        }
+
         CollectIf = -12;
         NotCollectIf = 127;
         _Info.Start = Start;
@@ -167,13 +189,16 @@ abstract unsafe class Allocator
                 found = true;
                 for (ulong k = 0; k < pages; k++)
                 {
-                    if (_Info.Pages[i+k] != 0)
+                    if (_Info.Pages[i + k] != 0)
                     {
                         found = false;
                         break;
                     }
                 }
-                if (found) break;
+                if (found)
+                {
+                    break;
+                }
             }
             else if (_Info.Pages[i] != PageSignature)
             {
@@ -202,7 +227,10 @@ abstract unsafe class Allocator
     public static IntPtr Reallocate(IntPtr intPtr, ulong size)
     {
         if (intPtr == IntPtr.Zero)
+        {
             return Allocate(size);
+        }
+
         if (size == 0)
         {
             Free(intPtr);
@@ -210,7 +238,10 @@ abstract unsafe class Allocator
         }
 
         ulong p = GetPageIndexStart(intPtr);
-        if (p == 0xFFFFFFFFFFFFFFFF) return intPtr;
+        if (p == 0xFFFFFFFFFFFFFFFF)
+        {
+            return intPtr;
+        }
 
         ulong pages = 1;
 
@@ -219,7 +250,10 @@ abstract unsafe class Allocator
             pages = (size / PageSize) + ((size % 4096) != 0 ? 1UL : 0);
         }
 
-        if (_Info.Pages[p] == pages) return intPtr;
+        if (_Info.Pages[p] == pages)
+        {
+            return intPtr;
+        }
 
         IntPtr newptr = Allocate(size);
         MemoryCopy(newptr, intPtr, size);

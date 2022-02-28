@@ -1,6 +1,6 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
-using Internal.Runtime;
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.CompilerServices;
+using Internal.Runtime;
 
 namespace System
 {
@@ -8,37 +8,13 @@ namespace System
     {
         internal EEType* Value;
 
-        public bool IsSzArray 
-        {
-            get 
-            {
-                return Value->IsSzArray;
-            }
-        }
+        public bool IsSzArray => Value->IsSzArray;
 
-        public EETypePtr ArrayElementType 
-        {
-            get 
-            {
-                return new EETypePtr(Value->RelatedParameterType);
-            }
-        }
+        public EETypePtr ArrayElementType => new EETypePtr(Value->RelatedParameterType);
 
-        internal int ArrayRank
-        {
-            get
-            {
-                return Value->ArrayRank;
-            }
-        }
+        internal int ArrayRank => Value->ArrayRank;
 
-        public IntPtr RawValue 
-        {
-            get 
-            {
-                return (IntPtr)Value;
-            }
-        }
+        public IntPtr RawValue => (IntPtr)Value;
 
         public EETypePtr(IntPtr value)
         {

@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the  MIT licence
+// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.InteropServices;
 
 namespace System.Runtime.CompilerServices
@@ -28,7 +28,9 @@ namespace System.Runtime.CompilerServices
             // between class constructors.
 
             if (context.initialized == 1)
+            {
                 return;
+            }
 
             context.initialized = 1;
 
