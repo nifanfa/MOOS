@@ -3,8 +3,6 @@ using System.Runtime;
 using Internal.Runtime.CompilerHelpers;
 using Kernel.Driver;
 using Kernel.FileSystem;
-using Kernel.Networking;
-using Kernel.Misc;
 
 namespace Kernel
 {
@@ -65,48 +63,18 @@ namespace Kernel
             Serial.WriteLine("Hello from OS-Sharp!");
             Console.WriteLine("Hello, World!");
             Console.WriteLine("Using Native AOT (Core RT) Technology.");
-            Console.WriteLine();
-            Console.WriteLine("Press 'CTRL+N' to open Super Mario Bros.");
-            ConsoleKeyInfo Key = Console.ReadKey();
-
-
-            if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
-
-            {
-                Console.WriteLine("Emulator Keymap:");
-                Console.WriteLine("A = Q");
-                Console.WriteLine("B = E");
-                Console.WriteLine("Z = Select");
-                Console.WriteLine("C = Start");
-                Console.WriteLine("W = Up");
-                Console.WriteLine("A = Left");
-                Console.WriteLine("S = Down");
-                Console.WriteLine("D = Right");
-                Console.WriteLine("Press any key to continue");
-                Console.ReadKey();
-                Console.Clear();
-                Console.WriteLine("Game Will Start In 2 Seconds");
-                PIT.Wait(2000);
-                NES.NES nes = new NES.NES();
-                nes.openROM(fs.ReadAllBytes("/MARIO.NES"));
-                Framebuffer.TripleBuffered = true;
-                for (; ; )
-                {
-                    nes.runGame();
-                    for (int i = 0; i < 128; i++)
-                    {
-                        Native.Nop();
-                    }
-                }
-            }
-
 
             /*
+            Console.WriteLine("Connecting to internet");
             ARP.Initialise();
             Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
             RTL8139.Initialise();
             ARP.Require(Network.Gateway);
             */
+            for (; ; )
+            {
+
+            }
         }
         // Makes messages for the init methods
         private static void InitMsg(bool initfunc, string smsg, string fmsg)

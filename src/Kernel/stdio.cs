@@ -1,6 +1,6 @@
 ﻿using System.Runtime;
 using System.Runtime.InteropServices;
-using Kernel.FS;
+using Kernel.FileSystem;
 using Kernel.Misc;
 
 namespace Kernel
