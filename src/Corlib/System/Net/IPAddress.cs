@@ -5,18 +5,23 @@ namespace System.Net
     {
         public byte[] Address;
 
-        public static IPAddress Parse(params byte[] IP)
+        public IPAddress(byte octal1, byte octal2, byte octal3, byte octal4)
         {
-            return new IPAddress()
-            {
-                Address = new byte[]
-                {
-                    IP[0],
-                    IP[1],
-                    IP[2],
-                    IP[3]
-                }
+            Address = new byte[] {
+                    octal1,
+                    octal2,
+                    octal3,
+                    octal4
             };
+        }
+
+        public static IPAddress FromByteArray(params byte[] IP)
+        {
+            return new IPAddress(IP[0], IP[1], IP[2], IP[3]);
+        }
+        public override string ToString()
+        {
+            return Address[0] + "." + Address[1] + "." + Address[2] + "." + Address[3];
         }
     }
 }

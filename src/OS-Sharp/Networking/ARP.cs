@@ -58,7 +58,7 @@ namespace Kernel.Networking
                 MAC[3] = hdr->SourceMAC[3];
                 MAC[4] = hdr->SourceMAC[4];
                 MAC[5] = hdr->SourceMAC[5];
-                ARPEntry entry = new ARPEntry() { IP = IP, MAC = MAC };
+                ARPEntry entry = new() { IP = IP, MAC = MAC };
                 ARPEntries.Add(entry);
                 Console.Write(((ulong)IP[0]).ToString());
                 Console.Write(".");

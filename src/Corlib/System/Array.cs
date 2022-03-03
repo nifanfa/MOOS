@@ -31,6 +31,40 @@ namespace System
         {
             return ref Unsafe.AddByteOffset(ref _numComponents, (nuint)sizeof(void*));
         }
+        public static void ForEach<T>(T[] array, Action<T> action)
+        {
+            if (array == null)
+            {
+                Kernel.Misc.Panic.Error("Argument null");
+            }
+
+            if (action == null)
+            {
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                action(array[i]);
+            }
+        }
+        public static void Map<T>(ref T[] array, Func<T, T> func)
+        {
+            if (array == null)
+            {
+                Kernel.Misc.Panic.Error("Argument null");
+            }
+
+            if (func == null)
+            {
+                Kernel.Misc.Panic.Error("Argument out of range");
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = func(array[i]);
+            }
+        }
         public static unsafe Array NewMultiDimArray(EETypePtr eeType, int* pLengths, int rank)
         {
             ulong totalLength = 1;
