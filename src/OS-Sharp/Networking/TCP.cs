@@ -473,7 +473,7 @@ namespace Kernel.Networking
 
         public static TCPConnection Connect(byte[] addr, ushort port, ushort localPort)
         {
-            TCPConnection conn = new TCPConnection();
+            TCPConnection conn = new();
 
             currConn = conn;
 
