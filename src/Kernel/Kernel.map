@@ -1,6 +1,6 @@
  Kernel
 
- Timestamp is 62242e0a (Sat Mar  5 19:44:10 2022)
+ Timestamp is 62243995 (Sat Mar  5 20:33:25 2022)
 
  Preferred load address is 0000000004000000
 
@@ -392,12 +392,12 @@
  0002:00000df0       String__Concat_1           0000000004007df0     Kernel.obj
  0002:00000e50       UInt64__ToString           0000000004007e50     Kernel.obj
  0002:00000f20       UInt64__ToStringHex        0000000004007f20     Kernel.obj
- 0002:00000fd0       RhTypeCast_CheckCastClass  0000000004007fd0     Kernel.obj
  0002:00000fd0       Kernel_System_Runtime_TypeCast__CheckCastClass 0000000004007fd0     Kernel.obj
+ 0002:00000fd0       RhTypeCast_CheckCastClass  0000000004007fd0     Kernel.obj
  0002:00001000       Kernel_System_Runtime_TypeCast__CheckCastArray 0000000004008000     Kernel.obj
  0002:00001000       RhTypeCast_CheckCastArray  0000000004008000     Kernel.obj
- 0002:00001030       Kernel_System_Runtime_TypeCast__IsInstanceOfArray 0000000004008030     Kernel.obj
  0002:00001030       RhTypeCast_IsInstanceOfArray 0000000004008030     Kernel.obj
+ 0002:00001030       Kernel_System_Runtime_TypeCast__IsInstanceOfArray 0000000004008030     Kernel.obj
  0002:00001070       Kernel_System_Runtime_CompilerServices_ClassConstructorRunner__CheckStaticClassConstructionReturnNonGCStaticBase 0000000004008070     Kernel.obj
  0002:00001090       Kernel_System_Runtime_CompilerServices_ClassConstructorRunner__CheckStaticClassConstruction 0000000004008090     Kernel.obj
  0002:000010d0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____imp_GetCurrentThreadId 00000000040080d0     Kernel.obj
@@ -406,99 +406,99 @@
  0002:000010e0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____CheckForDebuggerJustMyCode 00000000040080e0     Kernel.obj
  0002:000010f0       __fail_fast                00000000040080f0     Kernel.obj
  0002:000010f0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__FailFast 00000000040080f0     Kernel.obj
- 0002:00001100       memset                     0000000004008100     Kernel.obj
  0002:00001100       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemSet 0000000004008100     Kernel.obj
+ 0002:00001100       memset                     0000000004008100     Kernel.obj
  0002:00001120       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemCpy 0000000004008120     Kernel.obj
  0002:00001120       memcpy                     0000000004008120     Kernel.obj
  0002:00001140       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpFallbackFailFast 0000000004008140     Kernel.obj
  0002:00001140       RhpFallbackFailFast        0000000004008140     Kernel.obj
- 0002:00001150       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke2 0000000004008150     Kernel.obj
  0002:00001150       RhpReversePInvoke2         0000000004008150     Kernel.obj
+ 0002:00001150       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke2 0000000004008150     Kernel.obj
  0002:00001160       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn2 0000000004008160     Kernel.obj
  0002:00001160       RhpReversePInvokeReturn2   0000000004008160     Kernel.obj
  0002:00001170       RhpReversePInvoke          0000000004008170     Kernel.obj
  0002:00001170       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke 0000000004008170     Kernel.obj
- 0002:00001180       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn 0000000004008180     Kernel.obj
  0002:00001180       RhpReversePInvokeReturn    0000000004008180     Kernel.obj
- 0002:00001190       RhpPInvoke                 0000000004008190     Kernel.obj
+ 0002:00001180       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn 0000000004008180     Kernel.obj
  0002:00001190       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvoke 0000000004008190     Kernel.obj
+ 0002:00001190       RhpPInvoke                 0000000004008190     Kernel.obj
  0002:000011a0       RhpPInvokeReturn           00000000040081a0     Kernel.obj
  0002:000011a0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvokeReturn 00000000040081a0     Kernel.obj
- 0002:000011b0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewFast 00000000040081b0     Kernel.obj
  0002:000011b0       RhpNewFast                 00000000040081b0     Kernel.obj
+ 0002:000011b0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewFast 00000000040081b0     Kernel.obj
  0002:00001260       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewArray 0000000004008260     Kernel.obj
  0002:00001260       RhpNewArray                0000000004008260     Kernel.obj
- 0002:00001370       RhpAssignRef               0000000004008370     Kernel.obj
  0002:00001370       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpAssignRef 0000000004008370     Kernel.obj
+ 0002:00001370       RhpAssignRef               0000000004008370     Kernel.obj
  0002:00001380       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpByRefAssignRef 0000000004008380     Kernel.obj
  0002:00001380       RhpByRefAssignRef          0000000004008380     Kernel.obj
- 0002:00001390       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpCheckedAssignRef 0000000004008390     Kernel.obj
  0002:00001390       RhpCheckedAssignRef        0000000004008390     Kernel.obj
- 0002:000013a0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpStelemRef 00000000040083a0     Kernel.obj
+ 0002:00001390       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpCheckedAssignRef 0000000004008390     Kernel.obj
  0002:000013a0       RhpStelemRef               00000000040083a0     Kernel.obj
+ 0002:000013a0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpStelemRef 00000000040083a0     Kernel.obj
  0002:000013e0       RhTypeCast_IsInstanceOfClass 00000000040083e0     Kernel.obj
  0002:000013e0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhTypeCast_IsInstanceOfClass 00000000040083e0     Kernel.obj
  0002:00001410       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__InitializeModules 0000000004008410     Kernel.obj
  0002:00001480       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__InitializeStatics 0000000004008480     Kernel.obj
  0002:00001520       Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowOverflowException 0000000004008520     Kernel.obj
  0002:00001530       Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowIndexOutOfRangeException 0000000004008530     Kernel.obj
- 0002:00001540       Kernel_OS_Sharp_Program__Main_0 0000000004008540     Kernel.obj
  0002:00001540       Main                       0000000004008540     Kernel.obj
+ 0002:00001540       Kernel_OS_Sharp_Program__Main_0 0000000004008540     Kernel.obj
  0002:00001810       Kernel_OS_Sharp_Program__InitMsg 0000000004008810     Kernel.obj
- 0002:000018b0       Kernel_OS_Sharp_Stdio__Print 00000000040088b0     Kernel.obj
- 0002:000018b0       print                      00000000040088b0     Kernel.obj
- 0002:000018f0       fopen                      00000000040088f0     Kernel.obj
- 0002:000018f0       Kernel_OS_Sharp_Stdio__Fopen 00000000040088f0     Kernel.obj
- 0002:00001a50       fseek                      0000000004008a50     Kernel.obj
- 0002:00001a50       Kernel_OS_Sharp_Stdio__Fseek 0000000004008a50     Kernel.obj
- 0002:00001a70       fread                      0000000004008a70     Kernel.obj
- 0002:00001a70       Kernel_OS_Sharp_Stdio__Fread 0000000004008a70     Kernel.obj
- 0002:00001ae0       Kernel_OS_Sharp_Stdlib__Malloc 0000000004008ae0     Kernel.obj
- 0002:00001ae0       malloc                     0000000004008ae0     Kernel.obj
- 0002:00001af0       free                       0000000004008af0     Kernel.obj
- 0002:00001af0       Kernel_OS_Sharp_Stdlib__Free 0000000004008af0     Kernel.obj
- 0002:00001b00       Kernel_OS_Sharp_Stdlib__Realloc 0000000004008b00     Kernel.obj
- 0002:00001b00       realloc                    0000000004008b00     Kernel.obj
- 0002:00001b10       Kernel_OS_Sharp_AC97__OnInterrupt 0000000004008b10     Kernel.obj
- 0002:00001bd0       Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 0000000004008bd0     Kernel.obj
- 0002:00001c20       Kernel_OS_Sharp_Framebuffer__SetVideoMode 0000000004008c20     Kernel.obj
- 0002:00001d10       Kernel_OS_Sharp_Framebuffer__Clear 0000000004008d10     Kernel.obj
- 0002:00001d90       Kernel_OS_Sharp_Framebuffer__DrawPoint 0000000004008d90     Kernel.obj
- 0002:00001df0       Kernel_OS_Sharp_Framebuffer__GetPoint 0000000004008df0     Kernel.obj
- 0002:00001e60       Kernel_OS_Sharp_PCIDevice___ctor 0000000004008e60     Kernel.obj
- 0002:00001e70       Kernel_OS_Sharp_PCI__Initialize 0000000004008e70     Kernel.obj
- 0002:00001f70       Kernel_OS_Sharp_PCI__CheckBus 0000000004008f70     Kernel.obj
- 0002:000026c0       Kernel_OS_Sharp_PCI__GetHeaderType 00000000040096c0     Kernel.obj
- 0002:00002770       Kernel_OS_Sharp_PIC__Disable 0000000004009770     Kernel.obj
- 0002:00002960       Kernel_OS_Sharp_PIT__Initialize 0000000004009960     Kernel.obj
- 0002:00002a60       Kernel_OS_Sharp_PS2Keyboard__Initialize 0000000004009a60     Kernel.obj
- 0002:00002f10       Kernel_OS_Sharp_PS2Keyboard__CleanKeyInfo 0000000004009f10     Kernel.obj
- 0002:00002f40       Kernel_OS_Sharp_PS2Keyboard__ProcessKey 0000000004009f40     Kernel.obj
- 0002:00003170       Kernel_OS_Sharp_PS2Mouse__Initialize 000000000400a170     Kernel.obj
- 0002:000033b0       Kernel_OS_Sharp_PS2Mouse__WriteRegister 000000000400a3b0     Kernel.obj
- 0002:000034a0       Kernel_OS_Sharp_PS2Mouse__OnInterrupt 000000000400a4a0     Kernel.obj
- 0002:00003650       Kernel_OS_Sharp_SATA__Initialize 000000000400a650     Kernel.obj
- 0002:000038f0       Kernel_OS_Sharp_SATA__CheckPortType 000000000400a8f0     Kernel.obj
- 0002:00003960       Kernel_OS_Sharp_Serial__Initialize 000000000400a960     Kernel.obj
- 0002:00003ad0       Kernel_OS_Sharp_Serial__Write 000000000400aad0     Kernel.obj
- 0002:00003b20       Kernel_OS_Sharp_Serial__Write_0 000000000400ab20     Kernel.obj
- 0002:00003bb0       Kernel_OS_Sharp_ASC16__DrawChar 000000000400abb0     Kernel.obj
- 0002:00003c40       Kernel_OS_Sharp_Console__Initialize 000000000400ac40     Kernel.obj
- 0002:00003cd0       Kernel_OS_Sharp_Console__EnableCursor 000000000400acd0     Kernel.obj
- 0002:00003e10       Kernel_OS_Sharp_Console__WriteFramebuffer 000000000400ae10     Kernel.obj
- 0002:00003eb0       Kernel_OS_Sharp_Console__MoveUp 000000000400aeb0     Kernel.obj
- 0002:00003fd0       Kernel_OS_Sharp_Console__UpdateCursor 000000000400afd0     Kernel.obj
- 0002:000040e0       Kernel_OS_Sharp_Console__UpdateCursorFramebuffer 000000000400b0e0     Kernel.obj
- 0002:00004130       Kernel_OS_Sharp_Console__Write_0 000000000400b130     Kernel.obj
- 0002:00004190       Kernel_OS_Sharp_Console__Write_1 000000000400b190     Kernel.obj
- 0002:00004200       Kernel_OS_Sharp_Console__WriteLine_0 000000000400b200     Kernel.obj
- 0002:00004280       Kernel_OS_Sharp_Console__WriteLine_2 000000000400b280     Kernel.obj
- 0002:000042b0       Kernel_OS_Sharp_Console__Clear 000000000400b2b0     Kernel.obj
- 0002:000042d0       Kernel_OS_Sharp_Console___cctor 000000000400b2d0     Kernel.obj
- 0002:00004310       Kernel_OS_Sharp_PageTable__Initialize 000000000400b310     Kernel.obj
- 0002:00004410       Kernel_OS_Sharp_PageTable__GetPage 000000000400b410     Kernel.obj
- 0002:000044c0       Kernel_OS_Sharp_PageTable__Next 000000000400b4c0     Kernel.obj
- 0002:00004570       Kernel_OS_Sharp_UDP__HandlePacket 000000000400b570     Kernel.obj
+ 0002:000018b0       Kernel_OS_Sharp_AC97__OnInterrupt 00000000040088b0     Kernel.obj
+ 0002:00001970       Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 0000000004008970     Kernel.obj
+ 0002:000019c0       Kernel_OS_Sharp_Framebuffer__SetVideoMode 00000000040089c0     Kernel.obj
+ 0002:00001ab0       Kernel_OS_Sharp_Framebuffer__Clear 0000000004008ab0     Kernel.obj
+ 0002:00001b30       Kernel_OS_Sharp_Framebuffer__DrawPoint 0000000004008b30     Kernel.obj
+ 0002:00001b90       Kernel_OS_Sharp_Framebuffer__GetPoint 0000000004008b90     Kernel.obj
+ 0002:00001c00       Kernel_OS_Sharp_PCIDevice___ctor 0000000004008c00     Kernel.obj
+ 0002:00001c10       Kernel_OS_Sharp_PCI__Initialize 0000000004008c10     Kernel.obj
+ 0002:00001d10       Kernel_OS_Sharp_PCI__CheckBus 0000000004008d10     Kernel.obj
+ 0002:00002460       Kernel_OS_Sharp_PCI__GetHeaderType 0000000004009460     Kernel.obj
+ 0002:00002510       Kernel_OS_Sharp_PIC__Disable 0000000004009510     Kernel.obj
+ 0002:00002700       Kernel_OS_Sharp_PIT__Initialize 0000000004009700     Kernel.obj
+ 0002:00002800       Kernel_OS_Sharp_PS2Keyboard__Initialize 0000000004009800     Kernel.obj
+ 0002:00002cb0       Kernel_OS_Sharp_PS2Keyboard__CleanKeyInfo 0000000004009cb0     Kernel.obj
+ 0002:00002ce0       Kernel_OS_Sharp_PS2Keyboard__ProcessKey 0000000004009ce0     Kernel.obj
+ 0002:00002f10       Kernel_OS_Sharp_PS2Mouse__Initialize 0000000004009f10     Kernel.obj
+ 0002:00003150       Kernel_OS_Sharp_PS2Mouse__WriteRegister 000000000400a150     Kernel.obj
+ 0002:00003240       Kernel_OS_Sharp_PS2Mouse__OnInterrupt 000000000400a240     Kernel.obj
+ 0002:000033f0       Kernel_OS_Sharp_SATA__Initialize 000000000400a3f0     Kernel.obj
+ 0002:00003690       Kernel_OS_Sharp_SATA__CheckPortType 000000000400a690     Kernel.obj
+ 0002:00003700       Kernel_OS_Sharp_Serial__Initialize 000000000400a700     Kernel.obj
+ 0002:00003870       Kernel_OS_Sharp_Serial__Write 000000000400a870     Kernel.obj
+ 0002:000038c0       Kernel_OS_Sharp_Serial__Write_0 000000000400a8c0     Kernel.obj
+ 0002:00003950       Kernel_OS_Sharp_ASC16__DrawChar 000000000400a950     Kernel.obj
+ 0002:000039e0       Kernel_OS_Sharp_Console__Initialize 000000000400a9e0     Kernel.obj
+ 0002:00003a70       Kernel_OS_Sharp_Console__EnableCursor 000000000400aa70     Kernel.obj
+ 0002:00003bb0       Kernel_OS_Sharp_Console__WriteFramebuffer 000000000400abb0     Kernel.obj
+ 0002:00003c50       Kernel_OS_Sharp_Console__MoveUp 000000000400ac50     Kernel.obj
+ 0002:00003d70       Kernel_OS_Sharp_Console__UpdateCursor 000000000400ad70     Kernel.obj
+ 0002:00003e80       Kernel_OS_Sharp_Console__UpdateCursorFramebuffer 000000000400ae80     Kernel.obj
+ 0002:00003ed0       Kernel_OS_Sharp_Console__Write_0 000000000400aed0     Kernel.obj
+ 0002:00003f30       Kernel_OS_Sharp_Console__Write_1 000000000400af30     Kernel.obj
+ 0002:00003fa0       Kernel_OS_Sharp_Console__WriteLine_0 000000000400afa0     Kernel.obj
+ 0002:00004020       Kernel_OS_Sharp_Console__WriteLine_2 000000000400b020     Kernel.obj
+ 0002:00004050       Kernel_OS_Sharp_Console__Clear 000000000400b050     Kernel.obj
+ 0002:00004070       Kernel_OS_Sharp_Console___cctor 000000000400b070     Kernel.obj
+ 0002:000040b0       Kernel_OS_Sharp_PageTable__Initialize 000000000400b0b0     Kernel.obj
+ 0002:000041b0       Kernel_OS_Sharp_PageTable__GetPage 000000000400b1b0     Kernel.obj
+ 0002:00004260       Kernel_OS_Sharp_PageTable__Next 000000000400b260     Kernel.obj
+ 0002:00004310       Kernel_OS_Sharp_UDP__HandlePacket 000000000400b310     Kernel.obj
+ 0002:000043e0       print                      000000000400b3e0     Kernel.obj
+ 0002:000043e0       Kernel_OS_Sharp_Stdio__Print 000000000400b3e0     Kernel.obj
+ 0002:00004420       Kernel_OS_Sharp_Stdio__Fopen 000000000400b420     Kernel.obj
+ 0002:00004420       fopen                      000000000400b420     Kernel.obj
+ 0002:00004580       Kernel_OS_Sharp_Stdio__Fseek 000000000400b580     Kernel.obj
+ 0002:00004580       fseek                      000000000400b580     Kernel.obj
+ 0002:000045a0       fread                      000000000400b5a0     Kernel.obj
+ 0002:000045a0       Kernel_OS_Sharp_Stdio__Fread 000000000400b5a0     Kernel.obj
+ 0002:00004610       malloc                     000000000400b610     Kernel.obj
+ 0002:00004610       Kernel_OS_Sharp_Stdlib__Malloc 000000000400b610     Kernel.obj
+ 0002:00004620       Kernel_OS_Sharp_Stdlib__Free 000000000400b620     Kernel.obj
+ 0002:00004620       free                       000000000400b620     Kernel.obj
+ 0002:00004630       realloc                    000000000400b630     Kernel.obj
+ 0002:00004630       Kernel_OS_Sharp_Stdlib__Realloc 000000000400b630     Kernel.obj
  0002:00004640       Kernel_OS_Sharp_Misc_Panic__Error 000000000400b640     Kernel.obj
  0002:000046b0       Kernel_OS_Sharp_Networking_RTL8139__OnInterrupt 000000000400b6b0     Kernel.obj
  0002:000047b0       Kernel_OS_Sharp_Networking_RTL8139__Send 000000000400b7b0     Kernel.obj
@@ -684,14 +684,14 @@
  0003:0000261c       __optionalfields_??_7Boxed_Kernel_System_ConsoleKey@@6B@ 000000000401261c     Kernel.obj
  0003:0000261e       __optionalfields_??_7Kernel_System_ValueType@@6B@ 000000000401261e     Kernel.obj
  0003:00002625       __optionalfields_??_7Boxed_Kernel_IDT_IDTEntry@@6B@ 0000000004012625     Kernel.obj
- 0003:00002628       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_PCIDevice> 0000000004012628     Kernel.obj
  0003:00002628       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 0000000004012628     Kernel.obj
- 0003:00002630       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE> 0000000004012630     Kernel.obj
+ 0003:00002628       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_PCIDevice> 0000000004012628     Kernel.obj
  0003:00002630       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE> 0000000004012630     Kernel.obj
+ 0003:00002630       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE> 0000000004012630     Kernel.obj
  0003:00002638       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004012638     Kernel.obj
  0003:00002638       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004012638     Kernel.obj
- 0003:00002640       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004012640     Kernel.obj
  0003:00002640       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004012640     Kernel.obj
+ 0003:00002640       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004012640     Kernel.obj
  0003:0000269c       __volatile_metadata        000000000401269c     <linker-defined>
  0003:00002860       _unwind0Kernel_Allocator__GetPageIndexStart 0000000004012860     Kernel.obj
  0003:00002870       _unwind0Kernel_Allocator__Free 0000000004012870     Kernel.obj
@@ -746,53 +746,53 @@
  0003:00002d18       _unwind0Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowIndexOutOfRangeException 0000000004012d18     Kernel.obj
  0003:00002d20       _unwind0Kernel_OS_Sharp_Program__Main_0 0000000004012d20     Kernel.obj
  0003:00002da8       _unwind0Kernel_OS_Sharp_Program__InitMsg 0000000004012da8     Kernel.obj
- 0003:00002dc8       _unwind0Kernel_OS_Sharp_Stdio__Print 0000000004012dc8     Kernel.obj
- 0003:00002dd8       _unwind0Kernel_OS_Sharp_Stdio__Fopen 0000000004012dd8     Kernel.obj
- 0003:00002e38       _unwind0Kernel_OS_Sharp_Stdio__Fseek 0000000004012e38     Kernel.obj
- 0003:00002e44       _unwind0Kernel_OS_Sharp_Stdio__Fread 0000000004012e44     Kernel.obj
- 0003:00002e60       _unwind0Kernel_OS_Sharp_Stdlib__Malloc 0000000004012e60     Kernel.obj
- 0003:00002e6c       _unwind0Kernel_OS_Sharp_Stdlib__Free 0000000004012e6c     Kernel.obj
- 0003:00002e78       _unwind0Kernel_OS_Sharp_Stdlib__Realloc 0000000004012e78     Kernel.obj
- 0003:00002e84       _unwind0Kernel_OS_Sharp_AC97__OnInterrupt 0000000004012e84     Kernel.obj
- 0003:00002ea8       _unwind0Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 0000000004012ea8     Kernel.obj
- 0003:00002ebc       _unwind0Kernel_OS_Sharp_Framebuffer__SetVideoMode 0000000004012ebc     Kernel.obj
- 0003:00002ee8       _unwind0Kernel_OS_Sharp_Framebuffer__Clear 0000000004012ee8     Kernel.obj
- 0003:00002f08       _unwind0Kernel_OS_Sharp_Framebuffer__DrawPoint 0000000004012f08     Kernel.obj
- 0003:00002f1c       _unwind0Kernel_OS_Sharp_Framebuffer__GetPoint 0000000004012f1c     Kernel.obj
- 0003:00002f2c       _unwind0Kernel_OS_Sharp_PCIDevice___ctor 0000000004012f2c     Kernel.obj
- 0003:00002f34       _unwind0Kernel_OS_Sharp_PCI__Initialize 0000000004012f34     Kernel.obj
- 0003:00002f60       _unwind0Kernel_OS_Sharp_PCI__CheckBus 0000000004012f60     Kernel.obj
- 0003:00003008       _unwind0Kernel_OS_Sharp_PCI__GetHeaderType 0000000004013008     Kernel.obj
- 0003:00003028       _unwind0Kernel_OS_Sharp_PIC__Disable 0000000004013028     Kernel.obj
- 0003:00003068       _unwind0Kernel_OS_Sharp_PIT__Initialize 0000000004013068     Kernel.obj
- 0003:00003090       _unwind0Kernel_OS_Sharp_PS2Keyboard__Initialize 0000000004013090     Kernel.obj
- 0003:000030ac       _unwind0Kernel_OS_Sharp_PS2Keyboard__CleanKeyInfo 00000000040130ac     Kernel.obj
- 0003:000030b8       _unwind0Kernel_OS_Sharp_PS2Keyboard__ProcessKey 00000000040130b8     Kernel.obj
- 0003:000030d0       _unwind0Kernel_OS_Sharp_PS2Mouse__Initialize 00000000040130d0     Kernel.obj
- 0003:00003124       _unwind0Kernel_OS_Sharp_PS2Mouse__WriteRegister 0000000004013124     Kernel.obj
- 0003:00003150       _unwind0Kernel_OS_Sharp_PS2Mouse__OnInterrupt 0000000004013150     Kernel.obj
- 0003:0000317c       _unwind0Kernel_OS_Sharp_SATA__Initialize 000000000401317c     Kernel.obj
- 0003:00003200       _unwind0Kernel_OS_Sharp_SATA__CheckPortType 0000000004013200     Kernel.obj
- 0003:00003208       _unwind0Kernel_OS_Sharp_Serial__Initialize 0000000004013208     Kernel.obj
- 0003:0000323c       _unwind0Kernel_OS_Sharp_Serial__Write 000000000401323c     Kernel.obj
- 0003:00003254       _unwind0Kernel_OS_Sharp_Serial__Write_0 0000000004013254     Kernel.obj
- 0003:00003274       _unwind0Kernel_OS_Sharp_ASC16__DrawChar 0000000004013274     Kernel.obj
- 0003:000032a4       _unwind0Kernel_OS_Sharp_Console__Initialize 00000000040132a4     Kernel.obj
- 0003:000032c8       _unwind0Kernel_OS_Sharp_Console__EnableCursor 00000000040132c8     Kernel.obj
- 0003:000032f8       _unwind0Kernel_OS_Sharp_Console__WriteFramebuffer 00000000040132f8     Kernel.obj
- 0003:00003320       _unwind0Kernel_OS_Sharp_Console__MoveUp 0000000004013320     Kernel.obj
- 0003:0000335c       _unwind0Kernel_OS_Sharp_Console__UpdateCursor 000000000401335c     Kernel.obj
- 0003:00003388       _unwind0Kernel_OS_Sharp_Console__UpdateCursorFramebuffer 0000000004013388     Kernel.obj
- 0003:0000339c       _unwind0Kernel_OS_Sharp_Console__Write_0 000000000401339c     Kernel.obj
- 0003:000033b4       _unwind0Kernel_OS_Sharp_Console__Write_1 00000000040133b4     Kernel.obj
- 0003:000033d8       _unwind0Kernel_OS_Sharp_Console__WriteLine_0 00000000040133d8     Kernel.obj
- 0003:000033fc       _unwind0Kernel_OS_Sharp_Console__WriteLine_2 00000000040133fc     Kernel.obj
- 0003:0000340c       _unwind0Kernel_OS_Sharp_Console__Clear 000000000401340c     Kernel.obj
- 0003:00003420       _unwind0Kernel_OS_Sharp_Console___cctor 0000000004013420     Kernel.obj
- 0003:00003430       _unwind0Kernel_OS_Sharp_PageTable__Initialize 0000000004013430     Kernel.obj
- 0003:0000345c       _unwind0Kernel_OS_Sharp_PageTable__GetPage 000000000401345c     Kernel.obj
- 0003:00003478       _unwind0Kernel_OS_Sharp_PageTable__Next 0000000004013478     Kernel.obj
- 0003:00003498       _unwind0Kernel_OS_Sharp_UDP__HandlePacket 0000000004013498     Kernel.obj
+ 0003:00002dc8       _unwind0Kernel_OS_Sharp_AC97__OnInterrupt 0000000004012dc8     Kernel.obj
+ 0003:00002dec       _unwind0Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 0000000004012dec     Kernel.obj
+ 0003:00002e00       _unwind0Kernel_OS_Sharp_Framebuffer__SetVideoMode 0000000004012e00     Kernel.obj
+ 0003:00002e2c       _unwind0Kernel_OS_Sharp_Framebuffer__Clear 0000000004012e2c     Kernel.obj
+ 0003:00002e4c       _unwind0Kernel_OS_Sharp_Framebuffer__DrawPoint 0000000004012e4c     Kernel.obj
+ 0003:00002e60       _unwind0Kernel_OS_Sharp_Framebuffer__GetPoint 0000000004012e60     Kernel.obj
+ 0003:00002e70       _unwind0Kernel_OS_Sharp_PCIDevice___ctor 0000000004012e70     Kernel.obj
+ 0003:00002e78       _unwind0Kernel_OS_Sharp_PCI__Initialize 0000000004012e78     Kernel.obj
+ 0003:00002ea4       _unwind0Kernel_OS_Sharp_PCI__CheckBus 0000000004012ea4     Kernel.obj
+ 0003:00002f4c       _unwind0Kernel_OS_Sharp_PCI__GetHeaderType 0000000004012f4c     Kernel.obj
+ 0003:00002f6c       _unwind0Kernel_OS_Sharp_PIC__Disable 0000000004012f6c     Kernel.obj
+ 0003:00002fac       _unwind0Kernel_OS_Sharp_PIT__Initialize 0000000004012fac     Kernel.obj
+ 0003:00002fd4       _unwind0Kernel_OS_Sharp_PS2Keyboard__Initialize 0000000004012fd4     Kernel.obj
+ 0003:00002ff0       _unwind0Kernel_OS_Sharp_PS2Keyboard__CleanKeyInfo 0000000004012ff0     Kernel.obj
+ 0003:00002ffc       _unwind0Kernel_OS_Sharp_PS2Keyboard__ProcessKey 0000000004012ffc     Kernel.obj
+ 0003:00003014       _unwind0Kernel_OS_Sharp_PS2Mouse__Initialize 0000000004013014     Kernel.obj
+ 0003:00003068       _unwind0Kernel_OS_Sharp_PS2Mouse__WriteRegister 0000000004013068     Kernel.obj
+ 0003:00003094       _unwind0Kernel_OS_Sharp_PS2Mouse__OnInterrupt 0000000004013094     Kernel.obj
+ 0003:000030c0       _unwind0Kernel_OS_Sharp_SATA__Initialize 00000000040130c0     Kernel.obj
+ 0003:00003144       _unwind0Kernel_OS_Sharp_SATA__CheckPortType 0000000004013144     Kernel.obj
+ 0003:0000314c       _unwind0Kernel_OS_Sharp_Serial__Initialize 000000000401314c     Kernel.obj
+ 0003:00003180       _unwind0Kernel_OS_Sharp_Serial__Write 0000000004013180     Kernel.obj
+ 0003:00003198       _unwind0Kernel_OS_Sharp_Serial__Write_0 0000000004013198     Kernel.obj
+ 0003:000031b8       _unwind0Kernel_OS_Sharp_ASC16__DrawChar 00000000040131b8     Kernel.obj
+ 0003:000031e8       _unwind0Kernel_OS_Sharp_Console__Initialize 00000000040131e8     Kernel.obj
+ 0003:0000320c       _unwind0Kernel_OS_Sharp_Console__EnableCursor 000000000401320c     Kernel.obj
+ 0003:0000323c       _unwind0Kernel_OS_Sharp_Console__WriteFramebuffer 000000000401323c     Kernel.obj
+ 0003:00003264       _unwind0Kernel_OS_Sharp_Console__MoveUp 0000000004013264     Kernel.obj
+ 0003:000032a0       _unwind0Kernel_OS_Sharp_Console__UpdateCursor 00000000040132a0     Kernel.obj
+ 0003:000032cc       _unwind0Kernel_OS_Sharp_Console__UpdateCursorFramebuffer 00000000040132cc     Kernel.obj
+ 0003:000032e0       _unwind0Kernel_OS_Sharp_Console__Write_0 00000000040132e0     Kernel.obj
+ 0003:000032f8       _unwind0Kernel_OS_Sharp_Console__Write_1 00000000040132f8     Kernel.obj
+ 0003:0000331c       _unwind0Kernel_OS_Sharp_Console__WriteLine_0 000000000401331c     Kernel.obj
+ 0003:00003340       _unwind0Kernel_OS_Sharp_Console__WriteLine_2 0000000004013340     Kernel.obj
+ 0003:00003350       _unwind0Kernel_OS_Sharp_Console__Clear 0000000004013350     Kernel.obj
+ 0003:00003364       _unwind0Kernel_OS_Sharp_Console___cctor 0000000004013364     Kernel.obj
+ 0003:00003374       _unwind0Kernel_OS_Sharp_PageTable__Initialize 0000000004013374     Kernel.obj
+ 0003:000033a0       _unwind0Kernel_OS_Sharp_PageTable__GetPage 00000000040133a0     Kernel.obj
+ 0003:000033bc       _unwind0Kernel_OS_Sharp_PageTable__Next 00000000040133bc     Kernel.obj
+ 0003:000033dc       _unwind0Kernel_OS_Sharp_UDP__HandlePacket 00000000040133dc     Kernel.obj
+ 0003:00003400       _unwind0Kernel_OS_Sharp_Stdio__Print 0000000004013400     Kernel.obj
+ 0003:00003410       _unwind0Kernel_OS_Sharp_Stdio__Fopen 0000000004013410     Kernel.obj
+ 0003:00003470       _unwind0Kernel_OS_Sharp_Stdio__Fseek 0000000004013470     Kernel.obj
+ 0003:0000347c       _unwind0Kernel_OS_Sharp_Stdio__Fread 000000000401347c     Kernel.obj
+ 0003:00003498       _unwind0Kernel_OS_Sharp_Stdlib__Malloc 0000000004013498     Kernel.obj
+ 0003:000034a4       _unwind0Kernel_OS_Sharp_Stdlib__Free 00000000040134a4     Kernel.obj
+ 0003:000034b0       _unwind0Kernel_OS_Sharp_Stdlib__Realloc 00000000040134b0     Kernel.obj
  0003:000034bc       _unwind0Kernel_OS_Sharp_Misc_Panic__Error 00000000040134bc     Kernel.obj
  0003:000034e8       _unwind0Kernel_OS_Sharp_Networking_RTL8139__OnInterrupt 00000000040134e8     Kernel.obj
  0003:00003514       _unwind0Kernel_OS_Sharp_Networking_RTL8139__Send 0000000004013514     Kernel.obj

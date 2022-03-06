@@ -1,4 +1,4 @@
-﻿namespace OS_Sharp
+namespace OS_Sharp
 {
     internal unsafe class Strings
     {

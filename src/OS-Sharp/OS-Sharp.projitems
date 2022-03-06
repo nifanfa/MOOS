@@ -55,6 +55,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Networking\Network.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\TCP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\UDP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)stdio.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)stdlib.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)strings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Networking\README.md" />

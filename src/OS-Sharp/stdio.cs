@@ -1,4 +1,4 @@
-﻿using System.Runtime;
+using System.Runtime;
 using System.Runtime.InteropServices;
 using OS_Sharp.FileSystem;
 using OS_Sharp.Misc;
