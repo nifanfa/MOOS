@@ -38,7 +38,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ClassID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Console.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ConsoleColor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Misc\FPSMeter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\GDT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\IDT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\IFont.cs" />

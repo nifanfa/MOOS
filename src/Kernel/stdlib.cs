@@ -1,6 +1,6 @@
 ﻿using System.Runtime;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public static unsafe class Stdlib
     {

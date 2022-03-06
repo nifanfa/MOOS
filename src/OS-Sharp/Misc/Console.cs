@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public static unsafe class Console
     {
@@ -12,7 +12,6 @@ namespace Kernel
         private static int cursorY = 0;
         private static uint foregroundColor = ConsoleColor.White;
         private static uint backgroundColor = ConsoleColor.Black;
-
         public static int Width { get => width; set => width = value; }
         public static int Height { get => height; set => height = value; }
         public static int CursorX { get => cursorX; set => cursorX = value; }
@@ -42,14 +41,7 @@ namespace Kernel
             Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xE0) | 15));
         }
 
-        public static void Write(object s)
-        {
-            for (byte i = 0; i < s.ToString().Length; i++)
-            {
-                Console.Write(s.ToString()[i]);
-            }
-            s.Dispose();
-        }
+
 
         public static void Back()
         {
@@ -85,20 +77,6 @@ namespace Kernel
         {
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.White;
-        }
-
-        public static void Write(char chr)
-        {
-            WriteFramebuffer(chr);
-
-            CursorX++;
-            if (CursorX * 8 == Width)
-            {
-                CursorX = 0;
-                CursorY++;
-            }
-            MoveUp();
-            UpdateCursor();
         }
 
         private static void WriteFramebuffer(char chr)
@@ -195,16 +173,177 @@ namespace Kernel
             }
         }
 
+        public static void Write(object s)
+        {
+            for (byte i = 0; i < s.ToString().Length; i++)
+            {
+                if (s.ToString()[i] == '\r')
+                {
+                    continue;
+                }
+
+                if (s.ToString()[i] == '\n')
+                {
+                    WriteLine();
+                }
+                else
+                {
+                    WriteFramebuffer(s.ToString()[i]);
+                    CursorX++;
+                    if (CursorX * 8 == Width)
+                    {
+                        CursorX = 0;
+                        CursorY++;
+                    }
+                    MoveUp();
+                    UpdateCursor();
+                }
+            }
+            s.Dispose();
+        }
+
+        public static void Write(char chr)
+        {
+            if (chr == '\r')
+            {
+                return;
+            }
+            if (chr == '\n')
+            {
+                WriteLine();
+            }
+            else
+            {
+                {
+                    WriteFramebuffer(chr);
+
+
+                    CursorX++;
+                    if (CursorX * 8 == Width)
+                    {
+                        CursorX = 0;
+                        CursorY++;
+                    }
+                    MoveUp();
+                    UpdateCursor();
+                }
+            }
+        }
+
+        public static void Write(string s)
+        {
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '\r')
+                {
+                    continue;
+                }
+                if (s[i] == '\n')
+                {
+                    WriteLine();
+                }
+                else
+                {
+                    WriteFramebuffer(s[i]);
+
+
+                    CursorX++;
+                    if (CursorX * 8 == Width)
+                    {
+                        CursorX = 0;
+                        CursorY++;
+                    }
+                    MoveUp();
+                    UpdateCursor();
+                }
+            }
+        }
+
         public static void WriteLine(object o)
         {
-            string s = o.ToString();
-            Write(s);
-            WriteFramebuffer(' ');
-            CursorX = 0;
-            CursorY++;
-            MoveUp();
-            UpdateCursor();
-            s.Dispose();
+            for (byte i = 0; i < o.ToString().Length; i++)
+            {
+                if (o.ToString()[i] == '\r')
+                {
+                    continue;
+                }
+                if (o.ToString()[i] == '\n')
+                {
+                    WriteLine();
+                }
+                else
+                {
+                    WriteFramebuffer(o.ToString()[i]);
+
+
+                    CursorX++;
+                    if (CursorX * 8 == Width)
+                    {
+                        CursorX = 0;
+                        CursorY++;
+                    }
+                    MoveUp();
+                    UpdateCursor();
+                }
+            }
+            o.Dispose();
+            WriteLine();
+        }
+
+        public static void WriteLine(string s)
+        {
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '\r')
+                {
+                    continue;
+                }
+                if (s[i] == '\n')
+                {
+                    WriteLine();
+                }
+                else
+                {
+                    WriteFramebuffer(s[i]);
+
+
+                    CursorX++;
+                    if (CursorX * 8 == Width)
+                    {
+                        CursorX = 0;
+                        CursorY++;
+                    }
+                    MoveUp();
+                    UpdateCursor();
+                }
+            }
+            WriteLine();
+        }
+        public static void WriteLine(char c)
+        {
+            if (c == '\r')
+            {
+                return;
+            }
+            if (c == '\n')
+            {
+                WriteLine();
+            }
+            else
+            {
+                WriteFramebuffer(c);
+
+
+                CursorX++;
+                if (CursorX * 8 == Width)
+                {
+                    CursorX = 0;
+                    CursorY++;
+                }
+                MoveUp();
+                UpdateCursor();
+                WriteLine();
+            }
         }
 
         public static void WriteLine()

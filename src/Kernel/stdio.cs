@@ -1,9 +1,9 @@
 ﻿using System.Runtime;
 using System.Runtime.InteropServices;
-using Kernel.FileSystem;
-using Kernel.Misc;
+using OS_Sharp.FileSystem;
+using OS_Sharp.Misc;
 
-namespace Kernel
+namespace OS_Sharp
 {
     internal unsafe class Stdio
     {

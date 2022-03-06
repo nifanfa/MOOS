@@ -1,4 +1,4 @@
-﻿namespace Kernel
+﻿namespace OS_Sharp
 {
     internal unsafe class Strings
     {

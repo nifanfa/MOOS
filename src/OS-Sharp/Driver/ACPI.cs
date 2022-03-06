@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Kernel.Driver
+namespace OS_Sharp.Driver
 {
 #pragma warning disable CS0649
     public unsafe class ACPI

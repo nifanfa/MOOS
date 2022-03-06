@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Kernel.FileSystem
+namespace OS_Sharp.FileSystem
 {
     public unsafe class FAT32 : File
     {

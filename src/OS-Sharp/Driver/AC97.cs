@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using static Native;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public unsafe class AC97
     {

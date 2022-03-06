@@ -1,7 +1,7 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime.InteropServices;
 
-namespace Kernel.Networking
+namespace OS_Sharp.Networking
 {
     public static unsafe class Ethernet
     {

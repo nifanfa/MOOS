@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kernel.Networking
+namespace OS_Sharp.Networking
 {
     public unsafe class TCPConnection
     {

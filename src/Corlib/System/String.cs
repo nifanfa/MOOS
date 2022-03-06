@@ -93,7 +93,6 @@ namespace System
 
 #pragma warning disable 824
         public extern unsafe String(char* ptr);
-        public extern String(IntPtr ptr);
         public extern String(char[] buf);
         public extern unsafe String(char* ptr, int index, int length);
         public extern unsafe String(char[] buf, int index, int length);
@@ -200,7 +199,6 @@ namespace System
         {
             return this;
         }
-
         public override bool Equals(object obj)
         {
             if (obj is not string)

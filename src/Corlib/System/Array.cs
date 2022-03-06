@@ -35,12 +35,12 @@ namespace System
         {
             if (array == null)
             {
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             if (action == null)
             {
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -52,12 +52,12 @@ namespace System
         {
             if (array == null)
             {
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             if (func == null)
             {
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -75,7 +75,7 @@ namespace System
                 if (length > MaxArrayLength)
                 {
                     /*throw new Exception*/
-                    Kernel.Misc.Panic.Error("Length of array is too large, Max: " + MaxArrayLength);
+                    OS_Sharp.Misc.Panic.Error("Length of array is too large, Max: " + MaxArrayLength);
                 }
 
                 totalLength *= (ulong)length;
@@ -110,7 +110,7 @@ namespace System
             if (newSize < 0)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
 
@@ -136,7 +136,7 @@ namespace System
             if (length < MaxArrayLength)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             return new T[length];
         }
@@ -166,22 +166,22 @@ namespace System
             if (sourceArray == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (destinationArray == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (startIndex < 0)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (destinationArray.Length < sourceArray.Length - count)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (count <= 0)
             {
@@ -192,7 +192,7 @@ namespace System
             object[] temp = new object[count];
             for (int i = startIndex; i < startIndex + count; i++)
             {
-                Kernel.Console.WriteLine(i);
+                OS_Sharp.Console.WriteLine(i);
                 temp[x] = sourceArray[i];
                 x++;
             }
@@ -204,22 +204,22 @@ namespace System
             if (sourceArray == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (destinationArray == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (startIndex < 0)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (destinationArray.Length > sourceArray.Length - count)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
             if (count <= 0)
             {
@@ -244,7 +244,7 @@ namespace System
             if (index != iindex)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             return GetValue(iindex);
@@ -260,13 +260,13 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             return GetValue(iindex1, iindex2);
@@ -283,19 +283,19 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (index3 != iindex3)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             return GetValue(iindex1, iindex2, iindex3);
@@ -310,7 +310,7 @@ namespace System
             if (index != iindex)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             SetValue(value, iindex);
@@ -326,13 +326,13 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             SetValue(value, iindex1, iindex2);
@@ -349,19 +349,19 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (index3 != iindex3)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             SetValue(value, iindex1, iindex2, iindex3);
@@ -402,7 +402,7 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -416,19 +416,19 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             if (startIndex < 0 || startIndex > array.Length)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (count < 0 || startIndex > array.Length - count)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             for (int i = startIndex; i < startIndex + count; i++)
@@ -455,13 +455,13 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             for (int i = startIndex; i < array.Length; i++)
@@ -487,13 +487,13 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             for (int i = startIndex; i < startIndex + array.Length; i++)
@@ -526,25 +526,25 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             if (index < 0)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (length < 0)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (array.Length - index < length)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (length <= 1)
@@ -571,25 +571,25 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument null");
+                OS_Sharp.Misc.Panic.Error("Argument null");
             }
 
             if (index < 0)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (length < 0)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (array.Length - index < length)
             {
                 /*throw new Exception*/
-                Kernel.Misc.Panic.Error("Argument out of range");
+                OS_Sharp.Misc.Panic.Error("Argument out of range");
             }
 
             if (length <= 1)

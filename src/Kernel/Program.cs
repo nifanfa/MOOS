@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime;
 using Internal.Runtime.CompilerHelpers;
-using Kernel.Driver;
-using Kernel.FileSystem;
+using OS_Sharp.Driver;
+using OS_Sharp.FileSystem;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public unsafe class Program
     {

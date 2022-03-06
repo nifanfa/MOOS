@@ -2,10 +2,10 @@
 //Reference: https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
 
 using System.Runtime.InteropServices;
-using Kernel.Networking;
-using static Kernel.Misc.MMIO;
+using OS_Sharp.Networking;
+using static OS_Sharp.Misc.MMIO;
 
-namespace Kernel.Driver
+namespace OS_Sharp.Driver
 {
     public unsafe class Intel8254X
     {

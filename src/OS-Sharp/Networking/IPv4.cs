@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kernel.Networking
+namespace OS_Sharp.Networking
 {
     public static unsafe class IPv4
     {

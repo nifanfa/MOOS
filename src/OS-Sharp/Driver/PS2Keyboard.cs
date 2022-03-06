@@ -4,7 +4,7 @@
 using System;
 using static System.ConsoleKey;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public static class PS2Keyboard
     {

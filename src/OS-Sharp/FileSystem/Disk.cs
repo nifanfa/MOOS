@@ -1,5 +1,5 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
-namespace Kernel.FileSystem
+namespace OS_Sharp.FileSystem
 {
     public abstract class Disk
     {

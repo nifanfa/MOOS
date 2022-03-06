@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Kernel.FileSystem;
+using OS_Sharp.FileSystem;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public static unsafe class SATA
     {

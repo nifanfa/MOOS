@@ -2,10 +2,10 @@
 using System.Runtime;
 using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerServices;
-using Kernel;
-using Kernel.Driver;
-using Kernel.Misc;
-using Kernel.Networking;
+using OS_Sharp;
+using OS_Sharp.Driver;
+using OS_Sharp.Misc;
+using OS_Sharp.Networking;
 
 public static class IDT
 {
@@ -35,7 +35,7 @@ public static class IDT
     private static IDTDescriptor idtr;
 
 
-    public static bool Initialised { get; private set; }
+    public static bool Initialized { get; private set; }
 
 
     public static unsafe bool Initialize()
@@ -54,7 +54,7 @@ public static class IDT
 
         Native.Load_IDT(ref idtr);
 
-        Initialised = true;
+        Initialized = true;
         return true;
     }
 

@@ -2,8 +2,8 @@
 using System;
 using System.Diagnostics;
 using Internal.Runtime.CompilerServices;
-using Kernel;
-using Kernel.Misc;
+using OS_Sharp;
+using OS_Sharp.Misc;
 
 /// <summary>
 /// Nifanfa's Super Fast Memory Allocation Lib

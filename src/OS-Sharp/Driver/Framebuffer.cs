@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public static unsafe class Framebuffer
     {

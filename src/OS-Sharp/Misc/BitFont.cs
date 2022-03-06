@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Kernel.Misc
+namespace OS_Sharp.Misc
 {
     public class BitFontDescriptor
     {

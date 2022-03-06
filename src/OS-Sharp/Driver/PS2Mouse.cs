@@ -1,9 +1,9 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Windows.Forms;
-using Kernel.Driver;
+using OS_Sharp.Driver;
 using static Native;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public static class PS2Mouse
     {

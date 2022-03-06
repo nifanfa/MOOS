@@ -1,7 +1,7 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
-using Kernel.Driver;
+using OS_Sharp.Driver;
 
-namespace Kernel
+namespace OS_Sharp
 {
     public class PIT
     {

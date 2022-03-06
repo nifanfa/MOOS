@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kernel.Driver
+namespace OS_Sharp.Driver
 {
     public static unsafe class SMBIOS
     {
@@ -96,6 +96,8 @@ namespace Kernel.Driver
             public ulong ExtendedMaximumCapacity;
         }
 
+        public static ProcessorInformation* ProcessorInfo;
+
         public static bool Initialize()
         {
             byte* p = (byte*)0xF0000;
@@ -119,7 +121,7 @@ namespace Kernel.Driver
                 switch (hdr->Type)
                 {
                     case HeaderTypes.ProcessorInformation:
-                        ProcessorInformation* pinfo = (ProcessorInformation*)((byte*)hdr + sizeof(SMBIOSHeader));
+                        ProcessorInfo = (ProcessorInformation*)((byte*)hdr + sizeof(SMBIOSHeader));
                         break;
                 }
 

@@ -1,9 +1,9 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Drawing;
 using System.Runtime.InteropServices;
-using Kernel.Networking;
+using OS_Sharp.Networking;
 
-namespace Kernel.Misc
+namespace OS_Sharp.Misc
 {
     public unsafe class PNG : Image
     {
