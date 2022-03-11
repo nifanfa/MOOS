@@ -59,15 +59,13 @@ abstract unsafe class Allocator
             Debug.WriteLine("MiB");
         }
     }
-    
-    /*
+
     public static void KeepAlive(object obj)
     {
         ulong p = GetPageIndexStart((IntPtr)Unsafe.AsPointer(ref obj));
         if (p == 0xFFFFFFFFFFFFFFFF) return;
         _Info.GCInfos[p] = NotCollectIf;
     }
-    */
 
     private static ulong GetPageIndexStart(IntPtr ptr)
     {
