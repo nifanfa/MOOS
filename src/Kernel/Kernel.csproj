@@ -41,6 +41,8 @@
 
 	<Import Project="..\OS-Sharp\OS-Sharp.projitems" Label="Shared" />
 
+	<Import Project="..\NESEmulator\NESEmulator.projitems" Label="Shared" />
+
 	<Target Name="CopyBinary" AfterTargets="Publish">
 		<Exec Command="$(MSBuildStartupDirectory)\Tools\nasm.exe -fbin $(MSBuildStartupDirectory)\Tools\EntryPoint.asm -o $(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Exec>
 		<Exec Command="cmd.exe /c copy /b $(MSBuildProjectDirectory)\$(NativeOutputPath)entry+$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt) $(MSBuildStartupDirectory)\Tools\grub2\boot\kernel"></Exec>

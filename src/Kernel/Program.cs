@@ -71,6 +71,49 @@ namespace OS_Sharp
             RTL8139.Initialise();
             ARP.Require(Network.Gateway);
             */
+
+            Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
+
+            /*
+            byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
+            AC97.Initialize();
+            AC97.Play(buffer);
+            */
+
+            /*
+            for(; ; ) 
+            {
+                Console.WriteLine(Console.ReadLine());
+            }
+            */
+
+            ConsoleKeyInfo Key = Console.ReadKey();
+
+            if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
+            {
+
+                Console.WriteLine("Emulator Keymap:");
+                Console.WriteLine("A = Q");
+                Console.WriteLine("B = E");
+                Console.WriteLine("Z = Select");
+                Console.WriteLine("C = Start");
+                Console.WriteLine("W = Up");
+                Console.WriteLine("A = Left");
+                Console.WriteLine("S = Down");
+                Console.WriteLine("D = Right");
+                Console.WriteLine("Game Will Start After 2 Seconds");
+                PIT.Wait(2000);
+                NES.NES nes = new NES.NES();
+                nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
+                Console.WriteLine("Nintendo Family Computer Emulator Initialized");
+                Framebuffer.TripleBuffered = true;
+                for (; ; )
+                {
+                    nes.runGame();
+                    for (int i = 0; i < 128; i++) Native.Nop();
+                }
+            }
+
             for (; ; )
             {
 
