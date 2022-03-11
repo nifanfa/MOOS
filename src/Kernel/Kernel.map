@@ -1,0 +1,1132 @@
+ Kernel
+
+ Timestamp is 62243995 (Sat Mar  5 20:33:25 2022)
+
+ Preferred load address is 0000000004000000
+
+ Start         Length     Name                   Class
+ 0001:00000000 00000140H .text                   CODE
+ 0001:00000140 00005e4eH .text$mn                CODE
+ 0002:00000000 00008244H .managedcode$I          CODE
+ 0003:00000000 0000269cH .rdata                  DATA
+ 0003:0000269c 00000024H .rdata$voltmd           DATA
+ 0003:000026c0 000001a0H .rdata$zzzdbg           DATA
+ 0003:00002860 000016f8H .xdata                  DATA
+ 0003:00003f58 00000000H .edata                  DATA
+ 0004:00000000 00003470H .data                   DATA
+ 0004:00003470 001202c8H .bss                    DATA
+ 0005:00000000 000008c4H .pdata                  DATA
+ 0006:00000000 00000008H .modules$I              DATA
+ 0007:00000000 00000059H .msvcjmc                DATA
+ 0008:00000000 000000a0H .rsrc$01                DATA
+ 0008:000000a0 00000438H .rsrc$02                DATA
+
+  Address         Publics by Value              Rva+Base               Lib:Object
+
+ 0000:00000000       __guard_iat_count          0000000000000000     <absolute>
+ 0000:00000000       __AbsoluteZero             0000000000000000     <absolute>
+ 0000:00000000       __guard_fids_count         0000000000000000     <absolute>
+ 0000:00000000       __arm64x_redirection_metadata 0000000000000000     <absolute>
+ 0000:00000000       __arm64x_redirection_metadata_count 0000000000000000     <absolute>
+ 0000:00000000       __enclave_config           0000000000000000     <absolute>
+ 0000:00000000       __x64_code_ranges_to_entry_points 0000000000000000     <absolute>
+ 0000:00000000       __arm64x_extra_rfe_table   0000000000000000     <absolute>
+ 0000:00000000       __guard_longjmp_table      0000000000000000     <absolute>
+ 0000:00000000       __guard_eh_cont_table      0000000000000000     <absolute>
+ 0000:00000000       __guard_longjmp_count      0000000000000000     <absolute>
+ 0000:00000000       __guard_check_icall_a64n_fptr 0000000000000000     <absolute>
+ 0000:00000000       __arm64x_native_entrypoint 0000000000000000     <absolute>
+ 0000:00000000       __guard_eh_cont_count      0000000000000000     <absolute>
+ 0000:00000000       __hybrid_auxiliary_iat_copy 0000000000000000     <absolute>
+ 0000:00000000       __hybrid_auxiliary_iat     0000000000000000     <absolute>
+ 0000:00000000       __guard_iat_table          0000000000000000     <absolute>
+ 0000:00000000       __guard_flags              0000000000000000     <absolute>
+ 0000:00000000       __hybrid_code_map          0000000000000000     <absolute>
+ 0000:00000000       __guard_fids_table         0000000000000000     <absolute>
+ 0000:00000000       __dynamic_value_reloc_table 0000000000000000     <absolute>
+ 0000:00000000       __hybrid_code_map_count    0000000000000000     <absolute>
+ 0000:00000000       __arm64x_extra_rfe_table_size 0000000000000000     <absolute>
+ 0000:00000000       __x64_code_ranges_to_entry_points_count 0000000000000000     <absolute>
+ 0001:00000000       __GetNonGCStaticBase_Kernel_Allocator 0000000004001000     Kernel.obj
+ 0001:00000008       __GetNonGCStaticBase_Kernel_GDT 0000000004001008     Kernel.obj
+ 0001:00000010       __GetNonGCStaticBase_Kernel_IDT 0000000004001010     Kernel.obj
+ 0001:00000018       __GetNonGCStaticBase_Kernel_System_Windows_Forms_Control 0000000004001018     Kernel.obj
+ 0001:00000020       __GetNonGCStaticBase_Kernel_OS_Sharp_AC97 0000000004001020     Kernel.obj
+ 0001:00000028       __GetNonGCStaticBase_Kernel_OS_Sharp_Framebuffer 0000000004001028     Kernel.obj
+ 0001:00000030       __GetNonGCStaticBase_Kernel_OS_Sharp_PIT 0000000004001030     Kernel.obj
+ 0001:00000038       __GetNonGCStaticBase_Kernel_OS_Sharp_PS2Keyboard 0000000004001038     Kernel.obj
+ 0001:00000040       __GetNonGCStaticBase_Kernel_OS_Sharp_PS2Mouse 0000000004001040     Kernel.obj
+ 0001:00000048       __GetNonGCStaticBase_Kernel_OS_Sharp_SATA 0000000004001048     Kernel.obj
+ 0001:00000050       __GetNonGCStaticBase_Kernel_OS_Sharp_Console 0000000004001050     Kernel.obj
+ 0001:0000006d       __GetNonGCStaticBase_Kernel_OS_Sharp_PageTable 000000000400106d     Kernel.obj
+ 0001:00000075       __GetNonGCStaticBase_Kernel_OS_Sharp_Networking_RTL8139 0000000004001075     Kernel.obj
+ 0001:0000007d       __GetNonGCStaticBase_Kernel_OS_Sharp_Driver_ACPI 000000000400107d     Kernel.obj
+ 0001:00000085       __GetNonGCStaticBase_Kernel_OS_Sharp_Driver_HPET 0000000004001085     Kernel.obj
+ 0001:0000008d       __GetNonGCStaticBase_Kernel_OS_Sharp_Driver_Intel8254X 000000000400108d     Kernel.obj
+ 0001:00000095       __GetNonGCStaticBase_Kernel_OS_Sharp_Driver_SMBIOS 0000000004001095     Kernel.obj
+ 0001:0000009d       __GetNonGCStaticBase_Kernel_OS_Sharp_Driver_VBE 000000000400109d     Kernel.obj
+ 0001:000000a5       __GetGCStaticBase_Kernel_IDT 00000000040010a5     Kernel.obj
+ 0001:000000b0       __GetGCStaticBase_Kernel_OS_Sharp_PCI 00000000040010b0     Kernel.obj
+ 0001:000000bb       __GetGCStaticBase_Kernel_OS_Sharp_PS2Keyboard 00000000040010bb     Kernel.obj
+ 0001:000000c6       __GetGCStaticBase_Kernel_OS_Sharp_PS2Mouse 00000000040010c6     Kernel.obj
+ 0001:000000d1       __GetGCStaticBase_Kernel_OS_Sharp_SATA 00000000040010d1     Kernel.obj
+ 0001:000000dc       __GetGCStaticBase_Kernel_OS_Sharp_ASC16 00000000040010dc     Kernel.obj
+ 0001:000000e7       __GetGCStaticBase_Kernel_OS_Sharp_Networking_RTL8139 00000000040010e7     Kernel.obj
+ 0001:000000f2       __GetGCStaticBase_Kernel_OS_Sharp_Networking_ARP 00000000040010f2     Kernel.obj
+ 0001:000000fd       __GetGCStaticBase_Kernel_OS_Sharp_Networking_Network 00000000040010fd     Kernel.obj
+ 0001:00000108       __GetGCStaticBase_Kernel_OS_Sharp_Networking_TCP 0000000004001108     Kernel.obj
+ 0001:00000113       __GetGCStaticBase_Kernel_OS_Sharp_FileSystem_File 0000000004001113     Kernel.obj
+ 0001:0000011e       __GetGCStaticBase_Kernel_OS_Sharp_Driver_ACPI 000000000400111e     Kernel.obj
+ 0001:00000129       __GetGCStaticBase_Kernel_OS_Sharp_Driver_IDE 0000000004001129     Kernel.obj
+ 0001:00000140       Movsb                      0000000004001140 f   NativeLib:mem.obj
+ 0001:00000180       Movsd                      0000000004001180 f   NativeLib:mem.obj
+ 0001:000001c0       Stosb                      00000000040011c0 f   NativeLib:mem.obj
+ 0001:00000210       Stosd                      0000000004001210 f   NativeLib:mem.obj
+ 0001:00000260       __JustMyCode_Default       0000000004001260 f i NativeLib:mem.obj
+ 0001:00000270       Load_GDT                   0000000004001270 f   NativeLib:interrupts.obj
+ 0001:000002a0       idt_set                    00000000040012a0 f   NativeLib:interrupts.obj
+ 0001:00000380       set_idt_entries            0000000004001380 f   NativeLib:interrupts.obj
+ 0001:000022c0       Cli                        00000000040032c0 f   NativeLib:native.obj
+ 0001:000022f0       Hlt                        00000000040032f0 f   NativeLib:native.obj
+ 0001:00002320       Invlpg                     0000000004003320 f   NativeLib:native.obj
+ 0001:00002350       Nop                        0000000004003350 f   NativeLib:native.obj
+ 0001:00002370       ReadCR2                    0000000004003370 f   NativeLib:native.obj
+ 0001:00002390       Sti                        0000000004003390 f   NativeLib:native.obj
+ 0001:000023c0       WriteCR3                   00000000040033c0 f   NativeLib:native.obj
+ 0001:000023f0       In16                       00000000040033f0 f   NativeLib:io.obj
+ 0001:00002420       In32                       0000000004003420 f   NativeLib:io.obj
+ 0001:00002450       In8                        0000000004003450 f   NativeLib:io.obj
+ 0001:00002480       Insb                       0000000004003480 f   NativeLib:io.obj
+ 0001:000024c0       Insd                       00000000040034c0 f   NativeLib:io.obj
+ 0001:00002500       Insw                       0000000004003500 f   NativeLib:io.obj
+ 0001:00002540       Out16                      0000000004003540 f   NativeLib:io.obj
+ 0001:00002570       Out32                      0000000004003570 f   NativeLib:io.obj
+ 0001:000025a0       Out8                       00000000040035a0 f   NativeLib:io.obj
+ 0001:000025d0       Outsb                      00000000040035d0 f   NativeLib:io.obj
+ 0001:00002610       Outsd                      0000000004003610 f   NativeLib:io.obj
+ 0001:00002650       Outsw                      0000000004003650 f   NativeLib:io.obj
+ 0001:00002690       isr0                       0000000004003690 f   NativeLib:interrupts_asm.obj
+ 0001:0000269d       isr1                       000000000400369d f   NativeLib:interrupts_asm.obj
+ 0001:000026aa       isr2                       00000000040036aa f   NativeLib:interrupts_asm.obj
+ 0001:000026b7       isr3                       00000000040036b7 f   NativeLib:interrupts_asm.obj
+ 0001:000026c4       isr4                       00000000040036c4 f   NativeLib:interrupts_asm.obj
+ 0001:000026d1       isr5                       00000000040036d1 f   NativeLib:interrupts_asm.obj
+ 0001:000026de       isr6                       00000000040036de f   NativeLib:interrupts_asm.obj
+ 0001:000026eb       isr7                       00000000040036eb f   NativeLib:interrupts_asm.obj
+ 0001:000026f8       isr8                       00000000040036f8 f   NativeLib:interrupts_asm.obj
+ 0001:00002705       isr9                       0000000004003705 f   NativeLib:interrupts_asm.obj
+ 0001:00002712       isr10                      0000000004003712 f   NativeLib:interrupts_asm.obj
+ 0001:0000271f       isr11                      000000000400371f f   NativeLib:interrupts_asm.obj
+ 0001:0000272c       isr12                      000000000400372c f   NativeLib:interrupts_asm.obj
+ 0001:00002739       isr13                      0000000004003739 f   NativeLib:interrupts_asm.obj
+ 0001:00002746       isr14                      0000000004003746 f   NativeLib:interrupts_asm.obj
+ 0001:00002753       isr15                      0000000004003753 f   NativeLib:interrupts_asm.obj
+ 0001:00002760       isr16                      0000000004003760 f   NativeLib:interrupts_asm.obj
+ 0001:0000276d       isr17                      000000000400376d f   NativeLib:interrupts_asm.obj
+ 0001:0000277a       isr18                      000000000400377a f   NativeLib:interrupts_asm.obj
+ 0001:00002787       isr19                      0000000004003787 f   NativeLib:interrupts_asm.obj
+ 0001:00002794       isr20                      0000000004003794 f   NativeLib:interrupts_asm.obj
+ 0001:000027a1       isr21                      00000000040037a1 f   NativeLib:interrupts_asm.obj
+ 0001:000027ae       isr22                      00000000040037ae f   NativeLib:interrupts_asm.obj
+ 0001:000027bb       isr23                      00000000040037bb f   NativeLib:interrupts_asm.obj
+ 0001:000027c8       isr24                      00000000040037c8 f   NativeLib:interrupts_asm.obj
+ 0001:000027d5       isr25                      00000000040037d5 f   NativeLib:interrupts_asm.obj
+ 0001:000027e2       isr26                      00000000040037e2 f   NativeLib:interrupts_asm.obj
+ 0001:000027ef       isr27                      00000000040037ef f   NativeLib:interrupts_asm.obj
+ 0001:000027fc       isr28                      00000000040037fc f   NativeLib:interrupts_asm.obj
+ 0001:00002809       isr29                      0000000004003809 f   NativeLib:interrupts_asm.obj
+ 0001:00002816       isr30                      0000000004003816 f   NativeLib:interrupts_asm.obj
+ 0001:00002823       isr31                      0000000004003823 f   NativeLib:interrupts_asm.obj
+ 0001:00002830       isr128                     0000000004003830 f   NativeLib:interrupts_asm.obj
+ 0001:0000283d       irq0                       000000000400383d f   NativeLib:interrupts_asm.obj
+ 0001:0000287c       irq1                       000000000400387c f   NativeLib:interrupts_asm.obj
+ 0001:000028bb       irq2                       00000000040038bb f   NativeLib:interrupts_asm.obj
+ 0001:000028fa       irq3                       00000000040038fa f   NativeLib:interrupts_asm.obj
+ 0001:00002939       irq4                       0000000004003939 f   NativeLib:interrupts_asm.obj
+ 0001:00002978       irq5                       0000000004003978 f   NativeLib:interrupts_asm.obj
+ 0001:000029b7       irq6                       00000000040039b7 f   NativeLib:interrupts_asm.obj
+ 0001:000029f6       irq7                       00000000040039f6 f   NativeLib:interrupts_asm.obj
+ 0001:00002a35       irq8                       0000000004003a35 f   NativeLib:interrupts_asm.obj
+ 0001:00002a74       irq9                       0000000004003a74 f   NativeLib:interrupts_asm.obj
+ 0001:00002ab3       irq10                      0000000004003ab3 f   NativeLib:interrupts_asm.obj
+ 0001:00002af2       irq11                      0000000004003af2 f   NativeLib:interrupts_asm.obj
+ 0001:00002b31       irq12                      0000000004003b31 f   NativeLib:interrupts_asm.obj
+ 0001:00002b70       irq13                      0000000004003b70 f   NativeLib:interrupts_asm.obj
+ 0001:00002baf       irq14                      0000000004003baf f   NativeLib:interrupts_asm.obj
+ 0001:00002bee       irq15                      0000000004003bee f   NativeLib:interrupts_asm.obj
+ 0001:00002c2d       irq16                      0000000004003c2d f   NativeLib:interrupts_asm.obj
+ 0001:00002c6c       irq17                      0000000004003c6c f   NativeLib:interrupts_asm.obj
+ 0001:00002cab       irq18                      0000000004003cab f   NativeLib:interrupts_asm.obj
+ 0001:00002cea       irq19                      0000000004003cea f   NativeLib:interrupts_asm.obj
+ 0001:00002d29       irq20                      0000000004003d29 f   NativeLib:interrupts_asm.obj
+ 0001:00002d68       irq21                      0000000004003d68 f   NativeLib:interrupts_asm.obj
+ 0001:00002da7       irq22                      0000000004003da7 f   NativeLib:interrupts_asm.obj
+ 0001:00002de6       irq23                      0000000004003de6 f   NativeLib:interrupts_asm.obj
+ 0001:00002e25       irq24                      0000000004003e25 f   NativeLib:interrupts_asm.obj
+ 0001:00002e64       irq25                      0000000004003e64 f   NativeLib:interrupts_asm.obj
+ 0001:00002ea3       irq26                      0000000004003ea3 f   NativeLib:interrupts_asm.obj
+ 0001:00002ee2       irq27                      0000000004003ee2 f   NativeLib:interrupts_asm.obj
+ 0001:00002f21       irq28                      0000000004003f21 f   NativeLib:interrupts_asm.obj
+ 0001:00002f60       irq29                      0000000004003f60 f   NativeLib:interrupts_asm.obj
+ 0001:00002f9f       irq30                      0000000004003f9f f   NativeLib:interrupts_asm.obj
+ 0001:00002fde       irq31                      0000000004003fde f   NativeLib:interrupts_asm.obj
+ 0001:0000301d       irq32                      000000000400401d f   NativeLib:interrupts_asm.obj
+ 0001:0000305c       irq33                      000000000400405c f   NativeLib:interrupts_asm.obj
+ 0001:0000309b       irq34                      000000000400409b f   NativeLib:interrupts_asm.obj
+ 0001:000030da       irq35                      00000000040040da f   NativeLib:interrupts_asm.obj
+ 0001:00003119       irq36                      0000000004004119 f   NativeLib:interrupts_asm.obj
+ 0001:00003158       irq37                      0000000004004158 f   NativeLib:interrupts_asm.obj
+ 0001:00003197       irq38                      0000000004004197 f   NativeLib:interrupts_asm.obj
+ 0001:000031d6       irq39                      00000000040041d6 f   NativeLib:interrupts_asm.obj
+ 0001:00003215       irq40                      0000000004004215 f   NativeLib:interrupts_asm.obj
+ 0001:00003254       irq41                      0000000004004254 f   NativeLib:interrupts_asm.obj
+ 0001:00003293       irq42                      0000000004004293 f   NativeLib:interrupts_asm.obj
+ 0001:000032d2       irq43                      00000000040042d2 f   NativeLib:interrupts_asm.obj
+ 0001:00003311       irq44                      0000000004004311 f   NativeLib:interrupts_asm.obj
+ 0001:00003350       irq45                      0000000004004350 f   NativeLib:interrupts_asm.obj
+ 0001:0000338f       irq46                      000000000400438f f   NativeLib:interrupts_asm.obj
+ 0001:000033ce       irq47                      00000000040043ce f   NativeLib:interrupts_asm.obj
+ 0001:0000340d       irq48                      000000000400440d f   NativeLib:interrupts_asm.obj
+ 0001:0000344c       irq49                      000000000400444c f   NativeLib:interrupts_asm.obj
+ 0001:0000348b       irq50                      000000000400448b f   NativeLib:interrupts_asm.obj
+ 0001:000034ca       irq51                      00000000040044ca f   NativeLib:interrupts_asm.obj
+ 0001:00003509       irq52                      0000000004004509 f   NativeLib:interrupts_asm.obj
+ 0001:00003548       irq53                      0000000004004548 f   NativeLib:interrupts_asm.obj
+ 0001:00003587       irq54                      0000000004004587 f   NativeLib:interrupts_asm.obj
+ 0001:000035c6       irq55                      00000000040045c6 f   NativeLib:interrupts_asm.obj
+ 0001:00003605       irq56                      0000000004004605 f   NativeLib:interrupts_asm.obj
+ 0001:00003644       irq57                      0000000004004644 f   NativeLib:interrupts_asm.obj
+ 0001:00003683       irq58                      0000000004004683 f   NativeLib:interrupts_asm.obj
+ 0001:000036c2       irq59                      00000000040046c2 f   NativeLib:interrupts_asm.obj
+ 0001:00003701       irq60                      0000000004004701 f   NativeLib:interrupts_asm.obj
+ 0001:00003740       irq61                      0000000004004740 f   NativeLib:interrupts_asm.obj
+ 0001:0000377f       irq62                      000000000400477f f   NativeLib:interrupts_asm.obj
+ 0001:000037be       irq63                      00000000040047be f   NativeLib:interrupts_asm.obj
+ 0001:000037fd       irq64                      00000000040047fd f   NativeLib:interrupts_asm.obj
+ 0001:0000383c       irq65                      000000000400483c f   NativeLib:interrupts_asm.obj
+ 0001:0000387b       irq66                      000000000400487b f   NativeLib:interrupts_asm.obj
+ 0001:000038ba       irq67                      00000000040048ba f   NativeLib:interrupts_asm.obj
+ 0001:000038f9       irq68                      00000000040048f9 f   NativeLib:interrupts_asm.obj
+ 0001:00003938       irq69                      0000000004004938 f   NativeLib:interrupts_asm.obj
+ 0001:00003977       irq70                      0000000004004977 f   NativeLib:interrupts_asm.obj
+ 0001:000039b6       irq71                      00000000040049b6 f   NativeLib:interrupts_asm.obj
+ 0001:000039f5       irq72                      00000000040049f5 f   NativeLib:interrupts_asm.obj
+ 0001:00003a34       irq73                      0000000004004a34 f   NativeLib:interrupts_asm.obj
+ 0001:00003a73       irq74                      0000000004004a73 f   NativeLib:interrupts_asm.obj
+ 0001:00003ab2       irq75                      0000000004004ab2 f   NativeLib:interrupts_asm.obj
+ 0001:00003af1       irq76                      0000000004004af1 f   NativeLib:interrupts_asm.obj
+ 0001:00003b30       irq77                      0000000004004b30 f   NativeLib:interrupts_asm.obj
+ 0001:00003b6f       irq78                      0000000004004b6f f   NativeLib:interrupts_asm.obj
+ 0001:00003bae       irq79                      0000000004004bae f   NativeLib:interrupts_asm.obj
+ 0001:00003bed       irq80                      0000000004004bed f   NativeLib:interrupts_asm.obj
+ 0001:00003c2c       irq81                      0000000004004c2c f   NativeLib:interrupts_asm.obj
+ 0001:00003c6b       irq82                      0000000004004c6b f   NativeLib:interrupts_asm.obj
+ 0001:00003caa       irq83                      0000000004004caa f   NativeLib:interrupts_asm.obj
+ 0001:00003ce9       irq84                      0000000004004ce9 f   NativeLib:interrupts_asm.obj
+ 0001:00003d28       irq85                      0000000004004d28 f   NativeLib:interrupts_asm.obj
+ 0001:00003d67       irq86                      0000000004004d67 f   NativeLib:interrupts_asm.obj
+ 0001:00003da6       irq87                      0000000004004da6 f   NativeLib:interrupts_asm.obj
+ 0001:00003de5       irq88                      0000000004004de5 f   NativeLib:interrupts_asm.obj
+ 0001:00003e24       irq89                      0000000004004e24 f   NativeLib:interrupts_asm.obj
+ 0001:00003e63       irq90                      0000000004004e63 f   NativeLib:interrupts_asm.obj
+ 0001:00003ea2       irq91                      0000000004004ea2 f   NativeLib:interrupts_asm.obj
+ 0001:00003ee1       irq92                      0000000004004ee1 f   NativeLib:interrupts_asm.obj
+ 0001:00003f20       irq93                      0000000004004f20 f   NativeLib:interrupts_asm.obj
+ 0001:00003f5f       irq94                      0000000004004f5f f   NativeLib:interrupts_asm.obj
+ 0001:00003f9e       irq95                      0000000004004f9e f   NativeLib:interrupts_asm.obj
+ 0001:00003fdd       irq96                      0000000004004fdd f   NativeLib:interrupts_asm.obj
+ 0001:0000401c       irq97                      000000000400501c f   NativeLib:interrupts_asm.obj
+ 0001:0000405b       irq98                      000000000400505b f   NativeLib:interrupts_asm.obj
+ 0001:0000409a       irq99                      000000000400509a f   NativeLib:interrupts_asm.obj
+ 0001:000040d9       irq100                     00000000040050d9 f   NativeLib:interrupts_asm.obj
+ 0001:00004118       irq101                     0000000004005118 f   NativeLib:interrupts_asm.obj
+ 0001:00004157       irq102                     0000000004005157 f   NativeLib:interrupts_asm.obj
+ 0001:00004196       irq103                     0000000004005196 f   NativeLib:interrupts_asm.obj
+ 0001:000041d5       irq104                     00000000040051d5 f   NativeLib:interrupts_asm.obj
+ 0001:00004214       irq105                     0000000004005214 f   NativeLib:interrupts_asm.obj
+ 0001:00004253       irq106                     0000000004005253 f   NativeLib:interrupts_asm.obj
+ 0001:00004292       irq107                     0000000004005292 f   NativeLib:interrupts_asm.obj
+ 0001:000042d1       irq108                     00000000040052d1 f   NativeLib:interrupts_asm.obj
+ 0001:00004310       irq109                     0000000004005310 f   NativeLib:interrupts_asm.obj
+ 0001:0000434f       irq110                     000000000400534f f   NativeLib:interrupts_asm.obj
+ 0001:0000438e       irq111                     000000000400538e f   NativeLib:interrupts_asm.obj
+ 0001:000043cd       irq112                     00000000040053cd f   NativeLib:interrupts_asm.obj
+ 0001:0000440c       irq113                     000000000400540c f   NativeLib:interrupts_asm.obj
+ 0001:0000444b       irq114                     000000000400544b f   NativeLib:interrupts_asm.obj
+ 0001:0000448a       irq115                     000000000400548a f   NativeLib:interrupts_asm.obj
+ 0001:000044c9       irq116                     00000000040054c9 f   NativeLib:interrupts_asm.obj
+ 0001:00004508       irq117                     0000000004005508 f   NativeLib:interrupts_asm.obj
+ 0001:00004547       irq118                     0000000004005547 f   NativeLib:interrupts_asm.obj
+ 0001:00004586       irq119                     0000000004005586 f   NativeLib:interrupts_asm.obj
+ 0001:000045c5       irq120                     00000000040055c5 f   NativeLib:interrupts_asm.obj
+ 0001:00004604       irq121                     0000000004005604 f   NativeLib:interrupts_asm.obj
+ 0001:00004643       irq122                     0000000004005643 f   NativeLib:interrupts_asm.obj
+ 0001:00004682       irq123                     0000000004005682 f   NativeLib:interrupts_asm.obj
+ 0001:000046c1       irq124                     00000000040056c1 f   NativeLib:interrupts_asm.obj
+ 0001:00004700       irq125                     0000000004005700 f   NativeLib:interrupts_asm.obj
+ 0001:0000473f       irq126                     000000000400573f f   NativeLib:interrupts_asm.obj
+ 0001:0000477e       irq127                     000000000400577e f   NativeLib:interrupts_asm.obj
+ 0001:000047bd       irq128                     00000000040057bd f   NativeLib:interrupts_asm.obj
+ 0001:000047fc       irq129                     00000000040057fc f   NativeLib:interrupts_asm.obj
+ 0001:0000483b       irq130                     000000000400583b f   NativeLib:interrupts_asm.obj
+ 0001:0000487a       irq131                     000000000400587a f   NativeLib:interrupts_asm.obj
+ 0001:000048b9       irq132                     00000000040058b9 f   NativeLib:interrupts_asm.obj
+ 0001:000048f8       irq133                     00000000040058f8 f   NativeLib:interrupts_asm.obj
+ 0001:00004937       irq134                     0000000004005937 f   NativeLib:interrupts_asm.obj
+ 0001:00004976       irq135                     0000000004005976 f   NativeLib:interrupts_asm.obj
+ 0001:000049b5       irq136                     00000000040059b5 f   NativeLib:interrupts_asm.obj
+ 0001:000049f4       irq137                     00000000040059f4 f   NativeLib:interrupts_asm.obj
+ 0001:00004a33       irq138                     0000000004005a33 f   NativeLib:interrupts_asm.obj
+ 0001:00004a72       irq139                     0000000004005a72 f   NativeLib:interrupts_asm.obj
+ 0001:00004ab1       irq140                     0000000004005ab1 f   NativeLib:interrupts_asm.obj
+ 0001:00004af0       irq141                     0000000004005af0 f   NativeLib:interrupts_asm.obj
+ 0001:00004b2f       irq142                     0000000004005b2f f   NativeLib:interrupts_asm.obj
+ 0001:00004b6e       irq143                     0000000004005b6e f   NativeLib:interrupts_asm.obj
+ 0001:00004bad       irq144                     0000000004005bad f   NativeLib:interrupts_asm.obj
+ 0001:00004bec       irq145                     0000000004005bec f   NativeLib:interrupts_asm.obj
+ 0001:00004c2b       irq146                     0000000004005c2b f   NativeLib:interrupts_asm.obj
+ 0001:00004c6a       irq147                     0000000004005c6a f   NativeLib:interrupts_asm.obj
+ 0001:00004ca9       irq148                     0000000004005ca9 f   NativeLib:interrupts_asm.obj
+ 0001:00004ce8       irq149                     0000000004005ce8 f   NativeLib:interrupts_asm.obj
+ 0001:00004d27       irq150                     0000000004005d27 f   NativeLib:interrupts_asm.obj
+ 0001:00004d66       irq151                     0000000004005d66 f   NativeLib:interrupts_asm.obj
+ 0001:00004da5       irq152                     0000000004005da5 f   NativeLib:interrupts_asm.obj
+ 0001:00004de4       irq153                     0000000004005de4 f   NativeLib:interrupts_asm.obj
+ 0001:00004e23       irq154                     0000000004005e23 f   NativeLib:interrupts_asm.obj
+ 0001:00004e62       irq155                     0000000004005e62 f   NativeLib:interrupts_asm.obj
+ 0001:00004ea1       irq156                     0000000004005ea1 f   NativeLib:interrupts_asm.obj
+ 0001:00004ee0       irq157                     0000000004005ee0 f   NativeLib:interrupts_asm.obj
+ 0001:00004f1f       irq158                     0000000004005f1f f   NativeLib:interrupts_asm.obj
+ 0001:00004f5e       irq159                     0000000004005f5e f   NativeLib:interrupts_asm.obj
+ 0001:00004f9d       irq160                     0000000004005f9d f   NativeLib:interrupts_asm.obj
+ 0001:00004fdc       irq161                     0000000004005fdc f   NativeLib:interrupts_asm.obj
+ 0001:0000501b       irq162                     000000000400601b f   NativeLib:interrupts_asm.obj
+ 0001:0000505a       irq163                     000000000400605a f   NativeLib:interrupts_asm.obj
+ 0001:00005099       irq164                     0000000004006099 f   NativeLib:interrupts_asm.obj
+ 0001:000050d8       irq165                     00000000040060d8 f   NativeLib:interrupts_asm.obj
+ 0001:00005117       irq166                     0000000004006117 f   NativeLib:interrupts_asm.obj
+ 0001:00005156       irq167                     0000000004006156 f   NativeLib:interrupts_asm.obj
+ 0001:00005195       irq168                     0000000004006195 f   NativeLib:interrupts_asm.obj
+ 0001:000051d4       irq169                     00000000040061d4 f   NativeLib:interrupts_asm.obj
+ 0001:00005213       irq170                     0000000004006213 f   NativeLib:interrupts_asm.obj
+ 0001:00005252       irq171                     0000000004006252 f   NativeLib:interrupts_asm.obj
+ 0001:00005291       irq172                     0000000004006291 f   NativeLib:interrupts_asm.obj
+ 0001:000052d0       irq173                     00000000040062d0 f   NativeLib:interrupts_asm.obj
+ 0001:0000530f       irq174                     000000000400630f f   NativeLib:interrupts_asm.obj
+ 0001:0000534e       irq175                     000000000400634e f   NativeLib:interrupts_asm.obj
+ 0001:0000538d       irq176                     000000000400638d f   NativeLib:interrupts_asm.obj
+ 0001:000053cc       irq177                     00000000040063cc f   NativeLib:interrupts_asm.obj
+ 0001:0000540b       irq178                     000000000400640b f   NativeLib:interrupts_asm.obj
+ 0001:0000544a       irq179                     000000000400644a f   NativeLib:interrupts_asm.obj
+ 0001:00005489       irq180                     0000000004006489 f   NativeLib:interrupts_asm.obj
+ 0001:000054c8       irq181                     00000000040064c8 f   NativeLib:interrupts_asm.obj
+ 0001:00005507       irq182                     0000000004006507 f   NativeLib:interrupts_asm.obj
+ 0001:00005546       irq183                     0000000004006546 f   NativeLib:interrupts_asm.obj
+ 0001:00005585       irq184                     0000000004006585 f   NativeLib:interrupts_asm.obj
+ 0001:000055c4       irq185                     00000000040065c4 f   NativeLib:interrupts_asm.obj
+ 0001:00005603       irq186                     0000000004006603 f   NativeLib:interrupts_asm.obj
+ 0001:00005642       irq187                     0000000004006642 f   NativeLib:interrupts_asm.obj
+ 0001:00005681       irq188                     0000000004006681 f   NativeLib:interrupts_asm.obj
+ 0001:000056c0       irq189                     00000000040066c0 f   NativeLib:interrupts_asm.obj
+ 0001:000056ff       irq190                     00000000040066ff f   NativeLib:interrupts_asm.obj
+ 0001:0000573e       irq191                     000000000400673e f   NativeLib:interrupts_asm.obj
+ 0001:0000577d       irq192                     000000000400677d f   NativeLib:interrupts_asm.obj
+ 0001:000057bc       irq193                     00000000040067bc f   NativeLib:interrupts_asm.obj
+ 0001:000057fb       irq194                     00000000040067fb f   NativeLib:interrupts_asm.obj
+ 0001:0000583a       irq195                     000000000400683a f   NativeLib:interrupts_asm.obj
+ 0001:00005879       irq196                     0000000004006879 f   NativeLib:interrupts_asm.obj
+ 0001:000058b8       irq197                     00000000040068b8 f   NativeLib:interrupts_asm.obj
+ 0001:000058f7       irq198                     00000000040068f7 f   NativeLib:interrupts_asm.obj
+ 0001:00005936       irq199                     0000000004006936 f   NativeLib:interrupts_asm.obj
+ 0001:00005975       irq200                     0000000004006975 f   NativeLib:interrupts_asm.obj
+ 0001:000059b4       irq201                     00000000040069b4 f   NativeLib:interrupts_asm.obj
+ 0001:000059f3       irq202                     00000000040069f3 f   NativeLib:interrupts_asm.obj
+ 0001:00005a32       irq203                     0000000004006a32 f   NativeLib:interrupts_asm.obj
+ 0001:00005a71       irq204                     0000000004006a71 f   NativeLib:interrupts_asm.obj
+ 0001:00005ab0       irq205                     0000000004006ab0 f   NativeLib:interrupts_asm.obj
+ 0001:00005aef       irq206                     0000000004006aef f   NativeLib:interrupts_asm.obj
+ 0001:00005b2e       irq207                     0000000004006b2e f   NativeLib:interrupts_asm.obj
+ 0001:00005b6d       irq208                     0000000004006b6d f   NativeLib:interrupts_asm.obj
+ 0001:00005bac       irq209                     0000000004006bac f   NativeLib:interrupts_asm.obj
+ 0001:00005beb       irq210                     0000000004006beb f   NativeLib:interrupts_asm.obj
+ 0001:00005c2a       irq211                     0000000004006c2a f   NativeLib:interrupts_asm.obj
+ 0001:00005c69       irq212                     0000000004006c69 f   NativeLib:interrupts_asm.obj
+ 0001:00005ca8       irq213                     0000000004006ca8 f   NativeLib:interrupts_asm.obj
+ 0001:00005ce7       irq214                     0000000004006ce7 f   NativeLib:interrupts_asm.obj
+ 0001:00005d26       irq215                     0000000004006d26 f   NativeLib:interrupts_asm.obj
+ 0001:00005d65       irq216                     0000000004006d65 f   NativeLib:interrupts_asm.obj
+ 0001:00005da4       irq217                     0000000004006da4 f   NativeLib:interrupts_asm.obj
+ 0001:00005de3       irq218                     0000000004006de3 f   NativeLib:interrupts_asm.obj
+ 0001:00005e22       irq219                     0000000004006e22 f   NativeLib:interrupts_asm.obj
+ 0001:00005e61       irq220                     0000000004006e61 f   NativeLib:interrupts_asm.obj
+ 0001:00005ea0       irq221                     0000000004006ea0 f   NativeLib:interrupts_asm.obj
+ 0001:00005edf       irq222                     0000000004006edf f   NativeLib:interrupts_asm.obj
+ 0001:00005f1e       irq223                     0000000004006f1e f   NativeLib:interrupts_asm.obj
+ 0001:00005f5d       _reload_segreg             0000000004006f5d f   NativeLib:interrupts_asm.obj
+ 0001:00005f84       Load_IDT                   0000000004006f84 f   NativeLib:interrupts_asm.obj
+ 0001:00005f88       _cli                       0000000004006f88 f   NativeLib:interrupts_asm.obj
+ 0001:00005f8a       _sti                       0000000004006f8a f   NativeLib:interrupts_asm.obj
+ 0001:00005f8c       _hlt                       0000000004006f8c f   NativeLib:interrupts_asm.obj
+ 0002:00000000       Kernel_Allocator__GetPageIndexStart 0000000004007000     Kernel.obj
+ 0002:00000060       Kernel_Allocator__Free     0000000004007060     Kernel.obj
+ 0002:00000170       Kernel_Allocator__Initialize 0000000004007170     Kernel.obj
+ 0002:00000220       Kernel_Allocator__Allocate 0000000004007220     Kernel.obj
+ 0002:00000370       Kernel_Allocator__Reallocate 0000000004007370     Kernel.obj
+ 0002:00000470       Kernel_GDT__Initialize     0000000004007470     Kernel.obj
+ 0002:00000550       Kernel_IDT__Initialize     0000000004007550     Kernel.obj
+ 0002:00000650       exception_handler          0000000004007650     Kernel.obj
+ 0002:00000650       Kernel_IDT__ExceptionHandler 0000000004007650     Kernel.obj
+ 0002:000007b0       Kernel_IDT__IRQHandler     00000000040077b0     Kernel.obj
+ 0002:000007b0       irq_handler                00000000040077b0     Kernel.obj
+ 0002:00000870       Kernel_Native__Load_GDT    0000000004007870     Kernel.obj
+ 0002:000008d0       Kernel_Native__Load_IDT    00000000040078d0     Kernel.obj
+ 0002:00000930       Object___ctor              0000000004007930     Kernel.obj
+ 0002:00000940       Object__Dispose            0000000004007940     Kernel.obj
+ 0002:00000960       String__FromASCII          0000000004007960     Kernel.obj
+ 0002:000009f0       String__FromASCII_0        00000000040079f0     Kernel.obj
+ 0002:00000ab0       String__Ctor_1             0000000004007ab0     Kernel.obj
+ 0002:00000ba0       String__Ctor_2             0000000004007ba0     Kernel.obj
+ 0002:00000c60       String__Ctor_3             0000000004007c60     Kernel.obj
+ 0002:00000cb0       String__Equals_0           0000000004007cb0     Kernel.obj
+ 0002:00000d00       String__Concat             0000000004007d00     Kernel.obj
+ 0002:00000df0       String__Concat_1           0000000004007df0     Kernel.obj
+ 0002:00000e50       UInt64__ToString           0000000004007e50     Kernel.obj
+ 0002:00000f20       UInt64__ToStringHex        0000000004007f20     Kernel.obj
+ 0002:00000fd0       Kernel_System_Runtime_TypeCast__CheckCastClass 0000000004007fd0     Kernel.obj
+ 0002:00000fd0       RhTypeCast_CheckCastClass  0000000004007fd0     Kernel.obj
+ 0002:00001000       Kernel_System_Runtime_TypeCast__CheckCastArray 0000000004008000     Kernel.obj
+ 0002:00001000       RhTypeCast_CheckCastArray  0000000004008000     Kernel.obj
+ 0002:00001030       RhTypeCast_IsInstanceOfArray 0000000004008030     Kernel.obj
+ 0002:00001030       Kernel_System_Runtime_TypeCast__IsInstanceOfArray 0000000004008030     Kernel.obj
+ 0002:00001070       Kernel_System_Runtime_CompilerServices_ClassConstructorRunner__CheckStaticClassConstructionReturnNonGCStaticBase 0000000004008070     Kernel.obj
+ 0002:00001090       Kernel_System_Runtime_CompilerServices_ClassConstructorRunner__CheckStaticClassConstruction 0000000004008090     Kernel.obj
+ 0002:000010d0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____imp_GetCurrentThreadId 00000000040080d0     Kernel.obj
+ 0002:000010d0       __imp_GetCurrentThreadId   00000000040080d0     Kernel.obj
+ 0002:000010e0       __CheckForDebuggerJustMyCode 00000000040080e0     Kernel.obj
+ 0002:000010e0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____CheckForDebuggerJustMyCode 00000000040080e0     Kernel.obj
+ 0002:000010f0       __fail_fast                00000000040080f0     Kernel.obj
+ 0002:000010f0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__FailFast 00000000040080f0     Kernel.obj
+ 0002:00001100       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemSet 0000000004008100     Kernel.obj
+ 0002:00001100       memset                     0000000004008100     Kernel.obj
+ 0002:00001120       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemCpy 0000000004008120     Kernel.obj
+ 0002:00001120       memcpy                     0000000004008120     Kernel.obj
+ 0002:00001140       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpFallbackFailFast 0000000004008140     Kernel.obj
+ 0002:00001140       RhpFallbackFailFast        0000000004008140     Kernel.obj
+ 0002:00001150       RhpReversePInvoke2         0000000004008150     Kernel.obj
+ 0002:00001150       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke2 0000000004008150     Kernel.obj
+ 0002:00001160       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn2 0000000004008160     Kernel.obj
+ 0002:00001160       RhpReversePInvokeReturn2   0000000004008160     Kernel.obj
+ 0002:00001170       RhpReversePInvoke          0000000004008170     Kernel.obj
+ 0002:00001170       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke 0000000004008170     Kernel.obj
+ 0002:00001180       RhpReversePInvokeReturn    0000000004008180     Kernel.obj
+ 0002:00001180       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn 0000000004008180     Kernel.obj
+ 0002:00001190       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvoke 0000000004008190     Kernel.obj
+ 0002:00001190       RhpPInvoke                 0000000004008190     Kernel.obj
+ 0002:000011a0       RhpPInvokeReturn           00000000040081a0     Kernel.obj
+ 0002:000011a0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvokeReturn 00000000040081a0     Kernel.obj
+ 0002:000011b0       RhpNewFast                 00000000040081b0     Kernel.obj
+ 0002:000011b0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewFast 00000000040081b0     Kernel.obj
+ 0002:00001260       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewArray 0000000004008260     Kernel.obj
+ 0002:00001260       RhpNewArray                0000000004008260     Kernel.obj
+ 0002:00001370       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpAssignRef 0000000004008370     Kernel.obj
+ 0002:00001370       RhpAssignRef               0000000004008370     Kernel.obj
+ 0002:00001380       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpByRefAssignRef 0000000004008380     Kernel.obj
+ 0002:00001380       RhpByRefAssignRef          0000000004008380     Kernel.obj
+ 0002:00001390       RhpCheckedAssignRef        0000000004008390     Kernel.obj
+ 0002:00001390       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpCheckedAssignRef 0000000004008390     Kernel.obj
+ 0002:000013a0       RhpStelemRef               00000000040083a0     Kernel.obj
+ 0002:000013a0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpStelemRef 00000000040083a0     Kernel.obj
+ 0002:000013e0       RhTypeCast_IsInstanceOfClass 00000000040083e0     Kernel.obj
+ 0002:000013e0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhTypeCast_IsInstanceOfClass 00000000040083e0     Kernel.obj
+ 0002:00001410       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__InitializeModules 0000000004008410     Kernel.obj
+ 0002:00001480       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__InitializeStatics 0000000004008480     Kernel.obj
+ 0002:00001520       Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowOverflowException 0000000004008520     Kernel.obj
+ 0002:00001530       Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowIndexOutOfRangeException 0000000004008530     Kernel.obj
+ 0002:00001540       Main                       0000000004008540     Kernel.obj
+ 0002:00001540       Kernel_OS_Sharp_Program__Main_0 0000000004008540     Kernel.obj
+ 0002:00001810       Kernel_OS_Sharp_Program__InitMsg 0000000004008810     Kernel.obj
+ 0002:000018b0       Kernel_OS_Sharp_AC97__OnInterrupt 00000000040088b0     Kernel.obj
+ 0002:00001970       Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 0000000004008970     Kernel.obj
+ 0002:000019c0       Kernel_OS_Sharp_Framebuffer__SetVideoMode 00000000040089c0     Kernel.obj
+ 0002:00001ab0       Kernel_OS_Sharp_Framebuffer__Clear 0000000004008ab0     Kernel.obj
+ 0002:00001b30       Kernel_OS_Sharp_Framebuffer__DrawPoint 0000000004008b30     Kernel.obj
+ 0002:00001b90       Kernel_OS_Sharp_Framebuffer__GetPoint 0000000004008b90     Kernel.obj
+ 0002:00001c00       Kernel_OS_Sharp_PCIDevice___ctor 0000000004008c00     Kernel.obj
+ 0002:00001c10       Kernel_OS_Sharp_PCI__Initialize 0000000004008c10     Kernel.obj
+ 0002:00001d10       Kernel_OS_Sharp_PCI__CheckBus 0000000004008d10     Kernel.obj
+ 0002:00002460       Kernel_OS_Sharp_PCI__GetHeaderType 0000000004009460     Kernel.obj
+ 0002:00002510       Kernel_OS_Sharp_PIC__Disable 0000000004009510     Kernel.obj
+ 0002:00002700       Kernel_OS_Sharp_PIT__Initialize 0000000004009700     Kernel.obj
+ 0002:00002800       Kernel_OS_Sharp_PS2Keyboard__Initialize 0000000004009800     Kernel.obj
+ 0002:00002cb0       Kernel_OS_Sharp_PS2Keyboard__CleanKeyInfo 0000000004009cb0     Kernel.obj
+ 0002:00002ce0       Kernel_OS_Sharp_PS2Keyboard__ProcessKey 0000000004009ce0     Kernel.obj
+ 0002:00002f10       Kernel_OS_Sharp_PS2Mouse__Initialize 0000000004009f10     Kernel.obj
+ 0002:00003150       Kernel_OS_Sharp_PS2Mouse__WriteRegister 000000000400a150     Kernel.obj
+ 0002:00003240       Kernel_OS_Sharp_PS2Mouse__OnInterrupt 000000000400a240     Kernel.obj
+ 0002:000033f0       Kernel_OS_Sharp_SATA__Initialize 000000000400a3f0     Kernel.obj
+ 0002:00003690       Kernel_OS_Sharp_SATA__CheckPortType 000000000400a690     Kernel.obj
+ 0002:00003700       Kernel_OS_Sharp_Serial__Initialize 000000000400a700     Kernel.obj
+ 0002:00003870       Kernel_OS_Sharp_Serial__Write 000000000400a870     Kernel.obj
+ 0002:000038c0       Kernel_OS_Sharp_Serial__Write_0 000000000400a8c0     Kernel.obj
+ 0002:00003950       Kernel_OS_Sharp_ASC16__DrawChar 000000000400a950     Kernel.obj
+ 0002:000039e0       Kernel_OS_Sharp_Console__Initialize 000000000400a9e0     Kernel.obj
+ 0002:00003a70       Kernel_OS_Sharp_Console__EnableCursor 000000000400aa70     Kernel.obj
+ 0002:00003bb0       Kernel_OS_Sharp_Console__WriteFramebuffer 000000000400abb0     Kernel.obj
+ 0002:00003c50       Kernel_OS_Sharp_Console__MoveUp 000000000400ac50     Kernel.obj
+ 0002:00003d70       Kernel_OS_Sharp_Console__UpdateCursor 000000000400ad70     Kernel.obj
+ 0002:00003e80       Kernel_OS_Sharp_Console__UpdateCursorFramebuffer 000000000400ae80     Kernel.obj
+ 0002:00003ed0       Kernel_OS_Sharp_Console__Write_0 000000000400aed0     Kernel.obj
+ 0002:00003f30       Kernel_OS_Sharp_Console__Write_1 000000000400af30     Kernel.obj
+ 0002:00003fa0       Kernel_OS_Sharp_Console__WriteLine_0 000000000400afa0     Kernel.obj
+ 0002:00004020       Kernel_OS_Sharp_Console__WriteLine_2 000000000400b020     Kernel.obj
+ 0002:00004050       Kernel_OS_Sharp_Console__Clear 000000000400b050     Kernel.obj
+ 0002:00004070       Kernel_OS_Sharp_Console___cctor 000000000400b070     Kernel.obj
+ 0002:000040b0       Kernel_OS_Sharp_PageTable__Initialize 000000000400b0b0     Kernel.obj
+ 0002:000041b0       Kernel_OS_Sharp_PageTable__GetPage 000000000400b1b0     Kernel.obj
+ 0002:00004260       Kernel_OS_Sharp_PageTable__Next 000000000400b260     Kernel.obj
+ 0002:00004310       Kernel_OS_Sharp_UDP__HandlePacket 000000000400b310     Kernel.obj
+ 0002:000043e0       print                      000000000400b3e0     Kernel.obj
+ 0002:000043e0       Kernel_OS_Sharp_Stdio__Print 000000000400b3e0     Kernel.obj
+ 0002:00004420       Kernel_OS_Sharp_Stdio__Fopen 000000000400b420     Kernel.obj
+ 0002:00004420       fopen                      000000000400b420     Kernel.obj
+ 0002:00004580       Kernel_OS_Sharp_Stdio__Fseek 000000000400b580     Kernel.obj
+ 0002:00004580       fseek                      000000000400b580     Kernel.obj
+ 0002:000045a0       fread                      000000000400b5a0     Kernel.obj
+ 0002:000045a0       Kernel_OS_Sharp_Stdio__Fread 000000000400b5a0     Kernel.obj
+ 0002:00004610       malloc                     000000000400b610     Kernel.obj
+ 0002:00004610       Kernel_OS_Sharp_Stdlib__Malloc 000000000400b610     Kernel.obj
+ 0002:00004620       Kernel_OS_Sharp_Stdlib__Free 000000000400b620     Kernel.obj
+ 0002:00004620       free                       000000000400b620     Kernel.obj
+ 0002:00004630       realloc                    000000000400b630     Kernel.obj
+ 0002:00004630       Kernel_OS_Sharp_Stdlib__Realloc 000000000400b630     Kernel.obj
+ 0002:00004640       Kernel_OS_Sharp_Misc_Panic__Error 000000000400b640     Kernel.obj
+ 0002:000046b0       Kernel_OS_Sharp_Networking_RTL8139__OnInterrupt 000000000400b6b0     Kernel.obj
+ 0002:000047b0       Kernel_OS_Sharp_Networking_RTL8139__Send 000000000400b7b0     Kernel.obj
+ 0002:000048b0       Kernel_OS_Sharp_Networking_ARP__HandlePacket 000000000400b8b0     Kernel.obj
+ 0002:00004da0       Kernel_OS_Sharp_Networking_ARP__Lookup 000000000400bda0     Kernel.obj
+ 0002:00004f20       Kernel_OS_Sharp_Networking_ARP__Require 000000000400bf20     Kernel.obj
+ 0002:00005110       Kernel_OS_Sharp_Networking_Ethernet__HandlePacket 000000000400c110     Kernel.obj
+ 0002:000051a0       Kernel_OS_Sharp_Networking_Ethernet__SendPacket 000000000400c1a0     Kernel.obj
+ 0002:00005370       Kernel_OS_Sharp_Networking_IPv4__HandlePacket 000000000400c370     Kernel.obj
+ 0002:00005500       Kernel_OS_Sharp_Networking_IPv4__SendPacket 000000000400c500     Kernel.obj
+ 0002:000056a0       Kernel_OS_Sharp_Networking_IPv4__CalculateChecksum 000000000400c6a0     Kernel.obj
+ 0002:000056f0       Kernel_OS_Sharp_Networking_TCP__TcpRecv 000000000400c6f0     Kernel.obj
+ 0002:00005780       Kernel_OS_Sharp_Networking_TCP__RecvGeneral 000000000400c780     Kernel.obj
+ 0002:000058a0       Kernel_OS_Sharp_Networking_TCP__RecvFin 000000000400c8a0     Kernel.obj
+ 0002:00005920       Kernel_OS_Sharp_Networking_TCP__RecvAck 000000000400c920     Kernel.obj
+ 0002:00005a30       Kernel_OS_Sharp_Networking_TCP__RecvRst 000000000400ca30     Kernel.obj
+ 0002:00005a70       Kernel_OS_Sharp_Networking_TCP__RecvSynSent 000000000400ca70     Kernel.obj
+ 0002:00005ba0       Kernel_OS_Sharp_Networking_TCP__SendPacket_0 000000000400cba0     Kernel.obj
+ 0002:00005eb0       Kernel_OS_Sharp_Networking_TCP__NetAllocBuf 000000000400ceb0     Kernel.obj
+ 0002:00005ee0       Kernel_OS_Sharp_Networking_TCP__Swap 000000000400cee0     Kernel.obj
+ 0002:00005ff0       Kernel_OS_Sharp_Networking_TCP__TCPChecksum 000000000400cff0     Kernel.obj
+ 0002:00006060       Kernel_OS_Sharp_FileSystem_Ramdisk__Read 000000000400d060     Kernel.obj
+ 0002:00006110       Kernel_OS_Sharp_FileSystem_FAT32___ctor 000000000400d110     Kernel.obj
+ 0002:00006260       Kernel_OS_Sharp_FileSystem_FAT32__ReadAllBytes 000000000400d260     Kernel.obj
+ 0002:00006410       Kernel_OS_Sharp_FileSystem_FAT32__GetSectorsWillUse 000000000400d410     Kernel.obj
+ 0002:00006430       Kernel_OS_Sharp_FileSystem_FAT32__ReadList 000000000400d430     Kernel.obj
+ 0002:000069f0       Kernel_OS_Sharp_Driver_ACPI__GetRSDP 000000000400d9f0     Kernel.obj
+ 0002:00006a20       Kernel_OS_Sharp_Driver_ACPI__Initialize 000000000400da20     Kernel.obj
+ 0002:00006ac0       Kernel_OS_Sharp_Driver_ACPI__ParseDT 000000000400dac0     Kernel.obj
+ 0002:00006c60       Kernel_OS_Sharp_Driver_ACPI__RemapIRQ 000000000400dc60     Kernel.obj
+ 0002:00006cc0       Kernel_OS_Sharp_Driver_HPET__Initialize 000000000400dcc0     Kernel.obj
+ 0002:00006d40       Kernel_OS_Sharp_Driver_IDE__Initialize 000000000400dd40     Kernel.obj
+ 0002:00006e60       Kernel_OS_Sharp_Driver_IDE___ctor 000000000400de60     Kernel.obj
+ 0002:00007390       Kernel_OS_Sharp_Driver_IDE__Available 000000000400e390     Kernel.obj
+ 0002:00007420       Kernel_OS_Sharp_Driver_IDE__WaitForReadyStatus 000000000400e420     Kernel.obj
+ 0002:00007490       Kernel_OS_Sharp_Driver_IDE__WaitForIdentifyData 000000000400e490     Kernel.obj
+ 0002:00007500       Kernel_OS_Sharp_Driver_IDE__ReadOrWrite 000000000400e500     Kernel.obj
+ 0002:00007800       Kernel_OS_Sharp_Driver_IDE__Read 000000000400e800     Kernel.obj
+ 0002:00007890       Kernel_OS_Sharp_Driver_Intel8254X__OnInterrupt 000000000400e890     Kernel.obj
+ 0002:00007990       Kernel_OS_Sharp_Driver_IOAPIC__Initialize 000000000400e990     Kernel.obj
+ 0002:00007a10       Kernel_OS_Sharp_Driver_IOAPIC__In 000000000400ea10     Kernel.obj
+ 0002:00007a40       Kernel_OS_Sharp_Driver_IOAPIC__Out 000000000400ea40     Kernel.obj
+ 0002:00007a70       Kernel_OS_Sharp_Driver_LocalAPIC__Initialize 000000000400ea70     Kernel.obj
+ 0002:00007ad0       Kernel_OS_Sharp_Driver_SMBIOS__Initialize 000000000400ead0     Kernel.obj
+ 0002:00007b70       Kernel_OS_Sharp_Driver_VBE__Initialize 000000000400eb70     Kernel.obj
+ 0002:00007bd0       Kernel_OS_Sharp_SATA_SATADevice__Configure 000000000400ebd0     Kernel.obj
+ 0002:00007cc0       Kernel_OS_Sharp_SATA_SATADevice__Read 000000000400ecc0     Kernel.obj
+ 0002:00007d50       Kernel_OS_Sharp_SATA_SATADevice__ReadOrWrite 000000000400ed50     Kernel.obj
+ 0002:000080c0       Kernel_OS_Sharp_SATA_SATADevice__FindSlot 000000000400f0c0     Kernel.obj
+ 0002:00008100       Kernel_OS_Sharp_SATA_SATADevice___ctor 000000000400f100     Kernel.obj
+ 0002:00008110       Kernel_OS_Sharp_FileSystem_FAT32_AEntry___ctor 000000000400f110     Kernel.obj
+ 0002:00008120       Kernel_System_Array_1<UInt8>___ctor 000000000400f120     Kernel.obj
+ 0002:00008130       Kernel_System_Array_1<Char>___ctor 000000000400f130     Kernel.obj
+ 0002:00008140       Kernel_System_Array_1<Kernel_System_ConsoleKey>___ctor 000000000400f140     Kernel.obj
+ 0002:00008150       Kernel_System_Array_1<Kernel_IDT_IDTEntry>___ctor 000000000400f150     Kernel.obj
+ 0002:00008160       Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__get_Item 000000000400f160     Kernel.obj
+ 0002:000081a0       Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__Add 000000000400f1a0     Kernel.obj
+ 0002:000081e0       Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE_DriveInfo>___ctor 000000000400f1e0     Kernel.obj
+ 0002:000081f0       Kernel_System_Array_1<System___Canon>___ctor 000000000400f1f0     Kernel.obj
+ 0002:00008200       Internal_CompilerGenerated__Module___SetAppContextSwitches 000000000400f200     Kernel.obj
+ 0002:00008210       Kernel__Module___StartupCodeMain 000000000400f210     Kernel.obj
+ 0002:00008210       __managed__Main            000000000400f210     Kernel.obj
+ 0003:00000000       __embedded_metadata        0000000004010000     Kernel.obj
+ 0003:0000137e       __embedded_resourceindex   000000000401137e     Kernel.obj
+ 0003:0000137e       __embedded_resourcedata    000000000401137e     Kernel.obj
+ 0003:0000137e       __embedded_resourcedata_End 000000000401137e     Kernel.obj
+ 0003:0000137e       __embedded_metadata_End    000000000401137e     Kernel.obj
+ 0003:00001381       __type_to_metadata_map     0000000004011381     Kernel.obj
+ 0003:00001381       __embedded_resourceindex_End 0000000004011381     Kernel.obj
+ 0003:000013f1       __type_to_cctorContext_map 00000000040113f1     Kernel.obj
+ 0003:000013f1       __type_to_metadata_map_End 00000000040113f1     Kernel.obj
+ 0003:000013f4       __type_to_cctorContext_map_End 00000000040113f4     Kernel.obj
+ 0003:000013f4       __method_to_entrypoint_map 00000000040113f4     Kernel.obj
+ 0003:000013f7       __method_to_entrypoint_map_End 00000000040113f7     Kernel.obj
+ 0003:000013f7       __delegate_marshalling_stub_map 00000000040113f7     Kernel.obj
+ 0003:000013fa       __delegate_marshalling_stub_map_End 00000000040113fa     Kernel.obj
+ 0003:000013fa       __struct_marshalling_stub_map 00000000040113fa     Kernel.obj
+ 0003:000013fd       __struct_marshalling_stub_map_End 00000000040113fd     Kernel.obj
+ 0003:000013fd       __array_type_map           00000000040113fd     Kernel.obj
+ 0003:0000141b       __array_type_map_End       000000000401141b     Kernel.obj
+ 0003:0000141b       __field_to_offset_map      000000000401141b     Kernel.obj
+ 0003:0000141e       __nativelayoutinfo         000000000401141e     Kernel.obj
+ 0003:0000141e       __nativelayoutinfo_End     000000000401141e     Kernel.obj
+ 0003:0000141e       __exact_method_instantiations 000000000401141e     Kernel.obj
+ 0003:0000141e       __field_to_offset_map_End  000000000401141e     Kernel.obj
+ 0003:00001421       __exact_method_instantiations_End 0000000004011421     Kernel.obj
+ 0003:00001421       __generic_types_hashtable  0000000004011421     Kernel.obj
+ 0003:00001433       __generic_types_hashtable_End 0000000004011433     Kernel.obj
+ 0003:00001433       __generic_methods_hashtable 0000000004011433     Kernel.obj
+ 0003:00001436       __generic_methods_hashtable_End 0000000004011436     Kernel.obj
+ 0003:00001436       __gvm_table                0000000004011436     Kernel.obj
+ 0003:00001439       __interface_gvm_table      0000000004011439     Kernel.obj
+ 0003:00001439       __gvm_table_End            0000000004011439     Kernel.obj
+ 0003:0000143c       __interface_gvm_table_End  000000000401143c     Kernel.obj
+ 0003:0000143c       __GenericMethodsTemplateMap 000000000401143c     Kernel.obj
+ 0003:0000143f       __GenericMethodsTemplateMap_End 000000000401143f     Kernel.obj
+ 0003:0000143f       __GenericTypesTemplateMap  000000000401143f     Kernel.obj
+ 0003:00001442       __block_reflection_type_map 0000000004011442     Kernel.obj
+ 0003:00001442       __GenericTypesTemplateMap_End 0000000004011442     Kernel.obj
+ 0003:00001482       _StaticsInfoHashtableNode  0000000004011482     Kernel.obj
+ 0003:00001482       __block_reflection_type_map_End 0000000004011482     Kernel.obj
+ 0003:00001485       __VirtualInvokeMap         0000000004011485     Kernel.obj
+ 0003:00001485       _StaticsInfoHashtableNode_End 0000000004011485     Kernel.obj
+ 0003:00001488       __DefaultConstructor_Map   0000000004011488     Kernel.obj
+ 0003:00001488       __VirtualInvokeMap_End     0000000004011488     Kernel.obj
+ 0003:0000149b       __DefaultConstructor_Map_End 000000000401149b     Kernel.obj
+ 0003:0000149b       __external_CommonFixupsTable_references 000000000401149b     Kernel.obj
+ 0003:0000151f       __external_CommonFixupsTable_references_End 000000000401151f     Kernel.obj
+ 0003:0000151f       __external_NativeReferences_references 000000000401151f     Kernel.obj
+ 0003:00001533       __external_NativeReferences_references_End 0000000004011533     Kernel.obj
+ 0003:00001533       __external_NativeStatics_references 0000000004011533     Kernel.obj
+ 0003:00001533       __external_NativeStatics_references_End 0000000004011533     Kernel.obj
+ 0003:00001538       _stacktrace_methodRVA_to_token_mapping 0000000004011538     Kernel.obj
+ 0003:00001a30       __ReadyToRunHeader         0000000004011a30     Kernel.obj
+ 0003:00001a30       _stacktrace_methodRVA_to_token_mapping_End 0000000004011a30     Kernel.obj
+ 0003:00001d10       g_compilerEmbeddedSettingsBlob 0000000004011d10     Kernel.obj
+ 0003:00001d10       __readonlydata_g_compilerEmbeddedSettingsBlob 0000000004011d10     Kernel.obj
+ 0003:00001d14       __readonlydata_g_requiredCpuFeatures 0000000004011d14     Kernel.obj
+ 0003:00001d14       g_requiredCpuFeatures      0000000004011d14     Kernel.obj
+ 0003:00001d18       ??_7Kernel_System_Collections_Generic_List_1@@6B@ 0000000004011d18     Kernel.obj
+ 0003:00001d38       ??_7Kernel_System_Array@@6B@ 0000000004011d38     Kernel.obj
+ 0003:00001d68       ??_7Object@@6B@            0000000004011d68     Kernel.obj
+ 0003:00001d98       ??_7String@@6B@            0000000004011d98     Kernel.obj
+ 0003:00001dc0       ??_7Kernel_OS_Sharp_PCIDevice@@6B@ 0000000004011dc0     Kernel.obj
+ 0003:00001df0       ??_7Kernel_OS_Sharp_FileSystem_Ramdisk@@6B@ 0000000004011df0     Kernel.obj
+ 0003:00001e20       ??_7Kernel_OS_Sharp_FileSystem_Disk@@6B@ 0000000004011e20     Kernel.obj
+ 0003:00001e70       ??_7Kernel_OS_Sharp_FileSystem_FAT32@@6B@ 0000000004011e70     Kernel.obj
+ 0003:00001ea8       ??_7Kernel_OS_Sharp_FileSystem_File@@6B@ 0000000004011ea8     Kernel.obj
+ 0003:00001ef8       ??_7Kernel_OS_Sharp_Driver_IDE@@6B@ 0000000004011ef8     Kernel.obj
+ 0003:00001f30       ??_7Kernel_OS_Sharp_SATA_SATADevice@@6B@ 0000000004011f30     Kernel.obj
+ 0003:00001f80       ??_7Kernel_OS_Sharp_FileSystem_FAT32_AEntry@@6B@ 0000000004011f80     Kernel.obj
+ 0003:00001fc0       ??_7Kernel_System_Collections_Generic_List_1<UInt8>@@6B@ 0000000004011fc0     Kernel.obj
+ 0003:00002010       ??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice>@@6B@ 0000000004012010     Kernel.obj
+ 0003:00002068       ??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE>@@6B@ 0000000004012068     Kernel.obj
+ 0003:000020c0       ??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice>@@6B@ 00000000040120c0     Kernel.obj
+ 0003:00002118       ??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry>@@6B@ 0000000004012118     Kernel.obj
+ 0003:00002158       ??_7__Array<UInt8>@@6B@    0000000004012158     Kernel.obj
+ 0003:00002180       ??_7__Array<Char>@@6B@     0000000004012180     Kernel.obj
+ 0003:000021a8       ??_7__Array<Kernel_System_ConsoleKey>@@6B@ 00000000040121a8     Kernel.obj
+ 0003:000021e8       ??_7__Array<Kernel_OS_Sharp_PCIDevice>@@6B@ 00000000040121e8     Kernel.obj
+ 0003:00002230       ??_7__Array<Kernel_OS_Sharp_Driver_IDE>@@6B@ 0000000004012230     Kernel.obj
+ 0003:00002260       ??_7__Array<Kernel_IDT_IDTEntry>@@6B@ 0000000004012260     Kernel.obj
+ 0003:000022a0       ??_7__Array<Kernel_OS_Sharp_SATA_SATADevice>@@6B@ 00000000040122a0     Kernel.obj
+ 0003:000022e8       ??_7__Array<Kernel_OS_Sharp_FileSystem_FAT32_AEntry>@@6B@ 00000000040122e8     Kernel.obj
+ 0003:00002318       ??_7__Array<Kernel_OS_Sharp_Driver_IDE_DriveInfo>@@6B@ 0000000004012318     Kernel.obj
+ 0003:00002340       __readonlydata_Kernel_IDT__ExceptionHandler 0000000004012340     Kernel.obj
+ 0003:00002388       __readonlydata_Kernel_OS_Sharp_Networking_TCP__RecvFin 0000000004012388     Kernel.obj
+ 0003:000023a8       __readonlydata_Kernel_OS_Sharp_Networking_TCP__RecvAck 00000000040123a8     Kernel.obj
+ 0003:000023c8       __readonlydata_Kernel_OS_Sharp_Networking_TCP__RecvRst 00000000040123c8     Kernel.obj
+ 0003:000023e8       ?__GCSTATICS@Kernel_OS_Sharp_SATA@@__PreInitData 00000000040123e8     Kernel.obj
+ 0003:00002408       __GCStaticEEType_01        0000000004012408     Kernel.obj
+ 0003:00002430       __GCStaticEEType_0111      0000000004012430     Kernel.obj
+ 0003:00002458       __GCStaticEEType_01111     0000000004012458     Kernel.obj
+ 0003:00002468       ??_7Kernel__Module_@@6B@   0000000004012468     Kernel.obj
+ 0003:00002488       ??_7Boxed_UInt8@@6B@       0000000004012488     Kernel.obj
+ 0003:000024b0       ??_7Boxed_Char@@6B@        00000000040124b0     Kernel.obj
+ 0003:000024d8       ??_7Kernel_System_Enum@@6B@ 00000000040124d8     Kernel.obj
+ 0003:00002500       ??_7Boxed_Kernel_System_ConsoleKey@@6B@ 0000000004012500     Kernel.obj
+ 0003:00002528       ??_7Kernel_System_ValueType@@6B@ 0000000004012528     Kernel.obj
+ 0003:00002550       ??_7Boxed_Kernel_IDT_IDTEntry@@6B@ 0000000004012550     Kernel.obj
+ 0003:00002578       ??_7Boxed_Kernel_OS_Sharp_Driver_IDE_DriveInfo@@6B@ 0000000004012578     Kernel.obj
+ 0003:00002598       __GenericInstance_UInt8    0000000004012598     Kernel.obj
+ 0003:000025a8       __GenericInstance_Kernel_OS_Sharp_PCIDevice 00000000040125a8     Kernel.obj
+ 0003:000025b8       __GenericInstance_Kernel_OS_Sharp_Driver_IDE 00000000040125b8     Kernel.obj
+ 0003:000025c8       __GenericInstance_Kernel_OS_Sharp_SATA_SATADevice 00000000040125c8     Kernel.obj
+ 0003:000025d8       __GenericInstance_Kernel_OS_Sharp_FileSystem_FAT32_AEntry 00000000040125d8     Kernel.obj
+ 0003:000025e8       __optionalfields_??_7Kernel_System_Array@@6B@ 00000000040125e8     Kernel.obj
+ 0003:000025ee       __optionalfields_??_7Object@@6B@ 00000000040125ee     Kernel.obj
+ 0003:000025f1       __optionalfields_??_7Kernel_OS_Sharp_PCIDevice@@6B@ 00000000040125f1     Kernel.obj
+ 0003:000025f3       __optionalfields_??_7Kernel_OS_Sharp_FileSystem_Disk@@6B@ 00000000040125f3     Kernel.obj
+ 0003:000025fa       __optionalfields_??_7Kernel_OS_Sharp_FileSystem_FAT32@@6B@ 00000000040125fa     Kernel.obj
+ 0003:000025fc       __optionalfields_??_7Kernel_OS_Sharp_FileSystem_File@@6B@ 00000000040125fc     Kernel.obj
+ 0003:00002603       __optionalfields_??_7Kernel_OS_Sharp_Driver_IDE@@6B@ 0000000004012603     Kernel.obj
+ 0003:00002605       __optionalfields_??_7Kernel_OS_Sharp_SATA_SATADevice@@6B@ 0000000004012605     Kernel.obj
+ 0003:00002607       __optionalfields_??_7Kernel_System_Collections_Generic_List_1<UInt8>@@6B@ 0000000004012607     Kernel.obj
+ 0003:00002609       __optionalfields_??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice>@@6B@ 0000000004012609     Kernel.obj
+ 0003:0000260b       __optionalfields_??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE>@@6B@ 000000000401260b     Kernel.obj
+ 0003:0000260d       __optionalfields_??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice>@@6B@ 000000000401260d     Kernel.obj
+ 0003:0000260f       __optionalfields_??_7Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry>@@6B@ 000000000401260f     Kernel.obj
+ 0003:00002611       __optionalfields_??_7Boxed_UInt8@@6B@ 0000000004012611     Kernel.obj
+ 0003:00002613       __optionalfields_??_7Boxed_Char@@6B@ 0000000004012613     Kernel.obj
+ 0003:00002615       __optionalfields_??_7Kernel_System_Enum@@6B@ 0000000004012615     Kernel.obj
+ 0003:0000261c       __optionalfields_??_7Boxed_Kernel_System_ConsoleKey@@6B@ 000000000401261c     Kernel.obj
+ 0003:0000261e       __optionalfields_??_7Kernel_System_ValueType@@6B@ 000000000401261e     Kernel.obj
+ 0003:00002625       __optionalfields_??_7Boxed_Kernel_IDT_IDTEntry@@6B@ 0000000004012625     Kernel.obj
+ 0003:00002628       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 0000000004012628     Kernel.obj
+ 0003:00002628       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_PCIDevice> 0000000004012628     Kernel.obj
+ 0003:00002630       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE> 0000000004012630     Kernel.obj
+ 0003:00002630       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE> 0000000004012630     Kernel.obj
+ 0003:00002638       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004012638     Kernel.obj
+ 0003:00002638       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004012638     Kernel.obj
+ 0003:00002640       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004012640     Kernel.obj
+ 0003:00002640       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004012640     Kernel.obj
+ 0003:0000269c       __volatile_metadata        000000000401269c     <linker-defined>
+ 0003:00002860       _unwind0Kernel_Allocator__GetPageIndexStart 0000000004012860     Kernel.obj
+ 0003:00002870       _unwind0Kernel_Allocator__Free 0000000004012870     Kernel.obj
+ 0003:000028b0       _unwind0Kernel_Allocator__Initialize 00000000040128b0     Kernel.obj
+ 0003:000028d4       _unwind0Kernel_Allocator__Allocate 00000000040128d4     Kernel.obj
+ 0003:00002918       _unwind0Kernel_Allocator__Reallocate 0000000004012918     Kernel.obj
+ 0003:0000293c       _unwind0Kernel_GDT__Initialize 000000000401293c     Kernel.obj
+ 0003:00002950       _unwind0Kernel_IDT__Initialize 0000000004012950     Kernel.obj
+ 0003:0000297c       _unwind0Kernel_IDT__ExceptionHandler 000000000401297c     Kernel.obj
+ 0003:000029b0       _unwind0Kernel_IDT__IRQHandler 00000000040129b0     Kernel.obj
+ 0003:000029d8       _unwind0Kernel_Native__Load_GDT 00000000040129d8     Kernel.obj
+ 0003:000029f8       _unwind0Kernel_Native__Load_IDT 00000000040129f8     Kernel.obj
+ 0003:00002a18       _unwind0Object___ctor      0000000004012a18     Kernel.obj
+ 0003:00002a20       _unwind0Object__Dispose    0000000004012a20     Kernel.obj
+ 0003:00002a2c       _unwind0String__FromASCII  0000000004012a2c     Kernel.obj
+ 0003:00002a58       _unwind0String__FromASCII_0 0000000004012a58     Kernel.obj
+ 0003:00002a8c       _unwind0String__Ctor_1     0000000004012a8c     Kernel.obj
+ 0003:00002ab4       _unwind0String__Ctor_2     0000000004012ab4     Kernel.obj
+ 0003:00002ad8       _unwind0String__Ctor_3     0000000004012ad8     Kernel.obj
+ 0003:00002ae8       _unwind0String__Equals_0   0000000004012ae8     Kernel.obj
+ 0003:00002b0c       _unwind0String__Concat     0000000004012b0c     Kernel.obj
+ 0003:00002b48       _unwind0String__Concat_1   0000000004012b48     Kernel.obj
+ 0003:00002b60       _unwind0UInt64__ToString   0000000004012b60     Kernel.obj
+ 0003:00002b7c       _unwind0UInt64__ToStringHex 0000000004012b7c     Kernel.obj
+ 0003:00002b98       _unwind0Kernel_System_Runtime_TypeCast__CheckCastClass 0000000004012b98     Kernel.obj
+ 0003:00002ba4       _unwind0Kernel_System_Runtime_TypeCast__CheckCastArray 0000000004012ba4     Kernel.obj
+ 0003:00002bb0       _unwind0Kernel_System_Runtime_TypeCast__IsInstanceOfArray 0000000004012bb0     Kernel.obj
+ 0003:00002bb8       _unwind0Kernel_System_Runtime_CompilerServices_ClassConstructorRunner__CheckStaticClassConstructionReturnNonGCStaticBase 0000000004012bb8     Kernel.obj
+ 0003:00002bc4       _unwind0Kernel_System_Runtime_CompilerServices_ClassConstructorRunner__CheckStaticClassConstruction 0000000004012bc4     Kernel.obj
+ 0003:00002bd0       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____imp_GetCurrentThreadId 0000000004012bd0     Kernel.obj
+ 0003:00002bd8       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____CheckForDebuggerJustMyCode 0000000004012bd8     Kernel.obj
+ 0003:00002be0       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__FailFast 0000000004012be0     Kernel.obj
+ 0003:00002bec       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemSet 0000000004012bec     Kernel.obj
+ 0003:00002bf8       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemCpy 0000000004012bf8     Kernel.obj
+ 0003:00002c04       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpFallbackFailFast 0000000004012c04     Kernel.obj
+ 0003:00002c10       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke2 0000000004012c10     Kernel.obj
+ 0003:00002c18       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn2 0000000004012c18     Kernel.obj
+ 0003:00002c20       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke 0000000004012c20     Kernel.obj
+ 0003:00002c28       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn 0000000004012c28     Kernel.obj
+ 0003:00002c30       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvoke 0000000004012c30     Kernel.obj
+ 0003:00002c38       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvokeReturn 0000000004012c38     Kernel.obj
+ 0003:00002c40       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewFast 0000000004012c40     Kernel.obj
+ 0003:00002c64       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewArray 0000000004012c64     Kernel.obj
+ 0003:00002c8c       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpAssignRef 0000000004012c8c     Kernel.obj
+ 0003:00002c94       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpByRefAssignRef 0000000004012c94     Kernel.obj
+ 0003:00002c9c       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpCheckedAssignRef 0000000004012c9c     Kernel.obj
+ 0003:00002ca4       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpStelemRef 0000000004012ca4     Kernel.obj
+ 0003:00002cb0       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhTypeCast_IsInstanceOfClass 0000000004012cb0     Kernel.obj
+ 0003:00002cc8       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__InitializeModules 0000000004012cc8     Kernel.obj
+ 0003:00002ce0       _unwind0Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__InitializeStatics 0000000004012ce0     Kernel.obj
+ 0003:00002d10       _unwind0Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowOverflowException 0000000004012d10     Kernel.obj
+ 0003:00002d18       _unwind0Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowIndexOutOfRangeException 0000000004012d18     Kernel.obj
+ 0003:00002d20       _unwind0Kernel_OS_Sharp_Program__Main_0 0000000004012d20     Kernel.obj
+ 0003:00002da8       _unwind0Kernel_OS_Sharp_Program__InitMsg 0000000004012da8     Kernel.obj
+ 0003:00002dc8       _unwind0Kernel_OS_Sharp_AC97__OnInterrupt 0000000004012dc8     Kernel.obj
+ 0003:00002dec       _unwind0Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 0000000004012dec     Kernel.obj
+ 0003:00002e00       _unwind0Kernel_OS_Sharp_Framebuffer__SetVideoMode 0000000004012e00     Kernel.obj
+ 0003:00002e2c       _unwind0Kernel_OS_Sharp_Framebuffer__Clear 0000000004012e2c     Kernel.obj
+ 0003:00002e4c       _unwind0Kernel_OS_Sharp_Framebuffer__DrawPoint 0000000004012e4c     Kernel.obj
+ 0003:00002e60       _unwind0Kernel_OS_Sharp_Framebuffer__GetPoint 0000000004012e60     Kernel.obj
+ 0003:00002e70       _unwind0Kernel_OS_Sharp_PCIDevice___ctor 0000000004012e70     Kernel.obj
+ 0003:00002e78       _unwind0Kernel_OS_Sharp_PCI__Initialize 0000000004012e78     Kernel.obj
+ 0003:00002ea4       _unwind0Kernel_OS_Sharp_PCI__CheckBus 0000000004012ea4     Kernel.obj
+ 0003:00002f4c       _unwind0Kernel_OS_Sharp_PCI__GetHeaderType 0000000004012f4c     Kernel.obj
+ 0003:00002f6c       _unwind0Kernel_OS_Sharp_PIC__Disable 0000000004012f6c     Kernel.obj
+ 0003:00002fac       _unwind0Kernel_OS_Sharp_PIT__Initialize 0000000004012fac     Kernel.obj
+ 0003:00002fd4       _unwind0Kernel_OS_Sharp_PS2Keyboard__Initialize 0000000004012fd4     Kernel.obj
+ 0003:00002ff0       _unwind0Kernel_OS_Sharp_PS2Keyboard__CleanKeyInfo 0000000004012ff0     Kernel.obj
+ 0003:00002ffc       _unwind0Kernel_OS_Sharp_PS2Keyboard__ProcessKey 0000000004012ffc     Kernel.obj
+ 0003:00003014       _unwind0Kernel_OS_Sharp_PS2Mouse__Initialize 0000000004013014     Kernel.obj
+ 0003:00003068       _unwind0Kernel_OS_Sharp_PS2Mouse__WriteRegister 0000000004013068     Kernel.obj
+ 0003:00003094       _unwind0Kernel_OS_Sharp_PS2Mouse__OnInterrupt 0000000004013094     Kernel.obj
+ 0003:000030c0       _unwind0Kernel_OS_Sharp_SATA__Initialize 00000000040130c0     Kernel.obj
+ 0003:00003144       _unwind0Kernel_OS_Sharp_SATA__CheckPortType 0000000004013144     Kernel.obj
+ 0003:0000314c       _unwind0Kernel_OS_Sharp_Serial__Initialize 000000000401314c     Kernel.obj
+ 0003:00003180       _unwind0Kernel_OS_Sharp_Serial__Write 0000000004013180     Kernel.obj
+ 0003:00003198       _unwind0Kernel_OS_Sharp_Serial__Write_0 0000000004013198     Kernel.obj
+ 0003:000031b8       _unwind0Kernel_OS_Sharp_ASC16__DrawChar 00000000040131b8     Kernel.obj
+ 0003:000031e8       _unwind0Kernel_OS_Sharp_Console__Initialize 00000000040131e8     Kernel.obj
+ 0003:0000320c       _unwind0Kernel_OS_Sharp_Console__EnableCursor 000000000401320c     Kernel.obj
+ 0003:0000323c       _unwind0Kernel_OS_Sharp_Console__WriteFramebuffer 000000000401323c     Kernel.obj
+ 0003:00003264       _unwind0Kernel_OS_Sharp_Console__MoveUp 0000000004013264     Kernel.obj
+ 0003:000032a0       _unwind0Kernel_OS_Sharp_Console__UpdateCursor 00000000040132a0     Kernel.obj
+ 0003:000032cc       _unwind0Kernel_OS_Sharp_Console__UpdateCursorFramebuffer 00000000040132cc     Kernel.obj
+ 0003:000032e0       _unwind0Kernel_OS_Sharp_Console__Write_0 00000000040132e0     Kernel.obj
+ 0003:000032f8       _unwind0Kernel_OS_Sharp_Console__Write_1 00000000040132f8     Kernel.obj
+ 0003:0000331c       _unwind0Kernel_OS_Sharp_Console__WriteLine_0 000000000401331c     Kernel.obj
+ 0003:00003340       _unwind0Kernel_OS_Sharp_Console__WriteLine_2 0000000004013340     Kernel.obj
+ 0003:00003350       _unwind0Kernel_OS_Sharp_Console__Clear 0000000004013350     Kernel.obj
+ 0003:00003364       _unwind0Kernel_OS_Sharp_Console___cctor 0000000004013364     Kernel.obj
+ 0003:00003374       _unwind0Kernel_OS_Sharp_PageTable__Initialize 0000000004013374     Kernel.obj
+ 0003:000033a0       _unwind0Kernel_OS_Sharp_PageTable__GetPage 00000000040133a0     Kernel.obj
+ 0003:000033bc       _unwind0Kernel_OS_Sharp_PageTable__Next 00000000040133bc     Kernel.obj
+ 0003:000033dc       _unwind0Kernel_OS_Sharp_UDP__HandlePacket 00000000040133dc     Kernel.obj
+ 0003:00003400       _unwind0Kernel_OS_Sharp_Stdio__Print 0000000004013400     Kernel.obj
+ 0003:00003410       _unwind0Kernel_OS_Sharp_Stdio__Fopen 0000000004013410     Kernel.obj
+ 0003:00003470       _unwind0Kernel_OS_Sharp_Stdio__Fseek 0000000004013470     Kernel.obj
+ 0003:0000347c       _unwind0Kernel_OS_Sharp_Stdio__Fread 000000000401347c     Kernel.obj
+ 0003:00003498       _unwind0Kernel_OS_Sharp_Stdlib__Malloc 0000000004013498     Kernel.obj
+ 0003:000034a4       _unwind0Kernel_OS_Sharp_Stdlib__Free 00000000040134a4     Kernel.obj
+ 0003:000034b0       _unwind0Kernel_OS_Sharp_Stdlib__Realloc 00000000040134b0     Kernel.obj
+ 0003:000034bc       _unwind0Kernel_OS_Sharp_Misc_Panic__Error 00000000040134bc     Kernel.obj
+ 0003:000034e8       _unwind0Kernel_OS_Sharp_Networking_RTL8139__OnInterrupt 00000000040134e8     Kernel.obj
+ 0003:00003514       _unwind0Kernel_OS_Sharp_Networking_RTL8139__Send 0000000004013514     Kernel.obj
+ 0003:00003540       _unwind0Kernel_OS_Sharp_Networking_ARP__HandlePacket 0000000004013540     Kernel.obj
+ 0003:000035b8       _unwind0Kernel_OS_Sharp_Networking_ARP__Lookup 00000000040135b8     Kernel.obj
+ 0003:000035e4       _unwind0Kernel_OS_Sharp_Networking_ARP__Require 00000000040135e4     Kernel.obj
+ 0003:000035fc       _unwind0Kernel_OS_Sharp_Networking_Ethernet__HandlePacket 00000000040135fc     Kernel.obj
+ 0003:00003610       _unwind0Kernel_OS_Sharp_Networking_Ethernet__SendPacket 0000000004013610     Kernel.obj
+ 0003:00003638       _unwind0Kernel_OS_Sharp_Networking_IPv4__HandlePacket 0000000004013638     Kernel.obj
+ 0003:00003664       _unwind0Kernel_OS_Sharp_Networking_IPv4__SendPacket 0000000004013664     Kernel.obj
+ 0003:00003690       _unwind0Kernel_OS_Sharp_Networking_IPv4__CalculateChecksum 0000000004013690     Kernel.obj
+ 0003:000036a0       _unwind0Kernel_OS_Sharp_Networking_TCP__TcpRecv 00000000040136a0     Kernel.obj
+ 0003:000036b8       _unwind0Kernel_OS_Sharp_Networking_TCP__RecvGeneral 00000000040136b8     Kernel.obj
+ 0003:000036dc       _unwind0Kernel_OS_Sharp_Networking_TCP__RecvFin 00000000040136dc     Kernel.obj
+ 0003:000036ec       _unwind0Kernel_OS_Sharp_Networking_TCP__RecvAck 00000000040136ec     Kernel.obj
+ 0003:000036fc       _unwind0Kernel_OS_Sharp_Networking_TCP__RecvRst 00000000040136fc     Kernel.obj
+ 0003:00003710       _unwind0Kernel_OS_Sharp_Networking_TCP__RecvSynSent 0000000004013710     Kernel.obj
+ 0003:00003744       _unwind0Kernel_OS_Sharp_Networking_TCP__SendPacket_0 0000000004013744     Kernel.obj
+ 0003:000037a8       _unwind0Kernel_OS_Sharp_Networking_TCP__NetAllocBuf 00000000040137a8     Kernel.obj
+ 0003:000037b4       _unwind0Kernel_OS_Sharp_Networking_TCP__Swap 00000000040137b4     Kernel.obj
+ 0003:000037c0       _unwind0Kernel_OS_Sharp_Networking_TCP__TCPChecksum 00000000040137c0     Kernel.obj
+ 0003:000037d0       _unwind0Kernel_OS_Sharp_FileSystem_Ramdisk__Read 00000000040137d0     Kernel.obj
+ 0003:000037f0       _unwind0Kernel_OS_Sharp_FileSystem_FAT32___ctor 00000000040137f0     Kernel.obj
+ 0003:00003814       _unwind0Kernel_OS_Sharp_FileSystem_FAT32__ReadAllBytes 0000000004013814     Kernel.obj
+ 0003:00003880       _unwind0Kernel_OS_Sharp_FileSystem_FAT32__GetSectorsWillUse 0000000004013880     Kernel.obj
+ 0003:00003888       _unwind0Kernel_OS_Sharp_FileSystem_FAT32__ReadList 0000000004013888     Kernel.obj
+ 0003:00003a14       _unwind0Kernel_OS_Sharp_Driver_ACPI__GetRSDP 0000000004013a14     Kernel.obj
+ 0003:00003a20       _unwind0Kernel_OS_Sharp_Driver_ACPI__Initialize 0000000004013a20     Kernel.obj
+ 0003:00003a38       _unwind0Kernel_OS_Sharp_Driver_ACPI__ParseDT 0000000004013a38     Kernel.obj
+ 0003:00003a78       _unwind0Kernel_OS_Sharp_Driver_ACPI__RemapIRQ 0000000004013a78     Kernel.obj
+ 0003:00003a90       _unwind0Kernel_OS_Sharp_Driver_HPET__Initialize 0000000004013a90     Kernel.obj
+ 0003:00003aa4       _unwind0Kernel_OS_Sharp_Driver_IDE__Initialize 0000000004013aa4     Kernel.obj
+ 0003:00003ad0       _unwind0Kernel_OS_Sharp_Driver_IDE___ctor 0000000004013ad0     Kernel.obj
+ 0003:00003b94       _unwind0Kernel_OS_Sharp_Driver_IDE__Available 0000000004013b94     Kernel.obj
+ 0003:00003bb8       _unwind0Kernel_OS_Sharp_Driver_IDE__WaitForReadyStatus 0000000004013bb8     Kernel.obj
+ 0003:00003bd8       _unwind0Kernel_OS_Sharp_Driver_IDE__WaitForIdentifyData 0000000004013bd8     Kernel.obj
+ 0003:00003bf8       _unwind0Kernel_OS_Sharp_Driver_IDE__ReadOrWrite 0000000004013bf8     Kernel.obj
+ 0003:00003c4c       _unwind0Kernel_OS_Sharp_Driver_IDE__Read 0000000004013c4c     Kernel.obj
+ 0003:00003c68       _unwind0Kernel_OS_Sharp_Driver_Intel8254X__OnInterrupt 0000000004013c68     Kernel.obj
+ 0003:00003c8c       _unwind0Kernel_OS_Sharp_Driver_IOAPIC__Initialize 0000000004013c8c     Kernel.obj
+ 0003:00003ca0       _unwind0Kernel_OS_Sharp_Driver_IOAPIC__In 0000000004013ca0     Kernel.obj
+ 0003:00003cac       _unwind0Kernel_OS_Sharp_Driver_IOAPIC__Out 0000000004013cac     Kernel.obj
+ 0003:00003cbc       _unwind0Kernel_OS_Sharp_Driver_LocalAPIC__Initialize 0000000004013cbc     Kernel.obj
+ 0003:00003ccc       _unwind0Kernel_OS_Sharp_Driver_SMBIOS__Initialize 0000000004013ccc     Kernel.obj
+ 0003:00003ce8       _unwind0Kernel_OS_Sharp_Driver_VBE__Initialize 0000000004013ce8     Kernel.obj
+ 0003:00003cf8       _unwind0Kernel_OS_Sharp_SATA_SATADevice__Configure 0000000004013cf8     Kernel.obj
+ 0003:00003d14       _unwind0Kernel_OS_Sharp_SATA_SATADevice__Read 0000000004013d14     Kernel.obj
+ 0003:00003d30       _unwind0Kernel_OS_Sharp_SATA_SATADevice__ReadOrWrite 0000000004013d30     Kernel.obj
+ 0003:00003d88       _unwind0Kernel_OS_Sharp_SATA_SATADevice__FindSlot 0000000004013d88     Kernel.obj
+ 0003:00003d9c       _unwind0Kernel_OS_Sharp_SATA_SATADevice___ctor 0000000004013d9c     Kernel.obj
+ 0003:00003da4       _unwind0Kernel_OS_Sharp_FileSystem_FAT32_AEntry___ctor 0000000004013da4     Kernel.obj
+ 0003:00003dac       _unwind0Kernel_System_Array_1<UInt8>___ctor 0000000004013dac     Kernel.obj
+ 0003:00003db4       _unwind0Kernel_System_Array_1<Char>___ctor 0000000004013db4     Kernel.obj
+ 0003:00003dbc       _unwind0Kernel_System_Array_1<Kernel_System_ConsoleKey>___ctor 0000000004013dbc     Kernel.obj
+ 0003:00003dc4       _unwind0Kernel_System_Array_1<Kernel_IDT_IDTEntry>___ctor 0000000004013dc4     Kernel.obj
+ 0003:00003dcc       _unwind0Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__get_Item 0000000004013dcc     Kernel.obj
+ 0003:00003ddc       _unwind0Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__Add 0000000004013ddc     Kernel.obj
+ 0003:00003dec       _unwind0Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE_DriveInfo>___ctor 0000000004013dec     Kernel.obj
+ 0003:00003df4       _unwind0Kernel_System_Array_1<System___Canon>___ctor 0000000004013df4     Kernel.obj
+ 0003:00003dfc       _unwind0Internal_CompilerGenerated__Module___SetAppContextSwitches 0000000004013dfc     Kernel.obj
+ 0003:00003e04       _unwind0Kernel__Module___StartupCodeMain 0000000004013e04     Kernel.obj
+ 0004:00000000       __FrozenSegmentRegionStart 0000000004014000     Kernel.obj
+ 0004:00000008       __Str_                     0000000004014008     Kernel.obj
+ 0004:00000020       __Str________________________________F9B74DCC2C30B833333DF39209DF1D350F28DAD78C0CCF4488DEC08673AE266D 0000000004014020     Kernel.obj
+ 0004:00002038       __Str___869F1DFB999A452F497A4CF7F44DB2D6EE661F74A9E7E05251BC1420E50672D4 0000000004016038     Kernel.obj
+ 0004:00002050       __Str____OK____FEEF5B61528D8462F349689677D379508069048B10EAD64A2F044C0B4A940311 0000000004016050     Kernel.obj
+ 0004:00002078       __Str______ABDB7107331CFFD09930D93566C4F7DD078B63158B61D8ABA0F57B9A7A0AF1C1 0000000004016078     Kernel.obj
+ 0004:00002098       __Str__FAILURE__5D9B3DF33149C7E6F02BEBBD321AB3C0CE91C2EB8A19E1CEC5F65D4DC2BE3F8D 0000000004016098     Kernel.obj
+ 0004:000020c0       __Str__Initialization_Failure_05CFA93448AD9C8A91822F101A2A76FC0083B781F42D8DE4406AAC919AF6BFBC 00000000040160c0     Kernel.obj
+ 0004:00002108       __Str__UNKNOWN_EXCEPTION_29DDB52727225DCDB14B7ABBFEB15C9C3E9C19E8C9BB1D0AFD02140BC6519362 0000000004016108     Kernel.obj
+ 0004:00002148       __Str___075D3DDF5A3A826E13A92288E853BC4B2CB17FB05367AE865F401A4BB11F05CE 0000000004016148     Kernel.obj
+ 0004:00002160       __Str___ADE0274F84B828B0980112609BB51775D0A4E39BF4728F21DCDD04A627ABB92A 0000000004016160     Kernel.obj
+ 0004:00002178       __Str___7648EB81C4E9FEF7B51879C6FCD6FB4B8863EEA0CB2A978C508711DC52C80041 0000000004016178     Kernel.obj
+ 0004:00002190       __Str_ACPI_Initialization_Failure_AD0404D1E4F3C8DD48AFDC700B5B0C88E5D993F7E5588451770A3CDE95F13114 0000000004016190     Kernel.obj
+ 0004:000021e0       __Str_ACPI_Successfully_Initialized_8ED2BC0C90747AC704E467843552CBEF16B71969621503E08FCB521BCF7A0797 00000000040161e0     Kernel.obj
+ 0004:00002230       __Str_ARP_entry_not_found__Making_re_0E591885C2C3BD30B755FA1B07C4D799B6B61A8C99D4FA4FA135B582CD2305B7 0000000004016230     Kernel.obj
+ 0004:00002290       __Str_BOUNDS_CHECK_26C6F58B86CDDB8934469E9F36BFD063D539D01530ACE0733089794894E8ECA6 0000000004016290     Kernel.obj
+ 0004:000022c0       __Str_BREAKPOINT           00000000040162c0     Kernel.obj
+ 0004:000022f0       __Str_Bad_ACK_86B625AEDDA25B9987129F842154B8B62B88C44806E2BC73941FA741B4F8623E 00000000040162f0     Kernel.obj
+ 0004:00002318       __Str_COPR_ERROR_C27F1F3E7F2ED4CFBD0EDCF5C7AA20D245CD9D1EBC80EDC243013215C2577FF9 0000000004016318     Kernel.obj
+ 0004:00002348       __Str_COPR_SEGMENT_OVERRUN_C449D79B0140F10083FD8C197428B494C3F5BC5E85A89FC5A9F3F9DFFE5E25AD 0000000004016348     Kernel.obj
+ 0004:00002388       __Str_COPR_UNAVAILABLE_834C85FB4D56A054FA75E003F62E454BF546EBD0D8DB2CB27CDAA76A62BF3C08 0000000004016388     Kernel.obj
+ 0004:000023c0       __Str_Connection_established_C7F61EB0E8A0A27B96E8B528A681CC4BC4FCF3896B18DA97D3154261FAF44F81 00000000040163c0     Kernel.obj
+ 0004:00002408       __Str_DIVIDE_BY_ZERO_35A15510F680DC765661E0D29DFAD7145E1665F9617FC031C21ECB78DB53A063 0000000004016408     Kernel.obj
+ 0004:00002440       __Str_DOUBLE_FAULT_D7745D19D21BED4FCAE5949B361E7C3770F0F6F00771FC35E0C922926FC4F820 0000000004016440     Kernel.obj
+ 0004:00002470       __Str_Error__connection_reset_2DD4AD50280D62E8F71D6416E12CFCF047C1869E4C5D38221FAB587947A39ABA 0000000004016470     Kernel.obj
+ 0004:000024b8       __Str_Error__tcp_connection_refused_AA861B629A6FA6E245F0A4CC20757E883A28D3B5A92F23F52D897434C32212E8 00000000040164b8     Kernel.obj
+ 0004:00002508       __Str_Error__tcp_reset_1904B15FD7C0D3E7C5171138738A54023B558117FF868A1481B914CEBCA68428 0000000004016508     Kernel.obj
+ 0004:00002540       __Str_GDT_Initialization_Failure_C828F57F7600344F4AD01A9B88E5798BD5193C540FAB3E0ACFA5D871DA9D9541 0000000004016540     Kernel.obj
+ 0004:00002590       __Str_GDT_Successfully_Initialized_A592EAFF47F845C987D1CBFA069648D744B994D5901DE84F083D9CA36DAFCB49 0000000004016590     Kernel.obj
+ 0004:000025e0       __Str_GENERAL_PROTECTION_8D0356CF6D03FD20FD9501FFF77BCB0EE6F4A84DDE8C5B8CD0FEE47094CDD3E5 00000000040165e0     Kernel.obj
+ 0004:00002620       __Str_HPET_Successfully_Initialized_A591433E672546D4B6A975FAD0DFFFDD1FD07098B13BCDF93EEC1CA952D33761 0000000004016620     Kernel.obj
+ 0004:00002670       __Str_Hello_from_OS_Sharp__1444772DAA69DA58D2B9FF1A590A4A250370ED3D041AF9578CA058B9F3CA3C98 0000000004016670     Kernel.obj
+ 0004:000026b0       __Str_Hello__World__98B83E2E14759B86F964E17964E7B706E21EA7DEEA1267ABCE2F3FFB95A81BBC 00000000040166b0     Kernel.obj
+ 0004:000026e0       __Str_IDE_Initialization_Failure_9E56032688853ED3761C18121FE91142CA1327991E4CD9A7086730E06E310270 00000000040166e0     Kernel.obj
+ 0004:00002730       __Str_IDE_Successfully_Initialized_E477CF6426BFF51CE4581110A14C5C2F2E6214702A0361183D658BF84ADE03B5 0000000004016730     Kernel.obj
+ 0004:00002780       __Str_IDE_bad_status_A4340D590FA84CCD8C75301D057B2E518ABCEA7EA8522D4B3D5C33ABEBBDC062 0000000004016780     Kernel.obj
+ 0004:000027b8       __Str_IDT_Initialization_Failure_0E29AADA4D8641B9C3A13E643B348FD8837B23F95A614A6CDD85BCB9620BB725 00000000040167b8     Kernel.obj
+ 0004:00002808       __Str_IDT_Successfully_Initialized_77F94CBF7B9B778409D20B39DB97ECAADF905DF5D3D1C57C9D4BBEA728B85FBD 0000000004016808     Kernel.obj
+ 0004:00002858       __Str_INVALID_OPCODE_54C9591B5203C421C322A7A77E8C2F0AE28E0F9288BC942670E066AC6B19994B 0000000004016858     Kernel.obj
+ 0004:00002890       __Str_INVALID_TSS_C62F37B994D6314510E6F050579212502983A0D22E662A0176CBB15DABFE9B12 0000000004016890     Kernel.obj
+ 0004:000028c0       __Str_IOAPIC_Initialization_Failure_22F78D51A9828505351C01787A623E6561380CC3CF2D0C6F81399333B06BFBBC 00000000040168c0     Kernel.obj
+ 0004:00002910       __Str_IOAPIC_Successfully_Initialize_82EA79709AF1F8199E255AB2FFC08735BB5357A3FC52E95C64B73B2FE631C428 0000000004016910     Kernel.obj
+ 0004:00002968       __Str_Invalid_address_7AC5EA86BEB9120D370C3BAD3E7ED36E4C71A46767A05393B7FF8E4872782BE0 0000000004016968     Kernel.obj
+ 0004:000029a0       __Str_LocalAPIC_Initialization_Failu_22FB91E9347E5C603A66C401EC6E6F4C95C1886DA3A788642036D750CE72EAA2 00000000040169a0     Kernel.obj
+ 0004:000029f8       __Str_LocalAPIC_Successfully_Initial_26803BD0FEF1F0C5C9B87E708C0DE4529B0CDBFAEADE7B36378D443825741FF1 00000000040169f8     Kernel.obj
+ 0004:00002a58       __Str_Memory_leak_E720373216761F9ADFAEAD740F6DE581C8946620241F34CDAABD3C0EF616261D 0000000004016a58     Kernel.obj
+ 0004:00002a88       __Str_MiB                  0000000004016a88     Kernel.obj
+ 0004:00002aa8       __Str_NMI                  0000000004016aa8     Kernel.obj
+ 0004:00002ac8       __Str_NULL_POINTER_2AB6F4D59E2DA1CEED3F4C3E01F564F254667D66DEADAA97B0E61DE8A62C3227 0000000004016ac8     Kernel.obj
+ 0004:00002af8       __Str_No_response_43B27C933D8F067983505C273BDF1C1C8E85094EBBF18902B54C65BF4E70C5BA 0000000004016af8     Kernel.obj
+ 0004:00002b28       __Str_OVERFLOW             0000000004016b28     Kernel.obj
+ 0004:00002b50       __Str_PAGE_FAULT_AC0C9BB7DF0A800C1DAAE3D0672B6A1CC78305DCE93C4796332016D0426511AF 0000000004016b50     Kernel.obj
+ 0004:00002b80       __Str_PANIC___18B9166B01C111C4C7D12C937E9C010FAC0A3B1BA35AA56F1A4A9DC62B7F3624 0000000004016b80     Kernel.obj
+ 0004:00002ba8       __Str_PCI_Initialization_Failure_C4F7E64D9A01CDAD241CD6F08DFA36642CB4BF36BA9B677A234C430E8E31F078 0000000004016ba8     Kernel.obj
+ 0004:00002bf8       __Str_PCI_Successfully_Initialized_A57BD8A141411577001FA8C739C74B465AFA79BDD70893F15B63CF4292991BA6 0000000004016bf8     Kernel.obj
+ 0004:00002c48       __Str_PIT_Initialization_Failure_764F93589549EC340D09C9B0EB561E781185C5E3FCEFA4DE3099FB481B354347 0000000004016c48     Kernel.obj
+ 0004:00002c98       __Str_PIT_Successfully_Initialized_B161E83F64FE8F5EAD1E0C052BFB74E59594FB9FB0799C9A51513A8B977B2871 0000000004016c98     Kernel.obj
+ 0004:00002ce8       __Str_PS2Keyboard_Initialization_Fai_8D564E876B63668E710B19D104CB296AC15ABBFA6B4DA7D489C354296EBF5B0D 0000000004016ce8     Kernel.obj
+ 0004:00002d48       __Str_PS2Keyboard_Successfully_Initi_F9757BC3CA32891873AB420589E2F40B80720833C3ED17ED0C97C0637B18DB07 0000000004016d48     Kernel.obj
+ 0004:00002da8       __Str_PS2Mouse_Initialization_Failur_FFC91D967C4C25FEF76E5239ED9582A661D8181E82F485C44377811B4C3B0235 0000000004016da8     Kernel.obj
+ 0004:00002e00       __Str_PS2Mouse_Successfully_Initiali_A21A6D9131CAD6761FD590FD399C985D6128374DBD78F6CD0F45A7B6990EEA57 0000000004016e00     Kernel.obj
+ 0004:00002e58       __Str_SATA_Initialization_Failure_AB5FC79EFBAD985630B323ACCCB678F12C29787E6935A003E3A7F22E02007C81 0000000004016e58     Kernel.obj
+ 0004:00002ea8       __Str_SATA_Successfully_Initialized_0A9ED1411B48AC9E2D6EBFDFEB4021EB3299E91CCB1B08BC7EEF99F229EA36F4 0000000004016ea8     Kernel.obj
+ 0004:00002ef8       __Str_SEGMENT_NOT_FOUND_7A09929F1094DAEB41502BFFC9E93921CA8FB9590AC80713AC7C7171F9511232 0000000004016ef8     Kernel.obj
+ 0004:00002f30       __Str_SINGLE_STEP_6E04E38E6AD9353B584BEB7F19DBD415786549605ECAFBD876AF6406D9ADFBFC 0000000004016f30     Kernel.obj
+ 0004:00002f60       __Str_SMBIOS_Initialization_Failure_EB76D0AB1C57382CDE73B652B00B12FD407C47C2868D800387EAF383D291F5E8 0000000004016f60     Kernel.obj
+ 0004:00002fb0       __Str_SMBIOS_Successfully_Initialize_62B6035620F54254C1D40675808A25D0757A3CD0BFA6E2EBEF4CAA6CCE62C672 0000000004016fb0     Kernel.obj
+ 0004:00003008       __Str_STACK_EXCEPTION_615EE5904CA2473731689018F663A51FDD729DDE9002D1965884E3317293317A 0000000004017008     Kernel.obj
+ 0004:00003040       __Str_Serial_Interface_Initializatio_0C9B32551E0D0E5486F5476C21CD6086CD3AC1254DFAA46AA4166B8F66120E84 0000000004017040     Kernel.obj
+ 0004:000030a8       __Str_Serial_Interface_Successfully__D4AAC72B9DEAEAD29C4C61A1F9FD1D146883166019244878D2862F28A60B6BA6 00000000040170a8     Kernel.obj
+ 0004:00003110       __Str_Size___549671492C0BFD5ED0D2EA280E3FB7C734D55FDA1E4EE5B2A47A1AEE6199E2A3 0000000004017110     Kernel.obj
+ 0004:00003138       __Str_TCP_Reset_AED747BDB4A64F0C249B25F72CFF5841C971E98F01E99BF01CD291CE1C5489C7 0000000004017138     Kernel.obj
+ 0004:00003160       __Str_TCP_connection_havn_t_establis_738AA20989DB6D0EEED153597F51D5E464980503E9EEB0BE3FB1C058C2A36A91 0000000004017160     Kernel.obj
+ 0004:000031c0       __Str_This_is_not_a_fat32_partition__FEF507B22E2EF131E321CFFEC77C23C3447206724A95914E4D128330A6D1AA08 00000000040171c0     Kernel.obj
+ 0004:00003218       __Str_Unknown_seek_6915F0E145DDA6C273E76A37B7F0C9F7EAAC8EB75579601E750090FCF77B667D 0000000004017218     Kernel.obj
+ 0004:00003248       __Str_Using_Native_AOT__Core_RT__Tec_60CE2ACAB77503472EC8188FD8040D6F4699B8B463DDEEAE9BE6AA378F843DB0 0000000004017248     Kernel.obj
+ 0004:000032b0       __Str___D851A0155B6A2716E0DA40A1336C5FF311FCF12CE16E53CF06B5A6CBD9CD32DF 00000000040172b0     Kernel.obj
+ 0004:000032c8       __Str__IDE___48CFDDBBE8C65D0A4BB3982086CA2F60CAE57BF1158F0064A9FA7EE85A587C05 00000000040172c8     Kernel.obj
+ 0004:000032f0       __Str____804779EAC33E29BC0631A6BBAE7359393E89CCE7778929AFDE36C60530F956AC 00000000040172f0     Kernel.obj
+ 0004:00003310       __Str_fopen__file_not_found__DA0255E30BCCD1694365B33FDCCC234DA542D287B150E533BD8334B121294625 0000000004017310     Kernel.obj
+ 0004:00003358       __GCStaticRegionStart      0000000004017358     Kernel.obj
+ 0004:00003358       __FrozenSegmentRegionEnd   0000000004017358     Kernel.obj
+ 0004:000033c0       __typemanager_indirection  00000000040173c0     Kernel.obj
+ 0004:000033c0       __GCStaticRegionEnd        00000000040173c0     Kernel.obj
+ 0004:000033d0       ?__NONGCSTATICS@Kernel_OS_Sharp_SATA@@ 00000000040173d0     Kernel.obj
+ 0004:000033e8       ?__NONGCSTATICS@Kernel_OS_Sharp_Console@@ 00000000040173e8     Kernel.obj
+ 0004:00003400       ?__GCSTATICS@Kernel_IDT@@  0000000004017400     Kernel.obj
+ 0004:00003408       ?__GCSTATICS@Kernel_OS_Sharp_PCI@@ 0000000004017408     Kernel.obj
+ 0004:00003410       ?__GCSTATICS@Kernel_OS_Sharp_PS2Keyboard@@ 0000000004017410     Kernel.obj
+ 0004:00003418       ?__GCSTATICS@Kernel_OS_Sharp_PS2Mouse@@ 0000000004017418     Kernel.obj
+ 0004:00003420       ?__GCSTATICS@Kernel_OS_Sharp_SATA@@ 0000000004017420     Kernel.obj
+ 0004:00003430       ?__GCSTATICS@Kernel_OS_Sharp_ASC16@@ 0000000004017430     Kernel.obj
+ 0004:00003438       ?__GCSTATICS@Kernel_OS_Sharp_Networking_RTL8139@@ 0000000004017438     Kernel.obj
+ 0004:00003440       ?__GCSTATICS@Kernel_OS_Sharp_Networking_ARP@@ 0000000004017440     Kernel.obj
+ 0004:00003448       ?__GCSTATICS@Kernel_OS_Sharp_Networking_Network@@ 0000000004017448     Kernel.obj
+ 0004:00003450       ?__GCSTATICS@Kernel_OS_Sharp_Networking_TCP@@ 0000000004017450     Kernel.obj
+ 0004:00003458       ?__GCSTATICS@Kernel_OS_Sharp_FileSystem_File@@ 0000000004017458     Kernel.obj
+ 0004:00003460       ?__GCSTATICS@Kernel_OS_Sharp_Driver_ACPI@@ 0000000004017460     Kernel.obj
+ 0004:00003468       ?__GCSTATICS@Kernel_OS_Sharp_Driver_IDE@@ 0000000004017468     Kernel.obj
+ 0004:00003470       __module_initializers_End  0000000004017470     Kernel.obj
+ 0004:00003470       ?__NONGCSTATICS@Kernel_Allocator@@ 0000000004017470     Kernel.obj
+ 0004:00003470       __module_initializers      0000000004017470     Kernel.obj
+ 0004:00123488       ?__NONGCSTATICS@Kernel_GDT@@ 0000000004137488     Kernel.obj
+ 0004:00123522       ?__NONGCSTATICS@Kernel_IDT@@ 0000000004137522     Kernel.obj
+ 0004:00123530       ?__NONGCSTATICS@Kernel_System_Windows_Forms_Control@@ 0000000004137530     Kernel.obj
+ 0004:00123540       ?__NONGCSTATICS@Kernel_OS_Sharp_AC97@@ 0000000004137540     Kernel.obj
+ 0004:00123560       ?__NONGCSTATICS@Kernel_OS_Sharp_Framebuffer@@ 0000000004137560     Kernel.obj
+ 0004:00123588       ?__NONGCSTATICS@Kernel_OS_Sharp_PIT@@ 0000000004137588     Kernel.obj
+ 0004:00123590       ?__NONGCSTATICS@Kernel_OS_Sharp_PS2Keyboard@@ 0000000004137590     Kernel.obj
+ 0004:001235a0       ?__NONGCSTATICS@Kernel_OS_Sharp_PS2Mouse@@ 00000000041375a0     Kernel.obj
+ 0004:001235b8       ?__NONGCSTATICS@Kernel_OS_Sharp_PageTable@@ 00000000041375b8     Kernel.obj
+ 0004:001235c0       ?__NONGCSTATICS@Kernel_OS_Sharp_Networking_RTL8139@@ 00000000041375c0     Kernel.obj
+ 0004:001235d0       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_ACPI@@ 00000000041375d0     Kernel.obj
+ 0004:001235f8       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_HPET@@ 00000000041375f8     Kernel.obj
+ 0004:00123600       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_Intel8254X@@ 0000000004137600     Kernel.obj
+ 0004:00123618       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_SMBIOS@@ 0000000004137618     Kernel.obj
+ 0004:00123620       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_VBE@@ 0000000004137620     Kernel.obj
+ 0004:00123628       __writableDataChar         0000000004137628     Kernel.obj
+ 0004:00123630       __writableDataKernel_IDT_IDTEntry 0000000004137630     Kernel.obj
+ 0004:00123638       __writableDataKernel_OS_Sharp_Driver_IDE 0000000004137638     Kernel.obj
+ 0004:00123640       __writableDataKernel_OS_Sharp_Driver_IDE_DriveInfo 0000000004137640     Kernel.obj
+ 0004:00123648       __writableDataKernel_OS_Sharp_FileSystem_Disk 0000000004137648     Kernel.obj
+ 0004:00123650       __writableDataKernel_OS_Sharp_FileSystem_FAT32 0000000004137650     Kernel.obj
+ 0004:00123658       __writableDataKernel_OS_Sharp_FileSystem_FAT32_AEntry 0000000004137658     Kernel.obj
+ 0004:00123660       __writableDataKernel_OS_Sharp_FileSystem_File 0000000004137660     Kernel.obj
+ 0004:00123668       __writableDataKernel_OS_Sharp_FileSystem_Ramdisk 0000000004137668     Kernel.obj
+ 0004:00123670       __writableDataKernel_OS_Sharp_PCIDevice 0000000004137670     Kernel.obj
+ 0004:00123678       __writableDataKernel_OS_Sharp_SATA_SATADevice 0000000004137678     Kernel.obj
+ 0004:00123680       __writableDataKernel_System_Array 0000000004137680     Kernel.obj
+ 0004:00123688       __writableDataKernel_System_Collections_Generic_List_1 0000000004137688     Kernel.obj
+ 0004:00123690       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE> 0000000004137690     Kernel.obj
+ 0004:00123698       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004137698     Kernel.obj
+ 0004:001236a0       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 00000000041376a0     Kernel.obj
+ 0004:001236a8       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 00000000041376a8     Kernel.obj
+ 0004:001236b0       __writableDataKernel_System_Collections_Generic_List_1<UInt8> 00000000041376b0     Kernel.obj
+ 0004:001236b8       __writableDataKernel_System_ConsoleKey 00000000041376b8     Kernel.obj
+ 0004:001236c0       __writableDataKernel_System_Enum 00000000041376c0     Kernel.obj
+ 0004:001236c8       __writableDataKernel_System_ValueType 00000000041376c8     Kernel.obj
+ 0004:001236d0       __writableDataKernel__Module_ 00000000041376d0     Kernel.obj
+ 0004:001236d8       __writableDataObject       00000000041376d8     Kernel.obj
+ 0004:001236e0       __writableDataString       00000000041376e0     Kernel.obj
+ 0004:001236e8       __writableDataUInt8        00000000041376e8     Kernel.obj
+ 0004:001236f0       __writableData__Array<Char> 00000000041376f0     Kernel.obj
+ 0004:001236f8       __writableData__Array<Kernel_IDT_IDTEntry> 00000000041376f8     Kernel.obj
+ 0004:00123700       __writableData__Array<Kernel_OS_Sharp_Driver_IDE> 0000000004137700     Kernel.obj
+ 0004:00123708       __writableData__Array<Kernel_OS_Sharp_Driver_IDE_DriveInfo> 0000000004137708     Kernel.obj
+ 0004:00123710       __writableData__Array<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004137710     Kernel.obj
+ 0004:00123718       __writableData__Array<Kernel_OS_Sharp_PCIDevice> 0000000004137718     Kernel.obj
+ 0004:00123720       __writableData__Array<Kernel_OS_Sharp_SATA_SATADevice> 0000000004137720     Kernel.obj
+ 0004:00123728       __writableData__Array<Kernel_System_ConsoleKey> 0000000004137728     Kernel.obj
+ 0004:00123730       __writableData__Array<UInt8> 0000000004137730     Kernel.obj
+ 0006:00000000       __Module                   0000000004139000     Kernel.obj
+
+ entry point at        0002:00001540
+
+ Static symbols
+
+ 0000:00000000       _volmd                     0000000004000000     NativeLib:interrupts.obj
+ 0001:00002690       $$000000                   0000000004003690     NativeLib:interrupts_asm.obj
+ 0003:00003e18       $unwind$Movsb              0000000004013e18     NativeLib:mem.obj
+ 0003:00003e28       $unwind$Movsd              0000000004013e28     NativeLib:mem.obj
+ 0003:00003e38       $unwind$Stosb              0000000004013e38     NativeLib:mem.obj
+ 0003:00003e44       $unwind$Stosd              0000000004013e44     NativeLib:mem.obj
+ 0003:00003e50       $unwind$Load_GDT           0000000004013e50     NativeLib:interrupts.obj
+ 0003:00003e5c       $unwind$idt_set            0000000004013e5c     NativeLib:interrupts.obj
+ 0003:00003e68       $unwind$set_idt_entries    0000000004013e68     NativeLib:interrupts.obj
+ 0003:00003e74       $unwind$Nop                0000000004013e74     NativeLib:native.obj
+ 0003:00003e80       $unwind$Invlpg             0000000004013e80     NativeLib:native.obj
+ 0003:00003e8c       $unwind$WriteCR3           0000000004013e8c     NativeLib:native.obj
+ 0003:00003e98       $unwind$ReadCR2            0000000004013e98     NativeLib:native.obj
+ 0003:00003ea4       $unwind$Hlt                0000000004013ea4     NativeLib:native.obj
+ 0003:00003eb0       $unwind$Cli                0000000004013eb0     NativeLib:native.obj
+ 0003:00003ebc       $unwind$Sti                0000000004013ebc     NativeLib:native.obj
+ 0003:00003ec8       $unwind$Out8               0000000004013ec8     NativeLib:io.obj
+ 0003:00003ed4       $unwind$Out16              0000000004013ed4     NativeLib:io.obj
+ 0003:00003ee0       $unwind$Out32              0000000004013ee0     NativeLib:io.obj
+ 0003:00003eec       $unwind$In8                0000000004013eec     NativeLib:io.obj
+ 0003:00003ef8       $unwind$In16               0000000004013ef8     NativeLib:io.obj
+ 0003:00003f04       $unwind$In32               0000000004013f04     NativeLib:io.obj
+ 0003:00003f10       $unwind$Insd               0000000004013f10     NativeLib:io.obj
+ 0003:00003f1c       $unwind$Insw               0000000004013f1c     NativeLib:io.obj
+ 0003:00003f28       $unwind$Insb               0000000004013f28     NativeLib:io.obj
+ 0003:00003f34       $unwind$Outsd              0000000004013f34     NativeLib:io.obj
+ 0003:00003f40       $unwind$Outsw              0000000004013f40     NativeLib:io.obj
+ 0003:00003f4c       $unwind$Outsb              0000000004013f4c     NativeLib:io.obj
+ 0007:00000000       __A1C2D1DC_concurrencysal@h 000000000413a000     NativeLib:mem.obj
+ 0007:00000001       __2AE1A8C2_sal@h           000000000413a001     NativeLib:mem.obj
+ 0007:00000002       __566E0226_vadefs@h        000000000413a002     NativeLib:mem.obj
+ 0007:00000003       __F6FD2D0D_vcruntime@h     000000000413a003     NativeLib:mem.obj
+ 0007:00000004       __50D81ED4_intrin0@inl@h   000000000413a004     NativeLib:mem.obj
+ 0007:00000005       __BE008443_setjmp@h        000000000413a005     NativeLib:mem.obj
+ 0007:00000006       __B4F60A16_mmintrin@h      000000000413a006     NativeLib:mem.obj
+ 0007:00000007       __6569C2CA_corecrt@h       000000000413a007     NativeLib:mem.obj
+ 0007:00000008       __6C20D4D3_corecrt_malloc@h 000000000413a008     NativeLib:mem.obj
+ 0007:00000009       __20BB4341_malloc@h        000000000413a009     NativeLib:mem.obj
+ 0007:0000000a       __76284159_xmmintrin@h     000000000413a00a     NativeLib:mem.obj
+ 0007:0000000b       __134AC895_emmintrin@h     000000000413a00b     NativeLib:mem.obj
+ 0007:0000000c       __CCEBA01C_pmmintrin@h     000000000413a00c     NativeLib:mem.obj
+ 0007:0000000d       __7C32D39E_tmmintrin@h     000000000413a00d     NativeLib:mem.obj
+ 0007:0000000e       __5509C61D_smmintrin@h     000000000413a00e     NativeLib:mem.obj
+ 0007:0000000f       __306B4FD1_nmmintrin@h     000000000413a00f     NativeLib:mem.obj
+ 0007:00000010       __E5D0B59F_wmmintrin@h     000000000413a010     NativeLib:mem.obj
+ 0007:00000011       __2E44F898_zmmintrin@h     000000000413a011     NativeLib:mem.obj
+ 0007:00000012       __19505A52_immintrin@h     000000000413a012     NativeLib:mem.obj
+ 0007:00000013       __A393BB17_ammintrin@h     000000000413a013     NativeLib:mem.obj
+ 0007:00000014       __98363834_intrin@h        000000000413a014     NativeLib:mem.obj
+ 0007:00000015       __069ACEDA_mem@cpp         000000000413a015     NativeLib:mem.obj
+ 0007:00000016       __A1C2D1DC_concurrencysal@h 000000000413a016     NativeLib:interrupts.obj
+ 0007:00000017       __2AE1A8C2_sal@h           000000000413a017     NativeLib:interrupts.obj
+ 0007:00000018       __566E0226_vadefs@h        000000000413a018     NativeLib:interrupts.obj
+ 0007:00000019       __F6FD2D0D_vcruntime@h     000000000413a019     NativeLib:interrupts.obj
+ 0007:0000001a       __2E636C40_stdint@h        000000000413a01a     NativeLib:interrupts.obj
+ 0007:0000001b       __50D81ED4_intrin0@inl@h   000000000413a01b     NativeLib:interrupts.obj
+ 0007:0000001c       __BE008443_setjmp@h        000000000413a01c     NativeLib:interrupts.obj
+ 0007:0000001d       __B4F60A16_mmintrin@h      000000000413a01d     NativeLib:interrupts.obj
+ 0007:0000001e       __6569C2CA_corecrt@h       000000000413a01e     NativeLib:interrupts.obj
+ 0007:0000001f       __6C20D4D3_corecrt_malloc@h 000000000413a01f     NativeLib:interrupts.obj
+ 0007:00000020       __20BB4341_malloc@h        000000000413a020     NativeLib:interrupts.obj
+ 0007:00000021       __76284159_xmmintrin@h     000000000413a021     NativeLib:interrupts.obj
+ 0007:00000022       __134AC895_emmintrin@h     000000000413a022     NativeLib:interrupts.obj
+ 0007:00000023       __CCEBA01C_pmmintrin@h     000000000413a023     NativeLib:interrupts.obj
+ 0007:00000024       __7C32D39E_tmmintrin@h     000000000413a024     NativeLib:interrupts.obj
+ 0007:00000025       __5509C61D_smmintrin@h     000000000413a025     NativeLib:interrupts.obj
+ 0007:00000026       __306B4FD1_nmmintrin@h     000000000413a026     NativeLib:interrupts.obj
+ 0007:00000027       __E5D0B59F_wmmintrin@h     000000000413a027     NativeLib:interrupts.obj
+ 0007:00000028       __2E44F898_zmmintrin@h     000000000413a028     NativeLib:interrupts.obj
+ 0007:00000029       __19505A52_immintrin@h     000000000413a029     NativeLib:interrupts.obj
+ 0007:0000002a       __A393BB17_ammintrin@h     000000000413a02a     NativeLib:interrupts.obj
+ 0007:0000002b       __98363834_intrin@h        000000000413a02b     NativeLib:interrupts.obj
+ 0007:0000002c       __19A456B5_interrupts@cpp  000000000413a02c     NativeLib:interrupts.obj
+ 0007:0000002d       __A1C2D1DC_concurrencysal@h 000000000413a02d     NativeLib:native.obj
+ 0007:0000002e       __2AE1A8C2_sal@h           000000000413a02e     NativeLib:native.obj
+ 0007:0000002f       __566E0226_vadefs@h        000000000413a02f     NativeLib:native.obj
+ 0007:00000030       __F6FD2D0D_vcruntime@h     000000000413a030     NativeLib:native.obj
+ 0007:00000031       __50D81ED4_intrin0@inl@h   000000000413a031     NativeLib:native.obj
+ 0007:00000032       __BE008443_setjmp@h        000000000413a032     NativeLib:native.obj
+ 0007:00000033       __B4F60A16_mmintrin@h      000000000413a033     NativeLib:native.obj
+ 0007:00000034       __6569C2CA_corecrt@h       000000000413a034     NativeLib:native.obj
+ 0007:00000035       __6C20D4D3_corecrt_malloc@h 000000000413a035     NativeLib:native.obj
+ 0007:00000036       __20BB4341_malloc@h        000000000413a036     NativeLib:native.obj
+ 0007:00000037       __76284159_xmmintrin@h     000000000413a037     NativeLib:native.obj
+ 0007:00000038       __134AC895_emmintrin@h     000000000413a038     NativeLib:native.obj
+ 0007:00000039       __CCEBA01C_pmmintrin@h     000000000413a039     NativeLib:native.obj
+ 0007:0000003a       __7C32D39E_tmmintrin@h     000000000413a03a     NativeLib:native.obj
+ 0007:0000003b       __5509C61D_smmintrin@h     000000000413a03b     NativeLib:native.obj
+ 0007:0000003c       __306B4FD1_nmmintrin@h     000000000413a03c     NativeLib:native.obj
+ 0007:0000003d       __E5D0B59F_wmmintrin@h     000000000413a03d     NativeLib:native.obj
+ 0007:0000003e       __2E44F898_zmmintrin@h     000000000413a03e     NativeLib:native.obj
+ 0007:0000003f       __19505A52_immintrin@h     000000000413a03f     NativeLib:native.obj
+ 0007:00000040       __A393BB17_ammintrin@h     000000000413a040     NativeLib:native.obj
+ 0007:00000041       __98363834_intrin@h        000000000413a041     NativeLib:native.obj
+ 0007:00000042       __745C357A_native@cpp      000000000413a042     NativeLib:native.obj
+ 0007:00000043       __A1C2D1DC_concurrencysal@h 000000000413a043     NativeLib:io.obj
+ 0007:00000044       __2AE1A8C2_sal@h           000000000413a044     NativeLib:io.obj
+ 0007:00000045       __566E0226_vadefs@h        000000000413a045     NativeLib:io.obj
+ 0007:00000046       __F6FD2D0D_vcruntime@h     000000000413a046     NativeLib:io.obj
+ 0007:00000047       __50D81ED4_intrin0@inl@h   000000000413a047     NativeLib:io.obj
+ 0007:00000048       __BE008443_setjmp@h        000000000413a048     NativeLib:io.obj
+ 0007:00000049       __B4F60A16_mmintrin@h      000000000413a049     NativeLib:io.obj
+ 0007:0000004a       __6569C2CA_corecrt@h       000000000413a04a     NativeLib:io.obj
+ 0007:0000004b       __6C20D4D3_corecrt_malloc@h 000000000413a04b     NativeLib:io.obj
+ 0007:0000004c       __20BB4341_malloc@h        000000000413a04c     NativeLib:io.obj
+ 0007:0000004d       __76284159_xmmintrin@h     000000000413a04d     NativeLib:io.obj
+ 0007:0000004e       __134AC895_emmintrin@h     000000000413a04e     NativeLib:io.obj
+ 0007:0000004f       __CCEBA01C_pmmintrin@h     000000000413a04f     NativeLib:io.obj
+ 0007:00000050       __7C32D39E_tmmintrin@h     000000000413a050     NativeLib:io.obj
+ 0007:00000051       __5509C61D_smmintrin@h     000000000413a051     NativeLib:io.obj
+ 0007:00000052       __306B4FD1_nmmintrin@h     000000000413a052     NativeLib:io.obj
+ 0007:00000053       __E5D0B59F_wmmintrin@h     000000000413a053     NativeLib:io.obj
+ 0007:00000054       __2E44F898_zmmintrin@h     000000000413a054     NativeLib:io.obj
+ 0007:00000055       __19505A52_immintrin@h     000000000413a055     NativeLib:io.obj
+ 0007:00000056       __A393BB17_ammintrin@h     000000000413a056     NativeLib:io.obj
+ 0007:00000057       __98363834_intrin@h        000000000413a057     NativeLib:io.obj
+ 0007:00000058       __6D563750_io@cpp          000000000413a058     NativeLib:io.obj
+ 0008:000000a0       $R000000                   000000000413b0a0     Kernel.res
+ 0008:000002e8       $R000248                   000000000413b2e8     Kernel.res
