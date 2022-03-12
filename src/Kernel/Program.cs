@@ -20,7 +20,7 @@ namespace OS_Sharp
         static Image Wallpaper;
 
         /**
-         * Minimum system requirement:
+         * Minimum system requirements:
          * 128MiB of RAM
          * Memory Map:
          * 64 MiB - 96MiB   -> System
