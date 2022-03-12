@@ -14,7 +14,7 @@ namespace OS_Sharp.GUI
             Title = "Console";
             Cmd = string.Empty;
             Data = string.Empty;
-            BackgroundColor = 0x0;
+            BackgroundColor = 0xFF101010;
             ScreenBuf = new Image(640, 320);
 
             Console.OnWrite += Console_OnWrite;

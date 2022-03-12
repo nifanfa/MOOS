@@ -39,7 +39,7 @@ namespace Kernel.GUI
             }
             names.Dispose();
 
-            Framebuffer.Fill(0, 0, Framebuffer.Width, BarHeight, 0xFF17202A);
+            Framebuffer.Fill(0, 0, Framebuffer.Width, BarHeight, 0xFF101010);
             Form.font.DrawString(0, (BarHeight / 2) - (Form.font.Height / 2), CurrentDirectory, Framebuffer.Width);
         }
     }

@@ -67,8 +67,8 @@ namespace OS_Sharp.GUI
                 Y = Control.MousePosition.Y - OffsetY;
             }
 
-            Framebuffer.Fill(X, Y - BarHeight - 5, Width, 5, 0xFF1B5DAA);
-            Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF3C3C3C);
+            Framebuffer.Fill(X, Y - BarHeight - 5, Width, 5, 0xFF2E86C1);
+            Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF424949);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
             font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
