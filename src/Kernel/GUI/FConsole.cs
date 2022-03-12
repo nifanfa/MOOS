@@ -68,7 +68,8 @@ namespace OS_Sharp.GUI
             base.Update();
             int w = 0, h = 0;
 
-            BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
+            font.DrawString(X, Y, Data, Width);
+            //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
         }
 
         private void Console_OnWrite(char chr)

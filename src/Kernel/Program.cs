@@ -87,13 +87,14 @@ namespace OS_Sharp
             AC97.Play(buffer);
             */
 
-            /*
-            for(; ; ) 
-            {
-                Console.WriteLine(Console.ReadLine());
-            }
-            */
+/*
+for(; ; ) 
+{
+    Console.WriteLine(Console.ReadLine());
+}
+*/
 
+#if false
             ConsoleKeyInfo Key = Console.ReadKey();
 
             if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
@@ -120,6 +121,7 @@ namespace OS_Sharp
                     for (int i = 0; i < 128; i++) Native.Nop();
                 }
             }
+#endif
 
             Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
             //Image from unsplash
