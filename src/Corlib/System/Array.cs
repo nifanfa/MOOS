@@ -192,7 +192,7 @@ namespace System
             object[] temp = new object[count];
             for (int i = startIndex; i < startIndex + count; i++)
             {
-                OS_Sharp.Console.WriteLine(i);
+                OS_Sharp.Console.WriteLine(i.ToString());
                 temp[x] = sourceArray[i];
                 x++;
             }

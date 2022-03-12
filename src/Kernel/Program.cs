@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime;
+using System.Windows.Forms;
 using Internal.Runtime.CompilerHelpers;
 using OS_Sharp.Driver;
 using OS_Sharp.FileSystem;
+using OS_Sharp.GUI;
+using OS_Sharp.Misc;
 
 namespace OS_Sharp
 {
@@ -10,6 +14,9 @@ namespace OS_Sharp
     {
         // The compiler expects that a static Main method exists
         private static void Main() { }
+
+        static Image Cursor;
+        static Image Wallpaper;
 
         /**
          * Minimum system requirement:
@@ -114,9 +121,33 @@ namespace OS_Sharp
                 }
             }
 
+            Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
+            //Image from unsplash
+            Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALLP.PNG"));
+
+            BitFont.Initialize();
+
+            string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+            BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
+
+            Framebuffer.TripleBuffered = true;
+
+            Form.Initialize();
+
+            new FConsole(100, 100);
+
+            Console.WriteLine("Hello, World!");
+
             for (; ; )
             {
-
+                Framebuffer.DrawImage(0, 0, Wallpaper, false);
+                Form.UpdateAll();
+                /*
+                ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
+                ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+                */
+                Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+                Framebuffer.Update();
             }
         }
         // Makes messages for the init methods
