@@ -53,12 +53,14 @@ namespace OS_Sharp.Misc
                     int newG = (fG * alpha + inv_alpha * bG) >> 8;
                     int newB = (fB * alpha + inv_alpha * bB) >> 8;
 
+                    if (X >= 0 && Y >= 0)
+                    {
+                        Framebuffer.DrawPoint(X + w, Y + h - basey, Color.ToArgb((byte)newR, (byte)newG, (byte)newB));
+                    }
+
                     if (fA != 0)
                     {
-                        if (X >= 0 && Y >= 0)
-                        {
-                            Framebuffer.DrawPoint(X + w, Y + h - basey, Color.ToArgb((byte)newR, (byte)newG, (byte)newB));
-                        }
+                        
                     }
                     else
                     {

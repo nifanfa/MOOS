@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Runtime;
 using System.Windows.Forms;
 using Internal.Runtime.CompilerHelpers;
+using Kernel.GUI;
 using OS_Sharp.Driver;
 using OS_Sharp.FileSystem;
 using OS_Sharp.GUI;
@@ -87,14 +88,12 @@ namespace OS_Sharp
             AC97.Play(buffer);
             */
 
-/*
-for(; ; ) 
-{
-    Console.WriteLine(Console.ReadLine());
-}
-*/
-
-#if false
+            /*
+            for(; ; ) 
+            {
+                Console.WriteLine(Console.ReadLine());
+            }
+            */
             ConsoleKeyInfo Key = Console.ReadKey();
 
             if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
@@ -121,7 +120,6 @@ for(; ; )
                     for (int i = 0; i < 128; i++) Native.Nop();
                 }
             }
-#endif
 
             Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
             //Image from unsplash
@@ -136,13 +134,16 @@ for(; ; )
 
             Form.Initialize();
 
-            new FConsole(100, 100);
+            Desktop.Initialize();
+
+            new FConsole(300, 250);
 
             Console.WriteLine("Hello, World!");
 
             for (; ; )
             {
                 Framebuffer.DrawImage(0, 0, Wallpaper, false);
+                Desktop.Update();
                 Form.UpdateAll();
                 /*
                 ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);

@@ -14,5 +14,6 @@ namespace OS_Sharp.FileSystem
         }
 
         public abstract byte[] ReadAllBytes(string Name);
+        public abstract string[] GetFiles();
     }
 }
