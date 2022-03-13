@@ -34,31 +34,19 @@ namespace OS_Sharp.Misc
             {
                 for (int h = basey; h < (basey) + (image.Height / charset.Length); h++)
                 {
+                    //Color ac = Color.FromArgb(Framebuffer.GetPoint(X + w, Y + h - basey));
+                    uint bg = Framebuffer.GetPoint(X + w, Y + h - basey);
                     uint foreground = image.RawData[image.Width * h + w];
-                    int fA = (byte)((foreground >> 24) & 0xFF);
-                    int fR = (byte)((foreground >> 16) & 0xFF);
-                    int fG = (byte)((foreground >> 8) & 0xFF);
-                    int fB = (byte)((foreground) & 0xFF);
-
-                    uint background = Framebuffer.GetPoint(X + w, Y + h - basey);
-                    int bA = (byte)((background >> 24) & 0xFF);
-                    int bR = (byte)((background >> 16) & 0xFF);
-                    int bG = (byte)((background >> 8) & 0xFF);
-                    int bB = (byte)((background) & 0xFF);
-
-                    int alpha = fA;
-                    int inv_alpha = 255 - alpha;
-
-                    int newR = (fR * alpha + inv_alpha * bR) >> 8;
-                    int newG = (fG * alpha + inv_alpha * bG) >> 8;
-                    int newB = (fB * alpha + inv_alpha * bB) >> 8;
-
+                    uint FontAlpha = foreground & 0xFF000000 >> 24;
+                    byte R = (byte)((((((byte)((foreground >> 16) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ((bg&0x00FF0000)>>16))) >> 8) & 0xFF);
+                    byte G = (byte)((((((byte)((foreground >> 8) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ((bg & 0x0000FF00) >> 8))) >> 8) & 0xFF);
+                    byte B = (byte)((((((byte)((foreground) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ((bg & 0x000000FF) >> 0))) >> 8) & 0xFF);
                     if (X >= 0 && Y >= 0)
                     {
-                        Framebuffer.DrawPoint(X + w, Y + h - basey, Color.ToArgb((byte)newR, (byte)newG, (byte)newB));
+                        Framebuffer.DrawPoint(X + w, Y + h - basey, Color.ToArgb(R, G, B));
                     }
 
-                    if (fA != 0)
+                    if ((foreground & 0xFF000000 >> 24) != 0)
                     {
                         
                     }
