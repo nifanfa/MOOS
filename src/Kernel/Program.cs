@@ -21,7 +21,7 @@ namespace OS_Sharp
 
         /**
          * Minimum system requirement:
-         * 128MiB of RAM
+         * 1024MiB of RAM
          * Memory Map:
          * 64 MiB - 96MiB   -> System
          * 96 MiB - ∞     -> Free to use
