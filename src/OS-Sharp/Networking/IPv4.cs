@@ -84,6 +84,7 @@ namespace OS_Sharp.Networking
             hdr->SourceIP[1] = Network.IP[1];
             hdr->SourceIP[2] = Network.IP[2];
             hdr->SourceIP[3] = Network.IP[3];
+
             hdr->DestIP[0] = DestIP[0];
             hdr->DestIP[1] = DestIP[1];
             hdr->DestIP[2] = DestIP[2];

@@ -589,6 +589,7 @@ namespace OS_Sharp.Networking
             phdr->dst[1] = conn.remoteAddr[1];
             phdr->dst[2] = conn.remoteAddr[2];
             phdr->dst[3] = conn.remoteAddr[3];
+
             phdr->reserved = 0;
             phdr->protocol = (byte)IPv4.IPv4Protocol.TCP;
             phdr->len = Ethernet.SwapLeftRight((ushort)((uint)pkt->end - (uint)pkt->start));
