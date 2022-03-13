@@ -90,7 +90,7 @@ namespace OS_Sharp.Misc
             for (int i = 0; i < Str.Length; i++)
             {
                 w += DrawChar(X + w, Y + h, Str[i]);
-                if (w + Width > LineLimit && LineLimit != -1) 
+                if (w + Width > LineLimit && LineLimit != -1 || Str[i] == '\n') 
                 {
                     w = 0;
                     h += Height;
