@@ -123,7 +123,7 @@ namespace OS_Sharp
 
             Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
             //Image from unsplash
-            Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALLP.PNG"));
+            Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALP.PNG"));
 
             BitFont.Initialize();
 
@@ -136,7 +136,7 @@ namespace OS_Sharp
 
             Desktop.Initialize();
 
-            new FConsole(300, 250);
+            new FConsole(350, 300);
 
             Console.WriteLine("Hello, World!");
 
