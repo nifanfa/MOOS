@@ -26,6 +26,21 @@ namespace System
             return m_pEEType->BaseSize - (uint)sizeof(ObjHeader) - (uint)sizeof(EEType*);
         }
 
+        public uint GetBit(int bitIndex)
+        {
+            return (uint)(GetRawData() & (1 << bitIndex));
+        }
+
+        public uint GetBitRange(int start, int end)
+        {
+            uint v = 0;
+            for (int i = start; i < end; i++)
+            {
+                v += GetBit(i);
+            }
+            return v;
+        }
+
         public Object() { }
         ~Object() { }
 
