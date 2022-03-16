@@ -1,5 +1,4 @@
-~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
-C# operating system demo, Using Native AOT (Core RT) boot via multiboot  
+C# operating system creator, made with Native AOT (Core RT) and boots via multiboot.  
  - [ ] Error Throwing / Catching
  - [x] GC
  - [x] PS2 Keyboard/Mouse(USB Compatible)
