@@ -9,6 +9,9 @@
     <Import_RootNamespace>OS_Sharp</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\stdio.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\stdlib.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\strings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\AC97.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Framebuffer.cs" />
@@ -35,7 +38,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Allocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ASC16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\BitFont.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Misc\ClassID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Console.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ConsoleColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\GDT.cs" />
@@ -49,15 +51,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\CPU.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\GameRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Input.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Mappers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Memory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\NES.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\PPU.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NES\Registers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\ARP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\Ethernet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\IPv4.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\Network.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\TCP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\UDP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)stdio.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)stdlib.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)strings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Networking\README.md" />

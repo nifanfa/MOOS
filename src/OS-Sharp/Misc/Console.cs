@@ -19,6 +19,9 @@ namespace OS_Sharp
         public static uint ForegroundColor { get => foregroundColor; set => foregroundColor = value; }
         public static uint BackgroundColor { get => backgroundColor; set => backgroundColor = value; }
 
+        public delegate void OnWriteHandler(char chr);
+        public static event OnWriteHandler OnWrite;
+
         internal static void Initialize()
         {
             Clear();
@@ -110,6 +113,7 @@ namespace OS_Sharp
 
         public static string ReadLine()
         {
+            int sx = CursorX;
             string s = string.Empty;
             ConsoleKeyInfo key;
             while ((key = ReadKey()).Key != ConsoleKey.Enter)
@@ -188,6 +192,7 @@ namespace OS_Sharp
                 }
                 else
                 {
+                    OnWrite?.Invoke(s.ToString()[i]);
                     WriteFramebuffer(s.ToString()[i]);
                     CursorX++;
                     if (CursorX * 8 == Width)
@@ -214,19 +219,19 @@ namespace OS_Sharp
             }
             else
             {
+                OnWrite?.Invoke(chr);
+                WriteFramebuffer(chr);
+
+
+                CursorX++;
+                if (CursorX * 8 == Width)
                 {
-                    WriteFramebuffer(chr);
-
-
-                    CursorX++;
-                    if (CursorX * 8 == Width)
-                    {
-                        CursorX = 0;
-                        CursorY++;
-                    }
-                    MoveUp();
-                    UpdateCursor();
+                    CursorX = 0;
+                    CursorY++;
                 }
+                MoveUp();
+                UpdateCursor();
+
             }
         }
 
@@ -244,6 +249,7 @@ namespace OS_Sharp
                 }
                 else
                 {
+                    OnWrite?.Invoke(s[i]);
                     WriteFramebuffer(s[i]);
 
 
@@ -273,6 +279,7 @@ namespace OS_Sharp
                 }
                 else
                 {
+                    OnWrite?.Invoke(o.ToString()[i]);
                     WriteFramebuffer(o.ToString()[i]);
 
 
@@ -304,6 +311,7 @@ namespace OS_Sharp
                 }
                 else
                 {
+                    OnWrite?.Invoke(s[i]);
                     WriteFramebuffer(s[i]);
 
 
@@ -331,6 +339,7 @@ namespace OS_Sharp
             }
             else
             {
+                OnWrite?.Invoke(c);
                 WriteFramebuffer(c);
 
 
@@ -348,6 +357,7 @@ namespace OS_Sharp
 
         public static void WriteLine()
         {
+            OnWrite?.Invoke('\n');
             WriteFramebuffer(' ');
             CursorX = 0;
             CursorY++;
@@ -357,6 +367,7 @@ namespace OS_Sharp
 
         public static void WriteAt(char chr, int x, int y)
         {
+            OnWrite?.Invoke(chr);
             WriteFramebuffer(chr, x, y);
         }
 

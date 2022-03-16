@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime;
+using System.Windows.Forms;
 using Internal.Runtime.CompilerHelpers;
+using Kernel.GUI;
 using OS_Sharp.Driver;
 using OS_Sharp.FileSystem;
+using OS_Sharp.GUI;
+using OS_Sharp.Misc;
 
 namespace OS_Sharp
 {
@@ -11,9 +16,12 @@ namespace OS_Sharp
         // The compiler expects that a static Main method exists
         private static void Main() { }
 
+        static Image Cursor;
+        static Image Wallpaper;
+
         /**
-         * Minimum system requirement:
-         * 128MiB of RAM
+         * Minimum system requirements:
+         * 1024MiB of RAM
          * Memory Map:
          * 64 MiB - 96MiB   -> System
          * 96 MiB - ∞     -> Free to use
@@ -71,9 +79,78 @@ namespace OS_Sharp
             RTL8139.Initialise();
             ARP.Require(Network.Gateway);
             */
-            for (; ; )
+
+            Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
+
+            /*
+            byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
+            AC97.Initialize();
+            AC97.Play(buffer);
+            */
+
+            /*
+            for(; ; ) 
+            {
+                Console.WriteLine(Console.ReadLine());
+            }
+            */
+            ConsoleKeyInfo Key = Console.ReadKey();
+
+            if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
             {
 
+                Console.WriteLine("Emulator Keymap:");
+                Console.WriteLine("A = Q");
+                Console.WriteLine("B = E");
+                Console.WriteLine("Z = Select");
+                Console.WriteLine("C = Start");
+                Console.WriteLine("W = Up");
+                Console.WriteLine("A = Left");
+                Console.WriteLine("S = Down");
+                Console.WriteLine("D = Right");
+                Console.WriteLine("Game Will Start After 2 Seconds");
+                PIT.Wait(2000);
+                NES.NES nes = new NES.NES();
+                nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
+                Console.WriteLine("Nintendo Family Computer Emulator Initialized");
+                Framebuffer.TripleBuffered = true;
+                for (; ; )
+                {
+                    nes.runGame();
+                    for (int i = 0; i < 128; i++) Native.Nop();
+                }
+            }
+
+            Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
+            //Image from unsplash
+            Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALP.PNG"));
+
+            BitFont.Initialize();
+
+            string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+            BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
+
+            Framebuffer.TripleBuffered = true;
+
+            Form.Initialize();
+
+            Desktop.Initialize();
+
+            new FConsole(350, 300);
+
+            Console.WriteLine("Hello, World!");
+
+            for (; ; )
+            {
+                Framebuffer.DrawImage(0, 0, Wallpaper, false);
+                Desktop.Update();
+                Form.UpdateAll();
+                /*
+                ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
+                ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+                */
+                Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+                Framebuffer.Update();
             }
         }
         // Makes messages for the init methods

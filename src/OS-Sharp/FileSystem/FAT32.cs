@@ -142,6 +142,16 @@ namespace OS_Sharp.FileSystem
             return RootDirectorySector + ((Cluster - 2) * DBR->BPB_SecPerClus);
         }
 
+        public override string[] GetFiles()
+        {
+            string[] str = new string[Items.Count];
+            for (int i = 0; i < str.Length; i++)
+            {
+                str[i] = Items[i].Name;
+            }
+            return str;
+        }
+
         public override byte[] ReadAllBytes(string FileName)
         {
             if (FileName[0] != '/')
