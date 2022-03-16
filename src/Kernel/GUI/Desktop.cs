@@ -11,7 +11,7 @@ namespace Kernel.GUI
         private static Image FileIcon;
         public static string CurrentDirectory;
 
-        public static void Initialize() 
+        public static void Initialize()
         {
             FileIcon = new PNG(File.Instance.ReadAllBytes("/UNKNOWN.PNG"));
             CurrentDirectory = " root@OS-Sharp: / ";
@@ -27,7 +27,7 @@ namespace Kernel.GUI
             int Y = Devide + BarHeight;
             for (int i = 0; i < names.Length; i++)
             {
-                if (Y + FileIcon.Height + Devide > Framebuffer.Height - Devide) 
+                if (Y + FileIcon.Height + Devide > Framebuffer.Height - Devide)
                 {
                     Y = Devide + BarHeight;
                     X += FileIcon.Width + Devide;
