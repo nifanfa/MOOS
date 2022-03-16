@@ -1,4 +1,5 @@
-﻿using OS_Sharp.Misc;
+﻿using OS_Sharp.Driver;
+using OS_Sharp.Misc;
 using System.Drawing;
 
 namespace OS_Sharp.GUI
@@ -44,10 +45,20 @@ namespace OS_Sharp.GUI
                 if (key.Key == System.ConsoleKey.Enter)
                 {
                     if (Cmd.Length != 0) Cmd.Length -= 1;
-                    switch (Cmd)
+                    
+                    // when a command is invoked
+                    switch (Cmd.ToLower())
                     {
                         case "hello":
                             Panic.Error(": )");
+                            break;
+
+                        case "help":
+                            Console.WriteLine("OS_Sharp Operating System https://github.com/nifanfa/OS-Sharp");
+                            break;
+
+                        case "shutdown":
+                            ACPI.Shutdown();
                             break;
 
                         default:
@@ -56,6 +67,7 @@ namespace OS_Sharp.GUI
                             Console.WriteLine("\"");
                             break;
                     }
+
                     Cmd.Dispose();
                     Cmd = string.Empty;
                 }
