@@ -2,6 +2,7 @@
 using System.Runtime;
 using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerServices;
+using Kernel;
 using OS_Sharp;
 using OS_Sharp.Driver;
 using OS_Sharp.Misc;
@@ -149,7 +150,9 @@ public static class IDT
         {
             case 0x20:
                 PIT.OnInterrupt();
-                break;
+                ThreadPool.Schedule(stack);
+                LocalAPIC.EndOfInterrupt();
+                return;
             case 0x21:
                 byte b = Native.In8(0x60);
                 PS2Keyboard.ProcessKey(b);

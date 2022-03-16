@@ -386,6 +386,23 @@ _inttest PROC
 _inttest ENDP
 
 
+PUBLIC _iretq
+
+_iretq PROC
+    mov rsp, rcx
+	popaq
+	iretq
+_iretq ENDP
+
+
+PUBLIC _int20h
+
+_int20h PROC
+    int 20h
+	ret
+_int20h ENDP
+
+
 _TEXT ENDS
 
 END

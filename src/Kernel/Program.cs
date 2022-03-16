@@ -4,6 +4,7 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Internal.Runtime.CompilerHelpers;
+using Kernel;
 using Kernel.GUI;
 using OS_Sharp.Driver;
 using OS_Sharp.FileSystem;
@@ -88,6 +89,7 @@ namespace OS_Sharp
 
 
             //_inttest();
+            ThreadPool.Initialize();
             for (; ; );
             /*
             byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");

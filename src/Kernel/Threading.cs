@@ -1,0 +1,83 @@
+﻿using OS_Sharp;
+using OS_Sharp.Driver;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace Kernel
+{
+    public unsafe class Thread
+    {
+        public IDT.IDTStack* stack;
+
+        public Thread()
+        {
+            ulong size = 1048576;
+            byte* ptr = (byte*)Allocator.Allocate(size);
+            Native.Stosb(ptr, 0, size);
+            ptr -= sizeof(IDT.IDTStack);
+            stack = (IDT.IDTStack*)ptr;
+
+            stack->cs = 0x08;
+            stack->rsp = (ulong)ptr;
+            stack->rflags = 0x202;
+        }
+    }
+
+    internal static unsafe class ThreadPool
+    {
+        public static List<Thread> Ts;
+        public static bool Ready = false;
+
+        public static void Initialize()
+        {
+            Ready = false;
+            Ts = new();
+            Add(&IdleThread);
+            Add(&A);
+            Add(&B);
+            Ready = true;
+            Schedule(null);
+        }
+
+        public static void A()
+        {
+            for (; ; ) Console.Write('A');
+        }
+
+        public static void B()
+        {
+            for (; ; ) Console.Write('B');
+        }
+
+        public static void IdleThread()
+        {
+            for (; ; ) Native.Hlt();
+        }
+
+        [DllImport("*")]
+        public static extern void _iretq(ulong rsp);
+
+        [DllImport("*")]
+        public static extern void _int20h();
+
+        public static void Add(delegate* <void> method)
+        {
+            Thread t = new();
+            t.stack->rip = (ulong)method;
+            Ts.Add(t);
+        }
+
+        public static int Index = 0;
+
+        public static void Schedule(IDT.IDTStack* stack)
+        {
+            if (!Ready) return;
+
+            if(stack != null)
+            Native.Movsb(Ts[Index].stack, stack, 14 * 8);
+            Index = (Index + 1) % Ts.Count;
+            LocalAPIC.EndOfInterrupt();
+            _iretq((ulong)Ts[Index].stack + 8);
+        }
+    }
+}
