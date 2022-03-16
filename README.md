@@ -1,4 +1,5 @@
 C# operating system creator, made with Native AOT (Core RT) and boots via multiboot.  
+## Implemented:  
  - [ ] Error Throwing / Catching
  - [x] GC
  - [x] PS2 Keyboard/Mouse(USB Compatible)
