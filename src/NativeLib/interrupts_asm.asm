@@ -56,6 +56,7 @@ irq MACRO num
 		mov rbp, rsp
 		pushaq
 		mov rcx, num
+		mov rdx, rsp
 		call irq_handler
 		popaq
 		pop rbp
@@ -374,6 +375,15 @@ _hlt PROC
 	hlt
 	ret
 _hlt ENDP
+
+
+PUBLIC _inttest
+
+_inttest PROC
+    mov rax,12345678h
+	int 80h
+	ret
+_inttest ENDP
 
 
 _TEXT ENDS

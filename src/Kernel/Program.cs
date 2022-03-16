@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Internal.Runtime.CompilerHelpers;
 using Kernel.GUI;
@@ -18,6 +19,9 @@ namespace OS_Sharp
 
         static Image Cursor;
         static Image Wallpaper;
+
+        [DllImport("*")]
+        public static extern void _inttest();
 
         /**
          * Minimum system requirements:
@@ -82,6 +86,9 @@ namespace OS_Sharp
 
             Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
+
+            //_inttest();
+            for (; ; );
             /*
             byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
             AC97.Initialize();
