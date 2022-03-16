@@ -1,3 +1,4 @@
+When building, make sure no folder in the path to the solution has a whitespace in it, You will get an error at the NASM stage of build
 C# operating system creator, made with Native AOT (Core RT) and boots via multiboot.  
 ## Implemented:  
  - [ ] Error Throwing / Catching
