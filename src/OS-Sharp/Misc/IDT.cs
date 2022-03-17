@@ -121,7 +121,8 @@ public static class IDT
         public ulong r13;
         public ulong r14;
         public ulong r15;
-
+        
+        //https://os.phil-opp.com/returning-from-exceptions/
         public ulong errorCode;
         public ulong rip;
         public ulong cs;
