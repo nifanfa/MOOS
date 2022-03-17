@@ -3,6 +3,7 @@
 C# operating system demo, using Native AOT (Core RT) boot via multiboot  
  - [ ] Error Throwing / Catching
  - [x] GC
+ - [x] Multithreading
  - [x] PS2 Keyboard/Mouse(USB Compatible)
  - [x] Nintendo Family Computer Emulator
  - [x] Intel® Gigabit Ethernet Network 
