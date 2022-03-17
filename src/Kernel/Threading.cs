@@ -33,8 +33,9 @@ namespace Kernel
             Ready = false;
             Ts = new();
             Add(&IdleThread);
-            Add(&A);
-            Add(&B);
+            //dd(&A);
+            //Add(&B);
+            Add(&Program.KMain);
             Ready = true;
             //Make sure the irq wont be triggered during _iretq
             Native.Hlt();

@@ -91,11 +91,15 @@ namespace OS_Sharp
             //_inttest();
             ThreadPool.Initialize();
             for (; ; );
+        }
+
+        public static void KMain()
+        {
             /*
-            byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
-            AC97.Initialize();
-            AC97.Play(buffer);
-            */
+                        byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
+                        AC97.Initialize();
+                        AC97.Play(buffer);
+                        */
 
             /*
             for(; ; ) 
@@ -162,6 +166,7 @@ namespace OS_Sharp
                 Framebuffer.Update();
             }
         }
+
         // Makes messages for the init methods
         private static void InitMsg(bool initfunc, string smsg, string fmsg)
         {
