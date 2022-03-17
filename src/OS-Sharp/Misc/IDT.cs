@@ -128,7 +128,7 @@ public static class IDT
         public ulong rflags;
         public ulong rsp;
         public ulong ss;
-        public ulong alignment;
+        //public ulong alignment;
     }
 
     [RuntimeExport("irq_handler")]

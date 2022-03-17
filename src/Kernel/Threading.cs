@@ -36,17 +36,22 @@ namespace Kernel
             Add(&A);
             Add(&B);
             Ready = true;
-            Schedule(null);
+            //Make sure the irq wont be triggered during _iretq
+            Native.Hlt();
+            //_iretq((ulong)Ts[0].stack + 8);
+            //_int20h();
+            //for (; ; ) Native.Hlt();
+            IdleThread();
         }
 
         public static void A()
         {
-            for (; ; ) Console.Write('A');
+            for (; ; ) Console.WriteLine("Thread A");
         }
 
         public static void B()
         {
-            for (; ; ) Console.Write('B');
+            for (; ; ) Console.WriteLine("Thread B");
         }
 
         public static void IdleThread()
@@ -73,11 +78,11 @@ namespace Kernel
         {
             if (!Ready) return;
 
-            if(stack != null)
-            Native.Movsb(Ts[Index].stack, stack, 14 * 8);
+            //Native.Movsb(Ts[Index].stack, stack, 14 * 8);
+            Native.Movsb(Ts[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
             Index = (Index + 1) % Ts.Count;
-            LocalAPIC.EndOfInterrupt();
-            _iretq((ulong)Ts[Index].stack + 8);
+
+            Native.Movsb(stack, Ts[Index].stack, (ulong)sizeof(IDT.IDTStack));
         }
     }
 }
