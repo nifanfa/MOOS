@@ -9,7 +9,7 @@ namespace Kernel
     {
         public IDT.IDTStack* stack;
 
-        public Thread()
+        public Thread(delegate* <void> method)
         {
             ulong size = 1048576;
             byte* ptr = (byte*)Allocator.Allocate(size);
@@ -20,28 +20,29 @@ namespace Kernel
             stack->cs = 0x08;
             stack->rsp = (ulong)ptr;
             stack->rflags = 0x202;
+
+            stack->rip = (ulong)method;
+
+            ThreadPool.Threads.Add(this);
         }
     }
 
     internal static unsafe class ThreadPool
     {
-        public static List<Thread> Ts;
+        public static List<Thread> Threads;
         public static bool Ready = false;
 
         public static void Initialize()
         {
             Ready = false;
-            Ts = new();
-            Add(&IdleThread);
-            //dd(&A);
-            //Add(&B);
-            Add(&Program.KMain);
+            Threads = new();
+            new Thread(&IdleThread);
+            new Thread(&A);
+            new Thread(&B);
+            //new Thread(&Program.KMain);
             Ready = true;
             //Make sure the irq wont be triggered during _iretq
             Native.Hlt();
-            //_iretq((ulong)Ts[0].stack + 8);
-            //_int20h();
-            //for (; ; ) Native.Hlt();
             IdleThread();
         }
 
@@ -60,30 +61,16 @@ namespace Kernel
             for (; ; ) Native.Hlt();
         }
 
-        [DllImport("*")]
-        public static extern void _iretq(ulong rsp);
-
-        [DllImport("*")]
-        public static extern void _int20h();
-
-        public static void Add(delegate* <void> method)
-        {
-            Thread t = new();
-            t.stack->rip = (ulong)method;
-            Ts.Add(t);
-        }
-
         public static int Index = 0;
 
         public static void Schedule(IDT.IDTStack* stack)
         {
             if (!Ready) return;
 
-            //Native.Movsb(Ts[Index].stack, stack, 14 * 8);
-            Native.Movsb(Ts[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
-            Index = (Index + 1) % Ts.Count;
+            Native.Movsb(Threads[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
+            Index = (Index + 1) % Threads.Count;
 
-            Native.Movsb(stack, Ts[Index].stack, (ulong)sizeof(IDT.IDTStack));
+            Native.Movsb(stack, Threads[Index].stack, (ulong)sizeof(IDT.IDTStack));
         }
     }
 }
