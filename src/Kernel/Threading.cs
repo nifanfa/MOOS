@@ -18,6 +18,7 @@ namespace Kernel
             stack = (IDT.IDTStack*)ptr;
 
             stack->cs = 0x08;
+            stack->ss = 0x10;
             stack->rsp = (ulong)ptr;
             stack->rflags = 0x202;
 
