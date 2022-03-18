@@ -88,6 +88,7 @@ namespace Kernel
                 Console.WriteLine("%");
 #endif
             }
+            //Make sure the index 0 is idle thread
             if (Index == 0)
             {
                 TickIdle++;
