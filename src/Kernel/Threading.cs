@@ -11,15 +11,12 @@ namespace Kernel
 
         public Thread(delegate* <void> method)
         {
-            ulong size = 1048576;
-            byte* ptr = (byte*)Allocator.Allocate(size);
-            Native.Stosb(ptr, 0, size);
-            ptr -= sizeof(IDT.IDTStack);
-            stack = (IDT.IDTStack*)ptr;
+            stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
 
             stack->cs = 0x08;
             stack->ss = 0x10;
-            stack->rsp = (ulong)ptr;
+            const int Size = 16384;
+            stack->rsp = ((ulong)Allocator.Allocate(Size)) + (Size / 2);
             stack->rflags = 0x202;
 
             stack->rip = (ulong)method;
