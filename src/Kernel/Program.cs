@@ -85,8 +85,39 @@ namespace OS_Sharp
             ARP.Require(Network.Gateway);
             */
 
-            Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
+            /*
+            byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
+            AC97.Initialize();
+            AC97.Play(buffer);
+            */
 
+            /*
+            for(; ; ) 
+            {
+                Console.WriteLine(Console.ReadLine());
+            }
+            */
+
+            #region Things for GUI
+            Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
+            //Image from unsplash
+            Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALP.PNG"));
+
+            BitFont.Initialize();
+
+            string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+            BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
+
+            Form.Initialize();
+
+            Desktop.Initialize();
+
+            new FConsole(350, 300);
+
+            Console.WriteLine("Hello, World!");
+            #endregion
+
+            Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
             //_inttest();
             ThreadPool.Initialize();
@@ -96,18 +127,6 @@ namespace OS_Sharp
 
         public static void KMain()
         {
-            /*
-                        byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
-                        AC97.Initialize();
-                        AC97.Play(buffer);
-                        */
-
-            /*
-            for(; ; ) 
-            {
-                Console.WriteLine(Console.ReadLine());
-            }
-            */
             ConsoleKeyInfo Key = Console.ReadKey();
 
             if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
@@ -135,25 +154,7 @@ namespace OS_Sharp
                 }
             }
 
-            Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
-            //Image from unsplash
-            Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALP.PNG"));
-
-            BitFont.Initialize();
-
-            string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-            BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
-
             Framebuffer.TripleBuffered = true;
-
-            Form.Initialize();
-
-            Desktop.Initialize();
-
-            new FConsole(350, 300);
-
-            Console.WriteLine("Hello, World!");
-
             for (; ; )
             {
                 Framebuffer.DrawImage(0, 0, Wallpaper, false);
