@@ -48,6 +48,11 @@
 		<Exec Command="cmd.exe /c copy /b $(MSBuildProjectDirectory)\$(NativeOutputPath)entry+$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt) $(MSBuildStartupDirectory)\Tools\grub2\boot\kernel"></Exec>
 		<Delete Files="$(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Delete>
 		<Exec Command="$(MSBuildStartupDirectory)\Tools\mkisofs.exe -relaxed-filenames -J -R -o $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table $(MSBuildStartupDirectory)\Tools\grub2"></Exec>
+		<!--Boot Using Qemu-->
 		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 512 -k en-gb -boot d -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\VirtualDisk.img,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97"></Exec>
+		<!--Boot Using VMWare-->
+		<!--
+		<Exec Command="&quot;C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\OS-Sharp\OS-Sharp.vmx"></Exec>
+		-->
 	</Target>
 </Project>
