@@ -146,7 +146,7 @@ namespace OS_Sharp
                 for (; ; )
                 {
                     nes.runGame();
-                    for (int i = 0; i < 128; i++) Native.Nop();
+                    //for (int i = 0; i < 128; i++) Native.Nop();
                 }
             }
 
