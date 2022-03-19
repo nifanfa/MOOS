@@ -41,6 +41,14 @@ namespace Kernel.GUI
 
             Framebuffer.Fill(0, 0, Framebuffer.Width, BarHeight, 0xFF101010);
             Form.font.DrawString(0, (BarHeight / 2) - (Form.font.Height / 2), CurrentDirectory, Framebuffer.Width);
+
+            string CPUUsage = ThreadPool.CPUUsage.ToString();
+            string Str = "CPU: %";
+            string Result = Str + CPUUsage;
+            Form.font.DrawString(Framebuffer.Width - Form.font.MeasureString(Result) - Form.font.Width, (BarHeight / 2) - (Form.font.Height / 2), Result);
+            CPUUsage.Dispose();
+            Str.Dispose();
+            Result.Dispose();
         }
     }
 }

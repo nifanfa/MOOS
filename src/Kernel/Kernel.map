@@ -1,20 +1,20 @@
  Kernel
 
- Timestamp is 6236073c (Sun Mar 20 00:39:24 2022)
+ Timestamp is 6236090b (Sun Mar 20 00:47:07 2022)
 
  Preferred load address is 0000000004000000
 
  Start         Length     Name                   Class
  0001:00000000 000001a0H .text                   CODE
  0001:000001a0 0001da81H .text$mn                CODE
- 0002:00000000 000131a4H .managedcode$I          CODE
+ 0002:00000000 00013264H .managedcode$I          CODE
  0003:00000000 00005b30H .rdata                  DATA
  0003:00005b30 0000002cH .rdata$voltmd           DATA
  0003:00005b5c 00000194H .rdata$zzzdbg           DATA
- 0003:00005cf0 000033b8H .xdata                  DATA
- 0003:000090a8 00000000H .edata                  DATA
- 0004:00000000 00004120H .data                   DATA
- 0004:00004120 00120418H .bss                    DATA
+ 0003:00005cf0 00003404H .xdata                  DATA
+ 0003:000090f4 00000000H .edata                  DATA
+ 0004:00000000 00004150H .data                   DATA
+ 0004:00004150 00120418H .bss                    DATA
  0005:00000000 00001800H .pdata                  DATA
  0006:00000000 00000008H .modules$I              DATA
  0007:00000000 00000079H .msvcjmc                DATA
@@ -23,30 +23,30 @@
 
   Address         Publics by Value              Rva+Base               Lib:Object
 
- 0000:00000000       __guard_check_icall_a64n_fptr 0000000000000000     <absolute>
- 0000:00000000       __guard_eh_cont_table      0000000000000000     <absolute>
- 0000:00000000       __x64_code_ranges_to_entry_points 0000000000000000     <absolute>
- 0000:00000000       __hybrid_code_map          0000000000000000     <absolute>
- 0000:00000000       __arm64x_native_entrypoint 0000000000000000     <absolute>
+ 0000:00000000       __AbsoluteZero             0000000000000000     <absolute>
  0000:00000000       __dynamic_value_reloc_table 0000000000000000     <absolute>
- 0000:00000000       __enclave_config           0000000000000000     <absolute>
- 0000:00000000       __guard_longjmp_table      0000000000000000     <absolute>
- 0000:00000000       __arm64x_extra_rfe_table_size 0000000000000000     <absolute>
+ 0000:00000000       __guard_fids_count         0000000000000000     <absolute>
  0000:00000000       __arm64x_extra_rfe_table   0000000000000000     <absolute>
+ 0000:00000000       __guard_longjmp_count      0000000000000000     <absolute>
+ 0000:00000000       __hybrid_auxiliary_iat     0000000000000000     <absolute>
  0000:00000000       __guard_iat_count          0000000000000000     <absolute>
- 0000:00000000       __arm64x_redirection_metadata 0000000000000000     <absolute>
  0000:00000000       __guard_flags              0000000000000000     <absolute>
  0000:00000000       __guard_eh_cont_count      0000000000000000     <absolute>
- 0000:00000000       __arm64x_redirection_metadata_count 0000000000000000     <absolute>
- 0000:00000000       __hybrid_auxiliary_iat     0000000000000000     <absolute>
- 0000:00000000       __x64_code_ranges_to_entry_points_count 0000000000000000     <absolute>
- 0000:00000000       __guard_fids_count         0000000000000000     <absolute>
- 0000:00000000       __hybrid_code_map_count    0000000000000000     <absolute>
+ 0000:00000000       __x64_code_ranges_to_entry_points 0000000000000000     <absolute>
  0000:00000000       __hybrid_auxiliary_iat_copy 0000000000000000     <absolute>
- 0000:00000000       __AbsoluteZero             0000000000000000     <absolute>
- 0000:00000000       __guard_longjmp_count      0000000000000000     <absolute>
- 0000:00000000       __guard_iat_table          0000000000000000     <absolute>
+ 0000:00000000       __x64_code_ranges_to_entry_points_count 0000000000000000     <absolute>
+ 0000:00000000       __guard_longjmp_table      0000000000000000     <absolute>
  0000:00000000       __guard_fids_table         0000000000000000     <absolute>
+ 0000:00000000       __hybrid_code_map          0000000000000000     <absolute>
+ 0000:00000000       __arm64x_redirection_metadata_count 0000000000000000     <absolute>
+ 0000:00000000       __enclave_config           0000000000000000     <absolute>
+ 0000:00000000       __arm64x_extra_rfe_table_size 0000000000000000     <absolute>
+ 0000:00000000       __guard_check_icall_a64n_fptr 0000000000000000     <absolute>
+ 0000:00000000       __guard_eh_cont_table      0000000000000000     <absolute>
+ 0000:00000000       __guard_iat_table          0000000000000000     <absolute>
+ 0000:00000000       __arm64x_redirection_metadata 0000000000000000     <absolute>
+ 0000:00000000       __arm64x_native_entrypoint 0000000000000000     <absolute>
+ 0000:00000000       __hybrid_code_map_count    0000000000000000     <absolute>
  0000:00000000       __ImageBase                0000000004000000     <linker-defined>
  0001:00000000       __GetNonGCStaticBase_Kernel_Allocator 0000000004001000     Kernel.obj
  0001:00000008       __GetNonGCStaticBase_Kernel_GDT 0000000004001008     Kernel.obj
@@ -460,10 +460,10 @@
  0002:00000370       Kernel_Allocator__Reallocate 000000000401f370     Kernel.obj
  0002:00000470       Kernel_GDT__Initialize     000000000401f470     Kernel.obj
  0002:00000550       Kernel_IDT__Initialize     000000000401f550     Kernel.obj
- 0002:00000650       exception_handler          000000000401f650     Kernel.obj
  0002:00000650       Kernel_IDT__ExceptionHandler 000000000401f650     Kernel.obj
- 0002:000007b0       irq_handler                000000000401f7b0     Kernel.obj
+ 0002:00000650       exception_handler          000000000401f650     Kernel.obj
  0002:000007b0       Kernel_IDT__IRQHandler     000000000401f7b0     Kernel.obj
+ 0002:000007b0       irq_handler                000000000401f7b0     Kernel.obj
  0002:00000a10       Kernel_Native__Load_GDT    000000000401fa10     Kernel.obj
  0002:00000a70       Kernel_Native__Load_IDT    000000000401fa70     Kernel.obj
  0002:00000ad0       Kernel_System_Delegate__InitializeClosedInstance 000000000401fad0     Kernel.obj
@@ -489,8 +489,8 @@
  0002:00001250       String__Concat_1           0000000004020250     Kernel.obj
  0002:000012b0       UInt64__ToString           00000000040202b0     Kernel.obj
  0002:00001380       UInt64__ToStringHex        0000000004020380     Kernel.obj
- 0002:00001430       RhTypeCast_CheckCastClass  0000000004020430     Kernel.obj
  0002:00001430       Kernel_System_Runtime_TypeCast__CheckCastClass 0000000004020430     Kernel.obj
+ 0002:00001430       RhTypeCast_CheckCastClass  0000000004020430     Kernel.obj
  0002:00001460       Kernel_System_Runtime_TypeCast__CheckCastArray 0000000004020460     Kernel.obj
  0002:00001460       RhTypeCast_CheckCastArray  0000000004020460     Kernel.obj
  0002:00001490       RhTypeCast_IsInstanceOfArray 0000000004020490     Kernel.obj
@@ -498,36 +498,36 @@
  0002:000014d0       Kernel_System_Drawing_Image___ctor_0 00000000040204d0     Kernel.obj
  0002:000014e0       Kernel_System_Drawing_Image__Dispose 00000000040204e0     Kernel.obj
  0002:00001510       Kernel_Internal_Runtime_CompilerHelpers_ArrayHelpers__NewObjArray 0000000004020510     Kernel.obj
- 0002:00001660       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____imp_GetCurrentThreadId 0000000004020660     Kernel.obj
  0002:00001660       __imp_GetCurrentThreadId   0000000004020660     Kernel.obj
- 0002:00001670       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____CheckForDebuggerJustMyCode 0000000004020670     Kernel.obj
+ 0002:00001660       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____imp_GetCurrentThreadId 0000000004020660     Kernel.obj
  0002:00001670       __CheckForDebuggerJustMyCode 0000000004020670     Kernel.obj
- 0002:00001680       __fail_fast                0000000004020680     Kernel.obj
+ 0002:00001670       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers____CheckForDebuggerJustMyCode 0000000004020670     Kernel.obj
  0002:00001680       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__FailFast 0000000004020680     Kernel.obj
+ 0002:00001680       __fail_fast                0000000004020680     Kernel.obj
  0002:00001690       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemSet 0000000004020690     Kernel.obj
  0002:00001690       memset                     0000000004020690     Kernel.obj
  0002:000016b0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__MemCpy 00000000040206b0     Kernel.obj
  0002:000016b0       memcpy                     00000000040206b0     Kernel.obj
  0002:000016d0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpFallbackFailFast 00000000040206d0     Kernel.obj
  0002:000016d0       RhpFallbackFailFast        00000000040206d0     Kernel.obj
- 0002:000016e0       RhpReversePInvoke2         00000000040206e0     Kernel.obj
  0002:000016e0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke2 00000000040206e0     Kernel.obj
+ 0002:000016e0       RhpReversePInvoke2         00000000040206e0     Kernel.obj
  0002:000016f0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn2 00000000040206f0     Kernel.obj
  0002:000016f0       RhpReversePInvokeReturn2   00000000040206f0     Kernel.obj
- 0002:00001700       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke 0000000004020700     Kernel.obj
  0002:00001700       RhpReversePInvoke          0000000004020700     Kernel.obj
+ 0002:00001700       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvoke 0000000004020700     Kernel.obj
  0002:00001710       RhpReversePInvokeReturn    0000000004020710     Kernel.obj
  0002:00001710       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpReversePInvokeReturn 0000000004020710     Kernel.obj
  0002:00001720       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvoke 0000000004020720     Kernel.obj
  0002:00001720       RhpPInvoke                 0000000004020720     Kernel.obj
  0002:00001730       RhpPInvokeReturn           0000000004020730     Kernel.obj
  0002:00001730       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpPinvokeReturn 0000000004020730     Kernel.obj
- 0002:00001740       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewFast 0000000004020740     Kernel.obj
  0002:00001740       RhpNewFast                 0000000004020740     Kernel.obj
- 0002:000017f0       RhpNewArray                00000000040207f0     Kernel.obj
+ 0002:00001740       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewFast 0000000004020740     Kernel.obj
  0002:000017f0       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpNewArray 00000000040207f0     Kernel.obj
- 0002:00001900       RhpAssignRef               0000000004020900     Kernel.obj
+ 0002:000017f0       RhpNewArray                00000000040207f0     Kernel.obj
  0002:00001900       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpAssignRef 0000000004020900     Kernel.obj
+ 0002:00001900       RhpAssignRef               0000000004020900     Kernel.obj
  0002:00001910       Kernel_Internal_Runtime_CompilerHelpers_StartupCodeHelpers__RhpByRefAssignRef 0000000004020910     Kernel.obj
  0002:00001910       RhpByRefAssignRef          0000000004020910     Kernel.obj
  0002:00001920       RhpCheckedAssignRef        0000000004020920     Kernel.obj
@@ -599,18 +599,18 @@
  0002:000052a0       Kernel_OS_Sharp_UDP__HandlePacket 00000000040242a0     Kernel.obj
  0002:00005370       Kernel_OS_Sharp_Stdio__Print 0000000004024370     Kernel.obj
  0002:00005370       print                      0000000004024370     Kernel.obj
- 0002:000053b0       fopen                      00000000040243b0     Kernel.obj
  0002:000053b0       Kernel_OS_Sharp_Stdio__Fopen 00000000040243b0     Kernel.obj
- 0002:00005510       fseek                      0000000004024510     Kernel.obj
+ 0002:000053b0       fopen                      00000000040243b0     Kernel.obj
  0002:00005510       Kernel_OS_Sharp_Stdio__Fseek 0000000004024510     Kernel.obj
- 0002:00005530       Kernel_OS_Sharp_Stdio__Fread 0000000004024530     Kernel.obj
+ 0002:00005510       fseek                      0000000004024510     Kernel.obj
  0002:00005530       fread                      0000000004024530     Kernel.obj
+ 0002:00005530       Kernel_OS_Sharp_Stdio__Fread 0000000004024530     Kernel.obj
  0002:000055a0       malloc                     00000000040245a0     Kernel.obj
  0002:000055a0       Kernel_OS_Sharp_Stdlib__Malloc 00000000040245a0     Kernel.obj
  0002:000055b0       free                       00000000040245b0     Kernel.obj
  0002:000055b0       Kernel_OS_Sharp_Stdlib__Free 00000000040245b0     Kernel.obj
- 0002:000055c0       realloc                    00000000040245c0     Kernel.obj
  0002:000055c0       Kernel_OS_Sharp_Stdlib__Realloc 00000000040245c0     Kernel.obj
+ 0002:000055c0       realloc                    00000000040245c0     Kernel.obj
  0002:000055d0       Kernel_OS_Sharp_NES_CPU__execOpCode 00000000040245d0     Kernel.obj
  0002:000094c0       Kernel_OS_Sharp_NES_CPU__NMIHandler 00000000040284c0     Kernel.obj
  0002:00009600       Kernel_OS_Sharp_NES_CPU__setCompareFlags 0000000004028600     Kernel.obj
@@ -723,69 +723,69 @@
  0002:000127b0       Kernel_Kernel_ThreadPool__Schedule 00000000040317b0     Kernel.obj
  0002:00012930       Kernel_Kernel_GUI_Desktop__Initialize 0000000004031930     Kernel.obj
  0002:000129a0       Kernel_Kernel_GUI_Desktop__Update 00000000040319a0     Kernel.obj
- 0002:00012b20       Kernel_OS_Sharp_SATA_SATADevice__Configure 0000000004031b20     Kernel.obj
- 0002:00012c10       Kernel_OS_Sharp_SATA_SATADevice__Read 0000000004031c10     Kernel.obj
- 0002:00012ca0       Kernel_OS_Sharp_SATA_SATADevice__ReadOrWrite 0000000004031ca0     Kernel.obj
- 0002:00013010       Kernel_OS_Sharp_SATA_SATADevice__FindSlot 0000000004032010     Kernel.obj
- 0002:00013050       Kernel_OS_Sharp_SATA_SATADevice___ctor 0000000004032050     Kernel.obj
- 0002:00013060       Kernel_OS_Sharp_FileSystem_FAT32_AEntry___ctor 0000000004032060     Kernel.obj
- 0002:00013070       Kernel_System_Array_1<UInt8>___ctor 0000000004032070     Kernel.obj
- 0002:00013080       Kernel_System_Array_1<Char>___ctor 0000000004032080     Kernel.obj
- 0002:00013090       Kernel_System_Array_1<Kernel_System_ConsoleKey>___ctor 0000000004032090     Kernel.obj
- 0002:000130a0       Kernel_System_Array_1<UInt32>___ctor 00000000040320a0     Kernel.obj
- 0002:000130b0       Kernel_System_Array_1<Kernel_IDT_IDTEntry>___ctor 00000000040320b0     Kernel.obj
- 0002:000130c0       Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__get_Item 00000000040320c0     Kernel.obj
- 0002:00013100       Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__Add 0000000004032100     Kernel.obj
- 0002:00013140       Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE_DriveInfo>___ctor 0000000004032140     Kernel.obj
- 0002:00013150       Kernel_System_Array_1<System___Canon>___ctor 0000000004032150     Kernel.obj
- 0002:00013160       Internal_CompilerGenerated__Module___SetAppContextSwitches 0000000004032160     Kernel.obj
- 0002:00013170       Kernel__Module___StartupCodeMain 0000000004032170     Kernel.obj
- 0002:00013170       __managed__Main            0000000004032170     Kernel.obj
+ 0002:00012be0       Kernel_OS_Sharp_SATA_SATADevice__Configure 0000000004031be0     Kernel.obj
+ 0002:00012cd0       Kernel_OS_Sharp_SATA_SATADevice__Read 0000000004031cd0     Kernel.obj
+ 0002:00012d60       Kernel_OS_Sharp_SATA_SATADevice__ReadOrWrite 0000000004031d60     Kernel.obj
+ 0002:000130d0       Kernel_OS_Sharp_SATA_SATADevice__FindSlot 00000000040320d0     Kernel.obj
+ 0002:00013110       Kernel_OS_Sharp_SATA_SATADevice___ctor 0000000004032110     Kernel.obj
+ 0002:00013120       Kernel_OS_Sharp_FileSystem_FAT32_AEntry___ctor 0000000004032120     Kernel.obj
+ 0002:00013130       Kernel_System_Array_1<UInt8>___ctor 0000000004032130     Kernel.obj
+ 0002:00013140       Kernel_System_Array_1<Char>___ctor 0000000004032140     Kernel.obj
+ 0002:00013150       Kernel_System_Array_1<Kernel_System_ConsoleKey>___ctor 0000000004032150     Kernel.obj
+ 0002:00013160       Kernel_System_Array_1<UInt32>___ctor 0000000004032160     Kernel.obj
+ 0002:00013170       Kernel_System_Array_1<Kernel_IDT_IDTEntry>___ctor 0000000004032170     Kernel.obj
+ 0002:00013180       Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__get_Item 0000000004032180     Kernel.obj
+ 0002:000131c0       Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__Add 00000000040321c0     Kernel.obj
+ 0002:00013200       Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE_DriveInfo>___ctor 0000000004032200     Kernel.obj
+ 0002:00013210       Kernel_System_Array_1<System___Canon>___ctor 0000000004032210     Kernel.obj
+ 0002:00013220       Internal_CompilerGenerated__Module___SetAppContextSwitches 0000000004032220     Kernel.obj
+ 0002:00013230       Kernel__Module___StartupCodeMain 0000000004032230     Kernel.obj
+ 0002:00013230       __managed__Main            0000000004032230     Kernel.obj
  0003:00000000       __embedded_metadata        0000000004033000     Kernel.obj
  0003:00001d93       __embedded_resourceindex   0000000004034d93     Kernel.obj
  0003:00001d93       __embedded_resourcedata    0000000004034d93     Kernel.obj
- 0003:00001d93       __embedded_resourcedata_End 0000000004034d93     Kernel.obj
  0003:00001d93       __embedded_metadata_End    0000000004034d93     Kernel.obj
- 0003:00001d96       __embedded_resourceindex_End 0000000004034d96     Kernel.obj
+ 0003:00001d93       __embedded_resourcedata_End 0000000004034d93     Kernel.obj
  0003:00001d96       __type_to_metadata_map     0000000004034d96     Kernel.obj
+ 0003:00001d96       __embedded_resourceindex_End 0000000004034d96     Kernel.obj
  0003:00001ec1       __type_to_metadata_map_End 0000000004034ec1     Kernel.obj
  0003:00001ec1       __type_to_cctorContext_map 0000000004034ec1     Kernel.obj
  0003:00001ec4       __method_to_entrypoint_map 0000000004034ec4     Kernel.obj
  0003:00001ec4       __type_to_cctorContext_map_End 0000000004034ec4     Kernel.obj
  0003:00001ec7       __method_to_entrypoint_map_End 0000000004034ec7     Kernel.obj
  0003:00001ec7       __delegate_marshalling_stub_map 0000000004034ec7     Kernel.obj
- 0003:00001eca       __delegate_marshalling_stub_map_End 0000000004034eca     Kernel.obj
  0003:00001eca       __struct_marshalling_stub_map 0000000004034eca     Kernel.obj
+ 0003:00001eca       __delegate_marshalling_stub_map_End 0000000004034eca     Kernel.obj
  0003:00001ecd       __struct_marshalling_stub_map_End 0000000004034ecd     Kernel.obj
  0003:00001ecd       __array_type_map           0000000004034ecd     Kernel.obj
  0003:00001efe       __field_to_offset_map      0000000004034efe     Kernel.obj
  0003:00001efe       __array_type_map_End       0000000004034efe     Kernel.obj
- 0003:00001f01       __field_to_offset_map_End  0000000004034f01     Kernel.obj
  0003:00001f01       __nativelayoutinfo_End     0000000004034f01     Kernel.obj
+ 0003:00001f01       __field_to_offset_map_End  0000000004034f01     Kernel.obj
  0003:00001f01       __exact_method_instantiations 0000000004034f01     Kernel.obj
  0003:00001f01       __nativelayoutinfo         0000000004034f01     Kernel.obj
  0003:00001f04       __exact_method_instantiations_End 0000000004034f04     Kernel.obj
  0003:00001f04       __generic_types_hashtable  0000000004034f04     Kernel.obj
- 0003:00001f22       __generic_methods_hashtable 0000000004034f22     Kernel.obj
  0003:00001f22       __generic_types_hashtable_End 0000000004034f22     Kernel.obj
- 0003:00001f25       __generic_methods_hashtable_End 0000000004034f25     Kernel.obj
+ 0003:00001f22       __generic_methods_hashtable 0000000004034f22     Kernel.obj
  0003:00001f25       __gvm_table                0000000004034f25     Kernel.obj
+ 0003:00001f25       __generic_methods_hashtable_End 0000000004034f25     Kernel.obj
  0003:00001f28       __interface_gvm_table      0000000004034f28     Kernel.obj
  0003:00001f28       __gvm_table_End            0000000004034f28     Kernel.obj
  0003:00001f2b       __interface_gvm_table_End  0000000004034f2b     Kernel.obj
  0003:00001f2b       __GenericMethodsTemplateMap 0000000004034f2b     Kernel.obj
  0003:00001f2e       __GenericTypesTemplateMap  0000000004034f2e     Kernel.obj
  0003:00001f2e       __GenericMethodsTemplateMap_End 0000000004034f2e     Kernel.obj
- 0003:00001f31       __GenericTypesTemplateMap_End 0000000004034f31     Kernel.obj
  0003:00001f31       __block_reflection_type_map 0000000004034f31     Kernel.obj
+ 0003:00001f31       __GenericTypesTemplateMap_End 0000000004034f31     Kernel.obj
  0003:00001fca       _StaticsInfoHashtableNode  0000000004034fca     Kernel.obj
  0003:00001fca       __block_reflection_type_map_End 0000000004034fca     Kernel.obj
- 0003:00001fcd       _StaticsInfoHashtableNode_End 0000000004034fcd     Kernel.obj
  0003:00001fcd       __VirtualInvokeMap         0000000004034fcd     Kernel.obj
+ 0003:00001fcd       _StaticsInfoHashtableNode_End 0000000004034fcd     Kernel.obj
  0003:00001fd0       __VirtualInvokeMap_End     0000000004034fd0     Kernel.obj
  0003:00001fd0       __DefaultConstructor_Map   0000000004034fd0     Kernel.obj
- 0003:00001ff7       __DefaultConstructor_Map_End 0000000004034ff7     Kernel.obj
  0003:00001ff7       __external_CommonFixupsTable_references 0000000004034ff7     Kernel.obj
+ 0003:00001ff7       __DefaultConstructor_Map_End 0000000004034ff7     Kernel.obj
  0003:000020ff       __external_NativeReferences_references 00000000040350ff     Kernel.obj
  0003:000020ff       __external_CommonFixupsTable_references_End 00000000040350ff     Kernel.obj
  0003:00002123       __external_NativeStatics_references 0000000004035123     Kernel.obj
@@ -926,23 +926,23 @@
  0003:00004247       __optionalfields_??_7Kernel_OS_Sharp_PS2Keyboard@@6B@ 0000000004037247     Kernel.obj
  0003:0000424b       __optionalfields_??_7Kernel_OS_Sharp_Console@@6B@ 000000000403724b     Kernel.obj
  0003:0000424f       __optionalfields_??_7Boxed_Kernel_IDT_IDTEntry@@6B@ 000000000403724f     Kernel.obj
- 0003:00004258       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 0000000004037258     Kernel.obj
  0003:00004258       __GenericDict_Kernel_System_Array_1<String> 0000000004037258     Kernel.obj
  0003:00004258       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_PCIDevice> 0000000004037258     Kernel.obj
- 0003:00004260       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004037260     Kernel.obj
+ 0003:00004258       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 0000000004037258     Kernel.obj
  0003:00004260       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004037260     Kernel.obj
+ 0003:00004260       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004037260     Kernel.obj
  0003:00004268       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE> 0000000004037268     Kernel.obj
  0003:00004268       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE> 0000000004037268     Kernel.obj
- 0003:00004270       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_GUI_Form> 0000000004037270     Kernel.obj
  0003:00004270       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_GUI_Form> 0000000004037270     Kernel.obj
- 0003:00004278       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_Kernel_Thread> 0000000004037278     Kernel.obj
+ 0003:00004270       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_GUI_Form> 0000000004037270     Kernel.obj
  0003:00004278       __GenericDict_Kernel_System_Array_1<Kernel_Kernel_Thread> 0000000004037278     Kernel.obj
- 0003:00004280       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004037280     Kernel.obj
+ 0003:00004278       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_Kernel_Thread> 0000000004037278     Kernel.obj
  0003:00004280       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004037280     Kernel.obj
+ 0003:00004280       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004037280     Kernel.obj
  0003:00004288       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004037288     Kernel.obj
  0003:00004288       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004037288     Kernel.obj
- 0003:00004290       __GenericDict_Kernel_System_Array_1<__Array<UInt8>> 0000000004037290     Kernel.obj
  0003:00004290       __GenericDict_Kernel_System_Collections_Generic_List_1<__Array<UInt8>> 0000000004037290     Kernel.obj
+ 0003:00004290       __GenericDict_Kernel_System_Array_1<__Array<UInt8>> 0000000004037290     Kernel.obj
  0003:000042a0       lodepng_default_decompress_settings 00000000040372a0     NativeLib:lodepng.obj
  0003:000042c8       lodepng_default_compress_settings 00000000040372c8     NativeLib:lodepng.obj
  0003:000045d0       ??_C@_08CJOLANMN@20220109@ 00000000040375d0     NativeLib:lodepng.obj
@@ -1304,23 +1304,23 @@
  0003:0000828c       _unwind0Kernel_Kernel_ThreadPool__Schedule 000000000403b28c     Kernel.obj
  0003:000082c0       _unwind0Kernel_Kernel_GUI_Desktop__Initialize 000000000403b2c0     Kernel.obj
  0003:000082d4       _unwind0Kernel_Kernel_GUI_Desktop__Update 000000000403b2d4     Kernel.obj
- 0003:00008350       _unwind0Kernel_OS_Sharp_SATA_SATADevice__Configure 000000000403b350     Kernel.obj
- 0003:0000836c       _unwind0Kernel_OS_Sharp_SATA_SATADevice__Read 000000000403b36c     Kernel.obj
- 0003:00008388       _unwind0Kernel_OS_Sharp_SATA_SATADevice__ReadOrWrite 000000000403b388     Kernel.obj
- 0003:000083e0       _unwind0Kernel_OS_Sharp_SATA_SATADevice__FindSlot 000000000403b3e0     Kernel.obj
- 0003:000083f4       _unwind0Kernel_OS_Sharp_SATA_SATADevice___ctor 000000000403b3f4     Kernel.obj
- 0003:000083fc       _unwind0Kernel_OS_Sharp_FileSystem_FAT32_AEntry___ctor 000000000403b3fc     Kernel.obj
- 0003:00008404       _unwind0Kernel_System_Array_1<UInt8>___ctor 000000000403b404     Kernel.obj
- 0003:0000840c       _unwind0Kernel_System_Array_1<Char>___ctor 000000000403b40c     Kernel.obj
- 0003:00008414       _unwind0Kernel_System_Array_1<Kernel_System_ConsoleKey>___ctor 000000000403b414     Kernel.obj
- 0003:0000841c       _unwind0Kernel_System_Array_1<UInt32>___ctor 000000000403b41c     Kernel.obj
- 0003:00008424       _unwind0Kernel_System_Array_1<Kernel_IDT_IDTEntry>___ctor 000000000403b424     Kernel.obj
- 0003:0000842c       _unwind0Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__get_Item 000000000403b42c     Kernel.obj
- 0003:0000843c       _unwind0Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__Add 000000000403b43c     Kernel.obj
- 0003:0000844c       _unwind0Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE_DriveInfo>___ctor 000000000403b44c     Kernel.obj
- 0003:00008454       _unwind0Kernel_System_Array_1<System___Canon>___ctor 000000000403b454     Kernel.obj
- 0003:0000845c       _unwind0Internal_CompilerGenerated__Module___SetAppContextSwitches 000000000403b45c     Kernel.obj
- 0003:00008464       _unwind0Kernel__Module___StartupCodeMain 000000000403b464     Kernel.obj
+ 0003:0000839c       _unwind0Kernel_OS_Sharp_SATA_SATADevice__Configure 000000000403b39c     Kernel.obj
+ 0003:000083b8       _unwind0Kernel_OS_Sharp_SATA_SATADevice__Read 000000000403b3b8     Kernel.obj
+ 0003:000083d4       _unwind0Kernel_OS_Sharp_SATA_SATADevice__ReadOrWrite 000000000403b3d4     Kernel.obj
+ 0003:0000842c       _unwind0Kernel_OS_Sharp_SATA_SATADevice__FindSlot 000000000403b42c     Kernel.obj
+ 0003:00008440       _unwind0Kernel_OS_Sharp_SATA_SATADevice___ctor 000000000403b440     Kernel.obj
+ 0003:00008448       _unwind0Kernel_OS_Sharp_FileSystem_FAT32_AEntry___ctor 000000000403b448     Kernel.obj
+ 0003:00008450       _unwind0Kernel_System_Array_1<UInt8>___ctor 000000000403b450     Kernel.obj
+ 0003:00008458       _unwind0Kernel_System_Array_1<Char>___ctor 000000000403b458     Kernel.obj
+ 0003:00008460       _unwind0Kernel_System_Array_1<Kernel_System_ConsoleKey>___ctor 000000000403b460     Kernel.obj
+ 0003:00008468       _unwind0Kernel_System_Array_1<UInt32>___ctor 000000000403b468     Kernel.obj
+ 0003:00008470       _unwind0Kernel_System_Array_1<Kernel_IDT_IDTEntry>___ctor 000000000403b470     Kernel.obj
+ 0003:00008478       _unwind0Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__get_Item 000000000403b478     Kernel.obj
+ 0003:00008488       _unwind0Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Networking_ARP_ARPEntry>__Add 000000000403b488     Kernel.obj
+ 0003:00008498       _unwind0Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE_DriveInfo>___ctor 000000000403b498     Kernel.obj
+ 0003:000084a0       _unwind0Kernel_System_Array_1<System___Canon>___ctor 000000000403b4a0     Kernel.obj
+ 0003:000084a8       _unwind0Internal_CompilerGenerated__Module___SetAppContextSwitches 000000000403b4a8     Kernel.obj
+ 0003:000084b0       _unwind0Kernel__Module___StartupCodeMain 000000000403b4b0     Kernel.obj
  0004:00000000       __FrozenSegmentRegionStart 000000000403d000     Kernel.obj
  0004:00000008       __Str_                     000000000403d008     Kernel.obj
  0004:00000020       __Str________________________________F9B74DCC2C30B833333DF39209DF1D350F28DAD78C0CCF4488DEC08673AE266D 000000000403d020     Kernel.obj
@@ -1355,204 +1355,205 @@
  0004:000025e0       __Str_COPR_ERROR_C27F1F3E7F2ED4CFBD0EDCF5C7AA20D245CD9D1EBC80EDC243013215C2577FF9 000000000403f5e0     Kernel.obj
  0004:00002610       __Str_COPR_SEGMENT_OVERRUN_C449D79B0140F10083FD8C197428B494C3F5BC5E85A89FC5A9F3F9DFFE5E25AD 000000000403f610     Kernel.obj
  0004:00002650       __Str_COPR_UNAVAILABLE_834C85FB4D56A054FA75E003F62E454BF546EBD0D8DB2CB27CDAA76A62BF3C08 000000000403f650     Kernel.obj
- 0004:00002688       __Str_Connection_established_C7F61EB0E8A0A27B96E8B528A681CC4BC4FCF3896B18DA97D3154261FAF44F81 000000000403f688     Kernel.obj
- 0004:000026d0       __Str_Console              000000000403f6d0     Kernel.obj
- 0004:000026f8       __Str_D___Right_14C187A6866382F69F06DA3EE0FB1DF0B16908121A563D80AEA28A4A7AA6BD80 000000000403f6f8     Kernel.obj
- 0004:00002720       __Str_DIVIDE_BY_ZERO_35A15510F680DC765661E0D29DFAD7145E1665F9617FC031C21ECB78DB53A063 000000000403f720     Kernel.obj
- 0004:00002758       __Str_DOUBLE_FAULT_D7745D19D21BED4FCAE5949B361E7C3770F0F6F00771FC35E0C922926FC4F820 000000000403f758     Kernel.obj
- 0004:00002788       __Str_Emulator_Keymap__66658E9A6FF5CE9009CD6BCAD86B1DEE7064A22596586E1942B331F205BDD3F2 000000000403f788     Kernel.obj
- 0004:000027c0       __Str_Error__connection_reset_2DD4AD50280D62E8F71D6416E12CFCF047C1869E4C5D38221FAB587947A39ABA 000000000403f7c0     Kernel.obj
- 0004:00002808       __Str_Error__tcp_connection_refused_AA861B629A6FA6E245F0A4CC20757E883A28D3B5A92F23F52D897434C32212E8 000000000403f808     Kernel.obj
- 0004:00002858       __Str_Error__tcp_reset_1904B15FD7C0D3E7C5171138738A54023B558117FF868A1481B914CEBCA68428 000000000403f858     Kernel.obj
- 0004:00002890       __Str_Form1                000000000403f890     Kernel.obj
- 0004:000028b0       __Str_GDT_Initialization_Failure_C828F57F7600344F4AD01A9B88E5798BD5193C540FAB3E0ACFA5D871DA9D9541 000000000403f8b0     Kernel.obj
- 0004:00002900       __Str_GDT_Successfully_Initialized_A592EAFF47F845C987D1CBFA069648D744B994D5901DE84F083D9CA36DAFCB49 000000000403f900     Kernel.obj
- 0004:00002950       __Str_GENERAL_PROTECTION_8D0356CF6D03FD20FD9501FFF77BCB0EE6F4A84DDE8C5B8CD0FEE47094CDD3E5 000000000403f950     Kernel.obj
- 0004:00002990       __Str_Game_Will_Start_After_2_Second_37BD51CB6AE6844114569DE61CF58314F6B2A596F56F0F9571A96F45A282A0BA 000000000403f990     Kernel.obj
- 0004:000029e8       __Str_HPET_Successfully_Initialized_A591433E672546D4B6A975FAD0DFFFDD1FD07098B13BCDF93EEC1CA952D33761 000000000403f9e8     Kernel.obj
- 0004:00002a38       __Str_Hello_from_OS_Sharp__1444772DAA69DA58D2B9FF1A590A4A250370ED3D041AF9578CA058B9F3CA3C98 000000000403fa38     Kernel.obj
- 0004:00002a78       __Str_Hello__World__98B83E2E14759B86F964E17964E7B706E21EA7DEEA1267ABCE2F3FFB95A81BBC 000000000403fa78     Kernel.obj
- 0004:00002aa8       __Str_IDE_Initialization_Failure_9E56032688853ED3761C18121FE91142CA1327991E4CD9A7086730E06E310270 000000000403faa8     Kernel.obj
- 0004:00002af8       __Str_IDE_Successfully_Initialized_E477CF6426BFF51CE4581110A14C5C2F2E6214702A0361183D658BF84ADE03B5 000000000403faf8     Kernel.obj
- 0004:00002b48       __Str_IDE_bad_status_A4340D590FA84CCD8C75301D057B2E518ABCEA7EA8522D4B3D5C33ABEBBDC062 000000000403fb48     Kernel.obj
- 0004:00002b80       __Str_IDT_Initialization_Failure_0E29AADA4D8641B9C3A13E643B348FD8837B23F95A614A6CDD85BCB9620BB725 000000000403fb80     Kernel.obj
- 0004:00002bd0       __Str_IDT_Successfully_Initialized_77F94CBF7B9B778409D20B39DB97ECAADF905DF5D3D1C57C9D4BBEA728B85FBD 000000000403fbd0     Kernel.obj
- 0004:00002c20       __Str_INVALID_OPCODE_54C9591B5203C421C322A7A77E8C2F0AE28E0F9288BC942670E066AC6B19994B 000000000403fc20     Kernel.obj
- 0004:00002c58       __Str_INVALID_TSS_C62F37B994D6314510E6F050579212502983A0D22E662A0176CBB15DABFE9B12 000000000403fc58     Kernel.obj
- 0004:00002c88       __Str_IOAPIC_Initialization_Failure_22F78D51A9828505351C01787A623E6561380CC3CF2D0C6F81399333B06BFBBC 000000000403fc88     Kernel.obj
- 0004:00002cd8       __Str_IOAPIC_Successfully_Initialize_82EA79709AF1F8199E255AB2FFC08735BB5357A3FC52E95C64B73B2FE631C428 000000000403fcd8     Kernel.obj
- 0004:00002d30       __Str_Invalid_address_7AC5EA86BEB9120D370C3BAD3E7ED36E4C71A46767A05393B7FF8E4872782BE0 000000000403fd30     Kernel.obj
- 0004:00002d68       __Str_Length_of_array_is_too_large___89807272FAE644FB16D9F5FC007599BEA004B78FE125094D314226BD97F71674 000000000403fd68     Kernel.obj
- 0004:00002dc8       __Str_LocalAPIC_Initialization_Failu_22FB91E9347E5C603A66C401EC6E6F4C95C1886DA3A788642036D750CE72EAA2 000000000403fdc8     Kernel.obj
- 0004:00002e20       __Str_LocalAPIC_Successfully_Initial_26803BD0FEF1F0C5C9B87E708C0DE4529B0CDBFAEADE7B36378D443825741FF1 000000000403fe20     Kernel.obj
- 0004:00002e80       __Str_Memory_leak_E720373216761F9ADFAEAD740F6DE581C8946620241F34CDAABD3C0EF616261D 000000000403fe80     Kernel.obj
- 0004:00002eb0       __Str_MiB                  000000000403feb0     Kernel.obj
- 0004:00002ed0       __Str_NMI                  000000000403fed0     Kernel.obj
- 0004:00002ef0       __Str_NULL_POINTER_2AB6F4D59E2DA1CEED3F4C3E01F564F254667D66DEADAA97B0E61DE8A62C3227 000000000403fef0     Kernel.obj
- 0004:00002f20       __Str_Nintendo_Family_Computer_Emula_517555353F7B04A0F68EC778EFB4BC81C4540A85ADCD96F6892C0242DB685A24 000000000403ff20     Kernel.obj
- 0004:00002f90       __Str_No_response_43B27C933D8F067983505C273BDF1C1C8E85094EBBF18902B54C65BF4E70C5BA 000000000403ff90     Kernel.obj
- 0004:00002fc0       __Str_No_such_command____0E6EFDFE70B9935488CA0AA8977C0A4CD4B6579C3BAB8A642124B3A3794FEB27 000000000403ffc0     Kernel.obj
- 0004:00003000       __Str_OS_Sharp_Operating_System_http_04A445F9C319ED51E36C6D19B21DF8CC30A53DAECB486465EB70BC4F78C272DF 0000000004040000     Kernel.obj
- 0004:00003090       __Str_OVERFLOW             0000000004040090     Kernel.obj
- 0004:000030b8       __Str_PAGE_FAULT_AC0C9BB7DF0A800C1DAAE3D0672B6A1CC78305DCE93C4796332016D0426511AF 00000000040400b8     Kernel.obj
- 0004:000030e8       __Str_PANIC___18B9166B01C111C4C7D12C937E9C010FAC0A3B1BA35AA56F1A4A9DC62B7F3624 00000000040400e8     Kernel.obj
- 0004:00003110       __Str_PCI_Initialization_Failure_C4F7E64D9A01CDAD241CD6F08DFA36642CB4BF36BA9B677A234C430E8E31F078 0000000004040110     Kernel.obj
- 0004:00003160       __Str_PCI_Successfully_Initialized_A57BD8A141411577001FA8C739C74B465AFA79BDD70893F15B63CF4292991BA6 0000000004040160     Kernel.obj
- 0004:000031b0       __Str_PIT_Initialization_Failure_764F93589549EC340D09C9B0EB561E781185C5E3FCEFA4DE3099FB481B354347 00000000040401b0     Kernel.obj
- 0004:00003200       __Str_PIT_Successfully_Initialized_B161E83F64FE8F5EAD1E0C052BFB74E59594FB9FB0799C9A51513A8B977B2871 0000000004040200     Kernel.obj
- 0004:00003250       __Str_PS2Keyboard_Initialization_Fai_8D564E876B63668E710B19D104CB296AC15ABBFA6B4DA7D489C354296EBF5B0D 0000000004040250     Kernel.obj
- 0004:000032b0       __Str_PS2Keyboard_Successfully_Initi_F9757BC3CA32891873AB420589E2F40B80720833C3ED17ED0C97C0637B18DB07 00000000040402b0     Kernel.obj
- 0004:00003310       __Str_PS2Mouse_Initialization_Failur_FFC91D967C4C25FEF76E5239ED9582A661D8181E82F485C44377811B4C3B0235 0000000004040310     Kernel.obj
- 0004:00003368       __Str_PS2Mouse_Successfully_Initiali_A21A6D9131CAD6761FD590FD399C985D6128374DBD78F6CD0F45A7B6990EEA57 0000000004040368     Kernel.obj
- 0004:000033c0       __Str_Press_Ctrl___N_To_Launch_Ninte_F6787EAC4C1D9C907420B8E2A409BEE9B98770A1B7D3735222F55585585D7B62 00000000040403c0     Kernel.obj
- 0004:00003478       __Str_S___Down_69D9E9BFAD4ECD7586A4F31CB51563EAC95B69B80E46EF48B94B5ACE4FB71B79 0000000004040478     Kernel.obj
- 0004:000034a0       __Str_SATA_Initialization_Failure_AB5FC79EFBAD985630B323ACCCB678F12C29787E6935A003E3A7F22E02007C81 00000000040404a0     Kernel.obj
- 0004:000034f0       __Str_SATA_Successfully_Initialized_0A9ED1411B48AC9E2D6EBFDFEB4021EB3299E91CCB1B08BC7EEF99F229EA36F4 00000000040404f0     Kernel.obj
- 0004:00003540       __Str_SEGMENT_NOT_FOUND_7A09929F1094DAEB41502BFFC9E93921CA8FB9590AC80713AC7C7171F9511232 0000000004040540     Kernel.obj
- 0004:00003578       __Str_SINGLE_STEP_6E04E38E6AD9353B584BEB7F19DBD415786549605ECAFBD876AF6406D9ADFBFC 0000000004040578     Kernel.obj
- 0004:000035a8       __Str_SMBIOS_Initialization_Failure_EB76D0AB1C57382CDE73B652B00B12FD407C47C2868D800387EAF383D291F5E8 00000000040405a8     Kernel.obj
- 0004:000035f8       __Str_SMBIOS_Successfully_Initialize_62B6035620F54254C1D40675808A25D0757A3CD0BFA6E2EBEF4CAA6CCE62C672 00000000040405f8     Kernel.obj
- 0004:00003650       __Str_SONG_BTF_7A3627496BCC6C8BB3767E360B6B664749E0096761CF937C03E7A6E1C2BD79B9 0000000004040650     Kernel.obj
- 0004:00003678       __Str_STACK_EXCEPTION_615EE5904CA2473731689018F663A51FDD729DDE9002D1965884E3317293317A 0000000004040678     Kernel.obj
- 0004:000036b0       __Str_Serial_Interface_Initializatio_0C9B32551E0D0E5486F5476C21CD6086CD3AC1254DFAA46AA4166B8F66120E84 00000000040406b0     Kernel.obj
- 0004:00003718       __Str_Serial_Interface_Successfully__D4AAC72B9DEAEAD29C4C61A1F9FD1D146883166019244878D2862F28A60B6BA6 0000000004040718     Kernel.obj
- 0004:00003780       __Str_Size___549671492C0BFD5ED0D2EA280E3FB7C734D55FDA1E4EE5B2A47A1AEE6199E2A3 0000000004040780     Kernel.obj
- 0004:000037a8       __Str_Song                 00000000040407a8     Kernel.obj
- 0004:000037c8       __Str_TCP_Reset_AED747BDB4A64F0C249B25F72CFF5841C971E98F01E99BF01CD291CE1C5489C7 00000000040407c8     Kernel.obj
- 0004:000037f0       __Str_TCP_connection_havn_t_establis_738AA20989DB6D0EEED153597F51D5E464980503E9EEB0BE3FB1C058C2A36A91 00000000040407f0     Kernel.obj
- 0004:00003850       __Str_This_is_not_a_fat32_partition__FEF507B22E2EF131E321CFFEC77C23C3447206724A95914E4D128330A6D1AA08 0000000004040850     Kernel.obj
- 0004:000038a8       __Str_Type_help_to_get_information__C18FAE548B269EE6FA6FA61216C29C1F1053FE536B536036D1218650B54073B3 00000000040408a8     Kernel.obj
- 0004:000038f8       __Str_Unknown_seek_6915F0E145DDA6C273E76A37B7F0C9F7EAAC8EB75579601E750090FCF77B667D 00000000040408f8     Kernel.obj
- 0004:00003928       __Str_Using_Native_AOT__Core_RT__Tec_60CE2ACAB77503472EC8188FD8040D6F4699B8B463DDEEAE9BE6AA378F843DB0 0000000004040928     Kernel.obj
- 0004:00003990       __Str_W___Up_08EE2A0B944FB7F9D0D681C4FDBBB71D2977F401AE6D2B89E4D707C450BC286E 0000000004040990     Kernel.obj
- 0004:000039b8       __Str_Z___Select_FF86DC8EFC085697F661E4F213FD2F3BEA43A12940B8F5AB8ECA2891238C502C 00000000040409b8     Kernel.obj
- 0004:000039e8       __Str___D851A0155B6A2716E0DA40A1336C5FF311FCF12CE16E53CF06B5A6CBD9CD32DF 00000000040409e8     Kernel.obj
- 0004:00003a00       __Str__IDE___48CFDDBBE8C65D0A4BB3982086CA2F60CAE57BF1158F0064A9FA7EE85A587C05 0000000004040a00     Kernel.obj
- 0004:00003a28       __Str____804779EAC33E29BC0631A6BBAE7359393E89CCE7778929AFDE36C60530F956AC 0000000004040a28     Kernel.obj
- 0004:00003a48       __Str_fopen__file_not_found__DA0255E30BCCD1694365B33FDCCC234DA542D287B150E533BD8334B121294625 0000000004040a48     Kernel.obj
- 0004:00003a90       __Str_hello                0000000004040a90     Kernel.obj
- 0004:00003ab0       __Str_help                 0000000004040ab0     Kernel.obj
- 0004:00003ad0       __Str_lodepng_error_F434EC204B27DAA3C6AE5ED51E594117998A7FB646CAFAD71B681B265BBE2F77 0000000004040ad0     Kernel.obj
- 0004:00003b00       __Str_rax__0x_CF8C208DBCC83DFC851C543099590C612AE70D5B0F6FD05F851C295B2F947AF9 0000000004040b00     Kernel.obj
- 0004:00003b28       __Str_rip__0x_CDB90633ED4E9ABF00DCC44D43EBBDF1AB2DF720FD181344DE2D50944F139BA2 0000000004040b28     Kernel.obj
- 0004:00003b50       __Str_shutdown             0000000004040b50     Kernel.obj
- 0004:00003b78       __Str_ss__0x_6D22BC7DFFCCE6939C7CE1F884D4049672650505B87ECBD36E3C4E2D4A1366D7 0000000004040b78     Kernel.obj
- 0004:00003ba0       __Str_x2                   0000000004040ba0     Kernel.obj
- 0004:00003bc0       __GCStaticRegionStart      0000000004040bc0     Kernel.obj
- 0004:00003bc0       __FrozenSegmentRegionEnd   0000000004040bc0     Kernel.obj
- 0004:00003c58       __GCStaticRegionEnd        0000000004040c58     Kernel.obj
- 0004:00003c58       __typemanager_indirection  0000000004040c58     Kernel.obj
- 0004:00003c68       ?__NONGCSTATICS@Kernel_OS_Sharp_SATA@@ 0000000004040c68     Kernel.obj
- 0004:00003c70       ?__GCSTATICS@Kernel_IDT@@  0000000004040c70     Kernel.obj
- 0004:00003c78       ?__GCSTATICS@Kernel_OS_Sharp_Program@@ 0000000004040c78     Kernel.obj
- 0004:00003c80       ?__GCSTATICS@Kernel_OS_Sharp_PCI@@ 0000000004040c80     Kernel.obj
- 0004:00003c88       ?__GCSTATICS@Kernel_OS_Sharp_PS2Keyboard@@ 0000000004040c88     Kernel.obj
- 0004:00003c90       ?__GCSTATICS@Kernel_OS_Sharp_PS2Mouse@@ 0000000004040c90     Kernel.obj
- 0004:00003c98       ?__GCSTATICS@Kernel_OS_Sharp_SATA@@ 0000000004040c98     Kernel.obj
- 0004:00003ca8       ?__GCSTATICS@Kernel_OS_Sharp_ASC16@@ 0000000004040ca8     Kernel.obj
- 0004:00003cb0       ?__GCSTATICS@Kernel_OS_Sharp_Console@@ 0000000004040cb0     Kernel.obj
- 0004:00003cb8       ?__GCSTATICS@Kernel_OS_Sharp_Misc_BitFont@@ 0000000004040cb8     Kernel.obj
- 0004:00003cc0       ?__GCSTATICS@Kernel_OS_Sharp_Networking_RTL8139@@ 0000000004040cc0     Kernel.obj
- 0004:00003cc8       ?__GCSTATICS@Kernel_OS_Sharp_Networking_ARP@@ 0000000004040cc8     Kernel.obj
- 0004:00003cd0       ?__GCSTATICS@Kernel_OS_Sharp_Networking_Network@@ 0000000004040cd0     Kernel.obj
- 0004:00003cd8       ?__GCSTATICS@Kernel_OS_Sharp_Networking_TCP@@ 0000000004040cd8     Kernel.obj
- 0004:00003ce0       ?__GCSTATICS@Kernel_OS_Sharp_FileSystem_File@@ 0000000004040ce0     Kernel.obj
- 0004:00003ce8       ?__GCSTATICS@Kernel_OS_Sharp_Driver_ACPI@@ 0000000004040ce8     Kernel.obj
- 0004:00003cf0       ?__GCSTATICS@Kernel_OS_Sharp_Driver_IDE@@ 0000000004040cf0     Kernel.obj
- 0004:00003cf8       ?__GCSTATICS@Kernel_OS_Sharp_GUI_Form@@ 0000000004040cf8     Kernel.obj
- 0004:00003d00       ?__GCSTATICS@Kernel_Kernel_ThreadPool@@ 0000000004040d00     Kernel.obj
- 0004:00003d08       ?__GCSTATICS@Kernel_Kernel_GUI_Desktop@@ 0000000004040d08     Kernel.obj
- 0004:00003d10       __module_initializers      0000000004040d10     Kernel.obj
- 0004:00003d10       __module_initializers_End  0000000004040d10     Kernel.obj
- 0004:00003d10       LODEPNG_VERSION_STRING     0000000004040d10     NativeLib:lodepng.obj
- 0004:00004120       ?__NONGCSTATICS@Kernel_Allocator@@ 0000000004041120     Kernel.obj
- 0004:00124138       ?__NONGCSTATICS@Kernel_GDT@@ 0000000004161138     Kernel.obj
- 0004:001241d2       ?__NONGCSTATICS@Kernel_IDT@@ 00000000041611d2     Kernel.obj
- 0004:001241e0       ?__NONGCSTATICS@Kernel_System_Windows_Forms_Control@@ 00000000041611e0     Kernel.obj
- 0004:001241f0       ?__NONGCSTATICS@Kernel_OS_Sharp_AC97@@ 00000000041611f0     Kernel.obj
- 0004:00124210       ?__NONGCSTATICS@Kernel_OS_Sharp_Framebuffer@@ 0000000004161210     Kernel.obj
- 0004:00124238       ?__NONGCSTATICS@Kernel_OS_Sharp_PIT@@ 0000000004161238     Kernel.obj
- 0004:00124240       ?__NONGCSTATICS@Kernel_OS_Sharp_PS2Keyboard@@ 0000000004161240     Kernel.obj
- 0004:00124250       ?__NONGCSTATICS@Kernel_OS_Sharp_PS2Mouse@@ 0000000004161250     Kernel.obj
- 0004:00124264       ?__NONGCSTATICS@Kernel_OS_Sharp_RTC@@ 0000000004161264     Kernel.obj
- 0004:00124268       ?__NONGCSTATICS@Kernel_OS_Sharp_Console@@ 0000000004161268     Kernel.obj
- 0004:00124278       ?__NONGCSTATICS@Kernel_OS_Sharp_PageTable@@ 0000000004161278     Kernel.obj
- 0004:00124280       ?__NONGCSTATICS@Kernel_OS_Sharp_Networking_RTL8139@@ 0000000004161280     Kernel.obj
- 0004:00124290       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_ACPI@@ 0000000004161290     Kernel.obj
- 0004:001242b8       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_HPET@@ 00000000041612b8     Kernel.obj
- 0004:001242c0       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_Intel8254X@@ 00000000041612c0     Kernel.obj
- 0004:001242d8       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_SMBIOS@@ 00000000041612d8     Kernel.obj
- 0004:001242e0       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_VBE@@ 00000000041612e0     Kernel.obj
- 0004:001242e8       ?__NONGCSTATICS@Kernel_OS_Sharp_GUI_Form@@ 00000000041612e8     Kernel.obj
- 0004:001242f0       ?__NONGCSTATICS@Kernel_Kernel_ThreadPool@@ 00000000041612f0     Kernel.obj
- 0004:00124318       __writableDataChar         0000000004161318     Kernel.obj
- 0004:00124320       __writableDataKernel_IDT_IDTEntry 0000000004161320     Kernel.obj
- 0004:00124328       __writableDataKernel_Kernel_Thread 0000000004161328     Kernel.obj
- 0004:00124330       __writableDataKernel_OS_Sharp_Console 0000000004161330     Kernel.obj
- 0004:00124338       __writableDataKernel_OS_Sharp_Console_OnWriteHandler 0000000004161338     Kernel.obj
- 0004:00124340       __writableDataKernel_OS_Sharp_Driver_IDE 0000000004161340     Kernel.obj
- 0004:00124348       __writableDataKernel_OS_Sharp_Driver_IDE_DriveInfo 0000000004161348     Kernel.obj
- 0004:00124350       __writableDataKernel_OS_Sharp_FileSystem_Disk 0000000004161350     Kernel.obj
- 0004:00124358       __writableDataKernel_OS_Sharp_FileSystem_FAT32 0000000004161358     Kernel.obj
- 0004:00124360       __writableDataKernel_OS_Sharp_FileSystem_FAT32_AEntry 0000000004161360     Kernel.obj
- 0004:00124368       __writableDataKernel_OS_Sharp_FileSystem_File 0000000004161368     Kernel.obj
- 0004:00124370       __writableDataKernel_OS_Sharp_FileSystem_Ramdisk 0000000004161370     Kernel.obj
- 0004:00124378       __writableDataKernel_OS_Sharp_GUI_FConsole 0000000004161378     Kernel.obj
- 0004:00124380       __writableDataKernel_OS_Sharp_GUI_Form 0000000004161380     Kernel.obj
- 0004:00124388       __writableDataKernel_OS_Sharp_Misc_BitFontDescriptor 0000000004161388     Kernel.obj
- 0004:00124390       __writableDataKernel_OS_Sharp_Misc_IFont 0000000004161390     Kernel.obj
- 0004:00124398       __writableDataKernel_OS_Sharp_Misc_PNG 0000000004161398     Kernel.obj
- 0004:001243a0       __writableDataKernel_OS_Sharp_NES_CPU 00000000041613a0     Kernel.obj
- 0004:001243a8       __writableDataKernel_OS_Sharp_NES_GameRender 00000000041613a8     Kernel.obj
- 0004:001243b0       __writableDataKernel_OS_Sharp_NES_Input 00000000041613b0     Kernel.obj
- 0004:001243b8       __writableDataKernel_OS_Sharp_NES_Mappers 00000000041613b8     Kernel.obj
- 0004:001243c0       __writableDataKernel_OS_Sharp_NES_MemoryMap 00000000041613c0     Kernel.obj
- 0004:001243c8       __writableDataKernel_OS_Sharp_NES_NES 00000000041613c8     Kernel.obj
- 0004:001243d0       __writableDataKernel_OS_Sharp_NES_PPU 00000000041613d0     Kernel.obj
- 0004:001243d8       __writableDataKernel_OS_Sharp_NES_Registers 00000000041613d8     Kernel.obj
- 0004:001243e0       __writableDataKernel_OS_Sharp_PCIDevice 00000000041613e0     Kernel.obj
- 0004:001243e8       __writableDataKernel_OS_Sharp_PS2Keyboard 00000000041613e8     Kernel.obj
- 0004:001243f0       __writableDataKernel_OS_Sharp_PS2Keyboard_OnKeyHandler 00000000041613f0     Kernel.obj
- 0004:001243f8       __writableDataKernel_OS_Sharp_SATA_SATADevice 00000000041613f8     Kernel.obj
- 0004:00124400       __writableDataKernel_System_Array 0000000004161400     Kernel.obj
- 0004:00124408       __writableDataKernel_System_Collections_Generic_List_1 0000000004161408     Kernel.obj
- 0004:00124410       __writableDataKernel_System_Collections_Generic_List_1<Kernel_Kernel_Thread> 0000000004161410     Kernel.obj
- 0004:00124418       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE> 0000000004161418     Kernel.obj
- 0004:00124420       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004161420     Kernel.obj
- 0004:00124428       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_GUI_Form> 0000000004161428     Kernel.obj
- 0004:00124430       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004161430     Kernel.obj
- 0004:00124438       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 0000000004161438     Kernel.obj
- 0004:00124440       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004161440     Kernel.obj
- 0004:00124448       __writableDataKernel_System_Collections_Generic_List_1<UInt8> 0000000004161448     Kernel.obj
- 0004:00124450       __writableDataKernel_System_Collections_Generic_List_1<__Array<UInt8>> 0000000004161450     Kernel.obj
- 0004:00124458       __writableDataKernel_System_ConsoleKey 0000000004161458     Kernel.obj
- 0004:00124460       __writableDataKernel_System_Delegate 0000000004161460     Kernel.obj
- 0004:00124468       __writableDataKernel_System_Drawing_Image 0000000004161468     Kernel.obj
- 0004:00124470       __writableDataKernel_System_Enum 0000000004161470     Kernel.obj
- 0004:00124478       __writableDataKernel_System_MulticastDelegate 0000000004161478     Kernel.obj
- 0004:00124480       __writableDataKernel_System_ValueType 0000000004161480     Kernel.obj
- 0004:00124488       __writableDataKernel__Module_ 0000000004161488     Kernel.obj
- 0004:00124490       __writableDataObject       0000000004161490     Kernel.obj
- 0004:00124498       __writableDataString       0000000004161498     Kernel.obj
- 0004:001244a0       __writableDataUInt32       00000000041614a0     Kernel.obj
- 0004:001244a8       __writableDataUInt8        00000000041614a8     Kernel.obj
- 0004:001244b0       __writableData__Array<Char> 00000000041614b0     Kernel.obj
- 0004:001244b8       __writableData__Array<Kernel_IDT_IDTEntry> 00000000041614b8     Kernel.obj
- 0004:001244c0       __writableData__Array<Kernel_Kernel_Thread> 00000000041614c0     Kernel.obj
- 0004:001244c8       __writableData__Array<Kernel_OS_Sharp_Driver_IDE> 00000000041614c8     Kernel.obj
- 0004:001244d0       __writableData__Array<Kernel_OS_Sharp_Driver_IDE_DriveInfo> 00000000041614d0     Kernel.obj
- 0004:001244d8       __writableData__Array<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 00000000041614d8     Kernel.obj
- 0004:001244e0       __writableData__Array<Kernel_OS_Sharp_GUI_Form> 00000000041614e0     Kernel.obj
- 0004:001244e8       __writableData__Array<Kernel_OS_Sharp_Misc_BitFontDescriptor> 00000000041614e8     Kernel.obj
- 0004:001244f0       __writableData__Array<Kernel_OS_Sharp_PCIDevice> 00000000041614f0     Kernel.obj
- 0004:001244f8       __writableData__Array<Kernel_OS_Sharp_SATA_SATADevice> 00000000041614f8     Kernel.obj
- 0004:00124500       __writableData__Array<Kernel_System_Array> 0000000004161500     Kernel.obj
- 0004:00124508       __writableData__Array<Kernel_System_ConsoleKey> 0000000004161508     Kernel.obj
- 0004:00124510       __writableData__Array<String> 0000000004161510     Kernel.obj
- 0004:00124518       __writableData__Array<UInt32> 0000000004161518     Kernel.obj
- 0004:00124520       __writableData__Array<UInt8> 0000000004161520     Kernel.obj
- 0004:00124528       __writableData__Array<__Array<UInt8>> 0000000004161528     Kernel.obj
- 0004:00124530       __writableData__MDArray<UInt8,2> 0000000004161530     Kernel.obj
+ 0004:00002688       __Str_CPU____0353D5828168F3D3B27CE98DECAC693A18DA918E738B96C548666E129BDC1A89 000000000403f688     Kernel.obj
+ 0004:000026b0       __Str_Connection_established_C7F61EB0E8A0A27B96E8B528A681CC4BC4FCF3896B18DA97D3154261FAF44F81 000000000403f6b0     Kernel.obj
+ 0004:000026f8       __Str_Console              000000000403f6f8     Kernel.obj
+ 0004:00002720       __Str_D___Right_14C187A6866382F69F06DA3EE0FB1DF0B16908121A563D80AEA28A4A7AA6BD80 000000000403f720     Kernel.obj
+ 0004:00002748       __Str_DIVIDE_BY_ZERO_35A15510F680DC765661E0D29DFAD7145E1665F9617FC031C21ECB78DB53A063 000000000403f748     Kernel.obj
+ 0004:00002780       __Str_DOUBLE_FAULT_D7745D19D21BED4FCAE5949B361E7C3770F0F6F00771FC35E0C922926FC4F820 000000000403f780     Kernel.obj
+ 0004:000027b0       __Str_Emulator_Keymap__66658E9A6FF5CE9009CD6BCAD86B1DEE7064A22596586E1942B331F205BDD3F2 000000000403f7b0     Kernel.obj
+ 0004:000027e8       __Str_Error__connection_reset_2DD4AD50280D62E8F71D6416E12CFCF047C1869E4C5D38221FAB587947A39ABA 000000000403f7e8     Kernel.obj
+ 0004:00002830       __Str_Error__tcp_connection_refused_AA861B629A6FA6E245F0A4CC20757E883A28D3B5A92F23F52D897434C32212E8 000000000403f830     Kernel.obj
+ 0004:00002880       __Str_Error__tcp_reset_1904B15FD7C0D3E7C5171138738A54023B558117FF868A1481B914CEBCA68428 000000000403f880     Kernel.obj
+ 0004:000028b8       __Str_Form1                000000000403f8b8     Kernel.obj
+ 0004:000028d8       __Str_GDT_Initialization_Failure_C828F57F7600344F4AD01A9B88E5798BD5193C540FAB3E0ACFA5D871DA9D9541 000000000403f8d8     Kernel.obj
+ 0004:00002928       __Str_GDT_Successfully_Initialized_A592EAFF47F845C987D1CBFA069648D744B994D5901DE84F083D9CA36DAFCB49 000000000403f928     Kernel.obj
+ 0004:00002978       __Str_GENERAL_PROTECTION_8D0356CF6D03FD20FD9501FFF77BCB0EE6F4A84DDE8C5B8CD0FEE47094CDD3E5 000000000403f978     Kernel.obj
+ 0004:000029b8       __Str_Game_Will_Start_After_2_Second_37BD51CB6AE6844114569DE61CF58314F6B2A596F56F0F9571A96F45A282A0BA 000000000403f9b8     Kernel.obj
+ 0004:00002a10       __Str_HPET_Successfully_Initialized_A591433E672546D4B6A975FAD0DFFFDD1FD07098B13BCDF93EEC1CA952D33761 000000000403fa10     Kernel.obj
+ 0004:00002a60       __Str_Hello_from_OS_Sharp__1444772DAA69DA58D2B9FF1A590A4A250370ED3D041AF9578CA058B9F3CA3C98 000000000403fa60     Kernel.obj
+ 0004:00002aa0       __Str_Hello__World__98B83E2E14759B86F964E17964E7B706E21EA7DEEA1267ABCE2F3FFB95A81BBC 000000000403faa0     Kernel.obj
+ 0004:00002ad0       __Str_IDE_Initialization_Failure_9E56032688853ED3761C18121FE91142CA1327991E4CD9A7086730E06E310270 000000000403fad0     Kernel.obj
+ 0004:00002b20       __Str_IDE_Successfully_Initialized_E477CF6426BFF51CE4581110A14C5C2F2E6214702A0361183D658BF84ADE03B5 000000000403fb20     Kernel.obj
+ 0004:00002b70       __Str_IDE_bad_status_A4340D590FA84CCD8C75301D057B2E518ABCEA7EA8522D4B3D5C33ABEBBDC062 000000000403fb70     Kernel.obj
+ 0004:00002ba8       __Str_IDT_Initialization_Failure_0E29AADA4D8641B9C3A13E643B348FD8837B23F95A614A6CDD85BCB9620BB725 000000000403fba8     Kernel.obj
+ 0004:00002bf8       __Str_IDT_Successfully_Initialized_77F94CBF7B9B778409D20B39DB97ECAADF905DF5D3D1C57C9D4BBEA728B85FBD 000000000403fbf8     Kernel.obj
+ 0004:00002c48       __Str_INVALID_OPCODE_54C9591B5203C421C322A7A77E8C2F0AE28E0F9288BC942670E066AC6B19994B 000000000403fc48     Kernel.obj
+ 0004:00002c80       __Str_INVALID_TSS_C62F37B994D6314510E6F050579212502983A0D22E662A0176CBB15DABFE9B12 000000000403fc80     Kernel.obj
+ 0004:00002cb0       __Str_IOAPIC_Initialization_Failure_22F78D51A9828505351C01787A623E6561380CC3CF2D0C6F81399333B06BFBBC 000000000403fcb0     Kernel.obj
+ 0004:00002d00       __Str_IOAPIC_Successfully_Initialize_82EA79709AF1F8199E255AB2FFC08735BB5357A3FC52E95C64B73B2FE631C428 000000000403fd00     Kernel.obj
+ 0004:00002d58       __Str_Invalid_address_7AC5EA86BEB9120D370C3BAD3E7ED36E4C71A46767A05393B7FF8E4872782BE0 000000000403fd58     Kernel.obj
+ 0004:00002d90       __Str_Length_of_array_is_too_large___89807272FAE644FB16D9F5FC007599BEA004B78FE125094D314226BD97F71674 000000000403fd90     Kernel.obj
+ 0004:00002df0       __Str_LocalAPIC_Initialization_Failu_22FB91E9347E5C603A66C401EC6E6F4C95C1886DA3A788642036D750CE72EAA2 000000000403fdf0     Kernel.obj
+ 0004:00002e48       __Str_LocalAPIC_Successfully_Initial_26803BD0FEF1F0C5C9B87E708C0DE4529B0CDBFAEADE7B36378D443825741FF1 000000000403fe48     Kernel.obj
+ 0004:00002ea8       __Str_Memory_leak_E720373216761F9ADFAEAD740F6DE581C8946620241F34CDAABD3C0EF616261D 000000000403fea8     Kernel.obj
+ 0004:00002ed8       __Str_MiB                  000000000403fed8     Kernel.obj
+ 0004:00002ef8       __Str_NMI                  000000000403fef8     Kernel.obj
+ 0004:00002f18       __Str_NULL_POINTER_2AB6F4D59E2DA1CEED3F4C3E01F564F254667D66DEADAA97B0E61DE8A62C3227 000000000403ff18     Kernel.obj
+ 0004:00002f48       __Str_Nintendo_Family_Computer_Emula_517555353F7B04A0F68EC778EFB4BC81C4540A85ADCD96F6892C0242DB685A24 000000000403ff48     Kernel.obj
+ 0004:00002fb8       __Str_No_response_43B27C933D8F067983505C273BDF1C1C8E85094EBBF18902B54C65BF4E70C5BA 000000000403ffb8     Kernel.obj
+ 0004:00002fe8       __Str_No_such_command____0E6EFDFE70B9935488CA0AA8977C0A4CD4B6579C3BAB8A642124B3A3794FEB27 000000000403ffe8     Kernel.obj
+ 0004:00003028       __Str_OS_Sharp_Operating_System_http_04A445F9C319ED51E36C6D19B21DF8CC30A53DAECB486465EB70BC4F78C272DF 0000000004040028     Kernel.obj
+ 0004:000030b8       __Str_OVERFLOW             00000000040400b8     Kernel.obj
+ 0004:000030e0       __Str_PAGE_FAULT_AC0C9BB7DF0A800C1DAAE3D0672B6A1CC78305DCE93C4796332016D0426511AF 00000000040400e0     Kernel.obj
+ 0004:00003110       __Str_PANIC___18B9166B01C111C4C7D12C937E9C010FAC0A3B1BA35AA56F1A4A9DC62B7F3624 0000000004040110     Kernel.obj
+ 0004:00003138       __Str_PCI_Initialization_Failure_C4F7E64D9A01CDAD241CD6F08DFA36642CB4BF36BA9B677A234C430E8E31F078 0000000004040138     Kernel.obj
+ 0004:00003188       __Str_PCI_Successfully_Initialized_A57BD8A141411577001FA8C739C74B465AFA79BDD70893F15B63CF4292991BA6 0000000004040188     Kernel.obj
+ 0004:000031d8       __Str_PIT_Initialization_Failure_764F93589549EC340D09C9B0EB561E781185C5E3FCEFA4DE3099FB481B354347 00000000040401d8     Kernel.obj
+ 0004:00003228       __Str_PIT_Successfully_Initialized_B161E83F64FE8F5EAD1E0C052BFB74E59594FB9FB0799C9A51513A8B977B2871 0000000004040228     Kernel.obj
+ 0004:00003278       __Str_PS2Keyboard_Initialization_Fai_8D564E876B63668E710B19D104CB296AC15ABBFA6B4DA7D489C354296EBF5B0D 0000000004040278     Kernel.obj
+ 0004:000032d8       __Str_PS2Keyboard_Successfully_Initi_F9757BC3CA32891873AB420589E2F40B80720833C3ED17ED0C97C0637B18DB07 00000000040402d8     Kernel.obj
+ 0004:00003338       __Str_PS2Mouse_Initialization_Failur_FFC91D967C4C25FEF76E5239ED9582A661D8181E82F485C44377811B4C3B0235 0000000004040338     Kernel.obj
+ 0004:00003390       __Str_PS2Mouse_Successfully_Initiali_A21A6D9131CAD6761FD590FD399C985D6128374DBD78F6CD0F45A7B6990EEA57 0000000004040390     Kernel.obj
+ 0004:000033e8       __Str_Press_Ctrl___N_To_Launch_Ninte_F6787EAC4C1D9C907420B8E2A409BEE9B98770A1B7D3735222F55585585D7B62 00000000040403e8     Kernel.obj
+ 0004:000034a0       __Str_S___Down_69D9E9BFAD4ECD7586A4F31CB51563EAC95B69B80E46EF48B94B5ACE4FB71B79 00000000040404a0     Kernel.obj
+ 0004:000034c8       __Str_SATA_Initialization_Failure_AB5FC79EFBAD985630B323ACCCB678F12C29787E6935A003E3A7F22E02007C81 00000000040404c8     Kernel.obj
+ 0004:00003518       __Str_SATA_Successfully_Initialized_0A9ED1411B48AC9E2D6EBFDFEB4021EB3299E91CCB1B08BC7EEF99F229EA36F4 0000000004040518     Kernel.obj
+ 0004:00003568       __Str_SEGMENT_NOT_FOUND_7A09929F1094DAEB41502BFFC9E93921CA8FB9590AC80713AC7C7171F9511232 0000000004040568     Kernel.obj
+ 0004:000035a0       __Str_SINGLE_STEP_6E04E38E6AD9353B584BEB7F19DBD415786549605ECAFBD876AF6406D9ADFBFC 00000000040405a0     Kernel.obj
+ 0004:000035d0       __Str_SMBIOS_Initialization_Failure_EB76D0AB1C57382CDE73B652B00B12FD407C47C2868D800387EAF383D291F5E8 00000000040405d0     Kernel.obj
+ 0004:00003620       __Str_SMBIOS_Successfully_Initialize_62B6035620F54254C1D40675808A25D0757A3CD0BFA6E2EBEF4CAA6CCE62C672 0000000004040620     Kernel.obj
+ 0004:00003678       __Str_SONG_BTF_7A3627496BCC6C8BB3767E360B6B664749E0096761CF937C03E7A6E1C2BD79B9 0000000004040678     Kernel.obj
+ 0004:000036a0       __Str_STACK_EXCEPTION_615EE5904CA2473731689018F663A51FDD729DDE9002D1965884E3317293317A 00000000040406a0     Kernel.obj
+ 0004:000036d8       __Str_Serial_Interface_Initializatio_0C9B32551E0D0E5486F5476C21CD6086CD3AC1254DFAA46AA4166B8F66120E84 00000000040406d8     Kernel.obj
+ 0004:00003740       __Str_Serial_Interface_Successfully__D4AAC72B9DEAEAD29C4C61A1F9FD1D146883166019244878D2862F28A60B6BA6 0000000004040740     Kernel.obj
+ 0004:000037a8       __Str_Size___549671492C0BFD5ED0D2EA280E3FB7C734D55FDA1E4EE5B2A47A1AEE6199E2A3 00000000040407a8     Kernel.obj
+ 0004:000037d0       __Str_Song                 00000000040407d0     Kernel.obj
+ 0004:000037f0       __Str_TCP_Reset_AED747BDB4A64F0C249B25F72CFF5841C971E98F01E99BF01CD291CE1C5489C7 00000000040407f0     Kernel.obj
+ 0004:00003818       __Str_TCP_connection_havn_t_establis_738AA20989DB6D0EEED153597F51D5E464980503E9EEB0BE3FB1C058C2A36A91 0000000004040818     Kernel.obj
+ 0004:00003878       __Str_This_is_not_a_fat32_partition__FEF507B22E2EF131E321CFFEC77C23C3447206724A95914E4D128330A6D1AA08 0000000004040878     Kernel.obj
+ 0004:000038d0       __Str_Type_help_to_get_information__C18FAE548B269EE6FA6FA61216C29C1F1053FE536B536036D1218650B54073B3 00000000040408d0     Kernel.obj
+ 0004:00003920       __Str_Unknown_seek_6915F0E145DDA6C273E76A37B7F0C9F7EAAC8EB75579601E750090FCF77B667D 0000000004040920     Kernel.obj
+ 0004:00003950       __Str_Using_Native_AOT__Core_RT__Tec_60CE2ACAB77503472EC8188FD8040D6F4699B8B463DDEEAE9BE6AA378F843DB0 0000000004040950     Kernel.obj
+ 0004:000039b8       __Str_W___Up_08EE2A0B944FB7F9D0D681C4FDBBB71D2977F401AE6D2B89E4D707C450BC286E 00000000040409b8     Kernel.obj
+ 0004:000039e0       __Str_Z___Select_FF86DC8EFC085697F661E4F213FD2F3BEA43A12940B8F5AB8ECA2891238C502C 00000000040409e0     Kernel.obj
+ 0004:00003a10       __Str___D851A0155B6A2716E0DA40A1336C5FF311FCF12CE16E53CF06B5A6CBD9CD32DF 0000000004040a10     Kernel.obj
+ 0004:00003a28       __Str__IDE___48CFDDBBE8C65D0A4BB3982086CA2F60CAE57BF1158F0064A9FA7EE85A587C05 0000000004040a28     Kernel.obj
+ 0004:00003a50       __Str____804779EAC33E29BC0631A6BBAE7359393E89CCE7778929AFDE36C60530F956AC 0000000004040a50     Kernel.obj
+ 0004:00003a70       __Str_fopen__file_not_found__DA0255E30BCCD1694365B33FDCCC234DA542D287B150E533BD8334B121294625 0000000004040a70     Kernel.obj
+ 0004:00003ab8       __Str_hello                0000000004040ab8     Kernel.obj
+ 0004:00003ad8       __Str_help                 0000000004040ad8     Kernel.obj
+ 0004:00003af8       __Str_lodepng_error_F434EC204B27DAA3C6AE5ED51E594117998A7FB646CAFAD71B681B265BBE2F77 0000000004040af8     Kernel.obj
+ 0004:00003b28       __Str_rax__0x_CF8C208DBCC83DFC851C543099590C612AE70D5B0F6FD05F851C295B2F947AF9 0000000004040b28     Kernel.obj
+ 0004:00003b50       __Str_rip__0x_CDB90633ED4E9ABF00DCC44D43EBBDF1AB2DF720FD181344DE2D50944F139BA2 0000000004040b50     Kernel.obj
+ 0004:00003b78       __Str_shutdown             0000000004040b78     Kernel.obj
+ 0004:00003ba0       __Str_ss__0x_6D22BC7DFFCCE6939C7CE1F884D4049672650505B87ECBD36E3C4E2D4A1366D7 0000000004040ba0     Kernel.obj
+ 0004:00003bc8       __Str_x2                   0000000004040bc8     Kernel.obj
+ 0004:00003be8       __FrozenSegmentRegionEnd   0000000004040be8     Kernel.obj
+ 0004:00003be8       __GCStaticRegionStart      0000000004040be8     Kernel.obj
+ 0004:00003c80       __typemanager_indirection  0000000004040c80     Kernel.obj
+ 0004:00003c80       __GCStaticRegionEnd        0000000004040c80     Kernel.obj
+ 0004:00003c90       ?__NONGCSTATICS@Kernel_OS_Sharp_SATA@@ 0000000004040c90     Kernel.obj
+ 0004:00003c98       ?__GCSTATICS@Kernel_IDT@@  0000000004040c98     Kernel.obj
+ 0004:00003ca0       ?__GCSTATICS@Kernel_OS_Sharp_Program@@ 0000000004040ca0     Kernel.obj
+ 0004:00003ca8       ?__GCSTATICS@Kernel_OS_Sharp_PCI@@ 0000000004040ca8     Kernel.obj
+ 0004:00003cb0       ?__GCSTATICS@Kernel_OS_Sharp_PS2Keyboard@@ 0000000004040cb0     Kernel.obj
+ 0004:00003cb8       ?__GCSTATICS@Kernel_OS_Sharp_PS2Mouse@@ 0000000004040cb8     Kernel.obj
+ 0004:00003cc0       ?__GCSTATICS@Kernel_OS_Sharp_SATA@@ 0000000004040cc0     Kernel.obj
+ 0004:00003cd0       ?__GCSTATICS@Kernel_OS_Sharp_ASC16@@ 0000000004040cd0     Kernel.obj
+ 0004:00003cd8       ?__GCSTATICS@Kernel_OS_Sharp_Console@@ 0000000004040cd8     Kernel.obj
+ 0004:00003ce0       ?__GCSTATICS@Kernel_OS_Sharp_Misc_BitFont@@ 0000000004040ce0     Kernel.obj
+ 0004:00003ce8       ?__GCSTATICS@Kernel_OS_Sharp_Networking_RTL8139@@ 0000000004040ce8     Kernel.obj
+ 0004:00003cf0       ?__GCSTATICS@Kernel_OS_Sharp_Networking_ARP@@ 0000000004040cf0     Kernel.obj
+ 0004:00003cf8       ?__GCSTATICS@Kernel_OS_Sharp_Networking_Network@@ 0000000004040cf8     Kernel.obj
+ 0004:00003d00       ?__GCSTATICS@Kernel_OS_Sharp_Networking_TCP@@ 0000000004040d00     Kernel.obj
+ 0004:00003d08       ?__GCSTATICS@Kernel_OS_Sharp_FileSystem_File@@ 0000000004040d08     Kernel.obj
+ 0004:00003d10       ?__GCSTATICS@Kernel_OS_Sharp_Driver_ACPI@@ 0000000004040d10     Kernel.obj
+ 0004:00003d18       ?__GCSTATICS@Kernel_OS_Sharp_Driver_IDE@@ 0000000004040d18     Kernel.obj
+ 0004:00003d20       ?__GCSTATICS@Kernel_OS_Sharp_GUI_Form@@ 0000000004040d20     Kernel.obj
+ 0004:00003d28       ?__GCSTATICS@Kernel_Kernel_ThreadPool@@ 0000000004040d28     Kernel.obj
+ 0004:00003d30       ?__GCSTATICS@Kernel_Kernel_GUI_Desktop@@ 0000000004040d30     Kernel.obj
+ 0004:00003d38       __module_initializers_End  0000000004040d38     Kernel.obj
+ 0004:00003d38       __module_initializers      0000000004040d38     Kernel.obj
+ 0004:00003d40       LODEPNG_VERSION_STRING     0000000004040d40     NativeLib:lodepng.obj
+ 0004:00004150       ?__NONGCSTATICS@Kernel_Allocator@@ 0000000004041150     Kernel.obj
+ 0004:00124168       ?__NONGCSTATICS@Kernel_GDT@@ 0000000004161168     Kernel.obj
+ 0004:00124202       ?__NONGCSTATICS@Kernel_IDT@@ 0000000004161202     Kernel.obj
+ 0004:00124210       ?__NONGCSTATICS@Kernel_System_Windows_Forms_Control@@ 0000000004161210     Kernel.obj
+ 0004:00124220       ?__NONGCSTATICS@Kernel_OS_Sharp_AC97@@ 0000000004161220     Kernel.obj
+ 0004:00124240       ?__NONGCSTATICS@Kernel_OS_Sharp_Framebuffer@@ 0000000004161240     Kernel.obj
+ 0004:00124268       ?__NONGCSTATICS@Kernel_OS_Sharp_PIT@@ 0000000004161268     Kernel.obj
+ 0004:00124270       ?__NONGCSTATICS@Kernel_OS_Sharp_PS2Keyboard@@ 0000000004161270     Kernel.obj
+ 0004:00124280       ?__NONGCSTATICS@Kernel_OS_Sharp_PS2Mouse@@ 0000000004161280     Kernel.obj
+ 0004:00124294       ?__NONGCSTATICS@Kernel_OS_Sharp_RTC@@ 0000000004161294     Kernel.obj
+ 0004:00124298       ?__NONGCSTATICS@Kernel_OS_Sharp_Console@@ 0000000004161298     Kernel.obj
+ 0004:001242a8       ?__NONGCSTATICS@Kernel_OS_Sharp_PageTable@@ 00000000041612a8     Kernel.obj
+ 0004:001242b0       ?__NONGCSTATICS@Kernel_OS_Sharp_Networking_RTL8139@@ 00000000041612b0     Kernel.obj
+ 0004:001242c0       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_ACPI@@ 00000000041612c0     Kernel.obj
+ 0004:001242e8       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_HPET@@ 00000000041612e8     Kernel.obj
+ 0004:001242f0       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_Intel8254X@@ 00000000041612f0     Kernel.obj
+ 0004:00124308       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_SMBIOS@@ 0000000004161308     Kernel.obj
+ 0004:00124310       ?__NONGCSTATICS@Kernel_OS_Sharp_Driver_VBE@@ 0000000004161310     Kernel.obj
+ 0004:00124318       ?__NONGCSTATICS@Kernel_OS_Sharp_GUI_Form@@ 0000000004161318     Kernel.obj
+ 0004:00124320       ?__NONGCSTATICS@Kernel_Kernel_ThreadPool@@ 0000000004161320     Kernel.obj
+ 0004:00124348       __writableDataChar         0000000004161348     Kernel.obj
+ 0004:00124350       __writableDataKernel_IDT_IDTEntry 0000000004161350     Kernel.obj
+ 0004:00124358       __writableDataKernel_Kernel_Thread 0000000004161358     Kernel.obj
+ 0004:00124360       __writableDataKernel_OS_Sharp_Console 0000000004161360     Kernel.obj
+ 0004:00124368       __writableDataKernel_OS_Sharp_Console_OnWriteHandler 0000000004161368     Kernel.obj
+ 0004:00124370       __writableDataKernel_OS_Sharp_Driver_IDE 0000000004161370     Kernel.obj
+ 0004:00124378       __writableDataKernel_OS_Sharp_Driver_IDE_DriveInfo 0000000004161378     Kernel.obj
+ 0004:00124380       __writableDataKernel_OS_Sharp_FileSystem_Disk 0000000004161380     Kernel.obj
+ 0004:00124388       __writableDataKernel_OS_Sharp_FileSystem_FAT32 0000000004161388     Kernel.obj
+ 0004:00124390       __writableDataKernel_OS_Sharp_FileSystem_FAT32_AEntry 0000000004161390     Kernel.obj
+ 0004:00124398       __writableDataKernel_OS_Sharp_FileSystem_File 0000000004161398     Kernel.obj
+ 0004:001243a0       __writableDataKernel_OS_Sharp_FileSystem_Ramdisk 00000000041613a0     Kernel.obj
+ 0004:001243a8       __writableDataKernel_OS_Sharp_GUI_FConsole 00000000041613a8     Kernel.obj
+ 0004:001243b0       __writableDataKernel_OS_Sharp_GUI_Form 00000000041613b0     Kernel.obj
+ 0004:001243b8       __writableDataKernel_OS_Sharp_Misc_BitFontDescriptor 00000000041613b8     Kernel.obj
+ 0004:001243c0       __writableDataKernel_OS_Sharp_Misc_IFont 00000000041613c0     Kernel.obj
+ 0004:001243c8       __writableDataKernel_OS_Sharp_Misc_PNG 00000000041613c8     Kernel.obj
+ 0004:001243d0       __writableDataKernel_OS_Sharp_NES_CPU 00000000041613d0     Kernel.obj
+ 0004:001243d8       __writableDataKernel_OS_Sharp_NES_GameRender 00000000041613d8     Kernel.obj
+ 0004:001243e0       __writableDataKernel_OS_Sharp_NES_Input 00000000041613e0     Kernel.obj
+ 0004:001243e8       __writableDataKernel_OS_Sharp_NES_Mappers 00000000041613e8     Kernel.obj
+ 0004:001243f0       __writableDataKernel_OS_Sharp_NES_MemoryMap 00000000041613f0     Kernel.obj
+ 0004:001243f8       __writableDataKernel_OS_Sharp_NES_NES 00000000041613f8     Kernel.obj
+ 0004:00124400       __writableDataKernel_OS_Sharp_NES_PPU 0000000004161400     Kernel.obj
+ 0004:00124408       __writableDataKernel_OS_Sharp_NES_Registers 0000000004161408     Kernel.obj
+ 0004:00124410       __writableDataKernel_OS_Sharp_PCIDevice 0000000004161410     Kernel.obj
+ 0004:00124418       __writableDataKernel_OS_Sharp_PS2Keyboard 0000000004161418     Kernel.obj
+ 0004:00124420       __writableDataKernel_OS_Sharp_PS2Keyboard_OnKeyHandler 0000000004161420     Kernel.obj
+ 0004:00124428       __writableDataKernel_OS_Sharp_SATA_SATADevice 0000000004161428     Kernel.obj
+ 0004:00124430       __writableDataKernel_System_Array 0000000004161430     Kernel.obj
+ 0004:00124438       __writableDataKernel_System_Collections_Generic_List_1 0000000004161438     Kernel.obj
+ 0004:00124440       __writableDataKernel_System_Collections_Generic_List_1<Kernel_Kernel_Thread> 0000000004161440     Kernel.obj
+ 0004:00124448       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE> 0000000004161448     Kernel.obj
+ 0004:00124450       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004161450     Kernel.obj
+ 0004:00124458       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_GUI_Form> 0000000004161458     Kernel.obj
+ 0004:00124460       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004161460     Kernel.obj
+ 0004:00124468       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 0000000004161468     Kernel.obj
+ 0004:00124470       __writableDataKernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004161470     Kernel.obj
+ 0004:00124478       __writableDataKernel_System_Collections_Generic_List_1<UInt8> 0000000004161478     Kernel.obj
+ 0004:00124480       __writableDataKernel_System_Collections_Generic_List_1<__Array<UInt8>> 0000000004161480     Kernel.obj
+ 0004:00124488       __writableDataKernel_System_ConsoleKey 0000000004161488     Kernel.obj
+ 0004:00124490       __writableDataKernel_System_Delegate 0000000004161490     Kernel.obj
+ 0004:00124498       __writableDataKernel_System_Drawing_Image 0000000004161498     Kernel.obj
+ 0004:001244a0       __writableDataKernel_System_Enum 00000000041614a0     Kernel.obj
+ 0004:001244a8       __writableDataKernel_System_MulticastDelegate 00000000041614a8     Kernel.obj
+ 0004:001244b0       __writableDataKernel_System_ValueType 00000000041614b0     Kernel.obj
+ 0004:001244b8       __writableDataKernel__Module_ 00000000041614b8     Kernel.obj
+ 0004:001244c0       __writableDataObject       00000000041614c0     Kernel.obj
+ 0004:001244c8       __writableDataString       00000000041614c8     Kernel.obj
+ 0004:001244d0       __writableDataUInt32       00000000041614d0     Kernel.obj
+ 0004:001244d8       __writableDataUInt8        00000000041614d8     Kernel.obj
+ 0004:001244e0       __writableData__Array<Char> 00000000041614e0     Kernel.obj
+ 0004:001244e8       __writableData__Array<Kernel_IDT_IDTEntry> 00000000041614e8     Kernel.obj
+ 0004:001244f0       __writableData__Array<Kernel_Kernel_Thread> 00000000041614f0     Kernel.obj
+ 0004:001244f8       __writableData__Array<Kernel_OS_Sharp_Driver_IDE> 00000000041614f8     Kernel.obj
+ 0004:00124500       __writableData__Array<Kernel_OS_Sharp_Driver_IDE_DriveInfo> 0000000004161500     Kernel.obj
+ 0004:00124508       __writableData__Array<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004161508     Kernel.obj
+ 0004:00124510       __writableData__Array<Kernel_OS_Sharp_GUI_Form> 0000000004161510     Kernel.obj
+ 0004:00124518       __writableData__Array<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004161518     Kernel.obj
+ 0004:00124520       __writableData__Array<Kernel_OS_Sharp_PCIDevice> 0000000004161520     Kernel.obj
+ 0004:00124528       __writableData__Array<Kernel_OS_Sharp_SATA_SATADevice> 0000000004161528     Kernel.obj
+ 0004:00124530       __writableData__Array<Kernel_System_Array> 0000000004161530     Kernel.obj
+ 0004:00124538       __writableData__Array<Kernel_System_ConsoleKey> 0000000004161538     Kernel.obj
+ 0004:00124540       __writableData__Array<String> 0000000004161540     Kernel.obj
+ 0004:00124548       __writableData__Array<UInt32> 0000000004161548     Kernel.obj
+ 0004:00124550       __writableData__Array<UInt8> 0000000004161550     Kernel.obj
+ 0004:00124558       __writableData__Array<__Array<UInt8>> 0000000004161558     Kernel.obj
+ 0004:00124560       __writableData__MDArray<UInt8,2> 0000000004161560     Kernel.obj
  0006:00000000       __Module                   0000000004164000     Kernel.obj
 
  entry point at        0002:00001af0
@@ -1738,262 +1739,262 @@
  0003:00004570       ADAM7_IY                   0000000004037570     NativeLib:lodepng.obj
  0003:00004590       ADAM7_DX                   0000000004037590     NativeLib:lodepng.obj
  0003:000045b0       ADAM7_DY                   00000000040375b0     NativeLib:lodepng.obj
- 0003:00008478       $unwind$Movsb              000000000403b478     NativeLib:mem.obj
- 0003:00008488       $unwind$Movsd              000000000403b488     NativeLib:mem.obj
- 0003:00008498       $unwind$Stosb              000000000403b498     NativeLib:mem.obj
- 0003:000084a4       $unwind$Stosd              000000000403b4a4     NativeLib:mem.obj
- 0003:000084b0       $unwind$Load_GDT           000000000403b4b0     NativeLib:interrupts.obj
- 0003:000084bc       $unwind$idt_set            000000000403b4bc     NativeLib:interrupts.obj
- 0003:000084c8       $unwind$set_idt_entries    000000000403b4c8     NativeLib:interrupts.obj
- 0003:000084d4       $unwind$Nop                000000000403b4d4     NativeLib:native.obj
- 0003:000084e0       $unwind$Invlpg             000000000403b4e0     NativeLib:native.obj
- 0003:000084ec       $unwind$WriteCR3           000000000403b4ec     NativeLib:native.obj
- 0003:000084f8       $unwind$ReadCR2            000000000403b4f8     NativeLib:native.obj
- 0003:00008504       $unwind$Hlt                000000000403b504     NativeLib:native.obj
- 0003:00008510       $unwind$Cli                000000000403b510     NativeLib:native.obj
- 0003:0000851c       $unwind$Sti                000000000403b51c     NativeLib:native.obj
- 0003:00008528       $unwind$Out8               000000000403b528     NativeLib:io.obj
- 0003:00008534       $unwind$Out16              000000000403b534     NativeLib:io.obj
- 0003:00008540       $unwind$Out32              000000000403b540     NativeLib:io.obj
- 0003:0000854c       $unwind$In8                000000000403b54c     NativeLib:io.obj
- 0003:00008558       $unwind$In16               000000000403b558     NativeLib:io.obj
- 0003:00008564       $unwind$In32               000000000403b564     NativeLib:io.obj
- 0003:00008570       $unwind$Insd               000000000403b570     NativeLib:io.obj
- 0003:0000857c       $unwind$Insw               000000000403b57c     NativeLib:io.obj
- 0003:00008588       $unwind$Insb               000000000403b588     NativeLib:io.obj
- 0003:00008594       $unwind$Outsd              000000000403b594     NativeLib:io.obj
- 0003:000085a0       $unwind$Outsw              000000000403b5a0     NativeLib:io.obj
- 0003:000085ac       $unwind$Outsb              000000000403b5ac     NativeLib:io.obj
- 0003:000085b8       $unwind$lodepng_decode_memory 000000000403b5b8     NativeLib:lodepng.obj
- 0003:000085c4       $unwind$lodepng_decode32   000000000403b5c4     NativeLib:lodepng.obj
- 0003:000085d0       $unwind$lodepng_decode24   000000000403b5d0     NativeLib:lodepng.obj
- 0003:000085dc       $unwind$lodepng_encode_memory 000000000403b5dc     NativeLib:lodepng.obj
- 0003:000085e8       $unwind$lodepng_encode32   000000000403b5e8     NativeLib:lodepng.obj
- 0003:000085f4       $unwind$lodepng_encode24   000000000403b5f4     NativeLib:lodepng.obj
- 0003:00008600       $unwind$lodepng_error_text 000000000403b600     NativeLib:lodepng.obj
- 0003:0000860c       $unwind$lodepng_decompress_settings_init 000000000403b60c     NativeLib:lodepng.obj
- 0003:00008618       $unwind$lodepng_compress_settings_init 000000000403b618     NativeLib:lodepng.obj
- 0003:00008624       $unwind$lodepng_color_mode_init 000000000403b624     NativeLib:lodepng.obj
- 0003:00008630       $unwind$lodepng_color_mode_cleanup 000000000403b630     NativeLib:lodepng.obj
- 0003:0000863c       $unwind$lodepng_color_mode_copy 000000000403b63c     NativeLib:lodepng.obj
- 0003:00008648       $unwind$lodepng_color_mode_make 000000000403b648     NativeLib:lodepng.obj
- 0003:00008658       $unwind$lodepng_palette_clear 000000000403b658     NativeLib:lodepng.obj
- 0003:00008664       $unwind$lodepng_palette_add 000000000403b664     NativeLib:lodepng.obj
- 0003:00008670       $unwind$lodepng_get_bpp    000000000403b670     NativeLib:lodepng.obj
- 0003:0000867c       $unwind$lodepng_get_channels 000000000403b67c     NativeLib:lodepng.obj
- 0003:00008688       $unwind$lodepng_is_greyscale_type 000000000403b688     NativeLib:lodepng.obj
- 0003:00008694       $unwind$lodepng_is_alpha_type 000000000403b694     NativeLib:lodepng.obj
- 0003:000086a0       $unwind$lodepng_is_palette_type 000000000403b6a0     NativeLib:lodepng.obj
- 0003:000086ac       $unwind$lodepng_has_palette_alpha 000000000403b6ac     NativeLib:lodepng.obj
- 0003:000086b8       $unwind$lodepng_can_have_alpha 000000000403b6b8     NativeLib:lodepng.obj
- 0003:000086c4       $unwind$lodepng_get_raw_size 000000000403b6c4     NativeLib:lodepng.obj
- 0003:000086d0       $unwind$lodepng_info_init  000000000403b6d0     NativeLib:lodepng.obj
- 0003:000086dc       $unwind$lodepng_info_cleanup 000000000403b6dc     NativeLib:lodepng.obj
- 0003:000086e8       $unwind$lodepng_info_copy  000000000403b6e8     NativeLib:lodepng.obj
- 0003:000086f4       $unwind$lodepng_add_text   000000000403b6f4     NativeLib:lodepng.obj
- 0003:00008700       $unwind$lodepng_clear_text 000000000403b700     NativeLib:lodepng.obj
- 0003:0000870c       $unwind$lodepng_add_itext  000000000403b70c     NativeLib:lodepng.obj
- 0003:00008718       $unwind$lodepng_clear_itext 000000000403b718     NativeLib:lodepng.obj
- 0003:00008724       $unwind$lodepng_set_icc    000000000403b724     NativeLib:lodepng.obj
- 0003:00008730       $unwind$lodepng_clear_icc  000000000403b730     NativeLib:lodepng.obj
- 0003:0000873c       $unwind$lodepng_convert    000000000403b73c     NativeLib:lodepng.obj
- 0003:00008748       $unwind$lodepng_decoder_settings_init 000000000403b748     NativeLib:lodepng.obj
- 0003:00008754       $unwind$lodepng_color_stats_init 000000000403b754     NativeLib:lodepng.obj
- 0003:00008760       $unwind$lodepng_compute_color_stats 000000000403b760     NativeLib:lodepng.obj
- 0003:0000876c       $unwind$lodepng_encoder_settings_init 000000000403b76c     NativeLib:lodepng.obj
- 0003:00008778       $unwind$lodepng_state_init 000000000403b778     NativeLib:lodepng.obj
- 0003:00008784       $unwind$lodepng_state_cleanup 000000000403b784     NativeLib:lodepng.obj
- 0003:00008790       $unwind$lodepng_state_copy 000000000403b790     NativeLib:lodepng.obj
- 0003:000087a0       $unwind$lodepng_decode     000000000403b7a0     NativeLib:lodepng.obj
- 0003:000087ac       $unwind$lodepng_inspect    000000000403b7ac     NativeLib:lodepng.obj
- 0003:000087b8       $unwind$lodepng_inspect_chunk 000000000403b7b8     NativeLib:lodepng.obj
- 0003:000087c4       $unwind$lodepng_encode     000000000403b7c4     NativeLib:lodepng.obj
- 0003:000087d4       $unwind$lodepng_chunk_length 000000000403b7d4     NativeLib:lodepng.obj
- 0003:000087e0       $unwind$lodepng_chunk_type 000000000403b7e0     NativeLib:lodepng.obj
- 0003:000087ec       $unwind$lodepng_chunk_type_equals 000000000403b7ec     NativeLib:lodepng.obj
- 0003:000087f8       $unwind$lodepng_chunk_ancillary 000000000403b7f8     NativeLib:lodepng.obj
- 0003:00008804       $unwind$lodepng_chunk_private 000000000403b804     NativeLib:lodepng.obj
- 0003:00008810       $unwind$lodepng_chunk_safetocopy 000000000403b810     NativeLib:lodepng.obj
- 0003:0000881c       $unwind$lodepng_chunk_data 000000000403b81c     NativeLib:lodepng.obj
- 0003:00008828       $unwind$lodepng_chunk_data_const 000000000403b828     NativeLib:lodepng.obj
- 0003:00008834       $unwind$lodepng_chunk_check_crc 000000000403b834     NativeLib:lodepng.obj
- 0003:00008840       $unwind$lodepng_chunk_generate_crc 000000000403b840     NativeLib:lodepng.obj
- 0003:0000884c       $unwind$lodepng_chunk_next 000000000403b84c     NativeLib:lodepng.obj
- 0003:00008858       $unwind$lodepng_chunk_next_const 000000000403b858     NativeLib:lodepng.obj
- 0003:00008864       $unwind$lodepng_chunk_find 000000000403b864     NativeLib:lodepng.obj
- 0003:00008870       $unwind$lodepng_chunk_find_const 000000000403b870     NativeLib:lodepng.obj
- 0003:0000887c       $unwind$lodepng_chunk_append 000000000403b87c     NativeLib:lodepng.obj
- 0003:00008888       $unwind$lodepng_chunk_create 000000000403b888     NativeLib:lodepng.obj
- 0003:00008898       $unwind$lodepng_crc32      000000000403b898     NativeLib:lodepng.obj
- 0003:000088a4       $unwind$lodepng_inflate    000000000403b8a4     NativeLib:lodepng.obj
- 0003:000088b4       $unwind$lodepng_zlib_decompress 000000000403b8b4     NativeLib:lodepng.obj
- 0003:000088c4       $unwind$lodepng_zlib_compress 000000000403b8c4     NativeLib:lodepng.obj
- 0003:000088d0       $unwind$lodepng_huffman_code_lengths 000000000403b8d0     NativeLib:lodepng.obj
- 0003:000088dc       $unwind$lodepng_deflate    000000000403b8dc     NativeLib:lodepng.obj
- 0003:000088ec       $unwind$lodepng_malloc     000000000403b8ec     NativeLib:lodepng.obj
- 0003:000088f8       $unwind$lodepng_realloc    000000000403b8f8     NativeLib:lodepng.obj
- 0003:00008904       $unwind$lodepng_free       000000000403b904     NativeLib:lodepng.obj
- 0003:00008910       $unwind$lodepng_memcpy     000000000403b910     NativeLib:lodepng.obj
- 0003:0000891c       $unwind$lodepng_memset     000000000403b91c     NativeLib:lodepng.obj
- 0003:00008928       $unwind$lodepng_strlen     000000000403b928     NativeLib:lodepng.obj
- 0003:00008934       $unwind$lodepng_addofl     000000000403b934     NativeLib:lodepng.obj
- 0003:00008940       $unwind$lodepng_mulofl     000000000403b940     NativeLib:lodepng.obj
- 0003:0000894c       $unwind$lodepng_gtofl      000000000403b94c     NativeLib:lodepng.obj
- 0003:00008958       $unwind$uivector_cleanup   000000000403b958     NativeLib:lodepng.obj
- 0003:00008964       $unwind$uivector_resize    000000000403b964     NativeLib:lodepng.obj
- 0003:00008970       $unwind$uivector_init      000000000403b970     NativeLib:lodepng.obj
- 0003:0000897c       $unwind$uivector_push_back 000000000403b97c     NativeLib:lodepng.obj
- 0003:00008988       $unwind$ucvector_reserve   000000000403b988     NativeLib:lodepng.obj
- 0003:00008994       $unwind$ucvector_resize    000000000403b994     NativeLib:lodepng.obj
- 0003:000089a0       $unwind$ucvector_init      000000000403b9a0     NativeLib:lodepng.obj
- 0003:000089b0       $unwind$string_cleanup     000000000403b9b0     NativeLib:lodepng.obj
- 0003:000089bc       $unwind$alloc_string_sized 000000000403b9bc     NativeLib:lodepng.obj
- 0003:000089c8       $unwind$alloc_string       000000000403b9c8     NativeLib:lodepng.obj
- 0003:000089d4       $unwind$lodepng_read32bitInt 000000000403b9d4     NativeLib:lodepng.obj
- 0003:000089e0       $unwind$lodepng_set32bitInt 000000000403b9e0     NativeLib:lodepng.obj
- 0003:000089ec       $unwind$LodePNGBitWriter_init 000000000403b9ec     NativeLib:lodepng.obj
- 0003:000089f8       $unwind$writeBits          000000000403b9f8     NativeLib:lodepng.obj
- 0003:00008a04       $unwind$writeBitsReversed  000000000403ba04     NativeLib:lodepng.obj
- 0003:00008a10       $unwind$LodePNGBitReader_init 000000000403ba10     NativeLib:lodepng.obj
- 0003:00008a1c       $unwind$ensureBits9        000000000403ba1c     NativeLib:lodepng.obj
- 0003:00008a28       $unwind$ensureBits17       000000000403ba28     NativeLib:lodepng.obj
- 0003:00008a34       $unwind$ensureBits25       000000000403ba34     NativeLib:lodepng.obj
- 0003:00008a40       $unwind$ensureBits32       000000000403ba40     NativeLib:lodepng.obj
- 0003:00008a4c       $unwind$peekBits           000000000403ba4c     NativeLib:lodepng.obj
- 0003:00008a58       $unwind$advanceBits        000000000403ba58     NativeLib:lodepng.obj
- 0003:00008a64       $unwind$readBits           000000000403ba64     NativeLib:lodepng.obj
- 0003:00008a70       $unwind$reverseBits        000000000403ba70     NativeLib:lodepng.obj
- 0003:00008a7c       $unwind$HuffmanTree_init   000000000403ba7c     NativeLib:lodepng.obj
- 0003:00008a88       $unwind$HuffmanTree_cleanup 000000000403ba88     NativeLib:lodepng.obj
- 0003:00008a94       $unwind$HuffmanTree_makeTable 000000000403ba94     NativeLib:lodepng.obj
- 0003:00008aa0       $unwind$HuffmanTree_makeFromLengths2 000000000403baa0     NativeLib:lodepng.obj
- 0003:00008aac       $unwind$HuffmanTree_makeFromLengths 000000000403baac     NativeLib:lodepng.obj
- 0003:00008ab8       $unwind$bpmnode_create     000000000403bab8     NativeLib:lodepng.obj
- 0003:00008ac4       $unwind$bpmnode_sort       000000000403bac4     NativeLib:lodepng.obj
- 0003:00008ad4       $unwind$boundaryPM         000000000403bad4     NativeLib:lodepng.obj
- 0003:00008ae0       $unwind$HuffmanTree_makeFromFrequencies 000000000403bae0     NativeLib:lodepng.obj
- 0003:00008aec       $unwind$generateFixedLitLenTree 000000000403baec     NativeLib:lodepng.obj
- 0003:00008af8       $unwind$generateFixedDistanceTree 000000000403baf8     NativeLib:lodepng.obj
- 0003:00008b04       $unwind$huffmanDecodeSymbol 000000000403bb04     NativeLib:lodepng.obj
- 0003:00008b10       $unwind$getTreeInflateFixed 000000000403bb10     NativeLib:lodepng.obj
- 0003:00008b1c       $unwind$getTreeInflateDynamic 000000000403bb1c     NativeLib:lodepng.obj
- 0003:00008b28       $unwind$inflateHuffmanBlock 000000000403bb28     NativeLib:lodepng.obj
- 0003:00008b34       $unwind$inflateNoCompression 000000000403bb34     NativeLib:lodepng.obj
- 0003:00008b40       $unwind$lodepng_inflatev   000000000403bb40     NativeLib:lodepng.obj
- 0003:00008b4c       $unwind$inflatev           000000000403bb4c     NativeLib:lodepng.obj
- 0003:00008b58       $unwind$searchCodeIndex    000000000403bb58     NativeLib:lodepng.obj
- 0003:00008b64       $unwind$addLengthDistance  000000000403bb64     NativeLib:lodepng.obj
- 0003:00008b70       $unwind$hash_init          000000000403bb70     NativeLib:lodepng.obj
- 0003:00008b7c       $unwind$hash_cleanup       000000000403bb7c     NativeLib:lodepng.obj
- 0003:00008b88       $unwind$getHash            000000000403bb88     NativeLib:lodepng.obj
- 0003:00008b94       $unwind$countZeros         000000000403bb94     NativeLib:lodepng.obj
- 0003:00008ba0       $unwind$updateHashChain    000000000403bba0     NativeLib:lodepng.obj
- 0003:00008bac       $unwind$encodeLZ77         000000000403bbac     NativeLib:lodepng.obj
- 0003:00008bb8       $unwind$deflateNoCompression 000000000403bbb8     NativeLib:lodepng.obj
- 0003:00008bc4       $unwind$writeLZ77data      000000000403bbc4     NativeLib:lodepng.obj
- 0003:00008bd0       $unwind$deflateDynamic     000000000403bbd0     NativeLib:lodepng.obj
- 0003:00008bdc       $unwind$deflateFixed       000000000403bbdc     NativeLib:lodepng.obj
- 0003:00008be8       $unwind$lodepng_deflatev   000000000403bbe8     NativeLib:lodepng.obj
- 0003:00008bf4       $unwind$deflate            000000000403bbf4     NativeLib:lodepng.obj
- 0003:00008c00       $unwind$update_adler32     000000000403bc00     NativeLib:lodepng.obj
- 0003:00008c0c       $unwind$adler32            000000000403bc0c     NativeLib:lodepng.obj
- 0003:00008c18       $unwind$lodepng_zlib_decompressv 000000000403bc18     NativeLib:lodepng.obj
- 0003:00008c24       $unwind$zlib_decompress    000000000403bc24     NativeLib:lodepng.obj
- 0003:00008c34       $unwind$zlib_compress      000000000403bc34     NativeLib:lodepng.obj
- 0003:00008c40       $unwind$readBitFromReversedStream 000000000403bc40     NativeLib:lodepng.obj
- 0003:00008c4c       $unwind$readBitsFromReversedStream 000000000403bc4c     NativeLib:lodepng.obj
- 0003:00008c58       $unwind$setBitOfReversedStream 000000000403bc58     NativeLib:lodepng.obj
- 0003:00008c64       $unwind$lodepng_chunk_init 000000000403bc64     NativeLib:lodepng.obj
- 0003:00008c70       $unwind$lodepng_chunk_createv 000000000403bc70     NativeLib:lodepng.obj
- 0003:00008c7c       $unwind$checkColorValidity 000000000403bc7c     NativeLib:lodepng.obj
- 0003:00008c88       $unwind$getNumColorChannels 000000000403bc88     NativeLib:lodepng.obj
- 0003:00008c94       $unwind$lodepng_get_bpp_lct 000000000403bc94     NativeLib:lodepng.obj
- 0003:00008ca0       $unwind$lodepng_color_mode_alloc_palette 000000000403bca0     NativeLib:lodepng.obj
- 0003:00008cac       $unwind$lodepng_color_mode_equal 000000000403bcac     NativeLib:lodepng.obj
- 0003:00008cb8       $unwind$lodepng_get_raw_size_lct 000000000403bcb8     NativeLib:lodepng.obj
- 0003:00008cc4       $unwind$lodepng_get_raw_size_idat 000000000403bcc4     NativeLib:lodepng.obj
- 0003:00008cd0       $unwind$lodepng_pixel_overflow 000000000403bcd0     NativeLib:lodepng.obj
- 0003:00008cdc       $unwind$LodePNGUnknownChunks_init 000000000403bcdc     NativeLib:lodepng.obj
- 0003:00008ce8       $unwind$LodePNGUnknownChunks_cleanup 000000000403bce8     NativeLib:lodepng.obj
- 0003:00008cf4       $unwind$LodePNGUnknownChunks_copy 000000000403bcf4     NativeLib:lodepng.obj
- 0003:00008d00       $unwind$LodePNGText_init   000000000403bd00     NativeLib:lodepng.obj
- 0003:00008d0c       $unwind$LodePNGText_cleanup 000000000403bd0c     NativeLib:lodepng.obj
- 0003:00008d18       $unwind$LodePNGText_copy   000000000403bd18     NativeLib:lodepng.obj
- 0003:00008d24       $unwind$lodepng_add_text_sized 000000000403bd24     NativeLib:lodepng.obj
- 0003:00008d30       $unwind$LodePNGIText_init  000000000403bd30     NativeLib:lodepng.obj
- 0003:00008d3c       $unwind$LodePNGIText_cleanup 000000000403bd3c     NativeLib:lodepng.obj
- 0003:00008d48       $unwind$LodePNGIText_copy  000000000403bd48     NativeLib:lodepng.obj
- 0003:00008d54       $unwind$lodepng_add_itext_sized 000000000403bd54     NativeLib:lodepng.obj
- 0003:00008d60       $unwind$lodepng_assign_icc 000000000403bd60     NativeLib:lodepng.obj
- 0003:00008d6c       $unwind$addColorBits       000000000403bd6c     NativeLib:lodepng.obj
- 0003:00008d78       $unwind$color_tree_init    000000000403bd78     NativeLib:lodepng.obj
- 0003:00008d84       $unwind$color_tree_cleanup 000000000403bd84     NativeLib:lodepng.obj
- 0003:00008d90       $unwind$color_tree_get     000000000403bd90     NativeLib:lodepng.obj
- 0003:00008d9c       $unwind$color_tree_has     000000000403bd9c     NativeLib:lodepng.obj
- 0003:00008da8       $unwind$color_tree_add     000000000403bda8     NativeLib:lodepng.obj
- 0003:00008db4       $unwind$rgba8ToPixel       000000000403bdb4     NativeLib:lodepng.obj
- 0003:00008dc0       $unwind$rgba16ToPixel      000000000403bdc0     NativeLib:lodepng.obj
- 0003:00008dcc       $unwind$getPixelColorRGBA8 000000000403bdcc     NativeLib:lodepng.obj
- 0003:00008dd8       $unwind$getPixelColorsRGBA8 000000000403bdd8     NativeLib:lodepng.obj
- 0003:00008de4       $unwind$getPixelColorsRGB8 000000000403bde4     NativeLib:lodepng.obj
- 0003:00008df0       $unwind$getPixelColorRGBA16 000000000403bdf0     NativeLib:lodepng.obj
- 0003:00008dfc       $unwind$lodepng_convert_rgb 000000000403bdfc     NativeLib:lodepng.obj
- 0003:00008e08       $unwind$getValueRequiredBits 000000000403be08     NativeLib:lodepng.obj
- 0003:00008e14       $unwind$lodepng_color_stats_add 000000000403be14     NativeLib:lodepng.obj
- 0003:00008e20       $unwind$auto_choose_color  000000000403be20     NativeLib:lodepng.obj
- 0003:00008e2c       $unwind$paethPredictor     000000000403be2c     NativeLib:lodepng.obj
- 0003:00008e38       $unwind$Adam7_getpassvalues 000000000403be38     NativeLib:lodepng.obj
- 0003:00008e44       $unwind$unfilterScanline   000000000403be44     NativeLib:lodepng.obj
- 0003:00008e50       $unwind$unfilter           000000000403be50     NativeLib:lodepng.obj
- 0003:00008e5c       $unwind$Adam7_deinterlace  000000000403be5c     NativeLib:lodepng.obj
- 0003:00008e68       $unwind$removePaddingBits  000000000403be68     NativeLib:lodepng.obj
- 0003:00008e74       $unwind$postProcessScanlines 000000000403be74     NativeLib:lodepng.obj
- 0003:00008e80       $unwind$readChunk_PLTE     000000000403be80     NativeLib:lodepng.obj
- 0003:00008e8c       $unwind$readChunk_tRNS     000000000403be8c     NativeLib:lodepng.obj
- 0003:00008e98       $unwind$readChunk_bKGD     000000000403be98     NativeLib:lodepng.obj
- 0003:00008ea4       $unwind$readChunk_tEXt     000000000403bea4     NativeLib:lodepng.obj
- 0003:00008eb0       $unwind$readChunk_zTXt     000000000403beb0     NativeLib:lodepng.obj
- 0003:00008ec0       $unwind$readChunk_iTXt     000000000403bec0     NativeLib:lodepng.obj
- 0003:00008ed0       $unwind$readChunk_tIME     000000000403bed0     NativeLib:lodepng.obj
- 0003:00008edc       $unwind$readChunk_pHYs     000000000403bedc     NativeLib:lodepng.obj
- 0003:00008ee8       $unwind$readChunk_gAMA     000000000403bee8     NativeLib:lodepng.obj
- 0003:00008ef4       $unwind$readChunk_cHRM     000000000403bef4     NativeLib:lodepng.obj
- 0003:00008f00       $unwind$readChunk_sRGB     000000000403bf00     NativeLib:lodepng.obj
- 0003:00008f0c       $unwind$readChunk_iCCP     000000000403bf0c     NativeLib:lodepng.obj
- 0003:00008f1c       $unwind$decodeGeneric      000000000403bf1c     NativeLib:lodepng.obj
- 0003:00008f28       $unwind$writeSignature     000000000403bf28     NativeLib:lodepng.obj
- 0003:00008f34       $unwind$addChunk_IHDR      000000000403bf34     NativeLib:lodepng.obj
- 0003:00008f40       $unwind$addChunk_PLTE      000000000403bf40     NativeLib:lodepng.obj
- 0003:00008f4c       $unwind$addChunk_tRNS      000000000403bf4c     NativeLib:lodepng.obj
- 0003:00008f58       $unwind$addChunk_IDAT      000000000403bf58     NativeLib:lodepng.obj
- 0003:00008f64       $unwind$addChunk_IEND      000000000403bf64     NativeLib:lodepng.obj
- 0003:00008f70       $unwind$addChunk_tEXt      000000000403bf70     NativeLib:lodepng.obj
- 0003:00008f7c       $unwind$addChunk_zTXt      000000000403bf7c     NativeLib:lodepng.obj
- 0003:00008f88       $unwind$addChunk_iTXt      000000000403bf88     NativeLib:lodepng.obj
- 0003:00008f94       $unwind$addChunk_bKGD      000000000403bf94     NativeLib:lodepng.obj
- 0003:00008fa0       $unwind$addChunk_tIME      000000000403bfa0     NativeLib:lodepng.obj
- 0003:00008fac       $unwind$addChunk_pHYs      000000000403bfac     NativeLib:lodepng.obj
- 0003:00008fb8       $unwind$addChunk_gAMA      000000000403bfb8     NativeLib:lodepng.obj
- 0003:00008fc4       $unwind$addChunk_cHRM      000000000403bfc4     NativeLib:lodepng.obj
- 0003:00008fd0       $unwind$addChunk_sRGB      000000000403bfd0     NativeLib:lodepng.obj
- 0003:00008fdc       $unwind$addChunk_iCCP      000000000403bfdc     NativeLib:lodepng.obj
- 0003:00008fe8       $unwind$filterScanline     000000000403bfe8     NativeLib:lodepng.obj
- 0003:00008ff4       $unwind$ilog2              000000000403bff4     NativeLib:lodepng.obj
- 0003:00009000       $unwind$ilog2i             000000000403c000     NativeLib:lodepng.obj
- 0003:0000900c       $unwind$filter             000000000403c00c     NativeLib:lodepng.obj
- 0003:00009018       $unwind$addPaddingBits     000000000403c018     NativeLib:lodepng.obj
- 0003:00009024       $unwind$Adam7_interlace    000000000403c024     NativeLib:lodepng.obj
- 0003:00009030       $unwind$preProcessScanlines 000000000403c030     NativeLib:lodepng.obj
- 0003:0000903c       $unwind$addUnknownChunks   000000000403c03c     NativeLib:lodepng.obj
- 0003:00009048       $unwind$isGrayICCProfile   000000000403c048     NativeLib:lodepng.obj
- 0003:00009054       $unwind$isRGBICCProfile    000000000403c054     NativeLib:lodepng.obj
- 0003:00009060       $unwind$printf             000000000403c060     NativeLib:printf.obj
- 0003:0000906c       $unwind$sprintf            000000000403c06c     NativeLib:printf.obj
- 0003:00009078       $unwind$vsnprintf          000000000403c078     NativeLib:printf.obj
- 0003:00009084       $unwind$prepend_to_buffer  000000000403c084     NativeLib:printf.obj
- 0003:00009090       $unwind$append_num         000000000403c090     NativeLib:printf.obj
- 0003:0000909c       $unwind$append_str         000000000403c09c     NativeLib:printf.obj
- 0004:00003d20       lodepng_crc32_table        0000000004040d20     NativeLib:lodepng.obj
+ 0003:000084c4       $unwind$Movsb              000000000403b4c4     NativeLib:mem.obj
+ 0003:000084d4       $unwind$Movsd              000000000403b4d4     NativeLib:mem.obj
+ 0003:000084e4       $unwind$Stosb              000000000403b4e4     NativeLib:mem.obj
+ 0003:000084f0       $unwind$Stosd              000000000403b4f0     NativeLib:mem.obj
+ 0003:000084fc       $unwind$Load_GDT           000000000403b4fc     NativeLib:interrupts.obj
+ 0003:00008508       $unwind$idt_set            000000000403b508     NativeLib:interrupts.obj
+ 0003:00008514       $unwind$set_idt_entries    000000000403b514     NativeLib:interrupts.obj
+ 0003:00008520       $unwind$Nop                000000000403b520     NativeLib:native.obj
+ 0003:0000852c       $unwind$Invlpg             000000000403b52c     NativeLib:native.obj
+ 0003:00008538       $unwind$WriteCR3           000000000403b538     NativeLib:native.obj
+ 0003:00008544       $unwind$ReadCR2            000000000403b544     NativeLib:native.obj
+ 0003:00008550       $unwind$Hlt                000000000403b550     NativeLib:native.obj
+ 0003:0000855c       $unwind$Cli                000000000403b55c     NativeLib:native.obj
+ 0003:00008568       $unwind$Sti                000000000403b568     NativeLib:native.obj
+ 0003:00008574       $unwind$Out8               000000000403b574     NativeLib:io.obj
+ 0003:00008580       $unwind$Out16              000000000403b580     NativeLib:io.obj
+ 0003:0000858c       $unwind$Out32              000000000403b58c     NativeLib:io.obj
+ 0003:00008598       $unwind$In8                000000000403b598     NativeLib:io.obj
+ 0003:000085a4       $unwind$In16               000000000403b5a4     NativeLib:io.obj
+ 0003:000085b0       $unwind$In32               000000000403b5b0     NativeLib:io.obj
+ 0003:000085bc       $unwind$Insd               000000000403b5bc     NativeLib:io.obj
+ 0003:000085c8       $unwind$Insw               000000000403b5c8     NativeLib:io.obj
+ 0003:000085d4       $unwind$Insb               000000000403b5d4     NativeLib:io.obj
+ 0003:000085e0       $unwind$Outsd              000000000403b5e0     NativeLib:io.obj
+ 0003:000085ec       $unwind$Outsw              000000000403b5ec     NativeLib:io.obj
+ 0003:000085f8       $unwind$Outsb              000000000403b5f8     NativeLib:io.obj
+ 0003:00008604       $unwind$lodepng_decode_memory 000000000403b604     NativeLib:lodepng.obj
+ 0003:00008610       $unwind$lodepng_decode32   000000000403b610     NativeLib:lodepng.obj
+ 0003:0000861c       $unwind$lodepng_decode24   000000000403b61c     NativeLib:lodepng.obj
+ 0003:00008628       $unwind$lodepng_encode_memory 000000000403b628     NativeLib:lodepng.obj
+ 0003:00008634       $unwind$lodepng_encode32   000000000403b634     NativeLib:lodepng.obj
+ 0003:00008640       $unwind$lodepng_encode24   000000000403b640     NativeLib:lodepng.obj
+ 0003:0000864c       $unwind$lodepng_error_text 000000000403b64c     NativeLib:lodepng.obj
+ 0003:00008658       $unwind$lodepng_decompress_settings_init 000000000403b658     NativeLib:lodepng.obj
+ 0003:00008664       $unwind$lodepng_compress_settings_init 000000000403b664     NativeLib:lodepng.obj
+ 0003:00008670       $unwind$lodepng_color_mode_init 000000000403b670     NativeLib:lodepng.obj
+ 0003:0000867c       $unwind$lodepng_color_mode_cleanup 000000000403b67c     NativeLib:lodepng.obj
+ 0003:00008688       $unwind$lodepng_color_mode_copy 000000000403b688     NativeLib:lodepng.obj
+ 0003:00008694       $unwind$lodepng_color_mode_make 000000000403b694     NativeLib:lodepng.obj
+ 0003:000086a4       $unwind$lodepng_palette_clear 000000000403b6a4     NativeLib:lodepng.obj
+ 0003:000086b0       $unwind$lodepng_palette_add 000000000403b6b0     NativeLib:lodepng.obj
+ 0003:000086bc       $unwind$lodepng_get_bpp    000000000403b6bc     NativeLib:lodepng.obj
+ 0003:000086c8       $unwind$lodepng_get_channels 000000000403b6c8     NativeLib:lodepng.obj
+ 0003:000086d4       $unwind$lodepng_is_greyscale_type 000000000403b6d4     NativeLib:lodepng.obj
+ 0003:000086e0       $unwind$lodepng_is_alpha_type 000000000403b6e0     NativeLib:lodepng.obj
+ 0003:000086ec       $unwind$lodepng_is_palette_type 000000000403b6ec     NativeLib:lodepng.obj
+ 0003:000086f8       $unwind$lodepng_has_palette_alpha 000000000403b6f8     NativeLib:lodepng.obj
+ 0003:00008704       $unwind$lodepng_can_have_alpha 000000000403b704     NativeLib:lodepng.obj
+ 0003:00008710       $unwind$lodepng_get_raw_size 000000000403b710     NativeLib:lodepng.obj
+ 0003:0000871c       $unwind$lodepng_info_init  000000000403b71c     NativeLib:lodepng.obj
+ 0003:00008728       $unwind$lodepng_info_cleanup 000000000403b728     NativeLib:lodepng.obj
+ 0003:00008734       $unwind$lodepng_info_copy  000000000403b734     NativeLib:lodepng.obj
+ 0003:00008740       $unwind$lodepng_add_text   000000000403b740     NativeLib:lodepng.obj
+ 0003:0000874c       $unwind$lodepng_clear_text 000000000403b74c     NativeLib:lodepng.obj
+ 0003:00008758       $unwind$lodepng_add_itext  000000000403b758     NativeLib:lodepng.obj
+ 0003:00008764       $unwind$lodepng_clear_itext 000000000403b764     NativeLib:lodepng.obj
+ 0003:00008770       $unwind$lodepng_set_icc    000000000403b770     NativeLib:lodepng.obj
+ 0003:0000877c       $unwind$lodepng_clear_icc  000000000403b77c     NativeLib:lodepng.obj
+ 0003:00008788       $unwind$lodepng_convert    000000000403b788     NativeLib:lodepng.obj
+ 0003:00008794       $unwind$lodepng_decoder_settings_init 000000000403b794     NativeLib:lodepng.obj
+ 0003:000087a0       $unwind$lodepng_color_stats_init 000000000403b7a0     NativeLib:lodepng.obj
+ 0003:000087ac       $unwind$lodepng_compute_color_stats 000000000403b7ac     NativeLib:lodepng.obj
+ 0003:000087b8       $unwind$lodepng_encoder_settings_init 000000000403b7b8     NativeLib:lodepng.obj
+ 0003:000087c4       $unwind$lodepng_state_init 000000000403b7c4     NativeLib:lodepng.obj
+ 0003:000087d0       $unwind$lodepng_state_cleanup 000000000403b7d0     NativeLib:lodepng.obj
+ 0003:000087dc       $unwind$lodepng_state_copy 000000000403b7dc     NativeLib:lodepng.obj
+ 0003:000087ec       $unwind$lodepng_decode     000000000403b7ec     NativeLib:lodepng.obj
+ 0003:000087f8       $unwind$lodepng_inspect    000000000403b7f8     NativeLib:lodepng.obj
+ 0003:00008804       $unwind$lodepng_inspect_chunk 000000000403b804     NativeLib:lodepng.obj
+ 0003:00008810       $unwind$lodepng_encode     000000000403b810     NativeLib:lodepng.obj
+ 0003:00008820       $unwind$lodepng_chunk_length 000000000403b820     NativeLib:lodepng.obj
+ 0003:0000882c       $unwind$lodepng_chunk_type 000000000403b82c     NativeLib:lodepng.obj
+ 0003:00008838       $unwind$lodepng_chunk_type_equals 000000000403b838     NativeLib:lodepng.obj
+ 0003:00008844       $unwind$lodepng_chunk_ancillary 000000000403b844     NativeLib:lodepng.obj
+ 0003:00008850       $unwind$lodepng_chunk_private 000000000403b850     NativeLib:lodepng.obj
+ 0003:0000885c       $unwind$lodepng_chunk_safetocopy 000000000403b85c     NativeLib:lodepng.obj
+ 0003:00008868       $unwind$lodepng_chunk_data 000000000403b868     NativeLib:lodepng.obj
+ 0003:00008874       $unwind$lodepng_chunk_data_const 000000000403b874     NativeLib:lodepng.obj
+ 0003:00008880       $unwind$lodepng_chunk_check_crc 000000000403b880     NativeLib:lodepng.obj
+ 0003:0000888c       $unwind$lodepng_chunk_generate_crc 000000000403b88c     NativeLib:lodepng.obj
+ 0003:00008898       $unwind$lodepng_chunk_next 000000000403b898     NativeLib:lodepng.obj
+ 0003:000088a4       $unwind$lodepng_chunk_next_const 000000000403b8a4     NativeLib:lodepng.obj
+ 0003:000088b0       $unwind$lodepng_chunk_find 000000000403b8b0     NativeLib:lodepng.obj
+ 0003:000088bc       $unwind$lodepng_chunk_find_const 000000000403b8bc     NativeLib:lodepng.obj
+ 0003:000088c8       $unwind$lodepng_chunk_append 000000000403b8c8     NativeLib:lodepng.obj
+ 0003:000088d4       $unwind$lodepng_chunk_create 000000000403b8d4     NativeLib:lodepng.obj
+ 0003:000088e4       $unwind$lodepng_crc32      000000000403b8e4     NativeLib:lodepng.obj
+ 0003:000088f0       $unwind$lodepng_inflate    000000000403b8f0     NativeLib:lodepng.obj
+ 0003:00008900       $unwind$lodepng_zlib_decompress 000000000403b900     NativeLib:lodepng.obj
+ 0003:00008910       $unwind$lodepng_zlib_compress 000000000403b910     NativeLib:lodepng.obj
+ 0003:0000891c       $unwind$lodepng_huffman_code_lengths 000000000403b91c     NativeLib:lodepng.obj
+ 0003:00008928       $unwind$lodepng_deflate    000000000403b928     NativeLib:lodepng.obj
+ 0003:00008938       $unwind$lodepng_malloc     000000000403b938     NativeLib:lodepng.obj
+ 0003:00008944       $unwind$lodepng_realloc    000000000403b944     NativeLib:lodepng.obj
+ 0003:00008950       $unwind$lodepng_free       000000000403b950     NativeLib:lodepng.obj
+ 0003:0000895c       $unwind$lodepng_memcpy     000000000403b95c     NativeLib:lodepng.obj
+ 0003:00008968       $unwind$lodepng_memset     000000000403b968     NativeLib:lodepng.obj
+ 0003:00008974       $unwind$lodepng_strlen     000000000403b974     NativeLib:lodepng.obj
+ 0003:00008980       $unwind$lodepng_addofl     000000000403b980     NativeLib:lodepng.obj
+ 0003:0000898c       $unwind$lodepng_mulofl     000000000403b98c     NativeLib:lodepng.obj
+ 0003:00008998       $unwind$lodepng_gtofl      000000000403b998     NativeLib:lodepng.obj
+ 0003:000089a4       $unwind$uivector_cleanup   000000000403b9a4     NativeLib:lodepng.obj
+ 0003:000089b0       $unwind$uivector_resize    000000000403b9b0     NativeLib:lodepng.obj
+ 0003:000089bc       $unwind$uivector_init      000000000403b9bc     NativeLib:lodepng.obj
+ 0003:000089c8       $unwind$uivector_push_back 000000000403b9c8     NativeLib:lodepng.obj
+ 0003:000089d4       $unwind$ucvector_reserve   000000000403b9d4     NativeLib:lodepng.obj
+ 0003:000089e0       $unwind$ucvector_resize    000000000403b9e0     NativeLib:lodepng.obj
+ 0003:000089ec       $unwind$ucvector_init      000000000403b9ec     NativeLib:lodepng.obj
+ 0003:000089fc       $unwind$string_cleanup     000000000403b9fc     NativeLib:lodepng.obj
+ 0003:00008a08       $unwind$alloc_string_sized 000000000403ba08     NativeLib:lodepng.obj
+ 0003:00008a14       $unwind$alloc_string       000000000403ba14     NativeLib:lodepng.obj
+ 0003:00008a20       $unwind$lodepng_read32bitInt 000000000403ba20     NativeLib:lodepng.obj
+ 0003:00008a2c       $unwind$lodepng_set32bitInt 000000000403ba2c     NativeLib:lodepng.obj
+ 0003:00008a38       $unwind$LodePNGBitWriter_init 000000000403ba38     NativeLib:lodepng.obj
+ 0003:00008a44       $unwind$writeBits          000000000403ba44     NativeLib:lodepng.obj
+ 0003:00008a50       $unwind$writeBitsReversed  000000000403ba50     NativeLib:lodepng.obj
+ 0003:00008a5c       $unwind$LodePNGBitReader_init 000000000403ba5c     NativeLib:lodepng.obj
+ 0003:00008a68       $unwind$ensureBits9        000000000403ba68     NativeLib:lodepng.obj
+ 0003:00008a74       $unwind$ensureBits17       000000000403ba74     NativeLib:lodepng.obj
+ 0003:00008a80       $unwind$ensureBits25       000000000403ba80     NativeLib:lodepng.obj
+ 0003:00008a8c       $unwind$ensureBits32       000000000403ba8c     NativeLib:lodepng.obj
+ 0003:00008a98       $unwind$peekBits           000000000403ba98     NativeLib:lodepng.obj
+ 0003:00008aa4       $unwind$advanceBits        000000000403baa4     NativeLib:lodepng.obj
+ 0003:00008ab0       $unwind$readBits           000000000403bab0     NativeLib:lodepng.obj
+ 0003:00008abc       $unwind$reverseBits        000000000403babc     NativeLib:lodepng.obj
+ 0003:00008ac8       $unwind$HuffmanTree_init   000000000403bac8     NativeLib:lodepng.obj
+ 0003:00008ad4       $unwind$HuffmanTree_cleanup 000000000403bad4     NativeLib:lodepng.obj
+ 0003:00008ae0       $unwind$HuffmanTree_makeTable 000000000403bae0     NativeLib:lodepng.obj
+ 0003:00008aec       $unwind$HuffmanTree_makeFromLengths2 000000000403baec     NativeLib:lodepng.obj
+ 0003:00008af8       $unwind$HuffmanTree_makeFromLengths 000000000403baf8     NativeLib:lodepng.obj
+ 0003:00008b04       $unwind$bpmnode_create     000000000403bb04     NativeLib:lodepng.obj
+ 0003:00008b10       $unwind$bpmnode_sort       000000000403bb10     NativeLib:lodepng.obj
+ 0003:00008b20       $unwind$boundaryPM         000000000403bb20     NativeLib:lodepng.obj
+ 0003:00008b2c       $unwind$HuffmanTree_makeFromFrequencies 000000000403bb2c     NativeLib:lodepng.obj
+ 0003:00008b38       $unwind$generateFixedLitLenTree 000000000403bb38     NativeLib:lodepng.obj
+ 0003:00008b44       $unwind$generateFixedDistanceTree 000000000403bb44     NativeLib:lodepng.obj
+ 0003:00008b50       $unwind$huffmanDecodeSymbol 000000000403bb50     NativeLib:lodepng.obj
+ 0003:00008b5c       $unwind$getTreeInflateFixed 000000000403bb5c     NativeLib:lodepng.obj
+ 0003:00008b68       $unwind$getTreeInflateDynamic 000000000403bb68     NativeLib:lodepng.obj
+ 0003:00008b74       $unwind$inflateHuffmanBlock 000000000403bb74     NativeLib:lodepng.obj
+ 0003:00008b80       $unwind$inflateNoCompression 000000000403bb80     NativeLib:lodepng.obj
+ 0003:00008b8c       $unwind$lodepng_inflatev   000000000403bb8c     NativeLib:lodepng.obj
+ 0003:00008b98       $unwind$inflatev           000000000403bb98     NativeLib:lodepng.obj
+ 0003:00008ba4       $unwind$searchCodeIndex    000000000403bba4     NativeLib:lodepng.obj
+ 0003:00008bb0       $unwind$addLengthDistance  000000000403bbb0     NativeLib:lodepng.obj
+ 0003:00008bbc       $unwind$hash_init          000000000403bbbc     NativeLib:lodepng.obj
+ 0003:00008bc8       $unwind$hash_cleanup       000000000403bbc8     NativeLib:lodepng.obj
+ 0003:00008bd4       $unwind$getHash            000000000403bbd4     NativeLib:lodepng.obj
+ 0003:00008be0       $unwind$countZeros         000000000403bbe0     NativeLib:lodepng.obj
+ 0003:00008bec       $unwind$updateHashChain    000000000403bbec     NativeLib:lodepng.obj
+ 0003:00008bf8       $unwind$encodeLZ77         000000000403bbf8     NativeLib:lodepng.obj
+ 0003:00008c04       $unwind$deflateNoCompression 000000000403bc04     NativeLib:lodepng.obj
+ 0003:00008c10       $unwind$writeLZ77data      000000000403bc10     NativeLib:lodepng.obj
+ 0003:00008c1c       $unwind$deflateDynamic     000000000403bc1c     NativeLib:lodepng.obj
+ 0003:00008c28       $unwind$deflateFixed       000000000403bc28     NativeLib:lodepng.obj
+ 0003:00008c34       $unwind$lodepng_deflatev   000000000403bc34     NativeLib:lodepng.obj
+ 0003:00008c40       $unwind$deflate            000000000403bc40     NativeLib:lodepng.obj
+ 0003:00008c4c       $unwind$update_adler32     000000000403bc4c     NativeLib:lodepng.obj
+ 0003:00008c58       $unwind$adler32            000000000403bc58     NativeLib:lodepng.obj
+ 0003:00008c64       $unwind$lodepng_zlib_decompressv 000000000403bc64     NativeLib:lodepng.obj
+ 0003:00008c70       $unwind$zlib_decompress    000000000403bc70     NativeLib:lodepng.obj
+ 0003:00008c80       $unwind$zlib_compress      000000000403bc80     NativeLib:lodepng.obj
+ 0003:00008c8c       $unwind$readBitFromReversedStream 000000000403bc8c     NativeLib:lodepng.obj
+ 0003:00008c98       $unwind$readBitsFromReversedStream 000000000403bc98     NativeLib:lodepng.obj
+ 0003:00008ca4       $unwind$setBitOfReversedStream 000000000403bca4     NativeLib:lodepng.obj
+ 0003:00008cb0       $unwind$lodepng_chunk_init 000000000403bcb0     NativeLib:lodepng.obj
+ 0003:00008cbc       $unwind$lodepng_chunk_createv 000000000403bcbc     NativeLib:lodepng.obj
+ 0003:00008cc8       $unwind$checkColorValidity 000000000403bcc8     NativeLib:lodepng.obj
+ 0003:00008cd4       $unwind$getNumColorChannels 000000000403bcd4     NativeLib:lodepng.obj
+ 0003:00008ce0       $unwind$lodepng_get_bpp_lct 000000000403bce0     NativeLib:lodepng.obj
+ 0003:00008cec       $unwind$lodepng_color_mode_alloc_palette 000000000403bcec     NativeLib:lodepng.obj
+ 0003:00008cf8       $unwind$lodepng_color_mode_equal 000000000403bcf8     NativeLib:lodepng.obj
+ 0003:00008d04       $unwind$lodepng_get_raw_size_lct 000000000403bd04     NativeLib:lodepng.obj
+ 0003:00008d10       $unwind$lodepng_get_raw_size_idat 000000000403bd10     NativeLib:lodepng.obj
+ 0003:00008d1c       $unwind$lodepng_pixel_overflow 000000000403bd1c     NativeLib:lodepng.obj
+ 0003:00008d28       $unwind$LodePNGUnknownChunks_init 000000000403bd28     NativeLib:lodepng.obj
+ 0003:00008d34       $unwind$LodePNGUnknownChunks_cleanup 000000000403bd34     NativeLib:lodepng.obj
+ 0003:00008d40       $unwind$LodePNGUnknownChunks_copy 000000000403bd40     NativeLib:lodepng.obj
+ 0003:00008d4c       $unwind$LodePNGText_init   000000000403bd4c     NativeLib:lodepng.obj
+ 0003:00008d58       $unwind$LodePNGText_cleanup 000000000403bd58     NativeLib:lodepng.obj
+ 0003:00008d64       $unwind$LodePNGText_copy   000000000403bd64     NativeLib:lodepng.obj
+ 0003:00008d70       $unwind$lodepng_add_text_sized 000000000403bd70     NativeLib:lodepng.obj
+ 0003:00008d7c       $unwind$LodePNGIText_init  000000000403bd7c     NativeLib:lodepng.obj
+ 0003:00008d88       $unwind$LodePNGIText_cleanup 000000000403bd88     NativeLib:lodepng.obj
+ 0003:00008d94       $unwind$LodePNGIText_copy  000000000403bd94     NativeLib:lodepng.obj
+ 0003:00008da0       $unwind$lodepng_add_itext_sized 000000000403bda0     NativeLib:lodepng.obj
+ 0003:00008dac       $unwind$lodepng_assign_icc 000000000403bdac     NativeLib:lodepng.obj
+ 0003:00008db8       $unwind$addColorBits       000000000403bdb8     NativeLib:lodepng.obj
+ 0003:00008dc4       $unwind$color_tree_init    000000000403bdc4     NativeLib:lodepng.obj
+ 0003:00008dd0       $unwind$color_tree_cleanup 000000000403bdd0     NativeLib:lodepng.obj
+ 0003:00008ddc       $unwind$color_tree_get     000000000403bddc     NativeLib:lodepng.obj
+ 0003:00008de8       $unwind$color_tree_has     000000000403bde8     NativeLib:lodepng.obj
+ 0003:00008df4       $unwind$color_tree_add     000000000403bdf4     NativeLib:lodepng.obj
+ 0003:00008e00       $unwind$rgba8ToPixel       000000000403be00     NativeLib:lodepng.obj
+ 0003:00008e0c       $unwind$rgba16ToPixel      000000000403be0c     NativeLib:lodepng.obj
+ 0003:00008e18       $unwind$getPixelColorRGBA8 000000000403be18     NativeLib:lodepng.obj
+ 0003:00008e24       $unwind$getPixelColorsRGBA8 000000000403be24     NativeLib:lodepng.obj
+ 0003:00008e30       $unwind$getPixelColorsRGB8 000000000403be30     NativeLib:lodepng.obj
+ 0003:00008e3c       $unwind$getPixelColorRGBA16 000000000403be3c     NativeLib:lodepng.obj
+ 0003:00008e48       $unwind$lodepng_convert_rgb 000000000403be48     NativeLib:lodepng.obj
+ 0003:00008e54       $unwind$getValueRequiredBits 000000000403be54     NativeLib:lodepng.obj
+ 0003:00008e60       $unwind$lodepng_color_stats_add 000000000403be60     NativeLib:lodepng.obj
+ 0003:00008e6c       $unwind$auto_choose_color  000000000403be6c     NativeLib:lodepng.obj
+ 0003:00008e78       $unwind$paethPredictor     000000000403be78     NativeLib:lodepng.obj
+ 0003:00008e84       $unwind$Adam7_getpassvalues 000000000403be84     NativeLib:lodepng.obj
+ 0003:00008e90       $unwind$unfilterScanline   000000000403be90     NativeLib:lodepng.obj
+ 0003:00008e9c       $unwind$unfilter           000000000403be9c     NativeLib:lodepng.obj
+ 0003:00008ea8       $unwind$Adam7_deinterlace  000000000403bea8     NativeLib:lodepng.obj
+ 0003:00008eb4       $unwind$removePaddingBits  000000000403beb4     NativeLib:lodepng.obj
+ 0003:00008ec0       $unwind$postProcessScanlines 000000000403bec0     NativeLib:lodepng.obj
+ 0003:00008ecc       $unwind$readChunk_PLTE     000000000403becc     NativeLib:lodepng.obj
+ 0003:00008ed8       $unwind$readChunk_tRNS     000000000403bed8     NativeLib:lodepng.obj
+ 0003:00008ee4       $unwind$readChunk_bKGD     000000000403bee4     NativeLib:lodepng.obj
+ 0003:00008ef0       $unwind$readChunk_tEXt     000000000403bef0     NativeLib:lodepng.obj
+ 0003:00008efc       $unwind$readChunk_zTXt     000000000403befc     NativeLib:lodepng.obj
+ 0003:00008f0c       $unwind$readChunk_iTXt     000000000403bf0c     NativeLib:lodepng.obj
+ 0003:00008f1c       $unwind$readChunk_tIME     000000000403bf1c     NativeLib:lodepng.obj
+ 0003:00008f28       $unwind$readChunk_pHYs     000000000403bf28     NativeLib:lodepng.obj
+ 0003:00008f34       $unwind$readChunk_gAMA     000000000403bf34     NativeLib:lodepng.obj
+ 0003:00008f40       $unwind$readChunk_cHRM     000000000403bf40     NativeLib:lodepng.obj
+ 0003:00008f4c       $unwind$readChunk_sRGB     000000000403bf4c     NativeLib:lodepng.obj
+ 0003:00008f58       $unwind$readChunk_iCCP     000000000403bf58     NativeLib:lodepng.obj
+ 0003:00008f68       $unwind$decodeGeneric      000000000403bf68     NativeLib:lodepng.obj
+ 0003:00008f74       $unwind$writeSignature     000000000403bf74     NativeLib:lodepng.obj
+ 0003:00008f80       $unwind$addChunk_IHDR      000000000403bf80     NativeLib:lodepng.obj
+ 0003:00008f8c       $unwind$addChunk_PLTE      000000000403bf8c     NativeLib:lodepng.obj
+ 0003:00008f98       $unwind$addChunk_tRNS      000000000403bf98     NativeLib:lodepng.obj
+ 0003:00008fa4       $unwind$addChunk_IDAT      000000000403bfa4     NativeLib:lodepng.obj
+ 0003:00008fb0       $unwind$addChunk_IEND      000000000403bfb0     NativeLib:lodepng.obj
+ 0003:00008fbc       $unwind$addChunk_tEXt      000000000403bfbc     NativeLib:lodepng.obj
+ 0003:00008fc8       $unwind$addChunk_zTXt      000000000403bfc8     NativeLib:lodepng.obj
+ 0003:00008fd4       $unwind$addChunk_iTXt      000000000403bfd4     NativeLib:lodepng.obj
+ 0003:00008fe0       $unwind$addChunk_bKGD      000000000403bfe0     NativeLib:lodepng.obj
+ 0003:00008fec       $unwind$addChunk_tIME      000000000403bfec     NativeLib:lodepng.obj
+ 0003:00008ff8       $unwind$addChunk_pHYs      000000000403bff8     NativeLib:lodepng.obj
+ 0003:00009004       $unwind$addChunk_gAMA      000000000403c004     NativeLib:lodepng.obj
+ 0003:00009010       $unwind$addChunk_cHRM      000000000403c010     NativeLib:lodepng.obj
+ 0003:0000901c       $unwind$addChunk_sRGB      000000000403c01c     NativeLib:lodepng.obj
+ 0003:00009028       $unwind$addChunk_iCCP      000000000403c028     NativeLib:lodepng.obj
+ 0003:00009034       $unwind$filterScanline     000000000403c034     NativeLib:lodepng.obj
+ 0003:00009040       $unwind$ilog2              000000000403c040     NativeLib:lodepng.obj
+ 0003:0000904c       $unwind$ilog2i             000000000403c04c     NativeLib:lodepng.obj
+ 0003:00009058       $unwind$filter             000000000403c058     NativeLib:lodepng.obj
+ 0003:00009064       $unwind$addPaddingBits     000000000403c064     NativeLib:lodepng.obj
+ 0003:00009070       $unwind$Adam7_interlace    000000000403c070     NativeLib:lodepng.obj
+ 0003:0000907c       $unwind$preProcessScanlines 000000000403c07c     NativeLib:lodepng.obj
+ 0003:00009088       $unwind$addUnknownChunks   000000000403c088     NativeLib:lodepng.obj
+ 0003:00009094       $unwind$isGrayICCProfile   000000000403c094     NativeLib:lodepng.obj
+ 0003:000090a0       $unwind$isRGBICCProfile    000000000403c0a0     NativeLib:lodepng.obj
+ 0003:000090ac       $unwind$printf             000000000403c0ac     NativeLib:printf.obj
+ 0003:000090b8       $unwind$sprintf            000000000403c0b8     NativeLib:printf.obj
+ 0003:000090c4       $unwind$vsnprintf          000000000403c0c4     NativeLib:printf.obj
+ 0003:000090d0       $unwind$prepend_to_buffer  000000000403c0d0     NativeLib:printf.obj
+ 0003:000090dc       $unwind$append_num         000000000403c0dc     NativeLib:printf.obj
+ 0003:000090e8       $unwind$append_str         000000000403c0e8     NativeLib:printf.obj
+ 0004:00003d50       lodepng_crc32_table        0000000004040d50     NativeLib:lodepng.obj
  0007:00000000       __5B95AFCC_concurrencysal@h 0000000004165000     NativeLib:mem.obj
  0007:00000001       __AF7C3541_sal@h           0000000004165001     NativeLib:mem.obj
  0007:00000002       __FF4CBCD4_vadefs@h        0000000004165002     NativeLib:mem.obj
