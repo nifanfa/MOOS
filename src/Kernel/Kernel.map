@@ -1,6 +1,6 @@
  Kernel
 
- Timestamp is 6236090b (Sun Mar 20 00:47:07 2022)
+ Timestamp is 623609dc (Sun Mar 20 00:50:36 2022)
 
  Preferred load address is 0000000004000000
 
@@ -926,23 +926,23 @@
  0003:00004247       __optionalfields_??_7Kernel_OS_Sharp_PS2Keyboard@@6B@ 0000000004037247     Kernel.obj
  0003:0000424b       __optionalfields_??_7Kernel_OS_Sharp_Console@@6B@ 000000000403724b     Kernel.obj
  0003:0000424f       __optionalfields_??_7Boxed_Kernel_IDT_IDTEntry@@6B@ 000000000403724f     Kernel.obj
- 0003:00004258       __GenericDict_Kernel_System_Array_1<String> 0000000004037258     Kernel.obj
  0003:00004258       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_PCIDevice> 0000000004037258     Kernel.obj
  0003:00004258       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_PCIDevice> 0000000004037258     Kernel.obj
- 0003:00004260       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004037260     Kernel.obj
+ 0003:00004258       __GenericDict_Kernel_System_Array_1<String> 0000000004037258     Kernel.obj
  0003:00004260       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004037260     Kernel.obj
- 0003:00004268       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE> 0000000004037268     Kernel.obj
+ 0003:00004260       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Misc_BitFontDescriptor> 0000000004037260     Kernel.obj
  0003:00004268       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_Driver_IDE> 0000000004037268     Kernel.obj
- 0003:00004270       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_GUI_Form> 0000000004037270     Kernel.obj
+ 0003:00004268       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_Driver_IDE> 0000000004037268     Kernel.obj
  0003:00004270       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_GUI_Form> 0000000004037270     Kernel.obj
+ 0003:00004270       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_GUI_Form> 0000000004037270     Kernel.obj
  0003:00004278       __GenericDict_Kernel_System_Array_1<Kernel_Kernel_Thread> 0000000004037278     Kernel.obj
  0003:00004278       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_Kernel_Thread> 0000000004037278     Kernel.obj
  0003:00004280       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004037280     Kernel.obj
  0003:00004280       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_SATA_SATADevice> 0000000004037280     Kernel.obj
  0003:00004288       __GenericDict_Kernel_System_Collections_Generic_List_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004037288     Kernel.obj
  0003:00004288       __GenericDict_Kernel_System_Array_1<Kernel_OS_Sharp_FileSystem_FAT32_AEntry> 0000000004037288     Kernel.obj
- 0003:00004290       __GenericDict_Kernel_System_Collections_Generic_List_1<__Array<UInt8>> 0000000004037290     Kernel.obj
  0003:00004290       __GenericDict_Kernel_System_Array_1<__Array<UInt8>> 0000000004037290     Kernel.obj
+ 0003:00004290       __GenericDict_Kernel_System_Collections_Generic_List_1<__Array<UInt8>> 0000000004037290     Kernel.obj
  0003:000042a0       lodepng_default_decompress_settings 00000000040372a0     NativeLib:lodepng.obj
  0003:000042c8       lodepng_default_compress_settings 00000000040372c8     NativeLib:lodepng.obj
  0003:000045d0       ??_C@_08CJOLANMN@20220109@ 00000000040375d0     NativeLib:lodepng.obj
@@ -1355,7 +1355,7 @@
  0004:000025e0       __Str_COPR_ERROR_C27F1F3E7F2ED4CFBD0EDCF5C7AA20D245CD9D1EBC80EDC243013215C2577FF9 000000000403f5e0     Kernel.obj
  0004:00002610       __Str_COPR_SEGMENT_OVERRUN_C449D79B0140F10083FD8C197428B494C3F5BC5E85A89FC5A9F3F9DFFE5E25AD 000000000403f610     Kernel.obj
  0004:00002650       __Str_COPR_UNAVAILABLE_834C85FB4D56A054FA75E003F62E454BF546EBD0D8DB2CB27CDAA76A62BF3C08 000000000403f650     Kernel.obj
- 0004:00002688       __Str_CPU____0353D5828168F3D3B27CE98DECAC693A18DA918E738B96C548666E129BDC1A89 000000000403f688     Kernel.obj
+ 0004:00002688       __Str_CPU_0____A0BEDC54454F63FE06A436A5D001484701DAC803C63AA81575015DA6E04C1065 000000000403f688     Kernel.obj
  0004:000026b0       __Str_Connection_established_C7F61EB0E8A0A27B96E8B528A681CC4BC4FCF3896B18DA97D3154261FAF44F81 000000000403f6b0     Kernel.obj
  0004:000026f8       __Str_Console              000000000403f6f8     Kernel.obj
  0004:00002720       __Str_D___Right_14C187A6866382F69F06DA3EE0FB1DF0B16908121A563D80AEA28A4A7AA6BD80 000000000403f720     Kernel.obj
@@ -1439,8 +1439,8 @@
  0004:00003b78       __Str_shutdown             0000000004040b78     Kernel.obj
  0004:00003ba0       __Str_ss__0x_6D22BC7DFFCCE6939C7CE1F884D4049672650505B87ECBD36E3C4E2D4A1366D7 0000000004040ba0     Kernel.obj
  0004:00003bc8       __Str_x2                   0000000004040bc8     Kernel.obj
- 0004:00003be8       __FrozenSegmentRegionEnd   0000000004040be8     Kernel.obj
  0004:00003be8       __GCStaticRegionStart      0000000004040be8     Kernel.obj
+ 0004:00003be8       __FrozenSegmentRegionEnd   0000000004040be8     Kernel.obj
  0004:00003c80       __typemanager_indirection  0000000004040c80     Kernel.obj
  0004:00003c80       __GCStaticRegionEnd        0000000004040c80     Kernel.obj
  0004:00003c90       ?__NONGCSTATICS@Kernel_OS_Sharp_SATA@@ 0000000004040c90     Kernel.obj
@@ -1463,8 +1463,8 @@
  0004:00003d20       ?__GCSTATICS@Kernel_OS_Sharp_GUI_Form@@ 0000000004040d20     Kernel.obj
  0004:00003d28       ?__GCSTATICS@Kernel_Kernel_ThreadPool@@ 0000000004040d28     Kernel.obj
  0004:00003d30       ?__GCSTATICS@Kernel_Kernel_GUI_Desktop@@ 0000000004040d30     Kernel.obj
- 0004:00003d38       __module_initializers_End  0000000004040d38     Kernel.obj
  0004:00003d38       __module_initializers      0000000004040d38     Kernel.obj
+ 0004:00003d38       __module_initializers_End  0000000004040d38     Kernel.obj
  0004:00003d40       LODEPNG_VERSION_STRING     0000000004040d40     NativeLib:lodepng.obj
  0004:00004150       ?__NONGCSTATICS@Kernel_Allocator@@ 0000000004041150     Kernel.obj
  0004:00124168       ?__NONGCSTATICS@Kernel_GDT@@ 0000000004161168     Kernel.obj
