@@ -89,8 +89,8 @@ namespace OS_Sharp
 
 
             //_inttest();
-            //ThreadPool.Initialize();
-            KMain();
+            ThreadPool.Initialize();
+            //KMain();
             for (; ; );
         }
 
