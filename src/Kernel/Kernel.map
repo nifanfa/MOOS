@@ -1,6 +1,6 @@
  Kernel
 
- Timestamp is 623606c0 (Sun Mar 20 00:37:20 2022)
+ Timestamp is 6236073c (Sun Mar 20 00:39:24 2022)
 
  Preferred load address is 0000000004000000
 
@@ -544,7 +544,7 @@
  0002:00001ae0       Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowIndexOutOfRangeException 0000000004020ae0     Kernel.obj
  0002:00001af0       Main                       0000000004020af0     Kernel.obj
  0002:00001af0       Kernel_OS_Sharp_Program__Main_0 0000000004020af0     Kernel.obj
- 0002:00001f60       Kernel_OS_Sharp_Program__KMain 0000000004020f60     Kernel.obj
+ 0002:00001f30       Kernel_OS_Sharp_Program__KMain 0000000004020f30     Kernel.obj
  0002:00002120       Kernel_OS_Sharp_Program__InitMsg 0000000004021120     Kernel.obj
  0002:000021b0       Kernel_OS_Sharp_AC97__OnInterrupt 00000000040211b0     Kernel.obj
  0002:00002270       Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 0000000004021270     Kernel.obj
@@ -778,19 +778,19 @@
  0003:00001f2e       __GenericMethodsTemplateMap_End 0000000004034f2e     Kernel.obj
  0003:00001f31       __GenericTypesTemplateMap_End 0000000004034f31     Kernel.obj
  0003:00001f31       __block_reflection_type_map 0000000004034f31     Kernel.obj
- 0003:00001fcc       _StaticsInfoHashtableNode  0000000004034fcc     Kernel.obj
- 0003:00001fcc       __block_reflection_type_map_End 0000000004034fcc     Kernel.obj
- 0003:00001fcf       _StaticsInfoHashtableNode_End 0000000004034fcf     Kernel.obj
- 0003:00001fcf       __VirtualInvokeMap         0000000004034fcf     Kernel.obj
- 0003:00001fd2       __VirtualInvokeMap_End     0000000004034fd2     Kernel.obj
- 0003:00001fd2       __DefaultConstructor_Map   0000000004034fd2     Kernel.obj
- 0003:00001ff9       __DefaultConstructor_Map_End 0000000004034ff9     Kernel.obj
- 0003:00001ff9       __external_CommonFixupsTable_references 0000000004034ff9     Kernel.obj
- 0003:00002101       __external_NativeReferences_references 0000000004035101     Kernel.obj
- 0003:00002101       __external_CommonFixupsTable_references_End 0000000004035101     Kernel.obj
- 0003:00002125       __external_NativeStatics_references 0000000004035125     Kernel.obj
- 0003:00002125       __external_NativeReferences_references_End 0000000004035125     Kernel.obj
- 0003:00002125       __external_NativeStatics_references_End 0000000004035125     Kernel.obj
+ 0003:00001fca       _StaticsInfoHashtableNode  0000000004034fca     Kernel.obj
+ 0003:00001fca       __block_reflection_type_map_End 0000000004034fca     Kernel.obj
+ 0003:00001fcd       _StaticsInfoHashtableNode_End 0000000004034fcd     Kernel.obj
+ 0003:00001fcd       __VirtualInvokeMap         0000000004034fcd     Kernel.obj
+ 0003:00001fd0       __VirtualInvokeMap_End     0000000004034fd0     Kernel.obj
+ 0003:00001fd0       __DefaultConstructor_Map   0000000004034fd0     Kernel.obj
+ 0003:00001ff7       __DefaultConstructor_Map_End 0000000004034ff7     Kernel.obj
+ 0003:00001ff7       __external_CommonFixupsTable_references 0000000004034ff7     Kernel.obj
+ 0003:000020ff       __external_NativeReferences_references 00000000040350ff     Kernel.obj
+ 0003:000020ff       __external_CommonFixupsTable_references_End 00000000040350ff     Kernel.obj
+ 0003:00002123       __external_NativeStatics_references 0000000004035123     Kernel.obj
+ 0003:00002123       __external_NativeReferences_references_End 0000000004035123     Kernel.obj
+ 0003:00002123       __external_NativeStatics_references_End 0000000004035123     Kernel.obj
  0003:00002128       _stacktrace_methodRVA_to_token_mapping 0000000004035128     Kernel.obj
  0003:00002910       __ReadyToRunHeader         0000000004035910     Kernel.obj
  0003:00002910       _stacktrace_methodRVA_to_token_mapping_End 0000000004035910     Kernel.obj
@@ -1130,7 +1130,7 @@
  0003:00006310       _unwind0Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowOverflowException 0000000004039310     Kernel.obj
  0003:00006318       _unwind0Kernel_Internal_Runtime_CompilerHelpers_ThrowHelpers__ThrowIndexOutOfRangeException 0000000004039318     Kernel.obj
  0003:00006320       _unwind0Kernel_OS_Sharp_Program__Main_0 0000000004039320     Kernel.obj
- 0003:00006424       _unwind0Kernel_OS_Sharp_Program__KMain 0000000004039424     Kernel.obj
+ 0003:00006420       _unwind0Kernel_OS_Sharp_Program__KMain 0000000004039420     Kernel.obj
  0003:00006474       _unwind0Kernel_OS_Sharp_Program__InitMsg 0000000004039474     Kernel.obj
  0003:00006490       _unwind0Kernel_OS_Sharp_AC97__OnInterrupt 0000000004039490     Kernel.obj
  0003:000064b4       _unwind0Kernel_OS_Sharp_Framebuffer__set_TripleBuffered 00000000040394b4     Kernel.obj

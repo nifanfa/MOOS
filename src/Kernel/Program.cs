@@ -111,10 +111,6 @@ namespace OS_Sharp
             Form.Initialize();
 
             Desktop.Initialize();
-
-            new FConsole(350, 300);
-
-            Console.WriteLine("Hello, World!");
             #endregion
 
             Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
@@ -155,6 +151,10 @@ namespace OS_Sharp
             }
 
             Framebuffer.TripleBuffered = true;
+
+            new FConsole(350, 300);
+            Console.WriteLine("Hello, World!");
+
             for (; ; )
             {
                 Framebuffer.DrawImage(0, 0, Wallpaper, false);
