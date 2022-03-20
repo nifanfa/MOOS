@@ -46,6 +46,7 @@ namespace OS_Sharp
             string sname = string.FromASCII((System.IntPtr)name, Strings.Strlen(name));
             FILE file = new();
             byte[] buffer = File.Instance.ReadAllBytes(sname);
+
             if (buffer == null)
             {
                 Panic.Error("fopen: file not found!");

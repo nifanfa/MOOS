@@ -51,6 +51,7 @@ namespace OS_Sharp.Networking
             hdr->DestMAC[3] = DestMAC[3];
             hdr->DestMAC[4] = DestMAC[4];
             hdr->DestMAC[5] = DestMAC[5];
+
             hdr->SrcMAC[0] = Network.MAC[0];
             hdr->SrcMAC[1] = Network.MAC[1];
             hdr->SrcMAC[2] = Network.MAC[2];

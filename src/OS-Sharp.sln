@@ -11,11 +11,15 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Corlib", "Corlib\Corlib.shp
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "OS-Sharp", "OS-Sharp\OS-Sharp.shproj", "{E95441C8-8670-43D6-B505-1FAE13898E38}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NESEmulator", "NESEmulator\NESEmulator.shproj", "{CE543972-57AB-4780-B05F-D3E760A6B7C3}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Corlib\Corlib.projitems*{2ea1f38f-f26e-4148-8ffd-38713478e015}*SharedItemsImports = 13
 		Corlib\Corlib.projitems*{c63c2060-aedd-4907-8efa-70d8e9ce4a10}*SharedItemsImports = 5
+		NESEmulator\NESEmulator.projitems*{c63c2060-aedd-4907-8efa-70d8e9ce4a10}*SharedItemsImports = 5
 		OS-Sharp\OS-Sharp.projitems*{c63c2060-aedd-4907-8efa-70d8e9ce4a10}*SharedItemsImports = 5
+		NESEmulator\NESEmulator.projitems*{ce543972-57ab-4780-b05f-d3e760a6b7c3}*SharedItemsImports = 13
 		OS-Sharp\OS-Sharp.projitems*{e95441c8-8670-43d6-b505-1fae13898e38}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,7 @@
 using System.Runtime;
 using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerServices;
+using Kernel;
 using OS_Sharp;
 using OS_Sharp.Driver;
 using OS_Sharp.Misc;
@@ -104,15 +105,55 @@ public static class IDT
         }
     }
 
+    public struct IDTStack
+    {
+        public ulong rax;
+        public ulong rcx;
+        public ulong rdx;
+        public ulong rbx;
+        public ulong rsi;
+        public ulong rdi;
+        public ulong r8;
+        public ulong r9;
+        public ulong r10;
+        public ulong r11;
+        public ulong r12;
+        public ulong r13;
+        public ulong r14;
+        public ulong r15;
+        
+        //https://os.phil-opp.com/returning-from-exceptions/
+        public ulong errorCode;
+        public ulong rip;
+        public ulong cs;
+        public ulong rflags;
+        public ulong rsp;
+        public ulong ss;
+        //public ulong alignment;
+    }
+
     [RuntimeExport("irq_handler")]
-    public static void IRQHandler(int irq)
+    public static unsafe void IRQHandler(int irq, ulong rsp)
     {
         irq += 0x20;
+        IDTStack* stack = (IDTStack*)rsp;
+        if(irq == 0x80)
+        {
+            Console.Write("rax: 0x");
+            Console.WriteLine(stack->rax.ToString("x2"));
+            Console.Write("rip: 0x");
+            Console.WriteLine(stack->rip.ToString("x2"));
+            Console.Write("ss: 0x");
+            Console.WriteLine(stack->ss.ToString("x2"));
+            while (true) ;
+        }
         switch (irq)
         {
             case 0x20:
                 PIT.OnInterrupt();
-                break;
+                ThreadPool.Schedule(stack);
+                LocalAPIC.EndOfInterrupt();
+                return;
             case 0x21:
                 byte b = Native.In8(0x60);
                 PS2Keyboard.ProcessKey(b);
