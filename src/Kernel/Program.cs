@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Net;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -10,6 +11,7 @@ using OS_Sharp.Driver;
 using OS_Sharp.FileSystem;
 using OS_Sharp.GUI;
 using OS_Sharp.Misc;
+using OS_Sharp.Networking;
 
 namespace OS_Sharp
 {
@@ -80,7 +82,7 @@ namespace OS_Sharp
             /*
             Console.WriteLine("Connecting to internet");
             ARP.Initialise();
-            Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
+            Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
             RTL8139.Initialise();
             ARP.Require(Network.Gateway);
             */
