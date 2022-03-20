@@ -73,6 +73,16 @@ namespace OS_Sharp.Networking
             }
         }
 
+        public static bool IsSameSubnet(byte[] ip1, byte[] ip2)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if ((ip1[i] & Network.Mask[i]) != (ip2[i] & Network.Mask[i])) return false;
+            }
+
+            return true;
+        }
+
         public static void SendPacket(byte[] DestIP, byte Protocol, byte* Data, int Length)
         {
             IPv4Header* hdr = (IPv4Header*)Allocator.Allocate((ulong)(sizeof(IPv4Header) + Length));
@@ -84,13 +94,14 @@ namespace OS_Sharp.Networking
             hdr->SourceIP[1] = Network.IP[1];
             hdr->SourceIP[2] = Network.IP[2];
             hdr->SourceIP[3] = Network.IP[3];
+
             hdr->DestIP[0] = DestIP[0];
             hdr->DestIP[1] = DestIP[1];
             hdr->DestIP[2] = DestIP[2];
             hdr->DestIP[3] = DestIP[3];
             hdr->HeaderChecksum = CalculateChecksum((byte*)hdr, sizeof(IPv4Header));
             Native.Movsb(((byte*)hdr) + sizeof(IPv4Header), Data, (ulong)Length);
-            byte[] MAC = ARP.Lookup(DestIP);
+            byte[] MAC = ARP.Lookup(IsSameSubnet(DestIP, Network.IP) ? DestIP : Network.Gateway);
             Ethernet.SendPacket(MAC, (ushort)Ethernet.EthernetType.IPv4, hdr, sizeof(IPv4Header) + Length);
             Allocator.Free((IntPtr)hdr);
         }

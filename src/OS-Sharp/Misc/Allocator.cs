@@ -71,6 +71,7 @@ internal abstract unsafe class Allocator
         }
     }
 
+    /*
     public static void KeepAlive(object obj)
     {
         ulong p = GetPageIndexStart((IntPtr)Unsafe.AsPointer(ref obj));
@@ -81,6 +82,7 @@ internal abstract unsafe class Allocator
 
         _Info.GCInfos[p] = NotCollectIf;
     }
+    */
 
     private static ulong GetPageIndexStart(IntPtr ptr)
     {
