@@ -1,8 +1,12 @@
-When building, make sure no folder in the path to the solution has a whitespace in it, You will get an error at the NASM stage of build
-C# operating system creator, made with Native AOT (Core RT) and boots via multiboot.  
-## Implemented:  
+**Discord Server: https://discord.gg/GxwmAK7aRE**  
+~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
+C# operating system demo, using Native AOT (Core RT) boot via multiboot 
+
+# Implemented
+
  - [ ] Error Throwing / Catching
  - [x] GC
+ - [x] Multithreading
  - [x] PS2 Keyboard/Mouse(USB Compatible)
  - [x] Nintendo Family Computer Emulator
  - [x] Intel® Gigabit Ethernet Network 
@@ -19,6 +23,5 @@ C# operating system creator, made with Native AOT (Core RT) and boots via multib
  - [x] TCP
  - [x] UDP
  - [x] Lan
- - [ ] Wan  
-
-![image](https://user-images.githubusercontent.com/62805599/158496150-e235b1e1-bfc9-4134-ba66-f2f83229e2a1.png)
+ - [x] Wan  
+![image](https://github.com/nifanfa/OS-Sharp/blob/multiboot/src/VirtualBox_NativeAOT_20_03_2022_01_12_47.png)
