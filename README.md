@@ -20,5 +20,5 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
  - [x] TCP
  - [x] UDP
  - [x] Lan
- - [ ] Wan  
+ - [x] Wan  
 ![image](https://github.com/nifanfa/OS-Sharp/blob/multiboot/src/VirtualBox_NativeAOT_20_03_2022_01_12_47.png)
