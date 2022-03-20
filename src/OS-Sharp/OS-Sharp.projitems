@@ -48,6 +48,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\ARP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\Ethernet.cs" />

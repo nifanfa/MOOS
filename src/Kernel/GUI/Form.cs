@@ -14,7 +14,7 @@ namespace OS_Sharp.GUI
         public static void Initialize()
         {
             Forms = new List<Form>();
-            PNG yehei = new PNG(File.Instance.ReadAllBytes("/CASCA.PNG"));
+            PNG yehei = new PNG(File.Instance.ReadAllBytes("/FONT.PNG"));
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
         }
 
