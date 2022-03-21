@@ -7,7 +7,7 @@ namespace OS_Sharp
         public const byte Width = 80;
         public const byte Height = 25;
 
-        private static byte Color = 0;
+        private static uint Color = 0;
         public static int CursorX = 0;
         public static int CursorY = 0;
 
@@ -79,7 +79,7 @@ namespace OS_Sharp
             byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
             *p = (byte)chr;
             p++;
-            *p = Color;
+            *p = (byte)(Color > 0xF ? 0x0F : Color);
             CursorX++;
             if (CursorX == Width)
             {
@@ -97,7 +97,7 @@ namespace OS_Sharp
                 int X = (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
                 Framebuffer.Fill(X, Y, 8, 16, 0x0);
-                ASC16.DrawChar(chr, X, Y, 0xFFFFFFFF);
+                ASC16.DrawChar(chr, X, Y, Color);
             }
         }
 
@@ -229,7 +229,7 @@ namespace OS_Sharp
             byte* p = (byte*)0xb8000 + ((y * Width + x) * 2);
             *p = (byte)chr;
             p++;
-            *p = Color;
+            *p = (byte)(Color > 0xF ? 0x0F : Color);
         }
 
         public static void Clear()
@@ -245,16 +245,50 @@ namespace OS_Sharp
             }
         }
 
-        public static byte ForegroundColor
+        public static uint ForegroundColor
         {
-            get { return (byte)(Color & 0x0F); }
-            set { Color &= 0xF0; Color |= (byte)(value & 0x0F); }
+            get
+            {
+                if (Framebuffer.VideoMemory == null)
+                    return (byte)(Color & 0x0F);
+                else
+                    return Color;
+            }
+            set 
+            {
+                if (Framebuffer.VideoMemory == null)
+                {
+                    Color &= 0xF0;
+                    Color |= (byte)(value & 0x0F);
+                }
+                else
+                {
+                    Color = value;
+                }
+            }
         }
 
-        public static byte BackgroundColor
+        public static unsafe uint BackgroundColor
         {
-            get { return (byte)(Color >> 4); }
-            set { Color &= 0x0F; Color |= (byte)((value & 0x0F) << 4); }
+            get 
+            {
+                if (Framebuffer.VideoMemory == null)
+                    return (byte)(Color >> 4);
+                else
+                    return Color;
+            }
+            set
+            {
+                if (Framebuffer.VideoMemory == null)
+                {
+                    Color &= 0x0F;
+                    Color |= (byte)((value & 0x0F) << 4);
+                }
+                else
+                {
+                    Color = value;
+                }
+            }
         }
     }
 }
