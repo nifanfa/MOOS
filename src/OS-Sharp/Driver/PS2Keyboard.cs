@@ -96,9 +96,13 @@ namespace OS_Sharp
                 KeyInfo.KeyChar = PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock) ? char.ToUpper(keyCharsShift[b]) : keyCharsShift[b];
             }
 
-            if (b - 0x80 < keys.Length)
+            if(b < keys.Length)
             {
-                KeyInfo.Key = keys[b < keys.Length ? b : b - 0x80];
+                KeyInfo.Key = keys[b];
+            }
+            else if(b >= 0x80 && (b-0x80)<keys.Length)
+            {
+                KeyInfo.Key = keys[b - 0x80];
             }
 
             OnKeyChanged?.Invoke(KeyInfo);
