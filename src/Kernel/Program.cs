@@ -50,7 +50,7 @@ namespace OS_Sharp
             PIC.Disable();
             InitMsg(LocalAPIC.Initialize(), "LocalAPIC Successfully Initialized", "LocalAPIC Initialization Failure");
             InitMsg(IOAPIC.Initialize(), "IOAPIC Successfully Initialized", "IOAPIC Initialization Failure");
-            InitMsg(HPET.Initialize(), "HPET Successfully Initialized", " Initialization Failure");
+            InitMsg(HPET.Initialize(), "HPET Successfully Initialized", "HPET Initialization Failure");
             InitMsg(PS2Keyboard.Initialize(), "PS2Keyboard Successfully Initialized", "PS2Keyboard Initialization Failure");
 
             //Enable keyboard interrupts
