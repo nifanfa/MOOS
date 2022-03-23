@@ -1,5 +1,7 @@
 ﻿using OS_Sharp;
 using OS_Sharp.Driver;
+using OS_Sharp.Misc;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -7,6 +9,7 @@ namespace Kernel
 {
     public unsafe class Thread
     {
+        public bool Terminated;
         public IDT.IDTStack* stack;
 
         public Thread(delegate* <void> method)
@@ -16,10 +19,16 @@ namespace Kernel
             stack->cs = 0x08;
             stack->ss = 0x10;
             const int Size = 16384;
-            stack->rsp = ((ulong)Allocator.Allocate(Size)) + (Size / 2);
+            stack->rsp = ((ulong)Allocator.Allocate(Size)) + (Size);
+
+            stack->rsp -= 8;
+            *(ulong*)(stack->rsp) = (ulong)(delegate*<void>)&ThreadPool.Terminate;
+
             stack->rflags = 0x202;
 
             stack->rip = (ulong)method;
+
+            Terminated = false;
 
             ThreadPool.Threads.Add(this);
         }
@@ -37,11 +46,31 @@ namespace Kernel
             new Thread(&IdleThread);
             //new Thread(&A);
             //new Thread(&B);
+            new Thread(&TestThread);
             new Thread(&Program.KMain);
             Ready = true;
             //Make sure the irq wont be triggered during _iretq
             Native.Hlt();
             IdleThread();
+        }
+
+        public static void Terminate() 
+        {
+            Console.Write("Thread ");
+            Console.Write(Index.ToString());
+            Console.WriteLine(" Has Exited");
+            Threads[Index].Terminated = true;
+            _int20h();
+            Panic.Error("Termination Failed!");
+        }
+
+        [DllImport("*")]
+        public static extern void _int20h();
+
+        public static void TestThread() 
+        {
+            Console.WriteLine("Non-Loop Thread Test!");
+            return;
         }
 
         public static void A()
@@ -70,10 +99,14 @@ namespace Kernel
         {
             if (!Ready) return;
 
-            Native.Movsb(Threads[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
-            Index = (Index + 1) % Threads.Count;
+            if (!Threads[Index].Terminated)
+                Native.Movsb(Threads[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
+            do
+            {
+                Index = (Index + 1) % Threads.Count;
+            } while (Threads[Index].Terminated);
 
-            if(LastSec != RTC.Second)
+            if (LastSec != RTC.Second)
             {
                 if (TickInSec != 0 && TickIdle != 0)
                     CPUUsage = 100 - ((TickIdle * 100) / TickInSec);
