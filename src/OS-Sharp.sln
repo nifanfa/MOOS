@@ -13,6 +13,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "OS-Sharp", "OS-Sharp\OS-Sha
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NESEmulator", "NESEmulator\NESEmulator.shproj", "{CE543972-57AB-4780-B05F-D3E760A6B7C3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{41DD6A40-2E0C-4AC2-BA8A-9F6D12112DBD}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\EntryPoint.asm = Tools\EntryPoint.asm
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Corlib\Corlib.projitems*{2ea1f38f-f26e-4148-8ffd-38713478e015}*SharedItemsImports = 13
