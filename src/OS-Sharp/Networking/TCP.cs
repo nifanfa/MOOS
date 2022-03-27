@@ -531,7 +531,7 @@ namespace OS_Sharp.Networking
 
         public static void SendPacket(TCPConnection conn, uint seq, byte flags)
         {
-            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_SYN, null, 0);
+            SendPacket(conn, conn.sndNxt, flags, null, 0);
         }
 
         public static void SendPacket(TCPConnection conn, uint seq, byte flags, void* data, uint count)
