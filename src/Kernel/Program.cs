@@ -155,7 +155,8 @@ namespace OS_Sharp
             Framebuffer.TripleBuffered = true;
 
             new FConsole(350, 300);
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Welcome to OS-Sharp!");
+            Console.WriteLine("Thanks to all the Contributors of nifanfa/Solution1.");
 
             for (; ; )
             {

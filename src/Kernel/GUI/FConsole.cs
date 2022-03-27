@@ -80,7 +80,11 @@ namespace OS_Sharp.GUI
             base.Update();
             int w = 0, h = 0;
 
-            font.DrawString(X, Y, Data, Width);
+            string cur = "_";
+            string s = Data + cur; 
+            font.DrawString(X, Y, s, Width);
+            cur.Dispose();
+            s.Dispose();
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
         }
 
