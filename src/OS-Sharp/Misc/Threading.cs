@@ -43,7 +43,7 @@ namespace Kernel
         {
             Ready = false;
             Threads = new();
-            new Thread(&IdleThread);
+            //new Thread(&IdleThread);
             //new Thread(&A);
             //new Thread(&B);
             new Thread(&TestThread);
