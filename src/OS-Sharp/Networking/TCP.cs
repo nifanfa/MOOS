@@ -140,6 +140,11 @@ namespace OS_Sharp.Networking
                 return;
             }
 
+            if(hdr->dstPort != hdr->srcPort)
+            {
+                return;
+            }
+
             if (currConn.State == TCPStatus.Closed)
             {
                 //TO-DO send close ack
@@ -195,14 +200,8 @@ namespace OS_Sharp.Networking
             {
                 if ((flags & (byte)TCPFlags.TCP_PSH) != 0)
                 {
-                    for (int i = 0; i < length; i++)
-                    {
-                        Console.Write((char)buffer[i]);
-                    }
-
-                    Console.WriteLine();
+                    RecvData(conn, hdr->seq, buffer, length);
                 }
-                RecvData(conn, buffer, length);
             }
 
             // Check FIN - TODO, needs to handle out of sequence
@@ -255,7 +254,7 @@ namespace OS_Sharp.Networking
             }
         }
 
-        private static void RecvData(TCPConnection conn, byte* buffer, int length)
+        private static void RecvData(TCPConnection conn,uint seq, byte* buffer, int length)
         {
             switch (conn.State)
             {
@@ -266,12 +265,20 @@ namespace OS_Sharp.Networking
                 case TCPStatus.Established:
                 case TCPStatus.FinWait1:
                 case TCPStatus.FinWait2:
-                    // Insert packet on to input queue sorted by sequence
 
-                    //Do something
+                    //Maybe bug here?
+                    if(conn.rcvNxt == seq)
+                    {
+                        conn.rcvNxt += (uint)length;
+                        for (int i = 0; i < length; i++)
+                        {
+                            Console.Write((char)buffer[i]);
+                        }
+                        Console.WriteLine();
+                    }
 
                     // Acknowledge receipt of data
-                    SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
+                    SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK);
                     break;
 
                 default:
