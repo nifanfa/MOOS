@@ -2,13 +2,13 @@
 ~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
 C# operating system demo, using Native AOT (Core RT) boot via multiboot  
  - [ ] Error Throwing / Catching
- - [x] GC
- - [x] Multithreading
+ - [x] GC(WIP)
+ - [x] Multithreading(Single Core)
  - [x] PS2 Keyboard/Mouse(USB Compatible)
  - [x] Nintendo Family Computer Emulator
  - [x] Intel® Gigabit Ethernet Network 
  - [x] Realtek RTL8139
- - [x] FAT32(Read only) 
+ - [x] FAT32(Read only & WIP) 
  - [x] I/O APIC 
  - [x] Local APIC 
  - [x] SATA
@@ -17,7 +17,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
  - [x] ACPI
  - [x] IPv4
  - [ ] IPv6
- - [x] TCP
+ - [x] TCP(WIP)
  - [x] UDP
  - [x] Lan
  - [x] Wan  
