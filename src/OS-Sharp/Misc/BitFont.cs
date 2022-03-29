@@ -1,4 +1,5 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -67,6 +68,7 @@ namespace OS_Sharp.Misc
 
                                 if (AntiAliasing && AtEdge)
                                 {
+                                    /*
                                     int tx = X + (aw * 8) + ww - 1;
                                     int ty = Y + h;
                                     Color ac = System.Drawing.Color.FromArgb(Framebuffer.GetPoint(tx, ty));
@@ -75,6 +77,16 @@ namespace OS_Sharp.Misc
                                     ac.B = (byte)((((((byte)((Color) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ac.B)) >> 8) & 0xFF);
                                     Framebuffer.DrawPoint(tx, ty, ac.ToArgb());
                                     ac.Dispose();
+                                    */
+                                    int threshhold = 2;
+                                    int maxalpha = 200;
+
+                                    for (int ax = -threshhold; ax <= threshhold; ax++) 
+                                    {
+                                        if (ax == 0) continue;
+                                        int alpha = Math.Abs(((-maxalpha) * ax * ax / (threshhold * threshhold)) + maxalpha);
+                                        Framebuffer.ADrawPoint(x + ax, y, (Color & ~0xFF000000) | ((uint)alpha << 24));
+                                    }
                                 }
 
                                 AtEdge = false;

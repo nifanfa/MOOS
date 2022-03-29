@@ -72,6 +72,19 @@ namespace OS_Sharp
             Native.Stosd(TripleBuffered ? FirstBuffer : VideoMemory, Color, (ulong)(Width * Height));
         }
 
+        internal static void ADrawPoint(int X, int Y, uint Color)
+        {
+            uint Alpha = ((Color & 0xFF000000) >> 24);
+            uint bg = Framebuffer.GetPoint(X, Y);
+            byte r = (byte)((bg & 0x00FF0000) >> 16);
+            byte g = (byte)((bg & 0x0000FF00) >> 8);
+            byte b = ((byte)(bg & 0x000000FF));
+            r = (byte)((((((byte)((Color >> 16) & 0xFF)) * Alpha) + ((255 - Alpha) * r)) >> 8) & 0xFF);
+            g= (byte)((((((byte)((Color >> 8) & 0xFF)) * Alpha) + ((255 - Alpha) * g)) >> 8) & 0xFF);
+            b = (byte)((((((byte)((Color) & 0xFF)) * Alpha) + ((255 - Alpha) * b)) >> 8) & 0xFF);
+            Framebuffer.DrawPoint(X, Y, System.Drawing.Color.ToArgb(r,g,b));
+        }
+
         public static void Copy(int dX, int dY, int sX, int sY, int Width, int Height)
         {
             for (int w = 0; w < Width; w++)
