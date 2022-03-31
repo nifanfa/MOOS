@@ -1,4 +1,7 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 

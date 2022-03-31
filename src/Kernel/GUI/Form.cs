@@ -1,4 +1,7 @@
-﻿using OS_Sharp.FileSystem;
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+using OS_Sharp.FileSystem;
 using OS_Sharp.Misc;
 using System.Collections.Generic;
 using System.Windows.Forms;
