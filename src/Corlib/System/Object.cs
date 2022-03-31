@@ -57,7 +57,7 @@ namespace System
 
         public virtual string ToString()
         {
-            return typeof(object).Namespace + "." + typeof(object).FullName;
+            return "System.Object";
         }
 
         public virtual void Dispose()

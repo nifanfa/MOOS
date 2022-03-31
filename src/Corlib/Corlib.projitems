@@ -20,7 +20,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\RuntimeConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Action.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Type.cs" />
     <Compile Include="..\Corlib\System\Func.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Boolean.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Byte.cs" />
