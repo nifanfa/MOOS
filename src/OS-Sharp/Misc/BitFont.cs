@@ -1,7 +1,6 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace OS_Sharp.Misc
 {
@@ -81,9 +80,13 @@ namespace OS_Sharp.Misc
                                     int threshhold = 2;
                                     int maxalpha = 200;
 
-                                    for (int ax = -threshhold; ax <= threshhold; ax++) 
+                                    for (int ax = -threshhold; ax <= threshhold; ax++)
                                     {
-                                        if (ax == 0) continue;
+                                        if (ax == 0)
+                                        {
+                                            continue;
+                                        }
+
                                         int alpha = Math.Abs(((-maxalpha) * ax * ax / (threshhold * threshhold)) + maxalpha);
                                         Framebuffer.ADrawPoint(x + ax, y, (Color & ~0xFF000000) | ((uint)alpha << 24));
                                     }

@@ -26,6 +26,21 @@ namespace System
             return m_pEEType->BaseSize - (uint)sizeof(ObjHeader) - (uint)sizeof(EEType*);
         }
 
+        public uint GetBitValue(int bitIndex)
+        {
+            return (uint)(GetRawData() & (1 << bitIndex));
+        }
+
+        public uint GetByteValue(int start, int end)
+        {
+            uint v = 0;
+            for (int i = start; i < end; i++)
+            {
+                v += GetBitValue(i);
+            }
+            return v;
+        }
+
         public Object() { }
         ~Object() { }
 
@@ -42,7 +57,7 @@ namespace System
 
         public virtual string ToString()
         {
-            return "System.Object";
+            return typeof(object).Namespace + "." + typeof(object).FullName;
         }
 
         public virtual void Dispose()

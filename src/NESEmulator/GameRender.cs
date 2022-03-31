@@ -4,10 +4,10 @@ namespace OS_Sharp.NES
 {
     public class GameRender
     {
-        NES NES;
+        private readonly NES NES;
 
         // Setup background color to use with Alpha
-        Color colorBG;
+        private Color colorBG;
 
         public void InitializeGame()
         {

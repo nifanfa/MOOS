@@ -5,19 +5,19 @@ namespace OS_Sharp.NES
 {
     public partial class NES
     {
-        Registers registers;
-        MemoryMap memory;
-        Mappers mappers;
-        CPU cpu;
-        GameRender gameRender;
-        Input input;
-        PPU ppu;
+        private Registers registers;
+        private MemoryMap memory;
+        private Mappers mappers;
+        private CPU cpu;
+        private GameRender gameRender;
+        private Input input;
+        private PPU ppu;
 
         #region Global/Local Variables
         public bool bolRunGame;
         public bool bolStartFrame, bolReset = true;
-        int intFPS = 0;
-        int intMaxCPUCycles = 29780 * 15;
+        private int intFPS = 0;
+        private readonly int intMaxCPUCycles = 29780 * 15;
         public int tsMaster;
         public int tsCpuNTSC;
         public int tsCpuPAL;
@@ -56,14 +56,17 @@ namespace OS_Sharp.NES
 
         public unsafe void openROM(byte[] buffer)
         {
-            fixed(byte* prom = buffer) 
+            fixed (byte* prom = buffer)
             {
                 byte* rom = prom;
 
                 byte[] temp = new byte[16];
 
                 fixed (byte* p = temp)
+                {
                     Native.Movsb(p, rom, (ulong)temp.Length);
+                }
+
                 rom += temp.Length;
                 memory.byteMirror = (byte)(temp[6] & 0x01);
 
@@ -73,12 +76,17 @@ namespace OS_Sharp.NES
                 byte byteNumPRGBanks = temp[4];
                 byte byteNumCHRBanks = temp[5];
 
-                memory.memPRG = new List<byte[]>(byteNumPRGBanks);
-                memory.memPRG.Count = byteNumPRGBanks;
+                memory.memPRG = new List<byte[]>(byteNumPRGBanks)
+                {
+                    Count = byteNumPRGBanks
+                };
                 if (byteNumPRGBanks == 0x01)
                 {
                     fixed (byte* p = memory.memCPU)
+                    {
                         Native.Movsb(p + 0xC000, rom, 0x4000);
+                    }
+
                     rom += 0x4000;
 
                     for (int i = 0x0000; i < 0x4000; i++)
@@ -96,7 +104,10 @@ namespace OS_Sharp.NES
                     for (int k = 0; k < memory.memPRG.Count; k++)
                     {
                         fixed (byte* p = memory.memPRG[k])
+                        {
                             Native.Movsb(p, rom, 0x4000);
+                        }
+
                         rom += 0x4000;
                     }
 
@@ -109,8 +120,10 @@ namespace OS_Sharp.NES
 
                 if (byteNumCHRBanks != 0)
                 {
-                    memory.memCHR = new List<byte[]>(byteNumCHRBanks);
-                    memory.memCHR.Count = byteNumCHRBanks;
+                    memory.memCHR = new List<byte[]>(byteNumCHRBanks)
+                    {
+                        Count = byteNumCHRBanks
+                    };
 
 
                     for (int x = 0; x < memory.memCHR.Count; x++)
@@ -121,7 +134,10 @@ namespace OS_Sharp.NES
                     for (int y = 0; y < memory.memCHR.Count; y++)
                     {
                         fixed (byte* p = memory.memCHR[y])
+                        {
                             Native.Movsb(p, rom, 0x2000);
+                        }
+
                         rom += 0x2000;
                     }
 
@@ -195,7 +211,8 @@ namespace OS_Sharp.NES
                 {
                     input.joypadOne |= 0x80;
                 }
-            }else
+            }
+            else
             {
                 if (c == ConsoleKey.Q)        // A
                 {

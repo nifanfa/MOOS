@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Drawing;
-using System.Net;
 using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using Internal.Runtime.CompilerHelpers;
-using Kernel;
 using Kernel.GUI;
 using OS_Sharp.Driver;
 using OS_Sharp.FileSystem;
 using OS_Sharp.GUI;
 using OS_Sharp.Misc;
-using OS_Sharp.Networking;
 
 namespace OS_Sharp
 {
@@ -20,8 +18,8 @@ namespace OS_Sharp
         // The compiler expects that a static Main method exists
         private static void Main() { }
 
-        static Image Cursor;
-        static Image Wallpaper;
+        private static Image Cursor;
+        private static Image Wallpaper;
 
         [DllImport("*")]
         public static extern void _inttest();
@@ -72,7 +70,7 @@ namespace OS_Sharp
             //new FAT32(SATA.Ports[0], 2048);
             // IDE Disk
             //new FAT32(IDE.Controllers[0], 2048);
-            // Auto-Detect
+            // Auto-Detect ( NOT RECCOMENDED )
             // new FAT32(SATA.Ports.Count ? SATA.Ports[0] : (IDE.Controllers.Count ? IDE.Controllers[0] : new Ramdisk((IntPtr)Info->Mods[0])), 2048);
 
             Serial.WriteLine("Hello from OS-Sharp!");
@@ -120,7 +118,10 @@ namespace OS_Sharp
             //_inttest();
             ThreadPool.Initialize();
             //KMain();
-            for (; ; );
+            for (; ; )
+            {
+                ;
+            }
         }
 
         public static void KMain()
@@ -130,7 +131,7 @@ namespace OS_Sharp
             if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
             {
 
-                Console.WriteLine("Emulator Keymap:");
+                Console.WriteLine("NES Keymap:");
                 Console.WriteLine("A = Q");
                 Console.WriteLine("B = E");
                 Console.WriteLine("Z = Select");
@@ -139,11 +140,10 @@ namespace OS_Sharp
                 Console.WriteLine("A = Left");
                 Console.WriteLine("S = Down");
                 Console.WriteLine("D = Right");
-                Console.WriteLine("Game Will Start After 2 Seconds");
-                PIT.Wait(2000);
                 NES.NES nes = new NES.NES();
                 nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
-                Console.WriteLine("Nintendo Family Computer Emulator Initialized");
+                Console.WriteLine("PRESS ANY KEY TO START");
+                Console.ReadKey();
                 Framebuffer.TripleBuffered = true;
                 for (; ; )
                 {

@@ -68,7 +68,7 @@ namespace OS_Sharp.Networking
                 }
                 else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
                 {
-                    TCP.HandlePacket(data, length);
+                    TCP.TcpRecv(data, length);
                 }
             }
         }
@@ -77,7 +77,10 @@ namespace OS_Sharp.Networking
         {
             for (int i = 0; i < 4; i++)
             {
-                if ((ip1[i] & Network.Mask[i]) != (ip2[i] & Network.Mask[i])) return false;
+                if ((ip1[i] & Network.Mask[i]) != (ip2[i] & Network.Mask[i]))
+                {
+                    return false;
+                }
             }
 
             return true;

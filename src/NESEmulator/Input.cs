@@ -3,7 +3,7 @@
     public class Input
     {
         public byte joypadOne = 0x00;
-        byte j, joypad;
+        private byte j, joypad;
 
         public byte ReadJoypad()
         {

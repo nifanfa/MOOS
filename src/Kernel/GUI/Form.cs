@@ -1,7 +1,7 @@
-﻿using OS_Sharp.FileSystem;
-using OS_Sharp.Misc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using OS_Sharp.FileSystem;
+using OS_Sharp.Misc;
 
 namespace OS_Sharp.GUI
 {
@@ -40,10 +40,9 @@ namespace OS_Sharp.GUI
 
         public int BarHeight = 40;
         public string Title;
-
-        bool Move;
-        int OffsetX;
-        int OffsetY;
+        private bool Move;
+        private int OffsetX;
+        private int OffsetY;
 
         public virtual void Update()
         {

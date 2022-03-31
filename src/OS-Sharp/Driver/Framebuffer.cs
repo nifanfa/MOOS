@@ -80,9 +80,9 @@ namespace OS_Sharp
             byte g = (byte)((bg & 0x0000FF00) >> 8);
             byte b = ((byte)(bg & 0x000000FF));
             r = (byte)((((((byte)((Color >> 16) & 0xFF)) * Alpha) + ((255 - Alpha) * r)) >> 8) & 0xFF);
-            g= (byte)((((((byte)((Color >> 8) & 0xFF)) * Alpha) + ((255 - Alpha) * g)) >> 8) & 0xFF);
+            g = (byte)((((((byte)((Color >> 8) & 0xFF)) * Alpha) + ((255 - Alpha) * g)) >> 8) & 0xFF);
             b = (byte)((((((byte)((Color) & 0xFF)) * Alpha) + ((255 - Alpha) * b)) >> 8) & 0xFF);
-            Framebuffer.DrawPoint(X, Y, System.Drawing.Color.ToArgb(r,g,b));
+            Framebuffer.DrawPoint(X, Y, System.Drawing.Color.ToArgb(r, g, b));
         }
 
         public static void Copy(int dX, int dY, int sX, int sY, int Width, int Height)

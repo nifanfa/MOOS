@@ -2,11 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 
-using Internal.Runtime.CompilerServices;
 using System;
-using System.Runtime;
-
-using Debug = System.Diagnostics.Debug;
+using Internal.Runtime.CompilerServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
@@ -27,7 +24,7 @@ namespace Internal.Runtime.CompilerHelpers
 
             if (eeType.IsSzArray)
             {
-                var v = StartupCodeHelpers.RhpNewArray(eeType.Value, pDimensions[0]);
+                object v = StartupCodeHelpers.RhpNewArray(eeType.Value, pDimensions[0]);
                 Array ret = Unsafe.As<object, Array>(ref v);
 
                 if (nDimensions > 1)
@@ -38,7 +35,9 @@ namespace Internal.Runtime.CompilerHelpers
 
                     Array[] arrayOfArrays = (Array[])ret;
                     for (int i = 0; i < arrayOfArrays.Length; i++)
+                    {
                         arrayOfArrays[i] = NewObjArray(elementType.RawValue, nDimensions - 1, pDimensions + 1);
+                    }
                 }
 
                 return ret;
@@ -54,8 +53,10 @@ namespace Internal.Runtime.CompilerHelpers
                     for (int i = 0; i < rank; i++)
                     {
                         if (pDimensions[2 * i] != 0)
+                        {
                             return null;
-                            //throw new PlatformNotSupportedException(SR.Arg_NotSupportedNonZeroLowerBound);
+                        }
+                        //throw new PlatformNotSupportedException(SR.Arg_NotSupportedNonZeroLowerBound);
 
                         pDimensions[i] = pDimensions[2 * i + 1];
                     }

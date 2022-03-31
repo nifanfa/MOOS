@@ -1,18 +1,16 @@
-﻿using OS_Sharp;
-using OS_Sharp.Driver;
-using OS_Sharp.Misc;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using OS_Sharp;
+using OS_Sharp.Misc;
 
-namespace Kernel
+namespace System.Threading
 {
     public unsafe class Thread
     {
         public bool Terminated;
         public IDT.IDTStack* stack;
 
-        public Thread(delegate* <void> method)
+        public Thread(delegate*<void> method)
         {
             stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
 
@@ -54,7 +52,7 @@ namespace Kernel
             IdleThread();
         }
 
-        public static void Terminate() 
+        public static void Terminate()
         {
             Console.Write("Thread ");
             Console.Write(Index.ToString());
@@ -67,7 +65,7 @@ namespace Kernel
         [DllImport("*")]
         public static extern void _int20h();
 
-        public static void TestThread() 
+        public static void TestThread()
         {
             Console.WriteLine("Non-Loop Thread Test!");
             return;
@@ -75,17 +73,26 @@ namespace Kernel
 
         public static void A()
         {
-            for (; ; ) Console.WriteLine("Thread A");
+            for (; ; )
+            {
+                Console.WriteLine("Thread A");
+            }
         }
 
         public static void B()
         {
-            for (; ; ) Console.WriteLine("Thread B");
+            for (; ; )
+            {
+                Console.WriteLine("Thread B");
+            }
         }
 
         public static void IdleThread()
         {
-            for (; ; ) Native.Hlt();
+            for (; ; )
+            {
+                Native.Hlt();
+            }
         }
 
         public static int Index = 0;
@@ -97,10 +104,16 @@ namespace Kernel
 
         public static void Schedule(IDT.IDTStack* stack)
         {
-            if (!Ready) return;
+            if (!Ready)
+            {
+                return;
+            }
 
             if (!Threads[Index].Terminated)
+            {
                 Native.Movsb(Threads[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
+            }
+
             do
             {
                 Index = (Index + 1) % Threads.Count;
@@ -109,7 +122,10 @@ namespace Kernel
             if (LastSec != RTC.Second)
             {
                 if (TickInSec != 0 && TickIdle != 0)
+                {
                     CPUUsage = 100 - ((TickIdle * 100) / TickInSec);
+                }
+
                 TickIdle = 0;
                 TickInSec = 0;
                 LastSec = RTC.Second;

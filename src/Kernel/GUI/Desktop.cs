@@ -1,9 +1,9 @@
-﻿using OS_Sharp;
+﻿using System.Drawing;
+using System.Threading;
+using OS_Sharp;
 using OS_Sharp.FileSystem;
 using OS_Sharp.GUI;
 using OS_Sharp.Misc;
-using System.Drawing;
-
 namespace Kernel.GUI
 {
     internal class Desktop
@@ -11,7 +11,7 @@ namespace Kernel.GUI
         private static Image FileIcon;
         public static string CurrentDirectory;
 
-        public static void Initialize() 
+        public static void Initialize()
         {
             FileIcon = new PNG(File.Instance.ReadAllBytes("/UNKNOWN.PNG"));
             CurrentDirectory = " root@OS-Sharp: / ";
@@ -27,7 +27,7 @@ namespace Kernel.GUI
             int Y = Devide + BarHeight;
             for (int i = 0; i < names.Length; i++)
             {
-                if (Y + FileIcon.Height + Devide > Framebuffer.Height - Devide) 
+                if (Y + FileIcon.Height + Devide > Framebuffer.Height - Devide)
                 {
                     Y = Devide + BarHeight;
                     X += FileIcon.Width + Devide;
@@ -51,7 +51,7 @@ namespace Kernel.GUI
             MemoryUsed.Dispose();
 
             Form.font.DrawString(Framebuffer.Width - Form.font.MeasureString(Result) - Form.font.Width, (BarHeight / 2) - (Form.font.Height / 2), Result);
-            
+
             Result.Dispose();
         }
     }

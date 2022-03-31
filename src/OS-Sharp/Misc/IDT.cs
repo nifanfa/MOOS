@@ -1,8 +1,8 @@
 // Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
 using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Internal.Runtime.CompilerServices;
-using Kernel;
 using OS_Sharp;
 using OS_Sharp.Driver;
 using OS_Sharp.Misc;
@@ -121,7 +121,7 @@ public static class IDT
         public ulong r13;
         public ulong r14;
         public ulong r15;
-        
+
         //https://os.phil-opp.com/returning-from-exceptions/
         public ulong errorCode;
         public ulong rip;
@@ -137,7 +137,7 @@ public static class IDT
     {
         irq += 0x20;
         IDTStack* stack = (IDTStack*)rsp;
-        if(irq == 0x80)
+        if (irq == 0x80)
         {
             Console.Write("rax: 0x");
             Console.WriteLine(stack->rax.ToString("x2"));
@@ -145,7 +145,10 @@ public static class IDT
             Console.WriteLine(stack->rip.ToString("x2"));
             Console.Write("ss: 0x");
             Console.WriteLine(stack->ss.ToString("x2"));
-            while (true) ;
+            while (true)
+            {
+                ;
+            }
         }
         switch (irq)
         {

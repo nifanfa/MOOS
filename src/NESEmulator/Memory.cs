@@ -5,10 +5,10 @@ namespace OS_Sharp.NES
 {
     public class MemoryMap
     {
-        Registers registers;
-        Mappers mappers;
-        Input input;
-        NES tn;
+        private readonly Registers registers;
+        private readonly Mappers mappers;
+        private readonly Input input;
+        private readonly NES tn;
 
         /* -----   MEMORY MAP   -----
            
@@ -76,7 +76,7 @@ namespace OS_Sharp.NES
         public bool spriteOverflow = false;
 
         // Temporary placeholder for bogus 2007 reads from addr [2000-2FFF]
-        byte byteLastRead = 0;
+        private byte byteLastRead = 0;
 
         // PPU Access (0x2006) Counter
         /* 0x2006 is written to 2 times followed by a read/write to 0x2007.
@@ -87,11 +87,12 @@ namespace OS_Sharp.NES
            0x2007 is called for reading/written to the location specified by
            0x2006.  A variable (VRAMAddr) has also been setup to hold the
            new 2-byte address.*/
-        int VRAMAddr = 0;
+        private int VRAMAddr = 0;
+
         //int VRAMAddrFirstWrite = 0;
 
         // Scrolling Variables
-        bool PPULatchToggle = false;
+        private bool PPULatchToggle = false;
         public int t;
         public byte fineX;
 
@@ -452,7 +453,7 @@ namespace OS_Sharp.NES
                 memCPU[addr] = data;
 
                 t &= 0x73FF;
-                t |= ((int)(data & 0x03) << 10);
+                t |= ((data & 0x03) << 10);
             }
             #endregion
 

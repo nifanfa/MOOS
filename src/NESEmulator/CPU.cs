@@ -4,10 +4,10 @@ namespace OS_Sharp.NES
 {
     public class CPU
     {
-        MemoryMap memory;
-        Registers registers;
-        Input input;
-        PPU ppu;
+        private readonly MemoryMap memory;
+        private readonly Registers registers;
+        private readonly Input input;
+        private readonly PPU ppu;
 
         #region Local Variables
         public int intTotalCpuCycles = 0;
@@ -19,8 +19,8 @@ namespace OS_Sharp.NES
         public bool badOpCode = false;
 
         // Joypad Variables
-        byte joypad;
-        int j = 0;
+        private readonly byte joypad;
+        private readonly int j = 0;
         #endregion
 
         #region /* ----- OpCodes ----- */
@@ -4053,7 +4053,7 @@ namespace OS_Sharp.NES
         #endregion
 
         #region /* ----- Check Status Flag Bits ----- */
-        bool checkStatusCarry(int result)           // Check to see if result had a Carry
+        private bool checkStatusCarry(int result)           // Check to see if result had a Carry
         {
             if (result >= 256)
             {
@@ -4062,7 +4062,7 @@ namespace OS_Sharp.NES
             return false;
         }
 
-        bool checkStatusZero(int result)            // Check to see if result was Zero
+        private bool checkStatusZero(int result)            // Check to see if result was Zero
         {
             if (result == 0)
             {
@@ -4074,17 +4074,17 @@ namespace OS_Sharp.NES
             }
         }
 
-        bool checkStatusInterrupt(int result)       // Check for Interrupt
+        private bool checkStatusInterrupt(int result)       // Check for Interrupt
         {
             return Convert.ToBoolean(result);
         }
 
-        bool checkStatusBreak(int result)           // Check Break
+        private bool checkStatusBreak(int result)           // Check Break
         {
             return Convert.ToBoolean(result);
         }
 
-        bool checkStatusOverflowADC(byte regA, uint result, byte byteOne)        // Check for Overflow
+        private bool checkStatusOverflowADC(byte regA, uint result, byte byteOne)        // Check for Overflow
         {
             /*The overflow flag is only set under two circumstances:
                 1. There is a Carry from D6 to D7, but no Carry out of D7 (CF=0)
@@ -4102,7 +4102,7 @@ namespace OS_Sharp.NES
             else { /* MessageBox.Show("False");*/ return false; }
         }
 
-        bool checkStatusOverflowSBC(byte regA, uint result, byte byteOne)        // Check for Overflow
+        private bool checkStatusOverflowSBC(byte regA, uint result, byte byteOne)        // Check for Overflow
         {
             /*The overflow flag is only set under two circumstances:
                 1. There is a Carry from D6 to D7, but no Carry out of D7 (CF=0)
@@ -4120,7 +4120,7 @@ namespace OS_Sharp.NES
             else { /* MessageBox.Show("False");*/ return false; }
         }
 
-        bool checkStatusNegative(int result)        // Check Sign
+        private bool checkStatusNegative(int result)        // Check Sign
         {
             if ((result & 0x80) == 0x80)
             {
@@ -4129,7 +4129,7 @@ namespace OS_Sharp.NES
             else { return false; }
         }
 
-        bool checkStatusNegative(uint result)        // Check Sign
+        private bool checkStatusNegative(uint result)        // Check Sign
         {
             if ((result & 0x80) == 0x80)
             {
@@ -4140,7 +4140,7 @@ namespace OS_Sharp.NES
         #endregion
 
         #region /* ----- Set intCpuCyclesOffset ----- */
-        void pageChangeCheck()
+        private void pageChangeCheck()
         {
             /* Insert code here to check to see if the memory page changes
                so that the number of CPU Cycles can be modified with the 
@@ -4150,7 +4150,7 @@ namespace OS_Sharp.NES
         #endregion
 
         #region /* ----- Check for Page Crossing to update intCpuCyclesOffset ----- */
-        void pageChangeCheck(int intAddr)
+        private void pageChangeCheck(int intAddr)
         {
             /* Insert code here to check to see if the memory page changes
                so that the number of CPU Cycles can be modified with the 

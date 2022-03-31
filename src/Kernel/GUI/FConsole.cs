@@ -1,14 +1,14 @@
-﻿using OS_Sharp.Driver;
+﻿using System.Drawing;
+using OS_Sharp.Driver;
 using OS_Sharp.Misc;
-using System.Drawing;
 
 namespace OS_Sharp.GUI
 {
     internal class FConsole : Form
     {
-        string Data;
+        private string Data;
         public Image ScreenBuf;
-        string Cmd;
+        private string Cmd;
 
         public FConsole(int X, int Y) : base(X, Y, 640, 320)
         {
@@ -30,7 +30,9 @@ namespace OS_Sharp.GUI
                 if (key.Key == System.ConsoleKey.Backspace)
                 {
                     if (Data.Length != 0)
+                    {
                         Data.Length -= 1;
+                    }
                 }
                 else if (key.KeyChar != '\0')
                 {
@@ -44,8 +46,11 @@ namespace OS_Sharp.GUI
 
                 if (key.Key == System.ConsoleKey.Enter)
                 {
-                    if (Cmd.Length != 0) Cmd.Length -= 1;
-                    
+                    if (Cmd.Length != 0)
+                    {
+                        Cmd.Length -= 1;
+                    }
+
                     // when a command is invoked
                     switch (Cmd.ToLower())
                     {
@@ -71,7 +76,13 @@ namespace OS_Sharp.GUI
                     Cmd.Dispose();
                     Cmd = string.Empty;
                 }
-                else if (key.Key == System.ConsoleKey.Backspace) if (Cmd.Length != 0) Cmd.Length -= 1;
+                else if (key.Key == System.ConsoleKey.Backspace)
+                {
+                    if (Cmd.Length != 0)
+                    {
+                        Cmd.Length -= 1;
+                    }
+                }
             }
         }
 
@@ -81,7 +92,7 @@ namespace OS_Sharp.GUI
             int w = 0, h = 0;
 
             string cur = "_";
-            string s = Data + cur; 
+            string s = Data + cur;
             font.DrawString(X, Y, s, Width);
             cur.Dispose();
             s.Dispose();

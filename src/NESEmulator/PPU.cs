@@ -5,8 +5,8 @@ namespace OS_Sharp.NES
 {
     public class PPU
     {
-        MemoryMap memory;
-        NES tn;
+        private readonly MemoryMap memory;
+        private readonly NES tn;
 
         public Color BGColor;
 
@@ -17,26 +17,25 @@ namespace OS_Sharp.NES
         public byte[] byteNT1 = new byte[(256 * 240 * 4)];
         public byte[] byteNT2 = new byte[(256 * 240 * 4)];
         public byte[] byteNT3 = new byte[(256 * 240 * 4)];
-
-        byte setAlpha = 0xFF;
+        private byte setAlpha = 0xFF;
         public bool bolReadyToRender = false;
         public bool bolDrawBG = true;
         public bool bolDrawSprites = true;
-        int pixelX = 0;
-        int pixelM = 0;
+        private int pixelX = 0;
+        private int pixelM = 0;
         public bool bolDrawNameTable;
 
         // nametable debug offset drawing. dont draw every frame
         public int NTDebugOffset;
 
         // Background Variables
-        int bgTileNumber = 0;
-        int bgTileLineNumber = 0;
-        int bgPixelNumber = 0;
-        byte bgAlpha;
+        private int bgTileNumber = 0;
+        private int bgTileLineNumber = 0;
+        private int bgPixelNumber = 0;
+        private byte bgAlpha;
 
         public byte bgScrollX, bgScrollY;
-        byte bytePTableResult;
+        private byte bytePTableResult;
         public int nameTable = 0x2000;
         public int NTIndex = 0;
         public int nameTableTemp;
@@ -45,34 +44,30 @@ namespace OS_Sharp.NES
         public int scrollIndex = 0;
         public bool bolRead2006 = false;
         public bool toggle = false;
-        int fX;
-        byte fxTemp;
-        bool bolNewTile = true;
-        int pal;
-
-        int row, col, brow, bcol, bmrow, bmcol;
+        private int fX;
+        private byte fxTemp;
+        private bool bolNewTile = true;
+        private int pal;
+        private int row, col, brow, bcol, bmrow, bmcol;
         public byte[,] bytePal = new byte[4, 4] {{0x00, 0x00, 0x02, 0x02},
                                                  {0x00, 0x00, 0x02, 0x02},
                                                  {0x04, 0x04, 0x06, 0x06},
                                                  {0x04, 0x04, 0x06, 0x06}};
 
         // Sprite Variables
-        int spScanlineNumber = 0;
-        bool scanlineChanged = true;
-
-        bool spritesFound = false;
-        byte[] spriteToDraw = new byte[8];
-        byte spriteIndex = 0;
-        byte intNumSprites = 0;
-
-        bool spritesFoundT = false;
-        byte[] spriteToDrawT = new byte[8];
-        byte spriteIndexT = 0;
-        byte memCPU2002T = 0;
-
-        int spritePatternTableAddr = 0;
-        int pixel;
-        int sprPal = 0;
+        private readonly int spScanlineNumber = 0;
+        private bool scanlineChanged = true;
+        private bool spritesFound = false;
+        private byte[] spriteToDraw = new byte[8];
+        private byte spriteIndex = 0;
+        private byte intNumSprites = 0;
+        private bool spritesFoundT = false;
+        private byte[] spriteToDrawT = new byte[8];
+        private byte spriteIndexT = 0;
+        private byte memCPU2002T = 0;
+        private int spritePatternTableAddr = 0;
+        private int pixel;
+        private int sprPal = 0;
 
         // Color for Palettes to use
         public byte[,] byteColors = new byte[64, 4] {{0x75, 0x75, 0x75, 0x00}, {0x27, 0x1B, 0x8F, 0x00}, {0x00, 0x00, 0xAB, 0x00}, {0x47, 0x00, 0x9F, 0x00}, {0x8F, 0x00, 0x77, 0x00}, {0xAB, 0x00, 0x13, 0x00}, {0xA7, 0x00, 0x00, 0x00}, {0x7F, 0x0B, 0x00, 0x00},
@@ -281,7 +276,9 @@ namespace OS_Sharp.NES
             if (tsPpu < tn.VBlankTime)
             {
                 if (!tn.bolReset)
+                {
                     memory.setVblank(true);
+                }
 
                 // Make sure the system has not just been reset and check to see if Interrupt is enabled on VBLANK
                 if ((memory.memCPU[0x2000] & 0x80) == 0x80 && !tn.bolReset)
@@ -306,7 +303,9 @@ namespace OS_Sharp.NES
                 // For reason, clearing Sprite Hit causes the scroll offset to change seemingly randomly
                 // So I have disabled the reset of that below
                 if (!tn.bolReset)
+                {
                     memory.memCPU[0x2002] &= 0x40;  // (FIX) Should also clear Sprite Hit 0
+                }
 
                 // Clear VBlank
                 memory.setVblank(false);
@@ -376,7 +375,7 @@ namespace OS_Sharp.NES
             }
         }
 
-        void UpdateDrawLocation()
+        private void UpdateDrawLocation()
         {
             #region V and T operations
             if (pixelM == 0)
@@ -473,7 +472,7 @@ namespace OS_Sharp.NES
         }
 
         // Only called when DEBUGGING
-        void DrawNameTable(int nTable, byte[] byteNT)
+        private void DrawNameTable(int nTable, byte[] byteNT)
         {
             /********************************* NEED TO FIX THIS MEMORY MASKING STUFF ****************************/
             nTable = memory.AddressMask(nTable);
@@ -542,7 +541,7 @@ namespace OS_Sharp.NES
         }
 
         #region Sprite Rendering Methods
-        void CheckScanlineForSprites()
+        private void CheckScanlineForSprites()
         {
             // Update all previously retreived sprite values as the new current values
             spritesFound = spritesFoundT;           // Stores the location of each sprite found
@@ -564,8 +563,8 @@ namespace OS_Sharp.NES
                 int spriteHeight = ((memory.memCPU[0x2000] & 0x20) == 0x20) ? 16 : 8;
 
                 // Check to see if the sprite is on the current scanline in the Y direction
-                if (cntScanline - (byte)(memory.memSPRRAM[i]) < spriteHeight &&    // Is the sprite within 8 or 16 pixels of current scanline
-                    cntScanline - (byte)(memory.memSPRRAM[i]) >= 0 &&              // ...
+                if (cntScanline - memory.memSPRRAM[i] < spriteHeight &&    // Is the sprite within 8 or 16 pixels of current scanline
+                    cntScanline - memory.memSPRRAM[i] >= 0 &&              // ...
                     spriteIndexT < 8 &&         // Less than 8 sprites found?
                     memory.memSPRRAM[i] > 0 && // Is the sprite on screen between the 0 and EF scanline?
                     memory.memSPRRAM[i] < 0xEF) // ...
@@ -600,7 +599,7 @@ namespace OS_Sharp.NES
             }
         }
 
-        bool GetSpriteToDraw()
+        private bool GetSpriteToDraw()
         {
             for (byte i = 0; i <= intNumSprites; i++)
             {
@@ -620,7 +619,7 @@ namespace OS_Sharp.NES
             return false;
         }
 
-        bool CheckTransparency(int i)
+        private bool CheckTransparency(int i)
         {
             // NO NEED TO CHECK FOR spLineNumber, pal, Pattern Table, flipping on every pixel .... only every line except for flipping which is every tile (and mybe others too)
             int spLineNumber = (byte)(cntScanline - (byte)(memory.memSPRRAM[spriteToDraw[i]] + 1));
@@ -722,13 +721,13 @@ namespace OS_Sharp.NES
         // Draws Background
         public void drawBGTile(int tile, int line, int pixel, byte bytePixel, byte rgbPixel)
         {
-            byteBGFrame[(tile * 32 + line * 1024 + (pixel) * 4) + (int)(tile / 32) * 32 * 224 + rgbPixel] = bytePixel;
+            byteBGFrame[(tile * 32 + line * 1024 + (pixel) * 4) + tile / 32 * 32 * 224 + rgbPixel] = bytePixel;
         }
 
         // Draws Background - (FOR NAMETABLE DEBUGGING)
         public void drawBGTile(byte[] byteNT, int tile, int line, int pixel, byte bytePixel, byte rgbPixel)
         {
-            byteNT[(tile * 32 + line * 1024 + (pixel) * 4) + (int)(tile / 32) * 32 * 224 + rgbPixel] = bytePixel;
+            byteNT[(tile * 32 + line * 1024 + (pixel) * 4) + tile / 32 * 32 * 224 + rgbPixel] = bytePixel;
         }
 
         // Draws Sprites

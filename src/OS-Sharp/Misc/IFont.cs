@@ -23,7 +23,11 @@ namespace OS_Sharp.Misc
             int index = charset.IndexOf(Chr);
             if (index == -1)
             {
-                if (Chr == ' ') return Width / 2;
+                if (Chr == ' ')
+                {
+                    return Width / 2;
+                }
+
                 return 0;
             }
 
@@ -37,10 +41,10 @@ namespace OS_Sharp.Misc
                     uint bg = Framebuffer.GetPoint(X + w, Y + h - basey);
                     uint foreground = image.RawData[image.Width * h + w];
                     uint FontAlpha = foreground & 0xFF000000 >> 24;
-                    byte R = (byte)((((((byte)((foreground >> 16) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ((bg&0x00FF0000)>>16))) >> 8) & 0xFF);
+                    byte R = (byte)((((((byte)((foreground >> 16) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ((bg & 0x00FF0000) >> 16))) >> 8) & 0xFF);
                     byte G = (byte)((((((byte)((foreground >> 8) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ((bg & 0x0000FF00) >> 8))) >> 8) & 0xFF);
                     byte B = (byte)((((((byte)((foreground) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ((bg & 0x000000FF) >> 0))) >> 8) & 0xFF);
-                    
+
                     if ((foreground & 0xFF000000 >> 24) != 0)
                     {
                         if (X >= 0 && Y >= 0)
@@ -51,7 +55,10 @@ namespace OS_Sharp.Misc
                     else
                     {
                         counter++;
-                        if (counter == Height && w > 5) return width;
+                        if (counter == Height && w > 5)
+                        {
+                            return width;
+                        }
                     }
                 }
                 counter = 0;
@@ -60,23 +67,23 @@ namespace OS_Sharp.Misc
             return width;
         }
 
-        public int MeasureString(string Str) 
+        public int MeasureString(string Str)
         {
             int width = 0;
             for (int i = 0; i < Str.Length; i++)
             {
-                width+=DrawChar(-1, -1, Str[i]);
+                width += DrawChar(-1, -1, Str[i]);
             }
             return width;
         }
 
-        public void DrawString(int X, int Y, string Str,int LineLimit = -1)
+        public void DrawString(int X, int Y, string Str, int LineLimit = -1)
         {
             int w = 0, h = 0;
             for (int i = 0; i < Str.Length; i++)
             {
                 w += DrawChar(X + w, Y + h, Str[i]);
-                if (w + Width > LineLimit && LineLimit != -1 || Str[i] == '\n') 
+                if (w + Width > LineLimit && LineLimit != -1 || Str[i] == '\n')
                 {
                     w = 0;
                     h += Height;
