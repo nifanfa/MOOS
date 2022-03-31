@@ -84,8 +84,9 @@ namespace OS_Sharp.GUI
             int w = 0, h = 0;
 
             string cur = "_";
-            string s = Data + cur; 
-            font.DrawString(X, Y, s, Width);
+            string s = Data + cur;
+            BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);
+            //font.DrawString(X, Y, s, Width);
             cur.Dispose();
             s.Dispose();
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
