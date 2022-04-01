@@ -75,7 +75,7 @@ namespace OS_Sharp
         internal static void ADrawPoint(int X, int Y, uint Color)
         {
             uint Alpha = ((Color & 0xFF000000) >> 24);
-            uint bg = Framebuffer.GetPoint(X, Y);
+            uint bg = GetPoint(X, Y);
             byte r = (byte)((bg & 0x00FF0000) >> 16);
             byte g = (byte)((bg & 0x0000FF00) >> 8);
             byte b = ((byte)(bg & 0x000000FF));
@@ -165,10 +165,11 @@ namespace OS_Sharp
                         int newR = (fR * alpha + inv_alpha * bR) >> 8;
                         int newG = (fG * alpha + inv_alpha * bG) >> 8;
                         int newB = (fB * alpha + inv_alpha * bB) >> 8;
+                        int newA = (fA * alpha + inv_alpha * bA) >> 8;
 
                         if (fA != 0)
                         {
-                            DrawPoint(X + w, Y + h, Color.ToArgb((byte)newR, (byte)newG, (byte)newB));
+                            DrawPoint(X + w, Y + h, Color.ToArgb((byte)newA, (byte)newR, (byte)newG, (byte)newB));
                         }
                     }
                     else

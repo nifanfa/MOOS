@@ -89,7 +89,6 @@ namespace OS_Sharp.GUI
         public override void Update()
         {
             base.Update();
-            int w = 0, h = 0;
 
             string cur = "_";
             string s = Data + cur;

@@ -140,7 +140,7 @@ namespace OS_Sharp
                 Console.WriteLine("A = Left");
                 Console.WriteLine("S = Down");
                 Console.WriteLine("D = Right");
-                NES.NES nes = new NES.NES();
+                NES.NES nes = new();
                 nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
                 Console.WriteLine("PRESS ANY KEY TO START");
                 Console.ReadKey();
@@ -154,10 +154,9 @@ namespace OS_Sharp
 
             Framebuffer.TripleBuffered = true;
 
-            new FConsole(350, 300);
+            _ = new FConsole(350, 300);
             Console.WriteLine("Welcome to OS-Sharp!");
             Console.WriteLine("Thanks to all the Contributors of nifanfa/Solution1.");
-
             for (; ; )
             {
                 Framebuffer.DrawImage(0, 0, Wallpaper, false);
@@ -169,6 +168,7 @@ namespace OS_Sharp
                 */
                 Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
                 Framebuffer.Update();
+
             }
         }
 

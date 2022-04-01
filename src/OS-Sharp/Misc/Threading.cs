@@ -41,22 +41,14 @@ namespace System.Threading
         {
             Ready = false;
             Threads = new();
-            //new Thread(&IdleThread);
-            //new Thread(&A);
-            //new Thread(&B);
-            new Thread(&TestThread);
-            new Thread(&Program.KMain);
+            _ = new Thread(&IdleThread);
+            _ = new Thread(&Program.KMain);
             Ready = true;
-            //Make sure the irq wont be triggered during _iretq
             Native.Hlt();
-            IdleThread();
         }
 
         public static void Terminate()
         {
-            Console.Write("Thread ");
-            Console.Write(Index.ToString());
-            Console.WriteLine(" Has Exited");
             Threads[Index].Terminated = true;
             _int20h();
             Panic.Error("Termination Failed!");
@@ -64,28 +56,6 @@ namespace System.Threading
 
         [DllImport("*")]
         public static extern void _int20h();
-
-        public static void TestThread()
-        {
-            Console.WriteLine("Non-Loop Thread Test!");
-            return;
-        }
-
-        public static void A()
-        {
-            for (; ; )
-            {
-                Console.WriteLine("Thread A");
-            }
-        }
-
-        public static void B()
-        {
-            for (; ; )
-            {
-                Console.WriteLine("Thread B");
-            }
-        }
 
         public static void IdleThread()
         {
