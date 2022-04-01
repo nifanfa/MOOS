@@ -1,4 +1,7 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+
 using System;
 using System.Collections.Generic;
 
@@ -37,7 +40,7 @@ namespace OS_Sharp.Misc
         private const int FontAlpha = 96;
         private static bool AtEdge = false;
 
-        private static int DrawBitFontChar(byte[] Raw, int Size, int Size8, uint Color, int Index, int X, int Y, bool Calculate = false, bool AntiAliasing = true)
+        private static int DrawChar(byte[] Raw, int Size, int Size8, uint Color, int Index, int X, int Y, bool Calculate = false, bool AntiAliasing = true)
         {
             if (Index < 0)
             {
@@ -78,7 +81,7 @@ namespace OS_Sharp.Misc
                                     ac.Dispose();
                                     */
                                     int threshhold = 2;
-                                    int maxalpha = 200;
+                                    int maxalpha = 150;
 
                                     for (int ax = -threshhold; ax <= threshhold; ax++)
                                     {
@@ -125,22 +128,21 @@ namespace OS_Sharp.Misc
             return null;
         }
 
-        public static int MeasureString(string FontName, string s)
+        public static int MeasureString(string FontName, string Text, int Divide = 0)
         {
             BitFontDescriptor bitFontDescriptor = GetBitFontDescriptor(FontName);
-            int Size8 = bitFontDescriptor.Size / 8;
 
-            int r = 0;
-            if (bitFontDescriptor.Name == FontName)
+            int Size = bitFontDescriptor.Size;
+            int Size8 = Size / 8;
+
+            int UsedX = 0;
+            for (int i = 0; i < Text.Length; i++)
             {
-                for (int i1 = 0; i1 < s.Length; i1++)
-                {
-                    char j = s[i1];
-                    r += DrawBitFontChar(bitFontDescriptor.Raw, bitFontDescriptor.Size, Size8, 0, bitFontDescriptor.Charset.IndexOf(j), 0, 0, true);
-                }
+                char c = Text[i];
+                UsedX += BitFont.DrawChar(bitFontDescriptor.Raw, Size, Size8, 0, bitFontDescriptor.Charset.IndexOf(c), 0, 0, true) + 2 + Divide;
             }
 
-            return r;
+            return UsedX;
         }
 
         public static int DrawString(string FontName, uint color, string Text, int X, int Y, int LineWidth = -1, bool AntiAlising = true, int Divide = 0)
@@ -161,7 +163,7 @@ namespace OS_Sharp.Misc
                     UsedX = 0;
                     continue;
                 }
-                UsedX += BitFont.DrawBitFontChar(bitFontDescriptor.Raw, Size, Size8, color, bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y + bitFontDescriptor.Size * Line, false, AntiAlising) + 2 + Divide;
+                UsedX += BitFont.DrawChar(bitFontDescriptor.Raw, Size, Size8, color, bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y + bitFontDescriptor.Size * Line, false, AntiAlising) + 2 + Divide;
             }
 
             return UsedX;

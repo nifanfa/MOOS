@@ -1,4 +1,7 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+
 namespace OS_Sharp.Misc
 {
     public static class VendorID
@@ -4097,7 +4100,7 @@ namespace OS_Sharp.Misc
 
             if (id == 0x13B6)
             {
-                return "DLoG Gesellschaft für elektronische Datentechnik mbH";
+                return "DLoG Gesellschaft fï¿½r elektronische Datentechnik mbH";
             }
 
             if (id == 0x13B8)

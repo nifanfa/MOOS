@@ -1,4 +1,7 @@
-// Copyright (C) 2021 Contributors of nifanfa/Solution1. Licensed under the MIT licence
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+
 //Reference: https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
 
 using System.Runtime.InteropServices;

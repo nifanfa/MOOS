@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+using System.Collections.Generic;
 using System.Windows.Forms;
 using OS_Sharp.FileSystem;
 using OS_Sharp.Misc;
@@ -9,13 +12,12 @@ namespace OS_Sharp.GUI
     {
         public static List<Form> Forms;
         public static uint BackgroundColor;
-        public static IFont font;
+        //public static IFont font;
 
         public static void Initialize()
         {
-            Forms = new List<Form>();
-            PNG yehei = new(File.Instance.ReadAllBytes("/FONT.PNG"));
-            font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+            //PNG yehei = new PNG(File.Instance.ReadAllBytes("/FONT.PNG"));
+            //font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
         }
 
         public static void UpdateAll()
@@ -70,7 +72,8 @@ namespace OS_Sharp.GUI
             Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF424949);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
-            font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
+            BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - ((BitFont.MeasureString("Song", Title)) / 2), Y - BarHeight + (BarHeight / 4));
+            //font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
             Framebuffer.Fill(X, Y, Width, Height, BackgroundColor);

@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+using System.Drawing;
 using OS_Sharp.Driver;
 using OS_Sharp.Misc;
 
@@ -92,7 +95,8 @@ namespace OS_Sharp.GUI
 
             string cur = "_";
             string s = Data + cur;
-            font.DrawString(X, Y, s, Width);
+            //font.DrawString(X, Y, s, Width);
+            BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);
             cur.Dispose();
             s.Dispose();
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);

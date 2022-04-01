@@ -1,4 +1,7 @@
-﻿using System;
+/*
+* Copyright (c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+*/
+using System;
 using System.Collections.Generic;
 
 namespace OS_Sharp.NES
