@@ -143,6 +143,16 @@ namespace Kernel.FS
             ReadList(RootDirectorySector, "/");
         }
 
+        public override string[] GetFiles()
+        {
+            string[] str = new string[Items.Count];
+            for (int i = 0; i < str.Length; i++)
+            {
+                str[i] = Items[i].Name;
+            }
+            return str;
+        }
+
         private uint RootDirectorySector;
 
         private uint GetSectorOffset(uint Cluster)

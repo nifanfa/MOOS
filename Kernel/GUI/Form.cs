@@ -1,4 +1,4 @@
-﻿using Kernel.FS;
+using Kernel.FS;
 using Kernel.Misc;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -11,16 +11,16 @@ namespace Kernel.GUI
         public static uint BackgroundColor;
         //public static IFont font;
 
-        public static void Initialize() 
+        public static void Initialize()
         {
             Forms = new List<Form>();
-            //PNG yehei = new PNG(File.Instance.ReadAllBytes("/FONT.PNG"));
+            PNG yehei = new PNG(File.Instance.ReadAllBytes("/FONT.PNG"));
             //font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
         }
 
-        public static void UpdateAll() 
+        public static void UpdateAll()
         {
-            for(int i = 0; i < Forms.Count; i++) 
+            for (int i = 0; i < Forms.Count; i++)
             {
                 Forms[i].Update();
             }
@@ -28,7 +28,7 @@ namespace Kernel.GUI
 
         public int X, Y, Width, Height;
 
-        public Form(int X,int Y,int Width,int Height)
+        public Form(int X, int Y, int Width, int Height)
         {
             this.X = X;
             this.Y = Y;
@@ -45,7 +45,7 @@ namespace Kernel.GUI
         int OffsetX;
         int OffsetY;
 
-        public virtual void Update() 
+        public virtual void Update()
         {
             if (Control.MouseButtons == MouseButtons.Left)
             {
@@ -67,11 +67,13 @@ namespace Kernel.GUI
                 Y = Control.MousePosition.Y - OffsetY;
             }
 
-            Framebuffer.Fill(X, Y - BarHeight - 5, Width, 5, 0xFF1B5DAA);
-            Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF3C3C3C);
+            Framebuffer.Fill(X, Y - BarHeight - 5, Width, 5, 0xFF2E86C1);
+            Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF424949);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
-            BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
+            BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - ((BitFont.MeasureString("Song", Title)) / 2), Y - BarHeight + (BarHeight / 4));
+            //font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
+            //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
             Framebuffer.Fill(X, Y, Width, Height, BackgroundColor);
         }
