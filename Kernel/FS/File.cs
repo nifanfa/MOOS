@@ -13,5 +13,6 @@
         }
 
         public abstract byte[] ReadAllBytes(string Name);
+        public abstract string[] GetFiles();
     }
 }

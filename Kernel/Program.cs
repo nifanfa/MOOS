@@ -5,7 +5,6 @@ using Kernel.FS;
 using Kernel.GUI;
 using Kernel.Misc;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -113,12 +112,16 @@ unsafe class Program
 
         Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
         //Image from unsplash
-        Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALLP.PNG"));
+        Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALP.PNG"));
 
         BitFont.Initialize();
 
         string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
         BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
+
+        Form.Initialize();
+
+        Desktop.Initialize();
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
@@ -184,15 +187,14 @@ unsafe class Program
         {
             Framebuffer.TripleBuffered = true;
 
-            Form.Initialize();
-
-            new FConsole(100, 100);
-
-            Console.WriteLine("Hello, World!");
+            new FConsole(350, 300);
+            Console.WriteLine("Welcome to OS-Sharp!");
+            Console.WriteLine("Thanks to all the Contributors of nifanfa/Solution1.");
 
             for (; ; )
             {
                 Framebuffer.DrawImage(0, 0, Wallpaper, false);
+                Desktop.Update();
                 Form.UpdateAll();
                 /*
                 ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
@@ -200,7 +202,6 @@ unsafe class Program
                 */
                 Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
                 Framebuffer.Update();
-                FPSMeter.Update();
             }
         }
     }

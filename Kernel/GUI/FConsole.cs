@@ -1,5 +1,4 @@
-﻿using Kernel.Driver;
-using Kernel.FS;
+using Kernel.Driver;
 using Kernel.Misc;
 using System.Drawing;
 
@@ -16,7 +15,7 @@ namespace Kernel.GUI
             Title = "Console";
             Cmd = string.Empty;
             Data = string.Empty;
-            BackgroundColor = 0x0;
+            BackgroundColor = 0xFF101010;
             ScreenBuf = new Image(640, 320);
 
             Console.OnWrite += Console_OnWrite;
@@ -26,7 +25,7 @@ namespace Kernel.GUI
 
         private void PS2Keyboard_OnKeyChanged(System.ConsoleKeyInfo key)
         {
-            if(key.KeyState == System.ConsoleKeyState.Pressed)
+            if (key.KeyState == System.ConsoleKeyState.Pressed)
             {
                 if (key.Key == System.ConsoleKey.Backspace)
                 {
@@ -45,11 +44,21 @@ namespace Kernel.GUI
 
                 if (key.Key == System.ConsoleKey.Enter)
                 {
-                    if(Cmd.Length!=0) Cmd.Length -= 1;
+                    if (Cmd.Length != 0) Cmd.Length -= 1;
+
+                    // when a command is invoked
                     switch (Cmd)
                     {
                         case "hello":
                             Panic.Error(": )");
+                            break;
+
+                        case "help":
+                            Console.WriteLine("OS_Sharp Operating System https://github.com/nifanfa/OS-Sharp");
+                            break;
+
+                        case "shutdown":
+                            ACPI.Shutdown();
                             break;
 
                         default:
@@ -58,6 +67,7 @@ namespace Kernel.GUI
                             Console.WriteLine("\"");
                             break;
                     }
+
                     Cmd.Dispose();
                     Cmd = string.Empty;
                 }
@@ -70,7 +80,13 @@ namespace Kernel.GUI
             base.Update();
             int w = 0, h = 0;
 
-            BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
+            string cur = "_";
+            string s = Data + cur;
+            BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);
+            //font.DrawString(X, Y, s, Width);
+            cur.Dispose();
+            s.Dispose();
+            //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
         }
 
         private void Console_OnWrite(char chr)
