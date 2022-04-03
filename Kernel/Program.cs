@@ -4,8 +4,10 @@ using Kernel.Driver;
 using Kernel.FS;
 using Kernel.GUI;
 using Kernel.Misc;
+using Kernel.NET;
 using System;
 using System.Drawing;
+using System.Net;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -144,6 +146,23 @@ unsafe class Program
         }
         */
 
+        /*
+        ARP.Initialise();
+        Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
+        RTL8139.Initialise();
+        ARP.Require(Network.Gateway);
+        TCPConnection conn = TCP.Connect(new byte[] { 192, 168, 137, 1 }, 54188, 54188);
+        conn.Send(new byte[]
+        {
+            (byte)'H',
+            (byte)'e',
+            (byte)'l',
+            (byte)'l',
+            (byte)'o'
+        });
+        for (; ; ) Native.Hlt();
+        */
+
         ThreadPool.Initialize();
         //KMain();
     }
@@ -178,16 +197,6 @@ unsafe class Program
                 for (int i = 0; i < 128; i++) Native.Nop();
             }
         }
-
-
-        /*
-        ARP.Initialise();
-        Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
-        RTL8139.Initialise();
-        ARP.Require(Network.Gateway);
-        for (; ; );
-        */
-
         else
 
         {
