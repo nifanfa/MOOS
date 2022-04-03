@@ -1,11 +1,14 @@
+**Discord Server: https://discord.gg/GxwmAK7aRE**  
 ~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
-C# operating system demo, Using Native AOT (Core RT) boot via multiboot  
- - [x] GC
+C# operating system demo, using Native AOT (Core RT) boot via multiboot  
+ - [ ] Error Throwing / Catching
+ - [x] GC(WIP)
+ - [x] Multithreading(Single Core)
  - [x] PS2 Keyboard/Mouse(USB Compatible)
  - [x] Nintendo Family Computer Emulator
  - [x] Intel® Gigabit Ethernet Network 
  - [x] Realtek RTL8139
- - [x] FAT32(Read only) 
+ - [x] FAT32(Read only & WIP) 
  - [x] I/O APIC 
  - [x] Local APIC 
  - [x] SATA
@@ -14,9 +17,8 @@ C# operating system demo, Using Native AOT (Core RT) boot via multiboot
  - [x] ACPI
  - [x] IPv4
  - [ ] IPv6
- - [x] TCP
+ - [x] TCP(WIP)
  - [x] UDP
  - [x] Lan
- - [ ] Wan  
-![image](https://github.com/nifanfa/Solution1/blob/master/QQ截图20220212073734.png)
-![image](https://github.com/nifanfa/Solution1/blob/master/VirtualBox_NativeAOT_21_02_2022_00_11_51.png)
+ - [x] Wan  
+![image](https://github.com/nifanfa/OS-Sharp/blob/master/VirtualBox_NativeAOT_01_04_2022_00_12_06.png)
