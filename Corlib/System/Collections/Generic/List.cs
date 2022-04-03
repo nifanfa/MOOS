@@ -34,9 +34,10 @@ namespace System.Collections.Generic
             Count++;
         }
 
-        public void Insert(int index,T item) 
+        public void Insert(int index, T item, bool increaseCount = true) 
         {
-            //Count++;
+            if(increaseCount)
+                Count++;
             for(int i = Count - 1; i > index; i--) 
             {
                 _value[i] = _value[i - 1];
