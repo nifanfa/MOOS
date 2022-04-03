@@ -23,7 +23,7 @@ namespace Kernel.GUI
 
         public static void UpdateAll()
         {
-            for (int i = 0; i < Forms.Count; i++)
+            for (int i = Forms.Count - 1; i >= 0; i--)
             {
                 Forms[i].Update();
             }
@@ -54,6 +54,7 @@ namespace Kernel.GUI
             {
                 if (!Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
                 {
+                    Forms.Insert(0, this, false);
                     Move = true;
                     OffsetX = Control.MousePosition.X - X;
                     OffsetY = Control.MousePosition.Y - Y;
