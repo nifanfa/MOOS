@@ -36,6 +36,8 @@ namespace System.Collections.Generic
 
         public void Insert(int index, T item, bool increaseCount = true) 
         {
+            if (index == IndexOf(item)) return;
+
             if(increaseCount)
                 Count++;
             for(int i = Count - 1; i > index; i--) 
