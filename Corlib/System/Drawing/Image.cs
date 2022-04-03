@@ -20,6 +20,11 @@
 
         }
 
+        public uint GetPixel(int X, int Y)
+        {
+            return RawData[Y * Width + X];
+        }
+
         public Image ResizeImage(int NewWidth, int NewHeight)
         {
             int w1 = Width, h1 = Height;

@@ -32,15 +32,15 @@ namespace Kernel.GUI
                 }
 
                 Framebuffer.DrawImage(X, Y, FileIcon);
-                BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
-                //Form.font.DrawString(X, Y + FileIcon.Height, names[i], FileIcon.Width);
+                //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
+                Form.font.DrawString(X, Y + FileIcon.Height, names[i], FileIcon.Width);
                 Y += FileIcon.Height + Devide;
             }
             names.Dispose();
 
             Framebuffer.Fill(0, 0, Framebuffer.Width, BarHeight, 0xFF101010);
-            BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
-            //Form.font.DrawString(0, (BarHeight / 2) - (Form.font.Height / 2), CurrentDirectory, Framebuffer.Width);
+            //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
+            Form.font.DrawString(0, (BarHeight / 2) - (Form.font.FontSize / 2), CurrentDirectory, Framebuffer.Width);
 
             string CPUUsage = ThreadPool.CPUUsage.ToString();
             string Memory = ((Allocator.NumPages * Allocator.PageSize) / 1048576).ToString();
@@ -50,8 +50,8 @@ namespace Kernel.GUI
             Memory.Dispose();
             MemoryUsed.Dispose();
 
-            BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
-            //Form.font.DrawString(Framebuffer.Width - Form.font.MeasureString(Result) - Form.font.Width, (BarHeight / 2) - (Form.font.Height / 2), Result);
+            //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
+            Form.font.DrawString(Framebuffer.Width - Form.font.MeasureString(Result) - Form.font.FontSize, (BarHeight / 2) - (Form.font.FontSize / 2), Result);
 
             Result.Dispose();
         }

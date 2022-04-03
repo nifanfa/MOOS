@@ -1,73 +1,87 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace Kernel.Misc
 {
     internal class IFont
     {
-        Image image;
-        string charset;
+        private readonly Image image;
+        private readonly string charset;
 
-        public int Width 
+        public int Width => image.Width;
+
+        public int Height => image.Height;
+
+        public int FontSize;
+
+        public int NumRow => Width / FontSize;
+
+        public IFont(Image _img, string _charset,int size)
         {
-            get 
-            {
-                return image.Width;
-            }
+            image = _img;
+            charset = _charset;
+            FontSize = size;
         }
 
-        public int Height
-        {
-            get
-            {
-                return image.Height / charset.Length;
-            }
-        }
-
-        public IFont(Image _img, string _charset)
-        {
-            this.image = _img;
-            this.charset = _charset;
-        }
-
-        public void DrawChar(int X, int Y, char Chr)
+        public int DrawChar(int X, int Y, char Chr)
         {
             int index = charset.IndexOf(Chr);
-            if (index == -1) return;
-            int basey = index * (image.Height / charset.Length);
-            for (int h = basey; h < (basey)+(image.Height / charset.Length); h++)
-                for (int w = 0; w < image.Width; w++)
+            if (index == -1)
+            {
+                if (Chr == ' ') return FontSize / 2;
+                return 0;
+            }
+
+            int baseX = 0, baseY = 0;
+            for(int i = 0; i <= index; i++)
+            {
+                if ((i % NumRow) == 0 && i != 0)
                 {
-                    uint foreground = image.RawData[image.Width * h + w];
-                    int fA = (byte)((foreground >> 24) & 0xFF);
-                    int fR = (byte)((foreground >> 16) & 0xFF);
-                    int fG = (byte)((foreground >> 8) & 0xFF);
-                    int fB = (byte)((foreground) & 0xFF);
-
-                    uint background = Framebuffer.GetPoint(X + w, Y + h - basey);
-                    int bA = (byte)((background >> 24) & 0xFF);
-                    int bR = (byte)((background >> 16) & 0xFF);
-                    int bG = (byte)((background >> 8) & 0xFF);
-                    int bB = (byte)((background) & 0xFF);
-
-                    int alpha = fA;
-                    int inv_alpha = 255 - alpha;
-
-                    int newR = (fR * alpha + inv_alpha * bR) >> 8;
-                    int newG = (fG * alpha + inv_alpha * bG) >> 8;
-                    int newB = (fB * alpha + inv_alpha * bB) >> 8;
-
-                    if (fA != 0)
-                    {
-                        Framebuffer.DrawPoint(X + w, Y + h - basey, Color.ToArgb((byte)newR, (byte)newG, (byte)newB));
-                    }
+                    baseX = 0;
+                    baseY += FontSize;
                 }
+                if (i != index)
+                    baseX += FontSize;
+            }
+
+            for (int w = 0; w < FontSize; w++)
+            {
+                int counter = 0;
+                for (int h = 0; h < FontSize; h++)
+                {
+                    uint color = image.GetPixel(baseX + w, baseY + h);
+                    if (X != -1 && Y != -1)
+                        Framebuffer.ADrawPoint(X + w, Y + h, color);
+                    if ((color & 0xFF000000) == 0) counter++;
+                }
+                if (w > 5 && counter == FontSize) return w;
+            }
+
+            return FontSize;
         }
 
-        public void DrawString(int X,int Y,string Str) 
+        public int MeasureString(string Str)
         {
-            for (int i = 0; i < Str.Length; i++) 
+            int w = 0;
+            for (int i = 0; i < Str.Length; i++)
             {
-                DrawChar(X + (i * Width), Y, Str[i]);
+                w += DrawChar(-1, -1, Str[i]);
+            }
+            return w;
+        }
+
+        public void DrawString(int X, int Y, string Str, int LineLimit = -1)
+        {
+            int w = 0, h = 0;
+            for (int i = 0; i < Str.Length; i++)
+            {
+                w += DrawChar(X + w, Y + h, Str[i]);
+                if (w + FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
+                {
+                    w = 0;
+                    h += FontSize;
+                }
             }
         }
     }
