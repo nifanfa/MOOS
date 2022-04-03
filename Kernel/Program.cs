@@ -124,7 +124,7 @@ unsafe class Program
         string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
         BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
 
-        Form.Initialize();
+        Window.Initialize();
 
         Desktop.Initialize();
 
@@ -205,7 +205,7 @@ unsafe class Program
         {
             Framebuffer.TripleBuffered = true;
 
-            new Utility(200, 400);
+            new Welcome(200, 200);
             new FConsole(350, 300);
             Console.WriteLine("Welcome to OS-Sharp!");
             Console.WriteLine("Thanks to all the Contributors of nifanfa/OS-Sharp.");
@@ -214,7 +214,7 @@ unsafe class Program
             {
                 Framebuffer.DrawImage(0, 0, Wallpaper, false);
                 Desktop.Update();
-                Form.UpdateAll();
+                Window.UpdateAll();
                 /*
                 ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
                 ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);

@@ -131,6 +131,16 @@ namespace Kernel
             DrawPoint(X, Y, Color.ToArgb(R, G, B));
         }
 
+        public static void DrawRectangle(int X, int Y, int Width, int Height, uint Color, int Weight = 1)
+        {
+            Fill(X, Y, Width, Weight, Color);
+
+            Fill(X, Y, Weight, Height, Color);
+            Fill(X + (Width - Weight), Y, Weight, Height, Color);
+
+            Fill(X, Y + (Height - Weight), Width, Weight, Color);
+        }
+
         public static void DrawImage(int X, int Y, Image image,bool AlphaBlending = true)
         {
             for (int h = 0; h < image.Height; h++)
