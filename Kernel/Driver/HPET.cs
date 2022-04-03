@@ -1,4 +1,7 @@
-﻿//https://wiki.osdev.org/HPET#Interrupt_routing
+/*
+ * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ */
+//https://wiki.osdev.org/HPET#Interrupt_routing
 
 using System.Diagnostics;
 using static Kernel.Misc.MMIO;

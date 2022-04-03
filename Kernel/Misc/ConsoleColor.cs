@@ -1,4 +1,7 @@
-﻿public static class ConsoleColor
+/*
+ * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ */
+public static class ConsoleColor
 {
     public const byte Black = 0x00;
     public const byte Blue = 0x01;

@@ -1,4 +1,7 @@
-﻿using Internal.Runtime.CompilerHelpers;
+/*
+ * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ */
+using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
 using System.Runtime.CompilerServices;
 

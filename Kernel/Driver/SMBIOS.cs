@@ -1,4 +1,7 @@
-﻿//https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf
+/*
+ * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ */
+//https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf
 
 using System;
 using System.Runtime.InteropServices;
