@@ -117,17 +117,15 @@ namespace Kernel
             return 0;
         }
 
-        public static void ADrawPoint(int X, int Y, uint Color)
+        public static void ADrawPoint(int X, int Y, uint color)
         {
-            uint Alpha = ((Color & 0xFF000000) >> 24);
             uint bg = Framebuffer.GetPoint(X, Y);
-            byte r = (byte)((bg & 0x00FF0000) >> 16);
-            byte g = (byte)((bg & 0x0000FF00) >> 8);
-            byte b = ((byte)(bg & 0x000000FF));
-            r = (byte)((((((byte)((Color >> 16) & 0xFF)) * Alpha) + ((255 - Alpha) * r)) >> 8) & 0xFF);
-            g = (byte)((((((byte)((Color >> 8) & 0xFF)) * Alpha) + ((255 - Alpha) * g)) >> 8) & 0xFF);
-            b = (byte)((((((byte)((Color) & 0xFF)) * Alpha) + ((255 - Alpha) * b)) >> 8) & 0xFF);
-            Framebuffer.DrawPoint(X, Y, System.Drawing.Color.ToArgb(r, g, b));
+            uint foreground = color;
+            uint alpha = foreground & 0xFF000000 >> 24;
+            byte R = (byte)((((((byte)((foreground >> 16) & 0xFF)) * alpha) + ((255 - alpha) * ((bg & 0x00FF0000) >> 16))) >> 8) & 0xFF);
+            byte G = (byte)((((((byte)((foreground >> 8) & 0xFF)) * alpha) + ((255 - alpha) * ((bg & 0x0000FF00) >> 8))) >> 8) & 0xFF);
+            byte B = (byte)((((((byte)((foreground) & 0xFF)) * alpha) + ((255 - alpha) * ((bg & 0x000000FF) >> 0))) >> 8) & 0xFF);
+            DrawPoint(X, Y, Color.ToArgb(R, G, B));
         }
 
         public static void DrawImage(int X, int Y, Image image,bool AlphaBlending = true)
