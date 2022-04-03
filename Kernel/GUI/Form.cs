@@ -48,14 +48,17 @@ namespace Kernel.GUI
         int OffsetX;
         int OffsetY;
 
+        public static bool HasFormMoving = false;
+
         public virtual void Update()
         {
             if (Control.MouseButtons == MouseButtons.Left)
             {
-                if (!Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
+                if (!HasFormMoving && !Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
                 {
                     Forms.Insert(0, this, false);
                     Move = true;
+                    HasFormMoving = true;
                     OffsetX = Control.MousePosition.X - X;
                     OffsetY = Control.MousePosition.Y - Y;
                 }
@@ -63,6 +66,7 @@ namespace Kernel.GUI
             else
             {
                 Move = false;
+                HasFormMoving = false;
             }
 
             if (Move)
