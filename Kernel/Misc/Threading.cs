@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+/*
+ * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ */
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Kernel.Misc

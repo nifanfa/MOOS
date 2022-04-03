@@ -1,4 +1,7 @@
-﻿//http://cc.etsii.ull.es/ftp/antiguo/EC/AOA/APPND/Apndxc.pdf
+/*
+ * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ */
+//http://cc.etsii.ull.es/ftp/antiguo/EC/AOA/APPND/Apndxc.pdf
 
 using System;
 using static System.ConsoleKey;

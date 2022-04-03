@@ -1,4 +1,7 @@
-﻿using Kernel.NET;
+/*
+ * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ */
+using Kernel.NET;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
