@@ -9,10 +9,10 @@ using System.Runtime.InteropServices;
 public static class IDT
 {
     [DllImport("*")]
-    static unsafe extern void set_idt_entries(void* idt);
+    private static extern unsafe void set_idt_entries(void* idt);
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct IDTEntry
+    private struct IDTEntry
     {
         public ushort BaseLow;
         public ushort Selector;
@@ -30,15 +30,14 @@ public static class IDT
         public ulong Base;
     }
 
-
-    static IDTEntry[] idt;
-    static IDTDescriptor idtr;
-
-
-    public static bool Initialised { get; private set; }
+    private static IDTEntry[] idt;
+    private static IDTDescriptor idtr;
 
 
-    public unsafe static void Initialise()
+    public static bool Initialized { get; private set; }
+
+
+    public static unsafe bool Initialize()
     {
         idt = new IDTEntry[256];
 
@@ -54,7 +53,8 @@ public static class IDT
 
         Native.Load_IDT(ref idtr);
 
-        Initialised = true;
+        Initialized = true;
+        return true;
     }
 
     public static void Enable()
@@ -76,7 +76,7 @@ public static class IDT
             case 0: Panic.Error("DIVIDE BY ZERO"); break;
             case 1: Panic.Error("SINGLE STEP"); break;
             case 2: Panic.Error("NMI"); break;
-            case 3: Panic.Error("BREAKPOINT: CHECK YOUR CODE!"); break;
+            case 3: Panic.Error("BREAKPOINT"); break;
             case 4: Panic.Error("OVERFLOW"); break;
             case 5: Panic.Error("BOUNDS CHECK"); break;
             case 6: Panic.Error("INVALID OPCODE"); break;
@@ -103,15 +103,55 @@ public static class IDT
         }
     }
 
+    public struct IDTStack
+    {
+        public ulong rax;
+        public ulong rcx;
+        public ulong rdx;
+        public ulong rbx;
+        public ulong rsi;
+        public ulong rdi;
+        public ulong r8;
+        public ulong r9;
+        public ulong r10;
+        public ulong r11;
+        public ulong r12;
+        public ulong r13;
+        public ulong r14;
+        public ulong r15;
+
+        //https://os.phil-opp.com/returning-from-exceptions/
+        public ulong errorCode;
+        public ulong rip;
+        public ulong cs;
+        public ulong rflags;
+        public ulong rsp;
+        public ulong ss;
+        //public ulong alignment;
+    }
+
     [RuntimeExport("irq_handler")]
-    public static void IRQHandler(int irq) 
+    public static unsafe void IRQHandler(int irq, ulong rsp)
     {
         irq += 0x20;
+        IDTStack* stack = (IDTStack*)rsp;
+        if (irq == 0x80)
+        {
+            Console.Write("rax: 0x");
+            Console.WriteLine(stack->rax.ToString("x2"));
+            Console.Write("rip: 0x");
+            Console.WriteLine(stack->rip.ToString("x2"));
+            Console.Write("ss: 0x");
+            Console.WriteLine(stack->ss.ToString("x2"));
+            while (true) ;
+        }
         switch (irq)
         {
             case 0x20:
                 PIT.OnInterrupt();
-                break;
+                ThreadPool.Schedule(stack);
+                LocalAPIC.EndOfInterrupt();
+                return;
             case 0x21:
                 byte b = Native.In8(0x60);
                 PS2Keyboard.ProcessKey(b);

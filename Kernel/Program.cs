@@ -39,7 +39,7 @@ unsafe class Program
         Console.Setup();
         IDT.Disable();
         GDT.Initialise();
-        IDT.Initialise();
+        IDT.Initialize();
         IDT.Enable();
 
         ACPI.Initialize();
@@ -144,6 +144,12 @@ unsafe class Program
         }
         */
 
+        ThreadPool.Initialize();
+        //KMain();
+    }
+
+    public static void KMain()
+    {
         ConsoleKeyInfo Key = Console.ReadKey();
 
         //if (false)

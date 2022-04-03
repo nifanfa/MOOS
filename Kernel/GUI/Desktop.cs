@@ -42,8 +42,7 @@ namespace Kernel.GUI
             BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
             //Form.font.DrawString(0, (BarHeight / 2) - (Form.font.Height / 2), CurrentDirectory, Framebuffer.Width);
 
-            //string CPUUsage = ThreadPool.CPUUsage.ToString();
-            string CPUUsage = "0";
+            string CPUUsage = ThreadPool.CPUUsage.ToString();
             string Memory = ((Allocator.NumPages * Allocator.PageSize) / 1048576).ToString();
             string MemoryUsed = (Allocator.MemoryInUse / 1048576).ToString();
             string Result = $"CPU 0: {CPUUsage}% | Memory: {MemoryUsed}/{Memory}MiB";

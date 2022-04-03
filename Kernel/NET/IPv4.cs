@@ -68,7 +68,7 @@ namespace Kernel.NET
                 }
                 else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
                 {
-                    TCP.TcpRecv(data, length);
+                    TCP.HandlePacket(data, length);
                 }
             }
         }
