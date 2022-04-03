@@ -82,8 +82,8 @@ namespace Kernel.GUI
 
             string cur = "_";
             string s = Data + cur;
-            BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);
-            //font.DrawString(X, Y, s, Width);
+            //BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);
+            font.DrawString(X, Y, s, Width);
             cur.Dispose();
             s.Dispose();
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
