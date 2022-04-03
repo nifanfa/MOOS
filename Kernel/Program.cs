@@ -195,7 +195,7 @@ unsafe class Program
 
             new FConsole(350, 300);
             Console.WriteLine("Welcome to OS-Sharp!");
-            Console.WriteLine("Thanks to all the Contributors of nifanfa/Solution1.");
+            Console.WriteLine("Thanks to all the Contributors of nifanfa/OS-Sharp.");
 
             for (; ; )
             {
