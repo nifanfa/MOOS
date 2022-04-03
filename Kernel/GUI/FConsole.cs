@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Kernel.GUI
 {
-    internal class FConsole : Form
+    internal class FConsole : Window
     {
         string Data;
         public Image ScreenBuf;
@@ -18,7 +18,7 @@ namespace Kernel.GUI
             Title = "Console";
             Cmd = string.Empty;
             Data = string.Empty;
-            BackgroundColor = 0xFF101010;
+            BackgroundColor = 0xFF222222;
             ScreenBuf = new Image(640, 320);
 
             Console.OnWrite += Console_OnWrite;
