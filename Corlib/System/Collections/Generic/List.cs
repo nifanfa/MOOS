@@ -36,12 +36,12 @@ namespace System.Collections.Generic
 
         public void Insert(int index,T item) 
         {
-            for(int i = Count; i > index; i--) 
+            //Count++;
+            for(int i = Count - 1; i > index; i--) 
             {
                 _value[i] = _value[i - 1];
             }
             _value[index] = item;
-            Count++;
         }
 
         public T[] ToArray()
