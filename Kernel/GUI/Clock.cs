@@ -21,7 +21,7 @@ namespace Kernel.GUI
             DrawHand(X + (Width / 2), Y + (Height / 2), minute, Width > Height ? (Height / 4) : (Width / 4), 0xFFFFFFFF);
 
             int hour = (RTC.Hour >= 12 ? RTC.Hour - 12 : RTC.Hour) * 30;
-            DrawHand(X + (Width / 2), Y + (Height / 2), hour, Width > Height ? (Height / 5) : (Width / 5), 0xFFFFFFFF);
+            DrawHand(X + (Width / 2), Y + (Height / 2), hour, Width > Height ? (Height / 6) : (Width / 6), 0xFFFFFFFF);
 
             string devider = ":";
             string shour = RTC.Hour.ToString();
@@ -33,6 +33,7 @@ namespace Kernel.GUI
             shour.Dispose();
             sminute.Dispose();
             ssecond.Dispose();
+            result.Dispose();
         }
 
         void DrawHand(int xStart, int yStart, int angle, int radius, uint color)
@@ -61,6 +62,7 @@ namespace Kernel.GUI
             yEnd += (y_flip * ((sine[15 - angle] * radius) >> 8));
 
             Framebuffer.DrawLine(xStart, yStart, xEnd, yEnd, color);
+            sine.Dispose();
         }
     }
 }
