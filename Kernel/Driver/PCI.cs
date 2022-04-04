@@ -76,7 +76,7 @@ namespace Kernel
                 }
             }
 
-            Console.Write("PCI Initialized. ");
+            Console.Write("[PCI] PCI Initialized. ");
             Console.Write(((ulong)Devices.Count).ToString());
             Console.WriteLine(" Devices");
         }

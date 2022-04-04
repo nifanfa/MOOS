@@ -86,7 +86,7 @@ namespace Kernel.Driver
             // Configure Spurious Interrupt Vector Register
             Out((uint)LAPIC_SVR, 0x100 | 0xff);
 
-            Console.WriteLine("Local APIC initialized");
+            Console.WriteLine("[Local APIC] Local APIC initialized");
         }
 
         public static uint GetId()

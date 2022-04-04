@@ -37,7 +37,7 @@ namespace Kernel.Driver
             Controllers.Add(primary);
             Controllers.Add(secondary);
             if(primary.Available() || secondary.Available())
-            Console.WriteLine("IDE controller Initialized");
+            Console.WriteLine("[IDE] IDE controller Initialized");
         }
 
         ushort LBALowPort;

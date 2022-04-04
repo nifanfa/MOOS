@@ -114,7 +114,7 @@ namespace Kernel.Driver
 
             SMBIOSEntryPoint* entry = (SMBIOSEntryPoint*)p;
 
-            Console.Write("SMBIOS Version: ");
+            Console.Write("[SMBIOS] SMBIOS Version: ");
             Console.WriteLine(entry->MajorVersion.ToString());
 
             p = (byte*)entry->TableAddress;
@@ -127,6 +127,7 @@ namespace Kernel.Driver
                 {
                     case HeaderTypes.ProcessorInformation:
                         ProcessorInformation* pinfo = (ProcessorInformation*)((byte*)hdr + sizeof(SMBIOSHeader));
+                        Console.Write("[SMBIOS] ");
                         PrintIndex(hdr, pinfo->PartNumber);
                         PrintIndex(hdr, pinfo->SocketDesignation);
                         PrintIndex(hdr, pinfo->ProcessorManufacturer);
