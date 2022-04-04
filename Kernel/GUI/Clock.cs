@@ -20,8 +20,19 @@ namespace Kernel.GUI
             int minute = RTC.Minute * 6;
             DrawHand(X + (Width / 2), Y + (Height / 2), minute, Width > Height ? (Height / 4) : (Width / 4), 0xFFFFFFFF);
 
-            int hour = RTC.Hour * 6;
+            int hour = (RTC.Hour >= 12 ? RTC.Hour - 12 : 24 - RTC.Hour) * 15;
             DrawHand(X + (Width / 2), Y + (Height / 2), hour, Width > Height ? (Height / 5) : (Width / 5), 0xFFFFFFFF);
+
+            string devider = ":";
+            string shour = RTC.Hour.ToString();
+            string sminute = RTC.Minute.ToString();
+            string ssecond = RTC.Second.ToString();
+            string result = shour + devider + sminute + devider + ssecond;
+            font.DrawString(X + (Width / 2) - (font.MeasureString(result) / 2), Y + font.FontSize, result);
+            devider.Dispose();
+            shour.Dispose();
+            sminute.Dispose();
+            ssecond.Dispose();
         }
 
         void DrawHand(int xStart, int yStart, int angle, int radius, uint color)
