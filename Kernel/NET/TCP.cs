@@ -35,6 +35,9 @@ namespace Kernel.NET
         public uint rcvWnd;                        // receive window
         public uint rcvUP;                         // receive urgent pointer
 
+        public delegate void OnReceivedHandler(byte* ptr, int length);
+        public event OnReceivedHandler OnReceived;
+
         public void Send(byte[] buffer)
         {
             if (Connected)
@@ -46,6 +49,11 @@ namespace Kernel.NET
             {
                 Console.WriteLine("Connection havn't established yet");
             }
+        }
+
+        internal void OnPacket(byte* buffer, int length)
+        {
+            OnReceived?.Invoke(buffer, length);
         }
     }
 
@@ -187,10 +195,7 @@ namespace Kernel.NET
             // Process segment data
             if (length != 0)
             {
-                if ((flags & (byte)TCPFlags.TCP_PSH) != 0)
-                {
-                    RecvData(conn, hdr->seq, buffer, length);
-                }
+                RecvData(conn, hdr->seq, buffer, length);
             }
 
             // Check FIN - TODO, needs to handle out of sequence
@@ -258,12 +263,8 @@ namespace Kernel.NET
                     //Maybe bug here?
                     if (conn.rcvNxt == seq)
                     {
+                        conn.OnPacket(buffer, length);
                         conn.rcvNxt += (uint)length;
-                        for (int i = 0; i < length; i++)
-                        {
-                            Console.Write((char)buffer[i]);
-                        }
-                        Console.WriteLine();
                     }
 
                     // Acknowledge receipt of data
