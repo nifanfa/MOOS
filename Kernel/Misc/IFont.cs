@@ -55,7 +55,7 @@ namespace Kernel.Misc
                 {
                     uint color = image.GetPixel(baseX + w, baseY + h);
                     if (X != -1 && Y != -1)
-                        Framebuffer.ADrawPoint(X + w, Y + h, color);
+                        Framebuffer.DrawPoint(X + w, Y + h, color, true);
                     if ((color & 0xFF000000) == 0) counter++;
                 }
                 if (w > 5 && counter == FontSize) return w;

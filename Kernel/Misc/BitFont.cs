@@ -89,7 +89,7 @@ namespace Kernel.Misc
                                     {
                                         if (ax == 0) continue;
                                         int alpha = Math.Abs(((-maxalpha) * ax * ax / (threshhold * threshhold)) + maxalpha);
-                                        Framebuffer.ADrawPoint(x + ax, y, (Color & ~0xFF000000) | ((uint)alpha << 24));
+                                        Framebuffer.DrawPoint(x + ax, y, (Color & ~0xFF000000) | ((uint)alpha << 24), true);
                                     }
                                 }
 

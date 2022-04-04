@@ -41,7 +41,7 @@ namespace Kernel.GUI
             }
             names.Dispose();
 
-            Framebuffer.Fill(0, 0, Framebuffer.Width, BarHeight, 0xFF111111);
+            Framebuffer.FillRectangle(0, 0, Framebuffer.Width, BarHeight, 0xFF111111);
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
             Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), CurrentDirectory, Framebuffer.Width);
 

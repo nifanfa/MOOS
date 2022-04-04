@@ -2,6 +2,8 @@
  * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
  */
 using Kernel.Driver;
+using Kernel.Misc;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -86,7 +88,7 @@ namespace Kernel
             }
         }
 
-        internal static void Fill(int X, int Y, int Width, int Height, uint Color)
+        internal static void FillRectangle(int X, int Y, int Width, int Height, uint Color)
         {
             for(int w = 0; w < Width; w++) 
             {
@@ -94,17 +96,6 @@ namespace Kernel
                 {
                     DrawPoint(X + w, Y + h, Color);
                 }
-            }
-        }
-        
-        public static void DrawPoint(int X, int Y, uint Color)
-        {
-            if (X > 0 && Y > 0 && X < Width && Y < Height)
-            {
-                if (TripleBuffered)
-                    FirstBuffer[Width * Y + X] = Color;
-                else
-                    VideoMemory[Width * Y + X] = Color;
             }
         }
 
@@ -120,25 +111,49 @@ namespace Kernel
             return 0;
         }
 
-        public static void ADrawPoint(int X, int Y, uint color)
+        public static void DrawPoint(int X, int Y, uint color, bool alphaBlending = false)
         {
-            uint bg = Framebuffer.GetPoint(X, Y);
-            uint foreground = color;
-            uint alpha = foreground & 0xFF000000 >> 24;
-            byte R = (byte)((((((byte)((foreground >> 16) & 0xFF)) * alpha) + ((255 - alpha) * ((bg & 0x00FF0000) >> 16))) >> 8) & 0xFF);
-            byte G = (byte)((((((byte)((foreground >> 8) & 0xFF)) * alpha) + ((255 - alpha) * ((bg & 0x0000FF00) >> 8))) >> 8) & 0xFF);
-            byte B = (byte)((((((byte)((foreground) & 0xFF)) * alpha) + ((255 - alpha) * ((bg & 0x000000FF) >> 0))) >> 8) & 0xFF);
-            DrawPoint(X, Y, Color.ToArgb(R, G, B));
+            if (alphaBlending)
+            {
+                uint foreground = color;
+                int fA = (byte)((foreground >> 24) & 0xFF);
+                int fR = (byte)((foreground >> 16) & 0xFF);
+                int fG = (byte)((foreground >> 8) & 0xFF);
+                int fB = (byte)((foreground) & 0xFF);
+
+                uint background = GetPoint(X, Y);
+                int bA = (byte)((background >> 24) & 0xFF);
+                int bR = (byte)((background >> 16) & 0xFF);
+                int bG = (byte)((background >> 8) & 0xFF);
+                int bB = (byte)((background) & 0xFF);
+
+                int alpha = fA;
+                int inv_alpha = 255 - alpha;
+
+                int newR = (fR * alpha + inv_alpha * bR) >> 8;
+                int newG = (fG * alpha + inv_alpha * bG) >> 8;
+                int newB = (fB * alpha + inv_alpha * bB) >> 8;
+
+                color = Color.ToArgb((byte)newR, (byte)newG, (byte)newB);
+            }
+
+            if (X > 0 && Y > 0 && X < Width && Y < Height)
+            {
+                if (TripleBuffered)
+                    FirstBuffer[Width * Y + X] = color;
+                else
+                    VideoMemory[Width * Y + X] = color;
+            }
         }
 
         public static void DrawRectangle(int X, int Y, int Width, int Height, uint Color, int Weight = 1)
         {
-            Fill(X, Y, Width, Weight, Color);
+            FillRectangle(X, Y, Width, Weight, Color);
 
-            Fill(X, Y, Weight, Height, Color);
-            Fill(X + (Width - Weight), Y, Weight, Height, Color);
+            FillRectangle(X, Y, Weight, Height, Color);
+            FillRectangle(X + (Width - Weight), Y, Weight, Height, Color);
 
-            Fill(X, Y + (Height - Weight), Width, Weight, Color);
+            FillRectangle(X, Y + (Height - Weight), Width, Weight, Color);
         }
 
         public static void DrawImage(int X, int Y, Image image,bool AlphaBlending = true)
@@ -151,26 +166,10 @@ namespace Kernel
 
                         uint foreground = image.RawData[image.Width * h + w];
                         int fA = (byte)((foreground >> 24) & 0xFF);
-                        int fR = (byte)((foreground >> 16) & 0xFF);
-                        int fG = (byte)((foreground >> 8) & 0xFF);
-                        int fB = (byte)((foreground) & 0xFF);
-
-                        uint background = GetPoint(X + w, Y + h);
-                        int bA = (byte)((background >> 24) & 0xFF);
-                        int bR = (byte)((background >> 16) & 0xFF);
-                        int bG = (byte)((background >> 8) & 0xFF);
-                        int bB = (byte)((background) & 0xFF);
-
-                        int alpha = fA;
-                        int inv_alpha = 255 - alpha;
-
-                        int newR = (fR * alpha + inv_alpha * bR) >> 8;
-                        int newG = (fG * alpha + inv_alpha * bG) >> 8;
-                        int newB = (fB * alpha + inv_alpha * bB) >> 8;
 
                         if (fA != 0)
                         {
-                            DrawPoint(X + w, Y + h, Color.ToArgb((byte)newR, (byte)newG, (byte)newB));
+                            DrawPoint(X + w, Y + h, foreground, true);
                         }
                     }
                     else
@@ -179,5 +178,121 @@ namespace Kernel
                     }
                 }
         }
+
+        #region Xiaolin Wu's line algorithm
+        // swaps two numbers
+        static void Swap(int* a, int* b)
+        {
+            int temp = *a;
+            *a = *b;
+            *b = temp;
+        }
+
+        // returns absolute value of number
+        static float Absolute(float x)
+        {
+            if (x < 0) return -x;
+            else return x;
+        }
+
+        //returns integer part of a floating point number
+        static int IPartOfNumber(float x)
+        {
+            return (int)x;
+        }
+
+        //rounds off a number
+        static int RoundNumber(float x)
+        {
+            return IPartOfNumber(x + 0.5f);
+        }
+
+        //returns fractional part of a number
+        static float FPartOfNumber(float x)
+        {
+            if (x > 0) return x - IPartOfNumber(x);
+            else return x - (IPartOfNumber(x) + 1);
+
+        }
+
+        //returns 1 - fractional part of number
+        static float RFPartOfNumber(float x)
+        {
+            return 1 - FPartOfNumber(x);
+        }
+
+        // draws a pixel on screen of given brightness
+        // 0<=brightness<=1. We can use your own library
+        // to draw on screen
+        static void DrawPoint(int X, int Y, uint Color, float Brightness)
+        {
+            byte A = (byte)((Color >> 24) & 0xFF);
+            byte R = (byte)((Color >> 16) & 0xFF);
+            byte G = (byte)((Color >> 8) & 0xFF);
+            byte B = (byte)((Color) & 0xFF);
+            A = ((byte)(A * (1f - Brightness)));
+            DrawPoint(X, Y, System.Drawing.Color.ToArgb(A, R, G, B), true);
+        }
+
+        public static void DrawLine(int x0, int y0, int x1, int y1,uint color)
+        {
+            bool steep = Absolute(y1 - y0) > Absolute(x1 - x0);
+
+            // swap the co-ordinates if slope > 1 or we
+            // draw backwards
+            if (steep)
+            {
+                Swap(&x0, &y0);
+                Swap(&x1, &y1);
+            }
+            if (x0 > x1)
+            {
+                Swap(&x0, &x1);
+                Swap(&y0, &y1);
+            }
+
+            //compute the slope
+            float dx = x1 - x0;
+            float dy = y1 - y0;
+            float gradient = dy / dx;
+            if (dx == 0.0)
+                gradient = 1;
+
+            int xpxl1 = x0;
+            int xpxl2 = x1;
+            float intersectY = y0;
+
+            // main loop
+            if (steep)
+            {
+                int x;
+                for (x = xpxl1; x <= xpxl2; x++)
+                {
+                    // pixel coverage is determined by fractional
+                    // part of y co-ordinate
+                    DrawPoint(IPartOfNumber(intersectY), x, color,
+                                RFPartOfNumber(intersectY));
+                    DrawPoint(IPartOfNumber(intersectY) - 1, x, color,
+                                FPartOfNumber(intersectY));
+                    intersectY += gradient;
+                }
+            }
+            else
+            {
+                int x;
+                for (x = xpxl1; x <= xpxl2; x++)
+                {
+                    // pixel coverage is determined by fractional
+                    // part of y co-ordinate
+                    DrawPoint(x, IPartOfNumber(intersectY), color,
+                                RFPartOfNumber(intersectY));
+                    DrawPoint(x, IPartOfNumber(intersectY) - 1, color,
+                                  FPartOfNumber(intersectY));
+                    intersectY += gradient;
+                }
+            }
+
+        }
+        #endregion
     }
 }

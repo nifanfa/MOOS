@@ -75,14 +75,14 @@ namespace Kernel.GUI
                 Y = Control.MousePosition.Y - OffsetY;
             }
 
-            Framebuffer.Fill(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
+            Framebuffer.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - ((BitFont.MeasureString("Song", Title)) / 2), Y - BarHeight + (BarHeight / 4));
             font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
-            Framebuffer.Fill(X, Y, Width, Height, BackgroundColor);
+            Framebuffer.FillRectangle(X, Y, Width, Height, BackgroundColor);
             Framebuffer.DrawRectangle(X, Y - BarHeight, Width, BarHeight + Height, 0xFF333333);
         }
     }
