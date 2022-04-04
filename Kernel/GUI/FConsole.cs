@@ -57,7 +57,9 @@ namespace Kernel.GUI
                             break;
 
                         case "help":
-                            Console.WriteLine("OS_Sharp Operating System https://github.com/nifanfa/OS-Sharp");
+                            Console.WriteLine("help: to get this information");
+                            Console.WriteLine("shutdown: power off");
+                            Console.WriteLine("hello: issue kernel panic");
                             break;
 
                         case "shutdown":
