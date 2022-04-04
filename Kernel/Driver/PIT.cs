@@ -7,7 +7,7 @@ namespace Kernel
 {
     public class PIT
     {
-        public static ulong Tick = 0;
+        public static ulong Ticks = 0;
 
         public static void Initialise()
         {
@@ -22,13 +22,13 @@ namespace Kernel
 
         internal static void OnInterrupt()
         {
-            Tick = Tick + 1;
+            Ticks = Ticks + 1;
         }
 
         public static void Wait(ulong millisecond)
         {
-            ulong T = Tick;
-            while (Tick < (T + millisecond)) Native.Hlt();
+            ulong T = Ticks;
+            while (Ticks < (T + millisecond)) Native.Hlt();
         }
     }
 }

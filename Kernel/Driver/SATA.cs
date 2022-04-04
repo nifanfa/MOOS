@@ -482,9 +482,9 @@ namespace Kernel
                 FIS->LBA0 = (byte)((Sector) & 0xFF);
                 FIS->LBA1 = (byte)((Sector >> 8) & 0xFF);
                 FIS->LBA2 = (byte)((Sector >> 16) & 0xFF);
-                FIS->LBA3 = (byte)((Sector >> 32) & 0xFF);
-                FIS->LBA4 = (byte)((Sector >> 40) & 0xFF);
-                FIS->LBA5 = (byte)((Sector >> 48) & 0xFF);
+                FIS->LBA3 = (byte)((Sector >> 24) & 0xFF);
+                FIS->LBA4 = (byte)((Sector >> 32) & 0xFF);
+                FIS->LBA5 = (byte)((Sector >> 40) & 0xFF);
 
                 FIS->DeviceRegister = 1 << 6;
 

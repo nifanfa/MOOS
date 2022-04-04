@@ -3,6 +3,7 @@
  */
 //https://github.com/pdoane/osdev/blob/master/net/tcp.c
 
+using Kernel.Driver;
 using System.Runtime.InteropServices;
 
 namespace Kernel.NET
@@ -509,8 +510,8 @@ namespace Kernel.NET
             //TcpSetState(conn, TCP_SYN_SENT);
             conn.State = TCPStatus.SynSent;
 
-            ulong t = PIT.Tick + 3000;
-            while ((PIT.Tick < t) && !conn.Connected)
+            ulong t = Timer.Ticks + 3000;
+            while ((Timer.Ticks < t) && !conn.Connected)
             {
                 Native.Hlt();
             }
@@ -637,7 +638,7 @@ namespace Kernel.NET
                 for (; ; )
                 {
                     SendPacket(conn, sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
-                    PIT.Wait(1000);
+                    Timer.Wait(1000);
                     if (PacketSent) break;
                     Console.WriteLine("Packet may not accpeted. resending");
                 }
