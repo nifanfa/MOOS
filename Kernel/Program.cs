@@ -207,6 +207,7 @@ unsafe class Program
             Framebuffer.TripleBuffered = true;
 
             new Welcome(200, 200);
+            new Clock(600, 400);
             new FConsole(350, 300);
             Console.WriteLine("Welcome to OS-Sharp!");
             Console.WriteLine("Thanks to all the Contributors of nifanfa/OS-Sharp.");

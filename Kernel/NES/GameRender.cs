@@ -30,7 +30,7 @@ namespace NES
                 Color color = Color.FromArgb(byteToWrite[i + 3], byteToWrite[i + 2], byteToWrite[i + 1], byteToWrite[i + 0]);
                 if (color.A != 0)
                 {
-                    Framebuffer.Fill(((Framebuffer.Width / 2) - (512 / 2)) + (w * 2), ((Framebuffer.Height / 2) - (480 / 2)) + (h * 2), 2, 2, color.ToArgb());
+                    Framebuffer.FillRectangle(((Framebuffer.Width / 2) - (512 / 2)) + (w * 2), ((Framebuffer.Height / 2) - (480 / 2)) + (h * 2), 2, 2, color.ToArgb());
                 }
                 //
                 w++;
