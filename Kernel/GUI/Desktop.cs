@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
  */
 using Kernel.FS;
 using Kernel.Misc;
@@ -15,7 +15,7 @@ namespace Kernel.GUI
         public static void Initialize()
         {
             FileIcon = new PNG(File.Instance.ReadAllBytes("/UNKNOWN.PNG"));
-            CurrentDirectory = " root@OS-Sharp: / ";
+            CurrentDirectory = " root@Solution1: / ";
         }
 
         public static void Update()
