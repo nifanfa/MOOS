@@ -20,7 +20,7 @@ namespace Kernel.GUI
             int minute = RTC.Minute * 6;
             DrawHand(X + (Width / 2), Y + (Height / 2), minute, Width > Height ? (Height / 4) : (Width / 4), 0xFFFFFFFF);
 
-            int hour = (RTC.Hour >= 12 ? RTC.Hour - 12 : 24 - RTC.Hour) * 15;
+            int hour = (RTC.Hour >= 12 ? RTC.Hour - 12 : RTC.Hour) * 30;
             DrawHand(X + (Width / 2), Y + (Height / 2), hour, Width > Height ? (Height / 5) : (Width / 5), 0xFFFFFFFF);
 
             string devider = ":";
