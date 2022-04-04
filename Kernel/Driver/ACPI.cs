@@ -216,14 +216,13 @@ namespace Kernel.Driver
                 }
             }
 
-            Console.WriteLine("ACPI Initialized");
+            Console.WriteLine("[ACPI] ACPI Initialized");
         }
 
         private static void ParseDT(ACPI_HEADER* hdr)
         {
             if (*(uint*)hdr->Signature == 0x50434146)
             {
-                Console.WriteLine("ACPI FADT Found!");
                 FADT = (ACPI_FADT*)hdr;
 
                 if (*(uint*)FADT->Dsdt == 0x54445344) //DSDT
@@ -260,10 +259,7 @@ namespace Kernel.Driver
             }
             else if (*(uint*)hdr->Signature == 0x43495041)
             {
-                Console.WriteLine("ACPI MADT Found!");
                 MADT = (ACPI_MADT*)hdr;
-                Console.Write("Local APIC Address: 0x");
-                Console.WriteLine(((ulong)MADT->LocalAPICAddress).ToString("x2"));
 
                 byte* p = (byte*)(MADT + 1);
                 byte* end = (byte*)MADT + MADT->Header.Length;
@@ -276,11 +272,6 @@ namespace Kernel.Driver
                     if (type == APIC_TYPE.LocalAPIC)
                     {
                         APIC_LOCAL_APIC* pic = (APIC_LOCAL_APIC*)p;
-                        Console.Write("Found CPU");
-                        Console.Write(" ProcessorID:");
-                        Console.Write(((ulong)pic->AcpiProcessorId).ToString());
-                        Console.Write(" ID:");
-                        Console.WriteLine(((ulong)pic->ApicId).ToString());
                         LocalAPIC_CPUIDs.Add(pic->ApicId);
                     }
                     else if (type == APIC_TYPE.IOAPIC)
@@ -290,26 +281,10 @@ namespace Kernel.Driver
                         {
                             IO_APIC = ioapic;
                         }
-                        Console.Write("Found I/O APIC");
-                        Console.Write(" ID:");
-                        Console.Write(((ulong)ioapic->IOApicId).ToString());
-                        Console.Write(" Address:");
-                        Console.Write(((ulong)ioapic->IOApicAddress).ToString("x2"));
-                        Console.Write(" GSIB:");
-                        Console.WriteLine(((ulong)ioapic->GlobalSystemInterruptBase).ToString());
                     }
                     else if (type == APIC_TYPE.InterruptOverride)
                     {
                         APIC_INTERRUPT_OVERRIDE* ovr = (APIC_INTERRUPT_OVERRIDE*)p;
-                        Console.Write("Found APIC Override");
-                        Console.Write(" Bus:");
-                        Console.Write(((ulong)ovr->Bus).ToString());
-                        Console.Write(" Source:");
-                        Console.Write(((ulong)ovr->Source).ToString());
-                        Console.Write(" Interrupt:");
-                        Console.Write(((ulong)ovr->Interrupt).ToString("x2"));
-                        Console.Write(" Flags:");
-                        Console.WriteLine(((ulong)ovr->Flags).ToString());
                     }
 
                     p += length;
@@ -317,7 +292,6 @@ namespace Kernel.Driver
             }
             else if (*(uint*)hdr->Signature == 0x54455048) 
             {
-                Console.WriteLine("Found HPET");
                 HPET = (ACPI_HPET*)hdr;
             }
         }

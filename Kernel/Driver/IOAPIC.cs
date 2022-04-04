@@ -19,21 +19,18 @@ namespace Kernel.Driver
         {
             if (ACPI.IO_APIC == null)
             {
-                Panic.Error("Can't initialize I/O APIC");
+                Panic.Error("[I/O APIC] Can't initialize I/O APIC");
                 return;
             }
             uint value = In(IOAPICVER);
             uint count = ((value >> 16) & 0xFF) + 1;
-
-            Console.Write("I/O APIC Pins: ");
-            Console.WriteLine(((ulong)count).ToString());
 
             //Disable All Entries
             for (uint i = 0; i < count; ++i)
             {
                 SetEntry((byte)i, 1 << 16);
             }
-            Console.WriteLine("I/O APIC Initialized");
+            Console.WriteLine("[I/O APIC] I/O APIC Initialized");
         }
 
         public static uint In(byte reg)

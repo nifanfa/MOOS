@@ -14,24 +14,18 @@ namespace Kernel.Driver
 
         public static void Initialize()
         {
-            Console.WriteLine("Initializing HPET");
             if (ACPI.HPET == null) 
             {
-                Console.WriteLine("HPET not found!");
+                Console.WriteLine("[HPET] HPET not found!");
                 return;
             }
-            Console.Write("HPET is at: ");
-            Console.WriteLine(ACPI.HPET->Addresses.Address.ToString("x2"));
 
             //1 Femtosecond= 1e-15 sec
             Clock = (In64((ulong*)(ACPI.HPET->Addresses.Address + 0)) >> 32);
-            Console.Write("One HPET period is ");
-            Console.Write(Clock.ToString());
-            Console.WriteLine("fs");
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0x10), 0);
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0xF0), 0);
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0x10), 1);
-            Console.WriteLine("HPET Initialized");
+            Console.WriteLine("[HPET] HPET Initialized");
         }
 
         public static ulong GetTickCount()
