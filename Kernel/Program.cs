@@ -72,7 +72,8 @@ unsafe class Program
         Console.Write("Initrd: 0x");
         Console.WriteLine((Info->Mods[0]).ToString("x2"));
         Console.WriteLine("Initializing Ramdisk");
-        FAT32 fat = new FAT32(new Ramdisk((IntPtr)Info->Mods[0]), 2048);
+        //FAT32 fat = new FAT32(new Ramdisk((IntPtr)Info->Mods[0]), 2048);
+        FAT32 fat = new FAT32(SATA.Ports[0], 2048);
 
         /*
         if(SATA.Ports.Count)
@@ -189,7 +190,7 @@ unsafe class Program
             Console.WriteLine("S = Down");
             Console.WriteLine("D = Right");
             Console.WriteLine("Game Will Start After 2 Seconds");
-            PIT.Wait(2000);
+            Timer.Wait(2000);
             NES.NES nes = new NES.NES();
             nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
             Console.WriteLine("Nintendo Family Computer Emulator Initialized");
