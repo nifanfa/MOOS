@@ -364,3 +364,5 @@ FodyWeavers.xsd
 Tools/grub2/boot/kernel
 Kernel/Kernel.map
 *.scoreboard
+*.vmem
+*.lck
