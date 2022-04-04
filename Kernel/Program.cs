@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2022 nifanfa, This code is part of the OS-Sharp licensed under the MIT licence.
+ * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
  */
 using Internal.Runtime.CompilerHelpers;
 using Kernel;
@@ -209,8 +209,8 @@ unsafe class Program
             new Welcome(200, 200);
             new Clock(650, 500);
             new FConsole(350, 300);
-            Console.WriteLine("Welcome to OS-Sharp!");
-            Console.WriteLine("Thanks to all the Contributors of nifanfa/OS-Sharp.");
+            Console.WriteLine("Welcome to Solution1!");
+            Console.WriteLine("Thanks to all the Contributors of nifanfa/Solution1.");
 
             for (; ; )
             {
