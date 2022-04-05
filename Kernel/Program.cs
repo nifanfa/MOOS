@@ -137,6 +137,7 @@ unsafe class Program
         //test();
 
         //FIXME - to support unspecific addressed exe
+        //2.EXE is a unspecific addressed exe for testing
         Console.WriteLine("Loading EXE...");
         byte[] buffer = File.Instance.ReadAllBytes("1.EXE");
         Process.Start(buffer);
