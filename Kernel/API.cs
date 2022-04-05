@@ -1,4 +1,5 @@
-﻿using static IDT;
+﻿using Kernel.Misc;
+using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
 
 namespace Kernel
@@ -13,6 +14,9 @@ namespace Kernel
             {
                 case "SayHello":
                     stack->rax = (ulong)(delegate*<void>)&SayHello;
+                    break;
+                default:
+                    Panic.Error($"System call \"{name}\" is not found");
                     break;
             }
             name.Dispose();
