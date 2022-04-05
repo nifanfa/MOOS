@@ -163,6 +163,11 @@ namespace Internal.Runtime.CompilerHelpers
                 var header = (ReadyToRunHeader*)((IntPtr*)Modules)[i];
                 var sections = (ModuleInfoRow*)(header + 1);
 
+                if(header->Signature != ReadyToRunHeaderConstants.Signature) 
+                {
+                    FailFast();
+                }
+
                 for (int k = 0; k < header->NumberOfSections; k++)
                 {
                     if (sections[k].SectionId == ReadyToRunSectionType.GCStaticRegion)
