@@ -9,6 +9,7 @@ using Kernel.GUI;
 using Kernel.Misc;
 using Kernel.NET;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Net;
 using System.Runtime;
@@ -134,6 +135,12 @@ unsafe class Program
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
         test();
+
+        Console.WriteLine("Loading EXE...");
+
+        //Load fixed exe
+        byte[] buffer = File.Instance.ReadAllBytes("CONSLAPP.EXE");
+        Process.Start(buffer);
 
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
