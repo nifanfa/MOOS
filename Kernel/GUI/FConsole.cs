@@ -80,9 +80,9 @@ namespace Kernel.GUI
             }
         }
 
-        public override void Update()
+        public override void UIUpdate()
         {
-            base.Update();
+            base.UIUpdate();
             int w = 0, h = 0;
 
             string cur = "_";
