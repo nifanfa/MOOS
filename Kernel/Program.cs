@@ -136,9 +136,11 @@ unsafe class Program
 
         test();
 
+        /*
         Console.WriteLine("Loading EXE...");
         byte[] buffer = File.Instance.ReadAllBytes("TEST.EXE");
         Process.Start(buffer);
+        */
 
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
