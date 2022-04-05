@@ -15,9 +15,9 @@ namespace Kernel.GUI
             img = new PNG(File.Instance.ReadAllBytes("/BANNER.PNG"));
         }
 
-        public override void Update()
+        public override void UIUpdate()
         {
-            base.Update();
+            base.UIUpdate();
             Framebuffer.DrawImage(X, Y, img);
             font.DrawString(X, Y + img.Height, "(Banner by andreweathan)\nWelcome to Solution1!\nThis project is aim to show how to make asimple but powerful operating system.\nCheck out https://github.com/nifanfa/Solution1!\nContributors: nifanfa, Elijah629, devrusty, TRDP1404", Width);
         }

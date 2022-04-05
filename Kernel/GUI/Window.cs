@@ -39,11 +39,15 @@ namespace Kernel.GUI
 
         public static void UpdateAll()
         {
+            for (int i = 0; i < Forms.Count; i++) 
+            {
+                Forms[i].Update();
+            }
             for (int i = 0; i < Forms.Count; i++)
             {
                 for (int k = 0; k < Forms.Count; k++)
                 {
-                    if (Forms[k].Index == i) Forms[k].Update();
+                    if (Forms[k].Index == i) Forms[k].UIUpdate();
                 }
             }
         }
@@ -95,7 +99,10 @@ namespace Kernel.GUI
                 X = Control.MousePosition.X - OffsetX;
                 Y = Control.MousePosition.Y - OffsetY;
             }
+        }
 
+        public virtual void UIUpdate()
+        {
             Framebuffer.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
