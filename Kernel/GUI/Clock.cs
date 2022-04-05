@@ -13,9 +13,9 @@ namespace Kernel.GUI
             Title = "Clock";
         }
 
-        public override void UIUpdate()
+        public override void OnDraw()
         {
-            base.UIUpdate();
+            base.OnDraw();
 
             int second = RTC.Second * 6;
             DrawHand(X + (Width / 2), Y + (Height / 2), second, Width > Height ? (Height / 3) : (Width / 3), 0xFFFF0000);

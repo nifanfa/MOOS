@@ -41,13 +41,13 @@ namespace Kernel.GUI
         {
             for (int i = 0; i < Forms.Count; i++) 
             {
-                Forms[i].Update();
+                Forms[i].OnInput();
             }
             for (int i = 0; i < Forms.Count; i++)
             {
                 for (int k = 0; k < Forms.Count; k++)
                 {
-                    if (Forms[k].Index == i) Forms[k].UIUpdate();
+                    if (Forms[k].Index == i) Forms[k].OnDraw();
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace Kernel.GUI
 
         public static bool HasFormMoving = false;
 
-        public virtual void Update()
+        public virtual void OnInput()
         {
             if (Control.MouseButtons == MouseButtons.Left)
             {
@@ -101,7 +101,7 @@ namespace Kernel.GUI
             }
         }
 
-        public virtual void UIUpdate()
+        public virtual void OnDraw()
         {
             Framebuffer.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
