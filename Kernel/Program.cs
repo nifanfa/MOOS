@@ -213,9 +213,9 @@ unsafe class Program
         {
             Framebuffer.TripleBuffered = true;
 
-            new Welcome(200, 200);
-            new Clock(650, 500);
             new FConsole(350, 300);
+            new Clock(650, 500);
+            new Welcome(200, 200);
             Console.WriteLine("Welcome to Solution1!");
             Console.WriteLine("Thanks to all the Contributors of nifanfa/Solution1.");
 
