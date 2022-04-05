@@ -9,7 +9,7 @@ namespace System.Diagnostics
     public static unsafe class Process
     {
         /// <summary>
-        /// TO-DO disposing
+        /// FIXME - to support unspecific addressed exe
         /// </summary>
         /// <param name="exe"></param>
         public static void Start(byte[] exe)
