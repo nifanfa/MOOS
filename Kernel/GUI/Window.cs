@@ -21,11 +21,30 @@ namespace Kernel.GUI
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 16);
         }
 
+        public static void MoveToEnd(Window window)
+        {
+            if (window.Index == Forms.Count - 1) return;
+
+            int index = window.Index;
+            for(int i = 0; i < Forms.Count; i++)
+            {
+                var v = Forms[i];
+                if (v.Index > index)
+                {
+                    v.Index--;
+                }
+            }
+            window.Index = Forms.Count - 1;
+        }
+
         public static void UpdateAll()
         {
-            for (int i = Forms.Count - 1; i >= 0; i--)
+            for (int i = 0; i < Forms.Count; i++)
             {
-                Forms[i].Update();
+                for (int k = 0; k < Forms.Count; k++)
+                {
+                    if (Forms[k].Index == i) Forms[k].Update();
+                }
             }
         }
 
@@ -37,6 +56,7 @@ namespace Kernel.GUI
             this.Y = Y;
             this.Width = Width;
             this.Height = Height;
+            Index = Forms.Count;
             Forms.Add(this);
             Title = "Form1";
         }
@@ -47,6 +67,7 @@ namespace Kernel.GUI
         bool Move;
         int OffsetX;
         int OffsetY;
+        public int Index;
 
         public static bool HasFormMoving = false;
 
@@ -56,7 +77,7 @@ namespace Kernel.GUI
             {
                 if (!HasFormMoving && !Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
                 {
-                    Forms.Insert(0, this, false);
+                    MoveToEnd(this);
                     Move = true;
                     HasFormMoving = true;
                     OffsetX = Control.MousePosition.X - X;
