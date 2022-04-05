@@ -42,11 +42,19 @@ namespace System.Collections.Generic
 
             if(increaseCount)
                 Count++;
+
+            var lastOne = _value[Count - 1];
+
             for(int i = Count - 1; i > index; i--) 
             {
                 _value[i] = _value[i - 1];
             }
             _value[index] = item;
+
+            if (!increaseCount) 
+            {
+                _value[Count - 1] = lastOne;
+            }
         }
 
         public T[] ToArray()
