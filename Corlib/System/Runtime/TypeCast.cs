@@ -3,7 +3,9 @@
  */
 using Internal.Runtime;
 using Internal.Runtime.CompilerHelpers;
+#if Kernel
 using Kernel;
+#endif
 using static Internal.Runtime.EEType;
 
 namespace System.Runtime

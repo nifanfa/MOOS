@@ -1,6 +1,7 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
  */
+#if Kernel
 using Kernel;
 
 namespace System.Diagnostics
@@ -30,3 +31,4 @@ namespace System.Diagnostics
         }
     }
 }
+#endif
