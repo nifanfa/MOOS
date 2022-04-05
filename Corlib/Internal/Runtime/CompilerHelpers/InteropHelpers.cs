@@ -33,16 +33,14 @@ namespace Internal.Runtime.CompilerHelpers
 
         internal static unsafe IntPtr ResolvePInvoke(MethodFixupCell* pCell)
         {
-            if (pCell->Target != IntPtr.Zero)
-                return pCell->Target;
-
 #if Kernel
             Console.Write("Method Name: ");
             Console.WriteLine(string.FromASCII(pCell->MethodName, strings.strlen((byte*)pCell->MethodName)));
             //Return the pointer of method
             return (IntPtr)(delegate*<void>)&Hello;
+#else
+            return (IntPtr)ConsoleApp1.Program._int80h((ulong)pCell);
 #endif
-            return IntPtr.Zero;
         }
 
 #if Kernel
@@ -51,31 +49,5 @@ namespace Internal.Runtime.CompilerHelpers
             Panic.Error("Not implemented, check out Internal.Runtime.CompilerHelpers.InteropHelpers");
         }
 #endif
-
-        internal static unsafe int StringToAnsiString(string s, byte* buffer, int bufferLength, bool bestFit = false, bool throwOnUnmappableChar = false)
-        {
-            int convertedBytes = 0;
-
-            fixed (char* pChar = s)
-            {
-                while (pChar[convertedBytes] != '\0' && convertedBytes < bufferLength) 
-                {
-                    //No UTF8 support! To ASCII
-                    buffer[convertedBytes] = (byte)s[convertedBytes];
-                }
-                //convertedBytes = Encoding.UTF8.GetBytes(pChar, s.Length, buffer, bufferLength);
-            }
-
-            buffer[convertedBytes] = 0;
-
-            return convertedBytes;
-        }
-
-        public static void CoTaskMemFree(IntPtr allocatedMemory)
-        {
-#if Kernel
-            Allocator.Free(allocatedMemory);
-#endif
-        }
     }
 }

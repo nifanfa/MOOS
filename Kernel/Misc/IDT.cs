@@ -8,6 +8,7 @@ using Kernel.Misc;
 using Kernel.NET;
 using System.Runtime;
 using System.Runtime.InteropServices;
+using static Internal.Runtime.CompilerHelpers.InteropHelpers;
 
 public static class IDT
 {
@@ -138,15 +139,10 @@ public static class IDT
     {
         irq += 0x20;
         IDTStack* stack = (IDTStack*)rsp;
+        //System calls
         if (irq == 0x80)
         {
-            Console.Write("rax: 0x");
-            Console.WriteLine(stack->rax.ToString("x2"));
-            Console.Write("rip: 0x");
-            Console.WriteLine(stack->rip.ToString("x2"));
-            Console.Write("ss: 0x");
-            Console.WriteLine(stack->ss.ToString("x2"));
-            while (true) ;
+            API.HandleSystemCall(stack);
         }
         switch (irq)
         {
