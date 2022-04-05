@@ -2,7 +2,9 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
  */
 using Internal.Runtime.CompilerServices;
+#if Kernel
 using Kernel;
+#endif
 using System;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -54,6 +56,7 @@ namespace Internal.Runtime.CompilerHelpers
         [RuntimeExport("RhpPInvokeReturn")]
         static void RhpPinvokeReturn(IntPtr frame) { }
 
+#if Kernel
         [RuntimeExport("RhpNewFast")]
         static unsafe object RhpNewFast(EEType* pEEType)
         {
@@ -70,7 +73,9 @@ namespace Internal.Runtime.CompilerHelpers
 
             return obj;
         }
+#endif
 
+#if Kernel
         [RuntimeExport("RhpNewArray")]
         internal static unsafe object RhpNewArray(EEType* pEEType, int length)
         {
@@ -91,6 +96,7 @@ namespace Internal.Runtime.CompilerHelpers
 
             return obj;
         }
+#endif
 
         [RuntimeExport("RhpAssignRef")]
         static unsafe void RhpAssignRef(void** address, void* obj)
@@ -146,6 +152,7 @@ namespace Internal.Runtime.CompilerHelpers
             }
         }
 
+#if Kernel
         public static void InitializeModules(IntPtr Modules) 
         {
             for (int i = 0; ; i++)
@@ -163,7 +170,9 @@ namespace Internal.Runtime.CompilerHelpers
                 }
             }
         }
+#endif
 
+#if Kernel
         static unsafe void InitializeStatics(IntPtr rgnStart, IntPtr rgnEnd)
         {
             for (IntPtr* block = (IntPtr*)rgnStart; block < (IntPtr*)rgnEnd; block++)
@@ -190,5 +199,6 @@ namespace Internal.Runtime.CompilerHelpers
                 }
             }
         }
+#endif
     }
 }

@@ -1,8 +1,9 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
  */
-
+#if Kernel
 using Kernel;
+#endif
 using System.Runtime.CompilerServices;
 
 namespace System

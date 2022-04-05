@@ -8,6 +8,7 @@ using Internal.Runtime.CompilerServices;
 using System;
 using System.Runtime;
 
+#if Kernel
 using Debug = System.Diagnostics.Debug;
 
 namespace Internal.Runtime.CompilerHelpers
@@ -84,3 +85,4 @@ namespace Internal.Runtime.CompilerHelpers
         }
     }
 }
+#endif

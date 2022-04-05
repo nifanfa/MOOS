@@ -84,6 +84,7 @@ namespace System
             return s;
         }
 
+#if Kernel
         static unsafe string Ctor(char* ptr)
         {
             var i = 0;
@@ -92,16 +93,22 @@ namespace System
 
             return Ctor(ptr, 0, i - 1);
         }
+#endif
 
+#if Kernel
         static unsafe string Ctor(IntPtr ptr)
             => Ctor((char*)ptr);
+#endif
 
+#if Kernel
         static unsafe string Ctor(char[] buf)
         {
             fixed (char* _buf = buf)
                 return Ctor(_buf, 0, buf.Length);
         }
+#endif
 
+#if Kernel
         static unsafe string Ctor(char* ptr, int index, int length)
         {
             var et = EETypePtr.EETypePtrOf<string>();
@@ -118,12 +125,15 @@ namespace System
 
             return s;
         }
+#endif
 
+#if Kernel
         static unsafe string Ctor(char[] ptr, int index, int length)
         {
             fixed (char* _ptr = ptr)
                 return Ctor(_ptr, index, length);
         }
+#endif
 
         public override string ToString()
         {
