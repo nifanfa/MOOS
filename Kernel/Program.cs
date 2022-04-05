@@ -135,6 +135,25 @@ unsafe class Program
 
         test();
 
+        Console.WriteLine("Loading EXE...");
+
+        //Load fixed exe
+        byte[] buffer = File.Instance.ReadAllBytes("APP1.EXE");
+        fixed(byte* ptr = buffer) 
+        {
+            DOSHeader* doshdr = (DOSHeader*)ptr;
+            NtHeaders64* nthdr = (NtHeaders64*)(ptr + doshdr->e_lfanew);
+            SectionHeader* sections = ((SectionHeader*)(ptr + doshdr->e_lfanew + sizeof(NtHeaders64)));
+            IntPtr moduleSeg = IntPtr.Zero;
+            for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
+            {
+                if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
+                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ptr + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+            }
+            delegate*<void> p = (delegate*<void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
+            p();
+        }
+
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
         /*
