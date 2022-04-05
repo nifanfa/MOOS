@@ -1,4 +1,5 @@
 ﻿#if Kernel
+//https://www.52pojie.cn/thread-858841-1-1.html
 using Kernel;
 using Kernel.Misc;
 
