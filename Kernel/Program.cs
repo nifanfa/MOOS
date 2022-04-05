@@ -137,6 +137,8 @@ unsafe class Program
         test();
 
         /*
+        //This program is for printing OK on vga text screen. if you want to try it:
+        //Edit \Tools\EntryPoint.asm line 26, add ";" before |MULTIBOOT_VBE_MODE to disable vbe
         Console.WriteLine("Loading EXE...");
         byte[] buffer = File.Instance.ReadAllBytes("TEST.EXE");
         Process.Start(buffer);
