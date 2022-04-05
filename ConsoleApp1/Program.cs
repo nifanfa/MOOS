@@ -21,6 +21,8 @@ namespace ConsoleApp1
             ptr[9] = 0x0f;
             ptr[10] = (byte)'s';
             ptr[11] = 0x0f;
+            ptr[12] = (byte)'s';
+            ptr[13] = 0x0f;
         }
     }
 }
