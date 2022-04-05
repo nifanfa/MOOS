@@ -136,7 +136,7 @@ unsafe class Program
 
         //test();
 
-        //Solve me! can't load unspecific addressed exe!
+        //FIXME - to support unspecific addressed exe
         Console.WriteLine("Loading EXE...");
         byte[] buffer = File.Instance.ReadAllBytes("1.EXE");
         Process.Start(buffer);
