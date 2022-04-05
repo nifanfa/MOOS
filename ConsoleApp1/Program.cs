@@ -1,15 +1,17 @@
 ﻿using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Solution1;
 
 namespace ConsoleApp1
 {
     static unsafe class Program
     {
+        public static void Main() { }
+
         [RuntimeExport("Main")]
-        public static void Main() 
+        public static void Main(SystemTable* st) 
         {
-            ulong* ptr = (ulong*)0xb8000;
-            *ptr = 0x2f592f412f4b2f4f;
+            st->Console_WriteLine("Hello World From 1.EXE!\0");
         }
     }
 }
