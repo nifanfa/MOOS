@@ -2,7 +2,6 @@
 //https://www.52pojie.cn/thread-858841-1-1.html
 using Kernel;
 using Kernel.Misc;
-using System.Solution1;
 
 namespace System.Diagnostics
 {
@@ -60,9 +59,8 @@ namespace System.Diagnostics
                     }
                 }
 
-                delegate*<SystemTable*, void> p = (delegate*<SystemTable*, void>)(mem + pNt->OptionalHeader.AddressOfEntryPoint);
-                fixed(SystemTable* st = &API.st)
-                    p(st);
+                delegate*<void> p = (delegate*<void>)(mem + pNt->OptionalHeader.AddressOfEntryPoint);
+                p();
             }
         }
     }

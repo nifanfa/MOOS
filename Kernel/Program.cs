@@ -14,7 +14,6 @@ using System.Drawing;
 using System.Net;
 using System.Runtime;
 using System.Runtime.InteropServices;
-using System.Solution1;
 using System.Windows.Forms;
 
 unsafe class Program
@@ -68,8 +67,6 @@ unsafe class Program
         SATA.Initialize();
 
         IDE.Initialize();
-
-        API.Initialize();
 
         Allocator.AllowCollect = true;
 
@@ -137,11 +134,16 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
-        //test();
+        test();
 
+        /*
+        //TO-DO API
+        //This program is for printing OK on vga text screen. if you want to try it:
+        //Edit \Tools\EntryPoint.asm line 26, add ";" before |MULTIBOOT_VBE_MODE to disable vbe
         Console.WriteLine("Loading EXE...");
-        byte[] buffer = File.Instance.ReadAllBytes("1.EXE");
+        byte[] buffer = File.Instance.ReadAllBytes("TEST.EXE");
         Process.Start(buffer);
+        */
 
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
 
