@@ -5,11 +5,16 @@ namespace ConsoleApp1
 {
     static unsafe class Program
     {
+        [DllImport("SayHello")]
+        public static extern void SayHello();
+
+        [DllImport("*")]
+        public static extern ulong _int80h(ulong p1);
+
         [RuntimeExport("Main")]
-        public static void Main() 
+        public static void Main()
         {
-            ulong* ptr = (ulong*)0xb8000;
-            *ptr = 0x2f592f412f4b2f4f;
+            SayHello();
         }
     }
 }

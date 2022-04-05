@@ -19,6 +19,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<LinkerArg Include="/fixed /safeseh:no /base:0x20000000 /filealign:0x1000" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<NativeLibrary Include="$(MSBuildStartupDirectory)\x64\Debug\StaticLib1.lib" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
