@@ -70,6 +70,7 @@ unsafe class Program
 
         Allocator.AllowCollect = true;
 
+        //Only fixed size vhds are supported!
         Console.Write("Initrd: 0x");
         Console.WriteLine((Info->Mods[0]).ToString("x2"));
         Console.WriteLine("Initializing Ramdisk");
