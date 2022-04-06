@@ -19,10 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="diskio.c" />
+    <ClCompile Include="fatfs.c" />
+    <ClCompile Include="ff.c" />
+    <ClCompile Include="ffsystem.c" />
+    <ClCompile Include="ffunicode.c" />
     <ClCompile Include="interrupts.cpp" />
     <ClCompile Include="io.cpp" />
     <ClCompile Include="lodepng.c" />
     <ClCompile Include="mem.cpp" />
+    <ClCompile Include="misc.cpp" />
     <ClCompile Include="native.cpp" />
     <ClCompile Include="printf.cpp" />
     <ClCompile Include="test.cpp" />
@@ -31,6 +37,10 @@
     <MASM Include="interrupts_asm.asm" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="diskio.h" />
+    <ClInclude Include="ff.h" />
+    <ClInclude Include="ffconf.h" />
+    <ClInclude Include="integer.h" />
     <ClInclude Include="libcore.h" />
     <ClInclude Include="lodepng.h" />
   </ItemGroup>

@@ -402,16 +402,13 @@ namespace Kernel
                 }
             }
 
-            public override bool Read(ulong sector, uint count, byte[] data) 
+            public override bool Read(ulong sector, uint count, byte* p) 
             {
                 bool b = false;
-                fixed (byte* p = data)
+                for (int i = 0; i < (count * 512); i += 512)
                 {
-                    for (int i = 0; i < data.Length; i += 512)
-                    {
-                        b = ReadOrWrite((uint)sector,1, (ushort*)(p + i), false);
-                        sector++;
-                    }
+                    b = ReadOrWrite((uint)sector, 1, (ushort*)(p + i), false);
+                    sector++;
                 }
                 return b;
                 /*
@@ -420,16 +417,13 @@ namespace Kernel
                 */
             }
 
-            public override bool Write(ulong sector, uint count, byte[] data)
+            public override bool Write(ulong sector, uint count, byte* p)
             {
                 bool b = false;
-                fixed (byte* p = data)
+                for (int i = 0; i < (count*512); i += 512)
                 {
-                    for (int i = 0; i < data.Length; i += 512)
-                    {
-                        b = ReadOrWrite((uint)sector, 1, (ushort*)(p + i), true);
-                        sector++;
-                    }
+                    b = ReadOrWrite((uint)sector, 1, (ushort*)(p + i), true);
+                    sector++;
                 }
                 return b;
                 /*

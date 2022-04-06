@@ -14,7 +14,7 @@ namespace Kernel.GUI
 
         public static void Initialize()
         {
-            FileIcon = new PNG(File.Instance.ReadAllBytes("/UNKNOWN.PNG"));
+            FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
             CurrentDirectory = " root@Solution1: / ";
         }
 
@@ -22,6 +22,7 @@ namespace Kernel.GUI
         {
             const int BarHeight = 35;
 
+            /*
             string[] names = File.Instance.GetFiles();
             int Devide = 60;
             int X = Devide;
@@ -40,6 +41,7 @@ namespace Kernel.GUI
                 Y += FileIcon.Height + Devide;
             }
             names.Dispose();
+            */
 
             Framebuffer.FillRectangle(0, 0, Framebuffer.Width, BarHeight, 0xFF111111);
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));

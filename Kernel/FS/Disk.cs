@@ -3,9 +3,16 @@
  */
 namespace Kernel.FS
 {
-    public abstract class Disk
+    public abstract unsafe class Disk
     {
-        public abstract bool Read(ulong sector, uint count, byte[] data);
-        public abstract bool Write(ulong sector, uint count, byte[] data);
+        public static Disk Instance;
+
+        public Disk()
+        {
+            Instance = this;
+        }
+
+        public abstract bool Read(ulong sector, uint count, byte* data);
+        public abstract bool Write(ulong sector, uint count, byte* data);
     }
 }
