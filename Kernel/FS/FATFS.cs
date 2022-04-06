@@ -66,7 +66,29 @@ namespace Kernel.FS
         }
 
         [RuntimeExport("get_fattime")]
-        public static uint get_fattime() => 0;
+        public static uint get_fattime() 
+        {
+            uint year = RTC.Year;
+            //TO-DO 2100year
+            year += 2000;
+            uint month = RTC.Month;
+            uint day = RTC.Day;
+            uint hour = RTC.Hour;
+            uint minute = RTC.Minute;
+            uint second = RTC.Second;
+
+            year -= 1980;
+            second /= 2;
+
+            year <<= 25;
+            month <<= 21;
+            day <<= 16;
+            hour <<= 11;
+            minute <<= 5;
+
+            uint result = year | month | day | hour | minute | second;
+            return result;
+        }
 
         [RuntimeExport("RAM_disk_write")]
         public static int RAM_disk_write(byte* buffer, ulong sector, uint count)
