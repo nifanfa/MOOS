@@ -8,9 +8,6 @@ namespace ConsoleApp1
         [DllImport("SayHello")]
         public static extern void SayHello();
 
-        [DllImport("*")]
-        public static extern ulong _int80h(ulong p1);
-
         //Check out
         //Kernel.API
         //Internal.Runtime.CompilerHelpers.InteropHelpers

@@ -31,6 +31,12 @@ namespace Internal.Runtime.CompilerHelpers
             public uint DllImportSearchPathAndCookie;
         }
 
+#if Kernel
+#else
+        [DllImport("*")]
+        private static extern ulong _int80h(ulong p1);
+#endif
+
         internal static unsafe IntPtr ResolvePInvoke(MethodFixupCell* pCell)
         {
 #if Kernel
@@ -39,7 +45,7 @@ namespace Internal.Runtime.CompilerHelpers
             //Return the pointer of method
             return (IntPtr)(delegate*<void>)&Hello;
 #else
-            return (IntPtr)ConsoleApp1.Program._int80h((ulong)pCell);
+            return (IntPtr)_int80h((ulong)pCell);
 #endif
         }
 
