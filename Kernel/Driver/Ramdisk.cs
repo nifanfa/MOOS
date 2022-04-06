@@ -14,21 +14,15 @@ namespace Kernel.FS
             ptr = (byte*)_ptr;
         }
 
-        public override bool Read(ulong sector, uint count, byte[] data) 
+        public override bool Read(ulong sector, uint count, byte* p) 
         {
-            fixed(byte* p = data) 
-            {
-                Native.Movsb(p, ptr + (sector * 512), 512 * count);
-            }
+            Native.Movsb(p, ptr + (sector * 512), 512 * count);
             return true;
         }
 
-        public override bool Write(ulong sector, uint count, byte[] data)
+        public override bool Write(ulong sector, uint count, byte* p)
         {
-            fixed (byte* p = data)
-            {
-                Native.Movsb(ptr + (sector * 512), p, 512 * count);
-            }
+            Native.Movsb(ptr + (sector * 512), p, 512 * count);
             return true;
         }
     }

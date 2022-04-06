@@ -229,30 +229,24 @@ namespace Kernel.Driver
             return true;
         }
 
-        public override bool Read(ulong sector, uint count, byte[] data) 
+        public override bool Read(ulong sector, uint count, byte* p) 
         {
             bool b = false;
-            fixed(byte* p = data)
+            for (int i = 0; i < (count * 512); i += 512)
             {
-                for (int i = 0; i < data.Length; i += 512)
-                {
-                    b = ReadOrWrite(Drive.Master, (uint)sector, p + i, false);
-                    sector++;
-                }
+                b = ReadOrWrite(Drive.Master, (uint)sector, p + i, false);
+                sector++;
             }
             return b;
         }
 
-        public override bool Write(ulong sector, uint count, byte[] data)
+        public override bool Write(ulong sector, uint count, byte* p)
         {
             bool b = false;
-            fixed (byte* p = data)
+            for (int i = 0; i < (count*512); i += 512)
             {
-                for (int i = 0; i < data.Length; i += 512)
-                {
-                    b = ReadOrWrite(Drive.Master, (uint)sector, p + i, true);
-                    sector++;
-                }
+                b = ReadOrWrite(Drive.Master, (uint)sector, p + i, true);
+                sector++;
             }
             return b;
         }

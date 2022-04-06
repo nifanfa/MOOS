@@ -74,7 +74,8 @@ unsafe class Program
         Console.Write("Initrd: 0x");
         Console.WriteLine((Info->Mods[0]).ToString("x2"));
         Console.WriteLine("Initializing Ramdisk");
-        FAT32 fat = new FAT32(new Ramdisk((IntPtr)Info->Mods[0]), 2048);
+        new Ramdisk((IntPtr)(Info->Mods[0]));
+        new FATFS();
         //FAT32 fat = new FAT32(SATA.Ports[0], 2048);
 
         /*
@@ -112,20 +113,20 @@ unsafe class Program
         */
 
         /*
-        byte[] buffer = File.Instance.ReadAllBytes("/CURS.PNG");
+        byte[] buffer = File.Instance.ReadAllBytes("0:/CURS.PNG");
         Console.WriteLine("File read");
         PNG png = new PNG(buffer);
         Framebuffer.DrawImage(0, 0, png);
         */
 
-        Cursor = new PNG(File.Instance.ReadAllBytes("/CURSOR.PNG"));
+        Cursor = new PNG(File.Instance.ReadAllBytes("0:/CURSOR.PNG"));
         //Image from unsplash
-        Wallpaper = new PNG(File.Instance.ReadAllBytes("/WALP.PNG"));
+        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/WALP.PNG"));
 
         BitFont.Initialize();
 
         string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-        BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
+        BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("0:/SONG.BTF"), 16));
 
         Window.Initialize();
 
@@ -140,7 +141,7 @@ unsafe class Program
         //FIXME - to support unspecific addressed exe
         //2.EXE is a unspecific addressed exe for testing
         Console.WriteLine("Loading EXE...");
-        byte[] buffer = File.Instance.ReadAllBytes("1.EXE");
+        byte[] buffer = File.Instance.ReadAllBytes("0:/1.EXE");
         Process.Start(buffer);
 
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
@@ -200,7 +201,7 @@ unsafe class Program
             Console.WriteLine("Game Will Start After 2 Seconds");
             Timer.Wait(2000);
             NES.NES nes = new NES.NES();
-            nes.openROM(File.Instance.ReadAllBytes("/MARIO.NES"));
+            nes.openROM(File.Instance.ReadAllBytes("0:/MARIO.NES"));
             Console.WriteLine("Nintendo Family Computer Emulator Initialized");
             Framebuffer.TripleBuffered = true;
             for (; ; )

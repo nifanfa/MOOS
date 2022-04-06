@@ -17,7 +17,7 @@ namespace Kernel.GUI
         public static void Initialize()
         {
             Forms = new List<Window>();
-            PNG yehei = new PNG(File.Instance.ReadAllBytes("/CASC.PNG"));
+            PNG yehei = new PNG(File.Instance.ReadAllBytes("0:/CASC.PNG"));
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 16);
         }
 

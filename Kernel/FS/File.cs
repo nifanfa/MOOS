@@ -15,7 +15,8 @@ namespace Kernel.FS
             Instance = this;
         }
 
+        public abstract void Delete(string Name);
         public abstract byte[] ReadAllBytes(string Name);
-        public abstract string[] GetFiles();
+        public abstract void WriteAllBytes(string Name, byte[] Content);
     }
 }
