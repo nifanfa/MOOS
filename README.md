@@ -11,6 +11,9 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | Intel® Gigabit Ethernet Network | ✅ | ✅ |
 | Realtek RTL8139 | ✅ | ❓ |
 | ExFAT | ✅ | ✅ |
+| FAT32 | ❓ | ❓ |
+| FAT16 | ❓ | ❓ |
+| FAT12 | ❓ | ❓ |
 | I/O APIC | ✅ | ✅ |
 | Local APIC | ✅ | ✅ |
 | SATA | ⚠️ | ❌ | Can't read more than one sec at once, Can't detect sata controller on real hardware |
