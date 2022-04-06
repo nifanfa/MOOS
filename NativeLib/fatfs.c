@@ -8,14 +8,45 @@ UINT bw;            /* Bytes written */
 BYTE* work;
 DIR dir;
 FILINFO info;
+DIR dir;                    // Directory
+FILINFO fno;                // File Info
+WCHAR* names;
 
 void fatfs_init()
 {
 	work = malloc(FF_MAX_SS);
+	names = malloc(8192);
 
 	//res = f_mkfs(L"0:", FS_EXFAT, 0, work, FF_MAX_SS);
 
 	res = f_mount(&fs, L"0:", 0);
+}
+
+WCHAR* get_files(unsigned short* directory)
+{
+	f_opendir(&dir, directory);   // Open Root
+	int i = 0;
+	do
+	{
+		int ii = 0;
+		f_readdir(&dir, &fno);
+		if (fno.fname[0] != 0)
+		{
+			while (fno.fname[ii] != 0)
+			{
+				names[i] = fno.fname[ii];
+				i++;
+				ii++;
+			}
+			names[i] = '\n';
+			i++;
+		}
+	} while (fno.fname[0] != 0);
+	names[i] = 0;
+
+	f_closedir(&dir);
+
+	return names;
 }
 
 void write_all_bytes(TCHAR* filename, void* data,long filesize)

@@ -68,7 +68,9 @@ unsafe class Program
 
         IDE.Initialize();
 
-        Allocator.AllowCollect = true;
+#if HasGC
+        GC.AllowCollect = true;
+#endif
 
         //Only fixed size vhds are supported!
         Console.Write("Initrd: 0x");

@@ -1,4 +1,5 @@
-﻿using System.Runtime;
+﻿using System.Collections.Generic;
+using System.Runtime;
 using System.Runtime.InteropServices;
 
 namespace Kernel.FS
@@ -29,6 +30,39 @@ namespace Kernel.FS
             }
             while (true) ;
             */
+        }
+
+
+        [DllImport("*")]
+        private static extern char* get_files(char* directory);
+
+        public override List<string> GetFiles(string Directory) 
+        {
+            List<string> files = new List<string>();
+            char* c;
+            fixed (char* p = Directory) c = get_files(p);
+            int i = 0;
+            bool atEnd = false;
+            while (true) 
+            {
+                int len = 0;
+                while (c[i+ len] != '\n')
+                {
+                    if (c[i + len] == 0)
+                    {
+                        atEnd = true;
+                        break;
+                    }
+
+                    len++;
+                }
+                if (atEnd) break;
+                files.Add(new string(c, i, len));
+                i += len;
+                i++;
+            }
+
+            return files;
         }
 
         [RuntimeExport("get_fattime")]

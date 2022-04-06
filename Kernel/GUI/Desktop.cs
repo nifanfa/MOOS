@@ -3,6 +3,7 @@
  */
 using Kernel.FS;
 using Kernel.Misc;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Kernel.GUI
@@ -11,23 +12,24 @@ namespace Kernel.GUI
     {
         private static Image FileIcon;
         public static string CurrentDirectory;
+        public static string Dir;
 
         public static void Initialize()
         {
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
             CurrentDirectory = " root@Solution1: / ";
+            Dir = "0:/";
         }
 
         public static void Update()
         {
             const int BarHeight = 35;
 
-            /*
-            string[] names = File.Instance.GetFiles();
+            List<string> names = File.Instance.GetFiles(Dir);
             int Devide = 60;
             int X = Devide;
             int Y = Devide + BarHeight;
-            for (int i = 0; i < names.Length; i++)
+            for (int i = 0; i < names.Count; i++)
             {
                 if (Y + FileIcon.Height + Devide > Framebuffer.Height - Devide)
                 {
@@ -39,9 +41,9 @@ namespace Kernel.GUI
                 //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
                 Window.font.DrawString(X, Y + FileIcon.Height, names[i], FileIcon.Width);
                 Y += FileIcon.Height + Devide;
+                names[i].Dispose();
             }
             names.Dispose();
-            */
 
             Framebuffer.FillRectangle(0, 0, Framebuffer.Width, BarHeight, 0xFF111111);
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
