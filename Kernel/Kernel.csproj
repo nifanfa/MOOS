@@ -11,7 +11,7 @@
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 
-		<DefineConstants>Kernel</DefineConstants>
+		<DefineConstants>Kernel;HasGC</DefineConstants>
 
 		<IlcSystemModule>Kernel</IlcSystemModule>
 		<EntryPointSymbol>Main</EntryPointSymbol>

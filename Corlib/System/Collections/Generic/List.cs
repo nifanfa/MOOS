@@ -96,6 +96,12 @@ namespace System.Collections.Generic
             _value[Count] = default(T);
         }
 
+        public override void Dispose()
+        {
+            _value.Dispose();
+            base.Dispose();
+        }
+
         public void Clear()
         {
             Count = 0;
