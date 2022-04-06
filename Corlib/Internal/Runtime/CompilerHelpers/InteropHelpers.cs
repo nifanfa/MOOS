@@ -35,7 +35,7 @@ namespace Internal.Runtime.CompilerHelpers
         {
 #if Kernel
             Console.Write("Method Name: ");
-            Console.WriteLine(string.FromASCII(pCell->MethodName, strings.strlen((byte*)pCell->MethodName)));
+            Console.WriteLine(string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName)));
             //Return the pointer of method
             return (IntPtr)(delegate*<void>)&Hello;
 #else
@@ -49,5 +49,17 @@ namespace Internal.Runtime.CompilerHelpers
             Panic.Error("Not implemented, check out Internal.Runtime.CompilerHelpers.InteropHelpers");
         }
 #endif
+
+        internal static unsafe byte* StringToAnsiString(string str, bool bestFit, bool throwOnUnmappableChar) 
+        {
+            //String will become char* if we use DllImport
+            //No Ansi support, Return unicode
+            fixed (char* ptr = str) return (byte*)ptr;
+        }
+
+        internal unsafe static void CoTaskMemFree(void* p)
+        {
+            //TO-DO
+        }
     }
 }

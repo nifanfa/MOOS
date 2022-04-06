@@ -11,10 +11,16 @@ namespace ConsoleApp1
         [DllImport("*")]
         public static extern ulong _int80h(ulong p1);
 
+        //Check out
+        //Kernel.API
+        //Internal.Runtime.CompilerHelpers.InteropHelpers
+        [DllImport("Console.WriteLine")]
+        public static extern void WriteLine(string s);
+
         [RuntimeExport("Main")]
         public static void Main()
         {
-            SayHello();
+            WriteLine("Hello From ConsoleApp1.exe");
         }
     }
 }

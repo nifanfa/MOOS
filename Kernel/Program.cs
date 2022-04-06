@@ -101,7 +101,7 @@ unsafe class Program
         //FIXME - to support unspecific addressed exe
         //2.EXE is a unspecific addressed exe for testing
         Console.WriteLine("Loading EXE...");
-        byte[] buffer = File.Instance.ReadAllBytes("0:/1.EXE");
+        byte[] buffer = File.Instance.ReadAllBytes("0:/ConsoleApp1.exe");
         Process.Start(buffer);
 
         Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
