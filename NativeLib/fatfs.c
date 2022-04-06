@@ -24,7 +24,12 @@ void fatfs_init()
 
 WCHAR* get_files(unsigned short* directory)
 {
-	f_opendir(&dir, directory);   // Open Root
+	res = f_opendir(&dir, directory);   // Open Root
+	if (res != FR_OK)
+	{
+		printf("Can't open directory speficed error code: %d", res);
+		while (true);
+	}
 	int i = 0;
 	do
 	{
