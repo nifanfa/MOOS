@@ -78,48 +78,6 @@ unsafe class Program
         Console.WriteLine("Initializing Ramdisk");
         new Ramdisk((IntPtr)(Info->Mods[0]));
         new FATFS();
-        //FAT32 fat = new FAT32(SATA.Ports[0], 2048);
-
-        /*
-        if(SATA.Ports.Count)
-        {
-            FAT32 fat = new FAT32(SATA.Ports[0], 2048);
-            //byte[] data = File.Instance.ReadAllBytes("TEST1.TXT");
-        }
-        */
-
-        /*
-        Console.WriteLine(
-            IDE.Controllers[0].ReadOrWrite(IDE.Drive.Master, 0, (byte*)0x2000_0000, false) ? "IDE success" : "IDE failed");
-        */
-
-        /*
-        ushort* _P = (ushort*)0x40000000;
-        Console.WriteLine(SATA.Ports[0].Read(0, 1, _P) ? "SATA Success" : "SATA Failed");
-        */
-
-        /*
-        FAT32 fat = new FAT32(SATA.Ports[0], 2048);
-        for(int i = 0; i < fat.Items.Count; i++) 
-        {
-            Console.WriteLine($"{fat.Items[i].Parent}{fat.Items[i].Name}");
-        }
-        Bitmap bitmap = new Bitmap(fat.ReadAllBytes("/CURSOR.BMP"));
-        Framebuffer.DrawImage(0, 0, bitmap);
-        */
-
-        /*
-        FAT32 fat = new FAT32(SATA.Ports[0], 2048);
-        AC97.Initialize();
-        AC97.Play(fat.ReadAllBytes("/TEST.PCM"));
-        */
-
-        /*
-        byte[] buffer = File.Instance.ReadAllBytes("0:/CURS.PNG");
-        Console.WriteLine("File read");
-        PNG png = new PNG(buffer);
-        Framebuffer.DrawImage(0, 0, png);
-        */
 
         Cursor = new PNG(File.Instance.ReadAllBytes("0:/CURSOR.PNG"));
         //Image from unsplash
