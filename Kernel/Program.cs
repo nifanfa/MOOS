@@ -64,9 +64,9 @@ unsafe class Program
         SMBIOS.Initialise();
 
         PCI.Initialise();
-        SATA.Initialize();
 
         IDE.Initialize();
+        SATA.Initialize();
 
 #if HasGC
         GC.AllowCollect = true;
