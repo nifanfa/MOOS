@@ -10,7 +10,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | Nintendo Family Computer Emulator | ✅ | ✅ |
 | Intel® Gigabit Ethernet Network | ✅ | ✅ |
 | Realtek RTL8139 | ✅ | ❓ |
-| FAT32(Read only & WIP) | ⚠️ | ✅ |
+| ExFAT | ✅ | ✅ |
 | I/O APIC | ✅ | ✅ |
 | Local APIC | ✅ | ✅ |
 | SATA | ⚠️ | ❌ | Can't read more than one sec at once, Can't detect sata controller on real hardware |
