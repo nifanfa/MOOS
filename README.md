@@ -1,5 +1,4 @@
-Welcome to ***nifanfa's operating system builder (take a look of off-topic channel and see how we came up with the name XD)*** a name given by Elijah629
-
+Welcome to ***my own operating system project***
 **Discord Server: https://discord.gg/GxwmAK7aRE**  
 ~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
 C# operating system demo, using Native AOT (Core RT) boot via multiboot  
