@@ -1,4 +1,4 @@
-Welcome to ***nifanfa's operating system builder (search the Chinese meaning of SB on Google XD)*** a name given by Elijah629
+Welcome to ***nifanfa's operating system builder (take a look of off-topic channel and see how we came up with the name XD)*** a name given by Elijah629
 
 **Discord Server: https://discord.gg/GxwmAK7aRE**  
 ~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
