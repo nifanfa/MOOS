@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
+ * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 //Reference: https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
 

@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
+ * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;

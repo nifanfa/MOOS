@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
+ * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Kernel.FS;
 using Kernel.Misc;
@@ -17,7 +17,7 @@ namespace Kernel.GUI
         public static void Initialize()
         {
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
-            CurrentDirectory = " root@Solution1: / ";
+            CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
         }
 
