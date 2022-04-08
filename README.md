@@ -2,6 +2,10 @@ Welcome to ***my own operating system project***
 **Discord Server: https://discord.gg/GxwmAK7aRE**  
 ~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
 C# operating system demo, using Native AOT (Core RT) boot via multiboot  
+| Screenshot |
+| ------ |
+| ![image](https://github.com/nifanfa/Moos/blob/master/VirtualBox_NativeAOT_08_04_2022_23_40_57.png) |
+
 | Items | Implemented | Working On Real Hardware (Tested on Supermicro X9DRI-LN4F+) | Note |
 | ----- | ----------- | ----------------------------------------------------------- | ----- |
 | Error Throwing / Catching | ❌ | ❌ | 
@@ -26,5 +30,4 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | TCP(WIP) | ⚠️ | ❓ | Can't receive large package |
 | UDP | ✅ | ❓ |
 | Lan | ✅ | ✅ |
-| Wan | ✅ | ❓ |
-| ![image](https://github.com/nifanfa/Moos/blob/master/VirtualBox_NativeAOT_08_04_2022_23_40_57.png) | | | **Moos On Virtual Box** |
+| Wan | ✅ | ❓ 
