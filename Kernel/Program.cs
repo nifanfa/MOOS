@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2022 nifanfa, This code is part of the Solution1 licensed under the MIT licence.
+ * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Internal.Runtime.CompilerHelpers;
 using Kernel;
@@ -178,8 +178,8 @@ unsafe class Program
             new FConsole(350, 300);
             new Clock(650, 500);
             new Welcome(200, 200);
-            Console.WriteLine("Welcome to Solution1!");
-            Console.WriteLine("Thanks to all the Contributors of nifanfa/Solution1.");
+            Console.WriteLine("Welcome to Moos!");
+            Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
 
             for (; ; )
             {
