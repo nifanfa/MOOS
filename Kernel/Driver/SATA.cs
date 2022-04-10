@@ -404,6 +404,7 @@ namespace Kernel
 
             public override bool Read(ulong sector, uint count, byte* p) 
             {
+                /*
                 bool b = false;
                 for (int i = 0; i < (count * 512); i += 512)
                 {
@@ -411,14 +412,13 @@ namespace Kernel
                     sector++;
                 }
                 return b;
-                /*
-                fixed (byte* p = data)
-                    return ReadOrWrite(sector, count, (ushort*)p, false);
                 */
+                return ReadOrWrite(sector, count, (ushort*)p, false);
             }
 
             public override bool Write(ulong sector, uint count, byte* p)
             {
+                /*
                 bool b = false;
                 for (int i = 0; i < (count*512); i += 512)
                 {
@@ -426,10 +426,8 @@ namespace Kernel
                     sector++;
                 }
                 return b;
-                /*
-                fixed (byte* p = data)
-                    return ReadOrWrite(sector, count, (ushort*)p, true);
                 */
+                return ReadOrWrite(sector, count, (ushort*)p, true);
             }
 
             private bool ReadOrWrite(ulong Sector, uint Count, ushort* Buffer, bool Write)
