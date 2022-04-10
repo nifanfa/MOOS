@@ -6,63 +6,18 @@ using System.Collections.Generic;
 
 namespace Kernel.Driver
 {
-    public unsafe class IDE : Disk
+    public unsafe static class IDE
     {
-        public const byte ReadSectorsWithRetry = 0x20;
-        public const byte WriteSectorsWithRetry = 0x30;
-        public const byte IdentifyDrive = 0xEC;
-        public const byte CacheFlush = 0xE7;
-
-        public const byte Busy = 1 << 7;
-        public const byte DataRequest = 1 << 3;
-        public const byte Error = 1 << 0;
-
-        public const uint ModelNumber = 0x1B * 2;
-        public const uint MaxLBA28 = 60 * 2;
-
-        public const uint DrivesPerConroller = 2;
-
-        ushort DataPort;
-        ushort FeaturePort;
-        ushort ErrorPort;
-        ushort SectorCountPort;
-
-        public static List<IDE> Controllers;
+        public static List<IDEDevice> Ports;
 
         public static void Initialize()
         {
-            Controllers = new List<IDE>(2);
-            IDE primary = new IDE(Channels.Primary);
-            IDE secondary = new IDE(Channels.Secondary);
-            Controllers.Add(primary);
-            Controllers.Add(secondary);
-            if(primary.Available() || secondary.Available())
+            Ports = new ();
+            ScanPorts(Channels.Primary);
+            ScanPorts(Channels.Secondary);
+            if (Ports.Count != 0)
             Console.WriteLine("[IDE] IDE controller Initialized");
         }
-
-        ushort LBALowPort;
-        ushort LBAMidPort;
-        ushort LBAHighPort;
-        ushort DeviceHeadPort;
-        ushort StatusPort;
-        ushort CommandPort;
-        ushort AltStatusPort;
-
-        private struct DriveInfo
-        {
-            public bool Present;
-            public ulong Size;
-        }
-
-        private DriveInfo[] Ports;
-
-        public enum Drive
-        {
-            Master = 0,
-            Slave = 1
-        }
-
-        public const uint SectorSize = 512;
 
         public enum Channels
         {
@@ -70,9 +25,50 @@ namespace Kernel.Driver
             Secondary
         }
 
-        public IDE(Channels index)
+        public static void ScanPorts(Channels index)
         {
+            ushort LBALowPort;
+            ushort LBAMidPort;
+            ushort LBAHighPort;
+            ushort DeviceHeadPort;
+            ushort StatusPort;
+            ushort CommandPort;
+            ushort AltStatusPort;
+            ushort DataPort;
+            ushort FeaturePort;
+            ushort ErrorPort;
+            ushort SectorCountPort;
+
             ushort BasePort = 0, ControlPort = 0;
+
+            bool Available()
+            {
+                Native.Out8(LBALowPort, 0x88);
+                return Native.In8(LBALowPort) == 0x88;
+            }
+
+            bool WaitForReadyStatus()
+            {
+                byte status;
+                do
+                {
+                    status = Native.In8(StatusPort);
+                }
+                while ((status & IDEDevice.Busy) == IDEDevice.Busy);
+
+                return true;
+            }
+
+            bool WaitForIdentifyData()
+            {
+                byte status;
+                do
+                {
+                    status = Native.In8(StatusPort);
+                }
+                while ((status & IDEDevice.DataRequest) != IDEDevice.DataRequest && (status & IDEDevice.Error) != IDEDevice.Error);
+                return ((status & IDEDevice.Error) != IDEDevice.Error);
+            }
 
             switch (index)
             {
@@ -98,30 +94,18 @@ namespace Kernel.Driver
             StatusPort = (ushort)(BasePort + 7);
             AltStatusPort = (ushort)(ControlPort + 6);
 
-            Ports = new DriveInfo[DrivesPerConroller];
-
-            for (var drive = 0; drive < DrivesPerConroller; drive++)
-            {
-                Ports[drive].Present = false;
-                Ports[drive].Size = 0;
-            }
-
             if (!Available()) return;
 
-            //Start Device
             Native.Out8(ControlPort, 0);
 
             for (byte port = 0; port < 2; port++)
             {
-
-                Ports[port].Present = false;
-
                 Native.Out8(DeviceHeadPort, (byte)((port == 0) ? 0xA0 : 0xB0));
                 Native.Out8(SectorCountPort, 0);
                 Native.Out8(LBALowPort, 0);
                 Native.Out8(LBAMidPort, 0);
                 Native.Out8(LBAHighPort, 0);
-                Native.Out8(CommandPort, IdentifyDrive);
+                Native.Out8(CommandPort, IDEDevice.IdentifyDrive);
 
                 if (
                     Native.In8(StatusPort) == 0 ||
@@ -132,17 +116,17 @@ namespace Kernel.Driver
                 {
                     continue;
                 }
-                Ports[port].Present = true;
 
+                ulong Size = 0;
                 var DriveInfo = new byte[4096];
                 fixed (byte* p = DriveInfo)
                 {
                     Native.Insw(DataPort, (ushort*)p, (ulong)(DriveInfo.Length / 2));
 
-                    Ports[port].Size = (*(uint*)(p + MaxLBA28)) * SectorSize;
+                    Size = (*(uint*)(p + IDEDevice.MaxLBA28)) * IDEDevice.SectorSize;
 
                     Console.Write("[IDE] ");
-                    byte* pName = ((byte*)p) + ModelNumber;
+                    byte* pName = ((byte*)p) + IDEDevice.ModelNumber;
                     for (int i = 0; i < 40; i++)
                     {
                         Console.Write((char)pName[i]);
@@ -151,49 +135,68 @@ namespace Kernel.Driver
                     Console.Write(' ');
 
                     Console.Write("Size: ");
-                    Console.Write((Ports[port].Size / (1024 * 1024)).ToString());
+                    Console.Write((Size / (1024 * 1024)).ToString());
                     Console.WriteLine("MiB");
                 }
                 DriveInfo.Dispose();
+
+                var drv = new IDEDevice();
+
+                drv.LBALowPort = LBALowPort;
+                drv.LBAMidPort = LBAMidPort;
+                drv.LBAHighPort = LBAHighPort;
+                drv.DeviceHeadPort= DeviceHeadPort;
+                drv.StatusPort= StatusPort;
+                drv.CommandPort= CommandPort;
+
+
+                drv.DataPort = DataPort;
+                drv.SectorCountPort = SectorCountPort;
+
+                drv.Drive = port;
+
+                drv.Size = Size;
+
+                Ports.Add(drv);
             }
         }
+    }
 
-        public bool Available()
+    public unsafe class IDEDevice : Disk
+    {
+        public ushort LBALowPort;
+        public ushort LBAMidPort;
+        public ushort LBAHighPort;
+        public ushort DeviceHeadPort;
+        public ushort StatusPort;
+        public ushort CommandPort;
+
+        public const byte ReadSectorsWithRetry = 0x20;
+        public const byte WriteSectorsWithRetry = 0x30;
+        public const byte IdentifyDrive = 0xEC;
+        public const byte CacheFlush = 0xE7;
+
+        public const byte Busy = 1 << 7;
+        public const byte DataRequest = 1 << 3;
+        public const byte Error = 1 << 0;
+
+        public const uint ModelNumber = 0x1B * 2;
+        public const uint MaxLBA28 = 60 * 2;
+
+        public const uint DrivesPerConroller = 2;
+
+        public ushort DataPort;
+        public ushort SectorCountPort;
+
+        public const uint SectorSize = 512;
+
+        public uint Drive;
+
+        public ulong Size;
+
+        public bool ReadOrWrite(uint sector, byte* data, bool write)
         {
-            Native.Out8(LBALowPort, 0x88);
-            return Native.In8(LBALowPort) == 0x88;
-        }
-
-        private bool WaitForReadyStatus()
-        {
-            byte status;
-            do
-            {
-                status = Native.In8(StatusPort);
-            }
-            while ((status & Busy) == Busy);
-
-            return true;
-        }
-
-        private bool WaitForIdentifyData()
-        {
-            byte status;
-            do
-            {
-                status = Native.In8(StatusPort);
-            }
-            while ((status & DataRequest) != DataRequest && (status & Error) != Error);
-            return ((status & Error) != Error);
-        }
-
-        public bool ReadOrWrite(Drive adrive, uint sector, byte* data, bool write)
-        {
-            uint drive = (uint)adrive;
-            if (drive >= 2 || !Ports[drive].Present)
-                return false;
-
-            Native.Out8(DeviceHeadPort, (byte)(0xE0 | (drive << 4) | ((sector >> 24) & 0x0F)));
+            Native.Out8(DeviceHeadPort, (byte)(0xE0 | (Drive << 4) | ((sector >> 24) & 0x0F)));
             //Native.Out8(FeaturePort, 0);
             Native.Out8(SectorCountPort, 1);
             Native.Out8(LBAHighPort, (byte)((sector >> 16) & 0xFF));
@@ -229,26 +232,37 @@ namespace Kernel.Driver
             return true;
         }
 
-        public override bool Read(ulong sector, uint count, byte* p) 
+        private bool WaitForReadyStatus()
         {
-            bool b = false;
-            for (int i = 0; i < (count * 512); i += 512)
+            byte status;
+            do
             {
-                b = ReadOrWrite(Drive.Master, (uint)sector, p + i, false);
-                sector++;
+                status = Native.In8(StatusPort);
             }
-            return b;
+            while ((status & Busy) == Busy);
+
+            return true;
+        }
+
+
+        public override bool Read(ulong sector, uint count, byte* p)
+        {
+            for (ulong i = 0; i < count; i++)
+            {
+                bool b = ReadOrWrite((uint)(sector + i), p + (i * SectorSize), false);
+                if (!b) return false;
+            }
+            return true;
         }
 
         public override bool Write(ulong sector, uint count, byte* p)
         {
-            bool b = false;
-            for (int i = 0; i < (count*512); i += 512)
+            for (ulong i = 0; i < count; i++)
             {
-                b = ReadOrWrite(Drive.Master, (uint)sector, p + i, true);
-                sector++;
+                bool b = ReadOrWrite((uint)(sector + i), p + (i * SectorSize), true);
+                if (!b) return false;
             }
-            return b;
+            return true;
         }
     }
 }
