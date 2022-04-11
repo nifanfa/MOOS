@@ -181,7 +181,7 @@ namespace Kernel
 
         public static void Initialize()
         {
-            PCIDevice dev = null;
+            Ports = new List<SATADevice>();
             #region FindDev
             for (int i = 0; i < PCI.Devices.Count; i++)
             {
@@ -191,28 +191,32 @@ namespace Kernel
                     PCI.Devices[i].SubClassID == 0x06
                     )
                 {
-                    dev = PCI.Devices[i];
+                    var dev = PCI.Devices[i];
+
+                    if (dev == null) return;
+                    ushort reg = dev.ReadRegister(0x04);
+                    dev.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
+                    Controller = (HBA*)dev.Bar5;
+                    for (int k = 0; k < 32; k++)
+                    {
+                        if ((Controller->PortsImplemented & (1 << k)) != 0)
+                        {
+                            SATAPortType type = CheckPortType(&(&Controller->Ports)[k]);
+                            if (type == SATAPortType.SATA || type == SATAPortType.ATAPI)
+                            {
+                                SATADevice sata = new SATADevice();
+                                sata.PortType = type;
+                                sata.HBAPort = &(&Controller->Ports)[k];
+                                Ports.Add(sata);
+                            }
+                        }
+                    }
+                    if (Ports.Count != 0) goto End;
+                    dev.WriteRegister(0x04, reg);
                 }
             }
             #endregion
-            if (dev == null) return;
-            Ports = new List<SATADevice>();
-            dev.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
-            Controller = (HBA*)dev.Bar5;
-            for (int i = 0; i < 32; i++)
-            {
-                if ((Controller->PortsImplemented & (1 << i)) != 0)
-                {
-                    SATAPortType type = CheckPortType(&(&Controller->Ports)[i]);
-                    if (type == SATAPortType.SATA || type == SATAPortType.ATAPI)
-                    {
-                        SATADevice sata = new SATADevice();
-                        sata.PortType = type;
-                        sata.HBAPort = &(&Controller->Ports)[i];
-                        Ports.Add(sata);
-                    }
-                }
-            }
+        End:
             for (int i = 0; i < Ports.Count; i++)
             {
                 Ports[i].Configure();
@@ -402,39 +406,32 @@ namespace Kernel
                 }
             }
 
-            public override bool Read(ulong sector, uint count, byte* p) 
+            public const int SectorSize = 512;
+
+            public override bool Read(ulong sector, uint count, byte* p)
             {
-                /*
-                bool b = false;
-                for (int i = 0; i < (count * 512); i += 512)
+                for (ulong i = 0; i < count; i++)
                 {
-                    b = ReadOrWrite((uint)sector, 1, (ushort*)(p + i), false);
-                    sector++;
+                    bool b = ReadOrWrite((uint)(sector + i), p + (i * SectorSize), false);
+                    if (!b) return false;
                 }
-                return b;
-                */
-                return ReadOrWrite(sector, count, (ushort*)p, false);
+                return true;
             }
 
             public override bool Write(ulong sector, uint count, byte* p)
             {
-                /*
-                bool b = false;
-                for (int i = 0; i < (count*512); i += 512)
+                for (ulong i = 0; i < count; i++)
                 {
-                    b = ReadOrWrite((uint)sector, 1, (ushort*)(p + i), true);
-                    sector++;
+                    bool b = ReadOrWrite((uint)(sector + i), p + (i * SectorSize), false);
+                    if (!b) return false;
                 }
-                return b;
-                */
-                return ReadOrWrite(sector, count, (ushort*)p, true);
+                return true;
             }
 
-            private bool ReadOrWrite(ulong Sector, uint Count, ushort* Buffer, bool Write)
+            private bool ReadOrWrite(ulong Sector, byte* Buffer, bool Write)
             {
                 if (PortType == SATAPortType.ATAPI && Write) return false;
                 unchecked { HBAPort->InterruptStatus = (uint)-1; }
-                ulong Spin = 0;
                 int Slot = FindSlot();
                 if (Slot == -1) return false;
 
@@ -443,27 +440,16 @@ namespace Kernel
                 hdr->CommandFISLength = (byte)(sizeof(FIS_REG_H2D) / sizeof(uint));
                 hdr->Write = Write;
                 hdr->ClearBusy = true;
-                hdr->PRDTLength = (ushort)(((Count - 1) >> 4) + 1);
+                hdr->PRDTLength = 1;
 
                 HBACommandTable* table = ((HBACommandTable*)(hdr->CommandTableBaseAddress | (ulong)hdr->CommandTableBaseAddressUpper << 32));
 
                 Native.Stosb(table, 0, (ulong)(sizeof(HBACommandTable) + (hdr->PRDTLength - 1) * sizeof(HBAPRDTEntry)));
 
-                int i = 0;
-                for (; i < hdr->PRDTLength - 1; i++)
-                {
-                    (&(&table->PRDTEntry)[i])->DataBaseAddress = (uint)((ulong)Buffer);
-                    (&(&table->PRDTEntry)[i])->DataBaseAddressUpper = (uint)((ulong)Buffer << 32);
-                    (&(&table->PRDTEntry)[i])->ByteCount = 0x2000 - 1;
-                    (&(&table->PRDTEntry)[i])->InterruptOnCompletion = true;
-                    Buffer += 0x1000;
-                    Count -= 16;
-                }
-
-                (&(&table->PRDTEntry)[i])->DataBaseAddress = (uint)(ulong)Buffer;
-                (&(&table->PRDTEntry)[i])->DataBaseAddressUpper = ((uint)((ulong)Buffer << 32));
-                (&(&table->PRDTEntry)[i])->ByteCount = (Count << 9) - 1;
-                (&(&table->PRDTEntry)[i])->InterruptOnCompletion = true;
+                table->PRDTEntry.DataBaseAddress = (uint)(ulong)Buffer;
+                table->PRDTEntry.DataBaseAddressUpper = ((uint)((ulong)Buffer << 32));
+                table->PRDTEntry.ByteCount = 511;
+                table->PRDTEntry.InterruptOnCompletion = true;
 
                 FIS_REG_H2D* FIS = (FIS_REG_H2D*)(table->CommandFIS);
                 FIS->FISType = 0x27;
@@ -479,24 +465,15 @@ namespace Kernel
 
                 FIS->DeviceRegister = 1 << 6;
 
-                FIS->CountLow = (byte)(Count & 0xFF);
-                FIS->CountHigh = (byte)((Count >> 8) & 0xFF);
+                FIS->CountLow = 1;
+                FIS->CountHigh = 0;
 
-                //Do not make CPU too active
-                //Wait for 2 seconds if fail
-                while ((HBAPort->TaskFileData & (0x80 | 0x08)) != 0 && Spin < 2000)
-                {
-                    Spin++; 
-                    Native.Hlt();
-                }
-
-                if (Spin == 2000) return false;
+                while ((HBAPort->TaskFileData & (0x80 | 0x08)) != 0) ;
 
                 HBAPort->CommandIssue = (uint)(1 << Slot);
 
                 while (true)
                 {
-                    Native.Hlt();
                     if ((HBAPort->CommandIssue & (1 << Slot)) == 0) break;
                     if ((HBAPort->InterruptStatus & ((1 << 30))) != 0) 
                     {
@@ -509,7 +486,7 @@ namespace Kernel
                     return false;
                 }
 
-                while (HBAPort->CommandIssue != 0) Native.Hlt();
+                while (HBAPort->CommandIssue != 0);
                 return true;
             }
 
