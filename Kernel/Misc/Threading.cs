@@ -17,14 +17,12 @@ namespace Kernel.Misc
         public bool Terminated;
         public IDT.IDTStack* stack;
         public FxsaveArea* fxsaveArea;
-        public bool fxSaved;
 
         public Thread(delegate*<void> method)
         {
-            fxSaved = false;
-
             stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
             fxsaveArea = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
+            Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 32);
 
             stack->cs = 0x08;
             stack->ss = 0x10;
@@ -48,9 +46,13 @@ namespace Kernel.Misc
     {
         public static List<Thread> Threads;
         public static bool Ready = false;
+        public static FxsaveArea* Fxdefault;
 
         public static void Initialize()
         {
+            Fxdefault = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
+            Native.Fxsave64(Fxdefault);
+
             Ready = false;
             Threads = new();
             new Thread(&IdleThread);
@@ -112,7 +114,6 @@ namespace Kernel.Misc
             {
                 Native.Movsb(Threads[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
                 Native.Fxsave64(Threads[Index].fxsaveArea);
-                Threads[Index].fxSaved = true;
             }
 
             do
@@ -143,10 +144,7 @@ namespace Kernel.Misc
             #endregion
 
             Native.Movsb(stack, Threads[Index].stack, (ulong)sizeof(IDT.IDTStack));
-            if(Threads[Index].fxSaved)
-            {
-                Native.Fxrstor64(Threads[Index].fxsaveArea);
-            }
+            Native.Fxrstor64(Threads[Index].fxsaveArea);
         }
     }
 }
