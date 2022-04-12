@@ -5,6 +5,16 @@ void Nop()
 	__nop();
 }
 
+void Fxsave64(void* ptr)
+{
+	_fxsave64(ptr);
+}
+
+void Fxrstor64(void* ptr)
+{
+	_fxrstor64(ptr);
+}
+
 void Invlpg(unsigned long physicalAddress)
 {
 	__invlpg(physicalAddress);
