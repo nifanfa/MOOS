@@ -22,7 +22,7 @@ namespace Kernel.Misc
         {
             stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
             fxsaveArea = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
-            Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 32);
+            Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 512);
 
             stack->cs = 0x08;
             stack->ss = 0x10;
