@@ -80,4 +80,10 @@ static unsafe class Native
 
     [DllImport("*")]
     public extern static void Nop();
+
+    [DllImport("*")]
+    public extern static void Fxsave64(void* ptr);
+
+    [DllImport("*")]
+    public extern static void Fxrstor64(void* ptr);
 }
