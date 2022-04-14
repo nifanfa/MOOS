@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -19,7 +19,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/fixed /safeseh:no /base:0x20000000 /filealign:0x1000" />
+		<LinkerArg Include="/filealign:0x1000" />
 	</ItemGroup>
 
 	<ItemGroup>
