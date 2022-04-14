@@ -8,6 +8,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 
 | Items | Implemented | Working On Real Hardware (Tested on Supermicro X9DRI-LN4F+) | Note |
 | ----- | ----------- | ----------------------------------------------------------- | ----- |
+| Applications(.exe) | ✅ | ✅ |
 | Error Throwing / Catching | ❌ | ❌ | 
 | GC | ⚠️ | ❓ | Not safe |
 | Multithreading(Single Core) | ✅ | ✅ |
