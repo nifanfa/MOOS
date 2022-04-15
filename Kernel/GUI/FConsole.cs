@@ -88,10 +88,32 @@ namespace Kernel.GUI
             string cur = "_";
             string s = Data + cur;
             //BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);
-            font.DrawString(X, Y, s, Width);
+            DrawString(X, Y, s, Height, Width);
             cur.Dispose();
             s.Dispose();
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
+        }
+
+
+        public void DrawString(int X, int Y, string Str,int HeightLimit, int LineLimit = -1)
+        {
+            int w = 0, h = 0;
+            for (int i = 0; i < Str.Length; i++)
+            {
+                w += font.DrawChar(X + w, Y + h, Str[i]);
+                if (w + font.FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
+                {
+                    w = 0;
+                    h += font.FontSize;
+
+                    if(h + font.FontSize >= HeightLimit)
+                    {
+                        Framebuffer.Copy(X, Y, X, Y + font.FontSize, LineLimit, HeightLimit - (font.FontSize));
+                        Framebuffer.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, BackgroundColor);
+                        h -= (font.FontSize * 2);
+                    }
+                }
+            }
         }
 
         private void Console_OnWrite(char chr)
