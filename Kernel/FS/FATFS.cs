@@ -12,24 +12,6 @@ namespace Kernel.FS
         public FATFS()
         {
             fatfs_init();
-            /*
-            WriteAllBytes("0:/Hello.txt", new byte[]
-            {
-                (byte)'F',
-                (byte)'u',
-                (byte)'c',
-                (byte)'k',
-                (byte)' ',
-                (byte)'u'
-            });
-
-            byte[] buffer = ReadAllBytes("0:/Hello.txt");
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                Console.Write((char)buffer[i]);
-            }
-            while (true) ;
-            */
         }
 
 
