@@ -85,12 +85,12 @@ namespace Kernel.GUI
             base.OnDraw();
             int w = 0, h = 0;
 
-            string cur = "_";
-            string s = Data + cur;
+            string s0 = "_";
+            string s1 = Data + s0;
             //BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);
-            DrawString(X, Y, s, Height, Width);
-            cur.Dispose();
-            s.Dispose();
+            DrawString(X, Y, s1, Height, Width);
+            s0.Dispose();
+            s1.Dispose();
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
         }
 
@@ -106,11 +106,11 @@ namespace Kernel.GUI
                     w = 0;
                     h += font.FontSize;
 
-                    if(h + font.FontSize >= HeightLimit)
+                    if(h >= HeightLimit)
                     {
                         Framebuffer.Copy(X, Y, X, Y + font.FontSize, LineLimit, HeightLimit - (font.FontSize));
                         Framebuffer.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, BackgroundColor);
-                        h -= (font.FontSize * 2);
+                        h -= font.FontSize;
                     }
                 }
             }
