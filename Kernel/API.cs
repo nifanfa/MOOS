@@ -6,23 +6,17 @@ namespace Kernel
 {
     public static unsafe class API
     {
-        public static unsafe void HandleSystemCall(IDTStack* stack)
+        public static unsafe void* HandleSystemCall(string name)
         {
-            var pCell = (MethodFixupCell*)stack->rcx;
-            string name = string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName));
             switch (name)
             {
                 case "SayHello":
-                    stack->rax = (ulong)(delegate*<void>)&SayHello;
-                    break;
+                    return (delegate*<void>)&SayHello;
                 case "Console.WriteLine":
-                    stack->rax = (ulong)(delegate*<char*, void>)&API_WriteLine;
-                    break;
-                default:
-                    Panic.Error($"System call \"{name}\" is not found");
-                    break;
+                    return (delegate*<char*, void>)&API_WriteLine;
             }
-            name.Dispose();
+            Panic.Error($"System call \"{name}\" is not found");
+            return null;
         }
 
         //String will become char* if we use DllImport

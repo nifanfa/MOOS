@@ -142,7 +142,10 @@ public static class IDT
         //System calls
         if (irq == 0x80)
         {
-            API.HandleSystemCall(stack);
+            var pCell = (MethodFixupCell*)stack->rcx;
+            string name = string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName));
+            stack->rax = (ulong)API.HandleSystemCall(name);
+            name.Dispose();
         }
         switch (irq)
         {
