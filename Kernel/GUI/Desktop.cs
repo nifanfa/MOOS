@@ -5,6 +5,7 @@ using Kernel.FS;
 using Kernel.Misc;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Kernel.GUI
 {
@@ -13,12 +14,16 @@ namespace Kernel.GUI
         private static Image FileIcon;
         public static string CurrentDirectory;
         public static string Dir;
+        public static ImageViewer imageViewer;
 
         public static void Initialize()
         {
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
             CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
+            imageViewer = new ImageViewer(400,200);
+            imageViewer.Visible = false;
+            Window.Forms.Add(imageViewer);
         }
 
         public static void Update()
@@ -35,6 +40,27 @@ namespace Kernel.GUI
                 {
                     Y = Devide + BarHeight;
                     X += FileIcon.Width + Devide;
+                }
+
+                if(Control.MouseButtons == MouseButtons.Left)
+                {
+                    bool clickable = true;
+                    for(int d = 0; d < Window.Forms.Count; d++) 
+                    {
+                        if(Window.IsUnderMouse(Window.Forms[d].X, Window.Forms[d].Y, Window.Forms[d].Width, Window.Forms[d].Height)) 
+                        {
+                            clickable = false;
+                        }
+                    }
+                    
+                    if (clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
+                    {
+                        OnClick(names[i]);
+                    }
+                }
+                else 
+                {
+                    ClickLock = false;
                 }
 
                 Framebuffer.DrawImage(X, Y, FileIcon);
@@ -61,6 +87,23 @@ namespace Kernel.GUI
             Window.font.DrawString(Framebuffer.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);
 
             Result.Dispose();
+        }
+
+        static bool ClickLock = false;
+
+        public static void OnClick(string name)
+        {
+            ClickLock = true;
+            if (
+                name[name.Length-3].ToUpper() == 'P' &&
+                name[name.Length-2].ToUpper() == 'N' &&
+                name[name.Length-1].ToUpper() == 'G'
+                )
+            {
+                imageViewer.SetImage(new PNG(File.Instance.ReadAllBytes(name)));
+                Window.MoveToEnd(imageViewer);
+                imageViewer.Visible = true;
+            }
         }
     }
 }
