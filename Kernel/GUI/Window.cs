@@ -21,6 +21,12 @@ namespace Kernel.GUI
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 16);
         }
 
+        public static bool IsUnderMouse(int X,int Y ,int Width,int Height)
+        {
+            if (Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + Height) return true;
+            return false;
+        }
+
         public static void MoveToEnd(Window window)
         {
             if (window.Index == Forms.Count - 1) return;
@@ -41,16 +47,20 @@ namespace Kernel.GUI
         {
             for (int i = 0; i < Forms.Count; i++) 
             {
-                Forms[i].OnInput();
+                if(Forms[i].Visible)
+                    Forms[i].OnInput();
             }
             for (int i = 0; i < Forms.Count; i++)
             {
-                for (int k = 0; k < Forms.Count; k++)
-                {
-                    if (Forms[k].Index == i) Forms[k].OnDraw();
-                }
+                if (Forms[i].Visible)
+                    for (int k = 0; k < Forms.Count; k++)
+                    {
+                        if (Forms[k].Index == i) Forms[k].OnDraw();
+                    }
             }
         }
+
+        public bool Visible;
 
         public int X, Y, Width, Height;
 
@@ -60,6 +70,7 @@ namespace Kernel.GUI
             this.Y = Y;
             this.Width = Width;
             this.Height = Height;
+            this.Visible = true;
             Index = Forms.Count;
             Forms.Add(this);
             Title = "Form1";
