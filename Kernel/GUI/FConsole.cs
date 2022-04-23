@@ -95,7 +95,7 @@ namespace Kernel.GUI
         }
 
 
-        public void DrawString(int X, int Y, string Str,int HeightLimit, int LineLimit = -1)
+        public void DrawString(int X, int Y, string Str,int HeightLimit = -1, int LineLimit = -1)
         {
             int w = 0, h = 0;
             for (int i = 0; i < Str.Length; i++)
@@ -106,7 +106,7 @@ namespace Kernel.GUI
                     w = 0;
                     h += font.FontSize;
 
-                    if(h >= HeightLimit)
+                    if(HeightLimit != -1 && h >= HeightLimit)
                     {
                         Framebuffer.Copy(X, Y, X, Y + font.FontSize, LineLimit, HeightLimit - (font.FontSize));
                         Framebuffer.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, BackgroundColor);

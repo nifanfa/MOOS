@@ -74,7 +74,8 @@ namespace Kernel.Misc
             return w;
         }
 
-        public void DrawString(int X, int Y, string Str, int LineLimit = -1)
+
+        public void DrawString(int X, int Y, string Str, int LineLimit = -1, int HeightLimit = -1)
         {
             int w = 0, h = 0;
             for (int i = 0; i < Str.Length; i++)
@@ -84,6 +85,11 @@ namespace Kernel.Misc
                 {
                     w = 0;
                     h += FontSize;
+
+                    if (HeightLimit != -1 && h >= HeightLimit)
+                    {
+                        return;
+                    }
                 }
             }
         }
