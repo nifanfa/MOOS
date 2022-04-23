@@ -18,6 +18,7 @@ namespace Kernel.GUI
 
         public static void Initialize()
         {
+            IndexClicked = -1;
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
             CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
@@ -55,12 +56,19 @@ namespace Kernel.GUI
                     
                     if (clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
                     {
+                        IndexClicked = i;
                         OnClick(names[i]);
                     }
                 }
                 else 
                 {
                     ClickLock = false;
+                }
+
+                if(IndexClicked == i) 
+                {
+                    int w = (int)(FileIcon.Width * 1.5f);
+                    Framebuffer.AFillRectangle(X + ((FileIcon.Width/2) - (w/2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
                 }
 
                 Framebuffer.DrawImage(X, Y, FileIcon);
@@ -90,6 +98,7 @@ namespace Kernel.GUI
         }
 
         static bool ClickLock = false;
+        static int IndexClicked;
 
         public static void OnClick(string name)
         {

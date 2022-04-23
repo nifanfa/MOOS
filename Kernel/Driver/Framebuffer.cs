@@ -99,6 +99,17 @@ namespace Kernel
             }
         }
 
+        internal static void AFillRectangle(int X, int Y, int Width, int Height, uint Color)
+        {
+            for (int w = 0; w < Width; w++)
+            {
+                for (int h = 0; h < Height; h++)
+                {
+                    DrawPoint(X + w, Y + h, Color, true);
+                }
+            }
+        }
+
         public static uint GetPoint(int X, int Y)
         {
             if (X > 0 && Y > 0 && X < Width && Y < Height)
