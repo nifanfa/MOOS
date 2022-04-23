@@ -22,7 +22,12 @@ namespace Kernel.GUI
 
         public void SetImage(Image image) 
         {
-            if(image.Width > image.Height)
+            if (this.image != null)
+            {
+                this.image.Dispose();
+            }
+
+            if (image.Width > image.Height)
             {
                 float ratio = image.Height / (float)image.Width;
 

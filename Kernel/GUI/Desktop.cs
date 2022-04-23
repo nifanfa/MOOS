@@ -100,7 +100,11 @@ namespace Kernel.GUI
                 name[name.Length-1].ToUpper() == 'G'
                 )
             {
-                imageViewer.SetImage(new PNG(File.Instance.ReadAllBytes(name)));
+                byte[] buffer = File.Instance.ReadAllBytes(name);
+                PNG png = new PNG(buffer);
+                buffer.Dispose();
+                imageViewer.SetImage(png);
+                png.Dispose();
                 Window.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
             }
