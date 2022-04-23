@@ -25,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/fixed /base:0x4000000 /filealign:0x1000 /map:Kernel.map" />
+		<LinkerArg Include="/fixed /base:0x10000000 /filealign:0x1000 /map:Kernel.map" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -46,9 +46,9 @@
 		<Exec Command="cmd.exe /c copy /b $(MSBuildProjectDirectory)\$(NativeOutputPath)entry+$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt) $(MSBuildStartupDirectory)\Tools\grub2\boot\kernel"></Exec>
 		<Delete Files="$(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Delete>
 		<Exec Command="$(MSBuildStartupDirectory)\Tools\mkisofs.exe -relaxed-filenames -J -R -o $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table $(MSBuildStartupDirectory)\Tools\grub2"></Exec>
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 768 -k en-gb -boot d -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 1024 -k en-gb -boot d -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -d guest_errors -serial stdio -drive id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime"></Exec>
 		<!--
-		<Exec Command="&quot;C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\Solution1\Solution1.vmx"></Exec>
+			<Exec Command="&quot;C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\Solution1\Solution1.vmx"></Exec>
 		-->
 	</Target>
 </Project>
