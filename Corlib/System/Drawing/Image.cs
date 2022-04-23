@@ -60,7 +60,7 @@ namespace System.Drawing
         public override void Dispose()
         {
             RawData.Dispose();
-            this.Dispose();
+            base.Dispose();
         }
     }
 }
