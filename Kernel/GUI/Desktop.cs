@@ -15,6 +15,7 @@ namespace Kernel.GUI
         public static string CurrentDirectory;
         public static string Dir;
         public static ImageViewer imageViewer;
+        public static MessageBox msgbox;
 
         public static void Initialize()
         {
@@ -22,8 +23,11 @@ namespace Kernel.GUI
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
             CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
-            imageViewer = new ImageViewer(400,200);
+            imageViewer = new ImageViewer(400,400);
+            msgbox = new MessageBox(100,300);
             imageViewer.Visible = false;
+            msgbox.Visible = false;
+            Window.Forms.Add(msgbox);
             Window.Forms.Add(imageViewer);
         }
 
@@ -86,10 +90,20 @@ namespace Kernel.GUI
             string CPUUsage = ThreadPool.CPUUsage.ToString();
             string Memory = ((Allocator.NumPages * Allocator.PageSize) / 1048576).ToString();
             string MemoryUsed = (Allocator.MemoryInUse / 1048576).ToString();
-            string Result = $"CPU 0: {CPUUsage}% | Memory: {MemoryUsed}/{Memory}MiB";
+            string Year = (2000+RTC.Year).ToString();
+            string Month = RTC.Month.ToString();
+            string Day = RTC.Day.ToString();
+            string Hour = RTC.Hour.ToString();
+            string Minute = RTC.Minute.ToString();
+            string Result = $"{Year}/{Month}/{Day},{Hour}:{Minute} | CPU 0: {CPUUsage}% | Memory: {MemoryUsed}/{Memory}MiB";
             CPUUsage.Dispose();
             Memory.Dispose();
             MemoryUsed.Dispose();
+            Year.Dispose();
+            Month.Dispose();
+            Day.Dispose();
+            Hour.Dispose();
+            Minute.Dispose();
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
             Window.font.DrawString(Framebuffer.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);
@@ -116,6 +130,12 @@ namespace Kernel.GUI
                 png.Dispose();
                 Window.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
+            }
+            else
+            {
+                msgbox.SetText("No application can open this file!");
+                Window.MoveToEnd(msgbox);
+                msgbox.Visible = true;
             }
         }
     }

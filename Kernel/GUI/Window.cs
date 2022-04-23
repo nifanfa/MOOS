@@ -52,11 +52,14 @@ namespace Kernel.GUI
             }
             for (int i = 0; i < Forms.Count; i++)
             {
-                if (Forms[i].Visible)
-                    for (int k = 0; k < Forms.Count; k++)
+                for (int k = 0; k < Forms.Count; k++)
+                {
+                    if (Forms[k].Index == i)
                     {
-                        if (Forms[k].Index == i) Forms[k].OnDraw();
+                        if (Forms[k].Visible)
+                            Forms[k].OnDraw();
                     }
+                }
             }
         }
 
