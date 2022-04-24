@@ -7,10 +7,10 @@ namespace Kernel.Misc
     {
         public static void Error(string msg) 
         {
+            IDT.Disable();
             Framebuffer.TripleBuffered = false;
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
-            IDT.Disable();
             for (; ; );
         }
     }
