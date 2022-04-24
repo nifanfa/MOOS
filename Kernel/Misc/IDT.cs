@@ -75,6 +75,8 @@ public static class IDT
     [RuntimeExport("exception_handler")]
     public static unsafe void ExceptionHandler(int code, IDTStack* stack)
     {
+        Framebuffer.TripleBuffered = false;
+
         Console.WriteLine($"RAX: 0x{stack->rax.ToString("x2")}");
         Console.WriteLine($"RCX: 0x{stack->rcx.ToString("x2")}");
         Console.WriteLine($"RDX: 0x{stack->rdx.ToString("x2")}");
