@@ -73,38 +73,60 @@ public static class IDT
 
 
     [RuntimeExport("exception_handler")]
-    public static void ExceptionHandler(int code)
+    public static unsafe void ExceptionHandler(int code, IDTStack* stack)
     {
+        Console.WriteLine($"RAX: 0x{stack->rax.ToString("x2")}");
+        Console.WriteLine($"RCX: 0x{stack->rcx.ToString("x2")}");
+        Console.WriteLine($"RDX: 0x{stack->rdx.ToString("x2")}");
+        Console.WriteLine($"RBX: 0x{stack->rbx.ToString("x2")}");
+        Console.WriteLine($"RSI: 0x{stack->rsi.ToString("x2")}");
+        Console.WriteLine($"RDI: 0x{stack->rdi.ToString("x2")}");
+        Console.WriteLine($"R8: 0x{stack->r8.ToString("x2")}");
+        Console.WriteLine($"R9: 0x{stack->r9.ToString("x2")}");
+        Console.WriteLine($"R10: 0x{stack->r10.ToString("x2")}");
+        Console.WriteLine($"R11: 0x{stack->r11.ToString("x2")}");
+        Console.WriteLine($"R12: 0x{stack->r12.ToString("x2")}");
+        Console.WriteLine($"R13: 0x{stack->r13.ToString("x2")}");
+        Console.WriteLine($"R14: 0x{stack->r14.ToString("x2")}");
+        Console.WriteLine($"R15: 0x{stack->r15.ToString("x2")}");
+        Console.WriteLine($"Error Code: 0x{stack->errorCode.ToString("x2")}");
+        Console.WriteLine($"RIP: 0x{stack->rip.ToString("x2")}");
+        Console.WriteLine($"Code segment: 0x{stack->cs.ToString("x2")}");
+        Console.WriteLine($"RFlags: 0x{stack->rflags.ToString("x2")}");
+        Console.WriteLine($"RSP: 0x{stack->rsp.ToString("x2")}");
+        Console.WriteLine($"Stack segment: 0x{stack->ss.ToString("x2")}");
         switch (code)
         {
-            case 0: Panic.Error("DIVIDE BY ZERO"); break;
-            case 1: Panic.Error("SINGLE STEP"); break;
-            case 2: Panic.Error("NMI"); break;
-            case 3: Panic.Error("BREAKPOINT"); break;
-            case 4: Panic.Error("OVERFLOW"); break;
-            case 5: Panic.Error("BOUNDS CHECK"); break;
-            case 6: Panic.Error("INVALID OPCODE"); break;
-            case 7: Panic.Error("COPR UNAVAILABLE"); break;
-            case 8: Panic.Error("DOUBLE FAULT"); break;
-            case 9: Panic.Error("COPR SEGMENT OVERRUN"); break;
-            case 10: Panic.Error("INVALID TSS"); break;
-            case 11: Panic.Error("SEGMENT NOT FOUND"); break;
-            case 12: Panic.Error("STACK EXCEPTION"); break;
-            case 13: Panic.Error("GENERAL PROTECTION"); break;
+            case 0: Console.WriteLine("DIVIDE BY ZERO"); break;
+            case 1: Console.WriteLine("SINGLE STEP"); break;
+            case 2: Console.WriteLine("NMI"); break;
+            case 3: Console.WriteLine("BREAKPOINT"); break;
+            case 4: Console.WriteLine("OVERFLOW"); break;
+            case 5: Console.WriteLine("BOUNDS CHECK"); break;
+            case 6: Console.WriteLine("INVALID OPCODE"); break;
+            case 7: Console.WriteLine("COPR UNAVAILABLE"); break;
+            case 8: Console.WriteLine("DOUBLE FAULT"); break;
+            case 9: Console.WriteLine("COPR SEGMENT OVERRUN"); break;
+            case 10: Console.WriteLine("INVALID TSS"); break;
+            case 11: Console.WriteLine("SEGMENT NOT FOUND"); break;
+            case 12: Console.WriteLine("STACK EXCEPTION"); break;
+            case 13: Console.WriteLine("GENERAL PROTECTION"); break;
             case 14:
                 ulong CR2 = Native.ReadCR2();
                 if ((CR2 >> 5) < 0x1000)
                 {
-                    Panic.Error("NULL POINTER");
+                    Console.WriteLine("NULL POINTER");
                 }
                 else
                 {
-                    Panic.Error("PAGE FAULT");
+                    Console.WriteLine("PAGE FAULT");
                 }
                 break;
-            case 16: Panic.Error("COPR ERROR"); break;
-            default: Panic.Error(" UNKNOWN EXCEPTION"); break;
+            case 16: Console.WriteLine("COPR ERROR"); break;
+            default: Console.WriteLine("UNKNOWN EXCEPTION"); break;
         }
+        Console.WriteLine("Please check methods around rip sub kernel base address and see what method caused this exception!");
+        //This method is unreturnable
     }
 
     public struct IDTStack
@@ -125,7 +147,7 @@ public static class IDT
         public ulong r15;
 
         //https://os.phil-opp.com/returning-from-exceptions/
-        public ulong errorCode;
+        public ulong errorCode; //optional
         public ulong rip;
         public ulong cs;
         public ulong rflags;
@@ -135,10 +157,9 @@ public static class IDT
     }
 
     [RuntimeExport("irq_handler")]
-    public static unsafe void IRQHandler(int irq, ulong rsp)
+    public static unsafe void IRQHandler(int irq, IDTStack* stack)
     {
         irq += 0x20;
-        IDTStack* stack = (IDTStack*)rsp;
         //System calls
         if (irq == 0x80)
         {
