@@ -3,6 +3,7 @@
  */
 using Kernel;
 using Kernel.Driver;
+using Kernel.Misc;
 using System.Diagnostics;
 using static Native;
 
@@ -76,7 +77,7 @@ namespace Kernel.NET
 
             Network.MAC = MAC;
             IRQ = dev.IRQ;
-            IOAPIC.SetEntry(dev.IRQ);
+            Interrupts.EnableInterrupt(dev.IRQ);
         }
 
         public static void OnInterrupt()

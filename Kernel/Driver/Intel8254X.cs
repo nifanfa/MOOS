@@ -3,6 +3,7 @@
  */
 //Reference: https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
 
+using Kernel.Misc;
 using Kernel.NET;
 using System.Runtime.InteropServices;
 using static Kernel.Misc.MMIO;
@@ -128,7 +129,7 @@ namespace Kernel.Driver
             Console.WriteLine("Configuration Done");
 
             Network.MAC = MAC;
-            IOAPIC.SetEntry(device.IRQ);
+            Interrupts.EnableInterrupt(device.IRQ);
             IRQ = device.IRQ;
         }
 

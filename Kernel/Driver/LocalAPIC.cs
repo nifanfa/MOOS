@@ -76,6 +76,8 @@ namespace Kernel.Driver
 
         public static void Initialize(uint CPUForIRQHandlingIndex = 0)
         {
+            PIC.Disable();
+
             //Enable All Interrupts
             Out((uint)LAPIC_TPR, 0);
 
