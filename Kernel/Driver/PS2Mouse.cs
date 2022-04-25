@@ -2,6 +2,7 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Kernel.Driver;
+using Kernel.Misc;
 using System.Windows.Forms;
 using static Native;
 
@@ -26,7 +27,7 @@ namespace Kernel
         public static void Initialise()
         {
             MData = new byte[3];
-            IOAPIC.SetEntry(0x2c);
+            Interrupts.EnableInterrupt(0x2c);
 
             byte _status;
 

@@ -49,14 +49,14 @@ unsafe class Program
         IDT.Enable();
 
         ACPI.Initialize();
-        PIC.Disable();
-        LocalAPIC.Initialize();
-        IOAPIC.Initialize();
-        HPET.Initialize();
+        PIC.Enable();
+        //LocalAPIC.Initialize();
+        //IOAPIC.Initialize();
+        //HPET.Initialize();
 
         PS2Keyboard.Initialize();
         //Enable keyboard interrupts
-        IOAPIC.SetEntry(0x21);
+        Interrupts.EnableInterrupt(0x21);
 
         Serial.Initialise();
         PIT.Initialise();

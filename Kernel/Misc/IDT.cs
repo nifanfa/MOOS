@@ -175,8 +175,7 @@ public static class IDT
             case 0x20:
                 PIT.OnInterrupt();
                 ThreadPool.Schedule(stack);
-                LocalAPIC.EndOfInterrupt();
-                return;
+                break;
             case 0x21:
                 byte b = Native.In8(0x60);
                 PS2Keyboard.ProcessKey(b);
@@ -197,6 +196,6 @@ public static class IDT
         {
             AC97.OnInterrupt();
         }
-        LocalAPIC.EndOfInterrupt();
+        Interrupts.EndOfInterrupt((byte)irq);
     }
 }
