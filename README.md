@@ -20,8 +20,8 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | FAT32 | ❓ | ❓ |
 | FAT16 | ❓ | ❓ |
 | FAT12 | ❓ | ❓ |
-| I/O APIC | ✅ | ✅ |
-| Local APIC | ✅ | ✅ |
+| I/O APIC | ⚠️ | ✅ | Cause triple fault on some PC |
+| Local APIC | ⚠️ | ✅ | Cause triple fault on some PC |
 | SATA | ⚠️ | ❌ | Can't read more than one sec at once, Can't detect sata controller on real hardware |
 | IDE | ✅ | ✅ |
 | SMBIOS | ✅ | ✅ |
