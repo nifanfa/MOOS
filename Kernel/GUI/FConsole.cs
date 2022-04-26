@@ -53,7 +53,9 @@ namespace Kernel.GUI
                     switch (Cmd)
                     {
                         case "hello":
-                            Panic.Error(": )");
+                            int a = 1;
+                            int b = 0;
+                            int c = a / b;
                             break;
 
                         case "help":

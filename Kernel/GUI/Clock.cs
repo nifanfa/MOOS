@@ -7,10 +7,13 @@ namespace Kernel.GUI
 {
     internal class Clock : Window
     {
+        static int[] sine;
+
         public Clock(int X,int Y) : base(X, Y, 200, 200)
         {
             BackgroundColor = 0x0;
             Title = "Clock";
+            sine = new int[16] { 0, 27, 54, 79, 104, 128, 150, 171, 190, 201, 221, 233, 243, 250, 254, 255 };
         }
 
         public override void OnDraw()
@@ -42,7 +45,6 @@ namespace Kernel.GUI
         void DrawHand(int xStart, int yStart, int angle, int radius, uint color)
         {
             angle /= 6;
-            int[] sine = new int[16] { 0, 27, 54, 79, 104, 128, 150, 171, 190, 201, 221, 233, 243, 250, 254, 255 };
             int xEnd, yEnd, quadrant, x_flip, y_flip;
 
             quadrant = angle / 15;
@@ -65,7 +67,6 @@ namespace Kernel.GUI
             yEnd += (y_flip * ((sine[15 - angle] * radius) >> 8));
 
             Framebuffer.DrawLine(xStart, yStart, xEnd, yEnd, color);
-            sine.Dispose();
         }
     }
 }

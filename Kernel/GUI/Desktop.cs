@@ -133,6 +133,8 @@ namespace Kernel.GUI
             }
             else
             {
+                msgbox.X = Control.MousePosition.X + 50;
+                msgbox.Y = Control.MousePosition.Y + 50;
                 msgbox.SetText("No application can open this file!");
                 Window.MoveToEnd(msgbox);
                 msgbox.Visible = true;

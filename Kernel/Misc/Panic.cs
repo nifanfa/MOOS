@@ -5,13 +5,14 @@ namespace Kernel.Misc
 {
     public static class Panic
     {
-        public static void Error(string msg) 
+        public static void Error(string msg,bool skippable = false) 
         {
             IDT.Disable();
             Framebuffer.TripleBuffered = false;
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
-            for (; ; );
+            if(!skippable)
+                for (; ; );
         }
     }
 }
