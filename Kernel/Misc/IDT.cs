@@ -71,7 +71,7 @@ public static class IDT
         Native.Cli();
     }
 
-
+    //interrupts_asm.asm line 39
     [RuntimeExport("exception_handler")]
     public static unsafe void ExceptionHandler(int code, IDTStack* stack)
     {
