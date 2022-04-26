@@ -75,7 +75,7 @@ public static class IDT
     [RuntimeExport("exception_handler")]
     public static unsafe void ExceptionHandler(int code, IDTStack* stack)
     {
-        Framebuffer.TripleBuffered = false;
+        Panic.Error("KERNEL PANIC!!!", true);
 
         Console.WriteLine($"RAX: 0x{stack->rax.ToString("x2")}");
         Console.WriteLine($"RCX: 0x{stack->rcx.ToString("x2")}");
@@ -127,7 +127,6 @@ public static class IDT
             case 16: Console.WriteLine("COPR ERROR"); break;
             default: Console.WriteLine("UNKNOWN EXCEPTION"); break;
         }
-        Console.WriteLine("Please check methods around rip sub kernel base address and see what method caused this exception!");
         //This method is unreturnable
     }
 
