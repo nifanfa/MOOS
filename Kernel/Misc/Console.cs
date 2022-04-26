@@ -2,6 +2,7 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using System;
+using System.Drawing;
 
 namespace Kernel
 {
@@ -16,12 +17,38 @@ namespace Kernel
         public delegate void OnWriteHandler(char chr);
         public static event OnWriteHandler OnWrite;
 
+        private static uint[] ConsoleColorsFramebuffer;
+
+        public static ConsoleColor ForegroundColor;
+
         internal static void Setup()
         {
             Clear();
 
             EnableCursor();
             SetCursorStyle(0b1110);
+
+            ConsoleColorsFramebuffer = new uint[16]
+            {
+                Color.Black.ToArgb(),
+                Color.Blue.ToArgb(),
+                Color.Green.ToArgb(),
+                Color.Cyan.ToArgb(),
+                Color.Red.ToArgb(),
+                Color.Purple.ToArgb(),
+                Color.Brown.ToArgb(),
+                Color.Gray.ToArgb(),
+                Color.DarkGray.ToArgb(),
+                Color.LightBlue.ToArgb(),
+                Color.LightGreen.ToArgb(),
+                Color.LightCyan.ToArgb(),
+                Color.MediumVioletRed.ToArgb(),
+                Color.MediumPurple.ToArgb(),
+                Color.Yellow.ToArgb(),
+                Color.White.ToArgb(),
+            };
+
+            ForegroundColor = ConsoleColor.White;
         }
 
         private static void SetCursorStyle(byte style)
@@ -74,7 +101,8 @@ namespace Kernel
             byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
             *p = (byte)chr;
             p++;
-            *p = 0x0F;
+            *p = (byte)((byte)(ForegroundColor));
+            //*p = 0x0F;
             CursorX++;
             if (CursorX == Width)
             {
@@ -92,7 +120,7 @@ namespace Kernel
                 int X = (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
                 Framebuffer.FillRectangle(X, Y, 8, 16, 0x0);
-                ASC16.DrawChar(chr, X, Y, 0xFFFFFFFF);
+                ASC16.DrawChar(chr, X, Y, ConsoleColorsFramebuffer[(int)ForegroundColor]);
             }
         }
 

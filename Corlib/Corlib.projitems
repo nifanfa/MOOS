@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\BitHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\List.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\Queue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Convert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Debug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Process.cs" />
