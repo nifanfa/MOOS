@@ -152,7 +152,7 @@ unsafe class Program
         Console.WriteLine("Welcome to Moos!");
         Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
 
-        #region Animation of enter Desktop
+        #region Animation of entering Desktop
         Framebuffer.DrawImage(0, 0, Wallpaper, false);
         Desktop.Update();
         Window.UpdateAll();
