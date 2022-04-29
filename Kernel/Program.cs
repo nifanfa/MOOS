@@ -135,7 +135,7 @@ unsafe class Program
         for (; ; ) Native.Hlt();
         */
 
-        ThreadPool.Initialize();
+        ThreadPool.Initialize(&KMain);
         //KMain();
     }
 
