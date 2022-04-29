@@ -4,7 +4,7 @@
     {
         string _message;
 
-        public MessageBox(int X, int Y) : base(X, Y, 200, Window.font.FontSize)
+        public MessageBox(int X, int Y) : base(X, Y, 200, Window.font.FontSize*2)
         {
             this._message = null;
             this.Title = "MessageBox";
