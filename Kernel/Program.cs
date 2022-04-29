@@ -105,8 +105,6 @@ unsafe class Program
         byte[] buffer = File.Instance.ReadAllBytes("0:/ConsoleApp1.exe");
         Process.Start(buffer);
 
-        Console.WriteLine("Press Ctrl + N To Launch Nintendo Family Computer Emulator Otherwise Enter GUI");
-
         /*
         byte[] buffer = File.Instance.ReadAllBytes("TEST.PCM");
         AC97.Initialize();
@@ -143,6 +141,9 @@ unsafe class Program
 
     public static void KMain()
     {
+        Console.WriteLine("Press any key to enter desktop...");
+        Console.ReadKey();
+
         Framebuffer.TripleBuffered = true;
 
         new FConsole(350, 300);
