@@ -138,6 +138,19 @@ namespace Kernel.GUI
                 name[name.Length - 1].ToUpper() == 'S'
                 ) 
             {
+                Framebuffer.TripleBuffered = false;
+                Console.WriteLine("Emulator Keymap:");
+                Console.WriteLine("A = Q");
+                Console.WriteLine("B = E");
+                Console.WriteLine("Z = Select");
+                Console.WriteLine("C = Start");
+                Console.WriteLine("W = Up");
+                Console.WriteLine("A = Left");
+                Console.WriteLine("S = Down");
+                Console.WriteLine("D = Right");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Framebuffer.TripleBuffered = true;
                 NES.NES nes = new NES.NES();
                 nes.openROM(File.Instance.ReadAllBytes(name));
                 for (; ; )
