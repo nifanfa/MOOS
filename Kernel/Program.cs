@@ -160,7 +160,7 @@ unsafe class Program
         Framebuffer.Clear(0x0);
 
         SizedScreens = new Image[60];
-        int startat = 50;
+        int startat = 40;
         for (int i = startat; i < SizedScreens.Length; i++)
         {
             SizedScreens[i] = _screen.ResizeImage(
