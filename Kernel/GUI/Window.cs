@@ -4,6 +4,7 @@
 using Kernel.FS;
 using Kernel.Misc;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Kernel.GUI
@@ -13,11 +14,13 @@ namespace Kernel.GUI
         public static List<Window> Forms;
         public static uint BackgroundColor;
         public static IFont font;
+        public static Image CloseButton;
 
         public static void Initialize()
         {
             Forms = new List<Window>();
             PNG yehei = new PNG(File.Instance.ReadAllBytes("0:/CASC.PNG"));
+            CloseButton = new PNG(File.Instance.ReadAllBytes("0:/Close.png"));
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 16);
         }
 
@@ -101,6 +104,14 @@ namespace Kernel.GUI
                     OffsetX = Control.MousePosition.X - X;
                     OffsetY = Control.MousePosition.Y - Y;
                 }
+                if(
+                    Control.MousePosition.X > CloseButtonX && Control.MousePosition.X < CloseButtonX + CloseButton.Width &&
+                    Control.MousePosition.Y > CloseButtonY && Control.MousePosition.Y < CloseButtonY + CloseButton.Height
+                ) 
+                {
+                    this.Visible = false;
+                    return;
+                }
             }
             else
             {
@@ -115,6 +126,9 @@ namespace Kernel.GUI
             }
         }
 
+        private int CloseButtonX => X + Width + 2 - (BarHeight / 2) - (CloseButton.Width / 2);
+        private int CloseButtonY => Y - BarHeight + (BarHeight / 2) - (CloseButton.Height / 2);
+
         public virtual void OnDraw()
         {
             Framebuffer.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
@@ -126,6 +140,8 @@ namespace Kernel.GUI
 
             Framebuffer.FillRectangle(X, Y, Width, Height, BackgroundColor);
             Framebuffer.DrawRectangle(X - 1, Y - BarHeight - 1, Width + 2, BarHeight + Height + 2, 0xFF333333);
+
+            Framebuffer.DrawImage(CloseButtonX, CloseButtonY, CloseButton);
         }
     }
 }
