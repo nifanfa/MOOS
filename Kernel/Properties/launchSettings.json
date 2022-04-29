@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "VMWare Workstation": {
+    "VMWare Player": {
       "commandName": "Executable",
       "executablePath": "cmd.exe",
       "commandLineArgs": "/c dotnet publish -r win-x64 -c debug kernel",
