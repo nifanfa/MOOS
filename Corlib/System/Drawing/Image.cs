@@ -30,6 +30,11 @@ namespace System.Drawing
 
         public Image ResizeImage(int NewWidth, int NewHeight)
         {
+            if(NewWidth == 0 || NewHeight == 0) 
+            {
+                return new Image();
+            }
+
             int w1 = Width, h1 = Height;
             uint[] temp = new uint[NewWidth * NewHeight];
 

@@ -26,6 +26,8 @@ unsafe class Program
     static Image Cursor;
     static Image Wallpaper;
 
+    public static Image[] SizedScreens;
+
     /*
      * Minimum system requirement:
      * 1024MiB of RAM
@@ -179,6 +181,43 @@ unsafe class Program
             new Welcome(200, 200);
             Console.WriteLine("Welcome to Moos!");
             Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
+
+            #region Animation of enter Desktop
+            Framebuffer.DrawImage(0, 0, Wallpaper, false);
+            Desktop.Update();
+            Window.UpdateAll();
+            Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+            Image _screen = Framebuffer.Save();
+            Framebuffer.Clear(0x0);
+
+            SizedScreens = new Image[60];
+            int startat = 40;
+            for (int i = startat; i < SizedScreens.Length; i++)
+            {
+                SizedScreens[i] = _screen.ResizeImage(
+                    (int)(_screen.Width * (i / ((float)SizedScreens.Length))),
+                    (int)(_screen.Height * (i / ((float)SizedScreens.Length)))
+                    );
+            }
+
+            ulong lasttick = Timer.Ticks;
+            for (int i = startat+1; i < SizedScreens.Length; i++) 
+            {
+                Image img = SizedScreens[i];
+                Framebuffer.Clear(0x0);
+                Framebuffer.ADrawImage(
+                    (Framebuffer.Width / 2) - (img.Width / 2),
+                    (Framebuffer.Height / 2) - (img.Height / 2),
+                    img, (byte)(255 *(i/(float)(SizedScreens.Length-startat))));
+                Framebuffer.Update();
+                while (lasttick + 10 > Timer.Ticks) Native.Hlt();
+                lasttick = Timer.Ticks;
+            }
+
+            _screen.Dispose();
+            for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
+            SizedScreens.Dispose();
+            #endregion
 
             for (; ; )
             {

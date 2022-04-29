@@ -167,6 +167,36 @@ namespace Kernel
             FillRectangle(X, Y + (Height - Weight), Width, Weight, Color);
         }
 
+        public static Image Save() 
+        {
+            Image image = new Image(Width, Height);
+            fixed(uint* ptr = image.RawData)
+            {
+                if (TripleBuffered)
+                    Native.Movsd(ptr, FirstBuffer, (ulong)(Width * Height));
+                else
+                    Native.Movsd(ptr, VideoMemory, (ulong)(Width * Height));
+            }
+            return image;
+        }
+
+        public static void ADrawImage(int X, int Y, Image image, byte alpha)
+        {
+            for (int h = 0; h < image.Height; h++)
+                for (int w = 0; w < image.Width; w++)
+                {
+                    uint foreground = image.RawData[image.Width * h + w];
+                    foreground &= ~0xFF000000;
+                    foreground |= (uint)alpha << 24;
+                    int fA = (byte)((foreground >> 24) & 0xFF);
+
+                    if (fA != 0)
+                    {
+                        DrawPoint(X + w, Y + h, foreground, true);
+                    }
+                }
+        }
+
         public static void DrawImage(int X, int Y, Image image,bool AlphaBlending = true)
         {
             for (int h = 0; h < image.Height; h++)
