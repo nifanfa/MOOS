@@ -143,94 +143,62 @@ unsafe class Program
 
     public static void KMain()
     {
-        ConsoleKeyInfo Key = Console.ReadKey();
+        Framebuffer.TripleBuffered = true;
 
-        //if (false)
-        if (Key.Key == ConsoleKey.N && Key.Modifiers.HasFlag(ConsoleModifiers.Ctrl))
+        new FConsole(350, 300);
+        new Clock(650, 500);
+        new Welcome(200, 200);
+        Console.WriteLine("Welcome to Moos!");
+        Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
 
+        #region Animation of enter Desktop
+        Framebuffer.DrawImage(0, 0, Wallpaper, false);
+        Desktop.Update();
+        Window.UpdateAll();
+        Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+        Image _screen = Framebuffer.Save();
+        Framebuffer.Clear(0x0);
+
+        SizedScreens = new Image[60];
+        int startat = 40;
+        for (int i = startat; i < SizedScreens.Length; i++)
         {
-
-            Console.WriteLine("Emulator Keymap:");
-            Console.WriteLine("A = Q");
-            Console.WriteLine("B = E");
-            Console.WriteLine("Z = Select");
-            Console.WriteLine("C = Start");
-            Console.WriteLine("W = Up");
-            Console.WriteLine("A = Left");
-            Console.WriteLine("S = Down");
-            Console.WriteLine("D = Right");
-            Console.WriteLine("Game Will Start After 2 Seconds");
-            Timer.Wait(2000);
-            NES.NES nes = new NES.NES();
-            nes.openROM(File.Instance.ReadAllBytes("0:/MARIO.NES"));
-            Console.WriteLine("Nintendo Family Computer Emulator Initialized");
-            Framebuffer.TripleBuffered = true;
-            for (; ; )
-            {
-                nes.runGame();
-                for (int i = 0; i < 128; i++) Native.Nop();
-            }
+            SizedScreens[i] = _screen.ResizeImage(
+                (int)(_screen.Width * (i / ((float)SizedScreens.Length))),
+                (int)(_screen.Height * (i / ((float)SizedScreens.Length)))
+                );
         }
-        else
 
+        ulong lasttick = Timer.Ticks;
+        for (int i = startat + 1; i < SizedScreens.Length; i++)
         {
-            Framebuffer.TripleBuffered = true;
+            Image img = SizedScreens[i];
+            Framebuffer.Clear(0x0);
+            Framebuffer.ADrawImage(
+                (Framebuffer.Width / 2) - (img.Width / 2),
+                (Framebuffer.Height / 2) - (img.Height / 2),
+                img, (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
+            Framebuffer.Update();
+            while (lasttick + 10 > Timer.Ticks) Native.Hlt();
+            lasttick = Timer.Ticks;
+        }
 
-            new FConsole(350, 300);
-            new Clock(650, 500);
-            new Welcome(200, 200);
-            Console.WriteLine("Welcome to Moos!");
-            Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
+        _screen.Dispose();
+        for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
+        SizedScreens.Dispose();
+        #endregion
 
-            #region Animation of enter Desktop
+        for (; ; )
+        {
             Framebuffer.DrawImage(0, 0, Wallpaper, false);
             Desktop.Update();
             Window.UpdateAll();
+            /*
+            ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
+            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+            */
             Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
-            Image _screen = Framebuffer.Save();
-            Framebuffer.Clear(0x0);
-
-            SizedScreens = new Image[60];
-            int startat = 40;
-            for (int i = startat; i < SizedScreens.Length; i++)
-            {
-                SizedScreens[i] = _screen.ResizeImage(
-                    (int)(_screen.Width * (i / ((float)SizedScreens.Length))),
-                    (int)(_screen.Height * (i / ((float)SizedScreens.Length)))
-                    );
-            }
-
-            ulong lasttick = Timer.Ticks;
-            for (int i = startat+1; i < SizedScreens.Length; i++) 
-            {
-                Image img = SizedScreens[i];
-                Framebuffer.Clear(0x0);
-                Framebuffer.ADrawImage(
-                    (Framebuffer.Width / 2) - (img.Width / 2),
-                    (Framebuffer.Height / 2) - (img.Height / 2),
-                    img, (byte)(255 *(i/(float)(SizedScreens.Length-startat))));
-                Framebuffer.Update();
-                while (lasttick + 10 > Timer.Ticks) Native.Hlt();
-                lasttick = Timer.Ticks;
-            }
-
-            _screen.Dispose();
-            for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
-            SizedScreens.Dispose();
-            #endregion
-
-            for (; ; )
-            {
-                Framebuffer.DrawImage(0, 0, Wallpaper, false);
-                Desktop.Update();
-                Window.UpdateAll();
-                /*
-                ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
-                ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
-                */
-                Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
-                Framebuffer.Update();
-            }
+            Framebuffer.Update();
         }
     }
 }
