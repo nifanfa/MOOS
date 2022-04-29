@@ -5161,7 +5161,8 @@ unsigned lodepng_decode_memory(unsigned char** out, unsigned* w, unsigned* h, co
 #endif /*LODEPNG_COMPILE_ANCILLARY_CHUNKS*/
     error = lodepng_decode(out, w, h, &state, in, insize);
     lodepng_state_cleanup(&state);
-    printf("lodepng: %s\n",lodepng_error_text(error));
+    if(error != 0)
+        printf("lodepng: %s\n",lodepng_error_text(error));
     return error;
 }
 
