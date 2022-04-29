@@ -48,7 +48,7 @@ namespace Kernel.Misc
         public static bool Ready = false;
         public static FxsaveArea* Fxdefault;
 
-        public static void Initialize(delegate* <void> Main)
+        public static void Initialize(delegate* <void> MainThread)
         {
             Fxdefault = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
             Native.Fxsave64(Fxdefault);
@@ -61,7 +61,7 @@ namespace Kernel.Misc
             //new Thread(&B);
             Ready = true;
             _int20h(); //start scheduling
-            Main();
+            MainThread();
         }
 
         public static void Terminate()
