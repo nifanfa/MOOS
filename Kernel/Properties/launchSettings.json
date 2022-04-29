@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "VMWare Workstation": {
+    "QEMU": {
       "commandName": "Executable",
       "executablePath": "cmd.exe",
       "commandLineArgs": "/c dotnet publish -r win-x64 -c debug kernel",
