@@ -156,7 +156,7 @@ namespace Kernel.GUI
                 for (; ; )
                 {
                     nes.runGame();
-                    for (int i = 0; i < 32; i++) Native.Nop();
+                    //for (int i = 0; i < 32; i++) Native.Nop();
                 }
             }
             else
