@@ -28,8 +28,8 @@ namespace Kernel.GUI
             msgbox = new MessageBox(100,300);
             imageViewer.Visible = false;
             msgbox.Visible = false;
-            Window.Forms.Add(msgbox);
-            Window.Forms.Add(imageViewer);
+            Window.Windows.Add(msgbox);
+            Window.Windows.Add(imageViewer);
         }
 
         public static void Update()
@@ -51,15 +51,15 @@ namespace Kernel.GUI
                 if(Control.MouseButtons == MouseButtons.Left)
                 {
                     bool clickable = true;
-                    for(int d = 0; d < Window.Forms.Count; d++) 
+                    for(int d = 0; d < Window.Windows.Count; d++) 
                     {
-                        if(Window.IsUnderMouse(Window.Forms[d].X, Window.Forms[d].Y, Window.Forms[d].Width, Window.Forms[d].Height)) 
+                        if(Window.IsUnderMouse(Window.Windows[d].X, Window.Windows[d].Y, Window.Windows[d].Width, Window.Windows[d].Height)) 
                         {
                             clickable = false;
                         }
                     }
                     
-                    if (clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
+                    if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
                     {
                         IndexClicked = i;
                         OnClick(names[i]);

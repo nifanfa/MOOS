@@ -11,14 +11,14 @@ namespace Kernel.GUI
 {
     internal class Window
     {
-        public static List<Window> Forms;
+        public static List<Window> Windows;
         public static uint BackgroundColor;
         public static IFont font;
         public static Image CloseButton;
 
         public static void Initialize()
         {
-            Forms = new List<Window>();
+            Windows = new List<Window>();
             PNG yehei = new PNG(File.Instance.ReadAllBytes("0:/CASC.PNG"));
             CloseButton = new PNG(File.Instance.ReadAllBytes("0:/Close.png"));
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 16);
@@ -32,35 +32,35 @@ namespace Kernel.GUI
 
         public static void MoveToEnd(Window window)
         {
-            if (window.Index == Forms.Count - 1) return;
+            if (window.Index == Windows.Count - 1) return;
 
             int index = window.Index;
-            for(int i = 0; i < Forms.Count; i++)
+            for(int i = 0; i < Windows.Count; i++)
             {
-                var v = Forms[i];
+                var v = Windows[i];
                 if (v.Index > index)
                 {
                     v.Index--;
                 }
             }
-            window.Index = Forms.Count - 1;
+            window.Index = Windows.Count - 1;
         }
 
         public static void UpdateAll()
         {
-            for (int i = 0; i < Forms.Count; i++) 
+            for (int i = 0; i < Windows.Count; i++) 
             {
-                if(Forms[i].Visible)
-                    Forms[i].OnInput();
+                if(Windows[i].Visible)
+                    Windows[i].OnInput();
             }
-            for (int i = 0; i < Forms.Count; i++)
+            for (int i = 0; i < Windows.Count; i++)
             {
-                for (int k = 0; k < Forms.Count; k++)
+                for (int k = 0; k < Windows.Count; k++)
                 {
-                    if (Forms[k].Index == i)
+                    if (Windows[k].Index == i)
                     {
-                        if (Forms[k].Visible)
-                            Forms[k].OnDraw();
+                        if (Windows[k].Visible)
+                            Windows[k].OnDraw();
                     }
                 }
             }
@@ -77,9 +77,9 @@ namespace Kernel.GUI
             this.Width = Width;
             this.Height = Height;
             this.Visible = true;
-            Index = Forms.Count;
-            Forms.Add(this);
-            Title = "Form1";
+            Index = Windows.Count;
+            Windows.Add(this);
+            Title = "Window1";
         }
 
         public int BarHeight = 40;
@@ -90,33 +90,34 @@ namespace Kernel.GUI
         int OffsetY;
         public int Index;
 
-        public static bool HasFormMoving = false;
+        public static bool HasWindowMoving = false;
 
         public virtual void OnInput()
         {
             if (Control.MouseButtons == MouseButtons.Left)
             {
-                if (!HasFormMoving && !Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
-                {
-                    MoveToEnd(this);
-                    Move = true;
-                    HasFormMoving = true;
-                    OffsetX = Control.MousePosition.X - X;
-                    OffsetY = Control.MousePosition.Y - Y;
-                }
-                if(
+                if (
+                    !HasWindowMoving &&
                     Control.MousePosition.X > CloseButtonX && Control.MousePosition.X < CloseButtonX + CloseButton.Width &&
                     Control.MousePosition.Y > CloseButtonY && Control.MousePosition.Y < CloseButtonY + CloseButton.Height
-                ) 
+                )
                 {
                     this.Visible = false;
                     return;
+                }
+                if (!HasWindowMoving && !Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
+                {
+                    MoveToEnd(this);
+                    Move = true;
+                    HasWindowMoving = true;
+                    OffsetX = Control.MousePosition.X - X;
+                    OffsetY = Control.MousePosition.Y - Y;
                 }
             }
             else
             {
                 Move = false;
-                HasFormMoving = false;
+                HasWindowMoving = false;
             }
 
             if (Move)
