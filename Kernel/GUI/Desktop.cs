@@ -1,6 +1,7 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+using Kernel.Driver;
 using Kernel.FS;
 using Kernel.Misc;
 using System.Collections.Generic;
@@ -130,6 +131,20 @@ namespace Kernel.GUI
                 png.Dispose();
                 Window.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
+            }
+            else if (
+                name[name.Length - 3].ToUpper() == 'N' &&
+                name[name.Length - 2].ToUpper() == 'E' &&
+                name[name.Length - 1].ToUpper() == 'S'
+                ) 
+            {
+                NES.NES nes = new NES.NES();
+                nes.openROM(File.Instance.ReadAllBytes(name));
+                for (; ; )
+                {
+                    nes.runGame();
+                    for (int i = 0; i < 128; i++) Native.Nop();
+                }
             }
             else
             {
