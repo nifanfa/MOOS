@@ -22,8 +22,13 @@ namespace Kernel.GUI
             ScreenBuf = new Image(640, 320);
 
             Console.OnWrite += Console_OnWrite;
-            PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
+            Rebind();
             Console.WriteLine("Type help to get information!");
+        }
+
+        public void Rebind()
+        {
+            PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
         }
 
         private void PS2Keyboard_OnKeyChanged(System.ConsoleKeyInfo key)

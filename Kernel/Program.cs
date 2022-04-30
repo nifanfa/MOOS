@@ -146,6 +146,8 @@ unsafe class Program
         //KMain();
     }
 
+    public static FConsole FConsole;
+
     public static void KMain()
     {
         Console.WriteLine("Press any key to enter desktop...");
@@ -153,7 +155,7 @@ unsafe class Program
 
         Framebuffer.TripleBuffered = true;
 
-        new FConsole(350, 300);
+        FConsole = new FConsole(350, 300);
         new Clock(650, 500);
         new Welcome(200, 200);
         Console.WriteLine("Welcome to Moos!");

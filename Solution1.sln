@@ -15,6 +15,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Corlib\Corlib.projitems*{2ea1f38f-f26e-4148-8ffd-38713478e015}*SharedItemsImports = 13
 		Corlib\Corlib.projitems*{4937d3a9-2f20-43ba-a794-89067f060502}*SharedItemsImports = 5
+		Corlib\Corlib.projitems*{c63c2060-aedd-4907-8efa-70d8e9ce4a10}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -13,7 +13,7 @@ namespace NES
         MemoryMap memory;
         Mappers mappers;
         CPU cpu;
-        GameRender gameRender;
+        public GameRender gameRender;
         Input input;
         PPU ppu;
 
@@ -162,7 +162,7 @@ namespace NES
             PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChangedHandler;
         }
 
-        private void PS2Keyboard_OnKeyChangedHandler(ConsoleKeyInfo key)
+        public void PS2Keyboard_OnKeyChangedHandler(ConsoleKeyInfo key)
         {
             ConsoleKey c = key.Key;
             if (key.KeyState == ConsoleKeyState.Pressed)

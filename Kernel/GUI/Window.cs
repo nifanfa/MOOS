@@ -66,7 +66,22 @@ namespace Kernel.GUI
             }
         }
 
-        public bool Visible;
+        public bool Visible 
+        {
+            set 
+            {
+                _visible = value;
+                OnSetVisible(value);
+            }
+            get 
+            {
+                return _visible;
+            }
+        }
+
+        public bool _visible;
+
+        public virtual void OnSetVisible(bool value) { }
 
         public int X, Y, Width, Height;
 
