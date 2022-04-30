@@ -45,7 +45,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Math.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Net\IPAddress.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Net\UdpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Object.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ObsoleteAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ParamArrayAttribute.cs" />

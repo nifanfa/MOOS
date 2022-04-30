@@ -4,6 +4,7 @@
 //https://github.com/pdoane/osdev/blob/master/net/tcp.c
 
 using Kernel.Driver;
+using System.Net;
 using System.Runtime.InteropServices;
 
 namespace Kernel.NET
@@ -35,9 +36,6 @@ namespace Kernel.NET
         public uint rcvWnd;                        // receive window
         public uint rcvUP;                         // receive urgent pointer
 
-        public delegate void OnReceivedHandler(byte* ptr, int length);
-        public event OnReceivedHandler OnReceived;
-
         public void Send(byte[] buffer)
         {
             if (Connected)
@@ -51,9 +49,37 @@ namespace Kernel.NET
             }
         }
 
-        internal void OnPacket(byte* buffer, int length)
+        public static TcpClient Connect(IPAddress address,ushort port) 
         {
-            OnReceived?.Invoke(buffer, length);
+            return TCP.Connect(address.Address, port, port);
+        }
+
+        private byte[] Data;
+
+        public unsafe void OnData(byte* buffer, int length)
+        {
+            if (Data != null) Data.Dispose();
+            Data = new byte[length];
+            fixed (byte* dest = Data)
+            {
+                Native.Movsb(dest, buffer, (ulong)length);
+            }
+        }
+
+        public unsafe byte[] Receive()
+        {
+            while (Data == null) Native.Hlt();
+            byte[] data = new byte[Data.Length];
+            fixed (byte* dest = data)
+            {
+                fixed (byte* source = Data)
+                {
+                    Native.Movsb(dest, source, (ulong)data.Length);
+                }
+            }
+            Data.Dispose();
+            Data = null;
+            return data;
         }
     }
 
@@ -263,7 +289,7 @@ namespace Kernel.NET
                     //Maybe bug here?
                     if (conn.rcvNxt == seq)
                     {
-                        conn.OnPacket(buffer, length);
+                        conn.OnData(buffer, length);
                         conn.rcvNxt += (uint)length;
                     }
 

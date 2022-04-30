@@ -122,8 +122,8 @@ unsafe class Program
         Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
         RTL8139.Initialise();
         ARP.Require(Network.Gateway);
-        TcpClient conn = TCP.Connect(new byte[] { 192, 168, 137, 1 }, 54188, 54188);
-        conn.Send(new byte[]
+        TcpClient client = TcpClient.Connect(IPAddress.Parse(192, 168, 137, 1), 54188);
+        client.Send(new byte[]
         {
             (byte)'H',
             (byte)'e',
@@ -131,7 +131,15 @@ unsafe class Program
             (byte)'l',
             (byte)'o'
         });
-        for (; ; ) Native.Hlt();
+        for (; ; )
+        {
+            byte[] data = client.Receive();
+            for (int i = 0; i < data.Length; i++) 
+            {
+                Console.Write((char)data[i]);
+            }
+            Console.WriteLine();
+        }
         */
 
         ThreadPool.Initialize(&KMain);
