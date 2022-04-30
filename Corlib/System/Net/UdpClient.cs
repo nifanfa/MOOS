@@ -21,8 +21,7 @@ namespace System.Net
             {
                 Panic.Error("[UdpClient] Network is not initialized!");
             }
-            DataAvailable = false;
-            LastData = null;
+            Data = null;
         }
 
         public void Send(byte[] buffer) 
@@ -30,28 +29,35 @@ namespace System.Net
             UDP.SendPacket(iPAddress.Address, Port, Port, buffer);
         }
 
-        internal bool DataAvailable;
-        private byte[] LastData;
+        private byte[] Data;
 
         public unsafe void OnData(byte[] buffer)
         {
-            if (LastData != null) LastData.Dispose();
-            LastData = new byte[buffer.Length];
-            fixed (byte* pl = LastData) 
+            if (Data != null) Data.Dispose();
+            Data = new byte[buffer.Length];
+            fixed (byte* dest = Data) 
             {
-                fixed (byte* pb = buffer)
+                fixed (byte* source = buffer)
                 {
-                    Native.Movsb(pl, pb, (ulong)buffer.Length);
+                    Native.Movsb(dest, source, (ulong)buffer.Length);
                 }
             }
-            DataAvailable = true;
         }
 
-        public byte[] Receive() 
+        public unsafe byte[] Receive() 
         {
-            while (!DataAvailable) Native.Hlt();
-            DataAvailable = false;
-            return LastData;
+            while (Data == null) Native.Hlt();
+            byte[] data  = new byte[Data.Length];
+            fixed (byte* dest = data)
+            {
+                fixed (byte* source = Data)
+                {
+                    Native.Movsb(dest, source, (ulong)data.Length);
+                }
+            }
+            Data.Dispose();
+            Data = null;
+            return data;
         }
     }
 }
