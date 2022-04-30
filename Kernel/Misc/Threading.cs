@@ -1,6 +1,7 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+using Kernel.Driver;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -17,6 +18,7 @@ namespace Kernel.Misc
         public bool Terminated;
         public IDT.IDTStack* stack;
         public FxsaveArea* fxsaveArea;
+        public ulong SleepTime;
 
         public Thread(delegate*<void> method)
         {
@@ -38,7 +40,19 @@ namespace Kernel.Misc
 
             Terminated = false;
 
+            SleepTime = 0;
+
             ThreadPool.Threads.Add(this);
+        }
+
+        public static void Sleep(ulong Next) 
+        {
+            ThreadPool.Threads[ThreadPool.Index].SleepTime = Next;
+        }
+
+        public static void Sleep(int Index,ulong Next)
+        {
+            ThreadPool.Threads[Index].SleepTime = Next;
         }
     }
 
@@ -60,6 +74,8 @@ namespace Kernel.Misc
             //new Thread(&A);
             //new Thread(&B);
             Ready = true;
+            Thread.Sleep(1, 1000);
+            Console.WriteLine("Making thread id 1 to sleep 1 sec");
             _int20h(); //start scheduling
             MainThread();
         }
@@ -115,10 +131,15 @@ namespace Kernel.Misc
                 Native.Fxsave64(Threads[Index].fxsaveArea);
             }
 
+            for(int i = 0; i < Threads.Count; i++) 
+            {
+                if (Threads[i].SleepTime > 0) Threads[i].SleepTime--;
+            }
+
             do
             {
                 Index = (Index + 1) % Threads.Count;
-            } while (Threads[Index].Terminated);
+            } while (Threads[Index].Terminated || (Threads[Index].SleepTime > 0));
 
             #region CPU Usage
             if (LastSec != RTC.Second)
