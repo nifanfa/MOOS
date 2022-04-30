@@ -200,6 +200,19 @@ unsafe class Program
 
         for (; ; )
         {
+#region ConsoleHotKey
+            if (
+                PS2Keyboard.KeyInfo.Key == ConsoleKey.T &&
+                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Ctrl) &&
+                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt)
+                ) 
+            {
+                Window.MoveToEnd(FConsole);
+                if (FConsole.Visible == false)
+                    FConsole.Visible = true;
+            }
+#endregion
+
             Framebuffer.DrawImage(0, 0, Wallpaper, false);
             Desktop.Update();
             Window.UpdateAll();
