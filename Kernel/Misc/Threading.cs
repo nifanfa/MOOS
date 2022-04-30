@@ -24,7 +24,7 @@ namespace Kernel.Misc
 #if restorfpu
         public FxsaveArea* fxsaveArea;
 #endif
-        public ulong SleepTime;
+        public ulong SleepingTime;
 
         public Thread(delegate*<void> method)
         {
@@ -48,19 +48,19 @@ namespace Kernel.Misc
 
             Terminated = false;
 
-            SleepTime = 0;
+            SleepingTime = 0;
 
             ThreadPool.Threads.Add(this);
         }
 
         public static void Sleep(ulong Next) 
         {
-            ThreadPool.Threads[ThreadPool.Index].SleepTime = Next;
+            ThreadPool.Threads[ThreadPool.Index].SleepingTime = Next;
         }
 
         public static void Sleep(int Index,ulong Next)
         {
-            ThreadPool.Threads[Index].SleepTime = Next;
+            ThreadPool.Threads[Index].SleepingTime = Next;
         }
     }
 
@@ -68,6 +68,7 @@ namespace Kernel.Misc
     {
         public static List<Thread> Threads;
         public static bool Ready = false;
+        public static bool Locked = false;
 #if restorfpu
         public static FxsaveArea* Fxdefault;
 #endif
@@ -78,7 +79,7 @@ namespace Kernel.Misc
             Fxdefault = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
             Native.Fxsave64(Fxdefault);
 #endif
-
+            Locked = false;
             Ready = false;
             Threads = new();
             new Thread(&IdleThread);
@@ -135,7 +136,7 @@ namespace Kernel.Misc
 
         public static void Schedule(IDT.IDTStack* stack)
         {
-            if (!Ready) return;
+            if (!Ready || Locked) return;
 
             if (!Threads[Index].Terminated)
             {
@@ -147,13 +148,13 @@ namespace Kernel.Misc
 
             for(int i = 0; i < Threads.Count; i++) 
             {
-                if (Threads[i].SleepTime > 0) Threads[i].SleepTime--;
+                if (Threads[i].SleepingTime > 0) Threads[i].SleepingTime--;
             }
 
             do
             {
                 Index = (Index + 1) % Threads.Count;
-            } while (Threads[Index].Terminated || (Threads[Index].SleepTime > 0));
+            } while (Threads[Index].Terminated || (Threads[Index].SleepingTime > 0));
 
 #region CPU Usage
             if (LastSec != RTC.Second)
