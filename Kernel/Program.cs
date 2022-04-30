@@ -24,6 +24,7 @@ unsafe class Program
     public static extern void test();
 
     static Image Cursor;
+    static Image CursorMoving;
     static Image Wallpaper;
 
     public static Image[] SizedScreens;
@@ -81,7 +82,10 @@ unsafe class Program
         new Ramdisk((IntPtr)(Info->Mods[0]));
         new FATFS();
 
-        Cursor = new PNG(File.Instance.ReadAllBytes("0:/CURSOR.PNG"));
+        //Sized width to 512
+        //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
+        Cursor = new PNG(File.Instance.ReadAllBytes("0:/Cursor.png"));
+        CursorMoving = new PNG(File.Instance.ReadAllBytes("0:/Grab.png"));
         //Image from unsplash
         Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/Wallpaper.png"));
 
@@ -221,7 +225,7 @@ unsafe class Program
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
             ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
             */
-            Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+            Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
             Framebuffer.Update();
         }
     }
