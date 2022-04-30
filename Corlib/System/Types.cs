@@ -412,7 +412,7 @@ namespace System
 
         public static Delegate? Remove(Delegate? source, Delegate? value)
         {
-            return source;
+            return null;
         }
 
         // This function is known to the compiler backend.

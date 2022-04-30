@@ -17,6 +17,7 @@ namespace Kernel.GUI
         public static string Dir;
         public static ImageViewer imageViewer;
         public static MessageBox msgbox;
+        public static NESEmu nesemu;
 
         public static void Initialize()
         {
@@ -26,10 +27,13 @@ namespace Kernel.GUI
             Dir = "0:/";
             imageViewer = new ImageViewer(400,400);
             msgbox = new MessageBox(100,300);
+            nesemu = new(150, 350);
             imageViewer.Visible = false;
             msgbox.Visible = false;
+            nesemu.Visible = false;
             Window.Windows.Add(msgbox);
             Window.Windows.Add(imageViewer);
+            Window.Windows.Add(nesemu);
         }
 
         public static void Update()
@@ -137,8 +141,12 @@ namespace Kernel.GUI
                 name[name.Length - 3].ToUpper() == 'N' &&
                 name[name.Length - 2].ToUpper() == 'E' &&
                 name[name.Length - 1].ToUpper() == 'S'
-                ) 
+                )
             {
+                nesemu.OpenROM(File.Instance.ReadAllBytes(name));
+                Window.MoveToEnd(nesemu);
+                nesemu.Visible = true;
+                /*
                 Framebuffer.TripleBuffered = false;
                 Console.WriteLine("Emulator Keymap:");
                 Console.WriteLine("A = Q");
@@ -157,8 +165,9 @@ namespace Kernel.GUI
                 for (; ; )
                 {
                     nes.runGame();
-                    for (int i = 0; i < 64; i++) Native.Nop();
                 }
+                */
+
             }
             else
             {
