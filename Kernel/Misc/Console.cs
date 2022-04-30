@@ -115,11 +115,11 @@ namespace Kernel
 
         private static void WriteFramebuffer(char chr)
         {
-            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if (Framebuffer.Graphics.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
-                int X = (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
-                int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
-                Framebuffer.FillRectangle(X, Y, 8, 16, 0x0);
+                int X = (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
+                int Y = (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
+                Framebuffer.Graphics.FillRectangle(X, Y, 8, 16, 0x0);
                 ASC16.DrawChar(chr, X, Y, ConsoleColorsFramebuffer[(int)ForegroundColor]);
             }
         }
@@ -188,14 +188,14 @@ namespace Kernel
 
         private static void MoveUpFramebuffer()
         {
-            if(Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if(Framebuffer.Graphics.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
-                Framebuffer.Copy(
-                    (Framebuffer.Width / 2) - (Width * 8 / 2),
-                    (Framebuffer.Height / 2) - (Height * 16 / 2),
+                Framebuffer.Graphics.Copy(
+                    (Framebuffer.Graphics.Width / 2) - (Width * 8 / 2),
+                    (Framebuffer.Graphics.Height / 2) - (Height * 16 / 2),
 
-                    (Framebuffer.Width / 2) - (Width * 8 / 2),
-                    (Framebuffer.Height / 2) - (Height * 16 / 2) + 16,
+                    (Framebuffer.Graphics.Width / 2) - (Width * 8 / 2),
+                    (Framebuffer.Graphics.Height / 2) - (Height * 16 / 2) + 16,
 
                     Width * 8,
                     Height * 16
@@ -215,11 +215,11 @@ namespace Kernel
 
         private static void UpdateCursorFramebuffer()
         {
-            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if (Framebuffer.Graphics.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
                 ASC16.DrawChar('_',
-                            (Framebuffer.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),
-                            (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
+                            (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),
+                            (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
                             0xFFFFFFFF
                             );
             }

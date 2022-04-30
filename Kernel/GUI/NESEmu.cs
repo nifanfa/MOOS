@@ -38,7 +38,7 @@ namespace Kernel.GUI
         public override void OnDraw()
         {
             base.OnDraw();
-            Framebuffer.DrawImage(X, Y, nes.gameRender.image, false);
+            Framebuffer.Graphics.DrawImage(X, Y, nes.gameRender.image, false);
         }
 
         public static void RunGame() 
