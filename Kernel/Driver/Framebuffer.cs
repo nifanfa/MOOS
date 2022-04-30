@@ -2,6 +2,7 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Kernel.Driver;
+using Kernel.Graph;
 using Kernel.Misc;
 using System.Diagnostics;
 using System.Drawing;
@@ -59,6 +60,7 @@ namespace Kernel
                     }
                 }
                 Native.Movsd(SecondBuffer, FirstBuffer, (ulong)(Width * Height));
+                Graphics.Update();
             }
         }
 

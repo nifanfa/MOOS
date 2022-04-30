@@ -5,6 +5,7 @@ using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using Kernel.Driver;
 using Kernel.FS;
+using Kernel.Graph;
 using Kernel.GUI;
 using Kernel.Misc;
 using Kernel.NET;
@@ -45,6 +46,7 @@ unsafe class Program
 
         PageTable.Initialise();
 
+        ASC16.Initialise();
         VBE.Initialise((VBEInfo*)Info->VBEInfo);
         Console.Setup();
         IDT.Disable();
@@ -160,6 +162,9 @@ unsafe class Program
         Console.ReadKey();
 
         Framebuffer.TripleBuffered = true;
+
+        if(PCI.GetDevice(0x15AD, 0x0405) != null)
+            Framebuffer.Graphics = new VMWareSVGAIIGraphics();
 
         FConsole = new FConsole(350, 300);
         new Clock(650, 500);

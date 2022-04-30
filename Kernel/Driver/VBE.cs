@@ -10,7 +10,6 @@ namespace Kernel.Driver
         public static void Initialise(VBEInfo* info)
         {
             Info = info;
-            ASC16.Initialise();
             if (info->PhysBase != 0) 
             {
                 Framebuffer.VideoMemory = (uint*)info->PhysBase;
