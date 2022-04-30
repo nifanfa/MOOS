@@ -233,6 +233,8 @@ unsafe class Program
             */
             Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
             Framebuffer.Update();
+
+            FPSMeter.Update();
         }
     }
 }
