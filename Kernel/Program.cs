@@ -167,12 +167,12 @@ unsafe class Program
         Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
 
         #region Animation of entering Desktop
-        Framebuffer.DrawImage(0, 0, Wallpaper, false);
+        Framebuffer.Graphics.DrawImage(0, 0, Wallpaper, false);
         Desktop.Update();
         Window.UpdateAll();
-        Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
-        Image _screen = Framebuffer.Save();
-        Framebuffer.Clear(0x0);
+        Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+        Image _screen = Framebuffer.Graphics.Save();
+        Framebuffer.Graphics.Clear(0x0);
 
         SizedScreens = new Image[60];
         int startat = 40;
@@ -188,8 +188,8 @@ unsafe class Program
         for (int i = startat + 1; i < SizedScreens.Length; i++)
         {
             Image img = SizedScreens[i];
-            Framebuffer.Clear(0x0);
-            Framebuffer.ADrawImage(
+            Framebuffer.Graphics.Clear(0x0);
+            Framebuffer.Graphics.DrawImage(
                 (Framebuffer.Width / 2) - (img.Width / 2),
                 (Framebuffer.Height / 2) - (img.Height / 2),
                 img, (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
@@ -218,14 +218,14 @@ unsafe class Program
             }
 #endregion
 
-            Framebuffer.DrawImage(0, 0, Wallpaper, false);
+            Framebuffer.Graphics.DrawImage(0, 0, Wallpaper, false);
             Desktop.Update();
             Window.UpdateAll();
             /*
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
             ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
             */
-            Framebuffer.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
+            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
             Framebuffer.Update();
         }
     }
