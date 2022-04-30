@@ -11,8 +11,6 @@ namespace Kernel.Graph
             svga = new VMWareSVGAII();
             svga.SetMode(Framebuffer.Width, Framebuffer.Height);
             Framebuffer.VideoMemory = svga.Video_Memory;
-            Framebuffer.DoubleBuffered = true;
-            Framebuffer.NoVerification = true;
         }
 
         public override void Update()
