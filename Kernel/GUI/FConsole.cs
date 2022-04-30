@@ -119,8 +119,8 @@ namespace Kernel.GUI
 
                     if(HeightLimit != -1 && h >= HeightLimit)
                     {
-                        Framebuffer.Graphics.Copy(X, Y, X, Y + font.FontSize, LineLimit, HeightLimit - (font.FontSize));
-                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, BackgroundColor);
+                        Framebuffer.Copy(X, Y, X, Y + font.FontSize, LineLimit, HeightLimit - (font.FontSize));
+                        Framebuffer.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, BackgroundColor);
                         h -= font.FontSize;
                     }
                 }

@@ -78,10 +78,10 @@ namespace Kernel.GUI
                 if(IndexClicked == i) 
                 {
                     int w = (int)(FileIcon.Width * 1.5f);
-                    Framebuffer.Graphics.FillRectangle(X + ((FileIcon.Width / 2) - (w / 2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1, true);
+                    Framebuffer.AFillRectangle(X + ((FileIcon.Width/2) - (w/2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
                 }
 
-                Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
+                Framebuffer.DrawImage(X, Y, FileIcon);
                 //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
                 Window.font.DrawString(X, Y + FileIcon.Height, names[i], FileIcon.Width, Window.font.FontSize * 3);
                 Y += FileIcon.Height + Devide;
@@ -89,7 +89,7 @@ namespace Kernel.GUI
             }
             names.Dispose();
 
-            Framebuffer.Graphics.FillRectangle(0, 0, Framebuffer.Width, BarHeight, 0xFF111111);
+            Framebuffer.FillRectangle(0, 0, Framebuffer.Width, BarHeight, 0xFF111111);
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
             Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), CurrentDirectory, Framebuffer.Width);
 

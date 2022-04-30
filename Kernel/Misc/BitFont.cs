@@ -68,7 +68,7 @@ namespace Kernel.Misc
 
                             if (!Calculate)
                             {
-                                Framebuffer.Graphics.DrawPoint(x, y, Color);
+                                Framebuffer.DrawPoint(x, y, Color);
 
                                 if (AntiAliasing && AtEdge)
                                 {
@@ -89,7 +89,7 @@ namespace Kernel.Misc
                                     {
                                         if (ax == 0) continue;
                                         int alpha = Math.Abs(((-maxalpha) * ax * ax / (threshhold * threshhold)) + maxalpha);
-                                        Framebuffer.Graphics.DrawPoint(x + ax, y, (Color & ~0xFF000000) | ((uint)alpha << 24), true);
+                                        Framebuffer.DrawPoint(x + ax, y, (Color & ~0xFF000000) | ((uint)alpha << 24), true);
                                     }
                                 }
 
