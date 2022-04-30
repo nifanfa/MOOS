@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Kernel.Misc
+namespace Kernel.Graph
 {
     public unsafe class Graphics
     {
@@ -15,12 +15,14 @@ namespace Kernel.Misc
             this.VideoMemory = vm;
         }
 
-        public void Clear(uint Color)
+        public virtual void Update() { }
+
+        public virtual void Clear(uint Color)
         {
             Native.Stosd(VideoMemory, Color, (ulong)(Width * Height));
         }
 
-        public void Copy(int dX, int dY, int sX, int sY, int Width, int Height)
+        public virtual void Copy(int dX, int dY, int sX, int sY, int Width, int Height)
         {
             for (int w = 0; w < Width; w++)
             {
@@ -31,7 +33,7 @@ namespace Kernel.Misc
             }
         }
 
-        internal void FillRectangle(int X, int Y, int Width, int Height, uint Color)
+        public virtual void FillRectangle(int X, int Y, int Width, int Height, uint Color)
         {
             for (int w = 0; w < Width; w++)
             {
@@ -42,7 +44,7 @@ namespace Kernel.Misc
             }
         }
 
-        internal void AFillRectangle(int X, int Y, int Width, int Height, uint Color)
+        public virtual void AFillRectangle(int X, int Y, int Width, int Height, uint Color)
         {
             for (int w = 0; w < Width; w++)
             {
@@ -53,7 +55,7 @@ namespace Kernel.Misc
             }
         }
 
-        public uint GetPoint(int X, int Y)
+        public virtual uint GetPoint(int X, int Y)
         {
             if (X > 0 && Y > 0 && X < Width && Y < Height)
             {
@@ -62,7 +64,7 @@ namespace Kernel.Misc
             return 0;
         }
 
-        public void DrawPoint(int X, int Y, uint color, bool alphaBlending = false)
+        public virtual void DrawPoint(int X, int Y, uint color, bool alphaBlending = false)
         {
             if (alphaBlending)
             {
@@ -94,7 +96,7 @@ namespace Kernel.Misc
             }
         }
 
-        public void DrawRectangle(int X, int Y, int Width, int Height, uint Color, int Weight = 1)
+        public virtual void DrawRectangle(int X, int Y, int Width, int Height, uint Color, int Weight = 1)
         {
             FillRectangle(X, Y, Width, Weight, Color);
 
@@ -104,7 +106,7 @@ namespace Kernel.Misc
             FillRectangle(X, Y + (Height - Weight), Width, Weight, Color);
         }
 
-        public Image Save()
+        public virtual Image Save()
         {
             Image image = new Image(Width, Height);
             fixed (uint* ptr = image.RawData)
@@ -114,7 +116,7 @@ namespace Kernel.Misc
             return image;
         }
 
-        public void ADrawImage(int X, int Y, Image image, byte alpha)
+        public virtual void ADrawImage(int X, int Y, Image image, byte alpha)
         {
             for (int h = 0; h < image.Height; h++)
                 for (int w = 0; w < image.Width; w++)
@@ -131,7 +133,7 @@ namespace Kernel.Misc
                 }
         }
 
-        public void DrawImage(int X, int Y, Image image, bool AlphaBlending = true)
+        public virtual void DrawImage(int X, int Y, Image image, bool AlphaBlending = true)
         {
             for (int h = 0; h < image.Height; h++)
                 for (int w = 0; w < image.Width; w++)
@@ -199,7 +201,7 @@ namespace Kernel.Misc
         // draws a pixel on screen of given brightness
         // 0<=brightness<=1. We can use your own library
         // to draw on screen
-        void DrawPoint(int X, int Y, uint Color, float Brightness)
+        public virtual void DrawPoint(int X, int Y, uint Color, float Brightness)
         {
             byte A = (byte)((Color >> 24) & 0xFF);
             byte R = (byte)((Color >> 16) & 0xFF);
@@ -209,7 +211,7 @@ namespace Kernel.Misc
             DrawPoint(X, Y, System.Drawing.Color.ToArgb(A, R, G, B), true);
         }
 
-        public void DrawLine(int x0, int y0, int x1, int y1, uint color)
+        public virtual void DrawLine(int x0, int y0, int x1, int y1, uint color)
         {
             bool steep = Absolute(y1 - y0) > Absolute(x1 - x0);
 
