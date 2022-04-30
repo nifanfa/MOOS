@@ -4,7 +4,7 @@ Welcome to ***my own operating system project***
 C# operating system demo, using Native AOT (Core RT) boot via multiboot  
 | Screenshot |
 | ------ |
-| ![image](https://github.com/nifanfa/Moos/blob/master/VirtualBox_MOOS_30_04_2022_12_12_38.png) |
+| ![image](https://github.com/nifanfa/Moos/blob/master/VirtualBox_MOOS_30_04_2022_19_46_28.png) |
 
 | Items | Implemented | Working On Real Hardware (Tested on Supermicro X9DRI-LN4F+) | Note |
 | ----- | ----------- | ----------------------------------------------------------- | ----- |
