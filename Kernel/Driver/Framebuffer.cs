@@ -20,6 +20,8 @@ namespace Kernel
         public static uint* FirstBuffer;
         public static uint* SecondBuffer;
 
+        public static bool NoVerification = false;
+
         public static Graphics Graphics;
 
         static bool _TripleBuffered = false;
@@ -48,20 +50,52 @@ namespace Kernel
             }
         }
 
+        /// <summary>
+        /// Enable TripleBuffered first to get DoubleBuffered work
+        /// </summary>
+        public static bool DoubleBuffered = false;
+
         public static void Update()
         {
             if (TripleBuffered)
             {
-                for(int i = 0; i < Width * Height; i++) 
+                if (DoubleBuffered)
                 {
-                    if(FirstBuffer[i] != SecondBuffer[i]) 
+                    if (NoVerification) 
                     {
-                        VideoMemory[i] = FirstBuffer[i];
+                        Native.Movsd(VideoMemory, FirstBuffer, (ulong)(Width * Height));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Width * Height; i++)
+                        {
+                            if (VideoMemory[i] != FirstBuffer[i])
+                            {
+                                VideoMemory[i] = FirstBuffer[i];
+                            }
+                        }
                     }
                 }
-                Native.Movsd(SecondBuffer, FirstBuffer, (ulong)(Width * Height));
-                Graphics.Update();
+                else
+                {
+                    if (NoVerification)
+                    {
+                        Native.Movsd(VideoMemory, FirstBuffer, (ulong)(Width * Height));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Width * Height; i++)
+                        {
+                            if (FirstBuffer[i] != SecondBuffer[i])
+                            {
+                                VideoMemory[i] = FirstBuffer[i];
+                            }
+                        }
+                    }
+                    Native.Movsd(SecondBuffer, FirstBuffer, (ulong)(Width * Height));
+                }
             }
+            Graphics.Update();
         }
 
         public static void SetVideoMode(ushort XRes, ushort YRes)
