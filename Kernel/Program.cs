@@ -122,7 +122,7 @@ unsafe class Program
         Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
         RTL8139.Initialise();
         ARP.Require(Network.Gateway);
-        TCPConnection conn = TCP.Connect(new byte[] { 192, 168, 137, 1 }, 54188, 54188);
+        TcpClient conn = TCP.Connect(new byte[] { 192, 168, 137, 1 }, 54188, 54188);
         conn.Send(new byte[]
         {
             (byte)'H',
