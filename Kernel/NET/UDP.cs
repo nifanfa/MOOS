@@ -2,7 +2,9 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Kernel.NET;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Runtime.InteropServices;
 
 namespace Kernel
@@ -17,6 +19,8 @@ namespace Kernel
             public ushort Length;
             public ushort Checksum;
         }
+
+        public static List<UdpClient> Clients;
 
         public static void SendPacket(byte[] DestIP, ushort SourcePort, ushort DestPort, byte[] Data)
         {
@@ -46,6 +50,12 @@ namespace Kernel
             {
                 Native.Movsb(P, frame, (ulong)length);
             }
+
+            for (int i = 0; i < Clients.Count; i++) 
+            {
+                Clients[i].OnData(Buffer);
+            }
+
             //Do something
             Buffer.Dispose();
         }
