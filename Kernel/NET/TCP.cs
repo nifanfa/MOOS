@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Kernel.NET
 {
-    public unsafe class TCPConnection
+    public unsafe class TcpClient
     {
         public TCPStatus State;
 
@@ -161,7 +161,7 @@ namespace Kernel.NET
             }
         }
 
-        private static void RecvGeneral(TCPConnection conn, TCPHeader* hdr, byte* buffer, int length)
+        private static void RecvGeneral(TcpClient conn, TCPHeader* hdr, byte* buffer, int length)
         {
             // Process segments not in the CLOSED, LISTEN, or SYN-SENT states.
 
@@ -205,7 +205,7 @@ namespace Kernel.NET
             }
         }
 
-        private static void RecvFin(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvFin(TcpClient conn, TCPHeader* hdr)
         {
             // TODO - signal the user "connection closing" and return any pending receives
 
@@ -248,7 +248,7 @@ namespace Kernel.NET
             }
         }
 
-        private static void RecvData(TCPConnection conn, uint seq, byte* buffer, int length)
+        private static void RecvData(TcpClient conn, uint seq, byte* buffer, int length)
         {
             switch (conn.State)
             {
@@ -277,7 +277,7 @@ namespace Kernel.NET
             }
         }
 
-        private static void RecvAck(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvAck(TcpClient conn, TCPHeader* hdr)
         {
             switch (conn.State)
             {
@@ -366,7 +366,7 @@ namespace Kernel.NET
             }
         }
 
-        private static void RecvRst(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvRst(TcpClient conn, TCPHeader* hdr)
         {
             switch (conn.State)
             {
@@ -399,7 +399,7 @@ namespace Kernel.NET
         private const byte TCP_CONN_REFUSED = 2;
         private const byte TCP_CONN_CLOSING = 3;
 
-        private static void RecvSynSent(TCPConnection conn, TCPHeader* hdr)
+        private static void RecvSynSent(TcpClient conn, TCPHeader* hdr)
         {
             byte flags = hdr->flags;
 
@@ -467,11 +467,11 @@ namespace Kernel.NET
             }
         }
 
-        private static TCPConnection currConn;
+        private static TcpClient currConn;
 
-        public static TCPConnection Connect(byte[] addr, ushort port, ushort localPort)
+        public static TcpClient Connect(byte[] addr, ushort port, ushort localPort)
         {
-            TCPConnection conn = new();
+            TcpClient conn = new();
 
             currConn = conn;
 
@@ -524,12 +524,12 @@ namespace Kernel.NET
             return conn;
         }
 
-        private static void SendPacket(TCPConnection conn, uint seq, byte flags)
+        private static void SendPacket(TcpClient conn, uint seq, byte flags)
         {
             SendPacket(conn, conn.sndNxt, flags, null, 0);
         }
 
-        private static void SendPacket(TCPConnection conn, uint seq, byte flags, void* data, uint count)
+        private static void SendPacket(TcpClient conn, uint seq, byte flags, void* data, uint count)
         {
             byte* buffer = (byte*)Allocator.Allocate(TCP_WINDOW_SIZE);
 
@@ -629,7 +629,7 @@ namespace Kernel.NET
         private static bool PacketSent = false;
         private static uint PacketAck = 0;
 
-        public static void Send(TCPConnection conn, byte* data, int count)
+        public static void Send(TcpClient conn, byte* data, int count)
         {
             if (conn.Connected)
             {
