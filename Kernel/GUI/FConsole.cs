@@ -65,7 +65,11 @@ namespace Kernel.GUI
                             break;
 
                         case "shutdown":
-                            ACPI.Shutdown();
+                            Power.Shutdown();
+                            break;
+
+                        case "reboot":
+                            Power.Reboot();
                             break;
 
                         default:
