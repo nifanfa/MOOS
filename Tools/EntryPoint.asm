@@ -59,12 +59,9 @@ multiboot_entry:
         push   ebx                     ;1st argument multiboot info pointer
         mov   [multiboot_pointer],ebx
         jmp   Enter_Long_Mode          
-
-die:
         cli
-endloop:
         hlt
-        jmp   endloop
+        jmp $
 
 multiboot_pointer:
         dq 0
@@ -319,7 +316,9 @@ Skip:
     mov rdx,[rsp+32]
     mov rax,[rsp+8]
     call rax
-    jmp die
+    cli
+    hlt
+    jmp $
 
 align 4096
 
