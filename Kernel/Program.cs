@@ -83,7 +83,7 @@ unsafe class Program
 
         Cursor = new PNG(File.Instance.ReadAllBytes("0:/CURSOR.PNG"));
         //Image from unsplash
-        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/WALP.PNG"));
+        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/Wallpaper.png"));
 
         BitFont.Initialize();
 
