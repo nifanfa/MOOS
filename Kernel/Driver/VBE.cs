@@ -15,7 +15,7 @@ namespace Kernel.Driver
             {
                 Framebuffer.VideoMemory = (uint*)info->PhysBase;
                 Framebuffer.SetVideoMode(info->ScreenWidth, info->ScreenHeight);
-                Framebuffer.Graphics.Clear(0x0);
+                Framebuffer.Clear(0x0);
             }
         }
     }
