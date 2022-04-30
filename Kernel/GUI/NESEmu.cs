@@ -28,8 +28,11 @@ namespace Kernel.GUI
 
         public unsafe void OpenROM(byte[] buffer) 
         {
-            nes.openROM(buffer);
-            new Thread(&RunGame);
+            if (!nes.bolRunGame)
+            {
+                nes.openROM(buffer);
+                new Thread(&RunGame);
+            }
         }
 
         public override void OnDraw()
