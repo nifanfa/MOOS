@@ -101,7 +101,8 @@ namespace Kernel.GUI
             string Day = RTC.Day.ToString();
             string Hour = RTC.Hour.ToString();
             string Minute = RTC.Minute.ToString();
-            string Result = $"{Year}/{Month}/{Day},{Hour}:{Minute} | CPU 0: {CPUUsage}% | Memory: {MemoryUsed}/{Memory}MiB";
+            string FPS = FPSMeter.FPS.ToString();
+            string Result = $"{Year}/{Month}/{Day},{Hour}:{Minute} | FPS:{FPS} | CPU 0: {CPUUsage}% | Memory: {MemoryUsed}/{Memory}MiB";
             CPUUsage.Dispose();
             Memory.Dispose();
             MemoryUsed.Dispose();
@@ -110,6 +111,7 @@ namespace Kernel.GUI
             Day.Dispose();
             Hour.Dispose();
             Minute.Dispose();
+            FPS.Dispose();
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
             Window.font.DrawString(Framebuffer.Graphics.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);
