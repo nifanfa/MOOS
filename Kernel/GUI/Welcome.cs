@@ -18,7 +18,7 @@ namespace Kernel.GUI
         public override void OnDraw()
         {
             base.OnDraw();
-            Framebuffer.DrawImage(X, Y, img);
+            Framebuffer.Graphics.DrawImage(X, Y, img);
             font.DrawString(X, Y + img.Height, "(Banner by andreweathan)\nWelcome to Moos!\nThis project is aim to show how to make asimple but powerful operating system.\nCheck out https://github.com/nifanfa/Moos!\nContributors: nifanfa, Elijah629, devrusty, TRDP1404", Width);
         }
     }

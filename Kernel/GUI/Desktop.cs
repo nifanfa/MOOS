@@ -46,7 +46,7 @@ namespace Kernel.GUI
             int Y = Devide + BarHeight;
             for (int i = 0; i < names.Count; i++)
             {
-                if (Y + FileIcon.Height + Devide > Framebuffer.Height - Devide)
+                if (Y + FileIcon.Height + Devide > Framebuffer.Graphics.Height - Devide)
                 {
                     Y = Devide + BarHeight;
                     X += FileIcon.Width + Devide;
@@ -78,10 +78,10 @@ namespace Kernel.GUI
                 if(IndexClicked == i) 
                 {
                     int w = (int)(FileIcon.Width * 1.5f);
-                    Framebuffer.AFillRectangle(X + ((FileIcon.Width/2) - (w/2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
+                    Framebuffer.Graphics.AFillRectangle(X + ((FileIcon.Width/2) - (w/2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
                 }
 
-                Framebuffer.DrawImage(X, Y, FileIcon);
+                Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
                 //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
                 Window.font.DrawString(X, Y + FileIcon.Height, names[i], FileIcon.Width, Window.font.FontSize * 3);
                 Y += FileIcon.Height + Devide;
@@ -89,9 +89,9 @@ namespace Kernel.GUI
             }
             names.Dispose();
 
-            Framebuffer.FillRectangle(0, 0, Framebuffer.Width, BarHeight, 0xFF111111);
+            Framebuffer.Graphics.FillRectangle(0, 0, Framebuffer.Graphics.Width, BarHeight, 0xFF111111);
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
-            Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), CurrentDirectory, Framebuffer.Width);
+            Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), CurrentDirectory, Framebuffer.Graphics.Width);
 
             string CPUUsage = ThreadPool.CPUUsage.ToString();
             string Memory = ((Allocator.NumPages * Allocator.PageSize) / 1048576).ToString();
@@ -111,8 +111,8 @@ namespace Kernel.GUI
             Hour.Dispose();
             Minute.Dispose();
 
-            //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
-            Window.font.DrawString(Framebuffer.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);
+            //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
+            Window.font.DrawString(Framebuffer.Graphics.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);
 
             Result.Dispose();
         }
@@ -147,7 +147,7 @@ namespace Kernel.GUI
                 Window.MoveToEnd(nesemu);
                 nesemu.Visible = true;
                 /*
-                Framebuffer.TripleBuffered = false;
+                Framebuffer.Graphics.TripleBuffered = false;
                 Console.WriteLine("Emulator Keymap:");
                 Console.WriteLine("A = Q");
                 Console.WriteLine("B = E");
@@ -159,7 +159,7 @@ namespace Kernel.GUI
                 Console.WriteLine("D = Right");
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
-                Framebuffer.TripleBuffered = true;
+                Framebuffer.Graphics.TripleBuffered = true;
                 NES.NES nes = new NES.NES();
                 nes.openROM(File.Instance.ReadAllBytes(name));
                 for (; ; )
