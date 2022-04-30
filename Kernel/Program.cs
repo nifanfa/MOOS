@@ -142,8 +142,9 @@ unsafe class Program
         }
         */
 
-        ThreadPool.Initialize(&KMain);
-        //KMain();
+        ThreadPool.Initialize();
+
+        KMain();
     }
 
     public static FConsole FConsole;

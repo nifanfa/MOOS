@@ -73,7 +73,7 @@ namespace Kernel.Misc
         public static FxsaveArea* Fxdefault;
 #endif
 
-        public static void Initialize(delegate* <void> MainThread)
+        public static void Initialize()
         {
 #if restorfpu
             Fxdefault = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
@@ -90,7 +90,6 @@ namespace Kernel.Misc
             Thread.Sleep(1, 1000);
             Console.WriteLine("Making thread id 1 to sleep 1 sec");
             _int20h(); //start scheduling
-            MainThread();
         }
 
         public static void Terminate()
