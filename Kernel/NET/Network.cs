@@ -19,6 +19,7 @@ namespace Kernel.NET
             Gateway = GatewayAddress.Address;
             Mask = SubnetMask.Address;
             IP = IPAddress.Address;
+            UDP.Clients = new();
             ARP.Initialise();
         }
     }
