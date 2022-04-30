@@ -1,6 +1,7 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+using Kernel.Misc;
 using Kernel.NET;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -58,6 +59,64 @@ namespace Kernel
 
             //Do something
             Buffer.Dispose();
+        }
+    }
+
+
+    public class UdpClient
+    {
+        IPAddress iPAddress;
+        ushort Port;
+
+        public UdpClient(IPAddress address, ushort port)
+        {
+            this.iPAddress = address;
+            this.Port = port;
+            if (UDP.Clients != null)
+            {
+                UDP.Clients.Add(this);
+            }
+            else
+            {
+                Panic.Error("[UdpClient] Network is not initialized!");
+            }
+            Data = null;
+        }
+
+        public void Send(byte[] buffer)
+        {
+            UDP.SendPacket(iPAddress.Address, Port, Port, buffer);
+        }
+
+        private byte[] Data;
+
+        public unsafe void OnData(byte[] buffer)
+        {
+            if (Data != null) Data.Dispose();
+            Data = new byte[buffer.Length];
+            fixed (byte* dest = Data)
+            {
+                fixed (byte* source = buffer)
+                {
+                    Native.Movsb(dest, source, (ulong)buffer.Length);
+                }
+            }
+        }
+
+        public unsafe byte[] Receive()
+        {
+            while (Data == null) Native.Hlt();
+            byte[] data = new byte[Data.Length];
+            fixed (byte* dest = data)
+            {
+                fixed (byte* source = Data)
+                {
+                    Native.Movsb(dest, source, (ulong)data.Length);
+                }
+            }
+            Data.Dispose();
+            Data = null;
+            return data;
         }
     }
 }
