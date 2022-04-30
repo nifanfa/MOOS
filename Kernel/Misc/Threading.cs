@@ -1,30 +1,38 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+//#define restorfpu
+
 using Kernel.Driver;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Kernel.Misc
 {
+#if restorfpu
     [StructLayout(LayoutKind.Sequential,Pack = 1)]
     public unsafe struct FxsaveArea 
     {
         fixed byte Raw[512];
     }
+#endif
 
     public unsafe class Thread
     {
         public bool Terminated;
         public IDT.IDTStack* stack;
+#if restorfpu
         public FxsaveArea* fxsaveArea;
+#endif
         public ulong SleepTime;
 
         public Thread(delegate*<void> method)
         {
             stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
+#if restorfpu
             fxsaveArea = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
-            Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 512);
+            Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 32);
+#endif
 
             stack->cs = 0x08;
             stack->ss = 0x10;
@@ -60,12 +68,16 @@ namespace Kernel.Misc
     {
         public static List<Thread> Threads;
         public static bool Ready = false;
+#if restorfpu
         public static FxsaveArea* Fxdefault;
+#endif
 
         public static void Initialize(delegate* <void> MainThread)
         {
+#if restorfpu
             Fxdefault = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
             Native.Fxsave64(Fxdefault);
+#endif
 
             Ready = false;
             Threads = new();
@@ -128,7 +140,9 @@ namespace Kernel.Misc
             if (!Threads[Index].Terminated)
             {
                 Native.Movsb(Threads[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
+#if restorfpu
                 Native.Fxsave64(Threads[Index].fxsaveArea);
+#endif
             }
 
             for(int i = 0; i < Threads.Count; i++) 
@@ -141,7 +155,7 @@ namespace Kernel.Misc
                 Index = (Index + 1) % Threads.Count;
             } while (Threads[Index].Terminated || (Threads[Index].SleepTime > 0));
 
-            #region CPU Usage
+#region CPU Usage
             if (LastSec != RTC.Second)
             {
                 if (TickInSec != 0 && TickIdle != 0)
@@ -161,10 +175,12 @@ namespace Kernel.Misc
                 TickIdle++;
             }
             TickInSec++;
-            #endregion
+#endregion
 
             Native.Movsb(stack, Threads[Index].stack, (ulong)sizeof(IDT.IDTStack));
+#if restorfpu
             Native.Fxrstor64(Threads[Index].fxsaveArea);
+#endif
         }
     }
 }
