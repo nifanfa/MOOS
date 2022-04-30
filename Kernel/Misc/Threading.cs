@@ -67,7 +67,7 @@ namespace Kernel.Misc
     internal static unsafe class ThreadPool
     {
         public static List<Thread> Threads;
-        public static bool Ready = false;
+        public static bool Initialized = false;
         public static bool Locked = false;
 #if restorfpu
         public static FxsaveArea* Fxdefault;
@@ -80,13 +80,13 @@ namespace Kernel.Misc
             Native.Fxsave64(Fxdefault);
 #endif
             Locked = false;
-            Ready = false;
+            Initialized = false;
             Threads = new();
             new Thread(&IdleThread);
             new Thread(&TestThread);
             //new Thread(&A);
             //new Thread(&B);
-            Ready = true;
+            Initialized = true;
             Thread.Sleep(1, 1000);
             Console.WriteLine("Making thread id 1 to sleep 1 sec");
             _int20h(); //start scheduling
@@ -135,7 +135,7 @@ namespace Kernel.Misc
 
         public static void Schedule(IDT.IDTStack* stack)
         {
-            if (!Ready || Locked) return;
+            if (!Initialized || Locked) return;
 
             if (!Threads[Index].Terminated)
             {
