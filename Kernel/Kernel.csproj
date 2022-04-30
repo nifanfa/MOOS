@@ -17,7 +17,7 @@
 		<EntryPointSymbol>Main</EntryPointSymbol>
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 		<!--Make the code faster!-->
-		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
 	</PropertyGroup>
 
 	<ItemGroup>
