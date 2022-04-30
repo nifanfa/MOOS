@@ -29,7 +29,7 @@ namespace Kernel
                 {
                     if ((buffer[offset + i] & (0x80 >> (int)j)) != 0)
                     {
-                        Framebuffer.DrawPoint((x + j), y + i, color);
+                        Framebuffer.Graphics.DrawPoint((x + j), y + i, color);
                     }
                 }
             }

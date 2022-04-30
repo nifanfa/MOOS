@@ -147,17 +147,17 @@ namespace Kernel.GUI
 
         public virtual void OnDraw()
         {
-            Framebuffer.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
+            Framebuffer.Graphics.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - ((BitFont.MeasureString("Song", Title)) / 2), Y - BarHeight + (BarHeight / 4));
             font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
-            Framebuffer.FillRectangle(X, Y, Width, Height, BackgroundColor);
-            Framebuffer.DrawRectangle(X - 1, Y - BarHeight - 1, Width + 2, BarHeight + Height + 2, 0xFF333333);
+            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, BackgroundColor);
+            Framebuffer.Graphics.DrawRectangle(X - 1, Y - BarHeight - 1, Width + 2, BarHeight + Height + 2, 0xFF333333);
 
-            Framebuffer.DrawImage(CloseButtonX, CloseButtonY, CloseButton);
+            Framebuffer.Graphics.DrawImage(CloseButtonX, CloseButtonY, CloseButton);
         }
     }
 }

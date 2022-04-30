@@ -119,7 +119,7 @@ namespace Kernel
             {
                 int X = (Framebuffer.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
-                Framebuffer.FillRectangle(X, Y, 8, 16, 0x0);
+                Framebuffer.Graphics.FillRectangle(X, Y, 8, 16, 0x0);
                 ASC16.DrawChar(chr, X, Y, ConsoleColorsFramebuffer[(int)ForegroundColor]);
             }
         }
@@ -190,7 +190,7 @@ namespace Kernel
         {
             if(Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
-                Framebuffer.Copy(
+                Framebuffer.Graphics.Copy(
                     (Framebuffer.Width / 2) - (Width * 8 / 2),
                     (Framebuffer.Height / 2) - (Height * 16 / 2),
 
