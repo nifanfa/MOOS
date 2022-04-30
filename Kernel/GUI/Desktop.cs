@@ -53,10 +53,11 @@ namespace Kernel.GUI
                     bool clickable = true;
                     for(int d = 0; d < Window.Windows.Count; d++) 
                     {
-                        if(Window.IsUnderMouse(Window.Windows[d].X, Window.Windows[d].Y, Window.Windows[d].Width, Window.Windows[d].Height)) 
-                        {
-                            clickable = false;
-                        }
+                        if(Window.Windows[d].Visible)
+                            if(Window.IsUnderMouse(Window.Windows[d].X, Window.Windows[d].Y, Window.Windows[d].Width, Window.Windows[d].Height)) 
+                            {
+                                clickable = false;
+                            }
                     }
                     
                     if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
