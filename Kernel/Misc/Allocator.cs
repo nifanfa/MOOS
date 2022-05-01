@@ -85,7 +85,7 @@ abstract unsafe class Allocator
         public UInt64 PageInUse;
         public fixed ulong Pages[NumPages]; //Max 512MiB
 #if HasGC
-        public fixed sbyte GCInfos[NumPages]; //Max 512MiB
+        public fixed byte GCInfos[NumPages]; //Max 512MiB
 #endif
     }
 
@@ -95,10 +95,6 @@ abstract unsafe class Allocator
     {
         fixed (Info* pInfo = &_Info)
             Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
-#if HasGC
-        GC.CollectIf = -12;
-        GC.NotCollectIf = 127;
-#endif
         _Info.Start = Start;
         _Info.PageInUse = 0;
 #if HasGC
@@ -156,12 +152,12 @@ abstract unsafe class Allocator
             {
                 _Info.Pages[i + k] = PageSignature;
 #if HasGC
-                _Info.GCInfos[i + k] = GC.AllowCollect ? (sbyte)0 : GC.NotCollectIf;
+                _Info.GCInfos[i + k] = GC.AllowCollect ? (byte)0 : (byte)GC.Flags.Fixed;
 #endif
             }
             _Info.Pages[i] = pages;
 #if HasGC
-            _Info.GCInfos[i] = GC.AllowCollect ? (sbyte)0 : GC.NotCollectIf;
+            _Info.GCInfos[i] = GC.AllowCollect ? (byte)0 : (byte)GC.Flags.Fixed;
 #endif
             _Info.PageInUse += pages;
 
