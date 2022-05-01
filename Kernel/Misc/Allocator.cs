@@ -34,28 +34,31 @@ abstract unsafe class Allocator
 
     internal static ulong Free(IntPtr intPtr)
     {
-        long p = GetPageIndexStart(intPtr);
-        if (p == -1) return 0;
-        ulong pages = _Info.Pages[p];
-        if (pages != 0 && pages != PageSignature)
+        lock (null) 
         {
-            _Info.PageInUse -= pages;
-            Native.Stosb((void*)intPtr, 0, pages * PageSize);
-            for (ulong i = 0; i < pages; i++)
+            long p = GetPageIndexStart(intPtr);
+            if (p == -1) return 0;
+            ulong pages = _Info.Pages[p];
+            if (pages != 0 && pages != PageSignature)
             {
-                _Info.Pages[(ulong)p + i] = 0;
+                _Info.PageInUse -= pages;
+                Native.Stosb((void*)intPtr, 0, pages * PageSize);
+                for (ulong i = 0; i < pages; i++)
+                {
+                    _Info.Pages[(ulong)p + i] = 0;
 #if HasGC
-                _Info.GCInfos[(ulong)p + i] = 0;
+                    _Info.GCInfos[(ulong)p + i] = 0;
 #endif
-            }
+                }
 
-            _Info.Pages[p] = 0;
+                _Info.Pages[p] = 0;
 #if HasGC
-            _Info.GCInfos[p] = 0;
+                _Info.GCInfos[p] = 0;
 #endif
-            return pages * PageSize;
+                return pages * PageSize;
+            }
+            return 0;
         }
-        return 0;
     }
 
     public static ulong MemoryInUse
@@ -109,57 +112,60 @@ abstract unsafe class Allocator
     /// <returns></returns>
     internal static unsafe IntPtr Allocate(ulong size)
     {
-        ulong pages = 1;
-
-        if (size > PageSize)
+        lock (null) 
         {
-            pages = (size / PageSize) + ((size % 4096) != 0 ? 1UL : 0);
-        }
+            ulong pages = 1;
 
-        ulong i = 0;
-        bool found = false;
-
-        for (i = 0; i < NumPages; i++)
-        {
-            if (_Info.Pages[i] == 0)
+            if (size > PageSize)
             {
-                found = true;
-                for (ulong k = 0; k < pages; k++)
+                pages = (size / PageSize) + ((size % 4096) != 0 ? 1UL : 0);
+            }
+
+            ulong i = 0;
+            bool found = false;
+
+            for (i = 0; i < NumPages; i++)
+            {
+                if (_Info.Pages[i] == 0)
                 {
-                    if (_Info.Pages[i+k] != 0)
+                    found = true;
+                    for (ulong k = 0; k < pages; k++)
                     {
-                        found = false;
-                        break;
+                        if (_Info.Pages[i + k] != 0)
+                        {
+                            found = false;
+                            break;
+                        }
                     }
+                    if (found) break;
                 }
-                if (found) break;
+                else if (_Info.Pages[i] != PageSignature)
+                {
+                    i += _Info.Pages[i];
+                }
             }
-            else if (_Info.Pages[i] != PageSignature)
+            if (!found)
             {
-                i += _Info.Pages[i];
+                Panic.Error("Memory leak");
+                return IntPtr.Zero;
             }
-        }
-        if (!found)
-        {
-            Panic.Error("Memory leak");
-            return IntPtr.Zero;
-        }
 
-        for (ulong k = 0; k < pages; k++)
-        {
-            _Info.Pages[i + k] = PageSignature;
+            for (ulong k = 0; k < pages; k++)
+            {
+                _Info.Pages[i + k] = PageSignature;
 #if HasGC
-            _Info.GCInfos[i + k] = GC.AllowCollect ? (sbyte)0 : GC.NotCollectIf;
+                _Info.GCInfos[i + k] = GC.AllowCollect ? (sbyte)0 : GC.NotCollectIf;
 #endif
-        }
-        _Info.Pages[i] = pages;
+            }
+            _Info.Pages[i] = pages;
 #if HasGC
-        _Info.GCInfos[i] = GC.AllowCollect ? (sbyte)0 : GC.NotCollectIf;
+            _Info.GCInfos[i] = GC.AllowCollect ? (sbyte)0 : GC.NotCollectIf;
 #endif
-        _Info.PageInUse += pages;
+            _Info.PageInUse += pages;
 
-        IntPtr ptr = _Info.Start + (i * PageSize);
-        return ptr;
+            IntPtr ptr = _Info.Start + (i * PageSize);
+            return ptr;
+        }
     }
 
     public static IntPtr Reallocate(IntPtr intPtr, ulong size)
