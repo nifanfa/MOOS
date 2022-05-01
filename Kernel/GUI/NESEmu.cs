@@ -18,14 +18,16 @@ namespace Kernel.GUI
         public override void OnSetVisible(bool value)
         {
             if(nesThread != null)
+            {
                 nesThread.Terminated = !value;
-            if (value)
-            {
-                PS2Keyboard.OnKeyChanged += nes.PS2Keyboard_OnKeyChangedHandler;
-            }
-            else
-            {
-                Program.FConsole?.Rebind();
+                if (value)
+                {
+                    PS2Keyboard.OnKeyChanged += nes.PS2Keyboard_OnKeyChangedHandler;
+                }
+                else
+                {
+                    Program.FConsole?.Rebind();
+                }
             }
         }
 

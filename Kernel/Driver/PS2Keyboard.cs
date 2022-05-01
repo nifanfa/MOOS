@@ -54,6 +54,7 @@ namespace Kernel
             };
 
             CleanKeyInfo();
+            PS2Keyboard.OnKeyChanged = null;
             return true;
         }
 

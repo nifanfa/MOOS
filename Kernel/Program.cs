@@ -97,6 +97,7 @@ unsafe class Program
         string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
         BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("0:/SONG.BTF"), 16));
 
+        FConsole = null;
         Window.Initialize();
 
         Desktop.Initialize();
