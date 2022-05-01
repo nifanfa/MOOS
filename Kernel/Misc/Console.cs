@@ -115,7 +115,7 @@ namespace Kernel
 
         private static void WriteFramebuffer(char chr)
         {
-            if (Framebuffer.Graphics.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
                 int X = (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
@@ -188,7 +188,7 @@ namespace Kernel
 
         private static void MoveUpFramebuffer()
         {
-            if(Framebuffer.Graphics.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if(Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
                 Framebuffer.Graphics.Copy(
                     (Framebuffer.Graphics.Width / 2) - (Width * 8 / 2),
@@ -215,7 +215,7 @@ namespace Kernel
 
         private static void UpdateCursorFramebuffer()
         {
-            if (Framebuffer.Graphics.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
                 ASC16.DrawChar('_',
                             (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),
