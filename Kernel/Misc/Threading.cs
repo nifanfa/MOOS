@@ -20,7 +20,7 @@ namespace Kernel.Misc
     public unsafe class Thread
     {
         public bool Terminated;
-        public IDT.IDTStack* stack;
+        public IDT.IDTStack* Stack;
 #if restorfpu
         public FxsaveArea* fxsaveArea;
 #endif
@@ -28,23 +28,23 @@ namespace Kernel.Misc
 
         public Thread(delegate*<void> method)
         {
-            stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
+            Stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
 #if restorfpu
             fxsaveArea = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
             Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 32);
 #endif
 
-            stack->cs = 0x08;
-            stack->ss = 0x10;
+            Stack->cs = 0x08;
+            Stack->ss = 0x10;
             const int Size = 16384;
-            stack->rsp = ((ulong)Allocator.Allocate(Size)) + (Size);
+            Stack->rsp = ((ulong)Allocator.Allocate(Size)) + (Size);
 
-            stack->rsp -= 8;
-            *(ulong*)(stack->rsp) = (ulong)(delegate*<void>)&ThreadPool.Terminate;
+            Stack->rsp -= 8;
+            *(ulong*)(Stack->rsp) = (ulong)(delegate*<void>)&ThreadPool.Terminate;
 
-            stack->rflags = 0x202;
+            Stack->rflags = 0x202;
 
-            stack->rip = (ulong)method;
+            Stack->rip = (ulong)method;
 
             Terminated = false;
 
@@ -139,7 +139,7 @@ namespace Kernel.Misc
 
             if (!Threads[Index].Terminated)
             {
-                Native.Movsb(Threads[Index].stack, stack, (ulong)sizeof(IDT.IDTStack));
+                Native.Movsb(Threads[Index].Stack, stack, (ulong)sizeof(IDT.IDTStack));
 #if restorfpu
                 Native.Fxsave64(Threads[Index].fxsaveArea);
 #endif
@@ -177,7 +177,7 @@ namespace Kernel.Misc
             TickInSec++;
 #endregion
 
-            Native.Movsb(stack, Threads[Index].stack, (ulong)sizeof(IDT.IDTStack));
+            Native.Movsb(stack, Threads[Index].Stack, (ulong)sizeof(IDT.IDTStack));
 #if restorfpu
             Native.Fxrstor64(Threads[Index].fxsaveArea);
 #endif
