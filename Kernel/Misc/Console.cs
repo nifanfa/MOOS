@@ -23,6 +23,8 @@ namespace Kernel
 
         internal static void Setup()
         {
+            OnWrite = null;
+
             Clear();
 
             EnableCursor();
