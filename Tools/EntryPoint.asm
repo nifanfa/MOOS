@@ -238,6 +238,8 @@ struc SectionHeader
         .Characteristics: resb 4
 endstruc
 
+LOAD_IMAGE_PARAMS_STACK_SIZE   equ  64
+
 [BITS 64]      
 Main:
     mov ax, 0x0010
@@ -257,7 +259,7 @@ Main:
 
     fninit
 
-    sub rsp,64
+    sub rsp,LOAD_IMAGE_PARAMS_STACK_SIZE
     
     xor rbx,rbx
     mov ebx,[EXE+DOSHeader.e_lfanew]
@@ -279,6 +281,17 @@ Main:
     mov rax,[rsp+24]
     add rbx,rax
     mov [rsp+8],rbx
+
+    xor rbx,rbx
+    mov ebx,[EXE+DOSHeader.e_lfanew]
+    lea ebx,[ebx+EXE+NTHeader.SizeOfImage]
+    mov ebx,[ebx]
+    mov [rsp+48],rbx
+
+    mov rdi,[rsp+24]
+    mov rcx,[rsp+48]
+    mov rax,0
+    rep stosb
 
     xor rbx,rbx
     mov ebx,[EXE+DOSHeader.e_lfanew]
@@ -315,6 +328,7 @@ Skip:
     mov rcx,[multiboot_pointer]
     mov rdx,[rsp+32]
     mov rax,[rsp+8]
+    add rsp,LOAD_IMAGE_PARAMS_STACK_SIZE
     call rax
     cli
     hlt
