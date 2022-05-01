@@ -173,7 +173,7 @@ unsafe class Program
         Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
 
         #region Animation of entering Desktop
-        Framebuffer.Graphics.DrawImage(0, 0, Wallpaper, false);
+        Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
         Desktop.Update();
         Window.UpdateAll();
         Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
@@ -222,9 +222,9 @@ unsafe class Program
                 if (FConsole.Visible == false)
                     FConsole.Visible = true;
             }
-#endregion
+            #endregion
 
-            Framebuffer.Graphics.DrawImage(0, 0, Wallpaper, false);
+            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
             Desktop.Update();
             Window.UpdateAll();
             /*
