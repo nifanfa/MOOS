@@ -12,7 +12,10 @@ namespace Kernel.Misc
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
             if(!skippable)
+            {
+                Framebuffer.Update();
                 for (; ; );
+            }
         }
     }
 }

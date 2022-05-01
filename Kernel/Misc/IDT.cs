@@ -73,30 +73,46 @@ public static class IDT
 
     //interrupts_asm.asm line 39
     [RuntimeExport("exception_handler")]
-    public static unsafe void ExceptionHandler(int code, IDTStack* stack)
+    public static unsafe void ExceptionHandler(int code, IDTStackGeneric* stack)
     {
         Panic.Error("KERNEL PANIC!!!", true);
+        InterruptReturnStack* irs;
+        switch (code) 
+        {
+            case 0x00:
+            case 0x01:
+            case 0x02:
+            case 0x03:
+            case 0x04:
+            case 0x05:
+            case 0x06:
+            case 0x07:
+            case 0x09:
+            case 0x0F:
+            case 0x10:
+            case 0x12:
+            case 0x13:
+            case 0x14:
+            case 0x16:
+            case 0x17:
+            case 0x18:
+            case 0x19:
+            case 0x1A:
+            case 0x1B:
+            case 0x1C:
+            case 0x1F:
+                irs = (InterruptReturnStack*)(((byte*)stack) + sizeof(RegistersStack));
+                break;
 
-        Console.WriteLine($"RAX: 0x{stack->rax.ToString("x2")}");
-        Console.WriteLine($"RCX: 0x{stack->rcx.ToString("x2")}");
-        Console.WriteLine($"RDX: 0x{stack->rdx.ToString("x2")}");
-        Console.WriteLine($"RBX: 0x{stack->rbx.ToString("x2")}");
-        Console.WriteLine($"RSI: 0x{stack->rsi.ToString("x2")}");
-        Console.WriteLine($"RDI: 0x{stack->rdi.ToString("x2")}");
-        Console.WriteLine($"R8: 0x{stack->r8.ToString("x2")}");
-        Console.WriteLine($"R9: 0x{stack->r9.ToString("x2")}");
-        Console.WriteLine($"R10: 0x{stack->r10.ToString("x2")}");
-        Console.WriteLine($"R11: 0x{stack->r11.ToString("x2")}");
-        Console.WriteLine($"R12: 0x{stack->r12.ToString("x2")}");
-        Console.WriteLine($"R13: 0x{stack->r13.ToString("x2")}");
-        Console.WriteLine($"R14: 0x{stack->r14.ToString("x2")}");
-        Console.WriteLine($"R15: 0x{stack->r15.ToString("x2")}");
-        Console.WriteLine($"Error Code: 0x{stack->errorCode.ToString("x2")}");
-        Console.WriteLine($"RIP: 0x{stack->rip.ToString("x2")}");
-        Console.WriteLine($"Code segment: 0x{stack->cs.ToString("x2")}");
-        Console.WriteLine($"RFlags: 0x{stack->rflags.ToString("x2")}");
-        Console.WriteLine($"RSP: 0x{stack->rsp.ToString("x2")}");
-        Console.WriteLine($"Stack segment: 0x{stack->ss.ToString("x2")}");
+            default:
+                irs = (InterruptReturnStack*)(((byte*)stack) + sizeof(RegistersStack) + sizeof(ulong));
+                break;
+        }
+        Console.WriteLine($"RIP: 0x{stack->irs.rip.ToString("x2")}");
+        Console.WriteLine($"Code Segment: 0x{stack->irs.cs.ToString("x2")}");
+        Console.WriteLine($"RFlags: 0x{stack->irs.rflags.ToString("x2")}");
+        Console.WriteLine($"RSP: 0x{stack->irs.rsp.ToString("x2")}");
+        Console.WriteLine($"Stack Segment: 0x{stack->irs.ss.ToString("x2")}");
         switch (code)
         {
             case 0: Console.WriteLine("DIVIDE BY ZERO"); break;
@@ -127,10 +143,11 @@ public static class IDT
             case 16: Console.WriteLine("COPR ERROR"); break;
             default: Console.WriteLine("UNKNOWN EXCEPTION"); break;
         }
+        Framebuffer.Update();
         //This method is unreturnable
     }
 
-    public struct IDTStack
+    public struct RegistersStack 
     {
         public ulong rax;
         public ulong rcx;
@@ -146,27 +163,35 @@ public static class IDT
         public ulong r13;
         public ulong r14;
         public ulong r15;
+    }
 
-        //https://os.phil-opp.com/returning-from-exceptions/
-        public ulong errorCode; //optional
+    //https://os.phil-opp.com/returning-from-exceptions/
+    public struct InterruptReturnStack
+    {
         public ulong rip;
         public ulong cs;
         public ulong rflags;
         public ulong rsp;
         public ulong ss;
-        //public ulong alignment;
+    }
+
+    public struct IDTStackGeneric
+    {
+        public RegistersStack rs;
+        public ulong errorCode;
+        public InterruptReturnStack irs;
     }
 
     [RuntimeExport("irq_handler")]
-    public static unsafe void IRQHandler(int irq, IDTStack* stack)
+    public static unsafe void IRQHandler(int irq, IDTStackGeneric* stack)
     {
         irq += 0x20;
         //System calls
         if (irq == 0x80)
         {
-            var pCell = (MethodFixupCell*)stack->rcx;
+            var pCell = (MethodFixupCell*)stack->rs.rcx;
             string name = string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName));
-            stack->rax = (ulong)API.HandleSystemCall(name);
+            stack->rs.rax = (ulong)API.HandleSystemCall(name);
             name.Dispose();
         }
         switch (irq)
