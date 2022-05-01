@@ -160,7 +160,6 @@ unsafe class Program
     public static void KMain()
     {
         Console.WriteLine("Press any key to enter desktop...");
-        Console.ReadKey();
 
         Framebuffer.TripleBuffered = true;
 

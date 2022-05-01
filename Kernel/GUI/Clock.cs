@@ -61,12 +61,15 @@ namespace Kernel.GUI
             xEnd = xStart;
             yEnd = yStart;
 
-            if (angle > sine.Length) return;
+            if (angle > (sine.Length -1)) return;
 
             xEnd += (x_flip * ((sine[angle] * radius) >> 8));
             yEnd += (y_flip * ((sine[15 - angle] * radius) >> 8));
 
-            Framebuffer.Graphics.DrawLine(xStart, yStart, xEnd, yEnd, color);
+            lock (this)
+            {
+                Framebuffer.Graphics.DrawLine(xStart, yStart, xEnd, yEnd, color);
+            }
         }
     }
 }
