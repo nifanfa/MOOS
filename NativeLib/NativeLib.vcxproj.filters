@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="源文件\libcore">
-      <UniqueIdentifier>{e2705c22-a4dd-4e20-9582-3620cbfcf7b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\libcore">
-      <UniqueIdentifier>{f053fcac-97b7-4ee9-9b43-2618b534e7e5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\lodepng">
       <UniqueIdentifier>{744b81dd-0afe-4e84-adba-9a9adec3f09c}</UniqueIdentifier>
     </Filter>
@@ -45,14 +39,8 @@
     <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="printf.cpp">
-      <Filter>源文件\libcore</Filter>
-    </ClCompile>
     <ClCompile Include="lodepng.c">
       <Filter>源文件\lodepng</Filter>
-    </ClCompile>
-    <ClCompile Include="misc.cpp">
-      <Filter>源文件\libcore</Filter>
     </ClCompile>
     <ClCompile Include="diskio.c">
       <Filter>源文件\fatfs</Filter>
@@ -69,6 +57,9 @@
     <ClCompile Include="ffunicode.c">
       <Filter>源文件\fatfs</Filter>
     </ClCompile>
+    <ClCompile Include="printf.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm">
@@ -76,9 +67,6 @@
     </MASM>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libcore.h">
-      <Filter>头文件\libcore</Filter>
-    </ClInclude>
     <ClInclude Include="lodepng.h">
       <Filter>头文件\lodepng</Filter>
     </ClInclude>
@@ -93,6 +81,9 @@
     </ClInclude>
     <ClInclude Include="integer.h">
       <Filter>源文件\fatfs</Filter>
+    </ClInclude>
+    <ClInclude Include="printf.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,15 +10,16 @@ namespace Kernel
 {
     internal unsafe class stdio
     {
-        //Not really stdio thing
-        [RuntimeExport("print")]
-        public static void print(byte* msg) 
+        [RuntimeExport("_putchar")]
+        public static void _putchar(byte chr) 
         {
-            byte b;
-            while((b = *msg++) != 0) 
+            if(chr == '\n') 
             {
-                if (b == '\n') Console.WriteLine();
-                else Console.Write((char)b);
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.Write((char)chr);
             }
         }
 
