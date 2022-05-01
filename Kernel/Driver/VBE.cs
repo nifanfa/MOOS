@@ -16,6 +16,10 @@ namespace Kernel.Driver
                 Framebuffer.SetVideoMode(info->ScreenWidth, info->ScreenHeight);
                 Framebuffer.Graphics.Clear(0x0);
             }
+            else
+            {
+                Framebuffer.SetVideoMode(1024, 768);
+            }
         }
     }
 }
