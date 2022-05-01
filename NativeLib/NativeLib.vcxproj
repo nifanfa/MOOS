@@ -28,9 +28,8 @@
     <ClCompile Include="io.cpp" />
     <ClCompile Include="lodepng.c" />
     <ClCompile Include="mem.cpp" />
-    <ClCompile Include="misc.cpp" />
     <ClCompile Include="native.cpp" />
-    <ClCompile Include="printf.cpp" />
+    <ClCompile Include="printf.c" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,8 +40,8 @@
     <ClInclude Include="ff.h" />
     <ClInclude Include="ffconf.h" />
     <ClInclude Include="integer.h" />
-    <ClInclude Include="libcore.h" />
     <ClInclude Include="lodepng.h" />
+    <ClInclude Include="printf.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -1,4 +1,4 @@
-#include "libcore.h"
+#include "printf.h"
 
 void test()
 {

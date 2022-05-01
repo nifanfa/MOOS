@@ -1,5 +1,6 @@
 #include "ff.h"
-#include "libcore.h"
+#include "printf.h"
+#include <stdbool.h>
 
 FATFS fs;           /* Filesystem object */
 FIL fil;            /* File object */
