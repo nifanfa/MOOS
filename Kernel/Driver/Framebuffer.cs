@@ -74,7 +74,7 @@ namespace Kernel
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
             Control.MousePosition.X = XRes / 2;
             Control.MousePosition.Y = YRes / 2;
-            Graphics = new Graphics(Width, Height, VideoMemory ? VideoMemory : FirstBuffer);
+            Graphics = new Graphics(Width, Height, VideoMemory);
         }
     }
 }
