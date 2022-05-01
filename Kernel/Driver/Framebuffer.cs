@@ -60,8 +60,8 @@ namespace Kernel
                     }
                 }
                 Native.Movsd(SecondBuffer, FirstBuffer, (ulong)(Width * Height));
-                Graphics.Update();
             }
+            if(Graphics != null) Graphics.Update();
         }
 
         public static void SetVideoMode(ushort XRes, ushort YRes)

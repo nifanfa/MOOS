@@ -20,7 +20,7 @@ namespace Kernel.Misc
     public unsafe class Thread
     {
         public bool Terminated;
-        public IDT.IDTStack* Stack;
+        public IDT.IDTStackGeneric* Stack;
 #if restorfpu
         public FxsaveArea* fxsaveArea;
 #endif
@@ -28,23 +28,23 @@ namespace Kernel.Misc
 
         public Thread(delegate*<void> method)
         {
-            Stack = (IDT.IDTStack*)Allocator.Allocate((ulong)sizeof(IDT.IDTStack));
+            Stack = (IDT.IDTStackGeneric*)Allocator.Allocate((ulong)sizeof(IDT.IDTStackGeneric));
 #if restorfpu
             fxsaveArea = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
             Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 32);
 #endif
 
-            Stack->cs = 0x08;
-            Stack->ss = 0x10;
+            Stack->irs.cs = 0x08;
+            Stack->irs.ss = 0x10;
             const int Size = 16384;
-            Stack->rsp = ((ulong)Allocator.Allocate(Size)) + (Size);
+            Stack->irs.rsp = ((ulong)Allocator.Allocate(Size)) + (Size);
 
-            Stack->rsp -= 8;
-            *(ulong*)(Stack->rsp) = (ulong)(delegate*<void>)&ThreadPool.Terminate;
+            Stack->irs.rsp -= 8;
+            *(ulong*)(Stack->irs.rsp) = (ulong)(delegate*<void>)&ThreadPool.Terminate;
 
-            Stack->rflags = 0x202;
+            Stack->irs.rflags = 0x202;
 
-            Stack->rip = (ulong)method;
+            Stack->irs.rip = (ulong)method;
 
             Terminated = false;
 
@@ -133,13 +133,13 @@ namespace Kernel.Misc
         private static ulong LastSec;
         public static ulong CPUUsage;
 
-        public static void Schedule(IDT.IDTStack* stack)
+        public static void Schedule(IDT.IDTStackGeneric* stack)
         {
             if (!Initialized || Locked) return;
 
             if (!Threads[Index].Terminated)
             {
-                Native.Movsb(Threads[Index].Stack, stack, (ulong)sizeof(IDT.IDTStack));
+                Native.Movsb(Threads[Index].Stack, stack, (ulong)sizeof(IDT.IDTStackGeneric));
 #if restorfpu
                 Native.Fxsave64(Threads[Index].fxsaveArea);
 #endif
@@ -177,7 +177,7 @@ namespace Kernel.Misc
             TickInSec++;
 #endregion
 
-            Native.Movsb(stack, Threads[Index].Stack, (ulong)sizeof(IDT.IDTStack));
+            Native.Movsb(stack, Threads[Index].Stack, (ulong)sizeof(IDT.IDTStackGeneric));
 #if restorfpu
             Native.Fxrstor64(Threads[Index].fxsaveArea);
 #endif
