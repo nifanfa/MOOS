@@ -5,6 +5,7 @@ namespace Kernel.GUI
     internal class NESEmu : Window
     {
         public static NES.NES nes;
+        public static Thread nesThread;
 
         public NESEmu(int X, int Y) : base(X, Y, 256,240)
         {
@@ -16,6 +17,7 @@ namespace Kernel.GUI
 
         public override void OnSetVisible(bool value)
         {
+            nesThread.Terminated = !value;
             if (value)
             {
                 PS2Keyboard.OnKeyChanged += nes.PS2Keyboard_OnKeyChangedHandler;
@@ -31,7 +33,7 @@ namespace Kernel.GUI
             if (!nes.bolRunGame)
             {
                 nes.openROM(buffer);
-                new Thread(&RunGame);
+                nesThread = new Thread(&RunGame);
             }
         }
 
