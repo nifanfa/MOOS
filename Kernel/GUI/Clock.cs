@@ -44,29 +44,32 @@ namespace Kernel.GUI
 
         void DrawHand(int xStart, int yStart, int angle, int radius, uint color)
         {
-            angle /= 6;
-            int xEnd, yEnd, quadrant, x_flip, y_flip;
-
-            quadrant = angle / 15;
-
-            switch (quadrant)
+            lock (this) 
             {
-                case 0: x_flip = 1; y_flip = -1; break;
-                case 1: angle = Math.Abs(angle - 30); x_flip = y_flip = 1; break;
-                case 2: angle = angle - 30; x_flip = -1; y_flip = 1; break;
-                case 3: angle = Math.Abs(angle - 60); x_flip = y_flip = -1; break;
-                default: x_flip = y_flip = 1; break;
+                angle /= 6;
+                int xEnd, yEnd, quadrant, x_flip, y_flip;
+
+                quadrant = angle / 15;
+
+                switch (quadrant)
+                {
+                    case 0: x_flip = 1; y_flip = -1; break;
+                    case 1: angle = Math.Abs(angle - 30); x_flip = y_flip = 1; break;
+                    case 2: angle = angle - 30; x_flip = -1; y_flip = 1; break;
+                    case 3: angle = Math.Abs(angle - 60); x_flip = y_flip = -1; break;
+                    default: x_flip = y_flip = 1; break;
+                }
+
+                xEnd = xStart;
+                yEnd = yStart;
+
+                if (angle > sine.Length) return;
+
+                xEnd += (x_flip * ((sine[angle] * radius) >> 8));
+                yEnd += (y_flip * ((sine[15 - angle] * radius) >> 8));
+
+                Framebuffer.Graphics.DrawLine(xStart, yStart, xEnd, yEnd, color);
             }
-
-            xEnd = xStart;
-            yEnd = yStart;
-
-            if (angle > sine.Length) return;
-
-            xEnd += (x_flip * ((sine[angle] * radius) >> 8));
-            yEnd += (y_flip * ((sine[15 - angle] * radius) >> 8));
-
-            Framebuffer.Graphics.DrawLine(xStart, yStart, xEnd, yEnd, color);
         }
     }
 }
