@@ -17,7 +17,7 @@ namespace Kernel
         public delegate void OnWriteHandler(char chr);
         public static event OnWriteHandler OnWrite;
 
-        private static uint[] ConsoleColorsFramebuffer;
+        private static uint[] ColorsFB;
 
         public static ConsoleColor ForegroundColor;
 
@@ -30,7 +30,7 @@ namespace Kernel
             EnableCursor();
             SetCursorStyle(0b1110);
 
-            ConsoleColorsFramebuffer = new uint[16]
+            ColorsFB = new uint[16]
             {
                 Color.Black.ToArgb(),
                 Color.Blue.ToArgb(),
@@ -122,7 +122,7 @@ namespace Kernel
                 int X = (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
                 Framebuffer.Graphics.FillRectangle(X, Y, 8, 16, 0x0);
-                ASC16.DrawChar(chr, X, Y, ConsoleColorsFramebuffer[(int)ForegroundColor]);
+                ASC16.DrawChar(chr, X, Y, ColorsFB[(int)ForegroundColor]);
             }
         }
 
