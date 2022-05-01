@@ -1,19 +1,26 @@
 ﻿#if Kernel
+using Internal.Runtime.CompilerServices;
 using Kernel;
 using Kernel.Misc;
 
 namespace System.Threading
 {
-    public static class Monitor
+    public static unsafe class Monitor
     {
         public static void Enter(object obj)
         {
-            ThreadPool.Locked = true;
+            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
+            {
+                ThreadPool.Locked = true;
+            }
         }
 
         public static void Exit(object obj)
         {
-            ThreadPool.Locked = false;
+            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
+            {
+                ThreadPool.Locked = false;
+            }
         }
     }
 }
