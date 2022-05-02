@@ -93,8 +93,8 @@ unsafe class Program
         Cursor = new PNG(File.Instance.ReadAllBytes("0:/Cursor.png"));
         CursorMoving = new PNG(File.Instance.ReadAllBytes("0:/Grab.png"));
         //Image from unsplash
-        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/WALP.PNG"));
-        //Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/Wallpaper.png"));
+        //Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/WALP.PNG"));
+        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/Wallpaper.png"));
 
         BitFont.Initialize();
 
