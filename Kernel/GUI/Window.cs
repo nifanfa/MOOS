@@ -155,7 +155,7 @@ namespace Kernel.GUI
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
             Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, BackgroundColor);
-            Framebuffer.Graphics.DrawRectangle(X - 1, Y - BarHeight - 1, Width + 2, BarHeight + Height + 2, 0xFF333333, 2);
+            Framebuffer.Graphics.DrawRectangle(X - 1, Y - BarHeight - 1, Width + 2, BarHeight + Height + 2, 0xFF333333);
 
             Framebuffer.Graphics.DrawImage(CloseButtonX, CloseButtonY, CloseButton);
         }
