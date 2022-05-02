@@ -15,6 +15,7 @@ namespace Kernel.GUI
         private static Image FileIcon;
         private static Image IamgeIcon;
         private static Image GameIcon;
+        private static Image FolderIcon;
 
         public static string CurrentDirectory;
         public static string Dir;
@@ -28,6 +29,7 @@ namespace Kernel.GUI
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
             IamgeIcon = new PNG(File.Instance.ReadAllBytes("0:/Image.png"));
             GameIcon = new PNG(File.Instance.ReadAllBytes("0:/Game.png"));
+            FolderIcon = new PNG(File.Instance.ReadAllBytes("0:/folder.png"));
             CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
             imageViewer = new ImageViewer(400,400);
@@ -115,6 +117,13 @@ namespace Kernel.GUI
                     Framebuffer.Graphics.DrawImage(X, Y, GameIcon);
                 }
                 */
+                else if
+                    (
+                    names[i].Attribute == FileAttribute.Directory
+                    )
+                {
+                    Framebuffer.Graphics.DrawImage(X, Y, FolderIcon);
+                }
                 else
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
