@@ -6,6 +6,7 @@ namespace Kernel.GUI
     {
         public static NES.NES nes;
         public static Thread nesThread;
+        public bool GameStarted = false;
 
         public NESEmu(int X, int Y) : base(X, Y, 256,240)
         {
@@ -17,7 +18,7 @@ namespace Kernel.GUI
 
         public override void OnSetVisible(bool value)
         {
-            if(nes != null && nes.bolRunGame)
+            if(GameStarted)
             {
                 nesThread.Terminated = !value;
                 if (value)
@@ -37,6 +38,7 @@ namespace Kernel.GUI
             {
                 nes.openROM(buffer);
                 nesThread = new Thread(&RunGame);
+                GameStarted = true;
             }
         }
 
