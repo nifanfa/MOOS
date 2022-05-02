@@ -129,7 +129,7 @@ namespace Kernel.GUI
                     Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
                 }
                 //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
-                Window.font.DrawString(X, Y + FileIcon.Height, names[i].Name, FileIcon.Width, Window.font.FontSize * 3);
+                Window.font.DrawString(X, Y + FileIcon.Height, names[i].Name, FileIcon.Width + 8, Window.font.FontSize * 3);
                 Y += FileIcon.Height + Devide;
                 names[i].Dispose();
             }
