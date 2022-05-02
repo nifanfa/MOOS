@@ -17,7 +17,7 @@ namespace Kernel.GUI
 
         public override void OnSetVisible(bool value)
         {
-            if(nesThread != null)
+            if(nes != null && nes.bolRunGame)
             {
                 nesThread.Terminated = !value;
                 if (value)
