@@ -366,3 +366,5 @@ Kernel/Kernel.map
 *.scoreboard
 *.vmem
 *.lck
+*.gz
+*.dmp

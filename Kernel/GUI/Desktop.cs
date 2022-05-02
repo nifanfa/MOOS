@@ -45,7 +45,7 @@ namespace Kernel.GUI
         {
             const int BarHeight = 35;
 
-            List<string> names = File.Instance.GetFiles(Dir);
+            List<FileInfo> names = File.Instance.GetFiles(Dir);
             int Devide = 60;
             int X = Devide;
             int Y = Devide + BarHeight;
@@ -72,7 +72,7 @@ namespace Kernel.GUI
                     if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
                     {
                         IndexClicked = i;
-                        OnClick(names[i]);
+                        OnClick(names[i].Name);
                     }
                 }
                 else 
@@ -89,14 +89,14 @@ namespace Kernel.GUI
 
                 if (
                     (
-                    names[i][names[i].Length - 3].ToUpper() == 'P' &&
-                    names[i][names[i].Length - 2].ToUpper() == 'N' &&
-                    names[i][names[i].Length - 1].ToUpper() == 'G'
+                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'P' &&
+                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'N' &&
+                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'G'
                     ) ||
                     (
-                    names[i][names[i].Length - 3].ToUpper() == 'B' &&
-                    names[i][names[i].Length - 2].ToUpper() == 'M' &&
-                    names[i][names[i].Length - 1].ToUpper() == 'P'
+                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'B' &&
+                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'M' &&
+                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'P'
                     )
                     )
                 {
@@ -120,7 +120,7 @@ namespace Kernel.GUI
                     Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
                 }
                 //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
-                Window.font.DrawString(X, Y + FileIcon.Height, names[i], FileIcon.Width, Window.font.FontSize * 3);
+                Window.font.DrawString(X, Y + FileIcon.Height, names[i].Name, FileIcon.Width, Window.font.FontSize * 3);
                 Y += FileIcon.Height + Devide;
                 names[i].Dispose();
             }
