@@ -22,7 +22,8 @@ namespace Kernel.FS
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct Info
         {
-            public fixed char Name[32];
+            //The maximum file length of exFAT
+            public fixed char Name[255];
             public byte Attribute;
 
             byte C_alignment;
