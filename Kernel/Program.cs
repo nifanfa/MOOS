@@ -1,6 +1,9 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+
+//#define NETWORK
+
 using Internal.Runtime.CompilerHelpers;
 using Kernel;
 using Kernel.Driver;
@@ -90,7 +93,8 @@ unsafe class Program
         Cursor = new PNG(File.Instance.ReadAllBytes("0:/Cursor.png"));
         CursorMoving = new PNG(File.Instance.ReadAllBytes("0:/Grab.png"));
         //Image from unsplash
-        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/Wallpaper.png"));
+        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/WALP.PNG"));
+        //Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/Wallpaper.png"));
 
         BitFont.Initialize();
 
@@ -120,40 +124,50 @@ unsafe class Program
         */
 
         /*
-        for(; ; ) 
+        for (; ; )
         {
             Console.WriteLine(Console.ReadLine());
         }
         */
 
-        /*
+#if NETWORK
+        //To use network. edit Kernel.csproj and use qemu. add "-net nic,model=rtl8139 -net tap,ifname=tap" to the end of command
+        //Install openVPN's windows tap driver
+        //rename the network adapter to tap in control panel
+        //select your currently connected network controller and share the network with tap
+        //Run
         Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
         RTL8139.Initialise();
         ARP.Require(Network.Gateway);
-        TcpClient client = TcpClient.Connect(IPAddress.Parse(192, 168, 137, 1), 54188);
-        client.Send(new byte[]
-        {
-            (byte)'H',
-            (byte)'e',
-            (byte)'l',
-            (byte)'l',
-            (byte)'o'
-        });
-        for (; ; )
-        {
-            byte[] data = client.Receive();
-            for (int i = 0; i < data.Length; i++) 
-            {
-                Console.Write((char)data[i]);
-            }
-            Console.WriteLine();
-        }
-        */
+        //Make sure you have already setup a web server on your PC
+        TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168,137,1), 80);
+        client.OnData += Client_OnData;
+        client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
+        for (; ; ) Native.Hlt();
+#endif
 
         ThreadPool.Initialize();
 
         KMain();
     }
+
+#if NETWORK
+    private static void Client_OnData(byte[] data)
+    {
+        for (int i = 0; i < data.Length; i++)
+        {
+            Console.Write((char)data[i]);
+        }
+        Console.WriteLine();
+    }
+
+    public static byte[] ToASCII(string s) 
+    {
+        byte[] buffer = new byte[s.Length];
+        for (int i = 0; i < buffer.Length; i++) buffer[i] = (byte)s[i];
+        return buffer;
+    }
+#endif
 
     public static FConsole FConsole;
 
@@ -172,7 +186,7 @@ unsafe class Program
         Console.WriteLine("Welcome to Moos!");
         Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
 
-        #region Animation of entering Desktop
+#region Animation of entering Desktop
         Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
         Desktop.Update();
         Window.UpdateAll();
@@ -207,7 +221,7 @@ unsafe class Program
         _screen.Dispose();
         for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
         SizedScreens.Dispose();
-        #endregion
+#endregion
 
         for (; ; )
         {
@@ -222,7 +236,7 @@ unsafe class Program
                 if (FConsole.Visible == false)
                     FConsole.Visible = true;
             }
-            #endregion
+#endregion
 
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
             Desktop.Update();
