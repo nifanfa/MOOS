@@ -50,6 +50,7 @@ struct Info* get_files(unsigned short* directory)
 		memcpy(infos[i].Name, fno.fname, INFO_NAME_LENGTH);
 		infos[i].Attribute = fno.fattrib;
 	}
+	infos[i].Name[0] = 0;
 
 	f_closedir(&dir);
 
