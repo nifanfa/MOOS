@@ -49,37 +49,27 @@ namespace Kernel.NET
             }
         }
 
+        public TcpClient()
+        {
+            OnData = null;
+        }
+        
         public static TcpClient Connect(IPAddress address,ushort port) 
         {
             return TCP.Connect(address.Address, port, port);
         }
 
-        private byte[] Data;
+        public event Network.OnDataHandler OnData;
 
-        public unsafe void OnData(byte* buffer, int length)
+        internal unsafe void _OnData(byte* buffer, int length)
         {
-            if (Data != null) Data.Dispose();
-            Data = new byte[length];
+            byte[] Data = new byte[length];
             fixed (byte* dest = Data)
             {
                 Native.Movsb(dest, buffer, (ulong)length);
             }
-        }
-
-        public unsafe byte[] Receive()
-        {
-            while (Data == null) Native.Hlt();
-            byte[] data = new byte[Data.Length];
-            fixed (byte* dest = data)
-            {
-                fixed (byte* source = Data)
-                {
-                    Native.Movsb(dest, source, (ulong)data.Length);
-                }
-            }
+            OnData?.Invoke(Data);
             Data.Dispose();
-            Data = null;
-            return data;
         }
     }
 
@@ -289,7 +279,7 @@ namespace Kernel.NET
                     //Maybe bug here?
                     if (conn.rcvNxt == seq)
                     {
-                        conn.OnData(buffer, length);
+                        conn._OnData(buffer, length);
                         conn.rcvNxt += (uint)length;
                     }
 

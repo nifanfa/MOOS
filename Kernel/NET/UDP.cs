@@ -54,7 +54,7 @@ namespace Kernel
 
             for (int i = 0; i < Clients.Count; i++) 
             {
-                Clients[i].OnData(Buffer);
+                Clients[i]._OnData(Buffer);
             }
 
             //Do something
@@ -67,6 +67,12 @@ namespace Kernel
     {
         IPAddress iPAddress;
         ushort Port;
+        public event Network.OnDataHandler OnData;
+
+        internal void _OnData(byte[] buffer) 
+        {
+            OnData?.Invoke(buffer);
+        }
 
         public UdpClient(IPAddress address, ushort port)
         {
@@ -80,43 +86,11 @@ namespace Kernel
             {
                 Panic.Error("[UdpClient] Network is not initialized!");
             }
-            Data = null;
         }
 
         public void Send(byte[] buffer)
         {
             UDP.SendPacket(iPAddress.Address, Port, Port, buffer);
-        }
-
-        private byte[] Data;
-
-        public unsafe void OnData(byte[] buffer)
-        {
-            if (Data != null) Data.Dispose();
-            Data = new byte[buffer.Length];
-            fixed (byte* dest = Data)
-            {
-                fixed (byte* source = buffer)
-                {
-                    Native.Movsb(dest, source, (ulong)buffer.Length);
-                }
-            }
-        }
-
-        public unsafe byte[] Receive()
-        {
-            while (Data == null) Native.Hlt();
-            byte[] data = new byte[Data.Length];
-            fixed (byte* dest = data)
-            {
-                fixed (byte* source = Data)
-                {
-                    Native.Movsb(dest, source, (ulong)data.Length);
-                }
-            }
-            Data.Dispose();
-            Data = null;
-            return data;
         }
     }
 }
