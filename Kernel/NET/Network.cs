@@ -13,6 +13,8 @@ namespace Kernel.NET
         public static byte[] Boardcast;
         public static byte[] Gateway;
 
+        public delegate void OnDataHandler(byte[] buffer);
+
         public static void Initialise(IPAddress IPAddress, IPAddress GatewayAddress, IPAddress SubnetMask)
         {
             Boardcast = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
