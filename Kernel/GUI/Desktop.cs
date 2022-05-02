@@ -13,6 +13,9 @@ namespace Kernel.GUI
     internal class Desktop
     {
         private static Image FileIcon;
+        private static Image IamgeIcon;
+        private static Image GameIcon;
+
         public static string CurrentDirectory;
         public static string Dir;
         public static ImageViewer imageViewer;
@@ -23,6 +26,8 @@ namespace Kernel.GUI
         {
             IndexClicked = -1;
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
+            IamgeIcon = new PNG(File.Instance.ReadAllBytes("0:/Image.png"));
+            GameIcon = new PNG(File.Instance.ReadAllBytes("0:/Game.png"));
             CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
             imageViewer = new ImageViewer(400,400);
@@ -81,7 +86,39 @@ namespace Kernel.GUI
                     Framebuffer.Graphics.AFillRectangle(X + ((FileIcon.Width/2) - (w/2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
                 }
 
-                Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
+
+                if (
+                    (
+                    names[i][names[i].Length - 3].ToUpper() == 'P' &&
+                    names[i][names[i].Length - 2].ToUpper() == 'N' &&
+                    names[i][names[i].Length - 1].ToUpper() == 'G'
+                    ) ||
+                    (
+                    names[i][names[i].Length - 3].ToUpper() == 'B' &&
+                    names[i][names[i].Length - 2].ToUpper() == 'M' &&
+                    names[i][names[i].Length - 1].ToUpper() == 'P'
+                    )
+                    )
+                {
+                    Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
+                }
+                /*
+                else if
+                    (
+                    (
+                    names[i][names[i].Length - 3].ToUpper() == 'N' &&
+                    names[i][names[i].Length - 2].ToUpper() == 'E' &&
+                    names[i][names[i].Length - 1].ToUpper() == 'S'
+                    )
+                    )
+                {
+                    Framebuffer.Graphics.DrawImage(X, Y, GameIcon);
+                }
+                */
+                else
+                {
+                    Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
+                }
                 //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
                 Window.font.DrawString(X, Y + FileIcon.Height, names[i], FileIcon.Width, Window.font.FontSize * 3);
                 Y += FileIcon.Height + Devide;
