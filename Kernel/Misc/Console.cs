@@ -97,6 +97,11 @@ namespace Kernel
 
         public static void Write(char chr)
         {
+            if(chr == '\n') 
+            {
+                WriteLine();
+                return;
+            }
             OnWrite?.Invoke(chr);
             WriteFramebuffer(chr);
 
