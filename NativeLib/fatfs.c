@@ -1,6 +1,15 @@
 #include "ff.h"
 #include "printf.h"
 #include <stdbool.h>
+#include <intrin.h>
+
+#define INFO_NAME_LENGTH 32
+
+struct Info
+{
+	WCHAR Name[INFO_NAME_LENGTH];
+	BYTE Attribute;
+};
 
 FATFS fs;           /* Filesystem object */
 FIL fil;            /* File object */
@@ -11,19 +20,20 @@ DIR dir;
 FILINFO info;
 DIR dir;                    // Directory
 FILINFO fno;                // File Info
-WCHAR* names;
+
+struct Info *infos;
 
 void fatfs_init()
 {
 	work = malloc(FF_MAX_SS);
-	names = malloc(8192);
+	infos = malloc(sizeof(struct Info) * 64);
 
 	//res = f_mkfs(L"0:", FS_EXFAT, 0, work, FF_MAX_SS);
 
 	res = f_mount(&fs, L"0:", 0);
 }
 
-WCHAR* get_files(unsigned short* directory)
+struct Info* get_files(unsigned short* directory)
 {
 	res = f_opendir(&dir, directory);   // Open Root
 	if (res != FR_OK)
@@ -32,27 +42,17 @@ WCHAR* get_files(unsigned short* directory)
 		while (true);
 	}
 	int i = 0;
-	do
+	for(;;i++)
 	{
-		int ii = 0;
-		f_readdir(&dir, &fno);
-		if (fno.fname[0] != 0)
-		{
-			while (fno.fname[ii] != 0)
-			{
-				names[i] = fno.fname[ii];
-				i++;
-				ii++;
-			}
-			names[i] = '\n';
-			i++;
-		}
-	} while (fno.fname[0] != 0);
-	names[i] = 0;
+		res = f_readdir(&dir, &fno);
+		if (res != FR_OK || fno.fname[0] == 0) break;  /* Break on error or end of dir */
+		memcpy(infos[i].Name, fno.fname, INFO_NAME_LENGTH);
+		infos[i].Attribute = fno.fattrib;
+	}
 
 	f_closedir(&dir);
 
-	return names;
+	return infos;
 }
 
 void write_all_bytes(TCHAR* filename, void* data,long filesize)

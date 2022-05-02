@@ -16,34 +16,34 @@ namespace Kernel.FS
 
 
         [DllImport("*")]
-        private static extern char* get_files(char* directory);
+        private static extern Info* get_files(char* directory);
 
-        public override List<string> GetFiles(string Directory) 
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct Info
         {
-            List<string> files = new List<string>();
-            char* c;
-            fixed (char* p = Directory) c = get_files(p);
-            int i = 0;
-            bool atEnd = false;
-            while (true) 
-            {
-                int len = 0;
-                while (c[i+ len] != '\n')
-                {
-                    if (c[i + len] == 0)
-                    {
-                        atEnd = true;
-                        break;
-                    }
+            public fixed char Name[32];
+            public byte Attribute;
 
-                    len++;
-                }
-                if (atEnd) break;
-                files.Add(new string(c, i, len));
-                i += len;
+            byte C_alignment;
+        }
+
+        public override List<FileInfo> GetFiles(string Directory)
+        {
+            Info* infos;
+            fixed (char* p = Directory)
+            infos = get_files(p);
+            int i = 0;
+            List<FileInfo> files = new List<FileInfo>();
+            while (infos[i].Name[0] != 0) 
+            {
+                files.Add(new FileInfo()
+                {
+                    Name = new string(infos[i].Name),
+                    Attribute = (FileAttribute)infos[i].Attribute
+                });
                 i++;
             }
-
             return files;
         }
 
