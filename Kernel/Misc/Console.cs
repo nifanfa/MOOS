@@ -1,6 +1,8 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+#define ASCII
+
 using System;
 using System.Drawing;
 
@@ -102,22 +104,29 @@ namespace Kernel
                 WriteLine();
                 return;
             }
-            OnWrite?.Invoke(chr);
-            WriteFramebuffer(chr);
-
-            byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
-            *p = (byte)chr;
-            p++;
-            *p = (byte)((byte)(ForegroundColor));
-            //*p = 0x0F;
-            CursorX++;
-            if (CursorX == Width)
+#if ASCII
+            if(chr >= 0x20 && chr <= 0x7E)
+#else
+            unsafe
+#endif
             {
-                CursorX = 0;
-                CursorY++;
+                OnWrite?.Invoke(chr);
+                WriteFramebuffer(chr);
+
+                byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
+                *p = (byte)chr;
+                p++;
+                *p = (byte)((byte)(ForegroundColor));
+                //*p = 0x0F;
+                CursorX++;
+                if (CursorX == Width)
+                {
+                    CursorX = 0;
+                    CursorY++;
+                }
+                MoveUp();
+                UpdateCursor();
             }
-            MoveUp();
-            UpdateCursor();
         }
 
         private static void WriteFramebuffer(char chr)
