@@ -3,7 +3,8 @@
 #include <stdbool.h>
 #include <intrin.h>
 
-#define INFO_NAME_LENGTH 32
+//The maximum file length of exFAT
+#define INFO_NAME_LENGTH 255
 
 struct Info
 {
