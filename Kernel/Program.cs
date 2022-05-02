@@ -58,10 +58,14 @@ unsafe class Program
         IDT.Enable();
 
         ACPI.Initialize();
+#if UseAPIC
+        PIC.Disable();
+        LocalAPIC.Initialize();
+        IOAPIC.Initialize();
+        HPET.Initialize();
+#else
         PIC.Enable();
-        //LocalAPIC.Initialize();
-        //IOAPIC.Initialize();
-        //HPET.Initialize();
+#endif
 
         PS2Keyboard.Initialize();
         //Enable keyboard interrupts
