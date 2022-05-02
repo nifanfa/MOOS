@@ -21,8 +21,6 @@ namespace Kernel.GUI
 
         public static void Initialize()
         {
-            NESEmu.nesThread = null;
-
             IndexClicked = -1;
             FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
             CurrentDirectory = " root@Moos: / ";
