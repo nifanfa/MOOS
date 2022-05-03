@@ -5,6 +5,7 @@ using Kernel.Driver;
 using Kernel.FS;
 using Kernel.Misc;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -15,6 +16,7 @@ namespace Kernel.GUI
         private static Image FileIcon;
         private static Image IamgeIcon;
         private static Image GameIcon;
+        private static Image AppIcon;
         private static Image FolderIcon;
 
         public static string CurrentDirectory;
@@ -26,10 +28,11 @@ namespace Kernel.GUI
         public static void Initialize()
         {
             IndexClicked = -1;
-            FileIcon = new PNG(File.Instance.ReadAllBytes("UNKNOWN.PNG"));
-            IamgeIcon = new PNG(File.Instance.ReadAllBytes("Image.png"));
-            GameIcon = new PNG(File.Instance.ReadAllBytes("Game.png"));
-            FolderIcon = new PNG(File.Instance.ReadAllBytes("folder.png"));
+            FileIcon = new PNG(File.Instance.ReadAllBytes("Images/file.png"));
+            IamgeIcon = new PNG(File.Instance.ReadAllBytes("Images/Image.png"));
+            GameIcon = new PNG(File.Instance.ReadAllBytes("Images/Game.png"));
+            AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
+            FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
             CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
             imageViewer = new ImageViewer(400,400);
@@ -104,19 +107,28 @@ namespace Kernel.GUI
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
                 }
-                /*
                 else if
                     (
                     (
-                    names[i][names[i].Length - 3].ToUpper() == 'N' &&
-                    names[i][names[i].Length - 2].ToUpper() == 'E' &&
-                    names[i][names[i].Length - 1].ToUpper() == 'S'
+                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'N' &&
+                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'E' &&
+                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'S'
                     )
                     )
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, GameIcon);
                 }
-                */
+                else if
+                    (
+                    (
+                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'E' &&
+                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'X' &&
+                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'E'
+                    )
+                    )
+                {
+                    Framebuffer.Graphics.DrawImage(X, Y, AppIcon);
+                }
                 else if
                     (
                     names[i].Attribute == FileAttribute.Directory
@@ -172,9 +184,9 @@ namespace Kernel.GUI
         {
             ClickLock = true;
             if (
-                name[name.Length-3].ToUpper() == 'P' &&
-                name[name.Length-2].ToUpper() == 'N' &&
-                name[name.Length-1].ToUpper() == 'G'
+                name[name.Length - 3].ToUpper() == 'P' &&
+                name[name.Length - 2].ToUpper() == 'N' &&
+                name[name.Length - 1].ToUpper() == 'G'
                 )
             {
                 byte[] buffer = File.Instance.ReadAllBytes(name);
@@ -184,6 +196,21 @@ namespace Kernel.GUI
                 png.Dispose();
                 Window.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
+            }
+            else if (
+                name[name.Length - 3].ToUpper() == 'E' &&
+                name[name.Length - 2].ToUpper() == 'X' &&
+                name[name.Length - 1].ToUpper() == 'E'
+                )
+            {
+                Window.MoveToEnd(Program.FConsole);
+                if (Program.FConsole.Visible == false)
+                    Program.FConsole.Visible = true;
+
+                //TO-DO disposing
+                Console.WriteLine("Loading EXE...");
+                byte[] buffer = File.Instance.ReadAllBytes(name);
+                Process.Start(buffer);
             }
             else if (
                 name[name.Length - 3].ToUpper() == 'N' &&

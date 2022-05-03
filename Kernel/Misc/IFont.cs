@@ -80,6 +80,7 @@ namespace Kernel.Misc
             int w = 0, h = 0;
             for (int i = 0; i < Str.Length; i++)
             {
+                if (h != 0 && w == 0 && Str[i] == ' ') continue;
                 w += DrawChar(X + w, Y + h, Str[i]);
                 if (w + FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
                 {
