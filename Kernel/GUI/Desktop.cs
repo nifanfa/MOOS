@@ -19,7 +19,7 @@ namespace Kernel.GUI
         private static Image AppIcon;
         private static Image FolderIcon;
 
-        public static string CurrentDirectory;
+        public static string Prefix;
         public static string Dir;
         public static ImageViewer imageViewer;
         public static MessageBox msgbox;
@@ -33,7 +33,7 @@ namespace Kernel.GUI
             GameIcon = new PNG(File.Instance.ReadAllBytes("Images/Game.png"));
             AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
-            CurrentDirectory = " root@Moos: / ";
+            Prefix = " root@Moos: ";
             Dir = "";
             imageViewer = new ImageViewer(400,400);
             msgbox = new MessageBox(100,300);
@@ -149,7 +149,10 @@ namespace Kernel.GUI
 
             Framebuffer.Graphics.FillRectangle(0, 0, Framebuffer.Graphics.Width, BarHeight, 0xFF111111);
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
-            Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), CurrentDirectory, Framebuffer.Graphics.Width);
+            
+            string pre = Prefix + Dir;
+            Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), pre, Framebuffer.Graphics.Width);
+            pre.Dispose();
 
             string CPUUsage = ThreadPool.CPUUsage.ToString();
             string Memory = ((Allocator.NumPages * Allocator.PageSize) / 1048576).ToString();
