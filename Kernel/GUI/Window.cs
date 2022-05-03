@@ -19,8 +19,8 @@ namespace Kernel.GUI
         public static void Initialize()
         {
             Windows = new List<Window>();
-            PNG yehei = new PNG(File.Instance.ReadAllBytes("M+.png"));
-            CloseButton = new PNG(File.Instance.ReadAllBytes("Close.png"));
+            PNG yehei = new PNG(File.Instance.ReadAllBytes("Images/M+.png"));
+            CloseButton = new PNG(File.Instance.ReadAllBytes("Images/Close.png"));
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 18);
         }
 
