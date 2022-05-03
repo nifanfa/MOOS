@@ -94,16 +94,16 @@ unsafe class Program
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
-        Cursor = new PNG(File.Instance.ReadAllBytes("0:/Cursor.png"));
-        CursorMoving = new PNG(File.Instance.ReadAllBytes("0:/Grab.png"));
+        Cursor = new PNG(File.Instance.ReadAllBytes("Cursor.png"));
+        CursorMoving = new PNG(File.Instance.ReadAllBytes("Grab.png"));
         //Image from unsplash
-        Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/WALP.PNG"));
-        //Wallpaper = new PNG(File.Instance.ReadAllBytes("0:/Wallpaper.png"));
+        Wallpaper = new PNG(File.Instance.ReadAllBytes("WALP.PNG"));
+        //Wallpaper = new PNG(File.Instance.ReadAllBytes("Wallpaper.png"));
 
         BitFont.Initialize();
 
         string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-        BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("0:/SONG.BTF"), 16));
+        BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("SONG.BTF"), 16));
 
         FConsole = null;
         Window.Initialize();
@@ -118,7 +118,7 @@ unsafe class Program
 
         //TO-DO disposing
         Console.WriteLine("Loading EXE...");
-        byte[] buffer = File.Instance.ReadAllBytes("0:/ConsoleApp1.exe");
+        byte[] buffer = File.Instance.ReadAllBytes("ConsoleApp1.exe");
         Process.Start(buffer);
 
         /*

@@ -26,10 +26,10 @@ namespace Kernel.GUI
         public static void Initialize()
         {
             IndexClicked = -1;
-            FileIcon = new PNG(File.Instance.ReadAllBytes("0:/UNKNOWN.PNG"));
-            IamgeIcon = new PNG(File.Instance.ReadAllBytes("0:/Image.png"));
-            GameIcon = new PNG(File.Instance.ReadAllBytes("0:/Game.png"));
-            FolderIcon = new PNG(File.Instance.ReadAllBytes("0:/folder.png"));
+            FileIcon = new PNG(File.Instance.ReadAllBytes("UNKNOWN.PNG"));
+            IamgeIcon = new PNG(File.Instance.ReadAllBytes("Image.png"));
+            GameIcon = new PNG(File.Instance.ReadAllBytes("Game.png"));
+            FolderIcon = new PNG(File.Instance.ReadAllBytes("folder.png"));
             CurrentDirectory = " root@Moos: / ";
             Dir = "0:/";
             imageViewer = new ImageViewer(400,400);
