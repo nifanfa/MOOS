@@ -34,7 +34,7 @@ namespace Kernel.GUI
             AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
             CurrentDirectory = " root@Moos: / ";
-            Dir = "0:/";
+            Dir = "";
             imageViewer = new ImageViewer(400,400);
             msgbox = new MessageBox(100,300);
             nesemu = new(150, 350);
@@ -68,7 +68,7 @@ namespace Kernel.GUI
                     for(int d = 0; d < Window.Windows.Count; d++) 
                     {
                         if(Window.Windows[d].Visible)
-                            if(Window.IsUnderMouse(Window.Windows[d].X, Window.Windows[d].Y, Window.Windows[d].Width, Window.Windows[d].Height)) 
+                            if(Window.Windows[d].IsUnderMouse()) 
                             {
                                 clickable = false;
                             }
@@ -77,7 +77,7 @@ namespace Kernel.GUI
                     if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
                     {
                         IndexClicked = i;
-                        OnClick(names[i].Name);
+                        OnClick(names[i]);
                     }
                 }
                 else 
@@ -180,16 +180,21 @@ namespace Kernel.GUI
         static bool ClickLock = false;
         static int IndexClicked;
 
-        public static void OnClick(string name)
+        public static void OnClick(FileInfo info)
         {
+            string name = info.Name;
             ClickLock = true;
+
+            string devider = "/";
+            string path = Dir + devider + name;
+
             if (
                 name[name.Length - 3].ToUpper() == 'P' &&
                 name[name.Length - 2].ToUpper() == 'N' &&
                 name[name.Length - 1].ToUpper() == 'G'
                 )
             {
-                byte[] buffer = File.Instance.ReadAllBytes(name);
+                byte[] buffer = File.Instance.ReadAllBytes(path);
                 PNG png = new PNG(buffer);
                 buffer.Dispose();
                 imageViewer.SetImage(png);
@@ -209,7 +214,8 @@ namespace Kernel.GUI
 
                 //TO-DO disposing
                 Console.WriteLine("Loading EXE...");
-                byte[] buffer = File.Instance.ReadAllBytes(name);
+
+                byte[] buffer = File.Instance.ReadAllBytes(path);
                 Process.Start(buffer);
             }
             else if (
@@ -218,31 +224,15 @@ namespace Kernel.GUI
                 name[name.Length - 1].ToUpper() == 'S'
                 )
             {
-                nesemu.OpenROM(File.Instance.ReadAllBytes(name));
+                nesemu.OpenROM(File.Instance.ReadAllBytes(path));
                 Window.MoveToEnd(nesemu);
                 nesemu.Visible = true;
-                /*
-                Framebuffer.Graphics.TripleBuffered = false;
-                Console.WriteLine("Emulator Keymap:");
-                Console.WriteLine("A = Q");
-                Console.WriteLine("B = E");
-                Console.WriteLine("Z = Select");
-                Console.WriteLine("C = Start");
-                Console.WriteLine("W = Up");
-                Console.WriteLine("A = Left");
-                Console.WriteLine("S = Down");
-                Console.WriteLine("D = Right");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                Framebuffer.Graphics.TripleBuffered = true;
-                NES.NES nes = new NES.NES();
-                nes.openROM(File.Instance.ReadAllBytes(name));
-                for (; ; )
-                {
-                    nes.runGame();
-                }
-                */
-
+            }
+            else if (info.Attribute == FileAttribute.Directory) 
+            {
+                string newd = Dir + devider + name;
+                Dir.Dispose();
+                Dir = newd;
             }
             else
             {
@@ -252,6 +242,9 @@ namespace Kernel.GUI
                 Window.MoveToEnd(msgbox);
                 msgbox.Visible = true;
             }
+
+            path.Dispose();
+            devider.Dispose();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Kernel.GUI
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 18);
         }
 
-        public static bool IsUnderMouse(int X,int Y ,int Width,int Height)
+        public bool IsUnderMouse()
         {
             if (Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + Height) return true;
             return false;
@@ -155,9 +155,14 @@ namespace Kernel.GUI
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
             Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, BackgroundColor);
-            Framebuffer.Graphics.DrawRectangle(X - 1, Y - BarHeight - 1, Width + 2, BarHeight + Height + 2, 0xFF333333);
+            DrawBorder();
 
             Framebuffer.Graphics.DrawImage(CloseButtonX, CloseButtonY, CloseButton);
+        }
+
+        public void DrawBorder(bool HasBar = true)
+        {
+            Framebuffer.Graphics.DrawRectangle(X - 1, Y - (HasBar ? BarHeight : 0) - 1, Width + 2, (HasBar ? BarHeight : 0) + Height + 2, 0xFF333333);
         }
     }
 }

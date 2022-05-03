@@ -13,6 +13,7 @@ using Kernel.GUI;
 using Kernel.Misc;
 using Kernel.NET;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net;
@@ -182,6 +183,10 @@ unsafe class Program
         FConsole = new FConsole(350, 300);
         new Clock(650, 500);
         new Welcome(200, 200);
+
+        RightMenu rightmenu = new RightMenu();
+        bool rightClicked = false;
+
         Console.WriteLine("Welcome to Moos!");
         Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
 
@@ -220,7 +225,7 @@ unsafe class Program
         _screen.Dispose();
         for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
         SizedScreens.Dispose();
-#endregion
+        #endregion
 
         for (; ; )
         {
@@ -235,7 +240,18 @@ unsafe class Program
                 if (FConsole.Visible == false)
                     FConsole.Visible = true;
             }
-#endregion
+            #endregion
+            #region Right Menu
+            if (Control.MouseButtons.HasFlag(MouseButtons.Right)) 
+            {
+                rightClicked = true;
+            }
+            else
+            {
+                if (rightClicked == true) rightmenu.Visible = !rightmenu.Visible;
+                rightClicked = false;
+            }
+            #endregion
 
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
             Desktop.Update();
