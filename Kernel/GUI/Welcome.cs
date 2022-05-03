@@ -12,7 +12,7 @@ namespace Kernel.GUI
         {
             BackgroundColor = 0xFF222222;
             this.Title = "Welcome";
-            img = new PNG(File.Instance.ReadAllBytes("0:/BANNER.PNG"));
+            img = new PNG(File.Instance.ReadAllBytes("BANNER.PNG"));
         }
 
         public override void OnDraw()
