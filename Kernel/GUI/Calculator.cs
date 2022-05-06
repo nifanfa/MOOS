@@ -21,6 +21,8 @@ namespace Kernel.GUI
             fixed (uint* p = image.RawData)
             g = new Graphics(image.Width, image.Height, p);
 
+            PressedButton = new();
+            PressedButton.Name = null;
 
             g.FillRectangle(0, 0, Width, Height, 0xFF222222);
             g.FillRectangle(0, 0, Width, 20, 0xFF333333);
@@ -73,6 +75,13 @@ namespace Kernel.GUI
             string v = ValueToDisplay.ToString();
             font.DrawString( X, Y + 2,v);
 
+            if (PressedButton.Name != null)
+            {
+                Framebuffer.Graphics.FillRectangle(X + PressedButton.X, Y + PressedButton.Y, 60, 20, 0xFFB2BABB);
+                int i = font.MeasureString(PressedButton.Name);
+                font.DrawString(X + PressedButton.X + (60 / 2) - (i / 2), Y + PressedButton.Y + 2, PressedButton.Name);
+            }
+
             v.Dispose();
         }
 
@@ -101,6 +110,7 @@ namespace Kernel.GUI
             }
             else
             {
+                PressedButton.Name = null;
                 Pressed = false;
             }
         }
