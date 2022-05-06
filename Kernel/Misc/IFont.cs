@@ -1,6 +1,7 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+using Kernel.Graph;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -27,7 +28,7 @@ namespace Kernel.Misc
             FontSize = size;
         }
 
-        public int DrawChar(int X, int Y, char Chr)
+        public int DrawChar(Graphics g,int X, int Y, char Chr)
         {
             int index = charset.IndexOf(Chr);
             if (index == -1)
@@ -55,7 +56,7 @@ namespace Kernel.Misc
                 {
                     uint color = image.GetPixel(baseX + w, baseY + h);
                     if (X != -1 && Y != -1)
-                        Framebuffer.Graphics.DrawPoint(X + w, Y + h, color, true);
+                        g.DrawPoint(X + w, Y + h, color, true);
                     if ((color & 0xFF000000) == 0) counter++;
                 }
                 if (w > 5 && counter == FontSize) return w;
@@ -64,12 +65,23 @@ namespace Kernel.Misc
             return FontSize;
         }
 
+
+        public void DrawString(int X, int Y, string Str, Graphics g)
+        {
+            int w = 0, h = 0;
+            for (int i = 0; i < Str.Length; i++)
+            {
+                w += 
+                    DrawChar(g, X + w, Y + h, Str[i]);
+            }
+        }
+
         public int MeasureString(string Str)
         {
             int w = 0;
             for (int i = 0; i < Str.Length; i++)
             {
-                w += DrawChar(-1, -1, Str[i]);
+                w += DrawChar(Framebuffer.Graphics,-1, -1, Str[i]);
             }
             return w;
         }
@@ -81,7 +93,7 @@ namespace Kernel.Misc
             for (int i = 0; i < Str.Length; i++)
             {
                 if (h != 0 && w == 0 && Str[i] == ' ') continue;
-                w += DrawChar(X + w, Y + h, Str[i]);
+                w += DrawChar(Framebuffer.Graphics,X + w, Y + h, Str[i]);
                 if (w + FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
                 {
                     w = 0;
