@@ -77,7 +77,7 @@ namespace Kernel.GUI
 
             if (PressedButton.Name != null)
             {
-                Framebuffer.Graphics.FillRectangle(X + PressedButton.X, Y + PressedButton.Y, 60, 20, 0xFFB2BABB);
+                Framebuffer.Graphics.FillRectangle(X + PressedButton.X, Y + PressedButton.Y, 60, 20, 0xFF222222);
                 int i = font.MeasureString(PressedButton.Name);
                 font.DrawString(X + PressedButton.X + (60 / 2) - (i / 2), Y + PressedButton.Y + 2, PressedButton.Name);
             }
