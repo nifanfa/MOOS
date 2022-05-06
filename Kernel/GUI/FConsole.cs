@@ -2,6 +2,7 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Kernel.Driver;
+using Kernel.Graph;
 using Kernel.Misc;
 using System.Drawing;
 
@@ -105,13 +106,12 @@ namespace Kernel.GUI
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
         }
 
-
         public void DrawString(int X, int Y, string Str,int HeightLimit = -1, int LineLimit = -1)
         {
             int w = 0, h = 0;
             for (int i = 0; i < Str.Length; i++)
             {
-                w += font.DrawChar(X + w, Y + h, Str[i]);
+                w += font.DrawChar(Framebuffer.Graphics,X + w, Y + h, Str[i]);
                 if (w + font.FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
                 {
                     w = 0;

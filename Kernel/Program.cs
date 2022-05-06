@@ -12,6 +12,7 @@ using Kernel.Graph;
 using Kernel.GUI;
 using Kernel.Misc;
 using Kernel.NET;
+using Kernel.GUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -183,6 +184,8 @@ unsafe class Program
         FConsole = new FConsole(350, 300);
         new Clock(650, 500);
         new Welcome(200, 200);
+
+        new Calculator(300, 500);
 
         RightMenu rightmenu = new RightMenu();
         bool rightClicked = false;
