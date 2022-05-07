@@ -33,6 +33,7 @@
 	</ItemGroup>
 
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
+		<Error Text="Please install VMWare Player in order to Run MOOS!" Condition="!Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')"></Error>
 		<ItemGroup>
 			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
 			<ReferencePath Remove="@(ReferencePath)" />
