@@ -49,9 +49,6 @@ unsafe class Program
 
         StartupCodeHelpers.InitializeModules(Modules);
 
-        SSE.enable_sse(); 
-        //AVX.enable_avx();
-
         PageTable.Initialise();
 
         ASC16.Initialise();
@@ -61,6 +58,9 @@ unsafe class Program
         GDT.Initialise();
         IDT.Initialize();
         IDT.Enable();
+
+        SSE.enable_sse();
+        AVX.init_avx();
 
         ACPI.Initialize();
 #if UseAPIC
