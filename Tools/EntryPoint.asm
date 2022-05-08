@@ -252,13 +252,6 @@ Main:
     mov rsp,STACKTOP
     mov rbp,rsp
 
-    mov rcx,0x200
-    mov rbx,cr4
-    or rbx,rcx
-    mov cr4,rbx
-
-    fninit
-
     sub rsp,LOAD_IMAGE_PARAMS_STACK_SIZE
     
     xor rbx,rbx

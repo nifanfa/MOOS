@@ -49,6 +49,9 @@ unsafe class Program
 
         StartupCodeHelpers.InitializeModules(Modules);
 
+        SSE.enable_sse(); 
+        //AVX.enable_avx();
+
         PageTable.Initialise();
 
         ASC16.Initialise();

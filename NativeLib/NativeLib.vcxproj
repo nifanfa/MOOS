@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm" />
+    <MASM Include="misc.asm" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="diskio.h" />
