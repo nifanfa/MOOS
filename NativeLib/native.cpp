@@ -10,7 +10,7 @@ unsigned int cpuinfo[4];
 unsigned int* CPUID(int index) 
 {
 	__cpuid(&cpuinfo, index);
-	return cpuinfo;
+	return &cpuinfo;
 }
 
 void Fxsave64(void* ptr)
