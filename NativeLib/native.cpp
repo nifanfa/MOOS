@@ -5,6 +5,14 @@ void Nop()
 	__nop();
 }
 
+unsigned int cpuinfo[4];
+
+unsigned int* CPUID(int index) 
+{
+	__cpuid(&cpuinfo, index);
+	return cpuinfo;
+}
+
 void Fxsave64(void* ptr)
 {
 	_fxsave64(ptr);

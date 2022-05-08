@@ -1,11 +1,15 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+using Kernel.Misc;
 using System;
 using System.Runtime.InteropServices;
 
 static unsafe class Native
 {
+    [DllImport("*")]
+    public static extern CPUID* CPUID(int index);
+
     [DllImport("*")]
     public static extern void Insb(ushort port, byte* data, ulong count);
 
