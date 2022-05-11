@@ -12,6 +12,31 @@
             public byte Feature1;
             public uint Feature2_3;
         }
+        
+        public struct MPConfigurationTable
+        {
+        	public uint Signature;
+        	public ushort Length;
+        	public byte Revision;
+        	public byte Checksum;
+        	public ulong OEM;
+        	public fixed byte ProductID[12];
+        	public uint OEMTablePointer;
+        	public ushort OEMTableSize;
+        	public ushort EntryCount;
+        	public uint LAPIC;
+        	public ushort ExtendedLength;
+        	public byte ExtendedChecksum;
+        }
+        
+        public struct MPEntry
+        {
+        	public fixed byte Processor[20];
+        	public ulong Bus;
+        	public ulong IOAPIC;
+        	public ulong IOInterruptAssignment;
+        	public ulong LocalInterruptAssignment;
+        }
 
         public static void Initialize()
         {
