@@ -43,7 +43,7 @@ unsafe class Program
      * 512 MiB - ∞     -> Free to use
      */
     [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info, IntPtr Modules)
+    static void Main(MultibootInfo* Info, IntPtr Modules, IntPtr Trampoline)
     {
         Allocator.Initialize((IntPtr)0x20000000);
 
@@ -70,6 +70,14 @@ unsafe class Program
         HPET.Initialize();
 #else
         PIC.Enable();
+#endif
+
+#if true
+        ulong _trampoline = 0x70000;
+        Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
+        Native.Movsb((byte*)_trampoline, (byte*)Trampoline, 512);
+
+        SMP.Initialize((uint)_trampoline);
 #endif
 
         PS2Keyboard.Initialize();
