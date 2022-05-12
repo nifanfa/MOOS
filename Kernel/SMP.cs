@@ -22,7 +22,7 @@ namespace Kernel
                     LocalAPIC.SendStartup(id, (trampoline >> 12));
                 }
             }
-            while (*activedProcessor != NumCPU) Console.WriteLine((*activedProcessor).ToString());
+            while (*activedProcessor != NumCPU);
             Console.WriteLine("All CPUs started");
         }
     }
