@@ -72,7 +72,7 @@ unsafe class Program
         PIC.Enable();
 #endif
 
-#if true
+#if false
         ulong _trampoline = 0x70000;
         Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
         Native.Movsb((byte*)_trampoline, (byte*)Trampoline, 512);
