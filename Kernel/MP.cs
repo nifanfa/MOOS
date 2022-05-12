@@ -1,4 +1,7 @@
-﻿namespace Kernel
+﻿using Kernel.Driver;
+using System.Runtime.InteropServices;
+
+namespace Kernel
 {
     public static unsafe class MP
     {
@@ -38,6 +41,7 @@
         	public ulong LocalInterruptAssignment;
         }
 
+        /*
         public static void Initialize()
         {
             uint* ptr = (uint*)0xF0000;
@@ -47,6 +51,39 @@
             }
             Console.WriteLine($"ptr:{((uint)ptr).ToString("x2")}");
             Console.ReadKey();
+        }
+        */
+
+        public static int NumCPU;
+
+        public static void Initialize(uint trampoline)
+        {
+            ushort* activedProcessor = (ushort*)0x6000;
+
+            Console.WriteLine("Waking Up All CPU(s)");
+
+            NumCPU = ACPI.LocalAPIC_CPUIDs.Count;
+            uint LocalID = LocalAPIC.GetId();
+            for (int i = 0; i < NumCPU; ++i)
+            {
+                uint APICID = ACPI.LocalAPIC_CPUIDs[i];
+                if (APICID != LocalID) LocalAPIC.SendInit(APICID);
+            }
+
+            PIT.Wait(10);
+
+            for (int i = 0; i < NumCPU; ++i)
+            {
+                uint apicId = ACPI.LocalAPIC_CPUIDs[i];
+                if (apicId != LocalID)
+                {
+                    LocalAPIC.SendStartup(apicId, (trampoline >> 12));
+                }
+            }
+            PIT.Wait(100);
+            Console.WriteLine("Waiting for CPUs");
+            while (*activedProcessor != NumCPU) Native.Hlt();
+            Console.WriteLine("All CPU(s) Actived");
         }
     }
 }
