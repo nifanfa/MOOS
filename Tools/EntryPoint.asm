@@ -317,15 +317,30 @@ Skip:
     mov r14,[rsp+16]
     cmp r15,r14
     jne LoadSection
+
+    mov rdi, CPU_ACTIVED
+    mov rax,0
+    stosw
     
     mov rcx,[multiboot_pointer]
     mov rdx,[rsp+32]
     mov rax,[rsp+8]
+    mov r8,Trampoline
     add rsp,LOAD_IMAGE_PARAMS_STACK_SIZE
     call rax
     cli
     hlt
     jmp $
+
+CPU_ACTIVED         EQU 0x6000
+
+align 4096
+Trampoline:
+[BITS 16]
+mov bx,CPU_ACTIVED
+inc word [bx]
+hlt
+jmp $
 
 align 4096
 
