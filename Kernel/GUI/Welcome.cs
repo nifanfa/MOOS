@@ -8,7 +8,7 @@ namespace Kernel.GUI
     {
         public Image img;
 
-        public Welcome(int X, int Y) : base(X, Y, 280, 280)
+        public Welcome(int X, int Y) : base(X, Y, 280, 225)
         {
             BackgroundColor = 0xFF222222;
 #if Chinese
