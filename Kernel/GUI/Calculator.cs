@@ -1,6 +1,7 @@
 ﻿using Kernel;
 using Kernel.Graph;
 using Kernel.GUI;
+using Kernel.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -15,7 +16,7 @@ namespace Kernel.GUI
         public unsafe Calculator(int X, int Y) : base(X, Y, 270, 140)
         {
             Title = "Calculator";
-            Btns = new List<Btn>();
+            Btns = new List<Button>();
 
             image = new Image(this.Width, this.Height);
             fixed (uint* p = image.RawData)
@@ -87,7 +88,7 @@ namespace Kernel.GUI
 
         bool Pressed = false;
 
-        Btn PressedButton;
+        Button PressedButton;
 
         public override void OnInput()
         {
@@ -129,7 +130,7 @@ namespace Kernel.GUI
 
         Opreation opreation = Opreation.None;
 
-        private unsafe void ProcessButton(Btn btn)
+        private unsafe void ProcessButton(Button btn)
         {
             if (btn.Name[0] >= 0x30 && btn.Name[0] <= 0x39)
             {
@@ -192,14 +193,8 @@ namespace Kernel.GUI
             }
         }
 
-        List<Btn> Btns;
+        List<Button> Btns;
 
-        public class Btn
-        {
-            public int X, Y, Width, Height;
-            public uint Color;
-            public string Name;
-        }
 
         private void AddButton(int X, int Y, string s)
         {
@@ -207,7 +202,7 @@ namespace Kernel.GUI
             int i = font.MeasureString(s);
             font.DrawString(X + (60 / 2) - (i / 2), Y + 2,s,g);
 
-            Btns.Add(new Btn()
+            Btns.Add(new Button()
             {
                 X = X,
                 Y = Y,

@@ -2,9 +2,7 @@
 {
     internal class Button : Widget
     {
-        public Button()
-        {
-
-        }
+        public uint UIntParam;
+        public string Name;
     }
 }

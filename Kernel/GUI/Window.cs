@@ -22,6 +22,7 @@ namespace Kernel.GUI
             PNG yehei = new PNG(File.Instance.ReadAllBytes("Images/M+.png"));
             CloseButton = new PNG(File.Instance.ReadAllBytes("Images/Close.png"));
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 18);
+            MouseHandled = false;
         }
 
         public bool IsUnderMouse()
@@ -80,6 +81,12 @@ namespace Kernel.GUI
         }
 
         public bool _visible;
+
+        public static bool MouseHandled 
+        {
+            get => HasWindowMoving;
+            set => HasWindowMoving = value;
+        }
 
         public virtual void OnSetVisible(bool value) { }
 
