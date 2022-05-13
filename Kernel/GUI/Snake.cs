@@ -34,7 +34,11 @@ namespace Kernel.GUI
 
         public Snake(int X, int Y) : base(X, Y, 150, 150)
         {
+#if Chinese
+            Title = "贪吃蛇";
+#else
             Title = "Snake";
+#endif
 
             //MessageBox = new MessageBox() { Visible = false, Info = "Game Over!", Width = 150, Height = 16, X = 300, Y = 350 };
 

@@ -10,9 +10,13 @@ namespace Kernel.GUI
 
         public NESEmu(int X, int Y) : base(X, Y, 256,240)
         {
+#if Chinese
+            Title = "红白机模拟器";
+#else
             Title = "NES Emulator";
+#endif
 
-            if(nes == null)
+            if (nes == null)
                 nes = new NES.NES();
         }
 

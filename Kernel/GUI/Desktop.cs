@@ -35,7 +35,11 @@ namespace Kernel.GUI
             AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
             BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
+#if Chinese
+            Prefix = " 管理员@Moos: ";
+#else
             Prefix = " root@Moos: ";
+#endif
             Dir = "";
             imageViewer = new ImageViewer(400,400);
             msgbox = new MessageBox(100,300);
@@ -49,11 +53,19 @@ namespace Kernel.GUI
 
             BuiltInAppNames = new string[]
             {
+#if Chinese
+                "计算器",
+                " 时钟",
+                " 画图",
+                "贪吃蛇",
+                "控制台",
+#else
                 "Calculator",
                 "Clock",
                 "Paint",
                 "Snake",
                 "Console",
+#endif
             };
         }
 
@@ -164,7 +176,11 @@ namespace Kernel.GUI
             string Hour = RTC.Hour.ToString();
             string Minute = RTC.Minute.ToString();
             string FPS = FPSMeter.FPS.ToString();
+#if Chinese
+            string Result = $"{Year}年{Month}月{Day}日,{Hour}:{Minute} | FPS:{FPS} | CPU 0: {CPUUsage}% | 内存: {MemoryUsed}/{Memory}MiB";
+#else
             string Result = $"{Year}/{Month}/{Day},{Hour}:{Minute} | FPS:{FPS} | CPU 0: {CPUUsage}% | Memory: {MemoryUsed}/{Memory}MiB";
+#endif
             CPUUsage.Dispose();
             Memory.Dispose();
             MemoryUsed.Dispose();
@@ -264,24 +280,43 @@ namespace Kernel.GUI
                 nesemu.Visible = true;
             }
 
-
+#if Chinese
+            else if (name == "计算器")
+#else
             else if (name == "Calculator")
+#endif
             {
                 new Calculator(300, 500);
             }
-            else if(name == "Clock")
+#if Chinese
+            else if (name == " 时钟")
+#else
+            else if (name == "Clock")
+#endif
             {
                 new Clock(650, 500);
             }
+#if Chinese
+            else if (name == " 画图")
+#else
             else if (name == "Paint")
+#endif
             {
                 new Paint(500, 200);
             }
+#if Chinese
+            else if (name == "贪吃蛇")
+#else
             else if (name == "Snake")
+#endif
             {
                 new Snake(600, 100);
             }
+#if Chinese
+            else if (name == "控制台")
+#else
             else if (name == "Console")
+#endif
             {
                 Program.FConsole.Visible = true;
             }
@@ -297,7 +332,11 @@ namespace Kernel.GUI
             {
                 msgbox.X = Control.MousePosition.X + 50;
                 msgbox.Y = Control.MousePosition.Y + 50;
+#if Chinese
+                msgbox.SetText("没有任何程序可以打开此程序!");
+#else
                 msgbox.SetText("No application can open this file!");
+#endif
                 Window.MoveToEnd(msgbox);
                 msgbox.Visible = true;
             }
