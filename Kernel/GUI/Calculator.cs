@@ -27,7 +27,6 @@ namespace Kernel.GUI
             g = new Graphics(image.Width, image.Height, p);
 
             PressedButton = new();
-            PressedButton.Name = null;
 
             g.FillRectangle(0, 0, Width, Height, 0xFF222222);
             g.FillRectangle(0, 0, Width, 20, 0xFF333333);
@@ -80,7 +79,7 @@ namespace Kernel.GUI
             string v = ValueToDisplay.ToString();
             font.DrawString( X, Y + 2,v);
 
-            if (PressedButton.Name != null)
+            if (Pressed)
             {
                 Framebuffer.Graphics.FillRectangle(X + PressedButton.X, Y + PressedButton.Y, 60, 20, 0xFF222222);
                 int i = font.MeasureString(PressedButton.Name);
@@ -115,7 +114,6 @@ namespace Kernel.GUI
             }
             else
             {
-                PressedButton.Name = null;
                 Pressed = false;
             }
         }
