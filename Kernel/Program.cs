@@ -60,7 +60,7 @@ unsafe class Program
         IDT.Enable();
 
         SSE.enable_sse();
-        AVX.init_avx();
+        //AVX.init_avx();
 
         ACPI.Initialize();
 #if UseAPIC
