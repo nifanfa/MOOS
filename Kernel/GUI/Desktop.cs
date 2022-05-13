@@ -44,7 +44,18 @@ namespace Kernel.GUI
             Window.Windows.Add(msgbox);
             Window.Windows.Add(imageViewer);
             Window.Windows.Add(nesemu);
+
+            BuiltInAppNames = new string[]
+            {
+                "Calculator",
+                "Clock",
+                "Paint",
+                "Snake",
+                "Console",
+            };
         }
+
+        public static string[] BuiltInAppNames;
 
         public static void Update()
         {
@@ -54,6 +65,22 @@ namespace Kernel.GUI
             int Devide = 60;
             int X = Devide;
             int Y = Devide + BarHeight;
+
+            for (int i = 0; i < BuiltInAppNames.Length; i++)
+            {
+                if (Y + FileIcon.Height + Devide > Framebuffer.Graphics.Height - Devide)
+                {
+                    Y = Devide + BarHeight;
+                    X += FileIcon.Width + Devide;
+                }
+
+                ClickEvent(BuiltInAppNames[i], false, X, Y, i);
+
+                Framebuffer.Graphics.DrawImage(X, Y, AppIcon);
+                Window.font.DrawString(X, Y + FileIcon.Height, BuiltInAppNames[i], FileIcon.Width + 8, Window.font.FontSize * 3); 
+                Y += FileIcon.Height + Devide;
+            }
+
             for (int i = 0; i < names.Count; i++)
             {
                 if (Y + FileIcon.Height + Devide > Framebuffer.Graphics.Height - Devide)
@@ -62,35 +89,7 @@ namespace Kernel.GUI
                     X += FileIcon.Width + Devide;
                 }
 
-                if(Control.MouseButtons == MouseButtons.Left)
-                {
-                    bool clickable = true;
-                    for(int d = 0; d < Window.Windows.Count; d++) 
-                    {
-                        if(Window.Windows[d].Visible)
-                            if(Window.Windows[d].IsUnderMouse()) 
-                            {
-                                clickable = false;
-                            }
-                    }
-                    
-                    if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
-                    {
-                        IndexClicked = i;
-                        OnClick(names[i]);
-                    }
-                }
-                else 
-                {
-                    ClickLock = false;
-                }
-
-                if(IndexClicked == i) 
-                {
-                    int w = (int)(FileIcon.Width * 1.5f);
-                    Framebuffer.Graphics.AFillRectangle(X + ((FileIcon.Width/2) - (w/2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
-                }
-
+                ClickEvent(names[i].Name, names[i].Attribute == FileAttribute.Directory, X, Y, i + BuiltInAppNames.Length);
 
                 if (
                     (
@@ -180,12 +179,43 @@ namespace Kernel.GUI
             Result.Dispose();
         }
 
+        private static void ClickEvent(string name,bool isDirectory, int X, int Y, int i)
+        {
+            if (Control.MouseButtons == MouseButtons.Left)
+            {
+                bool clickable = true;
+                for (int d = 0; d < Window.Windows.Count; d++)
+                {
+                    if (Window.Windows[d].Visible)
+                        if (Window.Windows[d].IsUnderMouse())
+                        {
+                            clickable = false;
+                        }
+                }
+
+                if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
+                {
+                    IndexClicked = i;
+                    OnClick(name,isDirectory);
+                }
+            }
+            else
+            {
+                ClickLock = false;
+            }
+
+            if (IndexClicked == i)
+            {
+                int w = (int)(FileIcon.Width * 1.5f);
+                Framebuffer.Graphics.AFillRectangle(X + ((FileIcon.Width / 2) - (w / 2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
+            }
+        }
+
         static bool ClickLock = false;
         static int IndexClicked;
 
-        public static void OnClick(FileInfo info)
+        public static void OnClick(string name, bool isDirectory)
         {
-            string name = info.Name;
             ClickLock = true;
 
             string devider = "/";
@@ -231,7 +261,31 @@ namespace Kernel.GUI
                 Window.MoveToEnd(nesemu);
                 nesemu.Visible = true;
             }
-            else if (info.Attribute == FileAttribute.Directory) 
+
+
+            else if (name == "Calculator")
+            {
+                new Calculator(300, 500);
+            }
+            else if(name == "Clock")
+            {
+                new Clock(650, 500);
+            }
+            else if (name == "Paint")
+            {
+                new Paint(500, 200);
+            }
+            else if (name == "Snake")
+            {
+                new Snake(600, 100);
+            }
+            else if (name == "Console")
+            {
+                Program.FConsole.Visible = true;
+            }
+
+
+            else if (isDirectory) 
             {
                 string newd = Dir + devider + name;
                 Dir.Dispose();

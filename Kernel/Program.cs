@@ -193,10 +193,9 @@ unsafe class Program
             Framebuffer.Graphics = new VMWareSVGAIIGraphics();
 
         FConsole = new FConsole(350, 300);
-        new Clock(650, 500);
-        new Welcome(200, 200);
+        FConsole.Visible = false;
 
-        new Calculator(300, 500);
+        var welcome = new Welcome(250, 240);
 
         RightMenu rightmenu = new RightMenu();
         bool rightClicked = false;
