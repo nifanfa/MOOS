@@ -6,7 +6,11 @@ namespace Kernel.GUI
     {
         public RightMenu() : base(Control.MousePosition.X, Control.MousePosition.Y, 100, 50)
         {
+#if Chinese
+            str = "返回上级目录";
+#else
             str = "Back to the parent directory";
+#endif
             Visible = false;
         }
 
