@@ -26,6 +26,11 @@ namespace Kernel.GUI
         public static MessageBox msgbox;
         public static NESEmu nesemu;
 
+        public static bool IsAtRoot 
+        {
+            get => Desktop.Dir.Length < 1;
+        }
+
         public static void Initialize()
         {
             IndexClicked = -1;
@@ -80,19 +85,22 @@ namespace Kernel.GUI
             int X = Devide;
             int Y = Devide + BarHeight;
 
-            for (int i = 0; i < BuiltInAppNames.Length; i++)
+            if(IsAtRoot)
             {
-                if (Y + FileIcon.Height + Devide > Framebuffer.Graphics.Height - Devide)
+                for (int i = 0; i < BuiltInAppNames.Length; i++)
                 {
-                    Y = Devide + BarHeight;
-                    X += FileIcon.Width + Devide;
+                    if (Y + FileIcon.Height + Devide > Framebuffer.Graphics.Height - Devide)
+                    {
+                        Y = Devide + BarHeight;
+                        X += FileIcon.Width + Devide;
+                    }
+
+                    ClickEvent(BuiltInAppNames[i], false, X, Y, i);
+
+                    Framebuffer.Graphics.DrawImage(X, Y, BuiltInAppIcon);
+                    Window.font.DrawString(X, Y + FileIcon.Height, BuiltInAppNames[i], FileIcon.Width + 8, Window.font.FontSize * 3); 
+                    Y += FileIcon.Height + Devide;
                 }
-
-                ClickEvent(BuiltInAppNames[i], false, X, Y, i);
-
-                Framebuffer.Graphics.DrawImage(X, Y, BuiltInAppIcon);
-                Window.font.DrawString(X, Y + FileIcon.Height, BuiltInAppNames[i], FileIcon.Width + 8, Window.font.FontSize * 3); 
-                Y += FileIcon.Height + Devide;
             }
 
             for (int i = 0; i < names.Count; i++)
@@ -103,7 +111,7 @@ namespace Kernel.GUI
                     X += FileIcon.Width + Devide;
                 }
 
-                ClickEvent(names[i].Name, names[i].Attribute == FileAttribute.Directory, X, Y, i + BuiltInAppNames.Length);
+                ClickEvent(names[i].Name, names[i].Attribute == FileAttribute.Directory, X, Y, i + (IsAtRoot ? BuiltInAppNames.Length : 0));
 
                 if (
                     (
