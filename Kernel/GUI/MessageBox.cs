@@ -7,7 +7,11 @@
         public MessageBox(int X, int Y) : base(X, Y, 200, Window.font.FontSize*2)
         {
             this._message = null;
+#if Chinese
+            this.Title = "信息框";
+#else
             this.Title = "MessageBox";
+#endif
         }
 
         public override void OnDraw()

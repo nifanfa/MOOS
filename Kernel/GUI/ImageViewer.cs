@@ -9,7 +9,11 @@ namespace Kernel.GUI
         public ImageViewer(int X, int Y) : base(X, Y, 250, 200)
         {
             image = null;
+#if Chinese
+            Title = "图片";
+#else
             Title = "ImageViewer";
+#endif
         }
 
         public override void OnDraw()

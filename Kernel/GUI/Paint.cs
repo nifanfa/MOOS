@@ -14,7 +14,11 @@ namespace Kernel.GUI
 
         public Paint(int X, int Y) : base(X, Y, 490, 500)
         {
+#if Chinese
+            Title = "画图";
+#else
             Title = "Paint";
+#endif
             Btns = new List<Button>();
             AddButton(10, 10, 0xFFC0392B);
             AddButton(40, 10, 0xFFE74C3C);
@@ -31,7 +35,11 @@ namespace Kernel.GUI
             AddButton(370, 10, 0xFFECF0F1);
             AddButton(400, 10, 0xFFD4AC0D);
 
+#if Chinese
+            AddButton(430, 10, 0xFF333333, 50, "清除");
+#else
             AddButton(430, 10, 0xFF333333, 50, "Clear");
+#endif
 
             img = new Image(this.Width, this.Height);
             fixed (uint* p = img.RawData)
@@ -52,9 +60,13 @@ namespace Kernel.GUI
             for (int i = 0; i < Btns.Count; i++)
             {
                 Framebuffer.Graphics.FillRectangle(X + Btns[i].X, Y + Btns[i].Y, Btns[i].Width, Btns[i].Height, Btns[i].UIntParam);
+#if Chinese
+                if (Btns[i].Name == "清除")
+#else
                 if (Btns[i].Name == "Clear")
+#endif
                 {
-                    font.DrawString(X + Btns[i].X + 4, Y + Btns[i].Y + 2, Btns[i].Name);
+                    font.DrawString(X + Btns[i].X + (Btns[i].Width / 2) - (font.MeasureString(Btns[i].Name) / 2), Y + Btns[i].Y + 2, Btns[i].Name);
                 }
             }
         }
@@ -82,7 +94,11 @@ namespace Kernel.GUI
                     {
                         if (Control.MousePosition.X > this.X + Btns[i].X && Control.MousePosition.X < this.X + Btns[i].X + Btns[i].Width && Control.MousePosition.Y > this.Y + Btns[i].Y && Control.MousePosition.Y < this.Y + Btns[i].Y + Btns[i].Height)
                         {
+#if Chinese
+                            if (Btns[i].Name == "清除")
+#else
                             if (Btns[i].Name == "Clear")
+#endif
                             {
                                 g.Clear(0xFF222222);
                             }
