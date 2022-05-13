@@ -73,6 +73,7 @@ unsafe class Program
 #endif
 
 #if false
+        //TO-DO the Application Processors are still in 16bit mode
         ulong _trampoline = 0x70000;
         Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
         Native.Movsb((byte*)_trampoline, (byte*)Trampoline, 512);

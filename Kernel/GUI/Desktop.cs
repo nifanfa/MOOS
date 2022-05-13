@@ -17,6 +17,7 @@ namespace Kernel.GUI
         private static Image IamgeIcon;
         private static Image GameIcon;
         private static Image AppIcon;
+        private static Image BuiltInAppIcon;
         private static Image FolderIcon;
 
         public static string Prefix;
@@ -32,6 +33,7 @@ namespace Kernel.GUI
             IamgeIcon = new PNG(File.Instance.ReadAllBytes("Images/Image.png"));
             GameIcon = new PNG(File.Instance.ReadAllBytes("Images/Game.png"));
             AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
+            BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
             Prefix = " root@Moos: ";
             Dir = "";
@@ -76,7 +78,7 @@ namespace Kernel.GUI
 
                 ClickEvent(BuiltInAppNames[i], false, X, Y, i);
 
-                Framebuffer.Graphics.DrawImage(X, Y, AppIcon);
+                Framebuffer.Graphics.DrawImage(X, Y, BuiltInAppIcon);
                 Window.font.DrawString(X, Y + FileIcon.Height, BuiltInAppNames[i], FileIcon.Width + 8, Window.font.FontSize * 3); 
                 Y += FileIcon.Height + Devide;
             }
