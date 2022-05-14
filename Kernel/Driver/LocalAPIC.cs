@@ -74,7 +74,7 @@ namespace Kernel.Driver
             Out((uint)LAPIC_EOI, 0);
         }
 
-        public static void Initialize(uint CPUForIRQHandlingIndex = 0)
+        public static void Initialize()
         {
             PIC.Disable();
 
@@ -83,7 +83,7 @@ namespace Kernel.Driver
 
             // Logical Destination Mode
             Out((uint)LAPIC_DFR, 0xffffffff);   // Flat mode
-            Out((uint)LAPIC_LDR, CPUForIRQHandlingIndex << 24);   // All cpus use logical id CPUforIRQHandlingIndex
+            Out((uint)LAPIC_LDR, 0 << 24);   // All cpus use logical id 0
 
             // Configure Spurious Interrupt Vector Register
             Out((uint)LAPIC_SVR, 0x100 | 0xff);
