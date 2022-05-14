@@ -146,7 +146,7 @@ Enter_Long_Mode:
     jmp 0x0008:Main             ; Load CS with 64 bit segment and flush the instruction cache
  
  
-    ; Global Descriptor Table
+; Global Descriptor Table
 GDT:
 .Null:
     dq 0x0000000000000000             ; Null Descriptor - should be present.
@@ -328,16 +328,9 @@ Skip:
     hlt
     jmp $
 
-CPU_ACTIVED     EQU 0x6000
-
 align 4096
 Trampoline:
-[BITS 16]
-mov bx,CPU_ACTIVED
-inc word [bx]
-cli
-hlt
-jmp $
+incbin 'Trampoline'
 
 align 4096
 

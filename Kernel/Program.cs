@@ -72,7 +72,7 @@ unsafe class Program
         PIC.Enable();
 #endif
 
-#if false
+#if SMP
         //TO-DO the Application Processors are still in 16bit mode
         ulong _trampoline = 0x70000;
         Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
@@ -80,6 +80,7 @@ unsafe class Program
 
         SMP.Initialize((uint)_trampoline);
 #endif
+        while (true) ;
 
         PS2Keyboard.Initialize();
         //Enable keyboard interrupts
