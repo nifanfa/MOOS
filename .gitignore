@@ -368,3 +368,4 @@ Kernel/Kernel.map
 *.lck
 *.gz
 *.dmp
+Tools/Trampoline
