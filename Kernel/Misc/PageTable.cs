@@ -18,7 +18,7 @@ namespace Kernel
         internal static void Initialise()
         {
 #if SMP
-            PML4 = (ulong*)0x9000;
+            PML4 = (ulong*)SMP.SharedPageTable;
 #else
             PML4 = (ulong*)Allocator.Allocate(0x1000);
 #endif

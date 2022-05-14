@@ -1,8 +1,10 @@
-CPU_ACTIVED     EQU 0x6000
-PAGE_TABLE     EQU 0x9000
+NUM_ACTIVED_PROCESSORS     EQU 0x80000
+AP_MAIN     EQU 0x80008
+STACKS     EQU 0x800016
+SHARED_PAGE_TABLE     EQU 0x81000
 
 [BITS 16]
-[ORG 0x70000]
+[ORG 0x90000]
 Startup:
     cli
     cld
@@ -14,7 +16,7 @@ Startup:
     or eax, 0x20
     mov cr4, eax
 
-    mov ecx, PAGE_TABLE
+    mov ecx, SHARED_PAGE_TABLE
     mov cr3, ecx
 
     mov ecx, 0xC0000080
@@ -42,8 +44,17 @@ APMain:
     mov gs, ax
     mov ss, ax
 
-    mov rbx,CPU_ACTIVED
+    mov rbx,STACKS
+    add qword [rbx],32768
+    mov rsp,[rbx]
+
+    mov rbx,NUM_ACTIVED_PROCESSORS
     inc word [rbx]
+
+    mov rbx,AP_MAIN
+    mov rbx,[rbx]
+    call rbx
+
     cli
     hlt
     jmp $
