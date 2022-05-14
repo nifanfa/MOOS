@@ -17,7 +17,7 @@ namespace Kernel
             *activedProcessor = 1;
 
             ulong* apMain = (ulong*)APMain;
-            *apMain = (ulong)(delegate*<void>)&Program.APMain;
+            *apMain = (ulong)(delegate*<int,void>)&Program.APMain;
 
             ulong* stacks = (ulong*)Stacks;
             *stacks = (ulong)Allocator.Allocate((ulong)(ACPI.LocalAPIC_CPUIDs.Count * 32768));

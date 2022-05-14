@@ -36,7 +36,7 @@ unsafe class Program
     public static Image[] SizedScreens;
 
     //Method for other CPU cores
-    public static void APMain()
+    public static void APMain(int Core)
     {
         //Console.WriteLine("Hello from Application Processor");
         for (; ; ) Native.Hlt();
