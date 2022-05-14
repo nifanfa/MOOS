@@ -11,6 +11,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | Applications(.exe) | ✅ | ✅ |
 | Error Throwing / Catching | ❌ | ❌ | 
 | GC | ⚠️ | ❓ | Not safe |
+| Multiprocessor | ✅ | ❓ |
 | Multithreading(Single Core) | ✅ | ✅ |
 | PS2 Keyboard/Mouse(USB Compatible) | ✅ | ✅ |
 | Nintendo Family Computer Emulator | ✅ | ✅ |
