@@ -5,10 +5,22 @@ namespace Kernel
 {
     public static unsafe class SMP
     {
+        public const ulong NumActivedProcessors = 0x80000;
+        public const ulong APMain = 0x80008;
+        public const ulong Stacks = 0x800016;
+        public const ulong SharedPageTable = 0x81000;
+        public const ulong ReommendedTrampoline = 0x90000;
+
         public static void Initialize(uint trampoline)
         {
-            ushort* activedProcessor = (ushort*)0x6000;
+            ushort* activedProcessor = (ushort*)NumActivedProcessors;
             *activedProcessor = 1;
+
+            ulong* apMain = (ulong*)APMain;
+            *apMain = (ulong)(delegate*<void>)&Program.APMain;
+
+            ulong* stacks = (ulong*)Stacks;
+            *stacks = (ulong)Allocator.Allocate((ulong)(ACPI.LocalAPIC_CPUIDs.Count * 32768));
 
             int NumCPU = ACPI.LocalAPIC_CPUIDs.Count;
             uint LocalID = LocalAPIC.GetId();

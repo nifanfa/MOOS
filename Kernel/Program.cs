@@ -35,6 +35,13 @@ unsafe class Program
 
     public static Image[] SizedScreens;
 
+    //Method for other CPU cores
+    public static void APMain()
+    {
+        //Console.WriteLine("Hello from Application Processor");
+        for (; ; ) Native.Hlt();
+    }
+
     /*
      * Minimum system requirement:
      * 1024MiB of RAM
@@ -74,13 +81,11 @@ unsafe class Program
 
 #if SMP
         //TO-DO the Application Processors are still in 16bit mode
-        ulong _trampoline = 0x70000;
         Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
-        Native.Movsb((byte*)_trampoline, (byte*)Trampoline, 512);
+        Native.Movsb((byte*)SMP.ReommendedTrampoline, (byte*)Trampoline, 512);
 
-        SMP.Initialize((uint)_trampoline);
+        SMP.Initialize((uint)SMP.ReommendedTrampoline);
 #endif
-        while (true) ;
 
         PS2Keyboard.Initialize();
         //Enable keyboard interrupts
