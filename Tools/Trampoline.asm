@@ -49,6 +49,7 @@ APMain:
     mov rsp,[rbx]
 
     mov rbx,NUM_ACTIVED_PROCESSORS
+    mov rcx,[rbx]
     inc word [rbx]
 
     mov rbx,AP_MAIN
