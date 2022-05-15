@@ -82,9 +82,9 @@ unsafe class Program
 #if SMP
         //TO-DO the Application Processors are still in 16bit mode
         Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
-        Native.Movsb((byte*)SMP.ReommendedTrampoline, (byte*)Trampoline, 512);
+        Native.Movsb((byte*)SMP.Trampoline, (byte*)Trampoline, 512);
 
-        SMP.Initialize((uint)SMP.ReommendedTrampoline);
+        SMP.Initialize((uint)SMP.Trampoline);
 #endif
 
         PS2Keyboard.Initialize();
