@@ -9,7 +9,7 @@ namespace Kernel
         public const ulong APMain = 0x80008;
         public const ulong Stacks = 0x800016;
         public const ulong SharedPageTable = 0x81000;
-        public const ulong ReommendedTrampoline = 0x90000;
+        public const ulong Trampoline = 0x90000;
 
         public static void Initialize(uint trampoline)
         {
