@@ -95,3 +95,5 @@ ALIGN 4
 IDT:
     .Length       dw 0
     .Base         dd 0
+
+times 512 - ($-$$) db 0
