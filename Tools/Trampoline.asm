@@ -1,6 +1,8 @@
 NUM_ACTIVED_PROCESSORS     EQU 0x80000
 AP_MAIN     EQU 0x80008
 STACKS     EQU 0x800016
+SHARED_GDT     EQU 0x800024
+SHARED_IDT     EQU 0x800032
 SHARED_PAGE_TABLE     EQU 0x81000
 
 [BITS 16]
@@ -54,6 +56,16 @@ APMain:
     mov rbx,NUM_ACTIVED_PROCESSORS
     mov rcx,[rbx]
     inc word [rbx]
+
+    mov rax,SHARED_GDT
+    mov rax,[rax]
+    lgdt [rax]
+
+    mov rax,SHARED_IDT
+    mov rax,[rax]
+    lidt [rax]
+
+    sti
 
     mov rbx,AP_MAIN
     mov rbx,[rbx]

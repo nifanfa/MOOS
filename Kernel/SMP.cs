@@ -8,6 +8,8 @@ namespace Kernel
         public const ulong NumActivedProcessors = 0x80000;
         public const ulong APMain = 0x80008;
         public const ulong Stacks = 0x800016;
+        public const ulong SharedGDT = 0x800024;
+        public const ulong SharedIDT = 0x800032;
         public const ulong SharedPageTable = 0x81000;
         public const ulong Trampoline = 0x90000;
 
@@ -21,6 +23,18 @@ namespace Kernel
 
             ulong* stacks = (ulong*)Stacks;
             *stacks = (ulong)Allocator.Allocate((ulong)(ACPI.LocalAPIC_CPUIDs.Count * 32768));
+
+            fixed(GDT.GDTDescriptor* gdt = &GDT.gdtr) 
+            {
+                ulong* sgdt = (ulong*)SharedGDT;
+                *sgdt = (ulong)gdt;
+            }
+
+            fixed (IDT.IDTDescriptor* idt = &IDT.idtr)
+            {
+                ulong* sidt = (ulong*)SharedIDT;
+                *sidt = (ulong)idt;
+            }
 
             int NumCPU = ACPI.LocalAPIC_CPUIDs.Count;
             uint LocalID = LocalAPIC.GetId();
