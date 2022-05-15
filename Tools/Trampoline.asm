@@ -7,6 +7,9 @@ SHARED_PAGE_TABLE     EQU 0x81000
 [ORG 0x90000]
 Startup:
     cli
+
+    lidt [IDT] 
+
     cld
     xor ax,ax
     mov ds, ax
@@ -75,3 +78,8 @@ ALIGN 4
 .Pointer:
     dw $ - GDT - 1                    ; 16-bit Size (Limit) of GDT.
     dd GDT                            ; 32-bit Base Address of GDT. (CPU will zero extend to 64-bit)
+
+ALIGN 4
+IDT:
+    .Length       dw 0
+    .Base         dd 0
