@@ -36,11 +36,9 @@ unsafe class Program
     public static Image[] SizedScreens;
 
     //Method for other CPU cores
-    //Page table has been configured in Trampoline. so we don't need to set it here
+    //GDT, IDT, PageTable has been configured in Trampoline. so we don't need to set it here
     public static void APMain(int Core)
     {
-        Native.Load_GDT(ref GDT.gdtr);
-        Native.Load_IDT(ref IDT.idtr);
         //Console.WriteLine("Hello from Application Processor");
         for (; ; ) Native.Hlt();
     }
