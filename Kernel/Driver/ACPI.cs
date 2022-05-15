@@ -272,7 +272,10 @@ namespace Kernel.Driver
                     if (type == APIC_TYPE.LocalAPIC)
                     {
                         APIC_LOCAL_APIC* pic = (APIC_LOCAL_APIC*)p;
-                        LocalAPIC_CPUIDs.Add(pic->ApicId);
+                        if ((pic->Flags & 1) ^ ((pic->Flags >> 1) & 1))
+                        {
+                            LocalAPIC_CPUIDs.Add(pic->ApicId);
+                        }
                     }
                     else if (type == APIC_TYPE.IOAPIC)
                     {
