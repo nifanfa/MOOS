@@ -35,7 +35,7 @@ public static class IDT
     }
 
     private static IDTEntry[] idt;
-    private static IDTDescriptor idtr;
+    public static IDTDescriptor idtr;
 
 
     public static bool Initialized { get; private set; }

@@ -38,6 +38,8 @@ unsafe class Program
     //Method for other CPU cores
     public static void APMain(int Core)
     {
+        Native.Load_GDT(ref GDT.gdtr);
+        Native.Load_IDT(ref IDT.idtr);
         //Console.WriteLine("Hello from Application Processor");
         for (; ; ) Native.Hlt();
     }

@@ -81,7 +81,7 @@ static class GDT
 
     static TSS tss;
     static GDTS gdts;
-    static GDTDescriptor gdtr;
+    public static GDTDescriptor gdtr;
 
 
     public static void Initialise()
