@@ -2,11 +2,17 @@
 {
     public static class Timer
     {
-        public static ulong Ticks => PIT.Ticks;
+        public static ulong Ticks = 0;
 
-        public static void Wait(ulong ms) 
+        internal static void OnInterrupt()
         {
-            PIT.Wait(ms);
+            Ticks = Ticks + 1;
+        }
+
+        public static void Wait(ulong millisecond)
+        {
+            ulong T = Ticks;
+            while (Ticks < (T + millisecond)) Native.Hlt();
         }
     }
 }

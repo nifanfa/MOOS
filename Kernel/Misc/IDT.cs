@@ -197,7 +197,7 @@ public static class IDT
         switch (irq)
         {
             case 0x20:
-                PIT.OnInterrupt();
+                Timer.OnInterrupt();
                 ThreadPool.Schedule(stack);
                 break;
             case 0x21:
