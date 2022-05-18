@@ -5,7 +5,7 @@ using Kernel.Misc;
 
 namespace Kernel.Driver
 {
-    public static unsafe class LocalAPIC
+    public static unsafe partial class LocalAPIC
     {
         private static int LAPIC_ID = 0x0020;
         private static int LAPIC_VER = 0x0030;
