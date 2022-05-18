@@ -1,6 +1,8 @@
 ﻿/*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+using Kernel.Misc;
+
 namespace Kernel.Driver
 {
     public static partial class LocalAPIC
@@ -12,6 +14,7 @@ namespace Kernel.Driver
             Out(0x320, 0x00020000 | vector);
             Out(0x3e0, 0x3);
             Out(0x380, (uint)(freq));
+            Interrupts.EnableInterrupt(0x20);
         }
 
         public static void StopTimer()
