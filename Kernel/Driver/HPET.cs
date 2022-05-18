@@ -3,6 +3,7 @@
  */
 //https://wiki.osdev.org/HPET#Interrupt_routing
 
+using Kernel.Misc;
 using System.Diagnostics;
 using static Kernel.Misc.MMIO;
 
@@ -26,6 +27,15 @@ namespace Kernel.Driver
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0xF0), 0);
             Out64((ulong*)(ACPI.HPET->Addresses.Address + 0x10), 1);
             Console.WriteLine("[HPET] HPET Initialized");
+        }
+
+        public static void ConfigureTimer(int Index,ulong Millionseconds, ulong IRQ)
+        {
+            ulong time = (Millionseconds * 10000000000000) / Clock;
+            Out64((ulong*)(ACPI.HPET->Addresses.Address + (ulong)(0x100 + 0x20 * Index)), (IRQ << 9) | (1 << 2) | (1 << 3) | (1 << 6));
+            Out64((ulong*)(ACPI.HPET->Addresses.Address + (ulong)(0x108 + 0x20 * Index)), In64((ulong*)(ACPI.HPET->Addresses.Address + 0)) + time);
+            Out64((ulong*)(ACPI.HPET->Addresses.Address + (ulong)(0x108 + 0x20 * Index)), time);
+            Interrupts.EnableInterrupt((byte)IRQ);
         }
 
         public static ulong GetTickCount()
