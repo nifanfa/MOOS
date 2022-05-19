@@ -39,6 +39,7 @@ namespace Kernel.Driver
             return In64((ulong*)(ACPI.HPET->Addresses.Address + reg));
         }
 
+        //Broken
         public static void ConfigureTimer(int Index,ulong Millionseconds, ulong IRQ)
         {
             ulong time = (Millionseconds * 10000000000000) / Clock;
