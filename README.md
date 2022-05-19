@@ -32,4 +32,4 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | TCP(WIP) | ⚠️ | ❓ | Can't receive large package |
 | UDP | ✅ | ❓ |
 | Lan | ✅ | ✅ |
-| Wan | ✅ | ❓ 
+| Wan | ❌ | ❌ 
