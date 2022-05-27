@@ -52,6 +52,7 @@ APMain:
     mov rbx,STACKS
     add qword [rbx],32768
     mov rsp,[rbx]
+    mov rbp,rsp
 
     mov rbx,NUM_ACTIVED_PROCESSORS
     mov rcx,[rbx]
