@@ -200,6 +200,10 @@ unsafe class Program
         if(PCI.GetDevice(0x15AD, 0x0405) != null)
             Framebuffer.Graphics = new VMWareSVGAIIGraphics();
 
+        Image wall = Wallpaper;
+        Wallpaper = wall.ResizeImage(Framebuffer.Width, Framebuffer.Height);
+        wall.Dispose();
+
         FConsole = new FConsole(350, 300);
         FConsole.Visible = false;
 
