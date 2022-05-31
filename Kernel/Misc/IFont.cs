@@ -61,7 +61,12 @@ namespace Kernel.Misc
                 }
                 if (w > 5 && counter == FontSize) return w;
             }
-
+            
+            baseX.Dispose();
+            baseY.Dispose();
+            index.Dispose();
+            w.Dispose();
+            h.Dispose();
             return FontSize;
         }
 
@@ -74,6 +79,9 @@ namespace Kernel.Misc
                 w += 
                     DrawChar(g, X + w, Y + h, Str[i]);
             }
+            Str.Dispose();
+            w.Dispose();
+            h.Dispose();
         }
 
         public int MeasureString(string Str)
@@ -83,6 +91,7 @@ namespace Kernel.Misc
             {
                 w += DrawChar(Framebuffer.Graphics,-1, -1, Str[i]);
             }
+            Str.Dispose();
             return w;
         }
 
@@ -105,6 +114,9 @@ namespace Kernel.Misc
                     }
                 }
             }
+            Str.Dispose();
+            w.Dispose();
+            h.Dispose();
         }
     }
 }
