@@ -65,8 +65,6 @@ namespace Kernel.Misc
             baseX.Dispose();
             baseY.Dispose();
             index.Dispose();
-            w.Dispose();
-            h.Dispose();
             return FontSize;
         }
 
