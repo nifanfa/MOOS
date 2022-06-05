@@ -72,6 +72,9 @@ namespace Kernel.GUI
                 "Console",
 #endif
             };
+
+            LastPoint.X = -1;
+            LastPoint.Y = -1;
         }
 
         public static string[] BuiltInAppNames;
@@ -202,8 +205,66 @@ namespace Kernel.GUI
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
             Window.font.DrawString(Framebuffer.Graphics.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);
 
+            if (Control.MouseButtons.HasFlag(MouseButtons.Left) && !Window.HasWindowMoving && !Window.MouseHandled) 
+            {
+                if (LastPoint.X == -1 && LastPoint.Y == -1) 
+                {
+                    LastPoint.X = Control.MousePosition.X;
+                    LastPoint.Y = Control.MousePosition.Y;
+                }
+                else 
+                {
+                    if(Control.MousePosition.X > LastPoint.X && Control.MousePosition.Y > LastPoint.Y)
+                    {
+                        Framebuffer.Graphics.AFillRectangle(
+                            LastPoint.X,
+                            LastPoint.Y,
+                            Control.MousePosition.X - LastPoint.X,
+                            Control.MousePosition.Y - LastPoint.Y,
+                            0x7F2E86C1);
+                    }
+
+                    if (Control.MousePosition.X < LastPoint.X && Control.MousePosition.Y < LastPoint.Y)
+                    {
+                        Framebuffer.Graphics.AFillRectangle(
+                            Control.MousePosition.X,
+                            Control.MousePosition.Y,
+                            LastPoint.X - Control.MousePosition.X,
+                            LastPoint.Y - Control.MousePosition.Y,
+                            0x7F2E86C1);
+                    }
+
+                    if (Control.MousePosition.X < LastPoint.X && Control.MousePosition.Y > LastPoint.Y)
+                    {
+                        Framebuffer.Graphics.AFillRectangle(
+                            Control.MousePosition.X,
+                            LastPoint.Y,
+                            LastPoint.X - Control.MousePosition.X,
+                            Control.MousePosition.Y - LastPoint.Y,
+                            0x7F2E86C1);
+                    }
+
+                    if (Control.MousePosition.X > LastPoint.X && Control.MousePosition.Y < LastPoint.Y)
+                    {
+                        Framebuffer.Graphics.AFillRectangle(
+                            LastPoint.X,
+                            Control.MousePosition.Y,
+                            Control.MousePosition.X - LastPoint.X,
+                            LastPoint.Y - Control.MousePosition.Y,
+                            0x7F2E86C1);
+                    }
+                }
+            }
+            else
+            {
+                LastPoint.X = -1;
+                LastPoint.Y = -1;
+            }
+
             Result.Dispose();
         }
+
+        public static Point LastPoint;
 
         private static void ClickEvent(string name,bool isDirectory, int X, int Y, int i)
         {
