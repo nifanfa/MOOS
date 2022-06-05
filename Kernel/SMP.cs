@@ -24,6 +24,8 @@ namespace Kernel
             return (delegate*<void>)WorkGroups.Dequeue(); 
         }
 
+        public static uint ThisCPU => LocalAPIC.GetId();
+
         public static void Initialize(uint trampoline)
         {
             ushort* activedProcessor = (ushort*)NumActivedProcessors;
@@ -50,12 +52,11 @@ namespace Kernel
             WorkGroups = new Queue<ulong>();
 
             int NumCPU = ACPI.LocalAPIC_CPUIDs.Count;
-            uint LocalID = LocalAPIC.GetId();
             for (int i = 0; i < NumCPU; ++i)
             {
                 uint id = ACPI.LocalAPIC_CPUIDs[i]; 
                 Console.WriteLine($"Starting CPU{id.ToString()}");
-                if (id != LocalID)
+                if (id != ThisCPU)
                 {
                     LocalAPIC.SendInit(id); 
                     LocalAPIC.SendStartup(id, (trampoline >> 12));
