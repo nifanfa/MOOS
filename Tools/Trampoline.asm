@@ -50,7 +50,7 @@ APMain:
     mov ss, ax
 
     mov rbx,STACKS
-    add qword [rbx],32768
+    add qword [rbx],1048576
     mov rsp,[rbx]
     mov rbp,rsp
 
