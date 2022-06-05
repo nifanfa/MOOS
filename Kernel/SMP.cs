@@ -18,10 +18,15 @@ namespace Kernel
 
         public static void RunOnAnyCPU(delegate*<void> method) => WorkGroups.Enqueue((ulong)method);
 
+        public static bool Untakable;
+
         public static delegate*<void> Take() 
         {
-            while (WorkGroups.Length == 0) ;
-            return (delegate*<void>)WorkGroups.Dequeue(); 
+            while (WorkGroups.Length == 0 || Untakable) ;
+            Untakable = true;
+            var addr = (delegate*<void>)WorkGroups.Dequeue();
+            Untakable = false;
+            return addr; 
         }
 
         public static uint ThisCPU => LocalAPIC.GetId();
@@ -49,6 +54,7 @@ namespace Kernel
                 *sidt = (ulong)idt;
             }
 
+            Untakable = false;
             WorkGroups = new Queue<ulong>();
 
             int NumCPU = ACPI.LocalAPIC_CPUIDs.Count;
