@@ -9,30 +9,15 @@ using System.Runtime.InteropServices;
 
 namespace Kernel.Misc
 {
-#if restorfpu
-    [StructLayout(LayoutKind.Sequential,Pack = 1)]
-    public unsafe struct FxsaveArea 
-    {
-        fixed byte Raw[512];
-    }
-#endif
-
     public unsafe class Thread
     {
         public bool Terminated;
         public IDT.IDTStackGeneric* Stack;
-#if restorfpu
-        public FxsaveArea* fxsaveArea;
-#endif
         public ulong SleepingTime;
 
         public Thread(delegate*<void> method)
         {
             Stack = (IDT.IDTStackGeneric*)Allocator.Allocate((ulong)sizeof(IDT.IDTStackGeneric));
-#if restorfpu
-            fxsaveArea = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
-            Native.Movsb(fxsaveArea, ThreadPool.Fxdefault, 32);
-#endif
 
             Stack->irs.cs = 0x08;
             Stack->irs.ss = 0x10;
@@ -69,16 +54,9 @@ namespace Kernel.Misc
         public static List<Thread> Threads;
         public static bool Initialized = false;
         public static bool Locked = false;
-#if restorfpu
-        public static FxsaveArea* Fxdefault;
-#endif
 
         public static void Initialize()
         {
-#if restorfpu
-            Fxdefault = (FxsaveArea*)Allocator.Allocate((ulong)sizeof(FxsaveArea));
-            Native.Fxsave64(Fxdefault);
-#endif
             Locked = false;
             Initialized = false;
             Threads = new();
@@ -140,9 +118,6 @@ namespace Kernel.Misc
             if (!Threads[Index].Terminated)
             {
                 Native.Movsb(Threads[Index].Stack, stack, (ulong)sizeof(IDT.IDTStackGeneric));
-#if restorfpu
-                Native.Fxsave64(Threads[Index].fxsaveArea);
-#endif
             }
 
             for(int i = 0; i < Threads.Count; i++) 
@@ -178,9 +153,6 @@ namespace Kernel.Misc
 #endregion
 
             Native.Movsb(stack, Threads[Index].Stack, (ulong)sizeof(IDT.IDTStackGeneric));
-#if restorfpu
-            Native.Fxrstor64(Threads[Index].fxsaveArea);
-#endif
         }
     }
 }
