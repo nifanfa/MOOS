@@ -41,7 +41,7 @@ unsafe class Program
     {
         SSE.enable_sse();
         //Console.WriteLine("Hello from Application Processor");
-        for (; ; ) Native.Hlt();
+        for (; ; ) SMP.Take()();
     }
 
     /*

@@ -1,4 +1,5 @@
 ﻿using Kernel.Driver;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Kernel
@@ -12,6 +13,16 @@ namespace Kernel
         public const ulong SharedIDT = 0x800032;
         public const ulong SharedPageTable = 0x81000;
         public const ulong Trampoline = 0x90000;
+
+        public static Queue<ulong> WorkGroups;
+
+        public static void RunOnAnyCPU(delegate*<void> method) => WorkGroups.Enqueue((ulong)method);
+
+        public static delegate*<void> Take() 
+        {
+            while (WorkGroups.Length == 0) ;
+            return (delegate*<void>)WorkGroups.Dequeue(); 
+        }
 
         public static void Initialize(uint trampoline)
         {
@@ -35,6 +46,8 @@ namespace Kernel
                 ulong* sidt = (ulong*)SharedIDT;
                 *sidt = (ulong)idt;
             }
+
+            WorkGroups = new Queue<ulong>();
 
             int NumCPU = ACPI.LocalAPIC_CPUIDs.Count;
             uint LocalID = LocalAPIC.GetId();
