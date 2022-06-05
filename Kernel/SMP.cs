@@ -22,7 +22,7 @@ namespace Kernel
             *apMain = (ulong)(delegate*<int,void>)&Program.APMain;
 
             ulong* stacks = (ulong*)Stacks;
-            *stacks = (ulong)Allocator.Allocate((ulong)(ACPI.LocalAPIC_CPUIDs.Count * 32768));
+            *stacks = (ulong)Allocator.Allocate((ulong)(ACPI.LocalAPIC_CPUIDs.Count * 1048576));
 
             fixed(GDT.GDTDescriptor* gdt = &GDT.gdtr) 
             {
