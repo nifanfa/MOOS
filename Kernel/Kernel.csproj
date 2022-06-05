@@ -11,7 +11,7 @@
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 
-		<DefineConstants>Kernel;HasGC;UseAPIC</DefineConstants>
+		<DefineConstants>Kernel;HasGC;UseAPIC;SMP;Chinese</DefineConstants>
 
 		<IlcSystemModule>Kernel</IlcSystemModule>
 		<EntryPointSymbol>Main</EntryPointSymbol>
