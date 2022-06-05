@@ -4,55 +4,29 @@
 
 namespace System.Collections.Generic
 {
-    /// <summary>A very basic queue implemented with a linked list.</summary>
-    /// <typeparam name="T">The type of the object held by the queue.</typeparam>
     public class Queue<T>
     {
-        class Entry
-        {
-            public T Value;
-            public Entry Next;
+        List<T> list;
 
-            public Entry(T value)
-            {
-                Value = value;
-            }
+        public Queue(int initsize = 256)
+        {
+            list = new List<T>(initsize);
         }
 
-
-        Entry head;
-        Entry tail;
-
-
-        public int Length { get; private set; }
+        public int Length => list.Count;
 
 
         public void Enqueue(T item)
         {
-            if (head == null)
-            {
-                head = new Entry(item);
-                tail = head;
-                Length = 1;
-
-                return;
-            }
-
-            var entry = new Entry(item);
-            tail.Next = entry;
-            tail = entry;
-            Length++;
+            list.Add(item);
         }
 
         public T Dequeue()
         {
-            var value = head.Value;
-            var next = head.Next;
-            head.Dispose();
-            head = next;
-            Length--;
+            if (list.Count == 0) return default;
 
-            return value;
+            list.Count--;
+            return list[list.Count];
         }
     }
 }
