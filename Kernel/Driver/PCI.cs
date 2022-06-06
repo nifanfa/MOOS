@@ -58,6 +58,23 @@ namespace MOOS
             return null;
         }
 
+        public static PCIDevice GetDevice(byte ClassID, byte SubClassID, byte ProgIF)
+        {
+            for (int i = 0; i < Devices.Count; i++)
+            {
+                if (
+                    Devices[i] != null &&
+                    Devices[i].ClassID == ClassID &&
+                    Devices[i].SubClassID == SubClassID &&
+                    Devices[i].ProgIF == ProgIF
+                    )
+                {
+                    return Devices[i];
+                }
+            }
+            return null;
+        }
+
         public static void Initialise()
         {
             Devices = new List<PCIDevice>();
