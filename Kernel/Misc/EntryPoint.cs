@@ -82,10 +82,10 @@ namespace MOOS.Misc
             new Ramdisk((IntPtr)(Info->Mods[0]));
             new FATFS();
 
-            main();
+            KMain();
         }
 
         [DllImport("*")]
-        public static extern void main();
+        public static extern void KMain();
     }
 }
