@@ -14,7 +14,7 @@
 		<DefineConstants>Kernel;HasGC;UseAPIC;SMP</DefineConstants>
 
 		<IlcSystemModule>Kernel</IlcSystemModule>
-		<EntryPointSymbol>Main</EntryPointSymbol>
+		<EntryPointSymbol>Entry</EntryPointSymbol>
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 		<!--Make the code faster!-->
 		<IlcOptimizationPreference>Size</IlcOptimizationPreference>

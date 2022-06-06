@@ -24,8 +24,6 @@ using System.Windows.Forms;
 
 unsafe class Program
 {
-    static void Main() { }
-
     [DllImport("*")]
     public static extern void test();
 
@@ -52,68 +50,9 @@ unsafe class Program
      * 256 MiB - 512MiB   -> System
      * 512 MiB - ∞     -> Free to use
      */
-    [RuntimeExport("Main")]
-    static void Main(MultibootInfo* Info, IntPtr Modules, IntPtr Trampoline)
+    [RuntimeExport("main")]
+    static void Main()
     {
-        Allocator.Initialize((IntPtr)0x20000000);
-
-        StartupCodeHelpers.InitializeModules(Modules);
-
-        PageTable.Initialise();
-
-        ASC16.Initialise();
-        VBE.Initialise((VBEInfo*)Info->VBEInfo);
-        Console.Setup();
-        IDT.Disable();
-        GDT.Initialise();
-        IDT.Initialize();
-        IDT.Enable();
-
-        SSE.enable_sse();
-        //AVX.init_avx();
-
-        ACPI.Initialize();
-#if UseAPIC
-        PIC.Disable();
-        LocalAPIC.Initialize();
-        IOAPIC.Initialize();
-        HPET.Initialize();
-#else
-        PIC.Enable();
-#endif
-
-#if SMP
-        Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
-        Native.Movsb((byte*)SMP.Trampoline, (byte*)Trampoline, 512);
-
-        SMP.Initialize((uint)SMP.Trampoline);
-#endif
-
-        PS2Keyboard.Initialize();
-        //Enable keyboard interrupts
-        Interrupts.EnableInterrupt(0x21);
-
-        Serial.Initialise();
-        PIT.Initialise();
-        PS2Mouse.Initialise();
-        SMBIOS.Initialise();
-
-        PCI.Initialise();
-
-        IDE.Initialize();
-        SATA.Initialize();
-
-#if HasGC
-        GC.AllowCollect = true;
-#endif
-
-        //Only fixed size vhds are supported!
-        Console.Write("Initrd: 0x");
-        Console.WriteLine((Info->Mods[0]).ToString("x2"));
-        Console.WriteLine("Initializing Ramdisk");
-        new Ramdisk((IntPtr)(Info->Mods[0]));
-        new FATFS();
-
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
         Cursor = new PNG(File.Instance.ReadAllBytes("Images/Cursor.png"));
@@ -167,9 +106,12 @@ unsafe class Program
         for (; ; ) Native.Hlt();
 #endif
 
-        ThreadPool.Initialize();
+        //ThreadPool.Initialize();
 
-        KMain();
+        SMP.RunOnAnyCPU(&KMain);
+
+        //KMain();
+        for (; ; ) Native.Hlt();
     }
 
 #if NETWORK
@@ -284,7 +226,7 @@ unsafe class Program
             Window.UpdateAll();
             /*
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
-            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString()e4, 42, 10, 0xFFFFFFFF);
             */
             Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
             Framebuffer.Update();
