@@ -1,9 +1,9 @@
-{
+﻿{
   "profiles": {
     "QEMU": {
       "commandName": "Executable",
       "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -r win-x64 -c debug kernel",
+      "commandLineArgs": "/c dotnet publish -r win-x64 -c debug MOOS",
       "workingDirectory": "..\\"
     }
   }

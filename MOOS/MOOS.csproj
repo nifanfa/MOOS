@@ -13,7 +13,7 @@
 
 		<DefineConstants>Kernel;HasGC;UseAPIC;SMP</DefineConstants>
 
-		<IlcSystemModule>Kernel</IlcSystemModule>
+		<IlcSystemModule>MOOS</IlcSystemModule>
 		<EntryPointSymbol>Entry</EntryPointSymbol>
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 		<!--Make the code faster!-->
@@ -42,6 +42,8 @@
 	</Target>
 
 	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
+
+	<Import Project="..\Kernel\Kernel.projitems" Label="Shared" />
 
 	<Target Name="CopyBinary" AfterTargets="Publish">
 		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="$(MSBuildStartupDirectory)\Tools\nasm.exe -fbin $(MSBuildStartupDirectory)\Tools\Trampoline.asm -o $(MSBuildStartupDirectory)\Tools\Trampoline"></Exec>
