@@ -3,7 +3,7 @@
  */
 using System.Runtime.InteropServices;
 
-namespace Kernel
+namespace MOOS
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public unsafe struct MultibootInfo

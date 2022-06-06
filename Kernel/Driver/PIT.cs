@@ -1,10 +1,10 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.Driver;
-using Kernel.Misc;
+using MOOS.Driver;
+using MOOS.Misc;
 
-namespace Kernel
+namespace MOOS
 {
     public class PIT
     {

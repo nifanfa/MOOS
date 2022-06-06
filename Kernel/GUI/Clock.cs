@@ -3,7 +3,7 @@
  */
 using System;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     internal class Clock : Window
     {

@@ -1,7 +1,7 @@
 ﻿#if Kernel
 using Internal.Runtime.CompilerServices;
-using Kernel;
-using Kernel.Misc;
+using MOOS;
+using MOOS.Misc;
 
 namespace System.Threading
 {

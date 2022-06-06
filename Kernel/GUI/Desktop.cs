@@ -1,15 +1,15 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.Driver;
-using Kernel.FS;
-using Kernel.Misc;
+using MOOS.Driver;
+using MOOS.FS;
+using MOOS.Misc;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     internal class Desktop
     {

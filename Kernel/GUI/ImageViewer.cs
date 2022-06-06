@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     internal class ImageViewer : Window
     {

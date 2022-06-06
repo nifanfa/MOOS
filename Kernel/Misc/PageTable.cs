@@ -1,9 +1,9 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.Misc;
+using MOOS.Misc;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class PageTable
     {

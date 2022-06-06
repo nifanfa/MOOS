@@ -3,12 +3,12 @@
  */
 //Reference: https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
 
-using Kernel.Misc;
-using Kernel.NET;
+using MOOS.Misc;
+using MOOS.NET;
 using System.Runtime.InteropServices;
-using static Kernel.Misc.MMIO;
+using static MOOS.Misc.MMIO;
 
-namespace Kernel.Driver
+namespace MOOS.Driver
 {
     public unsafe class Intel8254X
     {

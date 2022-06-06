@@ -6,7 +6,7 @@
     <SharedGUID>066034bc-37fe-4605-8bdb-c525ec29dbe4</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Kernel</Import_RootNamespace>
+    <Import_RootNamespace>MOOS</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)API.cs" />

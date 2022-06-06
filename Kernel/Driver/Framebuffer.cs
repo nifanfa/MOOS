@@ -1,14 +1,14 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.Driver;
-using Kernel.Graph;
-using Kernel.Misc;
+using MOOS.Driver;
+using MOOS.Graph;
+using MOOS.Misc;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class Framebuffer
     {

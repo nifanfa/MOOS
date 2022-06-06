@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Kernel.Misc
+namespace MOOS.Misc
 {
     public unsafe static class GC
     {

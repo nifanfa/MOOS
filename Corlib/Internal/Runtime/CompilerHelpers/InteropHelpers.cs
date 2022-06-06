@@ -2,8 +2,8 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 #if Kernel
-using Kernel;
-using Kernel.Misc;
+using MOOS;
+using MOOS.Misc;
 #endif
 using System;
 using System.Runtime.CompilerServices;

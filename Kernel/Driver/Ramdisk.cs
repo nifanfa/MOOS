@@ -3,7 +3,7 @@
  */
 using System;
 
-namespace Kernel.FS
+namespace MOOS.FS
 {
     public unsafe class Ramdisk : Disk
     {

@@ -1,7 +1,7 @@
-﻿using Kernel.Driver;
+﻿using MOOS.Driver;
 using System;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     class Snake : Window
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     internal class RightMenu : Window
     {

@@ -1,8 +1,8 @@
-﻿using Kernel.Driver;
+﻿using MOOS.Driver;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class SMP
     {

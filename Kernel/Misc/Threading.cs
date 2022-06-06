@@ -3,11 +3,11 @@
  */
 //#define restorfpu
 
-using Kernel.Driver;
+using MOOS.Driver;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Kernel.Misc
+namespace MOOS.Misc
 {
     public unsafe class Thread
     {

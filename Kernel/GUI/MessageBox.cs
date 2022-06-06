@@ -1,4 +1,4 @@
-﻿namespace Kernel.GUI
+﻿namespace MOOS.GUI
 {
     internal class MessageBox : Window
     {

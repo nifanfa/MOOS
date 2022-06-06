@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Kernel.Graph
+namespace MOOS.Graph
 {
     public unsafe class Graphics
     {

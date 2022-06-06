@@ -4,7 +4,7 @@
 using Internal.Runtime;
 using Internal.Runtime.CompilerHelpers;
 #if Kernel
-using Kernel;
+using MOOS;
 #endif
 using static Internal.Runtime.EEType;
 

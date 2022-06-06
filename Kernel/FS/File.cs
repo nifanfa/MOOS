@@ -3,7 +3,7 @@
  */
 using System.Collections.Generic;
 
-namespace Kernel.FS
+namespace MOOS.FS
 {
     public class FileInfo 
     {

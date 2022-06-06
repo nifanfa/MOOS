@@ -1,6 +1,6 @@
-﻿using Kernel.Driver;
+﻿using MOOS.Driver;
 
-namespace Kernel.Graph
+namespace MOOS.Graph
 {
     internal unsafe class VMWareSVGAIIGraphics : Graphics
     {

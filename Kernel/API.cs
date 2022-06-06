@@ -1,8 +1,8 @@
-﻿using Kernel.Misc;
+﻿using MOOS.Misc;
 using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class API
     {

@@ -1,12 +1,12 @@
-﻿using Kernel;
-using Kernel.Graph;
-using Kernel.GUI;
-using Kernel.GUI.Widgets;
+﻿using MOOS;
+using MOOS.Graph;
+using MOOS.GUI;
+using MOOS.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     class Calculator : Window
     {

@@ -1,13 +1,13 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel;
-using Kernel.Driver;
-using Kernel.Misc;
+using MOOS;
+using MOOS.Driver;
+using MOOS.Misc;
 using System.Diagnostics;
 using static Native;
 
-namespace Kernel.NET
+namespace MOOS.NET
 {
     public static unsafe class RTL8139
     {

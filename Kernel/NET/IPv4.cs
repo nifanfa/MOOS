@@ -1,11 +1,11 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel;
+using MOOS;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kernel.NET
+namespace MOOS.NET
 {
     public static unsafe class IPv4
     {
