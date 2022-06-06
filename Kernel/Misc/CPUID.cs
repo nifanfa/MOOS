@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Kernel.Misc
+namespace MOOS.Misc
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct CPUID

@@ -3,7 +3,7 @@
  */
 using System.Runtime;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class stdlib
     {

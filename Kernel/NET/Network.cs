@@ -3,7 +3,7 @@
  */
 using System.Net;
 
-namespace Kernel.NET
+namespace MOOS.NET
 {
     public static class Network
     {

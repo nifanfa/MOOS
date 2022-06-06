@@ -1,14 +1,14 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.Misc;
-using Kernel.NET;
+using MOOS.Misc;
+using MOOS.NET;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Runtime.InteropServices;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class UDP
     {

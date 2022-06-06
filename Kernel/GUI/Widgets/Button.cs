@@ -1,4 +1,4 @@
-﻿namespace Kernel.GUI.Widgets
+﻿namespace MOOS.GUI.Widgets
 {
     internal class Button : Widget
     {

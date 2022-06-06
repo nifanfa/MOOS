@@ -1,6 +1,6 @@
-﻿using Kernel.Misc;
+﻿using MOOS.Misc;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     internal class NESEmu : Window
     {

@@ -1,6 +1,6 @@
-﻿using Kernel.Driver;
+﻿using MOOS.Driver;
 
-namespace Kernel.Misc
+namespace MOOS.Misc
 {
     public static class Interrupts
     {

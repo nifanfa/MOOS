@@ -2,8 +2,8 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 using Internal.Runtime.CompilerServices;
-using Kernel;
-using Kernel.Misc;
+using MOOS;
+using MOOS.Misc;
 using System;
 using System.Runtime;
 

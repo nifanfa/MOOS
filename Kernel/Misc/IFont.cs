@@ -1,12 +1,12 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.Graph;
+using MOOS.Graph;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace Kernel.Misc
+namespace MOOS.Misc
 {
     internal class IFont
     {

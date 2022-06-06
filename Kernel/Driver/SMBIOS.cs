@@ -6,7 +6,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kernel.Driver
+namespace MOOS.Driver
 {
     public static unsafe class SMBIOS
     {

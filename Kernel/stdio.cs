@@ -1,12 +1,12 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.FS;
-using Kernel.Misc;
+using MOOS.FS;
+using MOOS.Misc;
 using System.Runtime;
 using System.Runtime.InteropServices;
 
-namespace Kernel
+namespace MOOS
 {
     internal unsafe class stdio
     {

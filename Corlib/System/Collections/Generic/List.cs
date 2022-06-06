@@ -2,7 +2,7 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 #if Kernel
-using Kernel;
+using MOOS;
 #endif
 
 namespace System.Collections.Generic

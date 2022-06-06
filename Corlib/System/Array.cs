@@ -5,7 +5,7 @@
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
 #if Kernel
-using Kernel;
+using MOOS;
 #endif
 using System.Runtime.CompilerServices;
 

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Kernel
+namespace MOOS
 {
     /// <summary>
     /// How to get the size of multiboot module?

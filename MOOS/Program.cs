@@ -5,14 +5,14 @@
 //#define NETWORK
 
 using Internal.Runtime.CompilerHelpers;
-using Kernel;
-using Kernel.Driver;
-using Kernel.FS;
-using Kernel.Graph;
-using Kernel.GUI;
-using Kernel.Misc;
-using Kernel.NET;
-using Kernel.GUI;
+using MOOS;
+using MOOS.Driver;
+using MOOS.FS;
+using MOOS.Graph;
+using MOOS.GUI;
+using MOOS.Misc;
+using MOOS.NET;
+using MOOS.GUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

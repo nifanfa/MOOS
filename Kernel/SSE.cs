@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Kernel
+namespace MOOS
 {
     internal static class SSE
     {

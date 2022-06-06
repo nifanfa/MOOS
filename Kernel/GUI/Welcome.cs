@@ -1,8 +1,8 @@
-﻿using Kernel.FS;
-using Kernel.Misc;
+﻿using MOOS.FS;
+using MOOS.Misc;
 using System.Drawing;
 
-namespace Kernel.GUI
+namespace MOOS.GUI
 {
     internal class Welcome : Window
     {

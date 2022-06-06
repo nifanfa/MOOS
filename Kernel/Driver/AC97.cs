@@ -1,13 +1,13 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel;
-using Kernel.Driver;
+using MOOS;
+using MOOS.Driver;
 using System;
 using System.Runtime.InteropServices;
 using static Native;
 
-namespace Kernel
+namespace MOOS
 {
     public unsafe class AC97
     {

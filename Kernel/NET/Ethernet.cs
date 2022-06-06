@@ -3,7 +3,7 @@
  */
 using System.Runtime.InteropServices;
 
-namespace Kernel.NET
+namespace MOOS.NET
 {
     public static unsafe class Ethernet
     {

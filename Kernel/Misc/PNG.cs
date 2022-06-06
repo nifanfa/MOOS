@@ -1,11 +1,11 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.NET;
+using MOOS.NET;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace Kernel.Misc
+namespace MOOS.Misc
 {
     public unsafe class PNG : Image
     {

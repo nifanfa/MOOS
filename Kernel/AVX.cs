@@ -1,8 +1,8 @@
-﻿using Kernel.Misc;
+﻿using MOOS.Misc;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class AVX
     {

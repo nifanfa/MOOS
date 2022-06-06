@@ -6,7 +6,7 @@
 using System;
 using System.Drawing;
 
-namespace Kernel
+namespace MOOS
 {
     public static unsafe class Console
     {

@@ -1,7 +1,7 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-namespace Kernel.FS
+namespace MOOS.FS
 {
     public abstract unsafe class Disk
     {

@@ -1,10 +1,10 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.Misc;
+using MOOS.Misc;
 using System.Collections.Generic;
 
-namespace Kernel
+namespace MOOS
 {
     public class PCIDevice
     {

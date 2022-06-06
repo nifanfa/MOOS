@@ -3,11 +3,11 @@
  */
 //https://wiki.osdev.org/HPET#Interrupt_routing
 
-using Kernel.Misc;
+using MOOS.Misc;
 using System.Diagnostics;
-using static Kernel.Misc.MMIO;
+using static MOOS.Misc.MMIO;
 
-namespace Kernel.Driver
+namespace MOOS.Driver
 {
     public static unsafe class HPET
     {

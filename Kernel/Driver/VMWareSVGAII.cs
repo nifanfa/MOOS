@@ -1,6 +1,6 @@
-﻿using Kernel;
+﻿using MOOS;
 
-namespace Kernel.Driver
+namespace MOOS.Driver
 {
     public unsafe class VMWareSVGAII
     {

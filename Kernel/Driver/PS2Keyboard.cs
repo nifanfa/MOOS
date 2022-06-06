@@ -7,7 +7,7 @@
 using System;
 using static System.ConsoleKey;
 
-namespace Kernel
+namespace MOOS
 {
     public static class PS2Keyboard
     {

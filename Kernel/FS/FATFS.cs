@@ -2,7 +2,7 @@
 using System.Runtime;
 using System.Runtime.InteropServices;
 
-namespace Kernel.FS
+namespace MOOS.FS
 {
     public unsafe class FATFS : File
     {

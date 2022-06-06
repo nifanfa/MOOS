@@ -1,10 +1,10 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
-using Kernel.FS;
+using MOOS.FS;
 using System.Collections.Generic;
 
-namespace Kernel.Driver
+namespace MOOS.Driver
 {
     public unsafe static class IDE
     {

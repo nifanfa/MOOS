@@ -3,11 +3,11 @@
  */
 //https://github.com/pdoane/osdev/blob/master/net/tcp.c
 
-using Kernel.Driver;
+using MOOS.Driver;
 using System.Net;
 using System.Runtime.InteropServices;
 
-namespace Kernel.NET
+namespace MOOS.NET
 {
     public unsafe class TcpClient
     {
