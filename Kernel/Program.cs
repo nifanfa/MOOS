@@ -106,12 +106,9 @@ unsafe class Program
         for (; ; ) Native.Hlt();
 #endif
 
-        //ThreadPool.Initialize();
+        ThreadPool.Initialize();
 
-        SMP.RunOnAnyCPU(&KMain);
-
-        //KMain();
-        for (; ; ) Native.Hlt();
+        KMain();
     }
 
 #if NETWORK
@@ -226,7 +223,7 @@ unsafe class Program
             Window.UpdateAll();
             /*
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
-            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString()e4, 42, 10, 0xFFFFFFFF);
+            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
             */
             Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
             Framebuffer.Update();
