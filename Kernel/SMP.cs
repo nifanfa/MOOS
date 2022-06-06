@@ -31,13 +31,24 @@ namespace Kernel
 
         public static uint ThisCPU => LocalAPIC.GetId();
 
+
+        //Method for other CPU cores
+        //GDT, IDT, PageTable has been configured in Trampoline. so we don't need to set it here
+        public static void ApplicationProcessorMain(int Core)
+        {
+            Native.Cli();
+            SSE.enable_sse();
+            //Console.WriteLine("Hello from Application Processor");
+            for (; ; ) SMP.Take()();
+        }
+
         public static void Initialize(uint trampoline)
         {
             ushort* activedProcessor = (ushort*)NumActivedProcessors;
             *activedProcessor = 1;
 
             ulong* apMain = (ulong*)APMain;
-            *apMain = (ulong)(delegate*<int,void>)&Program.APMain;
+            *apMain = (ulong)(delegate*<int,void>)&ApplicationProcessorMain;
 
             ulong* stacks = (ulong*)Stacks;
             *stacks = (ulong)Allocator.Allocate((ulong)(ACPI.LocalAPIC_CPUIDs.Count * 1048576));
