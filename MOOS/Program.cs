@@ -42,6 +42,7 @@ unsafe class Program
      * 256 MiB - 512MiB   -> System
      * 512 MiB - ∞     -> Free to use
      */
+    //Check out Kernel/Misc/EntryPoint.cs
     [RuntimeExport("KMain")]
     static void KMain()
     {
