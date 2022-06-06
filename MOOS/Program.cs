@@ -24,6 +24,8 @@ using System.Windows.Forms;
 
 unsafe class Program
 {
+    static void Main() { }
+
     [DllImport("*")]
     public static extern void test();
 
@@ -40,8 +42,8 @@ unsafe class Program
      * 256 MiB - 512MiB   -> System
      * 512 MiB - ∞     -> Free to use
      */
-    [RuntimeExport("main")]
-    static void Main()
+    [RuntimeExport("KMain")]
+    static void KMain()
     {
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
@@ -98,7 +100,7 @@ unsafe class Program
 
         ThreadPool.Initialize();
 
-        KMain();
+        SMain();
     }
 
 #if NETWORK
@@ -121,7 +123,7 @@ unsafe class Program
 
     public static FConsole FConsole;
 
-    public static void KMain()
+    public static void SMain()
     {
         Console.WriteLine("Press any key to enter desktop...");
 
