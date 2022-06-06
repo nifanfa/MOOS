@@ -15,9 +15,7 @@ namespace MOOS.GUI
 #else
             Title = "NES Emulator";
 #endif
-
-            if (nes == null)
-                nes = new NES.NES();
+            nes = new NES.NES();
         }
 
         public override void OnSetVisible(bool value)
