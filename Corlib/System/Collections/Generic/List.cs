@@ -36,12 +36,22 @@ namespace System.Collections.Generic
             Count++;
         }
 
-        public void Insert(int index, T item, bool increaseCount = true) 
+        public void Insert(int index, T item, bool internalMove = false) 
         {
             if (index == IndexOf(item)) return;
 
-            if(increaseCount)
+            if(!internalMove)
                 Count++;
+
+            if (internalMove) 
+            {
+                int _index = IndexOf(item);
+                for(int i = _index; i < Count -1; i++) 
+                {
+                    _value[i] = _value[i + 1];
+                }
+            }
+
             for(int i = Count - 1; i > index; i--) 
             {
                 _value[i] = _value[i - 1];
