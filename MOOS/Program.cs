@@ -140,7 +140,7 @@ unsafe class Program
         FConsole = new FConsole(350, 300);
         FConsole.Visible = false;
 
-        var welcome = new Welcome(250, 240);
+        var welcome = new Welcome(400, 250);
 
         RightMenu rightmenu = new RightMenu();
         bool rightClicked = false;
