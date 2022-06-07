@@ -34,18 +34,7 @@ namespace MOOS.GUI
 
         public static void MoveToEnd(Window window)
         {
-            if (window.Index == Windows.Count - 1) return;
-
-            int index = window.Index;
-            for(int i = 0; i < Windows.Count; i++)
-            {
-                var v = Windows[i];
-                if (v.Index > index)
-                {
-                    v.Index--;
-                }
-            }
-            window.Index = Windows.Count - 1;
+            Windows.Insert(0, window, true);
         }
 
         public static void UpdateAll()
@@ -55,16 +44,10 @@ namespace MOOS.GUI
                 if(Windows[i].Visible)
                     Windows[i].OnInput();
             }
-            for (int i = 0; i < Windows.Count; i++)
+            for (int i = Windows.Count - 1; i >= 0; i--)
             {
-                for (int k = 0; k < Windows.Count; k++)
-                {
-                    if (Windows[k].Index == i)
-                    {
-                        if (Windows[k].Visible)
-                            Windows[k].OnDraw();
-                    }
-                }
+                if (Windows[i].Visible)
+                    Windows[i].OnDraw();
             }
         }
 
@@ -100,13 +83,13 @@ namespace MOOS.GUI
             this.Width = Width;
             this.Height = Height;
             this.Visible = true;
-            Index = Windows.Count;
             Windows.Add(this);
 #if Chinese
             Title = "´°Ìו1";
 #else
             Title = "Window1";
 #endif
+            MoveToEnd(this);
         }
 
         public int BarHeight = 40;
@@ -115,7 +98,7 @@ namespace MOOS.GUI
         bool Move;
         int OffsetX;
         int OffsetY;
-        public int Index;
+        public int Index { get => Windows.IndexOf(this); }
 
         public static bool HasWindowMoving = false;
 
