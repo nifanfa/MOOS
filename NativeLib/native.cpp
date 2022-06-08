@@ -18,6 +18,16 @@ void Fxsave64(void* ptr)
 	_fxsave64(ptr);
 }
 
+unsigned long long Rdmsr(unsigned long index)
+{
+	return __readmsr(index);
+}
+
+void Wrmsr(unsigned long index,unsigned long long value)
+{
+	__writemsr(index, value);
+}
+
 void Fxrstor64(void* ptr)
 {
 	_fxrstor64(ptr);

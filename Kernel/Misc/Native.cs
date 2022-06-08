@@ -90,4 +90,10 @@ static unsafe class Native
 
     [DllImport("*")]
     public extern static void Fxrstor64(void* ptr);
+
+    [DllImport("*")]
+    public static extern ulong Rdmsr(ulong index);
+
+    [DllImport("*")]
+    public static extern void Wrmsr(ulong index, ulong value);
 }
