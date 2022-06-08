@@ -48,14 +48,32 @@ namespace MOOS.Driver
 
         public static void Initialize()
         {
-            PCIDevice device = PCI.GetDevice(0x8086, 0x100E);
+            PCIDevice device = null;
+
+            for (int i = 0; i < PCI.Devices.Count; i++)
+            {
+                if (
+                    PCI.Devices[i] != null &&
+                    PCI.Devices[i].VendorID == 0x8086 &&
+                        (
+                            PCI.Devices[i].DeviceID == 0x100e ||
+                            PCI.Devices[i].DeviceID == 0x1004 ||
+                            PCI.Devices[i].DeviceID == 0x100f ||
+                            PCI.Devices[i].DeviceID == 0x10ea ||
+                            PCI.Devices[i].DeviceID == 0x10d3
+                        )
+                    )
+                {
+                    device = PCI.Devices[i];
+                }
+            }
 
             if (device == null) return;
 
             Console.WriteLine("Intel 8254X Series Gigabit Ethernet Controller Found");
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
-            BAR0 = (uint)(device.Bar0 & (~3));
+            BAR0 = (uint)(device.Bar0 & (~0xF));
             Console.Write("BAR0: 0x");
             Console.WriteLine(((ulong)BAR0).ToStringHex());
 
