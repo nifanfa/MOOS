@@ -41,7 +41,6 @@ namespace MOOS
         //GDT, IDT, PageTable has been configured in Trampoline. so we don't need to set it here
         public static void ApplicationProcessorMain(int Core)
         {
-            Native.Cli();
             SSE.enable_sse();
             //Console.WriteLine("Hello from Application Processor");
             for (; ; ) SMP.Take()();
