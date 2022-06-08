@@ -178,29 +178,11 @@ namespace MOOS.GUI
             Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), pre, Framebuffer.Graphics.Width);
             pre.Dispose();
 
-            string CPUUsage = ThreadPool.CPUUsage.ToString();
-            string Memory = ((Allocator.NumPages * Allocator.PageSize) / 1048576).ToString();
-            string MemoryUsed = (Allocator.MemoryInUse / 1048576).ToString();
-            string Year = (2000+RTC.Year).ToString();
-            string Month = RTC.Month.ToString();
-            string Day = RTC.Day.ToString();
-            string Hour = RTC.Hour.ToString();
-            string Minute = RTC.Minute.ToString();
-            string FPS = FPSMeter.FPS.ToString();
 #if Chinese
-            string Result = $"{Year}年{Month}月{Day}日,{Hour}:{Minute} | FPS:{FPS} | CPU 0: {CPUUsage}% | 内存: {MemoryUsed}/{Memory}MiB";
+            string Result = $"{(2000 + RTC.Year)}年{RTC.Month}月{RTC.Day}日,{RTC.Hour}:{RTC.Minute} | FPS:{FPSMeter.FPS} | CPU 0: {ThreadPool.CPUUsage}% | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #else
-            string Result = $"{Year}/{Month}/{Day},{Hour}:{Minute} | FPS:{FPS} | CPU 0: {CPUUsage}% | Memory: {MemoryUsed}/{Memory}MiB";
+            string Result = $"{(2000 + RTC.Year)}/{RTC.Month}/{RTC.Day},{RTC.Hour}:{RTC.Minute} | FPS:{FPSMeter.FPS} | CPU 0: {ThreadPool.CPUUsage}% | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #endif
-            CPUUsage.Dispose();
-            Memory.Dispose();
-            MemoryUsed.Dispose();
-            Year.Dispose();
-            Month.Dispose();
-            Day.Dispose();
-            Hour.Dispose();
-            Minute.Dispose();
-            FPS.Dispose();
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
             Window.font.DrawString(Framebuffer.Graphics.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);

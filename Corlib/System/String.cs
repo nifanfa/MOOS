@@ -3,6 +3,7 @@
  */
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
+using MOOS.Misc;
 using System.Runtime.CompilerServices;
 
 
@@ -227,5 +228,33 @@ namespace System
             vs.Dispose();
             return s;
         }
+
+#if Kernel
+        public static string Format(string format, params object[] args) 
+        {
+            string res = string.Empty;
+            for(int i = 0; i < format.Length; i++) 
+            {
+                string chr = null;
+                if ((i + 2) < format.Length && format[i] == '{' && format[i + 2] == '}')
+                {
+                    chr = args[(int)(format[i + 1] - 0x30)].ToString();
+                    i += 2;
+                }
+                else
+                {
+                    chr = format[i].ToString();
+                }
+                string str = res + chr;
+                chr.Dispose();
+                res.Dispose();
+                res = str;
+            }
+
+            for (int i = 0; i < args.Length; i++) args[i].Dispose();
+            args.Dispose();
+            return res;
+        }
+#endif
     }
 }
