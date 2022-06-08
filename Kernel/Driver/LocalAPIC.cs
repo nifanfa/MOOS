@@ -76,8 +76,6 @@ namespace MOOS.Driver
 
         public static void Initialize()
         {
-            PIC.Disable();
-
             //Enable All Interrupts
             Out((uint)LAPIC_TPR, 0);
 
