@@ -105,6 +105,15 @@ namespace MOOS.Driver
             while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
         }
 
+
+        public static void SendInterrupt(uint apic_id, uint vector)
+        {
+            Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
+            Out((uint)LAPIC_ICRLO, vector | (uint)ICR_FIXED | (uint)ICR_NO_SHORTHAND);
+
+            while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
+        }
+
         public static void SendStartup(uint apic_id, uint vector)
         {
             Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
