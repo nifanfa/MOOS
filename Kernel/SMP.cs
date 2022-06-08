@@ -20,12 +20,16 @@ namespace MOOS
 
         public static bool Untakable;
 
+        public static int NumFreeCPU;
+
         public static delegate*<void> Take() 
         {
+            NumFreeCPU++;
             while (WorkGroups.Length == 0 || Untakable) ;
             Untakable = true;
             var addr = (delegate*<void>)WorkGroups.Dequeue();
             Untakable = false;
+            NumFreeCPU--;
             return addr; 
         }
 
