@@ -21,6 +21,7 @@ namespace MOOS
         public static bool Untakable;
 
         public static int NumFreeCPU;
+        public static int NumCPU { get => ACPI.LocalAPIC_CPUIDs.Count; }
 
         public static delegate*<void> Take() 
         {
@@ -73,7 +74,6 @@ namespace MOOS
             WorkGroups = new Queue<ulong>();
             NumFreeCPU = 0;
 
-            int NumCPU = ACPI.LocalAPIC_CPUIDs.Count;
             for (int i = 0; i < NumCPU; ++i)
             {
                 uint id = ACPI.LocalAPIC_CPUIDs[i]; 
