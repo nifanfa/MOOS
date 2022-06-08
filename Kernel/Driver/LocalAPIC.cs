@@ -57,7 +57,7 @@ namespace MOOS.Driver
         private const int ICR_ALL_INCLUDING_SELF = 0x00080000;
         private const int ICR_ALL_EXCLUDING_SELF = 0x000c0000;
 
-        private static int ICR_DESTINATION_SHIFT = 24;
+        private const int ICR_DESTINATION_SHIFT = 24;
 
         static uint In(uint reg)
         {
