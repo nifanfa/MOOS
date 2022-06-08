@@ -42,6 +42,7 @@ namespace MOOS
         public static void ApplicationProcessorMain(int Core)
         {
             SSE.enable_sse();
+            LocalAPIC.Initialize();
             //Console.WriteLine("Hello from Application Processor");
             for (; ; ) SMP.Take()();
         }
