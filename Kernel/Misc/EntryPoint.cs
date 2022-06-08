@@ -50,13 +50,6 @@ namespace MOOS.Misc
         PIC.Enable();
 #endif
 
-#if SMP
-            Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
-            Native.Movsb((byte*)SMP.Trampoline, (byte*)Trampoline, 512);
-
-            SMP.Initialize((uint)SMP.Trampoline);
-#endif
-
             PS2Keyboard.Initialize();
             //Enable keyboard interrupts
             Interrupts.EnableInterrupt(0x21);
@@ -70,6 +63,13 @@ namespace MOOS.Misc
 
             IDE.Initialize();
             SATA.Initialize();
+
+#if SMP
+            Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
+            Native.Movsb((byte*)SMP.Trampoline, (byte*)Trampoline, 512);
+
+            SMP.Initialize((uint)SMP.Trampoline);
+#endif
 
 #if HasGC
             GC.AllowCollect = true;
