@@ -85,10 +85,15 @@ namespace MOOS.Driver
             Out((uint)LAPIC_DFR, 0xffffffff);   // Flat mode
             Out((uint)LAPIC_LDR, 0 << 24);   // All cpus use logical id 0
 
-            // Configure Spurious Interrupt Vector Register
-            Out((uint)LAPIC_SVR, 0x100 | 0xff);
+            EnableSVR();
 
             Console.WriteLine("[Local APIC] Local APIC initialized");
+        }
+
+        public static void EnableSVR()
+        {
+            // Configure Spurious Interrupt Vector Register
+            Out((uint)LAPIC_SVR, 0x100 | 0xff);
         }
 
         public static uint GetId()
