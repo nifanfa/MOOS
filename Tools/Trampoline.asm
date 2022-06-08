@@ -50,12 +50,14 @@ APMain:
     mov ss, ax
 
     mov rbx,STACKS
+    lock
     add qword [rbx],1048576
     mov rsp,[rbx]
     mov rbp,rsp
 
     mov rbx,NUM_ACTIVED_PROCESSORS
     mov rcx,[rbx]
+    lock
     inc word [rbx]
 
     mov rax,SHARED_GDT
