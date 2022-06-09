@@ -64,6 +64,7 @@ namespace MOOS.Misc
             Locked = false;
             Initialized = false;
             Threads = new();
+            //There must be an IdleThread
             new Thread(&IdleThread).Start();
             new Thread(&TestThread).Start();
             //new Thread(&A);
