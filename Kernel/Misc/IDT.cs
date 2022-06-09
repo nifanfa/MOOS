@@ -193,17 +193,14 @@ public static class IDT
             for (; ; ) Native.Hlt();
         }
 
-        //For application processors
-        if (SMP.ThisCPU != 0) 
+        //System.Threading.Monitor.Enter(object obj)
+        if (irq == 0xFE)
         {
-            //System.Threading.Monitor.Enter(object obj)
-            if (irq == 0xFE)
-            {
-                while (ThreadPool.Locked) Native._pause();
-            }
+            while (ThreadPool.Locked) ;
         }
+
         //For main processor
-        else
+        if (SMP.ThisCPU == 0)
         {
             //System calls
             if (irq == 0x80)
