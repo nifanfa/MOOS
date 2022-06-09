@@ -15,15 +15,15 @@ namespace MOOS
         public const ulong SharedPageTable = 0x81000;
         public const ulong Trampoline = 0x90000;
 
-        public static Queue<TaskFor> WorkGroups;
+        public static Queue<ThreadFor> WorkGroups;
 
-        public class TaskFor 
+        public class ThreadFor 
         {
             public volatile uint For;
-            public volatile delegate*<void> Task;
+            public volatile delegate*<void> Method;
         }
 
-        public static void RunOnAnyCPU(delegate*<void> method) => WorkGroups.Enqueue(new TaskFor() { For = LastFreeCPUIndex, Task = method});
+        public static void RunOnAnyCPU(delegate*<void> method) => WorkGroups.Enqueue(new ThreadFor() { For = LastFreeCPUIndex, Method = method});
 
         public volatile static int NumFreeCPU;
         public static int NumCPU { get => ACPI.LocalAPIC_CPUIDs.Count; }
@@ -39,8 +39,8 @@ namespace MOOS
                 Native._pause();
             }
 
-            TaskFor tf = WorkGroups.Dequeue();
-            var addr = tf.Task;
+            ThreadFor tf = WorkGroups.Dequeue();
+            var addr = tf.Method;
             tf.Dispose();
             NumFreeCPU--;
             return addr; 
@@ -84,7 +84,7 @@ namespace MOOS
                 *sidt = (ulong)idt;
             }
 
-            WorkGroups = new Queue<TaskFor>();
+            WorkGroups = new Queue<ThreadFor>();
             NumFreeCPU = 0;
 
             for (int i = 0; i < NumCPU; ++i)
