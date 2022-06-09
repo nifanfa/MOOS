@@ -117,7 +117,7 @@ namespace MOOS.Misc
 
         public static void Schedule(IDT.IDTStackGeneric* stack)
         {
-            if (!Initialized || Locked) return;
+            if (!Initialized || Locked || Threads.Count == 0) return;
 
             if (!Threads[Index].Terminated)
             {
