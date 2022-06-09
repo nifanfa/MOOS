@@ -63,7 +63,8 @@ irq MACRO num
 		push rbp
 		mov rbp, rsp
 		pushaq
-		mov rcx, num
+		mov rcx,20h
+		add rcx, num
 		mov rdx, rsp
 		call irq_handler
 		popaq

@@ -1,6 +1,7 @@
 ﻿#if Kernel
 using Internal.Runtime.CompilerServices;
 using MOOS;
+using MOOS.Driver;
 using MOOS.Misc;
 
 namespace System.Threading
@@ -12,6 +13,7 @@ namespace System.Threading
             if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
             {
                 ThreadPool.Locked = true;
+                LocalAPIC.SendAllInterrupt(0xFE);
             }
         }
 
