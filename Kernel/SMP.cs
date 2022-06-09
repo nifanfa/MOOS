@@ -33,7 +33,12 @@ namespace MOOS
         public static delegate*<void> Take() 
         {
             NumFreeCPU++;
-            while (WorkGroups.Tail == null || WorkGroups.Tail.For != ThisCPU) LastFreeCPUIndex = ThisCPU;
+            while (WorkGroups.Tail == null || WorkGroups.Tail.For != ThisCPU)
+            {
+                LastFreeCPUIndex = ThisCPU;
+                Native._pause();
+            }
+
             TaskFor tf = WorkGroups.Dequeue();
             var addr = tf.Task;
             tf.Dispose();
