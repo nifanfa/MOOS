@@ -8,14 +8,12 @@ namespace MOOS.Misc
         public static void Error(string msg,bool skippable = false) 
         {
             IDT.Disable();
-            if (SMP.ThisCPU == 0)
-                Framebuffer.TripleBuffered = false;
+            Framebuffer.TripleBuffered = false;
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
             if(!skippable)
             {
-                if (SMP.ThisCPU == 0)
-                    Framebuffer.Update();
+                Framebuffer.Update();
                 for (; ; );
             }
         }
