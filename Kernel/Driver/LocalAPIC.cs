@@ -98,7 +98,12 @@ namespace MOOS.Driver
         {
             SendIPI(0, vector | ICR_ALL_EXCLUDING_SELF);
         }
-        
+
+        public static void SendInterrupt(uint apic_id,uint vector)
+        {
+            SendIPI(apic_id, vector | ICR_ALL_EXCLUDING_SELF);
+        }
+
         public static void SendIPI(uint apic_id, uint vector)
         {
             Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
