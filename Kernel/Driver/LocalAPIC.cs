@@ -79,7 +79,7 @@ namespace MOOS.Driver
             // Configure Spurious Interrupt Vector Register
             Out((uint)LAPIC_SVR, 0x1FF);
 
-            if (SMP.ThisCPU == SMP.BootstrapCPU)
+            if (SMP.ThisCPU == 0)
                 Console.WriteLine("[Local APIC] Local APIC initialized");
         }
 
