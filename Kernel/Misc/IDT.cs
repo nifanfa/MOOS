@@ -196,7 +196,7 @@ public static class IDT
         //System.Threading.Monitor.Enter(object obj)
         if (irq == 0xFE)
         {
-            while (ThreadPool.Locked) ;
+            while (ThreadPool.Locked) Native._nop();
         }
 
         //For main processor

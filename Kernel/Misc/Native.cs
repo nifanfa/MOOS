@@ -11,6 +11,9 @@ static unsafe class Native
     public static extern void _pause();
 
     [DllImport("*")]
+    public static extern void _nop();
+
+    [DllImport("*")]
     public static extern CPUID* CPUID(int index);
 
     [DllImport("*")]
