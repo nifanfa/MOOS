@@ -1,12 +1,16 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+using MOOS.Driver;
+
 namespace MOOS.Misc
 {
     public static class Panic
     {
-        public static void Error(string msg,bool skippable = false) 
+        public static void Error(string msg,bool skippable = false)
         {
+            //Kill all CPUs
+            LocalAPIC.SendAllInterrupt(0xFD);
             IDT.Disable();
             Framebuffer.TripleBuffered = false;
             Console.Write("PANIC: ");
