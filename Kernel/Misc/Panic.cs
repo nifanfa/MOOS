@@ -15,7 +15,8 @@ namespace MOOS.Misc
             Framebuffer.TripleBuffered = false;
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
-            if(!skippable)
+            Console.WriteLine("All CPU Halted Now!");
+            if (!skippable)
             {
                 Framebuffer.Update();
                 for (; ; );
