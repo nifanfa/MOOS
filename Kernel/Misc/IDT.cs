@@ -188,6 +188,7 @@ public static class IDT
         //DEAD
         if(irq == 0xFD) 
         {
+            Panic.CPUHalted++;
             for (; ; ) Native.Hlt();
         }
 
