@@ -122,7 +122,9 @@ unsafe class Program
     }
 #endif
 
+    public static bool rightClicked;
     public static FConsole FConsole;
+    public static RightMenu rightmenu;
 
     public static void SMain()
     {
@@ -142,8 +144,8 @@ unsafe class Program
 
         var welcome = new Welcome(400, 250);
 
-        RightMenu rightmenu = new RightMenu();
-        bool rightClicked = false;
+        rightmenu = new RightMenu();
+        rightClicked = false;
 
         Console.WriteLine("Welcome to Moos!");
         Console.WriteLine("Thanks to all the Contributors of nifanfa/Moos.");
@@ -185,41 +187,9 @@ unsafe class Program
         SizedScreens.Dispose();
         #endregion
 
-        SMP.RunOnAnyCPU(&DMain);
+        SMP.RunOnAnyCPU(&IMain);
 
         for (; ; )
-        {
-#region ConsoleHotKey
-            if (
-                PS2Keyboard.KeyInfo.Key == ConsoleKey.T &&
-                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Ctrl) &&
-                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt)
-                ) 
-            {
-                Window.MoveToEnd(FConsole);
-                if (FConsole.Visible == false)
-                    FConsole.Visible = true;
-            }
-            #endregion
-            #region Right Menu
-            if (Control.MouseButtons.HasFlag(MouseButtons.Right)) 
-            {
-                rightClicked = true;
-            }
-            else
-            {
-                if (rightClicked == true) rightmenu.Visible = !rightmenu.Visible;
-                rightClicked = false;
-            }
-            #endregion
-
-            Window.InputAll();
-        }
-    }
-
-    public static void DMain() 
-    {
-        for(; ; )
         {
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
             Desktop.Update();
@@ -232,6 +202,38 @@ unsafe class Program
             Framebuffer.Update();
 
             FPSMeter.Update();
+        }
+    }
+
+    public static void IMain()
+    {
+        for (; ; )
+        {
+            #region ConsoleHotKey
+            if (
+                PS2Keyboard.KeyInfo.Key == ConsoleKey.T &&
+                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Ctrl) &&
+                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt)
+                )
+            {
+                Window.MoveToEnd(FConsole);
+                if (FConsole.Visible == false)
+                    FConsole.Visible = true;
+            }
+            #endregion
+            #region Right Menu
+            if (Control.MouseButtons.HasFlag(MouseButtons.Right))
+            {
+                rightClicked = true;
+            }
+            else
+            {
+                if (rightClicked == true) rightmenu.Visible = !rightmenu.Visible;
+                rightClicked = false;
+            }
+            #endregion
+
+            Window.InputAll();
         }
     }
 }

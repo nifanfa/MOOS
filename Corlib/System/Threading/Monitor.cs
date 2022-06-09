@@ -13,7 +13,7 @@ namespace System.Threading
             if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
             {
                 ThreadPool.Locked = true;
-                LocalAPIC.SendAllInterrupt(0xFE);
+                //LocalAPIC.SendAllInterrupt(0xFE);
             }
         }
 
