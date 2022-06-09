@@ -1,4 +1,5 @@
 ﻿using MOOS.Driver;
+using MOOS.Misc;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -49,6 +50,8 @@ namespace MOOS
 
         public static void Initialize(uint trampoline)
         {
+            if (ThisCPU != 0) Panic.Error("Error: Bootstrap CPU is not CPU 0");
+
             ushort* activedProcessor = (ushort*)NumActivedProcessors;
             *activedProcessor = 1;
 
