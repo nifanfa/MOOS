@@ -188,8 +188,6 @@ public static class IDT
         //DEAD
         if(irq == 0xFD) 
         {
-            Native.Cli();
-            Native.Hlt();
             for (; ; ) Native.Hlt();
         }
 
