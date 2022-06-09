@@ -80,11 +80,12 @@ namespace MOOS
                 Console.WriteLine($"Starting CPU{id.ToString()}");
                 if (id != ThisCPU)
                 {
+                    int last = *activedProcessor;
                     LocalAPIC.SendInit(id); 
                     LocalAPIC.SendStartup(id, (trampoline >> 12));
+                    while (last == *activedProcessor) Native._pause();
                 }
             }
-            while (*activedProcessor != NumCPU);
             Console.WriteLine("All CPUs started");
         }
     }
