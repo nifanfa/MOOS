@@ -25,6 +25,11 @@ enable_sse PROC
     ret
 enable_sse ENDP
 
+_pause PROC
+    pause
+    ret
+_pause ENDP
+
 _TEXT ENDS
 
 END
