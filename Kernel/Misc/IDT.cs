@@ -75,7 +75,7 @@ public static class IDT
     [RuntimeExport("exception_handler")]
     public static unsafe void ExceptionHandler(int code, IDTStackGeneric* stack)
     {
-        Panic.Error("KERNEL PANIC!!!", true);
+        Panic.Error($"CPU{SMP.ThisCPU} KERNEL PANIC!!!", true);
         InterruptReturnStack* irs;
         switch (code) 
         {
@@ -185,6 +185,14 @@ public static class IDT
     [RuntimeExport("irq_handler")]
     public static unsafe void IRQHandler(int irq, IDTStackGeneric* stack)
     {
+        //DEAD
+        if(irq == 0xFD) 
+        {
+            Native.Cli();
+            Native.Hlt();
+            for (; ; ) Native.Hlt();
+        }
+
         //For application processors
         if (SMP.ThisCPU != 0) 
         {
