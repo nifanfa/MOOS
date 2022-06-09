@@ -185,40 +185,52 @@ public static class IDT
     [RuntimeExport("irq_handler")]
     public static unsafe void IRQHandler(int irq, IDTStackGeneric* stack)
     {
-        irq += 0x20;
-        //System calls
-        if (irq == 0x80)
+        //For application processors
+        if (SMP.ThisCPU != 0) 
         {
-            var pCell = (MethodFixupCell*)stack->rs.rcx;
-            string name = string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName));
-            stack->rs.rax = (ulong)API.HandleSystemCall(name);
-            name.Dispose();
+            //System.Threading.Monitor.Enter(object obj)
+            if (irq == 0xFE)
+            {
+                while (ThreadPool.Locked) Native._pause();
+            }
         }
-        switch (irq)
+        //For main processor
+        else
         {
-            case 0x20:
-                Timer.OnInterrupt();
-                ThreadPool.Schedule(stack);
-                break;
-            case 0x21:
-                byte b = Native.In8(0x60);
-                PS2Keyboard.ProcessKey(b);
-                break;
-            case 0x2C:
-                PS2Mouse.OnInterrupt();
-                break;
-        }
-        if (irq == RTL8139.IRQ)
-        {
-            RTL8139.OnInterrupt();
-        }
-        if (irq == Intel8254X.IRQ)
-        {
-            Intel8254X.OnInterrupt();
-        }
-        if (irq == AC97.IRQ)
-        {
-            AC97.OnInterrupt();
+            //System calls
+            if (irq == 0x80)
+            {
+                var pCell = (MethodFixupCell*)stack->rs.rcx;
+                string name = string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName));
+                stack->rs.rax = (ulong)API.HandleSystemCall(name);
+                name.Dispose();
+            }
+            switch (irq)
+            {
+                case 0x20:
+                    Timer.OnInterrupt();
+                    ThreadPool.Schedule(stack);
+                    break;
+                case 0x21:
+                    byte b = Native.In8(0x60);
+                    PS2Keyboard.ProcessKey(b);
+                    break;
+                case 0x2C:
+                    PS2Mouse.OnInterrupt();
+                    break;
+            }
+            if (irq == RTL8139.IRQ)
+            {
+                RTL8139.OnInterrupt();
+            }
+            if (irq == Intel8254X.IRQ)
+            {
+                Intel8254X.OnInterrupt();
+            }
+            if (irq == AC97.IRQ)
+            {
+                AC97.OnInterrupt();
+            }
         }
         Interrupts.EndOfInterrupt((byte)irq);
     }
