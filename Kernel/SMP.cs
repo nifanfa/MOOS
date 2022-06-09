@@ -7,13 +7,14 @@ namespace MOOS
 {
     public static unsafe class SMP
     {
-        public const ulong NumActivedProcessors = 0x80000;
-        public const ulong APMain = 0x80008;
-        public const ulong Stacks = 0x800016;
-        public const ulong SharedGDT = 0x800024;
-        public const ulong SharedIDT = 0x800032;
-        public const ulong SharedPageTable = 0x81000;
-        public const ulong Trampoline = 0x90000;
+        //https://wiki.osdev.org/Memory_Map_(x86)
+        public const ulong NumActivedProcessors = 0x50000;
+        public const ulong APMain = 0x50008;
+        public const ulong Stacks = 0x50016;
+        public const ulong SharedGDT = 0x50024;
+        public const ulong SharedIDT = 0x50032;
+        public const ulong SharedPageTable = 0x51000;
+        public const ulong Trampoline = 0x60000;
 
         public static Queue<ThreadFor> WorkGroups;
 
