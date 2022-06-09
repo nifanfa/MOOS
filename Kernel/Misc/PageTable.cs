@@ -17,11 +17,8 @@ namespace MOOS
 
         internal static void Initialise()
         {
-#if SMP
             PML4 = (ulong*)SMP.SharedPageTable;
-#else
-            PML4 = (ulong*)Allocator.Allocate(0x1000);
-#endif
+
             Native.Stosb(PML4, 0, 0x1000);
 
             ulong i = 0;
