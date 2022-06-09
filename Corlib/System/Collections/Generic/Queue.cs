@@ -13,6 +13,30 @@ namespace System.Collections.Generic
             list = new List<T>(initsize);
         }
 
+        public T Tail 
+        {
+            get 
+            {
+                if (Length == 0) return default;
+                else 
+                {
+                    return list[list.Count - 1];
+                }
+            }
+        }
+
+        public T Head
+        {
+            get
+            {
+                if (Length == 0) return default;
+                else
+                {
+                    return list[0];
+                }
+            }
+        }
+
         public int Length => list.Count;
 
 
