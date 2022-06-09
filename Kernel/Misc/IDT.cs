@@ -75,7 +75,7 @@ public static class IDT
     [RuntimeExport("exception_handler")]
     public static unsafe void ExceptionHandler(int code, IDTStackGeneric* stack)
     {
-        Panic.Error("KERNEL PANIC!!!", true);
+        Panic.Error($"CPU{SMP.ThisCPU} KERNEL PANIC!!!", true);
         InterruptReturnStack* irs;
         switch (code) 
         {
@@ -143,7 +143,8 @@ public static class IDT
             case 16: Console.WriteLine("COPR ERROR"); break;
             default: Console.WriteLine("UNKNOWN EXCEPTION"); break;
         }
-        Framebuffer.Update();
+        if(SMP.ThisCPU == 0)
+            Framebuffer.Update();
         //This method is unreturnable
     }
 
