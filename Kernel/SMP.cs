@@ -19,16 +19,16 @@ namespace MOOS
 
         public class TaskFor 
         {
-            public uint For;
-            public delegate*<void> Task;
+            public volatile uint For;
+            public volatile delegate*<void> Task;
         }
 
         public static void RunOnAnyCPU(delegate*<void> method) => WorkGroups.Enqueue(new TaskFor() { For = LastFreeCPUIndex, Task = method});
 
-        public static int NumFreeCPU;
+        public volatile static int NumFreeCPU;
         public static int NumCPU { get => ACPI.LocalAPIC_CPUIDs.Count; }
 
-        public static uint LastFreeCPUIndex;
+        public static volatile uint LastFreeCPUIndex;
 
         public static delegate*<void> Take() 
         {
