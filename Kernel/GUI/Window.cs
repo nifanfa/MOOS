@@ -37,17 +37,21 @@ namespace MOOS.GUI
             Windows.Insert(0, window, true);
         }
 
-        public static void UpdateAll()
+        public static void DrawAll()
         {
-            for (int i = 0; i < Windows.Count; i++) 
-            {
-                if(Windows[i].Visible)
-                    Windows[i].OnInput();
-            }
             for (int i = Windows.Count - 1; i >= 0; i--)
             {
                 if (Windows[i].Visible)
                     Windows[i].OnDraw();
+            }
+        }
+
+        public static void InputAll()
+        {
+            for (int i = 0; i < Windows.Count; i++)
+            {
+                if (Windows[i].Visible)
+                    Windows[i].OnInput();
             }
         }
 

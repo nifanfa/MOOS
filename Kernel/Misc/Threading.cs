@@ -34,8 +34,12 @@ namespace MOOS.Misc
             Terminated = false;
 
             SleepingTime = 0;
+        }
 
+        public Thread Start() 
+        {
             ThreadPool.Threads.Add(this);
+            return this;
         }
 
         public static void Sleep(ulong Next) 
@@ -60,8 +64,8 @@ namespace MOOS.Misc
             Locked = false;
             Initialized = false;
             Threads = new();
-            new Thread(&IdleThread);
-            new Thread(&TestThread);
+            new Thread(&IdleThread).Start();
+            new Thread(&TestThread).Start();
             //new Thread(&A);
             //new Thread(&B);
             Initialized = true;

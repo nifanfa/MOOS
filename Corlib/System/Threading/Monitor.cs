@@ -13,10 +13,7 @@ namespace System.Threading
             if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
             {
                 ThreadPool.Locked = true;
-                if(SMP.NumFreeCPU != (SMP.NumCPU - 1))
-                {
-                    LocalAPIC.SendAllInterrupt(0xFE);
-                }
+                LocalAPIC.SendAllInterrupt(0xFE);
             }
         }
 
