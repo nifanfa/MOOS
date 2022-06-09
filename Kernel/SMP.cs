@@ -34,8 +34,6 @@ namespace MOOS
             return addr; 
         }
 
-        public static uint BootstrapCPU;
-
         public static uint ThisCPU => LocalAPIC.GetId();
 
 
@@ -51,8 +49,6 @@ namespace MOOS
 
         public static void Initialize(uint trampoline)
         {
-            BootstrapCPU = ThisCPU;
-
             ushort* activedProcessor = (ushort*)NumActivedProcessors;
             *activedProcessor = 1;
 
