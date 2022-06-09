@@ -23,7 +23,17 @@ namespace MOOS
             public volatile delegate*<void> Method;
         }
 
-        public static void RunOnAnyCPU(delegate*<void> method) => WorkGroups.Enqueue(new ThreadFor() { For = LastFreeCPUIndex, Method = method});
+        public static void RunOnAnyCPU(delegate*<void> method)
+        {
+            if(WorkGroups == null) 
+            {
+                new Thread(method).Start();
+            }
+            else
+            {
+                WorkGroups.Enqueue(new ThreadFor() { For = LastFreeCPUIndex, Method = method });
+            }
+        }
 
         public volatile static int NumFreeCPU;
         public static int NumCPU { get => ACPI.LocalAPIC_CPUIDs.Count; }

@@ -39,7 +39,7 @@ namespace MOOS.GUI
             if (!nes.bolRunGame)
             {
                 nes.openROM(buffer);
-                nesThread = new Thread(&RunGame);
+                nesThread = new Thread(&RunGame).Start();
                 GameStarted = true;
             }
         }
