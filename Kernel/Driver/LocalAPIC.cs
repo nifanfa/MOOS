@@ -76,17 +76,10 @@ namespace MOOS.Driver
 
         public static void Initialize()
         {
-            //Enable All Interrupts
-            Out((uint)LAPIC_TPR, 0);
-
-            // Logical Destination Mode
-            Out((uint)LAPIC_DFR, 0xffffffff);   // Flat mode
-            Out((uint)LAPIC_LDR, 0 << 24);   // All cpus use logical id 0
-
             // Configure Spurious Interrupt Vector Register
-            Out((uint)LAPIC_SVR, 0x100 | 0xff);
+            Out((uint)LAPIC_SVR, 0x1FF);
 
-            if(SMP.ThisCPU == 0)
+            if (SMP.ThisCPU == 0)
                 Console.WriteLine("[Local APIC] Local APIC initialized");
         }
 
@@ -97,29 +90,27 @@ namespace MOOS.Driver
 
         public static void SendInit(uint apic_id)
         {
-            Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
-            Out((uint)LAPIC_ICRLO, (uint)(ICR_INIT | ICR_PHYSICAL
+            SendIPI(apic_id,(uint)(ICR_INIT | ICR_PHYSICAL
                 | ICR_ASSERT | ICR_EDGE | ICR_NO_SHORTHAND));
-
-            while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
         }
 
-
-        public static void SendInterrupt(uint apic_id, uint vector)
+        public static void SendAllInterrupt(uint vector) 
+        {
+            SendIPI(0, vector | ICR_ALL_EXCLUDING_SELF);
+        }
+        
+        public static void SendIPI(uint apic_id, uint vector)
         {
             Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
-            Out((uint)LAPIC_ICRLO, vector | (uint)ICR_FIXED | (uint)ICR_NO_SHORTHAND);
+            Out((uint)LAPIC_ICRLO, vector);
 
             while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
         }
 
         public static void SendStartup(uint apic_id, uint vector)
         {
-            Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
-            Out((uint)LAPIC_ICRLO, vector | (uint)ICR_STARTUP
+            SendIPI(apic_id, vector | (uint)ICR_STARTUP
                 | (uint)ICR_PHYSICAL | (uint)ICR_ASSERT | (uint)ICR_EDGE | (uint)ICR_NO_SHORTHAND);
-
-            while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
         }
     }
 }
