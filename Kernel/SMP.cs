@@ -32,6 +32,7 @@ namespace MOOS
             }
             else
             {
+                Timer.Wait(100);
                 WorkGroups.Enqueue(new ThreadFor() { For = LastFreeCPUIndex, Method = method });
             }
         }
