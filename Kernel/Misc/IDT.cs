@@ -75,6 +75,7 @@ public static class IDT
     [RuntimeExport("exception_handler")]
     public static unsafe void ExceptionHandler(int code, IDTStackGeneric* stack)
     {
+        Native.Cli();
         Panic.Error($"CPU{SMP.ThisCPU} KERNEL PANIC!!!", true);
         InterruptReturnStack* irs;
         switch (code) 
