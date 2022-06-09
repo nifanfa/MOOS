@@ -26,7 +26,7 @@ namespace MOOS
 
         public static void RunOnAnyCPU(delegate*<void> method)
         {
-            if(WorkGroups == null) 
+            if(WorkGroups == null || NumCPU < 2) 
             {
                 new Thread(method).Start();
             }
