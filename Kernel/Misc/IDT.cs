@@ -186,7 +186,7 @@ public static class IDT
     public static unsafe void IRQHandler(int irq, IDTStackGeneric* stack)
     {
         //For application processors
-        if (SMP.ThisCPU != SMP.BootstrapCPU) 
+        if (SMP.ThisCPU != 0) 
         {
             //System.Threading.Monitor.Enter(object obj)
             if (irq == 0xFE)
