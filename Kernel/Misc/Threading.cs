@@ -65,12 +65,12 @@ namespace MOOS.Misc
             Initialized = false;
             Threads = new();
             new Thread(&IdleThread).Start();
-            new Thread(&TestThread).Start();
+            //new Thread(&TestThread).Start();
             //new Thread(&A);
             //new Thread(&B);
             Initialized = true;
-            Thread.Sleep(1, 1000);
-            Console.WriteLine("Making thread id 1 to sleep 1 sec");
+            //Thread.Sleep(1, 1000);
+            //Console.WriteLine("Making thread id 1 to sleep 1 sec");
             _int20h(); //start scheduling
         }
 
