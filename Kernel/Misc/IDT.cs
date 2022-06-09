@@ -199,7 +199,7 @@ public static class IDT
             while (ThreadPool.Locked) Native._pause();
         }
 
-        //For application processors
+        //For bootstrap processors
         if (SMP.ThisCPU == 0) 
         {
             //System calls
