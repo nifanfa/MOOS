@@ -3,6 +3,7 @@
  */
 using MOOS;
 using MOOS.Driver;
+using MOOS.Misc;
 using System;
 using System.Runtime.InteropServices;
 using static Native;
@@ -40,20 +41,46 @@ namespace MOOS
 
             BufferDescriptors = (BufferDescriptor*)Allocator.Allocate((ulong)(sizeof(BufferDescriptor) * 32));
 
-            IRQ = 0x20;
+            for(int i = 0; i < NumDescriptors; i++)
+            {
+                ulong ptr = (ulong)Allocator.Allocate(Audio.SampleRate*2);
+                if (ptr > 0xFFFFFFFF) Panic.Error("[AC97] Invalid buf");
+                BufferDescriptors[i].Address = (uint)ptr;
+                //48000Khz dual channel
+                BufferDescriptors[i].SampleRate = Audio.SampleRate;
+                BufferDescriptors[i].Arribute = 1 << 15;
+            }
+
+            IRQ = device.IRQ;
+            Interrupts.EnableInterrupt((byte)IRQ);
             Index = 0;
+
+            Out8((ushort)(NABM + 0x1B), 0x02);
+            Out32((ushort)(NABM + 0x10), (uint)BufferDescriptors);
+            Out8((ushort)(NABM + 0x15), Index);
+            Out8((ushort)(NABM + 0x1B), 0x19);
         }
 
         public static byte Index = 0;
 
-        public static void OnInterrupt() 
+        public static void OnInterrupt()
         {
             ushort Status = In16((ushort)(NABM + 0x16));
             if((Status & (1 << 3)) != 0)
             {
-                Out8((ushort)(NABM + 0x15), Index++);
-                if (Index > NumDescriptors) Index = 0;
+                Out8((ushort)(NABM + 0x15), Index);
+                Index++;
+                Index %= (byte)NumDescriptors;
+
+                if(Audio.Queue.Length > 0)
+                {
+                    byte[] buffer = Audio.Queue.Dequeue();
+                    fixed (byte* ptr = buffer)
+                        Native.Movsb((void*)BufferDescriptors[Index].Address, ptr, Audio.SampleRate * 2);
+                }
             }
+            //Ack
+            Out16((ushort)(NABM + 0x16), 0x1C);
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -62,31 +89,6 @@ namespace MOOS
             public uint Address;
             public ushort SampleRate;
             public ushort Arribute;
-        }
-
-        public static unsafe void Play(byte[] PCM, ushort SampleRate = 48000, bool DualChannel = true)
-        {
-            int index = 0;
-            fixed (byte* buffer = PCM) 
-            {
-                for (int i = 0; i < PCM.Length; i += SampleRate * (DualChannel ? 2 : 1))
-                {
-                    BufferDescriptors[index].Address = (uint)(buffer + i);
-                    BufferDescriptors[index].SampleRate = SampleRate;
-                    BufferDescriptors[index].Arribute = 1 << 15;
-                    if (i + SampleRate > PCM.Length || index > NumDescriptors)
-                    {
-                        BufferDescriptors[index].Arribute |= 1 << 14;
-                        break;
-                    }
-                    index++;
-                }
-            }
-
-            Out8((ushort)(NABM + 0x1B), 0x02);
-            Out32((ushort)(NABM + 0x10), (uint)BufferDescriptors);
-            Out8((ushort)(NABM + 0x15), 0);
-            Out8((ushort)(NABM + 0x1B), 0x01);
         }
     }
 }
