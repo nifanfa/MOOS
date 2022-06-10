@@ -1,4 +1,5 @@
-﻿using MOOS.FS;
+﻿#if HasGUI
+using MOOS.FS;
 using MOOS.Misc;
 using System.Drawing;
 
@@ -31,3 +32,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

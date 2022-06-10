@@ -1,4 +1,5 @@
-﻿using MOOS.Driver;
+﻿#if HasGUI
+using MOOS.Driver;
 using System;
 
 namespace MOOS.GUI
@@ -288,3 +289,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

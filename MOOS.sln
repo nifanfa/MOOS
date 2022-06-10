@@ -9,18 +9,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeLib", "NativeLib\Nati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{4937D3A9-2F20-43BA-A794-89067F060502}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MOOS", "MOOS\MOOS.csproj", "{3880E378-077B-4F24-AD1E-9E157679C9BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MOOS", "MOOS\MOOS.csproj", "{3880E378-077B-4F24-AD1E-9E157679C9BA}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Kernel", "Kernel\Kernel.shproj", "{066034BC-37FE-4605-8BDB-C525EC29DBE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOS", "ConsoleOS\ConsoleOS.csproj", "{479EE355-D81E-4162-AA5C-38F30C1ABDB4}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Kernel\Kernel.projitems*{066034bc-37fe-4605-8bdb-c525ec29dbe4}*SharedItemsImports = 13
-		Corlib\Corlib.projitems*{2ea1f38f-f26e-4148-8ffd-38713478e015}*SharedItemsImports = 13
-		Corlib\Corlib.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
-		Kernel\Kernel.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
-		Corlib\Corlib.projitems*{4937d3a9-2f20-43ba-a794-89067f060502}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -66,11 +61,32 @@ Global
 		{3880E378-077B-4F24-AD1E-9E157679C9BA}.Release|x64.Build.0 = Release|Any CPU
 		{3880E378-077B-4F24-AD1E-9E157679C9BA}.Release|x86.ActiveCfg = Release|Any CPU
 		{3880E378-077B-4F24-AD1E-9E157679C9BA}.Release|x86.Build.0 = Release|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Debug|x64.Build.0 = Debug|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Debug|x86.Build.0 = Debug|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Release|x64.ActiveCfg = Release|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Release|x64.Build.0 = Release|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Release|x86.ActiveCfg = Release|Any CPU
+		{479EE355-D81E-4162-AA5C-38F30C1ABDB4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {520E811A-5371-4234-B39B-9189715E441D}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Kernel\Kernel.projitems*{066034bc-37fe-4605-8bdb-c525ec29dbe4}*SharedItemsImports = 13
+		Corlib\Corlib.projitems*{2ea1f38f-f26e-4148-8ffd-38713478e015}*SharedItemsImports = 13
+		Corlib\Corlib.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
+		Kernel\Kernel.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
+		Corlib\Corlib.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
+		Kernel\Kernel.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
+		Corlib\Corlib.projitems*{4937d3a9-2f20-43ba-a794-89067f060502}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,5 @@
-﻿using MOOS;
+﻿#if HasGUI
+using MOOS;
 using MOOS.Graph;
 using MOOS.GUI;
 using MOOS.GUI.Widgets;
@@ -215,3 +216,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

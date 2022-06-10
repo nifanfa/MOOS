@@ -1,6 +1,7 @@
 /*
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
+#if HasGUI
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
@@ -420,3 +421,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

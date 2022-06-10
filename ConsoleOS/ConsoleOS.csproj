@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -11,9 +11,9 @@
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 
-		<DefineConstants>Kernel;HasGC;UseAPIC;HasGUI</DefineConstants>
+		<DefineConstants>Kernel;HasGC;UseAPIC;</DefineConstants>
 
-		<IlcSystemModule>MOOS</IlcSystemModule>
+		<IlcSystemModule>ConsoleOS</IlcSystemModule>
 		<EntryPointSymbol>Entry</EntryPointSymbol>
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 		<!--Make the code faster!-->

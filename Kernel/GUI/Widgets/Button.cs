@@ -1,4 +1,5 @@
-﻿namespace MOOS.GUI.Widgets
+﻿#if HasGUI
+namespace MOOS.GUI.Widgets
 {
     internal class Button : Widget
     {
@@ -6,3 +7,4 @@
         public string Name;
     }
 }
+#endif
