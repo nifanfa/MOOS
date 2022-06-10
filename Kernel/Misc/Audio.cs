@@ -14,6 +14,10 @@ namespace MOOS.Misc
             Queue = new();
         }
 
+        /// <summary>
+        /// Play a 48khz dual channel PCM
+        /// </summary>
+        /// <param name="pcm"></param>
         public static void Play(byte[] pcm) 
         {
             fixed(byte* ptr_pcm = pcm)
