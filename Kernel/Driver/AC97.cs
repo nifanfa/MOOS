@@ -68,7 +68,10 @@ namespace MOOS
             ushort Status = In16((ushort)(NABM + 0x16));
             if((Status & (1 << 3)) != 0)
             {
-                Out8((ushort)(NABM + 0x15), Index);
+                //Clear last buffer
+                int LastIndex = Index;
+                Native.Stosb((void*)BufferDescriptors[Index].Address, 0, Audio.SampleRate * 2);
+
                 Index++;
                 Index %= (byte)NumDescriptors;
 
@@ -78,6 +81,8 @@ namespace MOOS
                     fixed (byte* ptr = buffer)
                         Native.Movsb((void*)BufferDescriptors[Index].Address, ptr, Audio.SampleRate * 2);
                 }
+
+                Out8((ushort)(NABM + 0x15), Index);
             }
             //Ack
             Out16((ushort)(NABM + 0x16), 0x1C);
