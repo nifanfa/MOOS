@@ -17,6 +17,7 @@ namespace MOOS.GUI
         private static Image IamgeIcon;
         private static Image GameIcon;
         private static Image AppIcon;
+        private static Image AudioIcon;
         private static Image BuiltInAppIcon;
         private static Image FolderIcon;
 
@@ -38,6 +39,7 @@ namespace MOOS.GUI
             IamgeIcon = new PNG(File.Instance.ReadAllBytes("Images/Image.png"));
             GameIcon = new PNG(File.Instance.ReadAllBytes("Images/Game.png"));
             AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
+            AudioIcon = new PNG(File.Instance.ReadAllBytes("Images/Audio.png"));
             BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
 #if Chinese
@@ -152,6 +154,17 @@ namespace MOOS.GUI
                     )
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, AppIcon);
+                }
+                else if
+                    (
+                    (
+                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'P' &&
+                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'C' &&
+                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'M'
+                    )
+                    )
+                {
+                    Framebuffer.Graphics.DrawImage(X, Y, AudioIcon);
                 }
                 else if
                     (
