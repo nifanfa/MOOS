@@ -1,4 +1,5 @@
-﻿using MOOS.Graph;
+﻿#if HasGUI
+using MOOS.Graph;
 using MOOS.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
@@ -135,3 +136,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

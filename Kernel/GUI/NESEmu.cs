@@ -1,4 +1,5 @@
-﻿using MOOS.Misc;
+﻿#if HasGUI
+using MOOS.Misc;
 
 namespace MOOS.GUI
 {
@@ -56,3 +57,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

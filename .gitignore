@@ -370,3 +370,4 @@ Kernel/Kernel.map
 *.dmp
 Tools/Trampoline
 MOOS/Kernel.map
+ConsoleOS/Kernel.map

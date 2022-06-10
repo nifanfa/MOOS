@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿#if HasGUI
+using System.Drawing;
 
 namespace MOOS.GUI
 {
@@ -46,3 +47,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

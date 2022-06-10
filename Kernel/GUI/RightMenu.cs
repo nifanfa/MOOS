@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿#if HasGUI
+using System.Windows.Forms;
 
 namespace MOOS.GUI
 {
@@ -64,3 +65,4 @@ namespace MOOS.GUI
         }
     }
 }
+#endif

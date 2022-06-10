@@ -1,4 +1,5 @@
-﻿namespace MOOS.GUI.Widgets
+﻿#if HasGUI
+namespace MOOS.GUI.Widgets
 {
     internal class Widget
     {
@@ -9,3 +10,4 @@
         }
     }
 }
+#endif

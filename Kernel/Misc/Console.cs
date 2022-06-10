@@ -282,6 +282,23 @@ namespace MOOS
                     WriteAt(' ', x, y);
                 }
             }
+            ClearFramebuffer();
+        }
+
+
+        private static void ClearFramebuffer()
+        {
+            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered) 
+            {
+                Framebuffer.Graphics.FillRectangle
+                    (
+                            (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),
+                            (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
+                            Width * 8,
+                            Height * 16,
+                            0x0
+                    );
+            }
         }
     }
 }
