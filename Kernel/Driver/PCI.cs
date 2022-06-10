@@ -44,7 +44,7 @@ namespace MOOS
         
         public void WriteRegister32(ushort Register, uint Value)
         {
-            PCI.WriteRegister32(Bus, Slot, Function, (byte)Register, ReadRegister32(Register) | Value);
+            PCI.WriteRegister32(Bus, Slot, Function, (byte)Register, Value);
         }
     }
 
