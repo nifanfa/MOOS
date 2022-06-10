@@ -80,6 +80,7 @@ namespace MOOS
                     byte[] buffer = Audio.Queue.Dequeue();
                     fixed (byte* ptr = buffer)
                         Native.Movsb((void*)BufferDescriptors[Index].Address, ptr, Audio.SampleRate * 2);
+                    buffer.Dispose();
                 }
 
                 Out8((ushort)(NABM + 0x15), Index);
