@@ -46,7 +46,7 @@ namespace MOOS
                 ulong ptr = (ulong)Allocator.Allocate(Audio.SampleRate*2);
                 if (ptr > 0xFFFFFFFF) Panic.Error("[AC97] Invalid buf");
                 BufferDescriptors[i].Address = (uint)ptr;
-                //48000Khz dual channel
+                //48Khz dual channel
                 BufferDescriptors[i].SampleRate = Audio.SampleRate;
                 BufferDescriptors[i].Arribute = 1 << 15;
             }
