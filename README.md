@@ -1,3 +1,11 @@
+**Debug requirements:**  
+*VMware Workstation Player https://www.vmware.com/products/workstation-player.html*  
+*Intel Hardware Accelerated Execution Manager (HAXM) https://github.com/intel/haxm/releases*  
+*Visual studio 2022 https://visualstudio.microsoft.com/*  
+*QEMU https://www.qemu.org/download/*  
+*At least 8gb of RAM, 64bit operating system*  
+**Have fun!**
+
 Welcome to ***MOOS(My own operating system)-Project***  
 **Discord Server: https://discord.gg/GxwmAK7aRE**  
 ~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi**~~  
