@@ -48,7 +48,114 @@ namespace MOOS.Driver
 
         public static void Initialize()
         {
-            PCIDevice device = PCI.GetDevice(0x8086, 0x100E);
+            PCIDevice device = null;
+
+            for (int i = 0; i < PCI.Devices.Count; i++)
+            {
+                if (
+                     PCI.Devices[i] != null &&
+                     PCI.Devices[i].VendorID == 0x8086 &&
+                     (
+                        PCI.Devices[i].DeviceID == 0x1000 || //Intel82542
+                        PCI.Devices[i].DeviceID == 0x1001 || //Intel82543GC
+                        PCI.Devices[i].DeviceID == 0x1004 || //Intel82543GC
+                        PCI.Devices[i].DeviceID == 0x1008 || //Intel82544EI
+                        PCI.Devices[i].DeviceID == 0x1009 || //Intel82544EI
+                        PCI.Devices[i].DeviceID == 0x100C || //Intel82543EI
+                        PCI.Devices[i].DeviceID == 0x100D || //Intel82544GC
+                        PCI.Devices[i].DeviceID == 0x100E || //Intel82540EM
+                        PCI.Devices[i].DeviceID == 0x100F || //Intel82545EM
+                        PCI.Devices[i].DeviceID == 0x1010 || //Intel82546EB
+                        PCI.Devices[i].DeviceID == 0x1011 || //Intel82545EM
+                        PCI.Devices[i].DeviceID == 0x1012 || //Intel82546EB
+                        PCI.Devices[i].DeviceID == 0x1013 || //Intel82541EI
+                        PCI.Devices[i].DeviceID == 0x1014 || //Intel82541ER
+                        PCI.Devices[i].DeviceID == 0x1015 || //Intel82540EM
+                        PCI.Devices[i].DeviceID == 0x1016 || //Intel82540EP
+                        PCI.Devices[i].DeviceID == 0x1017 || //Intel82540EP
+                        PCI.Devices[i].DeviceID == 0x1018 || //Intel82541EI
+                        PCI.Devices[i].DeviceID == 0x1019 || //Intel82547EI
+                        PCI.Devices[i].DeviceID == 0x101A || //Intel82547EI
+                        PCI.Devices[i].DeviceID == 0x101D || //Intel82546EB
+                        PCI.Devices[i].DeviceID == 0x101E || //Intel82540EP
+                        PCI.Devices[i].DeviceID == 0x1026 || //Intel82545GM
+                        PCI.Devices[i].DeviceID == 0x1027 || //Intel82545GM
+                        PCI.Devices[i].DeviceID == 0x1028 || //Intel82545GM
+                        PCI.Devices[i].DeviceID == 0x1049 || //Intel82566MM_ICH8
+                        PCI.Devices[i].DeviceID == 0x104A || //Intel82566DM_ICH8
+                        PCI.Devices[i].DeviceID == 0x104B || //Intel82566DC_ICH8
+                        PCI.Devices[i].DeviceID == 0x104C || //Intel82562V_ICH8
+                        PCI.Devices[i].DeviceID == 0x104D || //Intel82566MC_ICH8
+                        PCI.Devices[i].DeviceID == 0x105E || //Intel82571EB
+                        PCI.Devices[i].DeviceID == 0x105F || //Intel82571EB
+                        PCI.Devices[i].DeviceID == 0x1060 || //Intel82571EB
+                        PCI.Devices[i].DeviceID == 0x1075 || //Intel82547EI
+                        PCI.Devices[i].DeviceID == 0x1076 || //Intel82541GI
+                        PCI.Devices[i].DeviceID == 0x1077 || //Intel82547EI
+                        PCI.Devices[i].DeviceID == 0x1078 || //Intel82541ER
+                        PCI.Devices[i].DeviceID == 0x1079 || //Intel82546EB
+                        PCI.Devices[i].DeviceID == 0x107A || //Intel82546EB
+                        PCI.Devices[i].DeviceID == 0x107B || //Intel82546EB
+                        PCI.Devices[i].DeviceID == 0x107C || //Intel82541PI
+                        PCI.Devices[i].DeviceID == 0x107D || //Intel82572EI
+                        PCI.Devices[i].DeviceID == 0x107E || //Intel82572EI
+                        PCI.Devices[i].DeviceID == 0x107F || //Intel82572EI
+                        PCI.Devices[i].DeviceID == 0x108A || //Intel82546GB
+                        PCI.Devices[i].DeviceID == 0x108B || //Intel82573E
+                        PCI.Devices[i].DeviceID == 0x108C || //Intel82573E
+                        PCI.Devices[i].DeviceID == 0x1096 || //Intel80003ES2LAN
+                        PCI.Devices[i].DeviceID == 0x1098 || //Intel80003ES2LAN
+                        PCI.Devices[i].DeviceID == 0x1099 || //Intel82546GB
+                        PCI.Devices[i].DeviceID == 0x109A || //Intel82573L
+                        PCI.Devices[i].DeviceID == 0x10A4 || //Intel82571EB
+                        PCI.Devices[i].DeviceID == 0x10A7 || //Intel82575
+                        PCI.Devices[i].DeviceID == 0x10A9 || //Intel82575_serdes
+                        PCI.Devices[i].DeviceID == 0x10B5 || //Intel82546GB
+                        PCI.Devices[i].DeviceID == 0x10B9 || //Intel82572EI
+                        PCI.Devices[i].DeviceID == 0x10BA || //Intel80003ES2LAN
+                        PCI.Devices[i].DeviceID == 0x10BB || //Intel80003ES2LAN
+                        PCI.Devices[i].DeviceID == 0x10BC || //Intel82571EB
+                        PCI.Devices[i].DeviceID == 0x10BD || //Intel82566DM_ICH9
+                        PCI.Devices[i].DeviceID == 0x10C4 || //Intel82562GT_ICH8
+                        PCI.Devices[i].DeviceID == 0x10C5 || //Intel82562G_ICH8
+                        PCI.Devices[i].DeviceID == 0x10C9 || //Intel82576
+                        PCI.Devices[i].DeviceID == 0x10D3 || //Intel82574L
+                        PCI.Devices[i].DeviceID == 0x10A9 || //Intel82575_quadcopper
+                        PCI.Devices[i].DeviceID == 0x10CB || //Intel82567V_ICH9
+                        PCI.Devices[i].DeviceID == 0x10E5 || //Intel82567LM_4_ICH9
+                        PCI.Devices[i].DeviceID == 0x10EA || //Intel82577LM
+                        PCI.Devices[i].DeviceID == 0x10EB || //Intel82577LC
+                        PCI.Devices[i].DeviceID == 0x10EF || //Intel82578DM
+                        PCI.Devices[i].DeviceID == 0x10F0 || //Intel82578DC
+                        PCI.Devices[i].DeviceID == 0x10F5 || //Intel82567LM_ICH9_egDellE6400Notebook
+                        PCI.Devices[i].DeviceID == 0x1502 || //Intel82579LM
+                        PCI.Devices[i].DeviceID == 0x1503 || //Intel82579V
+                        PCI.Devices[i].DeviceID == 0x150A || //Intel82576NS
+                        PCI.Devices[i].DeviceID == 0x150E || //Intel82580
+                        PCI.Devices[i].DeviceID == 0x1521 || //IntelI350
+                        PCI.Devices[i].DeviceID == 0x1533 || //IntelI210
+                        PCI.Devices[i].DeviceID == 0x157B || //IntelI210
+                        PCI.Devices[i].DeviceID == 0x153A || //IntelI217LM
+                        PCI.Devices[i].DeviceID == 0x153B || //IntelI217VA
+                        PCI.Devices[i].DeviceID == 0x1559 || //IntelI218V
+                        PCI.Devices[i].DeviceID == 0x155A || //IntelI218LM
+                        PCI.Devices[i].DeviceID == 0x15A0 || //IntelI218LM2
+                        PCI.Devices[i].DeviceID == 0x15A1 || //IntelI218V
+                        PCI.Devices[i].DeviceID == 0x15A2 || //IntelI218LM3
+                        PCI.Devices[i].DeviceID == 0x15A3 || //IntelI218V3
+                        PCI.Devices[i].DeviceID == 0x156F || //IntelI219LM
+                        PCI.Devices[i].DeviceID == 0x1570 || //IntelI219V
+                        PCI.Devices[i].DeviceID == 0x15B7 || //IntelI219LM2
+                        PCI.Devices[i].DeviceID == 0x15B8 || //IntelI219V2
+                        PCI.Devices[i].DeviceID == 0x15BB || //IntelI219LM3
+                        PCI.Devices[i].DeviceID == 0x15D7 || //IntelI219LM
+                        PCI.Devices[i].DeviceID == 0x15E3    //IntelI219LM
+                        )
+                    )
+                {
+                    device = PCI.Devices[i];
+                }
+            }
 
             if (device == null) return;
 
