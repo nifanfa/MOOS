@@ -38,13 +38,13 @@ static unsafe class Native
     public static extern ulong ReadCR2();
 
     [DllImport("*")]
-    public static extern void Out8(ushort port, byte value);
+    public static extern void Out8(uint port, byte value);
 
     [DllImport("*")]
-    public static extern void Out16(ushort port, ushort value);
+    public static extern void Out16(uint port, ushort value);
 
     [DllImport("*")]
-    public static extern void Out32(ushort port, uint value);
+    public static extern void Out32(uint port, uint value);
 
     [DllImport("*")]
     public static extern byte In8(ushort port);
