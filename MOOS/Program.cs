@@ -72,8 +72,10 @@ unsafe class Program
 
         /*
         byte[] buffer = File.Instance.ReadAllBytes("Nokia Ringtone.pcm");
+        Audio.Initialize();
         AC97.Initialize();
-        AC97.Play(buffer);
+
+        Audio.Play(buffer);
         */
 
         /*
