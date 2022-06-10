@@ -321,6 +321,16 @@ namespace MOOS.GUI
                 Process.Start(buffer);
             }
             else if (
+                name[name.Length - 3].ToUpper() == 'P' &&
+                name[name.Length - 2].ToUpper() == 'C' &&
+                name[name.Length - 1].ToUpper() == 'M'
+                )
+            {
+                byte[] buffer = File.Instance.ReadAllBytes(path);
+                Audio.Play(buffer);
+                buffer.Dispose();
+            }
+            else if (
                 name[name.Length - 3].ToUpper() == 'N' &&
                 name[name.Length - 2].ToUpper() == 'E' &&
                 name[name.Length - 1].ToUpper() == 'S'
