@@ -47,13 +47,13 @@ static unsafe class Native
     public static extern void Out32(uint port, uint value);
 
     [DllImport("*")]
-    public static extern byte In8(ushort port);
+    public static extern byte In8(uint port);
 
     [DllImport("*")]
-    public static extern ushort In16(ushort port);
+    public static extern ushort In16(uint port);
 
     [DllImport("*")]
-    public static extern uint In32(ushort port);
+    public static extern uint In32(uint port);
 
     [DllImport("*")]
     public static extern void Stosd(void* p, uint value, ulong count);
