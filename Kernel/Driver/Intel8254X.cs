@@ -162,7 +162,7 @@ namespace MOOS.Driver
             Console.WriteLine("Intel 8254X Series Gigabit Ethernet Controller Found");
             device.WriteRegister16(0x04, 0x04 | 0x02 | 0x01);
 
-            BAR0 = (uint)(device.Bar0 & (~3));
+            BAR0 = (uint)(device.Bar0 & (~0xF));
             Console.Write("BAR0: 0x");
             Console.WriteLine(((ulong)BAR0).ToStringHex());
 
