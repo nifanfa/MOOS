@@ -5,7 +5,7 @@ RTL8139.Initialise();
 ARP.Require(Network.Gateway);
 ```
 And install OpenVPN's Windows TAP rename the device name to tap
-Edit Kernel.csproj
+Edit Kernel.csproj and add this command to the launch argument of qemu
 ```
-<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -m 8192 -cdrom $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -d guest_errors -serial stdio -net nic,model=rtl8139 -net tap,ifname=tap"></Exec>
+-net nic,model=rtl8139 -net tap,ifname=tap
 ```
