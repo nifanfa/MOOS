@@ -56,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Allocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ASC16.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Audio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\BitFont.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ClassID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Console.cs" />
