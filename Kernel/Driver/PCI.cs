@@ -36,6 +36,16 @@ namespace MOOS
         {
             return PCI.ReadRegister16(Bus, Slot, Function, (byte)Register);
         }
+
+        public uint ReadRegister32(ushort Register)
+        {
+            return PCI.ReadRegister(Bus, Slot, Function, (byte)Register);
+        }
+        
+        public void WriteRegister32(ushort Register, uint Value)
+        {
+            PCI.WriteRegister32(Bus, Slot, Function, (byte)Register, ReadRegister32(Register) | Value);
+        }
     }
 
     public static unsafe class PCI
@@ -163,6 +173,13 @@ namespace MOOS
             uint xAddr = GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
             Native.Out32(0xCF8, xAddr);
             Native.Out16(0xCFC, Value);
+        }
+
+        public static void WriteRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister, uint Value)
+        {
+            uint xAddr = GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
+            Native.Out32(0xCF8, xAddr);
+            Native.Out32(0xCFC, Value);
         }
 
         public static ushort GetVendorID(ushort Bus, ushort Slot, ushort Function)
