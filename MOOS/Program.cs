@@ -70,13 +70,8 @@ unsafe class Program
 
         //test();
 
-        /*
-        byte[] buffer = File.Instance.ReadAllBytes("rick.pcm");
         Audio.Initialize();
         AC97.Initialize();
-
-        Audio.Play(buffer);
-        */
 
         /*
         for (; ; )
