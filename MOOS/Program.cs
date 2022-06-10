@@ -86,13 +86,13 @@ unsafe class Program
         //rename the network adapter to tap in control panel
         //select your currently connected network controller and share the network with tap
         //Run
-        Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
+        Network.Initialise(IPAddress.Parse(192, 168, 1, 188), IPAddress.Parse(192, 168, 1, 1), IPAddress.Parse(255, 255, 255, 0));
         RTL8139.Initialise();
         ARP.Require(Network.Gateway);
-        //Make sure you have already setup a web server on your PC
-        TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168,137,1), 80);
+        //Make sure this IP is pointing your gateway
+        TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168,1,1), 80);
         client.OnData += Client_OnData;
-        client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
+        client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.1.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
         for (; ; ) Native.Hlt();
 #endif
 
