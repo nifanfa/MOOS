@@ -285,7 +285,6 @@ namespace MOOS
             ClearFramebuffer();
         }
 
-
         private static void ClearFramebuffer()
         {
             if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered) 
