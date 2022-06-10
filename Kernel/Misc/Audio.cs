@@ -16,6 +16,8 @@ namespace MOOS.Misc
 
         /// <summary>
         /// Play a 48khz dual channel PCM
+        /// ---how to convert mp3 to pcm?---
+        /// ffmpeg -i input.mp3 -ar 48000 -ac 2 -f s16le output.pcm
         /// </summary>
         /// <param name="pcm"></param>
         public static void Play(byte[] pcm) 
