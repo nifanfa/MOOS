@@ -194,8 +194,8 @@ namespace MOOS
                     var dev = PCI.Devices[i];
 
                     if (dev == null) return;
-                    ushort reg = dev.ReadRegister(0x04);
-                    dev.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
+                    ushort reg = dev.ReadRegister16(0x04);
+                    dev.WriteRegister16(0x04, 0x04 | 0x02 | 0x01);
                     Controller = (HBA*)dev.Bar5;
                     for (int k = 0; k < 32; k++)
                     {
@@ -212,7 +212,7 @@ namespace MOOS
                         }
                     }
                     if (Ports.Count != 0) goto End;
-                    dev.WriteRegister(0x04, reg);
+                    dev.WriteRegister16(0x04, reg);
                 }
             }
             #endregion

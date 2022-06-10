@@ -27,19 +27,30 @@ namespace MOOS
         public uint Bar4;
         public uint Bar5;
 
-        public void WriteRegister(ushort Register, ushort Value)
+
+        public void WriteRegister8(ushort Register, byte Value)
         {
-            PCI.WriteRegister16(Bus, Slot, Function, (byte)Register, (ushort)(ReadRegister(Register) | Value));
+            PCI.WriteRegister8(Bus, Slot, Function, (byte)Register, Value);
         }
 
-        public ushort ReadRegister(ushort Register)
+        public ushort ReadRegister8(ushort Register)
+        {
+            return PCI.ReadRegister8(Bus, Slot, Function, (byte)Register);
+        }
+
+        public void WriteRegister16(ushort Register, ushort Value)
+        {
+            PCI.WriteRegister16(Bus, Slot, Function, (byte)Register, (ushort)(ReadRegister16(Register) | Value));
+        }
+
+        public ushort ReadRegister16(ushort Register)
         {
             return PCI.ReadRegister16(Bus, Slot, Function, (byte)Register);
         }
 
         public uint ReadRegister32(ushort Register)
         {
-            return PCI.ReadRegister(Bus, Slot, Function, (byte)Register);
+            return PCI.ReadRegister32(Bus, Slot, Function, (byte)Register);
         }
         
         public void WriteRegister32(ushort Register, uint Value)
@@ -124,12 +135,12 @@ namespace MOOS
                 device.Function = 0;
                 device.VendorID = vendorID;
 
-                device.Bar0 = ReadRegister(device.Bus, device.Slot, device.Function, 0x10);
-                device.Bar1 = ReadRegister(device.Bus, device.Slot, device.Function, 0x14);
-                device.Bar2 = ReadRegister(device.Bus, device.Slot, device.Function, 0x18);
-                device.Bar3 = ReadRegister(device.Bus, device.Slot, device.Function, 0x1C);
-                device.Bar4 = ReadRegister(device.Bus, device.Slot, device.Function, 0x20);
-                device.Bar5 = ReadRegister(device.Bus, device.Slot, device.Function, 0x24);
+                device.Bar0 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x10);
+                device.Bar1 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x14);
+                device.Bar2 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x18);
+                device.Bar3 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x1C);
+                device.Bar4 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x20);
+                device.Bar5 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x24);
 
                 device.ClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 11);
                 device.SubClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 10);
@@ -147,7 +158,7 @@ namespace MOOS
             }
         }
 
-        public static uint ReadRegister(ushort Bus, ushort Slot, ushort Function, byte aRegister)
+        public static uint ReadRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister)
         {
             uint xAddr = PCI.GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
             Native.Out32(0xCF8, xAddr);
@@ -173,6 +184,13 @@ namespace MOOS
             uint xAddr = GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
             Native.Out32(0xCF8, xAddr);
             Native.Out16(0xCFC, Value);
+        }
+
+        public static void WriteRegister8(ushort Bus, ushort Slot, ushort Function, byte aRegister, byte Value)
+        {
+            uint xAddr = GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
+            Native.Out32(0xCF8, xAddr);
+            Native.Out8(0xCFC, Value);
         }
 
         public static void WriteRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister, uint Value)

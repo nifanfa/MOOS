@@ -53,7 +53,7 @@ namespace MOOS.Driver
             if (device == null) return;
 
             Console.WriteLine("Intel 8254X Series Gigabit Ethernet Controller Found");
-            device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
+            device.WriteRegister16(0x04, 0x04 | 0x02 | 0x01);
 
             BAR0 = (uint)(device.Bar0 & (~3));
             Console.Write("BAR0: 0x");

@@ -59,7 +59,7 @@ namespace MOOS.Driver
         public VMWareSVGAII()
         {
             device = PCI.GetDevice(0x15AD, 0x0405);
-            device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
+            device.WriteRegister16(0x04, 0x04 | 0x02 | 0x01);
             uint basePort = device.Bar0 & ~(0xFU);
             IndexPort = (ushort)(basePort + (uint)IOPortOffset.Index);
             ValuePort = (ushort)(basePort + (uint)IOPortOffset.Value);

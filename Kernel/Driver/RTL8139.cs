@@ -33,7 +33,7 @@ namespace MOOS.NET
             }
             Console.WriteLine("RTL8139 Found!");
             IOBase = (ushort)(dev.Bar0 & ~0x3);
-            dev.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
+            dev.WriteRegister16(0x04, 0x04 | 0x02 | 0x01);
 
             Out8((ushort)(IOBase + 0x52), 0x00);
             Out8((ushort)(IOBase + 0x37), 0x10);
