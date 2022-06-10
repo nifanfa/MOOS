@@ -84,7 +84,7 @@ unsafe class Program
         //To use network. edit Kernel.csproj and use qemu. add "-net nic,model=rtl8139 -net tap,ifname=tap" to the end of command
         //Install openVPN's windows tap driver
         //rename the network adapter to tap in control panel
-        //select your currently connected network controller and share the network with tap
+        //select your currently connected network controller and tap. right click to create a bridge
         //Run
         Network.Initialise(IPAddress.Parse(192, 168, 1, 188), IPAddress.Parse(192, 168, 1, 1), IPAddress.Parse(255, 255, 255, 0));
         RTL8139.Initialise();
