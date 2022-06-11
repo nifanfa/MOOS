@@ -29,9 +29,22 @@ void fatfs_init()
 	work = malloc(FF_MAX_SS);
 	infos = malloc(sizeof(struct Info) * 64);
 
-	//res = f_mkfs(L"0:", FS_EXFAT, 0, work, FF_MAX_SS);
-
 	res = f_mount(&fs, L"0:", 0);
+	if (res != FR_OK)
+	{
+		printf("Can't mount the partition");
+	}
+}
+
+void format_exfat()
+{
+	f_unmount(&fs, L"0:", 0);
+	f_mkfs(L"0:", FS_EXFAT, 0, work, FF_MAX_SS);
+	f_mount(&fs, L"0:", 0);
+	if (res != FR_OK)
+	{
+		printf("Can't mount the partition");
+	}
 }
 
 struct Info* get_files(unsigned short* directory)
