@@ -87,8 +87,6 @@ unsafe class Program
         //select your currently connected network controller and tap. right click to create a bridge
         //Run
         Network.Initialise(IPAddress.Parse(192, 168, 1, 188), IPAddress.Parse(192, 168, 1, 1), IPAddress.Parse(255, 255, 255, 0));
-        RTL8139.Initialise();
-        ARP.Require(Network.Gateway);
         //Make sure this IP is pointing your gateway
         TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168,1,1), 80);
         client.OnData += Client_OnData;
