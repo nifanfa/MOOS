@@ -9,7 +9,7 @@ using static Native;
 
 namespace MOOS.NET
 {
-    public static unsafe class RTL8139
+    public unsafe class RTL8139 : NIC
     {
         public static ushort IOBase = 0;
         public static uint RX = 0;
@@ -78,6 +78,9 @@ namespace MOOS.NET
             Network.MAC = MAC;
             IRQ = dev.IRQ;
             Interrupts.EnableInterrupt(dev.IRQ);
+
+            //Literally instance
+            Network.Controller = new RTL8139();
         }
 
         public static void OnInterrupt()
@@ -103,7 +106,7 @@ namespace MOOS.NET
             Out16((ushort)(IOBase + 0x3E), 0x05);
         }
 
-        public static void Send(byte* Data, int Length)
+        public override void Send(byte* Data, int Length)
         {
             Out32((ushort)(IOBase + TSAD[TXIndex]), (uint)Data);
             Out32((ushort)(IOBase + TSD[TXIndex++]), (uint)Length);

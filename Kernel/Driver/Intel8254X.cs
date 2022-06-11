@@ -10,7 +10,7 @@ using static MOOS.Misc.MMIO;
 
 namespace MOOS.Driver
 {
-    public unsafe class Intel8254X
+    public unsafe class Intel8254X : NIC
     {
         public static uint BAR0;
         public static uint RXDescs;
@@ -238,6 +238,9 @@ namespace MOOS.Driver
             Network.MAC = MAC;
             Interrupts.EnableInterrupt(device.IRQ);
             IRQ = device.IRQ;
+
+            //Literally instance
+            Network.Controller = new Intel8254X();
         }
 
         private static void TXInitialize()
@@ -370,7 +373,7 @@ namespace MOOS.Driver
             WriteRegister(0, ReadRegister(0) | 0x40);
         }
 
-        public static void Send(byte* Buffer, int Length)
+        public override void Send(byte* Buffer, int Length)
         {
             TXDesc* desc = (TXDesc*)(TXDescs + (TXCurr * 16));
             desc->addr = (ulong)Buffer;

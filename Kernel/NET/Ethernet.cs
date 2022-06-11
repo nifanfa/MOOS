@@ -55,7 +55,7 @@ namespace MOOS.NET
             hdr->EthernetType = SwapLeftRight(Type);
             Native.Movsb((void*)(p + (ulong)sizeof(EthernetHeader)), Data, (ulong)Length);
             //TODO Disposing
-            RTL8139.Send((byte*)p, Length + sizeof(EthernetHeader));
+            Network.Controller.Send((byte*)p, Length + sizeof(EthernetHeader));
         }
 
         public static uint SwapLeftRight32(uint x)
