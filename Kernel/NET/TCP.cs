@@ -23,19 +23,17 @@ namespace MOOS.NET
         public ushort LocalPort;
         public ushort RemotePort;
 
-        // send state
-        public uint SndUna;                         // send unacknowledged
-        public uint SndNxt;                         // send next
-        public uint SndWnd;                         // send window
-        public uint SndUP;                          // send urgent pointer
-        public uint SndWl1;                         // segment sequence number used for last window update
-        public uint SndWl2;                         // segment acknowledgment number used for last window update
-        public uint ISS;                            // initial send sequence number
+        public uint SndUna;                         
+        public uint SndNxt;                         
+        public uint SndWnd;                         
+        public uint SndUP;                          
+        public uint SndWl1;                         
+        public uint SndWl2;                         
+        public uint ISS;                            
 
-        // receive state
-        public uint RcvNxt;                        // receive next
-        public uint RcvWnd;                        // receive window
-        public uint RcvUP;                         // receive urgent pointer
+        public uint RcvNxt;                        
+        public uint RcvWnd;                        
+        public uint RcvUP;                         
 
         public void Send(byte[] buffer)
         {
@@ -106,9 +104,6 @@ namespace MOOS.NET
         TCP_URG = (1 << 5),
     }
 
-    /// <summary>
-    /// Incompleted TCP
-    /// </summary>
     internal unsafe class TCP
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -168,7 +163,6 @@ namespace MOOS.NET
 
             if (currConn.State == TCPStatus.Closed)
             {
-                //TO-DO send close ack
                 return;
             }
 
@@ -187,11 +181,9 @@ namespace MOOS.NET
 
         private static void RecvGeneral(TcpClient conn, TCPHeader* hdr, byte* buffer, int length)
         {
-            // Process segments not in the CLOSED, LISTEN, or SYN-SENT states.
 
             uint flags = hdr->flags;
 
-            // Check RST bit
             if ((flags & (byte)TCPFlags.TCP_RST) != 0)
             {
                 SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
@@ -199,14 +191,12 @@ namespace MOOS.NET
                 return;
             }
 
-            // Check SYN bit
             if ((flags & (byte)TCPFlags.TCP_SYN) != 0)
             {
                 SendPacket(conn, 0, (byte)TCPFlags.TCP_RST | (byte)TCPFlags.TCP_ACK, null, 0);
                 Console.WriteLine("Error: connection reset");
             }
 
-            // Check ACK
             if ((~flags & (byte)TCPFlags.TCP_ACK) != 0)
             {
                 return;
@@ -214,15 +204,12 @@ namespace MOOS.NET
 
             RecvAck(conn, hdr);
 
-            // TODO - check URG
 
-            // Process segment data
             if (length != 0 && (flags & (byte)TCPFlags.TCP_PSH) != 0)
             {
                 RecvData(conn, hdr->seq, buffer, length);
             }
 
-            // Check FIN - TODO, needs to handle out of sequence
             if ((flags & (byte)TCPFlags.TCP_FIN) != 0)
             {
                 RecvFin(conn, hdr);
@@ -231,7 +218,6 @@ namespace MOOS.NET
 
         private static void RecvFin(TcpClient conn, TCPHeader* hdr)
         {
-            // TODO - signal the user "connection closing" and return any pending receives
 
             conn.RcvNxt = hdr->seq + 1;
             SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
@@ -246,9 +232,7 @@ namespace MOOS.NET
                 case TCPStatus.FinWait1:
                     if ((hdr->ack - conn.SndNxt) >= 0)
                     {
-                        // TODO - is this the right way to detect that our FIN has been ACK'd?
 
-                        // TODO - turn off the other timers
                         conn.State = TCPStatus.TimeWait;
                     }
                     else
@@ -258,7 +242,6 @@ namespace MOOS.NET
                     break;
 
                 case TCPStatus.FinWait2:
-                    // TODO - turn off the other timers
                     conn.State = TCPStatus.TimeWait;
                     break;
 
@@ -277,26 +260,22 @@ namespace MOOS.NET
             switch (conn.State)
             {
                 case TCPStatus.SynReceived:
-                    // TODO - can this happen? ACK processing would transition to ESTABLISHED state.
                     break;
 
                 case TCPStatus.Established:
                 case TCPStatus.FinWait1:
                 case TCPStatus.FinWait2:
 
-                    //Maybe bug here?
                     if (conn.RcvNxt == seq)
                     {
                         conn._OnData(buffer, length);
                         conn.RcvNxt += (uint)length;
                     }
 
-                    // Acknowledge receipt of data
                     SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
                     break;
 
                 default:
-                    // FIN has been received from the remote side - ignore the segment data.
                     break;
             }
         }
@@ -324,15 +303,11 @@ namespace MOOS.NET
                 case TCPStatus.FinWait2:
                 case TCPStatus.CloseWait:
                 case TCPStatus.Closing:
-                    //Accept ack
                     if (hdr->seq == PacketAck) PacketSent = true;
-                    // Handle expected acks
                     if ((conn.SndUna - hdr->ack) <= 0 && (hdr->ack - conn.SndNxt) <= 0)
                     {
-                        // Update acknowledged pointer
                         conn.SndUna = hdr->ack;
 
-                        // Update send window
                         if ((conn.SndWl1 - hdr->seq) < 0 ||
                             (conn.SndWl1 == hdr->seq && (conn.SndWl2 - hdr->ack) <= 0))
                         {
@@ -341,27 +316,20 @@ namespace MOOS.NET
                             conn.SndWl2 = hdr->ack;
                         }
 
-                        // TODO - remove segments on the retransmission queue which have been ack'd
-                        // TODO - acknowledge buffers which have sent to user
                     }
 
-                    // Check for duplicate ack
                     if ((hdr->ack - conn.SndUna) <= 0)
                     {
-                        // TODO - anything to do here?
                     }
 
-                    // Check for ack of unsent data
                     if ((hdr->ack - conn.SndNxt) > 0)
                     {
                         SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                         return;
                     }
 
-                    // Check for ack of FIN
                     if ((hdr->ack - conn.SndNxt) >= 0)
                     {
-                        // TODO - is this the right way to detect that our FIN has been ACK'd?
                         if (conn.State == TCPStatus.FinWait1)
                         {
                             conn.State = TCPStatus.FinWait2;
@@ -375,17 +343,13 @@ namespace MOOS.NET
                     break;
 
                 case TCPStatus.LastAcknowledge:
-                    // Check for ack of FIN
                     if ((hdr->ack - conn.SndNxt) >= 0)
                     {
-                        // TODO - is this the right way to detect that our FIN has been ACK'd?
 
-                        //TcpFree(conn);
                     }
                     break;
 
                 case TCPStatus.TimeWait:
-                    // This case is handled in the FIN processing step.
                     break;
             }
         }
@@ -395,18 +359,14 @@ namespace MOOS.NET
             switch (conn.State)
             {
                 case TCPStatus.SynReceived:
-                    // TODO - All segments on the retransmission queue should be removed
 
-                    // TODO - If initiated with a passive open, go to LISTEN state
                     Console.WriteLine("Error: tcp connection refused");
-                    //TcpError(conn, TCP_CONN_REFUSED);
                     break;
 
                 case TCPStatus.Established:
                 case TCPStatus.FinWait1:
                 case TCPStatus.FinWait2:
                 case TCPStatus.CloseWait:
-                    // TODO - All outstanding sends should receive "reset" responses
 
                     Console.WriteLine("Error: tcp reset");
                     break;
@@ -414,7 +374,6 @@ namespace MOOS.NET
                 case TCPStatus.Closing:
                 case TCPStatus.LastAcknowledge:
                 case TCPStatus.TimeWait:
-                    //TcpFree(conn);
                     break;
             }
         }
@@ -427,7 +386,6 @@ namespace MOOS.NET
         {
             byte flags = hdr->flags;
 
-            // Check for bad ACK first.
             if ((flags & (byte)TCPFlags.TCP_ACK) != 0)
             {
                 if ((hdr->ack - conn.ISS) <= 0 || (hdr->ack - conn.SndNxt) > 0)
@@ -442,7 +400,6 @@ namespace MOOS.NET
                 }
             }
 
-            // Check for RST
             if ((flags & (byte)TCPFlags.TCP_RST) != 0)
             {
                 if ((flags & (byte)TCPFlags.TCP_ACK) != 0)
@@ -453,10 +410,8 @@ namespace MOOS.NET
                 return;
             }
 
-            // Check SYN
             if ((flags & (byte)TCPFlags.TCP_SYN) != 0)
             {
-                // SYN is set.  ACK is either ok or there was no ACK.  No RST.
 
                 conn.RcvNxt = hdr->seq + 1;
 
@@ -467,16 +422,13 @@ namespace MOOS.NET
                     conn.SndWl1 = hdr->seq;
                     conn.SndWl2 = hdr->ack;
 
-                    // TODO - Segments on the retransmission queue which are ack'd should be removed
 
                     conn.State = TCPStatus.Established;
                     SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                     Console.WriteLine("Connection established");
 
 
-                    // TODO - Data queued for transmission may be included with the ACK.
 
-                    // TODO - If there is data in the segment, continue processing at the URG phase.
                 }
                 else
                 {
@@ -484,7 +436,6 @@ namespace MOOS.NET
 
                     conn.State = TCPStatus.SynReceived;
 
-                    // Resend ISS
                     --conn.SndNxt;
                     SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_SYN | (byte)TCPFlags.TCP_ACK, null, 0);
                 }
@@ -495,7 +446,6 @@ namespace MOOS.NET
         {
             TcpClient conn = new();
 
-            // Initialize connection
             conn.LocalAddr[0] = Network.IP[0];
             conn.LocalAddr[1] = Network.IP[1];
             conn.LocalAddr[2] = Network.IP[2];
@@ -528,9 +478,7 @@ namespace MOOS.NET
 
             Clients.Add(conn);
 
-            // Issue SYN segment
             SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_SYN);
-            //TcpSetState(conn, TCP_SYN_SENT);
             conn.State = TCPStatus.SynSent;
 
             ulong t = Timer.Ticks + 3000;
@@ -555,7 +503,6 @@ namespace MOOS.NET
         {
             byte* buffer = (byte*)Allocator.Allocate(TCP_WINDOW_SIZE);
 
-            // Header
             TCPHeader* hdr = (TCPHeader*)buffer;
             hdr->srcPort = conn.LocalPort;
 
@@ -573,14 +520,12 @@ namespace MOOS.NET
 
             if ((flags & (byte)TCPFlags.TCP_SYN) != 0)
             {
-                // Maximum Segment Size
                 p[0] = (byte)TCPOption.MSS;
                 p[1] = 4;
                 *(ushort*)(p + 2) = Ethernet.SwapLeftRight(1460);
                 p += p[1];
             }
 
-            // Option End
             while (((p - buffer) & 3) != 0)
             {
                 *p++ = 0;
@@ -588,7 +533,6 @@ namespace MOOS.NET
 
             hdr->off = (byte)((p - buffer) << 2);
 
-            // Data
             if (data != null)
             {
                 Native.Movsb(p, data, count);
@@ -596,7 +540,6 @@ namespace MOOS.NET
 
             byte* end = p + count;
 
-            // Pseudo Header
             ChecksumHeader* phdr = (ChecksumHeader*)(buffer - sizeof(ChecksumHeader));
             phdr->src[0] = conn.LocalAddr[0];
             phdr->src[1] = conn.LocalAddr[1];
@@ -611,12 +554,9 @@ namespace MOOS.NET
             phdr->protocol = (byte)IPv4.IPv4Protocol.TCP;
             phdr->len = Ethernet.SwapLeftRight((ushort)((uint)end - (uint)buffer));
 
-            // Checksum
-            //ushort checksum = NetChecksum(pkt->start - sizeof(ChecksumHeader), pkt->end);
             ushort checksum = TCPChecksum(buffer - sizeof(ChecksumHeader), end);
             hdr->checksum = Ethernet.SwapLeftRight(checksum);
 
-            // Transmit
             IPv4.SendPacket(new byte[]
             {
                 conn.RemoteAddr [0],
@@ -627,7 +567,6 @@ namespace MOOS.NET
 
             Allocator.Free((System.IntPtr)buffer);
 
-            // Update State
             conn.SndNxt += count;
             if ((flags & ((byte)TCPFlags.TCP_SYN | (byte)TCPFlags.TCP_FIN)) != 0)
             {
@@ -693,7 +632,7 @@ namespace MOOS.NET
             sum += (sum >> 16);
 
             ushort temp = (ushort)~sum;
-            return (ushort)(((temp & 0x00ff) << 8) | ((temp & 0xff00) >> 8)); // TODO - shouldn't swap this twice
+            return (ushort)(((temp & 0x00ff) << 8) | ((temp & 0xff00) >> 8)); 
         }
     }
 }
