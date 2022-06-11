@@ -232,10 +232,7 @@ public static class IDT
             {
                 Intel8254X.OnInterrupt();
             }
-            if (irq == AC97.IRQ)
-            {
-                AC97.OnInterrupt();
-            }
+            Interrupts.HandleInterrupt(irq);
         }
         Interrupts.EndOfInterrupt((byte)irq);
     }
