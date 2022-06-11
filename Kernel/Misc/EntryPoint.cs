@@ -33,6 +33,7 @@ namespace MOOS.Misc
             IDT.Disable();
             GDT.Initialise();
             IDT.Initialize();
+            Interrupts.Initialize();
             IDT.Enable();
 
             SSE.enable_sse();

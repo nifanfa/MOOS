@@ -14,7 +14,6 @@ namespace MOOS
     {
         private static uint NAM, NABM;
         public static int NumDescriptors;
-        public static int IRQ;
 
         static BufferDescriptor* BufferDescriptors;
 
@@ -51,8 +50,7 @@ namespace MOOS
                 BufferDescriptors[i].Arribute = 1 << 15;
             }
 
-            IRQ = device.IRQ;
-            Interrupts.EnableInterrupt((byte)IRQ);
+            Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
             Index = 0;
 
             Out8((ushort)(NABM + 0x1B), 0x02);
