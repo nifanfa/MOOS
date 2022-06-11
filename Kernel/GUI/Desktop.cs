@@ -340,9 +340,24 @@ namespace MOOS.GUI
                 name[name.Length - 1].ToUpper() == 'M'
                 )
             {
-                byte[] buffer = File.Instance.ReadAllBytes(path);
-                Audio.Play(buffer);
-                buffer.Dispose();
+                if (Audio.HasAudioDevice)
+                {
+                    byte[] buffer = File.Instance.ReadAllBytes(path);
+                    Audio.Play(buffer);
+                    buffer.Dispose();
+                }
+                else
+                {
+                    msgbox.X = Control.MousePosition.X + 50;
+                    msgbox.Y = Control.MousePosition.Y + 50;
+#if Chinese
+                msgbox.SetText("Ã»ÓÐ¼æÈÝµÄÉù¿¨!");
+#else
+                    msgbox.SetText("Audio controller is unavailable!");
+#endif
+                    Window.MoveToEnd(msgbox);
+                    msgbox.Visible = true;
+                }
             }
             else if (
                 name[name.Length - 3].ToUpper() == 'N' &&

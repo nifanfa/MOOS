@@ -9,9 +9,12 @@ namespace MOOS.Misc
 
         public static Queue<byte[]> Queue;
 
+        public static bool HasAudioDevice;
+
         public static void Initialize() 
         {
             Queue = new();
+            HasAudioDevice = false;
         }
 
         /// <summary>
