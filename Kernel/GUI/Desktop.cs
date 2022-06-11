@@ -279,7 +279,7 @@ namespace MOOS.GUI
                 if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
                 {
                     IndexClicked = i;
-                    OnClick(name,isDirectory);
+                    OnClick(name, isDirectory, X, Y);
                 }
             }
             else
@@ -297,7 +297,7 @@ namespace MOOS.GUI
         static bool ClickLock = false;
         static int IndexClicked;
 
-        public static void OnClick(string name, bool isDirectory)
+        public static void OnClick(string name, bool isDirectory, int itemX, int itemY)
         {
             ClickLock = true;
 
@@ -348,8 +348,8 @@ namespace MOOS.GUI
                 }
                 else
                 {
-                    msgbox.X = Control.MousePosition.X + 50;
-                    msgbox.Y = Control.MousePosition.Y + 50;
+                    msgbox.X = itemX + 75;
+                    msgbox.Y = itemY + 75;
 #if Chinese
                 msgbox.SetText("没有兼容的声卡!");
 #else
@@ -420,8 +420,8 @@ namespace MOOS.GUI
             }
             else
             {
-                msgbox.X = Control.MousePosition.X + 50;
-                msgbox.Y = Control.MousePosition.Y + 50;
+                msgbox.X = itemX + 75;
+                msgbox.Y = itemY + 75;
 #if Chinese
                 msgbox.SetText("没有任何程序可以打开此程序!");
 #else
