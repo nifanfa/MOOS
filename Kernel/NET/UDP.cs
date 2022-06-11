@@ -54,7 +54,11 @@ namespace MOOS
 
             for (int i = 0; i < Clients.Count; i++) 
             {
-                Clients[i]._OnData(Buffer);
+                if (Clients[i].Port == header->DestPort)
+                {
+                    Clients[i]._OnData(Buffer);
+                    break;
+                }
             }
 
             //Do something
@@ -66,7 +70,7 @@ namespace MOOS
     public class UdpClient
     {
         IPAddress iPAddress;
-        ushort Port;
+        public ushort Port;
         public event Network.OnDataHandler OnData;
 
         internal void _OnData(byte[] buffer) 

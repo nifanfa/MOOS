@@ -4,6 +4,7 @@
 //https://github.com/pdoane/osdev/blob/master/net/tcp.c
 
 using MOOS.Driver;
+using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
 
@@ -138,6 +139,8 @@ namespace MOOS.NET
             public ushort len;
         }
 
+        public static List<TcpClient> Clients;
+
         internal static void HandlePacket(byte* buffer, int length)
         {
             TCPHeader* hdr = (TCPHeader*)buffer;
@@ -147,14 +150,19 @@ namespace MOOS.NET
 
             Swap(hdr);
 
+            TcpClient currConn = null;
+            for(int i = 0; i < Clients.Count; i++) 
+            {
+                if (Clients[i].localPort == hdr->dstPort) 
+                {
+                    currConn = Clients[i];
+                    break;
+                }
+            }
+
             if (currConn == null)
             {
                 Console.WriteLine("TCP connection havn't established yet");
-                return;
-            }
-
-            if (hdr->dstPort != hdr->srcPort)
-            {
                 return;
             }
 
@@ -483,13 +491,9 @@ namespace MOOS.NET
             }
         }
 
-        private static TcpClient currConn;
-
         public static TcpClient Connect(byte[] addr, ushort port, ushort localPort)
         {
             TcpClient conn = new();
-
-            currConn = conn;
 
             // Initialize connection
             conn.localAddr[0] = Network.IP[0];
@@ -521,6 +525,8 @@ namespace MOOS.NET
             conn.rcvNxt = 0;
             conn.rcvWnd = TCP_WINDOW_SIZE;
             conn.rcvUP = 0;
+
+            Clients.Add(conn);
 
             // Issue SYN segment
             SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_SYN);
