@@ -16,26 +16,26 @@ namespace MOOS.NET
 
         public bool Connected => State != TCPStatus.SynSent;
 
-        public byte[] localAddr = new byte[4];
-        public byte[] nextAddr = new byte[4];
-        public byte[] remoteAddr = new byte[4];
+        public byte[] LocalAddr = new byte[4];
+        public byte[] NextAddr = new byte[4];
+        public byte[] RemoteAddr = new byte[4];
 
-        public ushort localPort;
-        public ushort remotePort;
+        public ushort LocalPort;
+        public ushort RemotePort;
 
         // send state
-        public uint sndUna;                         // send unacknowledged
-        public uint sndNxt;                         // send next
-        public uint sndWnd;                         // send window
-        public uint sndUP;                          // send urgent pointer
-        public uint sndWl1;                         // segment sequence number used for last window update
-        public uint sndWl2;                         // segment acknowledgment number used for last window update
-        public uint iss;                            // initial send sequence number
+        public uint SndUna;                         // send unacknowledged
+        public uint SndNxt;                         // send next
+        public uint SndWnd;                         // send window
+        public uint SndUP;                          // send urgent pointer
+        public uint SndWl1;                         // segment sequence number used for last window update
+        public uint SndWl2;                         // segment acknowledgment number used for last window update
+        public uint ISS;                            // initial send sequence number
 
         // receive state
-        public uint rcvNxt;                        // receive next
-        public uint rcvWnd;                        // receive window
-        public uint rcvUP;                         // receive urgent pointer
+        public uint RcvNxt;                        // receive next
+        public uint RcvWnd;                        // receive window
+        public uint RcvUP;                         // receive urgent pointer
 
         public void Send(byte[] buffer)
         {
@@ -153,7 +153,7 @@ namespace MOOS.NET
             TcpClient currConn = null;
             for(int i = 0; i < Clients.Count; i++) 
             {
-                if (Clients[i].localPort == hdr->dstPort) 
+                if (Clients[i].LocalPort == hdr->dstPort) 
                 {
                     currConn = Clients[i];
                     break;
@@ -194,7 +194,7 @@ namespace MOOS.NET
             // Check RST bit
             if ((flags & (byte)TCPFlags.TCP_RST) != 0)
             {
-                SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
+                SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                 RecvRst(conn, hdr);
                 return;
             }
@@ -233,8 +233,8 @@ namespace MOOS.NET
         {
             // TODO - signal the user "connection closing" and return any pending receives
 
-            conn.rcvNxt = hdr->seq + 1;
-            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
+            conn.RcvNxt = hdr->seq + 1;
+            SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
 
             switch (conn.State)
             {
@@ -244,7 +244,7 @@ namespace MOOS.NET
                     break;
 
                 case TCPStatus.FinWait1:
-                    if ((hdr->ack - conn.sndNxt) >= 0)
+                    if ((hdr->ack - conn.SndNxt) >= 0)
                     {
                         // TODO - is this the right way to detect that our FIN has been ACK'd?
 
@@ -285,14 +285,14 @@ namespace MOOS.NET
                 case TCPStatus.FinWait2:
 
                     //Maybe bug here?
-                    if (conn.rcvNxt == seq)
+                    if (conn.RcvNxt == seq)
                     {
                         conn._OnData(buffer, length);
-                        conn.rcvNxt += (uint)length;
+                        conn.RcvNxt += (uint)length;
                     }
 
                     // Acknowledge receipt of data
-                    SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK);
+                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
                     break;
 
                 default:
@@ -306,11 +306,11 @@ namespace MOOS.NET
             switch (conn.State)
             {
                 case TCPStatus.SynReceived:
-                    if (conn.sndUna <= hdr->ack && hdr->ack <= conn.sndNxt)
+                    if (conn.SndUna <= hdr->ack && hdr->ack <= conn.SndNxt)
                     {
-                        conn.sndWnd = hdr->windowSize;
-                        conn.sndWl1 = hdr->seq;
-                        conn.sndWl2 = hdr->ack;
+                        conn.SndWnd = hdr->windowSize;
+                        conn.SndWl1 = hdr->seq;
+                        conn.SndWl2 = hdr->ack;
                         conn.State = TCPStatus.Established;
                     }
                     else
@@ -327,18 +327,18 @@ namespace MOOS.NET
                     //Accept ack
                     if (hdr->seq == PacketAck) PacketSent = true;
                     // Handle expected acks
-                    if ((conn.sndUna - hdr->ack) <= 0 && (hdr->ack - conn.sndNxt) <= 0)
+                    if ((conn.SndUna - hdr->ack) <= 0 && (hdr->ack - conn.SndNxt) <= 0)
                     {
                         // Update acknowledged pointer
-                        conn.sndUna = hdr->ack;
+                        conn.SndUna = hdr->ack;
 
                         // Update send window
-                        if ((conn.sndWl1 - hdr->seq) < 0 ||
-                            (conn.sndWl1 == hdr->seq && (conn.sndWl2 - hdr->ack) <= 0))
+                        if ((conn.SndWl1 - hdr->seq) < 0 ||
+                            (conn.SndWl1 == hdr->seq && (conn.SndWl2 - hdr->ack) <= 0))
                         {
-                            conn.sndWnd = hdr->windowSize;
-                            conn.sndWl1 = hdr->seq;
-                            conn.sndWl2 = hdr->ack;
+                            conn.SndWnd = hdr->windowSize;
+                            conn.SndWl1 = hdr->seq;
+                            conn.SndWl2 = hdr->ack;
                         }
 
                         // TODO - remove segments on the retransmission queue which have been ack'd
@@ -346,20 +346,20 @@ namespace MOOS.NET
                     }
 
                     // Check for duplicate ack
-                    if ((hdr->ack - conn.sndUna) <= 0)
+                    if ((hdr->ack - conn.SndUna) <= 0)
                     {
                         // TODO - anything to do here?
                     }
 
                     // Check for ack of unsent data
-                    if ((hdr->ack - conn.sndNxt) > 0)
+                    if ((hdr->ack - conn.SndNxt) > 0)
                     {
-                        SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
+                        SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                         return;
                     }
 
                     // Check for ack of FIN
-                    if ((hdr->ack - conn.sndNxt) >= 0)
+                    if ((hdr->ack - conn.SndNxt) >= 0)
                     {
                         // TODO - is this the right way to detect that our FIN has been ACK'd?
                         if (conn.State == TCPStatus.FinWait1)
@@ -376,7 +376,7 @@ namespace MOOS.NET
 
                 case TCPStatus.LastAcknowledge:
                     // Check for ack of FIN
-                    if ((hdr->ack - conn.sndNxt) >= 0)
+                    if ((hdr->ack - conn.SndNxt) >= 0)
                     {
                         // TODO - is this the right way to detect that our FIN has been ACK'd?
 
@@ -430,7 +430,7 @@ namespace MOOS.NET
             // Check for bad ACK first.
             if ((flags & (byte)TCPFlags.TCP_ACK) != 0)
             {
-                if ((hdr->ack - conn.iss) <= 0 || (hdr->ack - conn.sndNxt) > 0)
+                if ((hdr->ack - conn.ISS) <= 0 || (hdr->ack - conn.SndNxt) > 0)
                 {
                     if ((~flags & (byte)TCPFlags.TCP_RST) != 0)
                     {
@@ -458,19 +458,19 @@ namespace MOOS.NET
             {
                 // SYN is set.  ACK is either ok or there was no ACK.  No RST.
 
-                conn.rcvNxt = hdr->seq + 1;
+                conn.RcvNxt = hdr->seq + 1;
 
                 if ((flags & (byte)TCPFlags.TCP_ACK) != 0)
                 {
-                    conn.sndUna = hdr->ack;
-                    conn.sndWnd = hdr->windowSize;
-                    conn.sndWl1 = hdr->seq;
-                    conn.sndWl2 = hdr->ack;
+                    conn.SndUna = hdr->ack;
+                    conn.SndWnd = hdr->windowSize;
+                    conn.SndWl1 = hdr->seq;
+                    conn.SndWl2 = hdr->ack;
 
                     // TODO - Segments on the retransmission queue which are ack'd should be removed
 
                     conn.State = TCPStatus.Established;
-                    SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
+                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                     Console.WriteLine("Connection established");
 
 
@@ -485,8 +485,8 @@ namespace MOOS.NET
                     conn.State = TCPStatus.SynReceived;
 
                     // Resend ISS
-                    --conn.sndNxt;
-                    SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_SYN | (byte)TCPFlags.TCP_ACK, null, 0);
+                    --conn.SndNxt;
+                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_SYN | (byte)TCPFlags.TCP_ACK, null, 0);
                 }
             }
         }
@@ -496,40 +496,40 @@ namespace MOOS.NET
             TcpClient conn = new();
 
             // Initialize connection
-            conn.localAddr[0] = Network.IP[0];
-            conn.localAddr[1] = Network.IP[1];
-            conn.localAddr[2] = Network.IP[2];
-            conn.localAddr[3] = Network.IP[3];
+            conn.LocalAddr[0] = Network.IP[0];
+            conn.LocalAddr[1] = Network.IP[1];
+            conn.LocalAddr[2] = Network.IP[2];
+            conn.LocalAddr[3] = Network.IP[3];
 
-            conn.nextAddr[0] = addr[0];
-            conn.nextAddr[1] = addr[1];
-            conn.nextAddr[2] = addr[2];
-            conn.nextAddr[3] = addr[3];
+            conn.NextAddr[0] = addr[0];
+            conn.NextAddr[1] = addr[1];
+            conn.NextAddr[2] = addr[2];
+            conn.NextAddr[3] = addr[3];
 
-            conn.remoteAddr[0] = addr[0];
-            conn.remoteAddr[1] = addr[1];
-            conn.remoteAddr[2] = addr[2];
-            conn.remoteAddr[3] = addr[3];
+            conn.RemoteAddr[0] = addr[0];
+            conn.RemoteAddr[1] = addr[1];
+            conn.RemoteAddr[2] = addr[2];
+            conn.RemoteAddr[3] = addr[3];
 
-            conn.localPort = localPort;
-            conn.remotePort = port;
+            conn.LocalPort = localPort;
+            conn.RemotePort = port;
 
-            conn.sndUna = 0;
-            conn.sndNxt = 0;
-            conn.sndWnd = TCP_WINDOW_SIZE;
-            conn.sndUP = 0;
-            conn.sndWl1 = 0;
-            conn.sndWl2 = 0;
-            conn.iss = 0;
+            conn.SndUna = 0;
+            conn.SndNxt = 0;
+            conn.SndWnd = TCP_WINDOW_SIZE;
+            conn.SndUP = 0;
+            conn.SndWl1 = 0;
+            conn.SndWl2 = 0;
+            conn.ISS = 0;
 
-            conn.rcvNxt = 0;
-            conn.rcvWnd = TCP_WINDOW_SIZE;
-            conn.rcvUP = 0;
+            conn.RcvNxt = 0;
+            conn.RcvWnd = TCP_WINDOW_SIZE;
+            conn.RcvUP = 0;
 
             Clients.Add(conn);
 
             // Issue SYN segment
-            SendPacket(conn, conn.sndNxt, (byte)TCPFlags.TCP_SYN);
+            SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_SYN);
             //TcpSetState(conn, TCP_SYN_SENT);
             conn.State = TCPStatus.SynSent;
 
@@ -548,7 +548,7 @@ namespace MOOS.NET
 
         private static void SendPacket(TcpClient conn, uint seq, byte flags)
         {
-            SendPacket(conn, conn.sndNxt, flags, null, 0);
+            SendPacket(conn, conn.SndNxt, flags, null, 0);
         }
 
         private static void SendPacket(TcpClient conn, uint seq, byte flags, void* data, uint count)
@@ -557,11 +557,11 @@ namespace MOOS.NET
 
             // Header
             TCPHeader* hdr = (TCPHeader*)buffer;
-            hdr->srcPort = conn.localPort;
+            hdr->srcPort = conn.LocalPort;
 
-            hdr->dstPort = conn.remotePort;
+            hdr->dstPort = conn.RemotePort;
             hdr->seq = seq;
-            hdr->ack = ((flags & (byte)TCPFlags.TCP_ACK) != 0) ? conn.rcvNxt : 0;
+            hdr->ack = ((flags & (byte)TCPFlags.TCP_ACK) != 0) ? conn.RcvNxt : 0;
             hdr->off = 0;
             hdr->flags = flags;
             hdr->windowSize = TCP_WINDOW_SIZE;
@@ -598,14 +598,14 @@ namespace MOOS.NET
 
             // Pseudo Header
             ChecksumHeader* phdr = (ChecksumHeader*)(buffer - sizeof(ChecksumHeader));
-            phdr->src[0] = conn.localAddr[0];
-            phdr->src[1] = conn.localAddr[1];
-            phdr->src[2] = conn.localAddr[2];
-            phdr->src[3] = conn.localAddr[3];
-            phdr->dst[0] = conn.remoteAddr[0];
-            phdr->dst[1] = conn.remoteAddr[1];
-            phdr->dst[2] = conn.remoteAddr[2];
-            phdr->dst[3] = conn.remoteAddr[3];
+            phdr->src[0] = conn.LocalAddr[0];
+            phdr->src[1] = conn.LocalAddr[1];
+            phdr->src[2] = conn.LocalAddr[2];
+            phdr->src[3] = conn.LocalAddr[3];
+            phdr->dst[0] = conn.RemoteAddr[0];
+            phdr->dst[1] = conn.RemoteAddr[1];
+            phdr->dst[2] = conn.RemoteAddr[2];
+            phdr->dst[3] = conn.RemoteAddr[3];
 
             phdr->reserved = 0;
             phdr->protocol = (byte)IPv4.IPv4Protocol.TCP;
@@ -619,19 +619,19 @@ namespace MOOS.NET
             // Transmit
             IPv4.SendPacket(new byte[]
             {
-                conn.remoteAddr [0],
-                conn.remoteAddr [1],
-                conn.remoteAddr [2],
-                conn.remoteAddr [3]
+                conn.RemoteAddr [0],
+                conn.RemoteAddr [1],
+                conn.RemoteAddr [2],
+                conn.RemoteAddr [3]
             }, (byte)IPv4.IPv4Protocol.TCP, buffer, (int)end - (int)buffer);
 
             Allocator.Free((System.IntPtr)buffer);
 
             // Update State
-            conn.sndNxt += count;
+            conn.SndNxt += count;
             if ((flags & ((byte)TCPFlags.TCP_SYN | (byte)TCPFlags.TCP_FIN)) != 0)
             {
-                ++conn.sndNxt;
+                ++conn.SndNxt;
             }
         }
 
@@ -656,8 +656,8 @@ namespace MOOS.NET
             if (conn.Connected)
             {
                 PacketSent = false;
-                PacketAck = conn.rcvNxt;
-                uint sndNxt = conn.sndNxt;
+                PacketAck = conn.RcvNxt;
+                uint sndNxt = conn.SndNxt;
                 for (; ; )
                 {
                     SendPacket(conn, sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
