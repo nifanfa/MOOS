@@ -23,6 +23,7 @@ namespace MOOS.NET
             IP = IPAddress.Address;
             UDP.Clients = new();
             ARP.Initialise();
+            TCP.Clients = new();
         }
     }
 }
