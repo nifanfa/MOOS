@@ -689,7 +689,7 @@ namespace MOOS.NET
                 {
                     SendPacket(conn, sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
                     Timer.Wait(1000);
-                    if (PacketSent) break;
+                    if (PacketSent || conn == null) break;
                     Console.WriteLine("Packet may not accpeted. resending");
                 }
                 if (conn != null)
