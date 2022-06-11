@@ -93,6 +93,14 @@ namespace MOOS.FS
         [DllImport("*")]
         private static extern void write_all_bytes(char* filename, void* data, long filesize);
 
+        [DllImport("*")]
+        private static extern void format_exfat();
+
+        public override void Format() 
+        {
+            format_exfat();
+        }
+
         public override byte[] ReadAllBytes(string Name)
         {
             fixed (char* p = Name)

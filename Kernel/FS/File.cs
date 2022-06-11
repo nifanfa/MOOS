@@ -42,5 +42,6 @@ namespace MOOS.FS
         public abstract void Delete(string Name);
         public abstract byte[] ReadAllBytes(string Name);
         public abstract void WriteAllBytes(string Name, byte[] Content);
+        public abstract void Format();
     }
 }
