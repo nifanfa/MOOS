@@ -228,7 +228,7 @@ namespace MOOS.NET
             // TODO - check URG
 
             // Process segment data
-            if (length != 0)
+            if (length != 0 && (flags & (byte)TCPFlags.TCP_PSH) != 0)
             {
                 RecvData(conn, hdr->seq, buffer, length);
             }
