@@ -72,16 +72,6 @@ namespace MOOS.NET
             OnData?.Invoke(Data);
             Data.Dispose();
         }
-
-        public override void Dispose()
-        {
-            LocalAddr.Dispose();
-            NextAddr.Dispose();
-            RemoteAddr.Dispose();
-            OnData?.Dispose();
-
-            base.Dispose();
-        }
     }
 
     public enum TCPStatus
@@ -214,7 +204,6 @@ namespace MOOS.NET
             {
                 SendPacket(conn, 0, (byte)TCPFlags.TCP_RST | (byte)TCPFlags.TCP_ACK, null, 0);
                 Console.WriteLine("Error: connection reset");
-                TcpClean(conn);
             }
 
             // Check ACK
@@ -238,12 +227,6 @@ namespace MOOS.NET
             {
                 RecvFin(conn, hdr);
             }
-        }
-
-        private static void TcpClean(TcpClient conn)
-        {
-            Clients.Remove(conn);
-            conn.Dispose();
         }
 
         private static void RecvFin(TcpClient conn, TCPHeader* hdr)
@@ -417,8 +400,6 @@ namespace MOOS.NET
                     // TODO - If initiated with a passive open, go to LISTEN state
                     Console.WriteLine("Error: tcp connection refused");
                     //TcpError(conn, TCP_CONN_REFUSED);
-
-                    TcpClean(conn);
                     break;
 
                 case TCPStatus.Established:
@@ -428,8 +409,6 @@ namespace MOOS.NET
                     // TODO - All outstanding sends should receive "reset" responses
 
                     Console.WriteLine("Error: tcp reset");
-
-                    TcpClean(conn);
                     break;
 
                 case TCPStatus.Closing:
@@ -459,8 +438,6 @@ namespace MOOS.NET
                     }
 
                     Console.WriteLine("Bad ACK");
-
-                    TcpClean(conn);
                     return;
                 }
             }
@@ -473,7 +450,6 @@ namespace MOOS.NET
                     Console.WriteLine("TCP Reset");
                 }
 
-                TcpClean(conn);
                 return;
             }
 
@@ -565,9 +541,6 @@ namespace MOOS.NET
             if (conn.State == TCPStatus.SynSent)
             {
                 Console.WriteLine("Connection timeout");
-
-                TcpClean(conn);
-                return null;
             }
 
             return conn;
