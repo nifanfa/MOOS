@@ -46,6 +46,9 @@ namespace MOOS
             frame += sizeof(UDPHeader);
             length -= (ushort)sizeof(UDPHeader);
 
+            header->SrcPort = Ethernet.SwapLeftRight(header->SrcPort);
+            header->DestPort = Ethernet.SwapLeftRight(header->DestPort);
+
             byte[] Buffer = new byte[length];
             fixed (byte* P = Buffer)
             {
