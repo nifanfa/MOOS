@@ -687,6 +687,7 @@ namespace MOOS.NET
                 uint sndNxt = conn.SndNxt;
                 while(conn != null)
                 {
+                    if (conn == null) break;
                     SendPacket(conn, sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
                     Timer.Wait(1000);
                     if (PacketSent || conn == null) break;
