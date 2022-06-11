@@ -685,14 +685,15 @@ namespace MOOS.NET
                 PacketSent = false;
                 PacketAck = conn.RcvNxt;
                 uint sndNxt = conn.SndNxt;
-                for (; ; )
+                while(conn != null)
                 {
                     SendPacket(conn, sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
                     Timer.Wait(1000);
                     if (PacketSent) break;
                     Console.WriteLine("Packet may not accpeted. resending");
                 }
-                Console.WriteLine("Packet sent");
+                if (conn != null)
+                    Console.WriteLine("Packet sent");
             }
         }
 
