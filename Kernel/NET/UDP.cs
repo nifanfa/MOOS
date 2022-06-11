@@ -54,6 +54,7 @@ namespace MOOS
 
             for (int i = 0; i < Clients.Count; i++) 
             {
+                //When we send a packet we use dest port as local port
                 if (Clients[i].Port == header->DestPort)
                 {
                     Clients[i]._OnData(Buffer);
