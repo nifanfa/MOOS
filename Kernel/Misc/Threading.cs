@@ -54,7 +54,11 @@ namespace MOOS.Misc
             {
                 if (ACPI.LocalAPIC_CPUIDs[i] == run_on_which_cpu) hasThatCPU = true;
             }
-            if (!hasThatCPU) Panic.Error($"[Thread] CPU{run_on_which_cpu} is not exist!");
+            if (!hasThatCPU)
+            {
+                //Didn't find that CPU. run on bootstrap CPU
+                run_on_which_cpu = 0;
+            }
 
             this.RunOnWhichCPU = run_on_which_cpu;
             this.IsIdleThread = is_idle_thread;
