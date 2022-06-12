@@ -126,7 +126,7 @@ namespace MOOS.Misc
             _int20h(); //start scheduling
         }
 
-        public static void Terminate()
+        private static void Terminate()
         {
             Console.Write("Thread ");
             Console.Write(Index.ToString());
@@ -137,7 +137,7 @@ namespace MOOS.Misc
         }
 
         [DllImport("*")]
-        public static extern void _int20h();
+        private static extern void _int20h();
 
         public static void Lock() 
         {
@@ -157,18 +157,18 @@ namespace MOOS.Misc
 
         public static bool CanLock => Unsafe.As<bool, ulong>(ref ThreadPool.Locked);
 
-        public static void TestThread()
+        private static void TestThread()
         {
             Console.WriteLine("Non-Loop Thread Test!");
             return;
         }
 
-        public static void A()
+        private static void A()
         {
             for (; ; ) Console.WriteLine("Thread A");
         }
 
-        public static void B()
+        private static void B()
         {
             for (; ; ) Console.WriteLine("Thread B");
         }
@@ -178,14 +178,14 @@ namespace MOOS.Misc
             for (; ; ) Native.Hlt();
         }
 
-        public static int[] Indexs;
+        private static int[] Indexs;
 
         private static ulong TickInSec;
         private static ulong TickIdle;
         private static ulong LastSec;
         public static ulong CPUUsage;
 
-        public static void Schedule(IDT.IDTStackGeneric* stack)
+        internal static void Schedule(IDT.IDTStackGeneric* stack)
         {
             if (!Initialized  || Threads.Count == 0) return;
             while (Locked && Locker != SMP.ThisCPU) Native.Nop();
