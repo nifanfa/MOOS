@@ -5,7 +5,6 @@
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -33,8 +32,6 @@ namespace MOOS.GUI
         {
             get => Desktop.Dir.Length < 1;
         }
-
-        public static DateTime time;
 
         public static void Initialize()
         {
@@ -81,8 +78,6 @@ namespace MOOS.GUI
 
             LastPoint.X = -1;
             LastPoint.Y = -1;
-
-            time = DateTime.Now;
         }
 
         public static string[] BuiltInAppNames;
@@ -197,18 +192,10 @@ namespace MOOS.GUI
             Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), pre, Framebuffer.Graphics.Width);
             pre.Dispose();
 
-            //Do not continueing read the time
-            if(Timer.Ticks % 50 == 0)
-            {
-                lock (null)
-                {
-                    time = DateTime.Now;
-                }
-            }
 #if Chinese
-            string Result = $"{(time.Year)}年{time.Month}月{time.Day}日,{time.Hour}:{time.Minute} | FPS:{FPSMeter.FPS} | CPU使用率: {ThreadPool.CPUUsage}% | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
+            string Result = $"{(2000 + RTC.Year)}年{RTC.Month}月{RTC.Day}日,{RTC.Hour}:{RTC.Minute} | FPS:{FPSMeter.FPS} | CPU使用率: {ThreadPool.CPUUsage}% | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #else
-            string Result = $"{(time.Year)}/{time.Month}/{time.Day},{time.Hour}:{time.Minute} | FPS:{FPSMeter.FPS} | CPU Usage: {ThreadPool.CPUUsage}% | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
+            string Result = $"{(2000 + RTC.Year)}/{RTC.Month}/{RTC.Day},{RTC.Hour}:{RTC.Minute} | FPS:{FPSMeter.FPS} | CPU Usage: {ThreadPool.CPUUsage}% | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #endif
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
