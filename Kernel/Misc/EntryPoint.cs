@@ -63,6 +63,8 @@ namespace MOOS.Misc
             IDE.Initialize();
             SATA.Initialize();
 
+            ThreadPool.Initialize();
+
             Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
             Native.Movsb((byte*)SMP.Trampoline, (byte*)Trampoline, 512);
 

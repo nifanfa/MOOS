@@ -16,47 +16,9 @@ namespace MOOS
         public const ulong SharedPageTable = 0x51000;
         public const ulong Trampoline = 0x60000;
 
-        public static Queue<ThreadFor> WorkGroups;
-
-        public class ThreadFor 
-        {
-            public volatile uint For;
-            public volatile delegate*<void> Method;
-        }
-
-        public static void RunOnAnyCPU(delegate*<void> method)
-        {
-            if(WorkGroups == null || NumCPU < 2) 
-            {
-                new Thread(method).Start();
-            }
-            else
-            {
-                Timer.Wait(100);
-                WorkGroups.Enqueue(new ThreadFor() { For = LastFreeCPUIndex, Method = method });
-            }
-        }
-
-        public volatile static int NumFreeCPU;
         public static int NumCPU { get => ACPI.LocalAPIC_CPUIDs.Count; }
 
         public static volatile uint LastFreeCPUIndex;
-
-        public static delegate*<void> Take() 
-        {
-            NumFreeCPU++;
-            while (WorkGroups.Tail == null || WorkGroups.Tail.For != ThisCPU)
-            {
-                LastFreeCPUIndex = ThisCPU;
-                Native._pause();
-            }
-
-            ThreadFor tf = WorkGroups.Dequeue();
-            var addr = tf.Method;
-            tf.Dispose();
-            NumFreeCPU--;
-            return addr; 
-        }
 
         public static uint ThisCPU => LocalAPIC.GetId();
 
@@ -67,8 +29,13 @@ namespace MOOS
         {
             SSE.enable_sse();
             LocalAPIC.Initialize();
-            //Console.WriteLine("Hello from Application Processor");
-            for (; ; ) SMP.Take()();
+            LocalAPIC.StartTimer(100000, 0x20);
+            ThreadPool.Initialize();
+            for (; ; ) 
+            {
+                LastFreeCPUIndex = SMP.ThisCPU;
+                Native._pause();
+            }
         }
 
         public static void Initialize(uint trampoline)
@@ -95,9 +62,6 @@ namespace MOOS
                 ulong* sidt = (ulong*)SharedIDT;
                 *sidt = (ulong)idt;
             }
-
-            WorkGroups = new Queue<ThreadFor>();
-            NumFreeCPU = 0;
 
             for (int i = 0; i < NumCPU; ++i)
             {
