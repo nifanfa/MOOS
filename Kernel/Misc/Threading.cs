@@ -101,6 +101,7 @@ namespace MOOS.Misc
 
         public static void Initialize()
         {
+            Native.Cli();
             //Bootstrap CPU
             if(SMP.ThisCPU == 0)
             {
@@ -121,6 +122,7 @@ namespace MOOS.Misc
             {
                 new Thread(&IdleThread).Start((int)SMP.ThisCPU, true);
             }
+            Native.Sti();
             _int20h(); //start scheduling
         }
 
