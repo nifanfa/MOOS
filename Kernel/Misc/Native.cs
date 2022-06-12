@@ -8,9 +8,6 @@ using System.Runtime.InteropServices;
 static unsafe class Native
 {
     [DllImport("*")]
-    public static extern void _pause();
-
-    [DllImport("*")]
     public static extern CPUID* CPUID(int index);
 
     [DllImport("*")]

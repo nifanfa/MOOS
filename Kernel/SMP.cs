@@ -34,7 +34,7 @@ namespace MOOS
             for (; ; ) 
             {
                 LastFreeCPUIndex = SMP.ThisCPU;
-                Native._pause();
+                Native.Nop();
             }
         }
 
@@ -72,7 +72,7 @@ namespace MOOS
                     int last = *activedProcessor;
                     LocalAPIC.SendInit(id); 
                     LocalAPIC.SendStartup(id, (trampoline >> 12));
-                    while (last == *activedProcessor) Native._pause();
+                    while (last == *activedProcessor) Native.Nop();
                 }
             }
             Console.WriteLine("All CPUs started");
