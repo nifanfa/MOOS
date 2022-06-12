@@ -13,6 +13,7 @@ namespace System.Threading
             if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
             {
                 ThreadPool.Locked = true;
+                ThreadPool.Locker = SMP.ThisCPU;
                 //LocalAPIC.SendAllInterrupt(0xFE);
             }
         }
