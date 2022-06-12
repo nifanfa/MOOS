@@ -108,7 +108,7 @@ namespace MOOS.Misc
                     if (ACPI.LocalAPIC_CPUIDs[i] > size) size = ACPI.LocalAPIC_CPUIDs[i];
                 Indexs = new int[size + 1];
 
-                Locked = false;
+                UnLock();
 
                 Initialized = false;
                 Threads = new();
