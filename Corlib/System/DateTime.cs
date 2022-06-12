@@ -1119,14 +1119,22 @@ namespace System
 
         // Returns a DateTime representing the current date and time. The
         // resolution of the returned value depends on the system timer.
-        public static DateTime Now =>
-            new DateTime(
-                RTC.Century * 100 + RTC.Year,
-                RTC.Month,
-                RTC.Day,
-                RTC.Hour,
-                RTC.Minute,
-                RTC.Second);
+        public static DateTime Now
+        {
+            get
+            {
+                lock (null) 
+                {
+                    return new DateTime(
+                    RTC.Century * 100 + RTC.Year,
+                    RTC.Month,
+                    RTC.Day,
+                    RTC.Hour,
+                    RTC.Minute,
+                    RTC.Second);
+                }
+            }
+        }
 
         // Returns the second part of this DateTime. The returned value is
         // an integer between 0 and 59.
