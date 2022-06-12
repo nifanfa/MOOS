@@ -180,7 +180,7 @@ unsafe class Program
         SizedScreens.Dispose();
         #endregion
 
-        new Thread(&IMain).Start(1);
+        new Thread(&IMain).Start();
 
         for (; ; )
         {
