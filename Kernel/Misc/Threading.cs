@@ -47,6 +47,13 @@ namespace MOOS.Misc
 
         public Thread Start(int run_on_which_cpu)
         {
+            bool hasThatCPU = false;
+            for(int i = 0; i < ACPI.LocalAPIC_CPUIDs.Count; i++) 
+            {
+                if (ACPI.LocalAPIC_CPUIDs[i] == run_on_which_cpu) hasThatCPU = true;
+            }
+            if (!hasThatCPU) Panic.Error($"[Thread] CPU{run_on_which_cpu} is not exist!");
+
             this.RunOnWhichCPU = run_on_which_cpu;
             ThreadPool.Threads.Add(this);
             return this;
