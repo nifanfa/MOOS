@@ -10,17 +10,17 @@ namespace System.Threading
     {
         public static void Enter(object obj)
         {
-            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
+            if (ThreadPool.CanLock)
             {
-                ThreadPool.Locked = true;
+                ThreadPool.Lock();
             }
         }
 
         public static void Exit(object obj)
         {
-            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
+            if (ThreadPool.CanLock)
             {
-                ThreadPool.Locked = false;
+                ThreadPool.UnLock();
             }
         }
     }
