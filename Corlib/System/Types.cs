@@ -119,6 +119,9 @@ namespace System
 
     public unsafe struct Int64 
     {
+        public const long MaxValue = 9223372036854775807;
+        public const long MinValue = -9223372036854775808;
+
         public override string ToString()
         {
             var val = this;
