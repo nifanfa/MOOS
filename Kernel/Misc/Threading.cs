@@ -67,14 +67,14 @@ namespace MOOS.Misc
             return this;
         }
 
-        public static void Sleep(ulong Next) 
+        public static void Sleep(ulong Millionseconds) 
         {
-            ThreadPool.Threads[ThreadPool.Index].SleepingTime = Next;
+            ThreadPool.Threads[ThreadPool.Index].SleepingTime = Millionseconds;
         }
 
-        public static void Sleep(int Index,ulong Next)
+        public static void Sleep(int Index,ulong Millionseconds)
         {
-            ThreadPool.Threads[Index].SleepingTime = Next;
+            ThreadPool.Threads[Index].SleepingTime = Millionseconds;
         }
     }
 
