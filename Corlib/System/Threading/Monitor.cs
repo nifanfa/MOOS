@@ -10,7 +10,7 @@ namespace System.Threading
     {
         public static void Enter(object obj)
         {
-            if (Unsafe.As<long, ulong>(ref ThreadPool.Locker))
+            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
             {
                 ThreadPool.Locked = true;
             }
@@ -18,7 +18,7 @@ namespace System.Threading
 
         public static void Exit(object obj)
         {
-            if (Unsafe.As<long, ulong>(ref ThreadPool.Locker))
+            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
             {
                 ThreadPool.Locked = false;
             }

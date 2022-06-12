@@ -82,25 +82,7 @@ namespace MOOS.Misc
         public static List<Thread> Threads;
         public static bool Initialized = false;
 
-        public static long Locker;
-        public static bool Locked 
-        {
-            get 
-            {
-                return Locker != -1;
-            }
-            set 
-            {
-                if (value)
-                {
-                    Locker = SMP.ThisCPU;
-                }
-                else 
-                {
-                    Locker = -1;
-                }
-            }
-        }
+        public static bool Locked;
 
         internal static int Index
         {
@@ -126,6 +108,7 @@ namespace MOOS.Misc
                 Indexs = new int[size + 1];
 
                 Locked = false;
+
                 Initialized = false;
                 Threads = new();
                 new Thread(&IdleThread).Start(true);
@@ -183,8 +166,8 @@ namespace MOOS.Misc
 
         public static void Schedule(IDT.IDTStackGeneric* stack)
         {
-            if (!Initialized || Threads.Count == 0) return;
-            while (Locked && Locker != SMP.ThisCPU) Native._pause();
+            if (!Initialized || Locked || Threads.Count == 0) return;
+            //while (Locked && Locker != SMP.ThisCPU) Native._pause();
 
             if (
                 !Threads[Index].Terminated &&
