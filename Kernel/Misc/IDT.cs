@@ -214,7 +214,6 @@ public static class IDT
             {
                 case 0x20:
                     Timer.OnInterrupt();
-                    ThreadPool.Schedule(stack);
                     break;
                 case 0x21:
                     byte b = Native.In8(0x60);
@@ -234,6 +233,12 @@ public static class IDT
             }
             Interrupts.HandleInterrupt(irq);
         }
+
+        if (irq == 0x20)
+        {
+            ThreadPool.Schedule(stack);
+        }
+
         Interrupts.EndOfInterrupt((byte)irq);
     }
 }

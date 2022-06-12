@@ -195,7 +195,7 @@ namespace MOOS.GUI
 #if Chinese
             string Result = $"{(2000 + RTC.Year)}年{RTC.Month}月{RTC.Day}日,{RTC.Hour}:{RTC.Minute} | FPS:{FPSMeter.FPS} | CPU 0: {ThreadPool.CPUUsage}% | 当前空闲处理器数量: {SMP.NumFreeCPU} | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #else
-            string Result = $"{(2000 + RTC.Year)}/{RTC.Month}/{RTC.Day},{RTC.Hour}:{RTC.Minute} | FPS:{FPSMeter.FPS} | CPU 0: {ThreadPool.CPUUsage}% | Num Free CPU: {SMP.NumFreeCPU} | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
+            string Result = $"{(2000 + RTC.Year)}/{RTC.Month}/{RTC.Day},{RTC.Hour}:{RTC.Minute} | FPS:{FPSMeter.FPS} | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #endif
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));

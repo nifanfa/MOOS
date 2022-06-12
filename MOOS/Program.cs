@@ -94,8 +94,6 @@ unsafe class Program
         for (; ; ) Native.Hlt();
 #endif
 
-        ThreadPool.Initialize();
-
         SMain();
     }
 
@@ -182,7 +180,7 @@ unsafe class Program
         SizedScreens.Dispose();
         #endregion
 
-        SMP.RunOnAnyCPU(&IMain);
+        new Thread(&IMain).Start(1);
 
         for (; ; )
         {
