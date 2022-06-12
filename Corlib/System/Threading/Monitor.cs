@@ -14,7 +14,6 @@ namespace System.Threading
             {
                 ThreadPool.Locked = true;
                 ThreadPool.Locker = SMP.ThisCPU;
-                //LocalAPIC.SendAllInterrupt(0xFE);
             }
         }
 
