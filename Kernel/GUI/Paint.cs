@@ -85,13 +85,10 @@ namespace MOOS.GUI
             {
                 if (Control.MousePosition.X >= this.X && Control.MousePosition.X <= this.X + this.Width && Control.MousePosition.Y >= this.Y && Control.MousePosition.Y <= this.Y + this.Height)
                 {
-                    lock (this)
+                    MouseHandled = true;
+                    if (Control.MousePosition.X - this.X != LastX || Control.MousePosition.Y - this.Y != LastY)
                     {
-                        MouseHandled = true;
-                        if (Control.MousePosition.X - this.X != LastX || Control.MousePosition.Y - this.Y != LastY)
-                        {
-                            g.DrawLine(LastX, LastY, Control.MousePosition.X - this.X, Control.MousePosition.Y - this.Y, CurrentColor);
-                        }
+                        g.DrawLine(LastX, LastY, Control.MousePosition.X - this.X, Control.MousePosition.Y - this.Y, CurrentColor);
                     }
 
                     for (int i = 0; i < Btns.Count; i++)

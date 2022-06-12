@@ -180,26 +180,6 @@ unsafe class Program
         SizedScreens.Dispose();
         #endregion
 
-        new Thread(&IMain).Start(1);
-
-        for (; ; )
-        {
-            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
-            Desktop.Update();
-            Window.DrawAll();
-            /*
-            ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
-            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
-            */
-            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
-            Framebuffer.Update();
-
-            FPSMeter.Update();
-        }
-    }
-
-    public static void IMain()
-    {
         for (; ; )
         {
             #region ConsoleHotKey
@@ -226,6 +206,18 @@ unsafe class Program
             }
             #endregion
             Window.InputAll();
+
+            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
+            Desktop.Update();
+            Window.DrawAll();
+            /*
+            ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
+            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
+            */
+            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
+            Framebuffer.Update();
+
+            FPSMeter.Update();
         }
     }
 }
