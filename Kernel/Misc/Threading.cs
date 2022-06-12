@@ -81,6 +81,8 @@ namespace MOOS.Misc
     {
         public static List<Thread> Threads;
         public static bool Initialized = false;
+
+        public static uint Locker;
         public static bool Locked = false;
 
         internal static int Index
@@ -106,6 +108,7 @@ namespace MOOS.Misc
                     if (ACPI.LocalAPIC_CPUIDs[i] > size) size = ACPI.LocalAPIC_CPUIDs[i];
                 Indexs = new int[size + 1];
 
+                Locker = 0;
                 Locked = false;
                 Initialized = false;
                 Threads = new();
@@ -164,7 +167,8 @@ namespace MOOS.Misc
 
         public static void Schedule(IDT.IDTStackGeneric* stack)
         {
-            if (!Initialized || Locked || Threads.Count == 0) return;
+            if (!Initialized || Threads.Count == 0) return;
+            while (Locked && Locker != SMP.ThisCPU) Native._pause();
 
             if (
                 !Threads[Index].Terminated &&
