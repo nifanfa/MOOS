@@ -2,6 +2,7 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 
+using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -135,6 +136,18 @@ namespace MOOS.Misc
 
         [DllImport("*")]
         public static extern void _int20h();
+
+        public static void Lock() 
+        {
+            ThreadPool.Locked = true;
+        }
+
+        public static void UnLock()
+        {
+            ThreadPool.Locked = false;
+        }
+
+        public static bool CanLock => Unsafe.As<bool, ulong>(ref ThreadPool.Locked);
 
         public static void TestThread()
         {
