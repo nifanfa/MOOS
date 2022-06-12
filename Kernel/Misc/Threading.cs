@@ -201,13 +201,7 @@ namespace MOOS.Misc
                 TickIdle = 0;
                 TickInSec = 0;
                 LastSec = RTC.Second;
-#if false
-                Console.Write("CPU Usage: ");
-                Console.Write(CPUUsage.ToString());
-                Console.WriteLine("%");
-#endif
             }
-            //Make sure the index 0 is idle thread
             if (Threads[Index].IsIdleThread)
             {
                 TickIdle++;
