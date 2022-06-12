@@ -82,8 +82,25 @@ namespace MOOS.Misc
         public static List<Thread> Threads;
         public static bool Initialized = false;
 
-        public static uint Locker;
-        public static bool Locked = false;
+        public static long Locker;
+        public static bool Locked 
+        {
+            get 
+            {
+                return Locker != -1;
+            }
+            set 
+            {
+                if (value)
+                {
+                    Locker = SMP.ThisCPU;
+                }
+                else 
+                {
+                    Locker = -1;
+                }
+            }
+        }
 
         internal static int Index
         {
@@ -108,7 +125,7 @@ namespace MOOS.Misc
                     if (ACPI.LocalAPIC_CPUIDs[i] > size) size = ACPI.LocalAPIC_CPUIDs[i];
                 Indexs = new int[size + 1];
 
-                Locker = 0;
+                Locker = -1;
                 Locked = false;
                 Initialized = false;
                 Threads = new();

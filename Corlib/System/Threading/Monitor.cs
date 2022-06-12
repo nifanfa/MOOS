@@ -10,16 +10,15 @@ namespace System.Threading
     {
         public static void Enter(object obj)
         {
-            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
+            if (Unsafe.As<long, ulong>(ref ThreadPool.Locker))
             {
                 ThreadPool.Locked = true;
-                ThreadPool.Locker = SMP.ThisCPU;
             }
         }
 
         public static void Exit(object obj)
         {
-            if (Unsafe.As<bool, ulong>(ref ThreadPool.Locked))
+            if (Unsafe.As<long, ulong>(ref ThreadPool.Locker))
             {
                 ThreadPool.Locked = false;
             }
