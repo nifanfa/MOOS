@@ -30,11 +30,6 @@ _pause PROC
     ret
 _pause ENDP
 
-_nop PROC
-    nop
-    ret
-_nop ENDP
-
 _TEXT ENDS
 
 END
