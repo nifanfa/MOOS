@@ -18,8 +18,6 @@ namespace MOOS
 
         public static int NumCPU { get => ACPI.LocalAPIC_CPUIDs.Count; }
 
-        public static volatile uint LastFreeCPUIndex;
-
         public static uint ThisCPU => LocalAPIC.GetId();
 
 
@@ -31,11 +29,7 @@ namespace MOOS
             LocalAPIC.Initialize();
             LocalAPIC.StartTimer(100000, 0x20);
             ThreadPool.Initialize();
-            for (; ; ) 
-            {
-                LastFreeCPUIndex = SMP.ThisCPU;
-                Native.Nop();
-            }
+            for (; ; ) Native.Hlt();
         }
 
         public static void Initialize(uint trampoline)
