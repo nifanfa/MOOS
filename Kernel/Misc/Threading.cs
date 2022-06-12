@@ -126,7 +126,7 @@ namespace MOOS.Misc
             _int20h(); //start scheduling
         }
 
-        private static void Terminate()
+        internal static void Terminate()
         {
             Console.Write("Thread ");
             Console.Write(Index.ToString());
