@@ -200,7 +200,10 @@ namespace MOOS.GUI
             //Do not continueing read the time
             if(Timer.Ticks % 50 == 0)
             {
-                time = DateTime.Now;
+                lock (null)
+                {
+                    time = DateTime.Now;
+                }
             }
 #if Chinese
             string Result = $"{(time.Year)}年{time.Month}月{time.Day}日,{time.Hour}:{time.Minute} | FPS:{FPSMeter.FPS} | CPU使用率: {ThreadPool.CPUUsage}% | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
