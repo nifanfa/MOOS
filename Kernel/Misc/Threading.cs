@@ -84,6 +84,8 @@ namespace MOOS.Misc
         public static bool Initialized = false;
 
         public static bool Locked;
+        public static volatile uint Locker;
+
 
         internal static int Index
         {
@@ -139,11 +141,17 @@ namespace MOOS.Misc
 
         public static void Lock() 
         {
-            ThreadPool.Locked = true;
+            if(!ThreadPool.Locked)
+            {
+                Locker = SMP.ThisCPU;
+                LocalAPIC.SendAllInterrupt(0x20);
+                ThreadPool.Locked = true;
+            }
         }
 
         public static void UnLock()
         {
+            Locker = 0xFFFFFFFF;
             ThreadPool.Locked = false;
         }
 
@@ -179,8 +187,8 @@ namespace MOOS.Misc
 
         public static void Schedule(IDT.IDTStackGeneric* stack)
         {
-            if (!Initialized || Locked || Threads.Count == 0) return;
-            //while (Locked && Locker != SMP.ThisCPU) Native._pause();
+            if (!Initialized  || Threads.Count == 0) return;
+            while (Locked && Locker != SMP.ThisCPU) Native._pause();
 
             if (
                 !Threads[Index].Terminated &&
