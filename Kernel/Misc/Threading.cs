@@ -15,6 +15,7 @@ namespace MOOS.Misc
         public IDT.IDTStackGeneric* Stack;
         public ulong SleepingTime;
         public int RunOnWhichCPU;
+        public bool IsIdleThread;
 
         public Thread(delegate*<void> method)
         {
@@ -37,15 +38,16 @@ namespace MOOS.Misc
             SleepingTime = 0;
         }
 
-        public Thread Start() 
+        public Thread Start(bool is_idle_thread = false) 
         {
             //Bootstrap CPU
             this.RunOnWhichCPU = 0;
+            this.IsIdleThread = is_idle_thread;
             ThreadPool.Threads.Add(this);
             return this;
         }
 
-        public Thread Start(int run_on_which_cpu)
+        public Thread Start(int run_on_which_cpu, bool is_idle_thread = false)
         {
             bool hasThatCPU = false;
             for(int i = 0; i < ACPI.LocalAPIC_CPUIDs.Count; i++) 
@@ -55,6 +57,7 @@ namespace MOOS.Misc
             if (!hasThatCPU) Panic.Error($"[Thread] CPU{run_on_which_cpu} is not exist!");
 
             this.RunOnWhichCPU = run_on_which_cpu;
+            this.IsIdleThread = is_idle_thread;
             ThreadPool.Threads.Add(this);
             return this;
         }
@@ -102,13 +105,13 @@ namespace MOOS.Misc
                 Locked = false;
                 Initialized = false;
                 Threads = new();
-                new Thread(&IdleThread).Start();
+                new Thread(&IdleThread).Start(true);
                 Initialized = true;
             }
             //Application CPU
             else
             {
-                new Thread(&IdleThread).Start((int)SMP.ThisCPU);
+                new Thread(&IdleThread).Start((int)SMP.ThisCPU, true);
             }
             Native.Sti();
             _int20h(); //start scheduling
@@ -150,6 +153,11 @@ namespace MOOS.Misc
 
         public static int[] Indexs;
 
+        private static ulong TickInSec;
+        private static ulong TickIdle;
+        private static ulong LastSec;
+        public static ulong CPUUsage;
+
         public static void Schedule(IDT.IDTStackGeneric* stack)
         {
             if (!Initialized || Locked || Threads.Count == 0) return;
@@ -180,6 +188,28 @@ namespace MOOS.Misc
                 (Threads[Index].SleepingTime > 0) ||
                 Threads[Index].RunOnWhichCPU != SMP.ThisCPU
             );
+
+            #region CPU Usage
+            if (LastSec != RTC.Second)
+            {
+                if (TickInSec != 0 && TickIdle != 0)
+                    CPUUsage = 100 - ((TickIdle * 100) / TickInSec);
+                TickIdle = 0;
+                TickInSec = 0;
+                LastSec = RTC.Second;
+#if false
+                Console.Write("CPU Usage: ");
+                Console.Write(CPUUsage.ToString());
+                Console.WriteLine("%");
+#endif
+            }
+            //Make sure the index 0 is idle thread
+            if (Threads[Index].IsIdleThread)
+            {
+                TickIdle++;
+            }
+            TickInSec++;
+            #endregion
 
             Native.Movsb(stack, Threads[Index].Stack, (ulong)sizeof(IDT.IDTStackGeneric));
         }
