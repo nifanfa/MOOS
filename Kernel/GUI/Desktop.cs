@@ -81,6 +81,8 @@ namespace MOOS.GUI
 
             LastPoint.X = -1;
             LastPoint.Y = -1;
+
+            time = DateTime.Now;
         }
 
         public static string[] BuiltInAppNames;
@@ -196,7 +198,7 @@ namespace MOOS.GUI
             pre.Dispose();
 
             //Do not continueing read the time
-            if(Timer.Ticks % 10 == 0)
+            if(Timer.Ticks % 50 == 0)
             {
                 time = DateTime.Now;
             }
