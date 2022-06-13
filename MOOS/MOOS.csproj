@@ -49,11 +49,11 @@
 	<Import Project="..\Kernel\Kernel.projitems" Label="Shared" />
 
 	<Target Name="CopyBinary" AfterTargets="Publish">
-		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\Trampoline.asm&quot; -o &quot;$(MSBuildStartupDirectory)\Tools\Trampoline&quot;"></Exec>
-		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\EntryPoint.asm&quot; -o &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)entry&quot;"></Exec>
-		<Exec Command="cmd.exe /c copy /b &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)entry&quot;+&quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)&quot; &quot;$(MSBuildStartupDirectory)\Tools\grub2\boot\kernel&quot;"></Exec>
-		<Delete Files="&quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)entry&quot;"></Delete>
-		<Exec Command="&quot;$(MSBuildStartupDirectory)\Tools\mkisofs.exe&quot; -relaxed-filenames -J -R -o &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table &quot;$(MSBuildStartupDirectory)\Tools\grub2&quot;"></Exec>
+		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="$(MSBuildStartupDirectory)\Tools\nasm.exe -fbin $(MSBuildStartupDirectory)\Tools\Trampoline.asm -o $(MSBuildStartupDirectory)\Tools\Trampoline"></Exec>
+		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="$(MSBuildStartupDirectory)\Tools\nasm.exe -fbin $(MSBuildStartupDirectory)\Tools\EntryPoint.asm -o $(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Exec>
+		<Exec Command="cmd.exe /c copy /b $(MSBuildProjectDirectory)\$(NativeOutputPath)entry+$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt) $(MSBuildStartupDirectory)\Tools\grub2\boot\kernel"></Exec>
+		<Delete Files="$(MSBuildProjectDirectory)\$(NativeOutputPath)entry"></Delete>
+		<Exec Command="$(MSBuildStartupDirectory)\Tools\mkisofs.exe -relaxed-filenames -J -R -o $(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table $(MSBuildStartupDirectory)\Tools\grub2"></Exec>
 		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\Solution1\Solution1.vmx"></Exec>
 		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\Solution1\Solution1.vmx"></Exec>
 		<!--
