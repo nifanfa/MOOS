@@ -187,7 +187,7 @@ namespace MOOS.Misc
 
         internal static void Schedule(IDT.IDTStackGeneric* stack)
         {
-            if (!Initialized  || Threads.Count == 0) return;
+            if (!Initialized  || (Locked && Locker == 0 && SMP.ThisCPU == 0) || Threads.Count == 0) return;
             while (Locked && Locker != SMP.ThisCPU) Native.Nop();
 
             if (
