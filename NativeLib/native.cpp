@@ -28,6 +28,11 @@ void Wrmsr(unsigned long index,unsigned long long value)
 	__writemsr(index, value);
 }
 
+unsigned long Rdtsc()
+{
+	return __rdtsc();
+}
+
 void Fxrstor64(void* ptr)
 {
 	_fxrstor64(ptr);

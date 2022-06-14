@@ -32,6 +32,9 @@ static unsafe class Native
     public static extern ulong ReadCR2();
 
     [DllImport("*")]
+    public static extern ulong Rdtsc();
+
+    [DllImport("*")]
     public static extern void Out8(uint port, byte value);
 
     [DllImport("*")]
