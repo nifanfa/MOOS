@@ -57,10 +57,10 @@ namespace MOOS
                 *sidt = (ulong)idt;
             }
 
+            Console.WriteLine("Starting all CPUs");
             for (int i = 0; i < NumCPU; ++i)
             {
                 uint id = ACPI.LocalAPIC_CPUIDs[i]; 
-                Console.WriteLine($"Starting CPU{id.ToString()}");
                 if (id != ThisCPU)
                 {
                     int last = *activedProcessor;
@@ -69,7 +69,7 @@ namespace MOOS
                     while (last == *activedProcessor) Native.Nop();
                 }
             }
-            Console.WriteLine("All CPUs started");
+            Console.WriteLine($"{NumCPU} CPUs started");
         }
     }
 }
