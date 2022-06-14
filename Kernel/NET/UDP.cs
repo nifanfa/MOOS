@@ -49,10 +49,12 @@ namespace MOOS
             header->SrcPort = Ethernet.SwapLeftRight(header->SrcPort);
             header->DestPort = Ethernet.SwapLeftRight(header->DestPort);
 
-            byte[] Buffer = new byte[length];
+            int len = Ethernet.SwapLeftRight(header->Length);
+
+            byte[] Buffer = new byte[len];
             fixed (byte* P = Buffer)
             {
-                Native.Movsb(P, frame, (ulong)length);
+                Native.Movsb(P, frame, (ulong)len);
             }
 
             for (int i = 0; i < Clients.Count; i++) 
