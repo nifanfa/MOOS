@@ -56,12 +56,13 @@ namespace MOOS.Graph
             24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
             24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24};
+        public byte[] blur_stack = new byte[((255 * 2u) + 1) * 3];
         public void Blur(
             uint X,
             uint Y,
             uint Width,
             uint Height,
-            uint Radius)
+            byte Radius)
         {
             byte* src = (byte*)VideoMemory;
             uint w = (uint)this.Width;
@@ -91,12 +92,11 @@ namespace MOOS.Graph
             uint wm = Width - X - 1;
             uint hm = Height - Y - 1;
             uint w4 = w * 4;
-            uint div = (Radius * 2) + 1;
+            uint div = (Radius * 2u) + 1;
             uint mul_sum = stackblur_mul[Radius];
             byte shr_sum = stackblur_shr[Radius];
-            byte[] stack = new byte[div * 3];
 
-            fixed(byte* p = stack)
+            fixed(byte* p = blur_stack)
             {
                 {
                     for (y = Y; y < Height; y++)
@@ -129,9 +129,9 @@ namespace MOOS.Graph
                             stack_ptr[0] = src_ptr[0];
                             stack_ptr[1] = src_ptr[1];
                             stack_ptr[2] = src_ptr[2];
-                            sum_r += src_ptr[0] * (Radius + 1 - i);
-                            sum_g += src_ptr[1] * (Radius + 1 - i);
-                            sum_b += src_ptr[2] * (Radius + 1 - i);
+                            sum_r += src_ptr[0] * (Radius + 1u - i);
+                            sum_g += src_ptr[1] * (Radius + 1u - i);
+                            sum_b += src_ptr[2] * (Radius + 1u - i);
                             sum_in_r += src_ptr[0];
                             sum_in_g += src_ptr[1];
                             sum_in_b += src_ptr[2];
@@ -230,9 +230,9 @@ namespace MOOS.Graph
                             stack_ptr[0] = src_ptr[0];
                             stack_ptr[1] = src_ptr[1];
                             stack_ptr[2] = src_ptr[2];
-                            sum_r += src_ptr[0] * (Radius + 1 - i);
-                            sum_g += src_ptr[1] * (Radius + 1 - i);
-                            sum_b += src_ptr[2] * (Radius + 1 - i);
+                            sum_r += src_ptr[0] * (Radius + 1u - i);
+                            sum_g += src_ptr[1] * (Radius + 1u - i);
+                            sum_b += src_ptr[2] * (Radius + 1u - i);
                             sum_in_r += src_ptr[0];
                             sum_in_g += src_ptr[1];
                             sum_in_b += src_ptr[2];
