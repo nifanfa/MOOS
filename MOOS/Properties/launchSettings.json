@@ -6,6 +6,12 @@
       "commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug MOOS",
       "workingDirectory": "..\\"
     },
+    "QEMU with network(make sure windows TAP is installed)": {
+      "commandName": "Executable",
+      "executablePath": "cmd.exe",
+      "commandLineArgs": "/c dotnet publish -p:vm=qemutap -r win-x64 -c debug MOOS",
+      "workingDirectory": "..\\"
+    },
     "VMware": {
       "commandName": "Executable",
       "executablePath": "cmd.exe",
