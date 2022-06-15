@@ -250,7 +250,7 @@ namespace MOOS.Driver
             for (int i = 0; i < 8; i++)
             {
                 TXDesc* desc = (TXDesc*)(TXDescs + (i * 16));
-                desc->addr = 0;
+                desc->addr = (ulong)Allocator.Allocate(65536);
                 desc->cmd = 0;
             }
 
@@ -376,7 +376,7 @@ namespace MOOS.Driver
         public override void Send(byte* Buffer, int Length)
         {
             TXDesc* desc = (TXDesc*)(TXDescs + (TXCurr * 16));
-            desc->addr = (ulong)Buffer;
+            Native.Movsb((void*)desc->addr, Buffer, (ulong)Length);
             desc->length = (ushort)Length;
             desc->cmd = (1 << 0) | (1 << 1) | (1 << 3);
             desc->status = 0;
