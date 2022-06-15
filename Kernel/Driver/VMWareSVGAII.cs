@@ -1,4 +1,4 @@
-﻿using MOOS;
+using MOOS;
 
 namespace MOOS.Driver
 {

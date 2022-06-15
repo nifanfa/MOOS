@@ -1,4 +1,4 @@
-﻿#if HasGUI
+#if HasGUI
 using MOOS.FS;
 using MOOS.Misc;
 using System.Drawing;

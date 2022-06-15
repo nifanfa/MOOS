@@ -1,4 +1,4 @@
-﻿#if HasGUI
+#if HasGUI
 using MOOS.Graph;
 using MOOS.GUI.Widgets;
 using System.Collections.Generic;

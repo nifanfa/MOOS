@@ -1,4 +1,4 @@
-﻿using MOOS.Driver;
+using MOOS.Driver;
 using System.Collections.Generic;
 
 namespace MOOS.Misc

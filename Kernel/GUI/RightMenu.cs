@@ -1,4 +1,4 @@
-﻿#if HasGUI
+#if HasGUI
 using System.Windows.Forms;
 
 namespace MOOS.GUI

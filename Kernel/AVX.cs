@@ -1,4 +1,4 @@
-﻿using MOOS.Misc;
+using MOOS.Misc;
 using System;
 using System.Runtime.InteropServices;
 

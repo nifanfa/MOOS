@@ -1,4 +1,4 @@
-﻿#if HasGUI
+#if HasGUI
 using MOOS;
 using MOOS.Graph;
 using MOOS.GUI;

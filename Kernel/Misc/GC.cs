@@ -1,4 +1,4 @@
-﻿#if HasGC
+#if HasGC
 using System;
 using System.Diagnostics;
 

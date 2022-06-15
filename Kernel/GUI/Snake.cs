@@ -1,4 +1,4 @@
-﻿#if HasGUI
+#if HasGUI
 using MOOS.Driver;
 using System;
 

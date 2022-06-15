@@ -1,7 +1,5 @@
 #if HasGUI
-/*
- * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
- */
+
 using MOOS.Driver;
 using MOOS.Graph;
 using MOOS.Misc;
@@ -18,7 +16,7 @@ namespace MOOS.GUI
         public FConsole(int X, int Y) : base(X, Y, 640, 320)
         {
 #if Chinese
-            Title = "¿ØÖÆÌ¨";
+            Title = "ï¿½ï¿½ï¿½ï¿½Ì¨";
 #else
             Title = "Console";
 #endif

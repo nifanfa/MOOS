@@ -1,4 +1,4 @@
-﻿using Internal.Runtime.CompilerHelpers;
+using Internal.Runtime.CompilerHelpers;
 using MOOS;
 using MOOS.Driver;
 using MOOS.FS;

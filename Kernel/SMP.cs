@@ -1,4 +1,4 @@
-﻿using MOOS.Driver;
+using MOOS.Driver;
 using MOOS.Misc;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;

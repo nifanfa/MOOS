@@ -1,4 +1,4 @@
-﻿#if Kernel
+#if Kernel
 /*
 Authors:
   Bob Smith (bob@thestuff.net)

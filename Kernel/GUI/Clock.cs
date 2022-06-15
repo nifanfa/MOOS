@@ -1,7 +1,5 @@
-﻿#if HasGUI
-/*
- * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
- */
+#if HasGUI
+
 using System;
 
 namespace MOOS.GUI
