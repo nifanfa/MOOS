@@ -24,7 +24,6 @@ namespace MOOS.GUI
 #endif
             Cmd = string.Empty;
             Data = string.Empty;
-            BackgroundColor = 0xFF222222;
             ScreenBuf = new Image(640, 320);
 
             Console.OnWrite += Console_OnWrite;
