@@ -1,4 +1,4 @@
-﻿#if Kernel
+#if Kernel
 using Internal.Runtime.CompilerHelpers;
 using MOOS;
 using MOOS.Misc;

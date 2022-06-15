@@ -1,4 +1,4 @@
-﻿using MOOS.Misc;
+using MOOS.Misc;
 using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
 

@@ -1,4 +1,4 @@
-﻿using MOOS.Driver;
+using MOOS.Driver;
 
 namespace MOOS.Graph
 {

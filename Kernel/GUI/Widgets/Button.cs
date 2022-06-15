@@ -1,4 +1,4 @@
-﻿#if HasGUI
+#if HasGUI
 namespace MOOS.GUI.Widgets
 {
     internal class Button : Widget

@@ -1,4 +1,4 @@
-﻿namespace MOOS.Driver
+namespace MOOS.Driver
 {
     public static class Timer
     {

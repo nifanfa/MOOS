@@ -1,6 +1,3 @@
-/*
- * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
- */
 //https://wiki.osdev.org/HPET#Interrupt_routing
 
 using MOOS.Misc;

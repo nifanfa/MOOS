@@ -1,6 +1,3 @@
-/*
- * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
- */
 #if HasGUI
 using MOOS.Driver;
 using MOOS.FS;
@@ -44,7 +41,7 @@ namespace MOOS.GUI
             BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
 #if Chinese
-            Prefix = " ¹ÜÀíÔ±@Moos: ";
+            Prefix = " ï¿½ï¿½ï¿½ï¿½Ô±@Moos: ";
 #else
             Prefix = " root@Moos: ";
 #endif
@@ -62,11 +59,11 @@ namespace MOOS.GUI
             BuiltInAppNames = new string[]
             {
 #if Chinese
-                "¼ÆËãÆ÷",
-                " Ê±ÖÓ",
-                " »­Í¼",
-                "Ì°³ÔÉß",
-                "¿ØÖÆÌ¨",
+                "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+                " Ê±ï¿½ï¿½",
+                " ï¿½ï¿½Í¼",
+                "Ì°ï¿½ï¿½ï¿½ï¿½",
+                "ï¿½ï¿½ï¿½ï¿½Ì¨",
 #else
                 "Calculator",
                 "Clock",
@@ -193,7 +190,7 @@ namespace MOOS.GUI
             pre.Dispose();
 
 #if Chinese
-            string Result = $"FPS:{FPSMeter.FPS} | CPUÊ¹ÓÃÂÊ: {ThreadPool.CPUUsage}% | ÄÚ´æ: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
+            string Result = $"FPS:{FPSMeter.FPS} | CPUÊ¹ï¿½ï¿½ï¿½ï¿½: {ThreadPool.CPUUsage}% | ï¿½Ú´ï¿½: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #else
             string Result = $"FPS:{FPSMeter.FPS} | CPU Usage: {ThreadPool.CPUUsage}% | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #endif
@@ -351,7 +348,7 @@ namespace MOOS.GUI
                     msgbox.X = itemX + 75;
                     msgbox.Y = itemY + 75;
 #if Chinese
-                msgbox.SetText("Ã»ÓÐ¼æÈÝµÄÉù¿¨!");
+                msgbox.SetText("Ã»ï¿½Ð¼ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½!");
 #else
                     msgbox.SetText("Audio controller is unavailable!");
 #endif
@@ -371,7 +368,7 @@ namespace MOOS.GUI
             }
 
 #if Chinese
-            else if (name == "¼ÆËãÆ÷")
+            else if (name == "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
 #else
             else if (name == "Calculator")
 #endif
@@ -379,7 +376,7 @@ namespace MOOS.GUI
                 new Calculator(300, 500);
             }
 #if Chinese
-            else if (name == " Ê±ÖÓ")
+            else if (name == " Ê±ï¿½ï¿½")
 #else
             else if (name == "Clock")
 #endif
@@ -387,7 +384,7 @@ namespace MOOS.GUI
                 new Clock(650, 500);
             }
 #if Chinese
-            else if (name == " »­Í¼")
+            else if (name == " ï¿½ï¿½Í¼")
 #else
             else if (name == "Paint")
 #endif
@@ -395,7 +392,7 @@ namespace MOOS.GUI
                 new Paint(500, 200);
             }
 #if Chinese
-            else if (name == "Ì°³ÔÉß")
+            else if (name == "Ì°ï¿½ï¿½ï¿½ï¿½")
 #else
             else if (name == "Snake")
 #endif
@@ -403,7 +400,7 @@ namespace MOOS.GUI
                 new Snake(600, 100);
             }
 #if Chinese
-            else if (name == "¿ØÖÆÌ¨")
+            else if (name == "ï¿½ï¿½ï¿½ï¿½Ì¨")
 #else
             else if (name == "Console")
 #endif
@@ -423,7 +420,7 @@ namespace MOOS.GUI
                 msgbox.X = itemX + 75;
                 msgbox.Y = itemY + 75;
 #if Chinese
-                msgbox.SetText("Ã»ÓÐÈÎºÎ³ÌÐò¿ÉÒÔ´ò¿ª´Ë³ÌÐò!");
+                msgbox.SetText("Ã»ï¿½ï¿½ï¿½ÎºÎ³ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ò¿ª´Ë³ï¿½ï¿½ï¿½!");
 #else
                 msgbox.SetText("No application can open this file!");
 #endif

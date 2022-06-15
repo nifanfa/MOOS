@@ -1,4 +1,4 @@
-﻿#if HasGUI
+#if HasGUI
 namespace MOOS.GUI
 {
     internal class MessageBox : Window
