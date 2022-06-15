@@ -57,6 +57,13 @@
 		
 		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive id=disk,file=&quot;$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd&quot;,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime"></Exec>
 	</Target>
+
+	<Target Name="RunQemu" AfterTargets="BuildISO" Condition="$(vm) == 'qemutap'">
+		<Error Text="Please install QEMU in order to debug MOOS!(do not modify the path) https://www.qemu.org/download/#windows" Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')"></Error>
+		<Error Text="Please install Intel Hardware Accelerated Execution Manager (HAXM) in order to speed up QEMU https://github.com/intel/haxm/releases" Condition="!Exists('C:\Program Files\Intel\HAXM\IntelHaxm.sys')"></Error>
+
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive id=disk,file=&quot;$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd&quot;,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime -net nic,model=rtl8139 -net tap,ifname=tap"></Exec>
+	</Target>
 	
 	<Target Name="RunVMware" AfterTargets="BuildISO" Condition="$(vm) == 'vmware'">
 		<Error Text="Please install VMWare Player in order to Run MOOS!" Condition="!Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')"></Error>
