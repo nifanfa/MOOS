@@ -185,9 +185,7 @@ namespace MOOS.GUI
             }
             names.Dispose();
 
-
-            Framebuffer.Graphics.AFillRectangle(0, 0, Framebuffer.Graphics.Width, BarHeight, 0xDD111111);
-            Framebuffer.Graphics.Blur(0, 0, (uint)Framebuffer.Graphics.Width, BarHeight, 5);
+            Framebuffer.Graphics.AFillRectangle(0, 0, Framebuffer.Graphics.Width, BarHeight, 0xAA111111);
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
             
             string pre = Prefix + Dir;

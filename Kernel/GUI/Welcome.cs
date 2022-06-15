@@ -11,6 +11,7 @@ namespace MOOS.GUI
 
         public Welcome(int X, int Y) : base(X, Y, 280, 225)
         {
+            BackgroundColor = 0xFF222222;
 #if Chinese
             this.Title = "欢迎";
 #else

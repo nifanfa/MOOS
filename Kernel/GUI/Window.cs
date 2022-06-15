@@ -25,7 +25,6 @@ namespace MOOS.GUI
             CloseButton = new PNG(File.Instance.ReadAllBytes("Images/Close.png"));
             font = new IFont(yehei, "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~Ò»ÒÒ¶þÊ®¶¡³§Æß²·°ËÈËÈë¶ùØ°¼¸¾ÅµóÁËµ¶Á¦ÄËÓÖÈý¸ÉÓÚ¿÷¹¤ÍÁÊ¿²ÅÏÂ´ç´óÕÉÓëÍòÉÏÐ¡¿ÚÉ½½íÇ§Æò´¨ÒÚ¸öÏ¦¾ÃÃ´É×·²Íè¼°¹ãÍöÃÅÑ¾ÒåÖ®Ê¬¼ºÒÑËÈ¹­×ÓÎÀÒ²Å®ÈÐ·ÉÏ°²æÂíÏç·áÍõ¿ª¾®Ìì·òÔªÎÞÔÆ×¨Ø¤ÔúÒÕÄ¾ÎåÖ§Ìü²»È®Ì«ÇøÀú´õÓÑÓÈÆ¥³µ¾ÞÑÀÍÍ¸ê±È»¥ÇÐÍßÖ¹ÉÙÔ»ÈÕÖÐ±´¸ÔÄÚË®¼ûÎçÅ£ÊÖÆøÃ«ÈÉÉýØ²³¤ÈÊÊ²Æ¬ÆÍ»¯³ð±ÒÈÔ½ö½ï×¦·´½é¸¸´ÓÂØ½ñÐ×·Ö·¦¹«²ÖÔÂÊÏÎðÇ··çµ¤ÔÈÎÚ¹´·ïÁùÎÄ¿º·½»ðÎª¶·Òä¼Æ¶©»§ÈÏÈß¼¥ÐÄ³ßÒý³ó°Í¿×¶Ó°ìÒÔÔÊÓèµËÈ°Ë«Êé»ÃÓñ¿¯Î´Ä©Ê¾»÷´òÇÉÕýÆË»Ü°Ç¹¦ÈÓÈ¥¸ÊÊÀ°¬¹Å½Ú±¾Êõ¿É±û×óÀ÷Ê¯ÓÒ²¼º»ÎìÁúÆ½ÃðÔþ¶«¿¨±±Õ¼Í¹Â¬Òµ¾ÉË§¹éµ©Ä¿ÇÒÒ¶¼×Éê¶£µçºÅÌïÓÉÖ»°ÈÊ·ÑëÐÖß´µð½Ðßµß¶ÁíÌ¾È½Ãó°¼ÇôËÄÉúÊ¸Ê§Õ§ºÌÇð¸¶ÕÌ´úÏÉÃÇÒÇ°××ÐËû³â¹Ïºõ´ÔÁîÓÃË¦Ó¡¶ûÀÖ¾ä´Ò²áÃ®·¸Íâ´¦¶¬ÄñÎñ°ü¼¢Ö÷ÊÐÁ¢·ëÐþÉÁÀ¼°ëÖ­»ãÍ·ººÄþÑ¨ËüÌÖÐ´ÈÃÀñÑµÒé±ØÑ¶¼ÇÓÀË¾ÄáÃñ¸¥ºë³öÁÉÄÌÅ«ÕÙ¼ÓÆ¤±ßÔÐ·¢Ê¥¶ÔÌ¨Ã¬¾ÀÄ¸Ó×Ë¿°îÊ½ÓØÐÌÈÖ¶¯¿¸ËÂ¼ª¿Û¿¼ÍÐÀÏ¹®»øÖ´À©É¨µØ³¡Ñï¶úÓó¹²Ã¢ÑÇÖ¥ÐàÆÓ»úÈ¨¹ý³¼ÀôÔÙÐ­Î÷Ñ¹ÑáÐçÔÚ°ÙÓÐ´æ¶øÒ³½³¿ä¶á»Ò´ïÁÐËÀ³É¼ÐÒÄ¹ìÐ°Ò¢»®Âõ±ÏÖÁ´ËÕêÊ¦³¾¼âÁÓ¹âµ±ÔçÓõÍÂÏÅ³æÇúÍÅÂÀÍ¬µõ³ÔÒòÎüÂðßºÓìÒÙËê·«»ØÆñÔò¸ÕÍøÈâÄêÖìÏÈ¶ªÍ¢ÉàÖñÇ¨ÇÇÆùÎ°´«Æ¹ÅÒÐÝÎé·üÓÅ¾Ê·¥ÑÓÖÙ¼þÈÎÉË¼ÛÂ×·Ý»ªÑö·Â»ïÎ±×ÔÒÁÑªÏòËÆºóÐÐÖÛÈ«»áÉ±ºÏÕ×ÆóÖÚÒ¯É¡´´¼¡Àß¶äÔÓÎ£Ñ®Ö¼Ðñ¸ºÐÙÃû¸÷¶àÕùÉ«×³³å×±±ù×¯ÇìÒàÁõÆë½»ÒÂ´Î²ú¾öº¥³äÍý±ÕÎÊ´³Ñò²¢¹ØÃ×µÆÖÝº¹ÎÛ½­Ñ´³ØÈêÌÀÃ¦ÐËÓîÊØÕ¬×Ö°²½²»ä¾üÑÈÐí¶ïÂÛËÏÅ©·íÉè·Ã¾÷Ñ°ÄÇÑ¸¾¡µ¼Òì³ÚËïÕóÑôÊÕ½×Òõ·À¼éÈç¸¾åúºÃËýÂèÏ·Óð¹Û»¶ÂòºìÍÔÏËÑ±Ô¼¼¶¼Í³ÛÈÒÑ²ÊÙÅªÂó¾ÁÂêÐÎ½ø½äÍÌÔ¶Î¥ÈÍÔË·ö¸§Ì³¼¼»µ¿ÙÈÅ¶ó¾ÜÕÒÅúÖ·³¶×ß³­¹±¹¯°Ó¹¥³àÕÛ×¥°âÂÕ°çÇÀÐ¢¿²¾ùÒÖÅ×Í¶·Ø¿Ó¿¹·»¶¶»¤¿ÇÖ¾¿éÅ¤Éù°Ñ±¨ÄâÈ´Êã½ÙÜ½ÎßÎ­Ñ¿»¨ÇÛ½æ·Ò²Ô·¼ÑÏÂ«Ð¾ÀÍ¿Ë°ÅËÕ¸Ë¸Ü¶Å²Ä´åÕÈÐÓÉ¼Î×¼«ÀîÑîÇó¸¦Ï»¸üÊøÎá¶¹Á½ÓÏÀöÒ½³½Àø·ñ»¹ÞÎ¼ßÀ´Á¬Ðù²½Â±¼áÐ¤ºµ¶¢³ÊÊ±ÎâÖúÏØÀï´ôÖ¨·ÍÅ»Ô°¿õÎ§Ñ½¶Ö×ãÓÊÄÐÀ§³³´®Ô±ÄÅÌýÒ÷·ÔÇºÎÇ´µÎØ¿Ô°ÉÒØºð¶Ú±ðË±á«¸ÚÕÊ²ÆÕë¶¤Äµ¸æÎÒÂÒÀûÍºÐãË½Ã¿±ø¹ÀÌåºÎ×ôÓÓµ«Éìµè×÷²®ÁæÓ¶µÍÄã×¡Î»°éÉíÔíËÅ·ð´Ñ½ü³¹ÒÛ·µÓàÏ£×ø¹ÈÍ×º¬ÁÚ²í¸Î¸Ø¶ÇÖâ³¦¹êµéÃâ¿ñÓÌ±·½ÇÉ¾ÌõÍ®ÂÑ¾ÄµºÅÙÓ­·¹ÒûÏµÑÔ¶³×´Ä¶¿ö´²¿â±ÓÁÆÁßÓ¦ÕâÀäÂ®ÐòÐÁÆúÒ±ÍüÈòÏÐ¼äÃÆÅÐ¶ÒÔî²Ó×ÆµÜÍôãåÅæÌ­Á¤É³ÆûÎÖÂÙÐÚ·º²×Ã»¹µ»¦Éò³ÁÇß»³ÓÇ³À¿ìÍêËÎºêÀÎ¾¿ÇîÔÖÁ¼Ö¤ÆôÆÀ²¹³õÉçìëÊ¶Õ©Ëßº±Õï´ÊÒë¾ýÁé¼´²ãÆ¨ÄòÎ²³Ù¾Ö¸ÄÕÅ¼É¼ÊÂ½°¢³Â×è¸½×¹¼ËÃîÑýæ¢·Á¶ÊÅ¬ÈÌ¾¢ÒÓ¼¦Î³Çý´¿É´¸ÙÄÉ²µ×Ý·×Ö½ÎÆ·ÄÂ¿Å¦·îÍæ»·ÎäÇàÔðÏÖÃµ±í¹æÄ¨ØÔ¿ÀÅ÷ÍØÂ£°ÎÆº¼ðÌ¹µ£À¤Ñº³é¹ÕÍÏÕßÅÄ¶¥²ðÁàÓµµÖ¾ÐÊÆ±§ÖôÀ¬À­À¹ÐÒ°èÅ¡·÷×¾ÕÐÆÂÅû²¦ÔñÌ§Ä´ÞÖÆäÈ¡ÜÔ¿àÎô¿ÁÈôÃ¯Æ»ÃçÓ¢¹¶Ô·°ú·¶Ö±×ÂÇÑ¾¥Ì¦Ã©Í÷ÁÖÖ¦±­Êà¹ñÃ¶Îö°åËÉÇ¹·ã¹¹º¼½ÜÊöÕíÉ¥»ò»­ÎÔÊÂ´ÌÔæÓêÂôÓô·¯¿óÂë²ÞÄÎ±¼Ææ·ÜÌ¬Å·Å¹Â¢ÆÞºäÇê×ªÕ¶ÂÖÈíµ½·ÇÊåÆç¿Ï³ÝÐ©×¿»¢Â²ÉöÏÍÉÐÍú¾ßÎ¶¹ûÀ¥¹ú°¥¹¾²ýºÇ³©Ã÷Ò×Áü°ºµÏµä¹ÌÖÒÉëÖäÕ¦¸ÀºôÃùÓ½ÄØßÍ¿§°¶ÑÒÌûÂÞÖÄÅÁÁë¿­°ÜÕË··±á¹ºÖüÍ¼µöÖÆÖªµü·Õ´¹ÄÁÎï¹Ô¹Î¸ÑºÍ¼¾Î¯±ü¼ÑÊÌÔÀ¹©Ê¹ÀýÏÀ½Ä°æÖ¶ÕìÂÂ²àÆ¾ÇÈÅå»õ³ÞÒÀ±°µÄÆÈÖÊÐÀÕ÷ÍùÅÀ±Ë¾¶ËùÉá½ðÉ²ÃüëÈ¸«°Ö²ÉÃÙÊÜÈéÌ°ÄîÆ¶·Þ·ô·ÎÖ«Ö×ÕÍÅó¹É°¹·¾·Ê·þÐ²ÖÜ»èÓãÍÃºüºö¹·Äü±¸ÊÎ±¥ËÇ±ä¾©ÏíÅÓµêÒ¹Ãí¸®µ×Å±¸í¾Î¼Á×ä½¼¸ý·Ï¾»Ã¤·Å¿ÌÓýÃ¥Õ¢ÄÖÖ£È¯¾íµ¥¾æ³´´¶¿»Ñ×Â¯Ä­Ç³·¨Ð¹¹ÁºÓÕ´Àá¾ÚÓÍ²´ÑØÅÝ×¢ÆüÅ¢ÐºÃÚÓ¾Äà·ÐÕÓ²¨ÆÃÔóÖÎÕúÇÓ²ÀÐÔÅÂÁ¯¹ÖâùÑ§±¦×Ú¶¨³èÒËÉóÖæ¹Ù¿ÕÁ±ÍðÊµÊÔÀÉÊ«¼ç·¿³Ï³ÄÉÀÊÓÆí»°µ®¹îÑ¯¸ÃÏê½¨ËàÂ¼Á¥ÖãÌë¾Ó½ìË¢Çü»¡ÃÖÏÒ³ÐÃÏÂªÄ°¹ÂÉÂ½µº¯ÏÞÃÃ¹Ã½ãÐÕÄÝÊ¼Ä·Ìö¼ÝÈþ²Î¼èÏßÁ·×éÉðÏ¸Ê»Ö¯¾ÔÖÕ×¤°íÍÕÉÜÒï¾­¹áÆõ·¡×à´º°ïçèÕäÁáÉº²£¶¾ÐÍÊÃ¹Ò·â³Ö¿½¹°Ïî¿å¿æ³ÇÐ®ÄÓÕþ¸°ÕÔµ²×§ÔÕÍ¦À¨¹¸Ë©Ê°Ìô¶âÖ¸µæÕõ¼·Æ´ÍÚ°´»ÓÅ²ÕüÄ³Éõ¾£È×¸ï²ç¼öÏï´ø²Ý¼ëÒð²è»ÄÃ£µ´ÈÙ»çÓ«¹ÊºúÒñÀóÄÏÒ©±êÕ»¸Ì¿Ý±ú¶°Ïà²é°ØÕ¤ÁøÖùÊÁÀ¸ÄûÊ÷²ªÒª¼íÏÌÍþÍáÑÐ×©ÀåºñÆöÉ°±ÃÑâ¿³ÃæÄÍË£Ç£Å¸²ÐÑêÖáÇáÑ»½Ô¾Â±³Õ½µãÅ°ÁÙÀÀÊúÊ¡Ï÷³¢ÃÁíïÊÇÅÎÕ£ÍÛºåÑÆÏÔÃ°Ó³ÐÇ×òßÖÕÑÎ·Å¿Î¸¹ó½çºçÏºÒÏË¼ÂìËäÆ·ÑÊÂîÑ«»©ÔÛÏì¹þ¶ßÒ§¿ÈßäÄÄÓ´Ì¿Ï¿·£¼úÌùêÝ¹ÇÓÄ¸Æ¶Û³®ÖÓ¸ÖÄÆÔ¿ÇÕ¾û¹³Å¥Ð¶¸×°Ý¿´¾ØÕ±ÇâÔõÉüÑ¡ÊÊÃëÏãÖÖÇï¿ÆÖØ¸´¸Í¶Î±ãÁ©´ûË³ÐÞÇÎ±£´Ù¶íÀþÎê¼óË×·ýÐÅ»ÊÈª¹íÇÖÓíºî×·¿¡¶Ü´ý»²ÑÜÂÉºÜÐëÐð½£ÌÓÊ³ÅèÅßëÊµ¨Ê¤°ûÅÖÂöÌ¥ÃãÏÁÊ¨¶ÀÕø½ÆÓüºÝÃ³Ô¹¼±¶üÈÄÊ´½È±ýÂÍÍä½«½±°§Í¤ÁÁ¶È¼£Í¥´¯·èÒß°Ì×É×ËÇ×ÒôµÛÊ©¹ëÎÅÃö·§¸ó²îÑøÃÀ½ªÅÑËÍÀàÃÔ×ÑÂ¦Ç°Ê×Äæ×È×ÜÁ¶Õ¨Ë¸ÅÚìÅÀÃÌêÍÝ½àºéÈ÷Æâ½½×Ç¶´²âÏ´»îÅÉÇ¢È¾Âåä¯¼ÃÑóÖÞ»ëÅ¨½òÊÑºã»Ö»ÐÌñÐôÇ¡ÄÕºÞ¾Ù¾õÐû»ÂÊÒ¹¬ÏÜÍ»´©ÇÔ¿Í½ë¹ÚÎÜÓï±â°À×æÉñ×£ìôÎóÓÕ»åËµËÐ¿ÑÍË¼ÈÎÝÖçÆÁÊº·Ñ¶¸Ñ·Ã¼º¢ÔÉ³ýÏÕÔºÍÞÀÑÒÌÒö½¿Ò¦ÄÈÅ­¼ÜºØÓ¯ÓÂµ¡¹ïÔéÈáÀÝ°óÈÞ½áÈÆ½¾»æ¸øÑ¤ÂæÂç¾ø½Êº§Í³¸ûÔÅºÄ°ÒÑÞÌ©ÇØÖé°àËØÄä²ÏÍçÕµ·ËÀÌÔÔ²¶¹¡ÎæÕñÔØ¸ÏÆðÑÎÉÓº´ÄóÂñ×½À¦¾èËðÔ¬°Æ¶¼ÕÜÊÅ¼ñ´ì»»ÍìÖ¿ÈÈ¿Öµ·ºøÍ±°£°¤³Ü¹¢µ¢Äô¹§Ã§À³Á«ÄªÀòºÉ»ñ½ú¶ñÓ¨ÝºÕæ¿ò°ð¹ð½ÛÆÜµµÍ©ÖêÇÅèëË¨ÌÒ¸ñ×®Ð£ºËÑù¸ùË÷¸çËÙ¶ºÀõ¼Ö×ÃÅä³áÈè´½ÏÄÔÒÅéÀù´¡ÆÆÔ­Ì×ÖðÁÒÊâÑ³¹Ë½Î½Ï¶Ù±ÐÖÂ²ñ×ÀÂÇ¼à½ôµ³³ÑÉ¹ÃßÏþÏøßëÑ¼»Î²¸ÉÎÌÞÔÎ°öÅÏò¼ÎÃò½ò¾ÉÚÁ¨ÆÔ¿ÞÅ¶¶÷Ñì»½Ñäºßßó°¡°¦Ëô°ÕÇÍ¶ë·åÔ²¾þÔô»ßÂ¸ÔßÇ®Ç¯×ê¼ØÌúÁåÇ¦È±Ñõ°±ÌØÎþÔì³ËµÐ³Ó×â»ýÑíÖÈ³ÆÃØÍ¸±ÊÐ¦ËñÕ®½èÖµÒÐ°³Çãµ¹ÌÈ¾ã³«ºòÁÞ¸©±¶¾ë½¡³ôÉä¹ªÏ¢¾óÍ½ÐìÒó½¢²Õ°ãº½Í¾ÄÃËÊµùÒ¨°®²ò±ª°äËÌÎÌÒÈ´àÖ¬ÐØ¸ìÔàÆê½ºÄÔÅ§¹äÀêÀÇÇä·êÍÒÁôÔ§Öå¶öÄÙÁèÆàÁµ½°½¬Ë¥ÖÔ¸ß¹ùÏ¯×¼×ùÖ¢²¡¼²Õ«ÕîÌÛÆ£¼¹Ð§ÀëÎÉÌÆ´É×ÊÁ¹Õ¾ÆÊ¾º²¿ÅÔÂÃÐóÔÄÐß¸áÆ¿È­·ÛÁÏÒæ¼æ¿¾ºæ·³ÉÕÖòÑÌÀÓµÝÌÎÕãÀÔÆÖ¾ÆÉæÏûÎÐºÆº£Í¿Ô¡¸¡»ÁµÓÁ÷Èó½§ÌéÀË½þÕÇÌÌÉ¬Ó¿ã£ÎòÇÄº·»ÚÃõÔÃº¦¿í¼ÒÏüÑç±öÇÏÕ­ÈÝÔ×°¸ÇëÀÊÖîÅµ¶ÁÉÈ·ÌÍàÐäÅÛ±»Ïé¿ÎÚ¤Ë­µ÷Ô©ÁÂ×»Ì¸Òê°þ¿ÒÕ¹¾çÐ¼ÈõÁêËîÌÕÏÝÅãÓé¾êË¡¶ðÄïÍ¨ÄÜÄÑÔ¤É£¾îÐåÑé¼Ì¿¥ÇòËöÀíÁðÀÅÅõ¶Â´ëÃèÓòÞàÑÚ½ÝÅÅÑÉµô´·Éâ¶ÑÍÆ²ºÏÆÊÚÄí½ÌÌÍÆþÂÓµàÅà½ÓÖÀ¿ØÌ½¾Ý¾ò²ôÖ°»ùñö¿±ÁÄÈ¢ÖøÁâÀÕ»Æ·ÆÃÈÂÜ¾úÎ®²ËÌÑ¾ÕÆÐÆ¼²¤Ó©ÓªÇ¬ÏôÈø¹½Ðµ±òÃÎÀ·¹£ÎàÉÒÃ·¼ìÊáÌÝÍ°Ëó¾È²Ü¸±Æ±ÔÍÐïÏáÆÝ¹èË¶ÉÝ¿øË¬ÁûÏ®Ê¢ØÒÑ©¸¨Á¾Â­Ðé±ëÈ¸ÌÃ³£¿ô³×³¿ÕöÃÐÑÛÐüÒ°Å¾À²Âü»ÞÍí×Ä·È¾àÖº¿ÐÔ¾ÂÔòÇÖûÉß»£ÀÛ¶õ³ª»¼†ªÍÙÎ¨Æ¡É¶Ð¥ÑÂÆéÕ¸Âß´Þá¡±À³çáÈÓ¤È¦îíîõÂÁÍ­Ãú²ùÒø½ÃÌð½ÕÀæÀç»àÒÆ±¿ÁýµÑóÏ·ûµÚÃô×ö´üÓÆ³¥Å¼ÙËÍµÄúÊÛÍ£Æ«Çû¶µ¼ÙÐÆÅÇáãµÃÏÎÅÌ²°´¬¶æÐ±ºÐ¸ëÁ²Ï¤Óû²ÊÁì½Å²±¸¬ëàÁ³ÍÑÏó¹»ÒÝ²ÂÖíÁÔÃ¨»Ë²þÃÍ¼ÀÏÚ¹Ý´Õ¼õºÁÅëÊüÂéâÖÈ¬Ñ÷ºÛÀÈ¿µÓ¹Â¹µÁÕÂ¾¹ÉÌ×åÐýÍûÂÊÑÖ²û×ÅÁç¸Ç¾ìÕ³´ÖÁ£¶Ï¼ôÊÞº¸»ÀÇåÌíºèÁÜÑÄÑÍÇþ½¥ÊçÌÊ»ì»´ÏýÔ¨ÒùÓæÌÔ´¾ÒºÓÙµ­µíÉîäÌº­ÆÅÁºÉøÇéÏ§²Ñµ¿¾åÌèÎ©¾ªµëã²Íï²Ò¹ß¿ÜÒú¼Ä¼ÅËÞÖÏÒ¤ÃÜÄ±µý»ÑÐ³¸¤µ»»öÎ½ÑèÃÕ´þ¸ÒÎ¾ÍÀµ¯Ëå¶éËæµ°ÓçÂ¡Òþ»éÉôÍñÆÄ¾±¼¨Ð÷ÐøÆï´ÂÉþÎ¬Ãà±Á³ñ×ÛÕÀÂÌ×º³²ÇÙÁÕ×ÁÇí°ßÌæ×á¿î¿°Ëþ´îÑß¿«Ô½³ÃÇ÷³¬À¿µÌÌá²©½ÒÏ²Åí´§²å¾¾ËÑÖóÔ®²ó²Ã¸é´êÂ§½ÁÒ¼ÎÕÉ¦ÈàË¹ÆÚÆÛÁªºùÉ¢ÈÇÔáÄ¼¸ð¶­ÆÏ¾´´Ð½¯µÙÂäº«³¯¹¼¿û°ôÀâÆåÒ¬Ö²É­·ÙÒÎ½·¿Ã¹÷×µÃÞÅï×Ø¹×ÀÆÍÖ»Ý»ó±ÆËÚ¼¬º¨ËÖ³øÏÃÓ²ÏõÈ·ÁòÑãÖ³ÁÑÐÛ¼Õö¨ÔÝÑÅÇÌ±²±¯×ÏÔä»Ô³¨ÌÄÉÍÕÆÇçíùÊî×îÎúÁ¿¶¦ÅçÔû¾§À®Óöº°¶ôÁÀ¾°³ë¼ù°ÏµøÅÜõËÒÅÍÜÖëòÑÑÑ¸òºÈ¾éÎ¹´­ºíÓ÷ÌäÐúÇ¶·ùÃ±¸³¶ÄÊê´ÍÅâºÚÖýÆÌÁ´ÏúËø³ú¹øÐâ·æÐ¿ÈñÉûêþ¶ÌÖÇµªÌºÂÈ¶ìÊ£ÉÔ³ÌÏ¡Ë°¿ðµÈÖþ²ßÉ¸Í²·¤´ð½îóÝ°Á¸µÅÆ±¤¼¯½¹°ø´¢ð©ÍîÔÁ°Â½Ö³ÍÓùÑ­Í§ÊæÓâ·¬ÊÍÇÝÀ°Æ¢Ò¸Ç»ÍóÂ³ÐÉâ¬»«ºï±¹È»À¡²ö×°Âù¾Í¶Ø±ó¶»Á¡»¾Í´Í¯¿¢À«ÉÆÏèÏÛÆÕ·à×ðµìµÀËìÔøÑæ¸ÛÖÍºþÏæÔü²³ÃìÊªÎÂ¿ÊÀ£½¦»¬ÅÈÓåÍå¶ÉÓÎ×ÌäÖ¸È·ß»Å¶èãµã¶»ÌÀ¢Óä¿®¸îº®¸»Ô¢´ÜÎÑ½Ñ´°¾½±é¹ÍÔ£¿ãÈ¹ìøÂ»Ð»Ò¥°ùÇ«Ï¬ÊôÂÅÇ¿ÖàÊè¸ôÏ¶°¯Ã½ÐõÉ©ÃÄÐöµÇÃåÀÂ¼©¶Ð»ºµÞÂÆÆ­±àÉ§ÔµÉªðÄÈð¹åè§»êËÁÉãÃþÌî²«Ëú¹Ä°ÚÐ¯°áÒ¡¸ãÌÁÌ¯Æ¸ÕåËâÇÚÑ¥°ÐÈµÀ¶Ä¹Ä»ÅîÐîÆÑÈØÃÉÕôÏ×´»½û³þ¿¬é­Ïë»±ÓÜÂ¥¸ÅÀµÀÒ³ê¸Ð°­µâ±®ËéÅöÍëÂµÞÏÀ×ÁãÎí±¢·ø¼­Êä¶½ÆµÁä¼ø¾¦¶ÃÄÀÃé½ÞË¯²ÇÊÈ±ÉàÂÓÞÅ¯ÃËÐª°µÏ¾ÕÕ»û¿çõÎÌø¶å¹òÂ·õÓ¸úÇ²òÚÎÏ¶ê·äÍÉÐáÎËÉ¤ÊðÖÃ×ïÕÖÊñ»Ï´íÃªÎýÂà´¸×¶½õ¼ü¾âÃÌ°«´ÇÖÉ³íÍÇ³î³ïÇ©¼ò¿ê»Ù¾ËÊó´ßÉµÏñ¶ã¿ýÑÃÎ¢ÓúÒ£ÄåÑüÐÈÈù¸¹ÏÙÅôÌÚÍÈ±«Ô³Ó±´¥½âÉ·³ûâÉÁó½´Ù÷±ÔÀª³ÕÌµÁ®¾¸ÐÂÔÏÒâÌÜÁ¸Êý¼åËÜ´ÈÃº»ÍÂúÄ®µáÔ´ÂËÀÄÌÏÏªÁïÀì¹öÒçËÝ±õÈÜÄçÁ»Ì²É÷ÓþÈûÄ¯¿ú¿ßÇÞ½÷¹ÓÂã¸£ÃýÈºµî±ÙÕÏÏ±¼µÏÓ¼Þµþ¸¿·ì²øçÍ½Ë¾²±ÌÁ§×¸°¾Ç½Ðæ¼Î´ÝºÕ½ØÊÄ¾³ÕªË¤Æ²¾ÛÄ½ÄºÄ¡ÂûÃï²ÌÕá±Î°ªÎõÎµ¾¤Ä£¼÷Áñ°ñÕ¥éÅ¸èÔâ½Í¿áÄðËáµú¼îÌ¼´ÅÔ¸ÐèÏ½Õ·´ÆÉÑ¿Å³òÊûËÔÓ»òßÀ¯Ó¬Ö©²õÂïàÖ×¬ÇÂ¶Í¶ÆÎèÌòÎÈÑ¬»þËãÂá¹ÜóïÓßÁÅÉ®±ÇÆÇ÷ÈÃ²Ä¤²²°òÏÊÒÉ·õÂø¹üÇÃºÀ¸àÕÚ¸¯´ñÎÁÊÝÀ±ÕÃ½ß¶ËÆì¾«´âÇ¸±×Ï¨ÈÛÉ¿äìÆáÊþÆ¯ÂþµÎÑúÑÝÂ©Âý¿¶Õ¯Èü¹Ñ²ìÃÛÁÈÌ·ÕØºÖÍÊÆ×ËíÄÛ´äÐÜµÊÂâËõ»ÛÄìËºÈöÁÃÈ¤ÌË³Å´éÇË²¥ÇÜ¶Õ×²³·Ôö×«´ÏÐ¬°°½¶ÈïÊßÔÌºá²ÛÓ£ÏðÕÁéÏ·óÍãÆ®´×´¼×í¿ÄÀÚ°õÄëÕðÏöÃ¹Â÷Ìâ±©Ï¹ÎûË»³°àÚÓ°ÌßÌ¤²È×ÙµûºûòðÐ«òò»ÈòùºÙÖö´±Ä«Õò¸ä°÷¿¿»üµ¾Àè¸å¼ÚÏäÂ¨¼ýÆª½©ÌÉÆ§µÂËÒÏ¥ÌÅÀðöêÊìÄ¦°ý±ñÁöÌ±ÁÝÑÕÒãºý×ñ±ïÇ±Åì³±Ì¶öè°ÄÅË³ºÀ½³Î¶®ã¾°ÃÔ÷¶îôæÈìÇ´º×º©Î¿ÅüÂÄÔ¥çÔº³ÀÞ²ÙÉÃÑàÀÙÊíÑ¦Þ±ÇæÐ½±¡µßº²Ø¬³÷³ÈéÙÕûÈÚÆ°ÐÑ»ôö®ÕÞ¼½²Í×ìõâÌãõåó¡ó¦Æ÷ÔëðÐÔùÄ¬Ç­¾µÔÞÄÂÀº´ÛÅñÀéÈåÑûºâÅòµñ¾¨Ä¥ñ«È³Äý±æ±ç²ÚÌÇ¸âÈ¼±ôÔè¼¤ÀÁº¶Ð¸Áþ±Ú±ÜçÖ½É´÷²Á½å¾Ï²ØÃêÃÊéÜÌ´½¸Á×ËªÏ¼²tÇÆË²Í«ÖõµÉÊïÌ£µ¸ÂÝó¬ó°º¿ÉÄËëÎº»É´Ø·±»Õ¾ôëüëýöù°©±èÓ®Ôã¿·ÔïÅ³»íÍÎ±ÛÒíÖèÅº±ÞÌÙ¸²Õ°±ÄÏùÁ­·­÷¢Ó¥ÆÙ½óèµ´ÁÄõ¾¯Ä¢ÔåÅÊÆØ¶×²äµÅáÛô¤²¾Ð·²üÃÒÑ¢°ê¸þ±î±¬½®÷ÞÈÀÜ°Ò«ÔêÈä½ÀÈÂÎ¡¼®ÁÛÄ§Å´¹àÆ©´À°ÔÂ¶Åùõï÷öËè¸ÓÄÒÏâÈ¿¹Þ´£", 18);
             MouseHandled = false;
-            BackgroundColor = 0xDD222222;
         }
 
         public bool IsUnderMouse()
@@ -148,26 +147,17 @@ namespace MOOS.GUI
 
         public virtual void OnDraw()
         {
-            Framebuffer.Graphics.AFillRectangle(X, Y - BarHeight, Width, BarHeight, 0xDD111111);
-            Framebuffer.Graphics.Blur((uint)X, (uint)(Y - BarHeight), (uint)Width, (uint)BarHeight, 5);
-
+            Framebuffer.Graphics.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - ((BitFont.MeasureString("Song", Title)) / 2), Y - BarHeight + (BarHeight / 4));
             font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
-            DrawBackground();
-
+            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, BackgroundColor);
             DrawBorder();
 
             Framebuffer.Graphics.DrawImage(CloseButtonX, CloseButtonY, CloseButton);
-        }
-
-        public virtual void DrawBackground()
-        {
-            Framebuffer.Graphics.AFillRectangle(X, Y, Width, Height, 0xEE222222);
-            Framebuffer.Graphics.Blur((uint)X, (uint)Y, (uint)(Width), (uint)(Height), 20);
         }
 
         public void DrawBorder(bool HasBar = true)
