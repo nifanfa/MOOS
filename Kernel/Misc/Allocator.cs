@@ -94,9 +94,6 @@ abstract unsafe class Allocator
             Native.Stosb(pInfo, 0, (ulong)sizeof(Info));
         _Info.Start = Start;
         _Info.PageInUse = 0;
-#if HasGC
-        GC.AllowCollect = false;
-#endif
     }
 
     /// <summary>

@@ -25,6 +25,10 @@ namespace MOOS.Misc
 
             StartupCodeHelpers.InitializeModules(Modules);
 
+#if HasGC
+            GC.AllowCollect = false;
+#endif
+
             PageTable.Initialise();
 
             ASC16.Initialise();
