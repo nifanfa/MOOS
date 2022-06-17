@@ -7,7 +7,7 @@
 **Have fun!**
 
 Welcome to ***MOOS(My own operating system)-Project***  
-**Discord Server: https://discord.gg/GxwmAK7aRE**  
+**Discord Server(Please rejoin!): https://discord.gg/egAwCZmwgY**  
 ~~**UEFI one available! check out https://github.com/nifanfa/Solution1/tree/uefi-test**~~  
 C# operating system demo, using Native AOT (Core RT) boot via multiboot  
 | Screenshot(English is default) |
