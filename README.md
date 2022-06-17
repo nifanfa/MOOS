@@ -1,3 +1,6 @@
+**Please join our new server!**  
+https://discord.gg/egAwCZmwgY  
+
 **Debug requirements:**  
 *VMware Workstation Player https://www.vmware.com/products/workstation-player.html*  
 *Intel Hardware Accelerated Execution Manager (HAXM) https://github.com/intel/haxm/releases*  
