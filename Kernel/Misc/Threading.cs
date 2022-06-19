@@ -162,12 +162,14 @@ namespace MOOS.Misc
         {
             if (!Initialized) return;
 
+            //Lock all processors except locker CPU
             if (Locked && Locker != SMP.ThisCPU)
             {
                 while (Locked) Native.Nop();
                 return;
             }
 
+            //Lock locker CPU
             if (Locked && Locker == SMP.ThisCPU) return;
 
             if (SMP.ThisCPU == 0)
