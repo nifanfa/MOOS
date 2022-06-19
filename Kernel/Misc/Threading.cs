@@ -168,6 +168,8 @@ namespace MOOS.Misc
                 return;
             }
 
+            if (Locked && Locker == SMP.ThisCPU) return;
+
             if (SMP.ThisCPU == 0)
             {
                 for (int i = 0; i < Threads.Count; i++)
