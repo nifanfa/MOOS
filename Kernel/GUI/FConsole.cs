@@ -22,7 +22,6 @@ namespace MOOS.GUI
 #endif
             Cmd = string.Empty;
             Data = string.Empty;
-            BackgroundColor = 0xFF222222;
             ScreenBuf = new Image(640, 320);
 
             Console.OnWrite += Console_OnWrite;
@@ -123,7 +122,7 @@ namespace MOOS.GUI
                     if(HeightLimit != -1 && h >= HeightLimit)
                     {
                         Framebuffer.Graphics.Copy(X, Y, X, Y + font.FontSize, LineLimit, HeightLimit - (font.FontSize));
-                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, BackgroundColor);
+                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, 0xFF222222);
                         h -= font.FontSize;
                     }
                 }

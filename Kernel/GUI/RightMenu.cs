@@ -59,7 +59,7 @@ namespace MOOS.GUI
             Height = font.FontSize * 2;
             Width = len;
 
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, BackgroundColor);
+            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, 0xFF222222);
             font.DrawString(X, Y + (font.FontSize / 2), str);
             DrawBorder(false);
         }

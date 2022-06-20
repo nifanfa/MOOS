@@ -11,7 +11,6 @@ namespace MOOS.GUI
     internal class Window
     {
         public static List<Window> Windows;
-        public static uint BackgroundColor;
         public static IFont font;
         public static Image CloseButton;
 
@@ -152,7 +151,7 @@ namespace MOOS.GUI
             font.DrawString(X + (Width / 2) - ((font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title);
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, BackgroundColor);
+            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, 0xFF222222);
             DrawBorder();
 
             Framebuffer.Graphics.DrawImage(CloseButtonX, CloseButtonY, CloseButton);
