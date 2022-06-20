@@ -10,7 +10,6 @@ namespace MOOS.GUI
 
         public Clock(int X,int Y) : base(X, Y, 200, 200)
         {
-            BackgroundColor = 0x0;
 #if Chinese
             Title = "时钟";
 #else
