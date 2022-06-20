@@ -5,7 +5,7 @@ namespace MOOS.GUI
     {
         string _message;
 
-        public MessageBox(int X, int Y) : base(X, Y, 200, Window.font.FontSize*2)
+        public MessageBox(int X, int Y) : base(X, Y, 200, WindowManager.font.FontSize*2)
         {
             this._message = null;
 #if Chinese
@@ -19,12 +19,12 @@ namespace MOOS.GUI
         {
             if (this._message != null)
             {
-                this.Width = font.MeasureString(_message);
+                this.Width = WindowManager.font.MeasureString(_message);
             }
             base.OnDraw();
             if(this._message!=null)
             {
-                font.DrawString(X, Y, _message);
+                WindowManager.font.DrawString(X, Y, _message);
             }
         }
 

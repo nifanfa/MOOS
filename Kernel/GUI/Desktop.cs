@@ -52,9 +52,9 @@ namespace MOOS.GUI
             imageViewer.Visible = false;
             msgbox.Visible = false;
             nesemu.Visible = false;
-            Window.Windows.Add(msgbox);
-            Window.Windows.Add(imageViewer);
-            Window.Windows.Add(nesemu);
+            WindowManager.Windows.Add(msgbox);
+            WindowManager.Windows.Add(imageViewer);
+            WindowManager.Windows.Add(nesemu);
 
             BuiltInAppNames = new string[]
             {
@@ -101,7 +101,7 @@ namespace MOOS.GUI
                     ClickEvent(BuiltInAppNames[i], false, X, Y, i);
 
                     Framebuffer.Graphics.DrawImage(X, Y, BuiltInAppIcon);
-                    Window.font.DrawString(X, Y + FileIcon.Height, BuiltInAppNames[i], FileIcon.Width + 8, Window.font.FontSize * 3); 
+                    WindowManager.font.DrawString(X, Y + FileIcon.Height, BuiltInAppNames[i], FileIcon.Width + 8, WindowManager.font.FontSize * 3); 
                     Y += FileIcon.Height + Devide;
                 }
             }
@@ -176,7 +176,7 @@ namespace MOOS.GUI
                     Framebuffer.Graphics.DrawImage(X, Y, FileIcon);
                 }
                 //BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
-                Window.font.DrawString(X, Y + FileIcon.Height, names[i].Name, FileIcon.Width + 8, Window.font.FontSize * 3);
+                WindowManager.font.DrawString(X, Y + FileIcon.Height, names[i].Name, FileIcon.Width + 8, WindowManager.font.FontSize * 3);
                 Y += FileIcon.Height + Devide;
                 names[i].Dispose();
             }
@@ -186,7 +186,7 @@ namespace MOOS.GUI
             //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
             
             string pre = Prefix + Dir;
-            Window.font.DrawString(0, (BarHeight / 2) - (Window.font.FontSize / 2), pre, Framebuffer.Graphics.Width);
+            WindowManager.font.DrawString(0, (BarHeight / 2) - (WindowManager.font.FontSize / 2), pre, Framebuffer.Graphics.Width);
             pre.Dispose();
 
 #if Chinese
@@ -196,9 +196,9 @@ namespace MOOS.GUI
 #endif
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
-            Window.font.DrawString(Framebuffer.Graphics.Width - Window.font.MeasureString(Result) - Window.font.FontSize, (BarHeight / 2) - (Window.font.FontSize / 2), Result);
+            WindowManager.font.DrawString(Framebuffer.Graphics.Width - WindowManager.font.MeasureString(Result) - WindowManager.font.FontSize, (BarHeight / 2) - (WindowManager.font.FontSize / 2), Result);
 
-            if (Control.MouseButtons.HasFlag(MouseButtons.Left) && !Window.HasWindowMoving && !Window.MouseHandled) 
+            if (Control.MouseButtons.HasFlag(MouseButtons.Left) && !WindowManager.HasWindowMoving && !WindowManager.MouseHandled) 
             {
                 if (LastPoint.X == -1 && LastPoint.Y == -1) 
                 {
@@ -264,16 +264,16 @@ namespace MOOS.GUI
             if (Control.MouseButtons == MouseButtons.Left)
             {
                 bool clickable = true;
-                for (int d = 0; d < Window.Windows.Count; d++)
+                for (int d = 0; d < WindowManager.Windows.Count; d++)
                 {
-                    if (Window.Windows[d].Visible)
-                        if (Window.Windows[d].IsUnderMouse())
+                    if (WindowManager.Windows[d].Visible)
+                        if (WindowManager.Windows[d].IsUnderMouse())
                         {
                             clickable = false;
                         }
                 }
 
-                if (!Window.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
+                if (!WindowManager.HasWindowMoving && clickable && !ClickLock && Control.MousePosition.X > X && Control.MousePosition.X < X + FileIcon.Width && Control.MousePosition.Y > Y && Control.MousePosition.Y < Y + FileIcon.Height)
                 {
                     IndexClicked = i;
                     OnClick(name, isDirectory, X, Y);
@@ -312,7 +312,7 @@ namespace MOOS.GUI
                 buffer.Dispose();
                 imageViewer.SetImage(png);
                 png.Dispose();
-                Window.MoveToEnd(imageViewer);
+                WindowManager.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
             }
             else if (
@@ -321,7 +321,7 @@ namespace MOOS.GUI
                 name[name.Length - 1].ToUpper() == 'E'
                 )
             {
-                Window.MoveToEnd(Program.FConsole);
+                WindowManager.MoveToEnd(Program.FConsole);
                 if (Program.FConsole.Visible == false)
                     Program.FConsole.Visible = true;
 
@@ -352,7 +352,7 @@ namespace MOOS.GUI
 #else
                     msgbox.SetText("Audio controller is unavailable!");
 #endif
-                    Window.MoveToEnd(msgbox);
+                    WindowManager.MoveToEnd(msgbox);
                     msgbox.Visible = true;
                 }
             }
@@ -363,7 +363,7 @@ namespace MOOS.GUI
                 )
             {
                 nesemu.OpenROM(File.Instance.ReadAllBytes(path));
-                Window.MoveToEnd(nesemu);
+                WindowManager.MoveToEnd(nesemu);
                 nesemu.Visible = true;
             }
 
@@ -424,7 +424,7 @@ namespace MOOS.GUI
 #else
                 msgbox.SetText("No application can open this file!");
 #endif
-                Window.MoveToEnd(msgbox);
+                WindowManager.MoveToEnd(msgbox);
                 msgbox.Visible = true;
             }
 

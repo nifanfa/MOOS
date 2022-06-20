@@ -36,7 +36,7 @@ namespace MOOS.GUI
             string sminute = RTC.Minute.ToString();
             string ssecond = RTC.Second.ToString();
             string result = shour + devider + sminute + devider + ssecond;
-            font.DrawString(X + (Width / 2) - (font.MeasureString(result) / 2), Y + font.FontSize, result);
+            WindowManager.font.DrawString(X + (Width / 2) - (WindowManager.font.MeasureString(result) / 2), Y + WindowManager.font.FontSize, result);
             devider.Dispose();
             shour.Dispose();
             sminute.Dispose();

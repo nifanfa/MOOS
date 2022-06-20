@@ -56,7 +56,7 @@ unsafe class Program
         BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.Instance.ReadAllBytes("Song.btf"), 16));
 
         FConsole = null;
-        Window.Initialize();
+        WindowManager.Initialize();
 
         Desktop.Initialize();
 
@@ -142,7 +142,7 @@ unsafe class Program
 #region Animation of entering Desktop
         Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
         Desktop.Update();
-        Window.DrawAll();
+        WindowManager.DrawAll();
         Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
         Image _screen = Framebuffer.Graphics.Save();
         Framebuffer.Graphics.Clear(0x0);
@@ -185,7 +185,7 @@ unsafe class Program
                 PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt)
                 )
             {
-                Window.MoveToEnd(FConsole);
+                WindowManager.MoveToEnd(FConsole);
                 if (FConsole.Visible == false)
                     FConsole.Visible = true;
             }
@@ -201,16 +201,16 @@ unsafe class Program
                 rightClicked = false;
             }
             #endregion
-            Window.InputAll();
+            WindowManager.InputAll();
 
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
             Desktop.Update();
-            Window.DrawAll();
+            WindowManager.DrawAll();
             /*
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
             ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
             */
-            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Window.HasWindowMoving ? CursorMoving : Cursor);
+            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, WindowManager.HasWindowMoving ? CursorMoving : Cursor);
             Framebuffer.Update();
 
             FPSMeter.Update();
