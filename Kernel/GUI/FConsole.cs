@@ -69,11 +69,18 @@ namespace MOOS.GUI
                         case "help":
                             Console.WriteLine("help: to get this information");
                             Console.WriteLine("shutdown: power off");
+                            Console.WriteLine("reboot: reboot this computer");
+                            Console.WriteLine("cpu: list cpu information");
                             Console.WriteLine("hello: issue kernel panic");
                             break;
 
                         case "shutdown":
                             Power.Shutdown();
+                            break;
+
+                        case "cpu":
+                            for (int i = 0; i < ACPI.LocalAPIC_CPUIDs.Count; i++)
+                                Console.WriteLine($"cpu id:{ACPI.LocalAPIC_CPUIDs[i]}");
                             break;
 
                         case "reboot":
