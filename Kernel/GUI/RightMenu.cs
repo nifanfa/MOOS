@@ -55,12 +55,12 @@ namespace MOOS.GUI
 
         public override void OnDraw()
         {
-            int len = font.MeasureString(str);
-            Height = font.FontSize * 2;
+            int len = WindowManager.font.MeasureString(str);
+            Height = WindowManager.font.FontSize * 2;
             Width = len;
 
             Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, 0xFF222222);
-            font.DrawString(X, Y + (font.FontSize / 2), str);
+            WindowManager.font.DrawString(X, Y + (WindowManager.font.FontSize / 2), str);
             DrawBorder(false);
         }
     }

@@ -113,17 +113,17 @@ namespace MOOS.GUI
             int w = 0, h = 0;
             for (int i = 0; i < Str.Length; i++)
             {
-                w += font.DrawChar(Framebuffer.Graphics,X + w, Y + h, Str[i]);
-                if (w + font.FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
+                w += WindowManager.font.DrawChar(Framebuffer.Graphics,X + w, Y + h, Str[i]);
+                if (w + WindowManager.font.FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
                 {
                     w = 0;
-                    h += font.FontSize;
+                    h += WindowManager.font.FontSize;
 
                     if(HeightLimit != -1 && h >= HeightLimit)
                     {
-                        Framebuffer.Graphics.Copy(X, Y, X, Y + font.FontSize, LineLimit, HeightLimit - (font.FontSize));
-                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - (font.FontSize), LineLimit, font.FontSize, 0xFF222222);
-                        h -= font.FontSize;
+                        Framebuffer.Graphics.Copy(X, Y, X, Y + WindowManager.font.FontSize, LineLimit, HeightLimit - (WindowManager.font.FontSize));
+                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - (WindowManager.font.FontSize), LineLimit, WindowManager.font.FontSize, 0xFF222222);
+                        h -= WindowManager.font.FontSize;
                     }
                 }
             }

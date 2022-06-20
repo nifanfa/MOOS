@@ -54,6 +54,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Widgets\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Widgets\Widget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Window.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GUI\WindowManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Allocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ASC16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Audio.cs" />

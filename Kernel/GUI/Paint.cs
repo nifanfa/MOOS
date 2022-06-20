@@ -67,7 +67,7 @@ namespace MOOS.GUI
                 if (Btns[i].Name == "Clear")
 #endif
                 {
-                    font.DrawString(X + Btns[i].X + (Btns[i].Width / 2) - (font.MeasureString(Btns[i].Name) / 2), Y + Btns[i].Y + 2, Btns[i].Name);
+                    WindowManager.font.DrawString(X + Btns[i].X + (Btns[i].Width / 2) - (WindowManager.font.MeasureString(Btns[i].Name) / 2), Y + Btns[i].Y + 2, Btns[i].Name);
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace MOOS.GUI
             {
                 if (Control.MousePosition.X >= this.X && Control.MousePosition.X <= this.X + this.Width && Control.MousePosition.Y >= this.Y && Control.MousePosition.Y <= this.Y + this.Height)
                 {
-                    MouseHandled = true;
+                    WindowManager.MouseHandled = true;
                     if (Control.MousePosition.X - this.X != LastX || Control.MousePosition.Y - this.Y != LastY)
                     {
                         g.DrawLine(LastX, LastY, Control.MousePosition.X - this.X, Control.MousePosition.Y - this.Y, CurrentColor);
@@ -113,7 +113,7 @@ namespace MOOS.GUI
             }
             else
             {
-                MouseHandled = false;
+                WindowManager.MouseHandled = false;
             }
 
             LastX = Control.MousePosition.X - this.X;

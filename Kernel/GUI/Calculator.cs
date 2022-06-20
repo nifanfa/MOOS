@@ -78,13 +78,13 @@ namespace MOOS.GUI
             Framebuffer.Graphics.DrawImage(X, Y, image);
 
             string v = ValueToDisplay.ToString();
-            font.DrawString( X, Y + 2,v);
+            WindowManager.font.DrawString( X, Y + 2,v);
 
             if (Pressed)
             {
                 Framebuffer.Graphics.FillRectangle(X + PressedButton.X, Y + PressedButton.Y, 60, 20, 0xFF222222);
-                int i = font.MeasureString(PressedButton.Name);
-                font.DrawString(X + PressedButton.X + (60 / 2) - (i / 2), Y + PressedButton.Y + 2, PressedButton.Name);
+                int i = WindowManager.font.MeasureString(PressedButton.Name);
+                WindowManager.font.DrawString(X + PressedButton.X + (60 / 2) - (i / 2), Y + PressedButton.Y + 2, PressedButton.Name);
             }
 
             v.Dispose();
@@ -202,8 +202,8 @@ namespace MOOS.GUI
         private void AddButton(int X, int Y, string s)
         {
             g.FillRectangle(X, Y, 60, 20, 0xFF333333);
-            int i = font.MeasureString(s);
-            font.DrawString(X + (60 / 2) - (i / 2), Y + 2,s,g);
+            int i = WindowManager.font.MeasureString(s);
+            WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2,s,g);
 
             Btns.Add(new Button()
             {
