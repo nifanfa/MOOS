@@ -16,7 +16,7 @@ namespace MOOS.GUI
         public FConsole(int X, int Y) : base(X, Y, 640, 320)
         {
 #if Chinese
-            Title = "����̨";
+            Title = "控制台";
 #else
             Title = "Console";
 #endif
