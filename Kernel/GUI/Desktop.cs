@@ -60,8 +60,8 @@ namespace MOOS.GUI
             {
 #if Chinese
                 "计算器",
-                "时钟",
-                "画图",
+                " 时钟",
+                " 画图",
                 "贪吃蛇",
                 "控制台",
 #else
@@ -376,7 +376,7 @@ namespace MOOS.GUI
                 new Calculator(300, 500);
             }
 #if Chinese
-            else if (name == "时钟")
+            else if (name == " 时钟")
 #else
             else if (name == "Clock")
 #endif
@@ -384,7 +384,7 @@ namespace MOOS.GUI
                 new Clock(650, 500);
             }
 #if Chinese
-            else if (name == "画图")
+            else if (name == " 画图")
 #else
             else if (name == "Paint")
 #endif
