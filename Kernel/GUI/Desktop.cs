@@ -41,7 +41,7 @@ namespace MOOS.GUI
             BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
 #if Chinese
-            Prefix = " ����Ա@Moos: ";
+            Prefix = " 管理员@Moos: ";
 #else
             Prefix = " root@Moos: ";
 #endif
@@ -59,11 +59,11 @@ namespace MOOS.GUI
             BuiltInAppNames = new string[]
             {
 #if Chinese
-                "������",
-                " ʱ��",
-                " ��ͼ",
-                "̰����",
-                "����̨",
+                "计算器",
+                "时钟",
+                "画图",
+                "贪吃蛇",
+                "控制台",
 #else
                 "Calculator",
                 "Clock",
@@ -348,7 +348,7 @@ namespace MOOS.GUI
                     msgbox.X = itemX + 75;
                     msgbox.Y = itemY + 75;
 #if Chinese
-                msgbox.SetText("û�м��ݵ�����!");
+                msgbox.SetText("声卡不可用!");
 #else
                     msgbox.SetText("Audio controller is unavailable!");
 #endif
@@ -368,7 +368,7 @@ namespace MOOS.GUI
             }
 
 #if Chinese
-            else if (name == "������")
+            else if (name == "计算器")
 #else
             else if (name == "Calculator")
 #endif
@@ -376,7 +376,7 @@ namespace MOOS.GUI
                 new Calculator(300, 500);
             }
 #if Chinese
-            else if (name == " ʱ��")
+            else if (name == "时钟")
 #else
             else if (name == "Clock")
 #endif
@@ -384,7 +384,7 @@ namespace MOOS.GUI
                 new Clock(650, 500);
             }
 #if Chinese
-            else if (name == " ��ͼ")
+            else if (name == "画图")
 #else
             else if (name == "Paint")
 #endif
@@ -392,7 +392,7 @@ namespace MOOS.GUI
                 new Paint(500, 200);
             }
 #if Chinese
-            else if (name == "̰����")
+            else if (name == "贪吃蛇")
 #else
             else if (name == "Snake")
 #endif
@@ -400,7 +400,7 @@ namespace MOOS.GUI
                 new Snake(600, 100);
             }
 #if Chinese
-            else if (name == "����̨")
+            else if (name == "控制台")
 #else
             else if (name == "Console")
 #endif
@@ -420,7 +420,7 @@ namespace MOOS.GUI
                 msgbox.X = itemX + 75;
                 msgbox.Y = itemY + 75;
 #if Chinese
-                msgbox.SetText("û���κγ�����Դ򿪴˳���!");
+                msgbox.SetText("没有程序可用打开此文件!");
 #else
                 msgbox.SetText("No application can open this file!");
 #endif
