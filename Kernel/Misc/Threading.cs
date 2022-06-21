@@ -148,7 +148,7 @@ namespace MOOS.Misc
         {
             Locker = SMP.ThisCPU;
             Locked = true;
-            LocalAPIC.SendAllInterrupt(0x20);
+            LocalAPIC.SendAllInterruptIncludingSelf(0x20);
         }
 
         public static void UnLock() 
