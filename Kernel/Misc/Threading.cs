@@ -17,14 +17,13 @@ namespace MOOS.Misc
         public ulong SleepingTime;
         public int RunOnWhichCPU;
 
-        public Thread(delegate*<void> method)
+        public Thread(delegate*<void> method,ulong stack_size = 16384)
         {
             Stack = (IDT.IDTStackGeneric*)Allocator.Allocate((ulong)sizeof(IDT.IDTStackGeneric));
 
             Stack->irs.cs = 0x08;
             Stack->irs.ss = 0x10;
-            const int Size = 16384;
-            Stack->irs.rsp = ((ulong)Allocator.Allocate(Size)) + (Size);
+            Stack->irs.rsp = ((ulong)Allocator.Allocate(stack_size)) + (stack_size);
 
             Stack->irs.rsp -= 8;
             *(ulong*)(Stack->irs.rsp) = (ulong)(delegate*<void>)&ThreadPool.Terminate;
