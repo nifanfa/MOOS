@@ -38,16 +38,13 @@ void M_FindResponseFile(void);
 void dg_Create();
 
 
-int doommain(unsigned int* _vm,unsigned int _width,unsigned int _height,char* gb,long gl)
+int doommain(char* gb,long gl)
 {
     // save arguments
 
     myargc = 0;
     myargv = NULL;
 
-    vm = _vm;
-    width = _width;
-    height = _height;
     gameBinary = gb;
     gameBinaryLength = gl;
 

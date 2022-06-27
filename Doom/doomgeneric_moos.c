@@ -32,7 +32,7 @@ void DG_DrawFrame()
 	{
 		for (int x = 0; x < DOOMGENERIC_RESX; x++)
 		{
-			DrawPoint((width/2) - (DOOMGENERIC_RESX /2) + x, (height / 2) - (DOOMGENERIC_RESY / 2) + y, DG_ScreenBuffer[y * DOOMGENERIC_RESX + x]);
+			DrawPoint(x, y, DG_ScreenBuffer[y * DOOMGENERIC_RESX + x]);
 		}
 	}
 }
