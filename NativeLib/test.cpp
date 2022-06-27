@@ -1,4 +1,4 @@
-#include "printf.h"
+#include "..\LibC\printf.h"
 
 void test()
 {
