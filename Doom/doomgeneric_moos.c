@@ -7,7 +7,7 @@
 
 char* gameBinary;
 
-#define KEYQUEUE_SIZE 16
+#define KEYQUEUE_SIZE 48
 
 static unsigned short s_KeyQueue[KEYQUEUE_SIZE];
 static unsigned int s_KeyQueueWriteIndex = 0;
