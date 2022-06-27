@@ -316,6 +316,20 @@ namespace MOOS.GUI
                 imageViewer.Visible = true;
             }
             else if (
+               name[0].ToUpper() == 'D' &&
+               name[1].ToUpper() == 'O' &&
+               name[2].ToUpper() == 'O' &&
+               name[3].ToUpper() == 'M' &&
+               name[4].ToUpper() == '1' &&
+               name[5].ToUpper() == '.' &&
+               name[6].ToUpper() == 'W' &&
+               name[7].ToUpper() == 'A' &&
+               name[8].ToUpper() == 'D'
+               )
+            {
+                new Doom(300, 250);
+            }
+            else if (
                 name[name.Length - 3].ToUpper() == 'E' &&
                 name[name.Length - 2].ToUpper() == 'X' &&
                 name[name.Length - 1].ToUpper() == 'E'
@@ -409,7 +423,7 @@ namespace MOOS.GUI
             }
 
 
-            else if (isDirectory) 
+            else if (isDirectory)
             {
                 string newd = Dir + devider + name;
                 Dir.Dispose();

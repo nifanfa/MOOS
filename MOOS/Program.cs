@@ -31,44 +31,6 @@ unsafe class Program
 
     public static Image[] SizedScreens;
 
-    #region Doom
-    [DllImport("*")]
-    public static extern int doommain(uint* _vm, uint _width, uint _height, byte* gb, long gl);
-
-    [RuntimeExport("GetTickCount")]
-    public static uint GetTickCount() 
-    {
-        return (uint)Timer.Ticks;
-    }
-
-    [RuntimeExport("Sleep")]
-    public static void Sleep(uint ms) 
-    {
-        Timer.Wait(ms);
-    }
-
-    [RuntimeExport("DrawPoint")]
-    public static void DrawPoint(int x,int y,uint color) 
-    {
-        Framebuffer.Graphics.DrawPoint(x, y, color);
-    }
-
-    [RuntimeExport("getkbdkey")]
-    public static uint getkbdkey() 
-    {
-        if (PS2Keyboard.KeyInfo.Key == 0) return 0;
-        else 
-        {
-            var key = (uint)PS2Keyboard.KeyInfo.Key;
-            if (PS2Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed) key |= (1u << 31);
-            PS2Keyboard.KeyInfo.Key = 0;
-            return key;
-        }
-    }
-
-    public static byte[] gb;
-    #endregion
-
     /*
      * Minimum system requirement:
      * 1024MiB of RAM
@@ -80,13 +42,6 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
-#if false
-        gb = File.Instance.ReadAllBytes("DOOM1.WAD");
-
-        fixed (byte* ptr = gb)
-            doommain(Framebuffer.VideoMemory, Framebuffer.Width, Framebuffer.Height, ptr, gb.Length);
-#endif
-
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
         Cursor = new PNG(File.Instance.ReadAllBytes("Images/Cursor.png"));
