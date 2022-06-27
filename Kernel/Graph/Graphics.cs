@@ -15,6 +15,12 @@ namespace MOOS.Graph
             this.VideoMemory = vm;
         }
 
+        public static Graphics FromImage(Image img)
+        {
+            fixed (uint* ptr = img.RawData)
+                return new Graphics(img.Width, img.Height, ptr);
+        }
+
         public virtual void Update() { }
 
         public virtual void Clear(uint Color)
