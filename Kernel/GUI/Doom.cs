@@ -55,7 +55,7 @@ namespace MOOS.GUI
 
         public Doom(int X, int Y) : base(X, Y, 640, 400)
         {
-            Title = "DOOM";
+            Title = "DOOM Shareware";
 
             di = new Image(640, 400);
             dg = Graphics.FromImage(di);
