@@ -19,13 +19,13 @@ namespace MOOS.GUI
         [RuntimeExport("GetTickCount")]
         public static uint GetTickCount()
         {
-            return (uint)Timer.Ticks;
+            return (uint)Timer.Ticks / 4;
         }
 
         [RuntimeExport("Sleep")]
         public static void Sleep(uint ms)
         {
-            Timer.Wait(ms);
+            Thread.Sleep(ms);
         }
 
         [RuntimeExport("DrawPoint")]

@@ -14,7 +14,6 @@ namespace MOOS.Misc
     {
         public bool Terminated;
         public IDT.IDTStackGeneric* Stack;
-        public ulong SleepingTime;
         public int RunOnWhichCPU;
 
         public Thread(delegate*<void> method,ulong stack_size = 16384)
@@ -33,8 +32,6 @@ namespace MOOS.Misc
             Stack->irs.rip = (ulong)method;
 
             Terminated = false;
-
-            SleepingTime = 0;
         }
 
         public Thread Start()
@@ -54,7 +51,7 @@ namespace MOOS.Misc
 
         public static void Sleep(ulong Millionsecos)
         {
-            ThreadPool.Threads[ThreadPool.Index].SleepingTime = Millionsecos;
+            Timer.Wait(Millionsecos);
         }
     }
 
@@ -174,17 +171,6 @@ namespace MOOS.Misc
             //Lock locker CPU
             if (Locked && Locker == SMP.ThisCPU) return;
 
-            if (SMP.ThisCPU == 0)
-            {
-                for (int i = 0; i < Threads.Count; i++)
-                {
-                    if (Threads[i].SleepingTime > 0)
-                    {
-                        Threads[i].SleepingTime--;
-                    }
-                }
-            }
-
             for(; ; )
             {
                 if (
@@ -204,7 +190,6 @@ namespace MOOS.Misc
             } while
             (
                 Threads[Index].Terminated ||
-                (Threads[Index].SleepingTime > 0) ||
                 Threads[Index].RunOnWhichCPU != SMP.ThisCPU
             );
 
