@@ -18,6 +18,7 @@ namespace MOOS.GUI
         private static Image AudioIcon;
         private static Image BuiltInAppIcon;
         private static Image FolderIcon;
+        private static Image DoomIcon;
 
         public static string Prefix;
         public static string Dir;
@@ -40,6 +41,7 @@ namespace MOOS.GUI
             AudioIcon = new PNG(File.Instance.ReadAllBytes("Images/Audio.png"));
             BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
             FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
+            DoomIcon = new PNG(File.Instance.ReadAllBytes("Images/Doom1.png"));
 #if Chinese
             Prefix = " 管理员@Moos: ";
 #else
@@ -130,6 +132,21 @@ namespace MOOS.GUI
                     )
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
+                }
+
+                else if (
+                    names[i].Name[0].ToUpper() == 'D' &&
+                    names[i].Name[1].ToUpper() == 'O' &&
+                    names[i].Name[2].ToUpper() == 'O' &&
+                    names[i].Name[3].ToUpper() == 'M' &&
+                    names[i].Name[4].ToUpper() == '1' &&
+                    names[i].Name[5].ToUpper() == '.' &&
+                    names[i].Name[6].ToUpper() == 'W' &&
+                    names[i].Name[7].ToUpper() == 'A' &&
+                    names[i].Name[8].ToUpper() == 'D'
+                   )
+                {
+                    Framebuffer.Graphics.DrawImage(X, Y, DoomIcon);
                 }
                 else if
                     (
