@@ -3,7 +3,7 @@ https://discord.gg/egAwCZmwgY
 
 **How to run?**  
 Open MOOS.sln using VS2022  
-Select MOOS from the VS2022 dropdown menu  
+Select MOOS from the VS2022 dropdown menu(where there is a green start button)  
 Press F5  
 
 **Debug requirements:**  
