@@ -1,3 +1,5 @@
+using MOOS.Misc;
+
 namespace MOOS.Driver
 {
     public static class Timer
@@ -6,7 +8,16 @@ namespace MOOS.Driver
 
         internal static void OnInterrupt()
         {
-            Ticks = Ticks + 1;
+            //This method is only for bootstrap CPU
+            if(SMP.ThisCPU == 0)
+            {
+                Ticks++;
+
+                if (ThreadPool.Locked)
+                {
+                    Ticks--;
+                }
+            }
         }
 
         public static void Wait(ulong millisecond)
