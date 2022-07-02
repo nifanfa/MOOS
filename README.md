@@ -1,6 +1,11 @@
 **Please join our new server!**  
 https://discord.gg/egAwCZmwgY  
 
+**How to run?**  
+Open MOOS.sln using VS2022  
+Select MOOS from the VS2022 dropdown menu  
+Press F5  
+
 **Debug requirements:**  
 *VMware Workstation Player https://www.vmware.com/products/workstation-player.html*  
 *Intel Hardware Accelerated Execution Manager (HAXM) https://github.com/intel/haxm/releases*  
