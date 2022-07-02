@@ -1,4 +1,4 @@
-#include <climits>
+#include "limits.h"
 int myatoi(const char* str)
 {
     int sign = 1, base = 0, i = 0;
