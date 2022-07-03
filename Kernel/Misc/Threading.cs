@@ -156,9 +156,7 @@ namespace MOOS.Misc
             Locker = SMP.ThisCPU;
             Locked = true;
 
-            //LocalAPIC.SendAllInterrupt(0x20);
-            //Warning: Thread.Sleep will be unaccurate if sending interrupt to CPU0(bootstrap CPU)
-            LocalAPIC.SendAllInterruptIncludingSelf(0x20);
+            LocalAPIC.SendAllInterrupt(0x20);
         }
 
         public static void UnLock() 
