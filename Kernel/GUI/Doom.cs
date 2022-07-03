@@ -62,19 +62,17 @@ namespace MOOS.GUI
 
             gb = File.Instance.ReadAllBytes("DOOM1.WAD");
 
-            new Thread(&dm).Start();
+            new Thread(new Action(() =>
+            {
+                fixed (byte* ptr = gb)
+                    doommain(ptr, gb.Length);
+            })).Start();
         }
 
         public override void OnDraw()
         {
             base.OnDraw();
             Framebuffer.Graphics.DrawImage(X, Y, di, false);
-        }
-
-        public static void dm()
-        {
-            fixed (byte* ptr = gb)
-                doommain(ptr, gb.Length);
         }
     }
 }
