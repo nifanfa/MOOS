@@ -167,11 +167,11 @@ namespace MOOS.Misc
 
         public static int ThreadCount => Threads.Count;
 
-        private static ulong TickInSec;
-        private static ulong TickIdle;
-        private static ulong LastSec;
+        private static volatile uint TickInSec;
+        private static volatile uint TickIdle;
+        private static volatile uint LastSec;
 
-        public static ulong CPUUsage;
+        public static volatile uint CPUUsage;
 
         public static void Schedule(IDT.IDTStackGeneric* stack)
         {
