@@ -4,6 +4,7 @@
 
 using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -17,6 +18,11 @@ namespace MOOS.Misc
         public int RunOnWhichCPU;
 
         public Thread(delegate*<void> method,ulong stack_size = 16384)
+        {
+            NewThread(method, stack_size);
+        }
+
+        private void NewThread(delegate*<void> method, ulong stack_size)
         {
             Stack = (IDT.IDTStackGeneric*)Allocator.Allocate((ulong)sizeof(IDT.IDTStackGeneric));
 
@@ -32,6 +38,11 @@ namespace MOOS.Misc
             Stack->irs.rip = (ulong)method;
 
             Terminated = false;
+        }
+
+        public Thread(Action action, ulong stack_size = 16384)
+        {
+            NewThread((delegate*<void>)action.m_functionPointer, stack_size);
         }
 
         public Thread Start()

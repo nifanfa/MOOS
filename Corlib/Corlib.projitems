@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\ModuleHeaders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\RuntimeConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Action.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\AppContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Array.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Attribute.cs" />
