@@ -1,4 +1,5 @@
 using MOOS.FS;
+using MOOS.Misc;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -408,6 +409,8 @@ namespace MOOS
 
             private bool ReadOrWrite(ulong Sector,ushort Count, byte* Buffer, bool Write)
             {
+                if (Count >= 512) Panic.Error("[SATA] Too many sectors to read!");
+
                 if (PortType == SATAPortType.ATAPI && Write) return false;
                 unchecked { HBAPort->InterruptStatus = (uint)-1; }
                 int Slot = FindSlot();
