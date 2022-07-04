@@ -36,7 +36,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | ExFAT | ✅ | ✅ | FAT32/16/12 is no supported! |
 | I/O APIC | ✅ | ✅ |
 | Local APIC | ✅ | ✅ |
-| SATA | ⚠️ | ❌ | Can't read more than one sec at once, Can't detect sata controller on real hardware |
+| SATA | ✅ | ❓ |
 | IDE | ✅ | ✅ |
 | SMBIOS | ✅ | ✅ |
 | ACPI | ✅ | ✅ |
