@@ -29,10 +29,8 @@ namespace MOOS
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct HBAPort
         {
-            public uint CommandListBase;
-            public uint CommandListBaseUpper;
-            public uint FISBaseAddress;
-            public uint FISBaseAddressUpper;
+            public ulong CommandListBase;
+            public ulong FISBaseAddress;
             public uint InterruptStatus;
             public uint InterruptEnable;
             public uint CommandStatus;
@@ -57,8 +55,7 @@ namespace MOOS
             public byte P2;
             public ushort PRDTLength;
             public uint PRDBCount;
-            public uint CommandTableBaseAddress;
-            public uint CommandTableBaseAddressUpper;
+            public ulong CommandTableBaseAddress;
             public fixed uint Reserved1[4];
 
             public byte CommandFISLength
@@ -267,8 +264,7 @@ namespace MOOS
                 public byte LBA4;
                 public byte LBA5;
                 public byte FeatureHigh;
-                public byte CountLow;
-                public byte CountHigh;
+                public ushort Count;
                 public byte ISOCommandCompletion;
                 public byte Control;
                 public fixed byte Reserved1[4];
@@ -314,8 +310,7 @@ namespace MOOS
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             struct HBAPRDTEntry
             {
-                public uint DataBaseAddress;
-                public uint DataBaseAddressUpper;
+                public ulong DataBaseAddress;
                 public uint Reserved0;
                 public uint ByteCount_Reserved1_InterruptOnCompletion;
 
@@ -361,23 +356,20 @@ namespace MOOS
             {
                 StopCMD();
 
-                ulong newBase = (ulong)Allocator.Allocate(1024);
-                HBAPort->CommandListBase = (uint)newBase;
-                HBAPort->CommandListBaseUpper = (uint)(newBase >> 32);
+                ulong newBase = (ulong)Allocator.Allocate(4096);
+                HBAPort->CommandListBase = newBase;
 
-                ulong fisBase = (ulong)Allocator.Allocate(256);
-                HBAPort->FISBaseAddress = (uint)fisBase;
-                HBAPort->FISBaseAddressUpper = (uint)(fisBase >> 32);
+                ulong fisBase = (ulong)Allocator.Allocate(4096);
+                HBAPort->FISBaseAddress = fisBase;
 
-                HBACommandHeader* cmdhdr = (HBACommandHeader*)(HBAPort->CommandListBase | (ulong)HBAPort->CommandListBaseUpper << 32);
+                HBACommandHeader* cmdhdr = (HBACommandHeader*)(HBAPort->CommandListBase);
 
                 for (int i = 0; i < 32; i++)
                 {
                     cmdhdr[i].PRDTLength = 8;
-                    ulong cmdTableAddr = (ulong)Allocator.Allocate(256);
-                    cmdTableAddr += (ulong)(i << 8);
-                    cmdhdr[i].CommandTableBaseAddress = (uint)cmdTableAddr;
-                    cmdhdr[i].CommandTableBaseAddressUpper = (uint)(cmdTableAddr >> 32);
+                    var p = Allocator.Allocate(4096);
+                    Allocator.ZeroFill(p, 4096);
+                    cmdhdr[i].CommandTableBaseAddress = (ulong)p;
                 }
 
                 StartCMD();
@@ -407,46 +399,45 @@ namespace MOOS
 
             public override bool Read(ulong sector, uint count, byte* p)
             {
-                for (ulong i = 0; i < count; i++)
-                {
-                    bool b = ReadOrWrite((uint)(sector + i), p + (i * SectorSize), false);
-                    if (!b) return false;
-                }
-                return true;
+                return ReadOrWrite(sector, (ushort)count, p, false);
             }
 
             public override bool Write(ulong sector, uint count, byte* p)
             {
-                for (ulong i = 0; i < count; i++)
-                {
-                    bool b = ReadOrWrite((uint)(sector + i), p + (i * SectorSize), false);
-                    if (!b) return false;
-                }
-                return true;
+                return ReadOrWrite(sector, (ushort)count, p, true);
             }
 
-            private bool ReadOrWrite(ulong Sector, byte* Buffer, bool Write)
+            private bool ReadOrWrite(ulong Sector,ushort Count, byte* Buffer, bool Write)
             {
                 if (PortType == SATAPortType.ATAPI && Write) return false;
                 unchecked { HBAPort->InterruptStatus = (uint)-1; }
                 int Slot = FindSlot();
                 if (Slot == -1) return false;
 
-                HBACommandHeader* hdr = ((HBACommandHeader*)(HBAPort->CommandListBase | (ulong)HBAPort->CommandListBaseUpper << 32));
+                HBACommandHeader* hdr = ((HBACommandHeader*)(HBAPort->CommandListBase));
                 hdr += Slot;
                 hdr->CommandFISLength = (byte)(sizeof(FIS_REG_H2D) / sizeof(uint));
                 hdr->Write = Write;
                 hdr->ClearBusy = true;
-                hdr->PRDTLength = 1;
+                hdr->PRDTLength = (ushort)(((Count - 1) >> 4) + 1);
 
-                HBACommandTable* table = ((HBACommandTable*)(hdr->CommandTableBaseAddress | (ulong)hdr->CommandTableBaseAddressUpper << 32));
+                HBACommandTable* table = ((HBACommandTable*)(hdr->CommandTableBaseAddress));
 
                 Native.Stosb(table, 0, (ulong)(sizeof(HBACommandTable) + (hdr->PRDTLength - 1) * sizeof(HBAPRDTEntry)));
 
-                table->PRDTEntry.DataBaseAddress = (uint)(ulong)Buffer;
-                table->PRDTEntry.DataBaseAddressUpper = ((uint)((ulong)Buffer << 32));
-                table->PRDTEntry.ByteCount = 511;
-                table->PRDTEntry.InterruptOnCompletion = true;
+                int i = 0;
+                for(i = 0; i < hdr->PRDTLength - 1; i++) 
+                {
+                    (&table->PRDTEntry)[i].DataBaseAddress = (ulong)Buffer;
+                    (&table->PRDTEntry)[i].ByteCount = 8 * 1024 - 1;
+                    (&table->PRDTEntry)[i].InterruptOnCompletion = true;
+                    Buffer += 4 * 1024;
+                    Count -= 16;
+                }
+
+                (&table->PRDTEntry)[i].DataBaseAddress = (ulong)Buffer;
+                (&table->PRDTEntry)[i].ByteCount = (uint)((Count << 9) - 1);
+                (&table->PRDTEntry)[i].InterruptOnCompletion = true;
 
                 FIS_REG_H2D* FIS = (FIS_REG_H2D*)(table->CommandFIS);
                 FIS->FISType = 0x27;
@@ -462,8 +453,7 @@ namespace MOOS
 
                 FIS->DeviceRegister = 1 << 6;
 
-                FIS->CountLow = 1;
-                FIS->CountHigh = 0;
+                FIS->Count = Count;
 
                 while ((HBAPort->TaskFileData & (0x80 | 0x08)) != 0) ;
 
