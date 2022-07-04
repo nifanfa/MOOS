@@ -70,8 +70,8 @@
 	<Target Name="RunVMware" AfterTargets="BuildISO" Condition="$(vm) == 'vmware'">
 		<Error Text="Please install VMWare Player in order to Run MOOS!" Condition="!Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')"></Error>
 		
-		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\Solution1\Solution1.vmx"></Exec>
-		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\Solution1\Solution1.vmx"></Exec>
+		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\MOOS\MOOS.vmx"></Exec>
+		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\MOOS\MOOS.vmx"></Exec>
 	</Target>
 	
 </Project>
