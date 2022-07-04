@@ -6,6 +6,9 @@
 //The maximum file length of exFAT
 #define INFO_NAME_LENGTH 255
 
+#define MAX_ITEM_FOR_EACH_DIR 255
+#define MAX_WORK_SIZE 16384
+
 struct Info
 {
 	WCHAR Name[INFO_NAME_LENGTH];
@@ -26,8 +29,8 @@ struct Info *infos;
 
 void fatfs_init()
 {
-	work = malloc(FF_MAX_SS);
-	infos = malloc(sizeof(struct Info) * 64);
+	work = malloc(MAX_WORK_SIZE);
+	infos = malloc(sizeof(struct Info) * MAX_ITEM_FOR_EACH_DIR);
 
 	res = f_mount(&fs, L"0:", 0);
 	if (res != FR_OK)
@@ -39,7 +42,7 @@ void fatfs_init()
 void format_exfat()
 {
 	f_unmount(&fs, L"0:", 0);
-	f_mkfs(L"0:", FS_EXFAT, 0, work, FF_MAX_SS);
+	f_mkfs(L"0:", FS_EXFAT, 0, work, MAX_WORK_SIZE);
 	f_mount(&fs, L"0:", 0);
 	if (res != FR_OK)
 	{
