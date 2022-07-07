@@ -3,6 +3,8 @@
 **Please join our new server!**  
 https://discord.gg/egAwCZmwgY  
 
+*See screenshot below...*
+
 **How to run?**  
 Open MOOS.sln using VS2022  
 Select MOOS from the VS2022 dropdown menu  
