@@ -75,6 +75,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\TimeSpan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Types.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\Control.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MouseButtons.cs" />
   </ItemGroup>
 </Project>
