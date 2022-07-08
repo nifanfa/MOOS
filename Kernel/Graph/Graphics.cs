@@ -141,12 +141,11 @@ namespace MOOS.Graph
 
         public virtual void DrawImage(int X, int Y, Image image, bool AlphaBlending = true)
         {
-            for (int h = 0; h < image.Height; h++)
-                for (int w = 0; w < image.Width; w++)
-                {
-                    if (AlphaBlending)
+            if (AlphaBlending) 
+            {
+                for (int h = 0; h < image.Height; h++)
+                    for (int w = 0; w < image.Width; w++)
                     {
-
                         uint foreground = image.RawData[image.Width * h + w];
                         int fA = (byte)((foreground >> 24) & 0xFF);
 
@@ -155,11 +154,15 @@ namespace MOOS.Graph
                             DrawPoint(X + w, Y + h, foreground, true);
                         }
                     }
-                    else
-                    {
-                        DrawPoint(X + w, Y + h, image.RawData[image.Width * h + w]);
-                    }
+            }
+            else 
+            {
+                fixed(uint* ptr = image.RawData)
+                for(int h = 1; h < image.Height; h++) 
+                {
+                    Native.Movsd(VideoMemory + (Width * (Y + h) + X) + 1, ptr + (h * image.Width) + 1, (ulong)(image.Width - 1));
                 }
+            }
         }
 
         #region Xiaolin Wu's line algorithm
