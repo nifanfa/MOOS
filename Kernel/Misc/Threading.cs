@@ -47,17 +47,23 @@ namespace MOOS.Misc
 
         public Thread Start()
         {
-            //Bootstrap CPU
-            this.RunOnWhichCPU = 0;
-            ThreadPool.Threads.Add(this);
-            return this;
+            lock (this)
+            {
+                //Bootstrap CPU
+                this.RunOnWhichCPU = 0;
+                ThreadPool.Threads.Add(this);
+                return this;
+            }
         }
 
         public Thread Start(int run_on_which_cpu)
         {
-            this.RunOnWhichCPU = run_on_which_cpu;
-            ThreadPool.Threads.Add(this);
-            return this;
+            lock (this)
+            {
+                this.RunOnWhichCPU = run_on_which_cpu;
+                ThreadPool.Threads.Add(this);
+                return this;
+            }
         }
 
         public static void Sleep(ulong Millionsecos)
