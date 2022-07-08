@@ -157,10 +157,15 @@ namespace MOOS.Graph
             }
             else 
             {
+                int _x = 0;
+                int clip = 0;
+
+                if (X < 0) _x = X;
+                if (X + image.Width >= Width) clip = X - (Width - image.Width - 1);
                 fixed(uint* ptr = image.RawData)
                 for(int h = 1; h < image.Height; h++) 
                 {
-                    Native.Movsd(VideoMemory + (Width * (Y + h) + X) + 1, ptr + (h * image.Width) + 1, (ulong)(image.Width - 1));
+                    Native.Movsd(VideoMemory + (Width * (Y + h) + (X-_x)) + 1, ptr + (h * image.Width) + 1 - _x, (ulong)(image.Width - 1 + _x - clip));
                 }
             }
         }
