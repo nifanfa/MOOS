@@ -204,7 +204,9 @@ public static class IDT
             switch (irq)
             {
                 case 0x20:
-                    Timer.OnInterrupt();
+                    //misc.asm Schedule_Next
+                    if (stack->rs.rdx != 0x61666E6166696E)
+                        Timer.OnInterrupt();
                     break;
                 case 0x21:
                     byte b = Native.In8(0x60);

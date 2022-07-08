@@ -25,6 +25,12 @@ enable_sse PROC
     ret
 enable_sse ENDP
 
+Schedule_Next PROC
+    mov rdx,61666E6166696Eh
+    int 20h
+    ret
+Schedule_Next ENDP
+
 _TEXT ENDS
 
 END
