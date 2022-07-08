@@ -207,9 +207,9 @@ namespace MOOS.GUI
             pre.Dispose();
 
 #if Chinese
-            string Result = $"FPS:{FPSMeter.FPS} | 处理器使用率:{ThreadPool.CPUUsage}% | 线程数量: {ThreadPool.ThreadCount} | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
+            string Result = $"FPS:{FPSMeter.FPS} | 线程数量: {ThreadPool.ThreadCount} | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #else
-            string Result = $"FPS:{FPSMeter.FPS} | CPU Usage:{ThreadPool.CPUUsage}% | ThreadCount: {ThreadPool.ThreadCount} | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
+            string Result = $"FPS:{FPSMeter.FPS} | ThreadCount: {ThreadPool.ThreadCount} | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
 #endif
             //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
             WindowManager.font.DrawString(Framebuffer.Graphics.Width - WindowManager.font.MeasureString(Result) - WindowManager.font.FontSize, (BarHeight / 2) - (WindowManager.font.FontSize / 2), Result);
