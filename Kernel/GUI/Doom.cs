@@ -46,7 +46,11 @@ namespace MOOS.GUI
 
         public Doom(int X, int Y) : base(X, Y, 640, 400)
         {
+#if Chinese
+            Title = "毁灭战士";
+#else
             Title = "DOOM Shareware";
+#endif
 
             di = new Image(640, 400);
             dg = Graphics.FromImage(di);
