@@ -47,8 +47,6 @@ uint32_t DG_GetTicksMs()
 	return GetTickCount();
 }
 
-extern unsigned int getkbdkey();
-
 static unsigned char convertToDoomKey(unsigned char key)
 {
 	switch (key)
@@ -59,16 +57,16 @@ static unsigned char convertToDoomKey(unsigned char key)
 	case 27:
 		key = KEY_ESCAPE;
 		break;
-	case 37:
+	case 65:
 		key = KEY_LEFTARROW;
 		break;
-	case 39:
+	case 68:
 		key = KEY_RIGHTARROW;
 		break;
-	case 38:
+	case 87:
 		key = KEY_UPARROW;
 		break;
-	case 40:
+	case 83:
 		key = KEY_DOWNARROW;
 		break;
 	case 162:
@@ -89,7 +87,7 @@ static unsigned char convertToDoomKey(unsigned char key)
 }
 
 
-static void addKeyToQueue(int pressed, unsigned char keyCode)
+void addKeyToQueue(int pressed, unsigned char keyCode)
 {
 	unsigned char key = convertToDoomKey(keyCode);
 
@@ -102,12 +100,6 @@ static void addKeyToQueue(int pressed, unsigned char keyCode)
 
 int DG_GetKey(int* pressed, unsigned char* doomKey)
 {
-	unsigned int chr = getkbdkey();
-	if(chr)
-	{
-		addKeyToQueue(chr & (1 << 31) ? 1 : 0, chr & ~(1 << 31));
-	}
-
 	if (s_KeyQueueReadIndex == s_KeyQueueWriteIndex)
 	{
 		//key queue is empty
