@@ -55,6 +55,12 @@ namespace MOOS.GUI
 
             PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
 
+#if Chinese
+            System.Windows.Forms.MessageBox.Show("键位: WASD Ctrl Shift ESC Enter");
+#else
+            System.Windows.Forms.MessageBox.Show("Keymap: WASD Ctrl Shift ESC Enter");
+#endif
+
             new Thread(new Action(() =>
             {
                 fixed (byte* ptr = gb)
