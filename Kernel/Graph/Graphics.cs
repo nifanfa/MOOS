@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 
 namespace MOOS.Graph
@@ -158,14 +159,25 @@ namespace MOOS.Graph
             else 
             {
                 int _x = 0;
-                int clip = 0;
+                int _y = 0;
+                int clip_x = 0;
+                int clip_y = 0;
 
                 if (X < 0) _x = X;
-                if (X + image.Width >= Width) clip = X - (Width - image.Width - 1);
+                if (Y < 0) _y = Y;
+                if (X + image.Width >= Width) clip_x = X - (Width - image.Width - 1);
+                if (Y + image.Height >= Height) clip_y = Y - (Height - image.Height - 1);
+                if(
+                    _x !>= -image.Width &&
+                    _y !>= -image.Height &&
+
+                    clip_x < image.Width &&
+                    clip_y < image.Height
+                    )
                 fixed(uint* ptr = image.RawData)
-                for(int h = 1; h < image.Height; h++) 
+                for(int h = 1; h < image.Height + _y - clip_y; h++) 
                 {
-                    Native.Movsd(VideoMemory + (Width * (Y + h) + (X-_x)) + 1, ptr + (h * image.Width) + 1 - _x, (ulong)(image.Width - 1 + _x - clip));
+                    Native.Movsd(VideoMemory + (Width * ((Y-_y) + h) + (X-_x)) + 1, ptr + ((h-_y) * image.Width) + 1 - _x, (ulong)(image.Width - 1 + _x - clip_x));
                 }
             }
         }
