@@ -175,9 +175,9 @@ namespace MOOS.Graph
                     clip_y < image.Height
                     )
                 fixed(uint* ptr = image.RawData)
-                for(int h = 1; h < image.Height + _y - clip_y; h++) 
+                for(int h = 1; h < image.Height + _y - clip_y + 1; h++) 
                 {
-                    Native.Movsd(VideoMemory + (Width * ((Y-_y) + h) + (X-_x)) + 1, ptr + ((h-_y) * image.Width) + 1 - _x, (ulong)(image.Width - 1 + _x - clip_x));
+                    Native.Movsd(VideoMemory + (Width * ((Y-_y) + h) + (X-_x)) + 1, ptr + ((h-_y) * image.Width) + 1 - _x, (ulong)(image.Width + _x - clip_x));
                 }
             }
         }

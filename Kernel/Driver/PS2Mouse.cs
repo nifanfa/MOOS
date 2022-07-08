@@ -1,5 +1,6 @@
 using MOOS.Driver;
 using MOOS.Misc;
+using System;
 using System.Windows.Forms;
 using static Native;
 
@@ -108,18 +109,13 @@ namespace MOOS
                     Control.MouseButtons = MouseButtons.Right;
                 }
 
-                if (MData[1] > 127)
-                    aX = -(255 - MData[1]);
-                else
-                    aX = MData[1];
+                aX = (sbyte)MData[1];
 
-                if (MData[2] > 127)
-                    aY = -(255 - MData[2]);
-                else
-                    aY = MData[2];
+                aY = (sbyte)MData[2];
+                aY = -aY;
 
-                Control.MousePosition.X += aX;
-                Control.MousePosition.Y -= aY;
+                Control.MousePosition.X = Math.Clamp(Control.MousePosition.X + aX, 0, Framebuffer.Width);
+                Control.MousePosition.Y = Math.Clamp(Control.MousePosition.Y + aY, 0, Framebuffer.Height);
             }
         }
     }
