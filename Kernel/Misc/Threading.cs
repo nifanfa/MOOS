@@ -110,7 +110,7 @@ namespace MOOS.Misc
                 new Thread(&IdleThread).Start((int)SMP.ThisCPU);
             }
             Native.Sti();
-            _int20h(); //start scheduling
+            Schedule_Next(); //start scheduling
         }
 
         public static void Terminate()
@@ -119,12 +119,12 @@ namespace MOOS.Misc
             Console.Write(Index.ToString());
             Console.WriteLine(" Has Exited");
             Threads[Index].Terminated = true;
-            _int20h();
+            Schedule_Next();
             Panic.Error("Termination Failed!");
         }
 
         [DllImport("*")]
-        public static extern void _int20h();
+        public static extern void Schedule_Next();
 
         public static void TestThread()
         {
@@ -144,7 +144,7 @@ namespace MOOS.Misc
 
         public static void IdleThread()
         {
-            for (; ; ) Native.Hlt();
+            for (; ; ) Schedule_Next();
         }
 
         private static int[] Indexs;
