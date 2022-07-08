@@ -4,6 +4,7 @@ using MOOS.FS;
 using MOOS.Graph;
 using MOOS.Misc;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -34,18 +35,8 @@ namespace MOOS.GUI
             dg.DrawPoint(x, y, color);
         }
 
-        [RuntimeExport("getkbdkey")]
-        public static uint getkbdkey()
-        {
-            if (PS2Keyboard.KeyInfo.Key == 0) return 0;
-            else
-            {
-                var key = (uint)PS2Keyboard.KeyInfo.Key;
-                if (PS2Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed) key |= (1u << 31);
-                PS2Keyboard.KeyInfo.Key = 0;
-                return key;
-            }
-        }
+        [DllImport("*")]
+        public static extern void addKeyToQueue(int pressed, byte keyCode);
 
         public static byte[] gb;
 
@@ -62,11 +53,19 @@ namespace MOOS.GUI
 
             gb = File.Instance.ReadAllBytes("DOOM1.WAD");
 
+            PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
+
             new Thread(new Action(() =>
             {
                 fixed (byte* ptr = gb)
                     doommain(ptr, gb.Length);
             })).Start();
+        }
+
+        private void PS2Keyboard_OnKeyChanged(ConsoleKeyInfo key)
+        {
+            Debug.WriteLine($"Key:{(byte)key.Key} {(key.KeyState == ConsoleKeyState.Pressed ? "Pressed" : "Other")}");
+            addKeyToQueue(key.KeyState != ConsoleKeyState.Released ? 1 : 0, (byte)key.Key);
         }
 
         public override void OnDraw()
