@@ -16,7 +16,7 @@ namespace MOOS.Driver
             Console.WriteLine($"[Timer] CPU clock is {CPU_Clock / 1048576}mhz");
         }
 
-        public static ulong Ticks = 0;
+        public static ulong Ticks { get; private set; }
 
         internal static void OnInterrupt()
         {
