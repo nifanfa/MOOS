@@ -1,4 +1,6 @@
 using MOOS.Misc;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace MOOS.Driver
 {
@@ -6,7 +8,7 @@ namespace MOOS.Driver
     {
         public static byte GetHIDPacket(USBDevice device, uint devicedesc)
         {
-            EHCI.CMD* cmd = (EHCI.CMD*)Allocator.Allocate((ulong)sizeof(EHCI.CMD));
+            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
             cmd->Request = 1;
             cmd->RequestType = 0xA1;
             cmd->Index = 0;
@@ -17,24 +19,43 @@ namespace MOOS.Driver
             return *res;
         }
 
-        public static byte GetKeyboardKey(USBDevice device)
+        public static void GetKeyboardThings(USBDevice device, out byte ScanCode)
         {
+            ScanCode = 0;
+
             byte* desc = stackalloc byte[10];
             byte res = GetHIDPacket(device, (uint)desc);
             if (res != (USB.TransmitError & 0xFF))
             {
                 if (desc[2] != 0)
                 {
-                    byte scancode = desc[2];
-                    return scancode;
+                    ScanCode = desc[2];
                 }
             }
-            return 0;
+        }
+
+        public static void GetMouseThings(USBDevice device,out sbyte AxisX,out sbyte AxisY,out MouseButtons buttons)
+        {
+            AxisX = 0;
+            AxisY = 0;
+            buttons = MouseButtons.None;
+
+            byte* desc = stackalloc byte[10];
+            byte res = GetHIDPacket(device, (uint)desc);
+            if (res != (USB.TransmitError & 0xFF))
+            {
+                AxisX = (sbyte)desc[1];
+                AxisY = (sbyte)desc[2];
+
+                if (desc[0] & 0x01) buttons |= MouseButtons.Left;
+                if (desc[0] & 0x02) buttons |= MouseButtons.Right;
+                if (desc[0] & 0x04) buttons |= MouseButtons.Middle;
+            }
         }
 
         public static void Initialize(USBDevice device)
         {
-            EHCI.CMD* cmd = (EHCI.CMD*)Allocator.Allocate((ulong)sizeof(EHCI.CMD));
+            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
             cmd->Request = 0x0B;
             cmd->RequestType = 0x21;
             cmd->Index = 0;
@@ -56,16 +77,21 @@ namespace MOOS.Driver
             else if (device.Protocol == 2)
             {
                 Console.WriteLine($"Port {device.NumPort} is a mouse");
+                InitializeMouse(device);
             }
         }
 
+        public static USBDevice Mouse;
         public static USBDevice Keyboard;
+
+        static void InitializeMouse(USBDevice device)
+        {
+            Mouse = device;
+        }
 
         static void InitializeKeyboard(USBDevice device)
         {
             Keyboard = device;
-
-            return;
         }
     }
 }
