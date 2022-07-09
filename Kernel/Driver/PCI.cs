@@ -111,12 +111,12 @@ namespace MOOS
                 device.Function = 0;
                 device.VendorID = vendorID;
 
-                device.Bar0 = ReadRegister(device.Bus, device.Slot, device.Function, 0x10);
-                device.Bar1 = ReadRegister(device.Bus, device.Slot, device.Function, 0x14);
-                device.Bar2 = ReadRegister(device.Bus, device.Slot, device.Function, 0x18);
-                device.Bar3 = ReadRegister(device.Bus, device.Slot, device.Function, 0x1C);
-                device.Bar4 = ReadRegister(device.Bus, device.Slot, device.Function, 0x20);
-                device.Bar5 = ReadRegister(device.Bus, device.Slot, device.Function, 0x24);
+                device.Bar0 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x10);
+                device.Bar1 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x14);
+                device.Bar2 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x18);
+                device.Bar3 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x1C);
+                device.Bar4 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x20);
+                device.Bar5 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x24);
 
                 device.ClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 11);
                 device.SubClassID = ReadRegister8(device.Bus, device.Slot, device.Function, 10);
@@ -134,13 +134,13 @@ namespace MOOS
             }
         }
 
-        public static void WriteRegister(ushort Bus, ushort Slot, ushort Function, byte aRegister,uint value)
+        public static void WriteRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister,uint value)
         {
             WriteRegister16(Bus, Slot, Function, (byte)(aRegister + 0), (ushort)(value & 0xFFFF));
             WriteRegister16(Bus, Slot, Function, (byte)(aRegister + 2), (ushort)((value >> 16) & 0xFFFF));
         }
 
-        public static uint ReadRegister(ushort Bus, ushort Slot, ushort Function, byte aRegister)
+        public static uint ReadRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister)
         {
             uint xAddr = PCI.GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
             Native.Out32(0xCF8, xAddr);
