@@ -78,12 +78,12 @@ namespace MOOS.Driver
 
             if (device.Protocol == 1)
             {
-                Console.WriteLine($"Port {device.NumPort} is a keyboard");
+                Console.WriteLine($"USB Keyboard at port:{device.NumPort}");
                 InitializeKeyboard(device);
             }
             else if (device.Protocol == 2)
             {
-                Console.WriteLine($"Port {device.NumPort} is a mouse");
+                Console.WriteLine($"USB Mouse at port:{device.NumPort}");
                 InitializeMouse(device);
             }
         }
