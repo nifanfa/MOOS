@@ -8,11 +8,10 @@ namespace MOOS
     public static unsafe class SMP
     {
         //https://wiki.osdev.org/Memory_Map_(x86)
-        //public const ulong NumActivedProcessors = 0x50000;
-        public const ulong APMain = 0x50008;
-        public const ulong Stacks = 0x50016;
-        public const ulong SharedGDT = 0x50024;
-        public const ulong SharedIDT = 0x50032;
+        public const ulong APMain = 0x50000;
+        public const ulong Stacks = 0x50008;
+        public const ulong SharedGDT = 0x50016;
+        public const ulong SharedIDT = 0x50024;
         public const ulong SharedPageTable = 0x51000;
         public const ulong Trampoline = 0x60000;
 
@@ -38,9 +37,6 @@ namespace MOOS
         public static void Initialize(uint trampoline)
         {
             if (ThisCPU != 0) Panic.Error("Error: Bootstrap CPU is not CPU 0");
-
-            //ushort* activedProcessor = (ushort*)NumActivedProcessors;
-            //*activedProcessor = 1;
 
             NumActivedProcessors = 1;
 

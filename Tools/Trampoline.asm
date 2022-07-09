@@ -1,8 +1,7 @@
-;NUM_ACTIVED_PROCESSORS     EQU 0x50000
-AP_MAIN     EQU 0x50008
-STACKS     EQU 0x50016
-SHARED_GDT     EQU 0x50024
-SHARED_IDT     EQU 0x50032
+AP_MAIN     EQU 0x50000
+STACKS     EQU 0x50008
+SHARED_GDT     EQU 0x50016
+SHARED_IDT     EQU 0x50024
 SHARED_PAGE_TABLE     EQU 0x51000
 
 [BITS 16]
@@ -54,12 +53,7 @@ APMain:
     add qword [rbx],1048576
     mov rsp,[rbx]
     mov rbp,rsp
-
-    ;mov rbx,NUM_ACTIVED_PROCESSORS
-    ;mov rcx,[rbx]
-    ;lock
-    ;inc word [rbx]
-
+    
     mov rax,SHARED_GDT
     mov rax,[rax]
     lgdt [rax]
