@@ -79,8 +79,10 @@ namespace MOOS.GUI
                             break;
 
                         case "cpu":
+                            Console.WriteLine("multi-processor IDs:");
                             for (int i = 0; i < ACPI.LocalAPIC_CPUIDs.Count; i++)
-                                Console.WriteLine($"cpu id:{ACPI.LocalAPIC_CPUIDs[i]}");
+                                Console.WriteLine($" cpu id:{ACPI.LocalAPIC_CPUIDs[i]}");
+                            Console.WriteLine($"frequency: {Timer.CPU_Clock/1048576}mhz");
                             break;
 
                         case "reboot":
