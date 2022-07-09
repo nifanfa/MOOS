@@ -1,4 +1,4 @@
-NUM_ACTIVED_PROCESSORS     EQU 0x50000
+;NUM_ACTIVED_PROCESSORS     EQU 0x50000
 AP_MAIN     EQU 0x50008
 STACKS     EQU 0x50016
 SHARED_GDT     EQU 0x50024
@@ -55,10 +55,10 @@ APMain:
     mov rsp,[rbx]
     mov rbp,rsp
 
-    mov rbx,NUM_ACTIVED_PROCESSORS
-    mov rcx,[rbx]
-    lock
-    inc word [rbx]
+    ;mov rbx,NUM_ACTIVED_PROCESSORS
+    ;mov rcx,[rbx]
+    ;lock
+    ;inc word [rbx]
 
     mov rax,SHARED_GDT
     mov rax,[rax]
