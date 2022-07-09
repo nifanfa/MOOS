@@ -20,7 +20,9 @@ namespace System
         public static implicit operator bool(long value) => value != 0;
         public static implicit operator bool(ulong value) => value != 0;
         public static implicit operator bool(float value) => value != 0;
+#if Kernel
         public static implicit operator bool(double value) => value != 0;
-        public static implicit operator bool(void* value) => value != 0;
+#endif
+        public static implicit operator bool(void* value) => value != null;
     }
 }
