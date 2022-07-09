@@ -42,9 +42,11 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
-#if false
         EHCI.Initialize();
 
+        //Use qemu for USB debug
+        //VMware won't virtual a USB HID
+#if false
         new Thread(() =>
         {
             for (; ; )
