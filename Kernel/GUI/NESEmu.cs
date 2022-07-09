@@ -17,6 +17,12 @@ namespace MOOS.GUI
             Title = "NES Emulator";
 #endif
             nes = new NES.NES();
+
+#if Chinese
+            System.Windows.Forms.MessageBox.Show("键位: WASD ZC QE");
+#else
+            System.Windows.Forms.MessageBox.Show("Keymap: WASD ZC QE");
+#endif
         }
 
         public override void OnSetVisible(bool value)
