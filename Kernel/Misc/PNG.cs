@@ -17,26 +17,29 @@ namespace MOOS.Misc
 
         public PNG(byte[] file,LodePNGColorType type = LodePNGColorType.LCT_RGBA ,uint bitDepth = 8)
         {
-            fixed (byte* p = file)
+            lock (this)
             {
-                lodepng_decode_memory(out uint* _out, out uint w, out uint h, p, file.Length, type, bitDepth);
-
-                if (_out == null) Panic.Error("lodepng error");
-                RawData = new uint[w * h];
-                fixed (uint* pdata = RawData) 
+                fixed (byte* p = file)
                 {
-                    for (int x = 0; x < w; x++)
+                    lodepng_decode_memory(out uint* _out, out uint w, out uint h, p, file.Length, type, bitDepth);
+
+                    if (_out == null) Panic.Error("lodepng error");
+                    RawData = new uint[w * h];
+                    fixed (uint* pdata = RawData)
                     {
-                        for (int y = 0; y < h; y++)
+                        for (int x = 0; x < w; x++)
                         {
-                            RawData[y * w + x] = (_out[y * w + x] & 0xFF000000) | (Ethernet.SwapLeftRight32(_out[y * w + x] & 0x00FFFFFF)) >> 8;
+                            for (int y = 0; y < h; y++)
+                            {
+                                RawData[y * w + x] = (_out[y * w + x] & 0xFF000000) | (Ethernet.SwapLeftRight32(_out[y * w + x] & 0x00FFFFFF)) >> 8;
+                            }
                         }
                     }
+                    Allocator.Free((System.IntPtr)_out);
+                    Width = (int)w;
+                    Height = (int)h;
+                    Bpp = 4;
                 }
-                Allocator.Free((System.IntPtr)_out);
-                Width = (int)w;
-                Height = (int)h;
-                Bpp = 4;
             }
         }
 

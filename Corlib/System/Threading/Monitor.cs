@@ -12,7 +12,10 @@ namespace System.Threading
         {
             if (ThreadPool.CanLock)
             {
-                ThreadPool.Lock();
+                if(!ThreadPool.Locked)
+                {
+                    ThreadPool.Lock();
+                }
             }
         }
 
@@ -20,7 +23,13 @@ namespace System.Threading
         {
             if (ThreadPool.CanLock)
             {
-                ThreadPool.UnLock();
+                if (ThreadPool.Locked)
+                {
+                    if (ThreadPool.Locker == SMP.ThisCPU)
+                    {
+                        ThreadPool.UnLock();
+                    }
+                }
             }
         }
     }
