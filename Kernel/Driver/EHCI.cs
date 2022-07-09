@@ -150,17 +150,6 @@ namespace MOOS.Driver
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct CMD
-        {
-            public byte RequestType;
-            public byte Request;
-
-            public ushort Value;
-            public ushort Index;
-            public ushort Length;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct TD
         {
             public uint NextLink;
@@ -187,7 +176,7 @@ namespace MOOS.Driver
             public fixed uint ExtendedBuffer[5];
         }
 
-        public static byte* SendAndReceive(byte port, CMD* cmd, void* buffer)
+        public static byte* SendAndReceive(byte port, USBRequest* cmd, void* buffer)
         {
             QH* qh = (QH*)Allocator.Allocate((ulong)sizeof(QH));
             QH* qh1 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
@@ -266,7 +255,7 @@ namespace MOOS.Driver
 
         static byte SetDeviceAddr(byte addr)
         {
-            CMD* cmd = (CMD*)Allocator.Allocate((ulong)sizeof(CMD));
+            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
             cmd->Request = 0x05;
             cmd->RequestType |= 0;
             cmd->RequestType |= 0 << 5;
@@ -366,7 +355,7 @@ namespace MOOS.Driver
             TD* td = (TD*)Allocator.Allocate((ulong)sizeof(TD));
             TD* trans = (TD*)Allocator.Allocate((ulong)sizeof(TD));
             TD* status = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            CMD* cmd = (CMD*)Allocator.Allocate((ulong)sizeof(CMD));
+            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
 
             byte* buffer = (byte*)Allocator.Allocate(size);
 
@@ -442,7 +431,7 @@ namespace MOOS.Driver
             TD* trans1 = (TD*)Allocator.Allocate((ulong)sizeof(TD));
             TD* trans2 = (TD*)Allocator.Allocate((ulong)sizeof(TD));
             TD* status = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            CMD* cmd = (CMD*)Allocator.Allocate((ulong)sizeof(CMD));
+            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
 
             byte* buffer = (byte*)Allocator.Allocate(size);
 
@@ -524,7 +513,7 @@ namespace MOOS.Driver
 
         static byte SetConfig(byte addr, byte config)
         {
-            CMD* cmd = (CMD*)Allocator.Allocate((ulong)sizeof(CMD));
+            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
             cmd->Request = 0x09;
             cmd->RequestType |= 0;
             cmd->RequestType |= 0 << 5;

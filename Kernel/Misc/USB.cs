@@ -1,4 +1,5 @@
 using MOOS.Driver;
+using System.Runtime.InteropServices;
 
 namespace MOOS.Misc
 {
@@ -27,6 +28,17 @@ namespace MOOS.Misc
         public uint Localoutringoffset;
     }
 
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct USBRequest
+    {
+        public byte RequestType;
+        public byte Request;
+
+        public ushort Value;
+        public ushort Index;
+        public ushort Length;
+    }
+
     public static unsafe class USB
     {
         public const uint TransmitError = 0xFFFFFFFF;
@@ -35,7 +47,7 @@ namespace MOOS.Misc
         {
             if (device.USBVersion == 2)
             {
-                return EHCI.SendAndReceive(device.NumPort, (EHCI.CMD*)cmd, buffer);
+                return EHCI.SendAndReceive(device.NumPort, (USBRequest*)cmd, buffer);
             }
             else
             {
