@@ -42,6 +42,21 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
+        /*
+        lock (null)
+        {
+            EHCI.Initialize();
+
+            while (true) 
+            {
+                byte c = HID.GetKeyboardKey(HID.Keyboard);
+
+                if(c)
+                    Console.WriteLine(c.ToString());
+            }
+        }
+        */
+
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
         Cursor = new PNG(File.Instance.ReadAllBytes("Images/Cursor.png"));
