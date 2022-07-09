@@ -58,7 +58,10 @@ namespace MOOS.Misc
             Interrupts.EnableInterrupt(0x21);
 
             Serial.Initialise();
+            
             PIT.Initialise();
+            Timer.Initialize();
+
             PS2Mouse.Initialise();
             SMBIOS.Initialise();
 

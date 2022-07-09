@@ -4,6 +4,18 @@ namespace MOOS.Driver
 {
     public static class Timer
     {
+        public static ulong CPU_Clock;
+
+        public static void Initialize() 
+        {
+            ulong prev = Native.Rdtsc();
+            Timer.Wait(10);
+            ulong next = Native.Rdtsc();
+            CPU_Clock = next - prev;
+            CPU_Clock *= 100;
+            Console.WriteLine($"[Timer] CPU clock is {CPU_Clock / 1048576}mhz");
+        }
+
         public static ulong Ticks = 0;
 
         internal static void OnInterrupt()
