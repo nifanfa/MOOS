@@ -57,6 +57,9 @@
     <ClCompile Include="ffunicode.c">
       <Filter>源文件\fatfs</Filter>
     </ClCompile>
+    <ClCompile Include="double_tostring.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm">
