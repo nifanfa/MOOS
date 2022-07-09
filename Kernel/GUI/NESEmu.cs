@@ -32,7 +32,7 @@ namespace MOOS.GUI
                 nesThread.Terminated = !value;
                 if (value)
                 {
-                    PS2Keyboard.OnKeyChanged += nes.PS2Keyboard_OnKeyChangedHandler;
+                    Keyboard.OnKeyChanged += nes.PS2Keyboard_OnKeyChangedHandler;
                 }
                 else
                 {

@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\IDE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Intel8254X.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\IOAPIC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\Keyboard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\LocalAPIC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\LocalAPICTimer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PCI.cs" />

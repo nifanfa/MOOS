@@ -139,11 +139,11 @@ namespace MOOS
 
         public static ConsoleKeyInfo ReadKey(bool intercept = false)
         {
-            PS2Keyboard.CleanKeyInfo(true);
-            while (PS2Keyboard.KeyInfo.KeyChar == '\0') Native.Hlt();
+            Keyboard.CleanKeyInfo(true);
+            while (Keyboard.KeyInfo.KeyChar == '\0') Native.Hlt();
             if (!intercept)
             {
-                switch (PS2Keyboard.KeyInfo.Key) 
+                switch (Keyboard.KeyInfo.Key) 
                 {
                     case ConsoleKey.Enter:
                         Console.WriteLine();
@@ -153,11 +153,11 @@ namespace MOOS
                         Console.Back();
                         break;
                     default:
-                        Console.Write(PS2Keyboard.KeyInfo.KeyChar);
+                        Console.Write(Keyboard.KeyInfo.KeyChar);
                         break;
                 }
             }
-            return PS2Keyboard.KeyInfo;
+            return Keyboard.KeyInfo;
         }
 
         public static string ReadLine() 

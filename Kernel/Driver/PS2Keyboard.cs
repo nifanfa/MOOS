@@ -11,14 +11,9 @@ namespace MOOS
 {
     public static class PS2Keyboard
     {
-        public static ConsoleKeyInfo KeyInfo;
-
         private static char[] keyChars;
         private static char[] keyCharsShift;
         private static ConsoleKey[] keys;
-
-        public delegate void OnKeyHandler(ConsoleKeyInfo key);
-        public static event OnKeyHandler OnKeyChanged;
 
         public static bool Initialize()
         {
@@ -53,26 +48,14 @@ namespace MOOS
                 Down, Next, Insert, Delete, Snapshot, None, Oem5, F11, F12
             };
 
-            CleanKeyInfo();
-            PS2Keyboard.OnKeyChanged = null;
+            Keyboard.CleanKeyInfo();
             return true;
-        }
-
-        public static void CleanKeyInfo(bool NoModifiers = false)
-        {
-            KeyInfo.KeyChar = '\0';
-            KeyInfo.ScanCode = 0;
-            KeyInfo.KeyState = ConsoleKeyState.None;
-            if (!NoModifiers)
-            {
-                KeyInfo.Modifiers = ConsoleModifiers.None;
-            }
         }
 
         public static void ProcessKey(byte b)
         {
-            KeyInfo.ScanCode = b;
-            KeyInfo.KeyState = b > 0x80 ? ConsoleKeyState.Released : ConsoleKeyState.Pressed;
+            Keyboard.KeyInfo.ScanCode = b;
+            Keyboard.KeyInfo.KeyState = b > 0x80 ? ConsoleKeyState.Released : ConsoleKeyState.Pressed;
 
             SetIfKeyModifier(b, 0x1D, ConsoleModifiers.Ctrl);
             SetIfKeyModifier(b, 0x2A, ConsoleModifiers.Shift);
@@ -81,47 +64,47 @@ namespace MOOS
 
             if (b == 0x3A)
             {
-                if (PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock))
+                if (Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock))
                 {
-                    KeyInfo.Modifiers &= ~ConsoleModifiers.CapsLock;
+                    Keyboard.KeyInfo.Modifiers &= ~ConsoleModifiers.CapsLock;
                 }
                 else
                 {
-                    KeyInfo.Modifiers |= ConsoleModifiers.CapsLock;
+                    Keyboard.KeyInfo.Modifiers |= ConsoleModifiers.CapsLock;
                 }
             }
 
             if (b < keyChars.Length)
             {
-                KeyInfo.KeyChar = PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock) ? keyChars[b].ToUpper() : keyChars[b];
+                Keyboard.KeyInfo.KeyChar = Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock) ? keyChars[b].ToUpper() : keyChars[b];
             }
-            if (b < keyCharsShift.Length && PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Shift))
+            if (b < keyCharsShift.Length && Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Shift))
             {
-                KeyInfo.KeyChar = PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock) ? keyCharsShift[b].ToUpper() : keyCharsShift[b];
+                Keyboard.KeyInfo.KeyChar = Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.CapsLock) ? keyCharsShift[b].ToUpper() : keyCharsShift[b];
             }
 
             if (b < keys.Length)
             {
-                KeyInfo.Key = keys[b];
+                Keyboard.KeyInfo.Key = keys[b];
             }
             else if (b >= 0x80 && (b - 0x80) < keys.Length)
             {
-                KeyInfo.Key = keys[b - 0x80];
+                Keyboard.KeyInfo.Key = keys[b - 0x80];
             }
 
-            OnKeyChanged?.Invoke(KeyInfo);
+            Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
         }
 
         private static void SetIfKeyModifier(byte scanCode, byte pressedScanCode, ConsoleModifiers modifier)
         {
             if (scanCode == pressedScanCode)
             {
-                KeyInfo.Modifiers |= modifier;
+                Keyboard.KeyInfo.Modifiers |= modifier;
             }
 
             if (scanCode == pressedScanCode + 0x80)
             {
-                KeyInfo.Modifiers &= ~modifier;
+                Keyboard.KeyInfo.Modifiers &= ~modifier;
             }
         }
     }

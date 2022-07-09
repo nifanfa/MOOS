@@ -53,6 +53,8 @@ namespace MOOS.Misc
         PIC.Enable();
 #endif
 
+            Keyboard.Initialize();
+
             PS2Keyboard.Initialize();
             //Enable keyboard interrupts
             Interrupts.EnableInterrupt(0x21);

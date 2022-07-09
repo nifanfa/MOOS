@@ -31,7 +31,7 @@ namespace MOOS.GUI
 
         public void Rebind()
         {
-            PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
+            Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
         }
 
         private void PS2Keyboard_OnKeyChanged(System.ConsoleKeyInfo key)

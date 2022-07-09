@@ -57,7 +57,7 @@ namespace MOOS.GUI
 
             gb = File.Instance.ReadAllBytes("DOOM1.WAD");
 
-            PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
+            Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
 
 #if Chinese
             System.Windows.Forms.MessageBox.Show("键位: WASD Ctrl Shift ESC Enter");
@@ -74,7 +74,6 @@ namespace MOOS.GUI
 
         private void PS2Keyboard_OnKeyChanged(ConsoleKeyInfo key)
         {
-            Debug.WriteLine($"Key:{(byte)key.Key} {(key.KeyState == ConsoleKeyState.Pressed ? "Pressed" : "Other")}");
             addKeyToQueue(key.KeyState != ConsoleKeyState.Released ? 1 : 0, (byte)key.Key);
         }
 
