@@ -100,9 +100,7 @@ namespace MOOS.Driver
 
                 *(uint*)(BaseAddr + 0x10) = 0;
                 *(uint*)(BaseAddr + 0x14) = (uint)&framelist;
-                *(uint*)CMDReg |= 0x40 << 16;
-                *(uint*)CMDReg |= 0 << 2;
-                *(uint*)CMDReg |= 1;
+                *(uint*)CMDReg |= 0x400001;
                 *(uint*)(BaseAddr + 0x40) |= 1;
 
                 ScanPorts();
