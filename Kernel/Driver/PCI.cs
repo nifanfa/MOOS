@@ -134,6 +134,12 @@ namespace MOOS
             }
         }
 
+        public static void WriteRegister(ushort Bus, ushort Slot, ushort Function, byte aRegister,uint value)
+        {
+            WriteRegister16(Bus, Slot, Function, (byte)(aRegister + 0), (ushort)(value & 0xFFFF));
+            WriteRegister16(Bus, Slot, Function, (byte)(aRegister + 2), (ushort)((value >> 16) & 0xFFFF));
+        }
+
         public static uint ReadRegister(ushort Bus, ushort Slot, ushort Function, byte aRegister)
         {
             uint xAddr = PCI.GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
