@@ -87,7 +87,7 @@ namespace MOOS.GUI
         {
             base.OnInput();
 
-            switch (PS2Keyboard.KeyInfo.Key)
+            switch (Keyboard.KeyInfo.Key)
             {
                 case ConsoleKey.W:
                     Dir = Direction.Up;

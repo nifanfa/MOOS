@@ -43,21 +43,25 @@ unsafe class Program
     static void KMain()
     {
 #if false
-        lock (null)
+        EHCI.Initialize();
+
+        new Thread(() =>
         {
-            EHCI.Initialize();
-
-            while (true)
+            for (; ; )
             {
-                HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode);
-
-                if (ScanCode) Console.WriteLine(ScanCode.ToString());
+                HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode, out ConsoleKey Key);
+                Keyboard.KeyInfo.ScanCode = ScanCode;
+                Keyboard.KeyInfo.Key = Key;
+                Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
 
                 HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
 
-                if ((AxisX != 0 && AxisY != 0) | buttons != MouseButtons.None) Console.WriteLine($"X:{AxisX} Y:{AxisY} {(buttons == MouseButtons.Left ? "Left" : (buttons == MouseButtons.Right ? "Right" : (buttons == MouseButtons.None ? "None" : "Other")))}");
+                Control.MousePosition.X = Math.Clamp(Control.MousePosition.X + AxisX, 0, Framebuffer.Width);
+                Control.MousePosition.Y = Math.Clamp(Control.MousePosition.Y + AxisY, 0, Framebuffer.Height);
+
+                Control.MouseButtons = buttons;
             }
-        }
+        }).Start();
 #endif
 
         //Sized width to 512
@@ -198,9 +202,9 @@ unsafe class Program
         {
 #region ConsoleHotKey
             if (
-                PS2Keyboard.KeyInfo.Key == ConsoleKey.T &&
-                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Ctrl) &&
-                PS2Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt)
+                Keyboard.KeyInfo.Key == ConsoleKey.T &&
+                Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Ctrl) &&
+                Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt)
                 )
             {
                 WindowManager.MoveToEnd(FConsole);

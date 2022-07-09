@@ -156,7 +156,7 @@ namespace NES
             bolStartFrame = true;
             bolReset = true;
 
-            PS2Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChangedHandler;
+            Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChangedHandler;
         }
 
         public void PS2Keyboard_OnKeyChangedHandler(ConsoleKeyInfo key)

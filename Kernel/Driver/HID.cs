@@ -1,4 +1,6 @@
 using MOOS.Misc;
+using System;
+using static System.ConsoleKey;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -19,8 +21,9 @@ namespace MOOS.Driver
             return *res;
         }
 
-        public static void GetKeyboardThings(USBDevice device, out byte ScanCode)
+        public static void GetKeyboardThings(USBDevice device, out byte ScanCode, out ConsoleKey Key)
         {
+            Key = None;
             ScanCode = 0;
 
             byte* desc = stackalloc byte[10];
@@ -30,6 +33,10 @@ namespace MOOS.Driver
                 if (desc[2] != 0)
                 {
                     ScanCode = desc[2];
+                    if(ScanCode < ConsoleKeys.Length)
+                    {
+                        Key = ConsoleKeys[ScanCode];
+                    }
                 }
             }
         }
@@ -81,6 +88,8 @@ namespace MOOS.Driver
             }
         }
 
+        public static ConsoleKey[] ConsoleKeys;
+
         public static USBDevice Mouse;
         public static USBDevice Keyboard;
 
@@ -92,6 +101,54 @@ namespace MOOS.Driver
         static void InitializeKeyboard(USBDevice device)
         {
             Keyboard = device;
+            ConsoleKeys = new ConsoleKey[]
+            {
+                None,
+                None,
+                None,
+                None,
+                A,
+                B,
+                C,
+                D,
+                E,
+                F,
+                G,
+                H,
+                I,
+                J,
+                K,
+                L,
+                M,
+                N,
+                O,
+                P,
+                Q,
+                R,
+                S,
+                T,
+                U,
+                V,
+                W,
+                X,
+                Y,
+                Z,
+                D1,
+                D2,
+                D3,
+                D4,
+                D5,
+                D6,
+                D7,
+                D8,
+                D9,
+                D0,
+                Enter,
+                Escape,
+                Backspace,
+                Tab,
+                Space,
+            };
         }
     }
 }
