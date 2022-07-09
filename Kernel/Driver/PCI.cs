@@ -134,10 +134,11 @@ namespace MOOS
             }
         }
 
-        public static void WriteRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister,uint value)
+        public static void WriteRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister,uint Value)
         {
-            WriteRegister16(Bus, Slot, Function, (byte)(aRegister + 0), (ushort)(value & 0xFFFF));
-            WriteRegister16(Bus, Slot, Function, (byte)(aRegister + 2), (ushort)((value >> 16) & 0xFFFF));
+            uint xAddr = GetAddressBase(Bus, Slot, Function) | ((uint)(aRegister & 0xFC));
+            Native.Out32(0xCF8, xAddr);
+            Native.Out32(0xCFC, Value);
         }
 
         public static uint ReadRegister32(ushort Bus, ushort Slot, ushort Function, byte aRegister)
