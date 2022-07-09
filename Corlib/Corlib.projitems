@@ -10,6 +10,15 @@
     </Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Boolean.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Byte.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Char.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Delegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Double.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Int16.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Int32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Int64.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\ArrayHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\StartupCodeHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\SynchronizedMethodHelpers.cs" />
@@ -20,6 +29,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\ModuleHeaders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\RuntimeConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MulticastDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nullable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RuntimeMethodHandle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RuntimeTypeHandle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SByte.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Single.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Action.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\AppContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Array.cs" />
@@ -73,7 +88,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\String.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Threading\Monitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\TimeSpan.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Types.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UInt16.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UInt32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UInt64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIntPtr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Void.cs" />
+    <Compile Include="..\Corlib\System\RuntimeFieldHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\Control.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MouseButtons.cs" />
