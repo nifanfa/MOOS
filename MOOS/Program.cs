@@ -50,8 +50,14 @@ unsafe class Program
             for (; ; )
             {
                 HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode, out ConsoleKey Key);
-                Keyboard.KeyInfo.ScanCode = ScanCode;
-                Keyboard.KeyInfo.Key = Key;
+                Keyboard.KeyInfo.KeyState = ScanCode >= 4 ? ConsoleKeyState.Pressed : ConsoleKeyState.Released;
+                
+                if(Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed)
+                {
+                    Keyboard.KeyInfo.ScanCode = ScanCode;
+                    Keyboard.KeyInfo.Key = Key;
+                }
+
                 Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
 
                 HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
