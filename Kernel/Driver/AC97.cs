@@ -21,7 +21,7 @@ namespace MOOS
             if (device == null) return;
 
             Console.WriteLine("Intel 82801AA AC97 Audio Controller Found");
-            device.WriteRegister16(0x04, 0x04 | 0x02 | 0x01);
+            device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
             NumDescriptors = 31;
 
