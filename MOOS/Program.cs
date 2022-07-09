@@ -42,20 +42,23 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
-        /*
+#if false
         lock (null)
         {
             EHCI.Initialize();
 
-            while (true) 
+            while (true)
             {
-                byte c = HID.GetKeyboardKey(HID.Keyboard);
+                HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode);
 
-                if(c)
-                    Console.WriteLine(c.ToString());
+                if (ScanCode) Console.WriteLine(ScanCode.ToString());
+
+                HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
+
+                if ((AxisX != 0 && AxisY != 0) | buttons != MouseButtons.None) Console.WriteLine($"X:{AxisX} Y:{AxisY} {(buttons == MouseButtons.Left ? "Left" : (buttons == MouseButtons.Right ? "Right" : (buttons == MouseButtons.None ? "None" : "Other")))}");
             }
         }
-        */
+#endif
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
