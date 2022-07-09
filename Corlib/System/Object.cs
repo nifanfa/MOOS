@@ -46,9 +46,5 @@ namespace System
             Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
 #endif
         }
-
-#if Kernel
-        public static implicit operator bool(object obj)=>((ulong)Unsafe.AsPointer(ref obj))>= (ulong)Allocator._Info.Start;
-#endif
     }
 }
