@@ -316,7 +316,7 @@ namespace MOOS.Driver
 
             byte lsts = 1;
 
-            Timer.Ticks = 0;
+            ulong lastTick = Timer.Ticks;
 
             while (1)
             {
@@ -328,7 +328,8 @@ namespace MOOS.Driver
                     !(tsts & (1 << 6)) &&
                     !(tsts & (1 << 5)) &&
                     !(tsts & (1 << 7)) &&
-                    !(Timer.Ticks > 500)
+                    //500ms
+                    !(Timer.Ticks > (lastTick + 500))
                     )
                 {
                     lsts = 1;
