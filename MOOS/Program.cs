@@ -68,6 +68,8 @@ unsafe class Program
                 Control.MousePosition.Y = Math.Clamp(Control.MousePosition.Y + AxisY, 0, Framebuffer.Height);
 
                 Control.MouseButtons = buttons;
+
+                Native.Hlt();
             }
         }).Start();
 #endif
