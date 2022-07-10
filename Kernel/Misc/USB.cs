@@ -50,11 +50,13 @@ namespace MOOS.Misc
 
     public static unsafe class USB
     {
-        public static bool SendAndReceive(USBDevice device, void* cmd, void* buffer)
+        public static byte DeviceAddr;
+
+        public static bool SendAndReceive(USBDevice device, USBRequest* cmd, void* buffer)
         {
             if (device.USBVersion == 2)
             {
-                return EHCI.SendAndReceive(device.NumPort, (USBRequest*)cmd, buffer);
+                return EHCI.SendAndReceive(device.NumPort, cmd, buffer);
             }
             else
             {
