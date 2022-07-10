@@ -42,36 +42,46 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
-        EHCI.Initialize(); 
+        HID.Initialize();
+
+        EHCI.Initialize();
 
         //Use qemu for USB debug
         //VMware won't virtual a USB HID
 #if false
-        new Thread(() =>
+        if (HID.Keyboard != null && HID.Mouse != null) 
         {
-            for (; ; )
+
+            new Thread(() =>
             {
-                HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode, out ConsoleKey Key);
-                Keyboard.KeyInfo.KeyState = ScanCode >= 4 ? ConsoleKeyState.Pressed : ConsoleKeyState.Released;
-                
-                if(Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed)
+                for (; ; )
                 {
-                    Keyboard.KeyInfo.ScanCode = ScanCode;
-                    Keyboard.KeyInfo.Key = Key;
+                    HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode, out ConsoleKey Key);
+                    Keyboard.KeyInfo.KeyState = ScanCode >= 4 ? ConsoleKeyState.Pressed : ConsoleKeyState.Released;
+
+                    if (Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed)
+                    {
+                        Keyboard.KeyInfo.ScanCode = ScanCode;
+                        Keyboard.KeyInfo.Key = Key;
+                    }
+
+                    Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
+
+                    HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
+
+                    Control.MousePosition.X = Math.Clamp(Control.MousePosition.X + AxisX, 0, Framebuffer.Width);
+                    Control.MousePosition.Y = Math.Clamp(Control.MousePosition.Y + AxisY, 0, Framebuffer.Height);
+
+                    Control.MouseButtons = buttons;
+
+                    Native.Hlt();
                 }
-
-                Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
-
-                HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
-
-                Control.MousePosition.X = Math.Clamp(Control.MousePosition.X + AxisX, 0, Framebuffer.Width);
-                Control.MousePosition.Y = Math.Clamp(Control.MousePosition.Y + AxisY, 0, Framebuffer.Height);
-
-                Control.MouseButtons = buttons;
-
-                Native.Hlt();
-            }
-        }).Start();
+            }).Start();
+        }
+        else 
+        {
+            Panic.Error("Either USB Mouse or USB Keyboard not present");
+        }
 #endif
 
         //Sized width to 512
