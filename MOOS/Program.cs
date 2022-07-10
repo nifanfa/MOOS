@@ -51,30 +51,11 @@ unsafe class Program
 #if false
         if (HID.Keyboard != null && HID.Mouse != null) 
         {
-
             new Thread(() =>
             {
                 for (; ; )
                 {
-                    HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode, out ConsoleKey Key);
-                    Keyboard.KeyInfo.KeyState = ScanCode >= 4 ? ConsoleKeyState.Pressed : ConsoleKeyState.Released;
-
-                    if (Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed)
-                    {
-                        Keyboard.KeyInfo.ScanCode = ScanCode;
-                        Keyboard.KeyInfo.Key = Key;
-                    }
-
-                    Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
-
-                    HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
-
-                    Control.MousePosition.X = Math.Clamp(Control.MousePosition.X + AxisX, 0, Framebuffer.Width);
-                    Control.MousePosition.Y = Math.Clamp(Control.MousePosition.Y + AxisY, 0, Framebuffer.Height);
-
-                    Control.MouseButtons = buttons;
-
-                    Native.Hlt();
+                    USB.OnInterrupt();
                 }
             }).Start();
         }
