@@ -18,6 +18,15 @@ namespace MOOS.Driver
 
         public static void Initialize()
         {
+            qh = (QH*)Allocator.Allocate((ulong)sizeof(QH));
+            qh1 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
+            qh2 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
+            td = (TD*)Allocator.Allocate((ulong)sizeof(TD));
+            trans = (TD*)Allocator.Allocate((ulong)sizeof(TD));
+            trans1 = (TD*)Allocator.Allocate((ulong)sizeof(TD));
+            sts = (TD*)Allocator.Allocate((ulong)sizeof(TD));
+            cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
+
             PCIDevice device = PCI.GetDevice(0x0C, 0x03, 0x20);
             if (device == null) return;
 
@@ -155,6 +164,12 @@ namespace MOOS.Driver
             public uint Token;
             public fixed uint Buffer[5];
             public fixed uint ExtendedBuffer[5];
+
+            public void Clean()
+            {
+                fixed (void* p = &this)
+                    Native.Stosb(p, 0, (ulong)sizeof(TD));
+            }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -172,16 +187,31 @@ namespace MOOS.Driver
             public uint Token;
             public fixed uint Buffer[5];
             public fixed uint ExtendedBuffer[5];
+
+            public void Clean()
+            {
+                fixed (void* p = &this)
+                    Native.Stosb(p, 0, (ulong)sizeof(QH));
+            }
         }
+
+        static QH* qh;
+        static QH* qh1;
+        static QH* qh2;
+        static TD* td;
+        static TD* trans;
+        static TD* trans1;
+        static TD* sts;
+        static USBRequest* cmd;
 
         public static byte* SendAndReceive(byte port, USBRequest* cmd, void* buffer)
         {
-            QH* qh = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* qh1 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* qh2 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            TD* td = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* trans = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* sts = (TD*)Allocator.Allocate((ulong)sizeof(TD));
+            (*qh).Clean();
+            (*qh1).Clean();
+            (*qh2).Clean();
+            (*td).Clean();
+            (*trans).Clean();
+            (*sts).Clean();
 
             td->Token |= 2 << 8;
             td->Token |= 3 << 10;
@@ -236,13 +266,6 @@ namespace MOOS.Driver
             *(uint*)CMDReg &= ~0x20u;
             *(uint*)AsyncListReg = 1;
 
-            Allocator.Free((System.IntPtr)qh);
-            Allocator.Free((System.IntPtr)qh1);
-            Allocator.Free((System.IntPtr)qh2);
-            Allocator.Free((System.IntPtr)td);
-            Allocator.Free((System.IntPtr)trans);
-            Allocator.Free((System.IntPtr)sts);
-
             if (res == 0)
             {
                 return (byte*)USB.TransmitError;
@@ -253,7 +276,12 @@ namespace MOOS.Driver
 
         static byte SetDeviceAddr(byte addr)
         {
-            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
+            (*cmd).Clean();
+            (*trans).Clean();
+            (*sts).Clean();
+            (*qh).Clean();
+            (*qh1).Clean();
+
             cmd->Request = 0x05;
             cmd->RequestType |= 0;
             cmd->RequestType |= 0 << 5;
@@ -262,18 +290,13 @@ namespace MOOS.Driver
             cmd->Length = 0;
             cmd->Value = addr;
 
-            TD* tcmd = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* sts = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            QH* qh = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* qh1 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-
-            tcmd->NextLink = (uint)sts;
-            tcmd->AltLink = 1;
-            tcmd->Token |= 8 << 16;
-            tcmd->Token |= 1 << 7;
-            tcmd->Token |= 0x2 << 8;
-            tcmd->Token |= 0x3 << 10;
-            *tcmd->Buffer = (uint)cmd;
+            trans->NextLink = (uint)sts;
+            trans->AltLink = 1;
+            trans->Token |= 8 << 16;
+            trans->Token |= 1 << 7;
+            trans->Token |= 0x2 << 8;
+            trans->Token |= 0x3 << 10;
+            *trans->Buffer = (uint)cmd;
 
             sts->NextLink = 1;
             sts->AltLink = 1;
@@ -283,7 +306,7 @@ namespace MOOS.Driver
             sts->Token |= 0x3 << 10;
 
             qh1->AltLink = 1;
-            qh1->NextLink = (uint)tcmd;
+            qh1->NextLink = (uint)trans;
             qh1->HorizontalLink = ((uint)qh) | 2;
             qh1->CurrentLink = 0;
             qh1->Characteristics |= 1 << 14;
@@ -348,13 +371,13 @@ namespace MOOS.Driver
 
         static byte* GetDesc(byte addr, byte size)
         {
-            QH* qh = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* qh1 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* qh2 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            TD* td = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* trans = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* status = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
+            (*qh).Clean();
+            (*qh1).Clean();
+            (*qh2).Clean();
+            (*td).Clean();
+            (*trans).Clean();
+            (*sts).Clean();
+            (*cmd).Clean();
 
             byte* buffer = (byte*)Allocator.Allocate(size);
 
@@ -372,7 +395,7 @@ namespace MOOS.Driver
             td->AltLink = 1;
             *td->Buffer = (uint)cmd;
 
-            trans->NextLink = (uint)status;
+            trans->NextLink = (uint)sts;
             trans->AltLink = 1;
             trans->Token |= (uint)(size << 16);
             trans->Token |= 1u << 31;
@@ -381,12 +404,12 @@ namespace MOOS.Driver
             trans->Token |= 0x3 << 10;
             *trans->Buffer = (uint)buffer;
 
-            status->NextLink = 1;
-            status->AltLink = 1;
-            status->Token |= 0 << 8;
-            status->Token |= 1u << 31;
-            status->Token |= 1 << 7;
-            status->Token |= 0x3 << 10;
+            sts->NextLink = 1;
+            sts->AltLink = 1;
+            sts->Token |= 0 << 8;
+            sts->Token |= 1u << 31;
+            sts->Token |= 1 << 7;
+            sts->Token |= 0x3 << 10;
 
 
             qh1->AltLink = 1;
@@ -409,7 +432,7 @@ namespace MOOS.Driver
             *(uint*)AsyncListReg = (uint)qh;
             *(uint*)CMDReg |= 0x20;
 
-            byte result = WaitForComplete(status);
+            byte result = WaitForComplete(sts);
 
             *(uint*)CMDReg &= ~0x20u;
             *(uint*)AsyncListReg = 1;
@@ -423,14 +446,14 @@ namespace MOOS.Driver
 
         static byte* GetConfig(byte addr, byte size)
         {
-            QH* qh = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* qh1 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* qh2 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            TD* td = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* trans1 = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* trans2 = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* status = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
+            (*qh).Clean();
+            (*qh1).Clean();
+            (*qh2).Clean();
+            (*td).Clean();
+            (*trans).Clean();
+            (*trans1).Clean();
+            (*sts).Clean();
+            (*cmd).Clean();
 
             byte* buffer = (byte*)Allocator.Allocate(size);
 
@@ -444,38 +467,38 @@ namespace MOOS.Driver
             td->Token |= 3 << 10;
             td->Token |= 8 << 16;
             td->Token |= 1 << 7;
-            td->NextLink = (uint)trans1;
+            td->NextLink = (uint)trans;
             td->AltLink = 1;
             *td->Buffer = (uint)cmd;
             byte toggle = 0;
             toggle ^= 1;
 
-            trans1->NextLink = (uint)status;
+            trans->NextLink = (uint)sts;
+            trans->AltLink = 1;
+            trans->Token |= (uint)(size << 16);
+            trans->Token |= (uint)(toggle << 31);
+            trans->Token |= 1 << 7;
+            trans->Token |= 1 << 8;
+            trans->Token |= 0x3 << 10;
+            *trans->Buffer = (uint)buffer;
+
+            toggle ^= 1;
+
+            trans1->NextLink = (uint)sts;
             trans1->AltLink = 1;
             trans1->Token |= (uint)(size << 16);
             trans1->Token |= (uint)(toggle << 31);
             trans1->Token |= 1 << 7;
             trans1->Token |= 1 << 8;
             trans1->Token |= 0x3 << 10;
-            *trans1->Buffer = (uint)buffer;
+            *trans1->Buffer = ((uint)buffer) + 8;
 
-            toggle ^= 1;
-
-            trans2->NextLink = (uint)status;
-            trans2->AltLink = 1;
-            trans2->Token |= (uint)(size << 16);
-            trans2->Token |= (uint)(toggle << 31);
-            trans2->Token |= 1 << 7;
-            trans2->Token |= 1 << 8;
-            trans2->Token |= 0x3 << 10;
-            *trans2->Buffer = ((uint)buffer) + 8;
-
-            status->NextLink = 1;
-            status->AltLink = 1;
-            status->Token |= 0 << 8;
-            status->Token |= 1u << 31;
-            status->Token |= 1 << 7;
-            status->Token |= 0x3 << 10;
+            sts->NextLink = 1;
+            sts->AltLink = 1;
+            sts->Token |= 0 << 8;
+            sts->Token |= 1u << 31;
+            sts->Token |= 1 << 7;
+            sts->Token |= 0x3 << 10;
 
 
             qh1->AltLink = 1;
@@ -498,7 +521,7 @@ namespace MOOS.Driver
             *(uint*)AsyncListReg = (uint)qh;
             *(uint*)CMDReg |= 0x20;
 
-            byte res = WaitForComplete(status);
+            byte res = WaitForComplete(sts);
 
             *(uint*)CMDReg &= ~0x20u;
             *(uint*)AsyncListReg = 1;
@@ -512,7 +535,12 @@ namespace MOOS.Driver
 
         static byte SetConfig(byte addr, byte config)
         {
-            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
+            (*cmd).Clean();
+            (*td).Clean();
+            (*sts).Clean();
+            (*qh).Clean();
+            (*qh1).Clean();
+
             cmd->Request = 0x09;
             cmd->RequestType |= 0;
             cmd->RequestType |= 0 << 5;
@@ -521,47 +549,42 @@ namespace MOOS.Driver
             cmd->Length = 0;
             cmd->Value = config;
 
-            TD* tcmd = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            TD* status = (TD*)Allocator.Allocate((ulong)sizeof(TD));
-            QH* head = (QH*)Allocator.Allocate((ulong)sizeof(QH));
-            QH* head1 = (QH*)Allocator.Allocate((ulong)sizeof(QH));
+            td->NextLink = (uint)sts;
+            td->AltLink = 1;
+            td->Token |= 8 << 16;
+            td->Token |= 1 << 7;
+            td->Token |= 0x2 << 8;
+            td->Token |= 0x3 << 10;
+            *td->Buffer = (uint)cmd;
 
-            tcmd->NextLink = (uint)status;
-            tcmd->AltLink = 1;
-            tcmd->Token |= 8 << 16;
-            tcmd->Token |= 1 << 7;
-            tcmd->Token |= 0x2 << 8;
-            tcmd->Token |= 0x3 << 10;
-            *tcmd->Buffer = (uint)cmd;
+            sts->NextLink = 1;
+            sts->AltLink = 1;
+            sts->Token |= 1 << 8;
+            sts->Token |= 1u << 31;
+            sts->Token |= 1 << 7;
+            sts->Token |= 0x3 << 10;
 
-            status->NextLink = 1;
-            status->AltLink = 1;
-            status->Token |= 1 << 8;
-            status->Token |= 1u << 31;
-            status->Token |= 1 << 7;
-            status->Token |= 0x3 << 10;
+            qh1->AltLink = 1;
+            qh1->NextLink = (uint)td;
+            qh1->HorizontalLink = ((uint)qh) | 2;
+            qh1->CurrentLink = 0;
+            qh1->Characteristics |= 1 << 14;
+            qh1->Characteristics |= 64 << 16;
+            qh1->Characteristics |= 2 << 12;
+            qh1->Characteristics |= addr;
+            qh1->Capabilities = 0x40000000;
 
-            head1->AltLink = 1;
-            head1->NextLink = (uint)tcmd;
-            head1->HorizontalLink = ((uint)head) | 2;
-            head1->CurrentLink = 0;
-            head1->Characteristics |= 1 << 14;
-            head1->Characteristics |= 64 << 16;
-            head1->Characteristics |= 2 << 12;
-            head1->Characteristics |= addr;
-            head1->Capabilities = 0x40000000;
+            qh->AltLink = 1;
+            qh->NextLink = 1;
+            qh->HorizontalLink = ((uint)qh1) | 2;
+            qh->CurrentLink = 0;
+            qh->Characteristics = 1 << 15;
+            qh->Token = 0x40;
 
-            head->AltLink = 1;
-            head->NextLink = 1;
-            head->HorizontalLink = ((uint)head1) | 2;
-            head->CurrentLink = 0;
-            head->Characteristics = 1 << 15;
-            head->Token = 0x40;
-
-            *(uint*)AsyncListReg = (uint)head;
+            *(uint*)AsyncListReg = (uint)qh;
             *(uint*)CMDReg |= 0x20;
 
-            byte lstatus = WaitForComplete(status);
+            byte lstatus = WaitForComplete(sts);
 
             *(uint*)CMDReg &= ~0x20u;
             *(uint*)AsyncListReg = 1;

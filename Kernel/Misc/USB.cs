@@ -32,7 +32,7 @@ namespace MOOS.Misc
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct USBRequest
+    public unsafe struct USBRequest
     {
         public byte RequestType;
         public byte Request;
@@ -40,6 +40,12 @@ namespace MOOS.Misc
         public ushort Value;
         public ushort Index;
         public ushort Length;
+
+        public void Clean() 
+        {
+            fixed (void* p = &this)
+                Native.Stosb(p, 0, (ulong)sizeof(USBRequest));
+        }
     }
 
     public static unsafe class USB
