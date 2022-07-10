@@ -8,6 +8,12 @@ namespace MOOS.Driver
 {
     public static unsafe class HID
     {
+        public static void Initialize() 
+        {
+            Mouse = null;
+            Keyboard = null;
+        }
+
         public static byte GetHIDPacket(USBDevice device, uint devicedesc)
         {
             USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
