@@ -113,6 +113,8 @@ namespace MOOS.Driver
                 *(uint*)(BaseAddr + 0x40) |= 1;
 
                 ScanPorts();
+
+                Console.WriteLine("EHCI controller initialized");
             }
         }
 
