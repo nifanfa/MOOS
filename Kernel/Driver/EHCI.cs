@@ -204,7 +204,7 @@ namespace MOOS.Driver
         static TD* sts;
         static USBRequest* cmd;
 
-        public static byte* SendAndReceive(byte port, USBRequest* cmd, void* buffer)
+        public static bool SendAndReceive(byte port, USBRequest* cmd, void* buffer)
         {
             (*qh).Clean();
             (*qh1).Clean();
@@ -268,10 +268,10 @@ namespace MOOS.Driver
 
             if (res == 0)
             {
-                return (byte*)USB.TransmitError;
+                return false;
             }
 
-            return (byte*)buffer;
+            return true;
         }
 
         static byte SetDeviceAddr(byte addr)

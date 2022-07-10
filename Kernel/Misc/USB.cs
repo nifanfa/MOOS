@@ -50,9 +50,7 @@ namespace MOOS.Misc
 
     public static unsafe class USB
     {
-        public const uint TransmitError = 0xFFFFFFFF;
-
-        public static void* SendAndReceive(USBDevice device, void* cmd, void* buffer)
+        public static bool SendAndReceive(USBDevice device, void* cmd, void* buffer)
         {
             if (device.USBVersion == 2)
             {
@@ -60,7 +58,7 @@ namespace MOOS.Misc
             }
             else
             {
-                return (void*)USB.TransmitError;
+                return false;
             }
         }
 
