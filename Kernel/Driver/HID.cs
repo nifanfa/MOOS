@@ -12,18 +12,21 @@ namespace MOOS.Driver
         {
             Mouse = null;
             Keyboard = null;
+
+            cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
         }
+
+        static USBRequest* cmd;
 
         public static byte GetHIDPacket(USBDevice device, uint devicedesc)
         {
-            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
+            (*cmd).Clean();
             cmd->Request = 1;
             cmd->RequestType = 0xA1;
             cmd->Index = 0;
             cmd->Length = 3;
             cmd->Value = 0x0100;
             byte* res = (byte*)USB.SendAndReceive(device, cmd, (void*)devicedesc);
-            Allocator.Free((System.IntPtr)cmd);
             return *res;
         }
 
@@ -68,14 +71,13 @@ namespace MOOS.Driver
 
         public static void Initialize(USBDevice device)
         {
-            USBRequest* cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
+            (*cmd).Clean();
             cmd->Request = 0x0B;
             cmd->RequestType = 0x21;
             cmd->Index = 0;
             cmd->Length = 0;
             cmd->Value = 0;
             byte* res = (byte*)USB.SendAndReceive(device, cmd, null);
-            Allocator.Free((System.IntPtr)cmd);
             if ((uint)res == USB.TransmitError)
             {
                 Console.WriteLine("Unable to set protocol");
