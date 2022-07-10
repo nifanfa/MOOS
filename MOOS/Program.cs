@@ -48,7 +48,7 @@ unsafe class Program
 
         //Use qemu for USB debug
         //VMware won't connect virtual USB HIDs
-#if false
+#if true
         if (HID.Keyboard != null && HID.Mouse != null) 
         {
             new Thread(() =>
@@ -61,7 +61,7 @@ unsafe class Program
         }
         else 
         {
-            Panic.Error("Either USB Mouse or USB Keyboard not present");
+            Console.WriteLine("Either USB Mouse or USB Keyboard not present");
         }
 #endif
 
