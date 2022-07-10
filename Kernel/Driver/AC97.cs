@@ -50,6 +50,9 @@ namespace MOOS
             Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
             Index = 0;
 
+            Out16((ushort)(NAM + 0x2C), Audio.SampleRate);
+            Out16((ushort)(NAM + 0x32), Audio.SampleRate);
+
             Out8((ushort)(NABM + 0x1B), 0x02);
             Out32((ushort)(NABM + 0x10), (uint)BufferDescriptors);
             Out8((ushort)(NABM + 0x15), Index);
