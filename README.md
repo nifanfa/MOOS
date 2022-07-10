@@ -39,6 +39,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | USB HUB | ❌ | ❌ |
 | PS2 Keyboard/Mouse(USB Compatible) | ✅ | ✅ |
 | Nintendo Family Computer Emulator | ✅ | ✅ |
+| DOOM(doomgeneric) | ✅ | ✅ |
 | Intel® Gigabit Ethernet Network | ✅ | ✅ |
 | Realtek RTL8139 | ✅ | ❓ |
 | ExFAT | ✅ | ✅ | FAT32/16/12 is no supported! |
