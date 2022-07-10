@@ -47,7 +47,7 @@ unsafe class Program
         EHCI.Initialize();
 
         //Use qemu for USB debug
-        //VMware won't virtual a USB HID
+        //VMware won't connect virtual USB HIDs
 #if false
         if (HID.Keyboard != null && HID.Mouse != null) 
         {
