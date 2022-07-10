@@ -698,6 +698,10 @@ namespace MOOS.Driver
                     Console.WriteLine($"Port {i} Present");
                     InitPort(i);
                 }
+                else
+                {
+                    Console.WriteLine($"Port {i} Not Present");
+                }
             }
         }
     }
