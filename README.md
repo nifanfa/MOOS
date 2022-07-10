@@ -33,6 +33,10 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | GC | ⚠️ | ❓ | Not safe |
 | Multiprocessor | ✅ | ✅ |
 | Multithreading | ✅ | ✅ |
+| EHCI(USB2.0) | ✅ | ✅ |
+| USB Keyboard | ⚠️ | ❓ | Work in progress |
+| USB Mouse | ✅ | ❓ |
+| USB HUB | ❌ | ❌ |
 | PS2 Keyboard/Mouse(USB Compatible) | ✅ | ✅ |
 | Nintendo Family Computer Emulator | ✅ | ✅ |
 | Intel® Gigabit Ethernet Network | ✅ | ✅ |
