@@ -1,5 +1,8 @@
 using MOOS.Driver;
+using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace MOOS.Misc
 {
@@ -52,6 +55,33 @@ namespace MOOS.Misc
             else
             {
                 return (void*)USB.TransmitError;
+            }
+        }
+
+        public static void OnInterrupt() 
+        {
+            if(HID.Keyboard != null)
+            {
+                HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode, out ConsoleKey Key);
+                Keyboard.KeyInfo.KeyState = ScanCode >= 4 ? ConsoleKeyState.Pressed : ConsoleKeyState.Released;
+
+                if (Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed)
+                {
+                    Keyboard.KeyInfo.ScanCode = ScanCode;
+                    Keyboard.KeyInfo.Key = Key;
+                }
+
+                Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
+            }
+
+            if(HID.Mouse != null)
+            {
+                HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
+
+                Control.MousePosition.X = Math.Clamp(Control.MousePosition.X + AxisX, 0, Framebuffer.Width);
+                Control.MousePosition.Y = Math.Clamp(Control.MousePosition.Y + AxisY, 0, Framebuffer.Height);
+
+                Control.MouseButtons = buttons;
             }
         }
 
