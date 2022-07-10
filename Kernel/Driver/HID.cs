@@ -18,7 +18,7 @@ namespace MOOS.Driver
 
         static USBRequest* cmd;
 
-        public static byte GetHIDPacket(USBDevice device, uint devicedesc)
+        public static bool GetHIDPacket(USBDevice device, uint devicedesc)
         {
             (*cmd).Clean();
             cmd->Request = 1;
@@ -26,8 +26,8 @@ namespace MOOS.Driver
             cmd->Index = 0;
             cmd->Length = 3;
             cmd->Value = 0x0100;
-            byte* res = (byte*)USB.SendAndReceive(device, cmd, (void*)devicedesc);
-            return *res;
+            bool res = USB.SendAndReceive(device, cmd, (void*)devicedesc);
+            return res;
         }
 
         public static void GetKeyboardThings(USBDevice device, out byte ScanCode, out ConsoleKey Key)
@@ -36,8 +36,8 @@ namespace MOOS.Driver
             ScanCode = 0;
 
             byte* desc = stackalloc byte[10];
-            byte res = GetHIDPacket(device, (uint)desc);
-            if (res != (USB.TransmitError & 0xFF))
+            bool res = GetHIDPacket(device, (uint)desc);
+            if (res)
             {
                 if (desc[2] != 0)
                 {
@@ -57,8 +57,8 @@ namespace MOOS.Driver
             buttons = MouseButtons.None;
 
             byte* desc = stackalloc byte[10];
-            byte res = GetHIDPacket(device, (uint)desc);
-            if (res != (USB.TransmitError & 0xFF))
+            bool res = GetHIDPacket(device, (uint)desc);
+            if (res)
             {
                 AxisX = (sbyte)desc[1];
                 AxisY = (sbyte)desc[2];
@@ -77,8 +77,8 @@ namespace MOOS.Driver
             cmd->Index = 0;
             cmd->Length = 0;
             cmd->Value = 0;
-            byte* res = (byte*)USB.SendAndReceive(device, cmd, null);
-            if ((uint)res == USB.TransmitError)
+            bool res = USB.SendAndReceive(device, cmd, null);
+            if (!res)
             {
                 Console.WriteLine("Unable to set protocol");
                 return;
