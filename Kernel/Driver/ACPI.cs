@@ -14,6 +14,7 @@ namespace MOOS.Driver
         public static ACPI_MADT* MADT;
         public static APIC_IO_APIC* IO_APIC;
         public static ACPI_HPET* HPET;
+        public static MCFGHeader* MCFG;
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct ACPI_RSDP
@@ -51,6 +52,24 @@ namespace MOOS.Driver
             LocalAPIC,
             IOAPIC,
             InterruptOverride
+        }
+
+        [StructLayout(LayoutKind.Sequential,Pack = 1)]
+        public struct MCFGHeader
+        {
+            public ACPI_HEADER Header;
+            public ulong Reserved;
+            public MCFGEntry Entry0;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct MCFGEntry
+        {
+            public ulong BaseAddress;
+            public ushort Segment;
+            public byte StartBus;
+            public byte EndBus;
+            public uint Reserved;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -193,8 +212,12 @@ namespace MOOS.Driver
 
         public static void Initialize()
         {
-            HPET = null;
+            FADT = null;
+            MADT = null;
             IO_APIC = null;
+            HPET = null;
+            MCFG = null;
+
             LocalAPIC_CPUIDs = new List<byte>();
             ACPI_RSDP* rsdp = GetRSDP();
             //MMIO.Map(rsdp->RsdtAddress, ushort.MaxValue);
@@ -293,6 +316,10 @@ namespace MOOS.Driver
             else if (*(uint*)hdr->Signature == 0x54455048) 
             {
                 HPET = (ACPI_HPET*)hdr;
+            }
+            else if (*(uint*)hdr->Signature == 0x4746434D) 
+            {
+                MCFG = (MCFGHeader*)hdr;
             }
         }
 
