@@ -36,7 +36,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Serial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\SMBIOS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Timer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Driver\VBE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\VMWareSVGAII.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\Disk.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\FATFS.cs" />
