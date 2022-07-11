@@ -173,9 +173,9 @@ namespace MOOS.GUI
                 else if
                     (
                     (
-                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'P' &&
-                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'C' &&
-                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'M'
+                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'W' &&
+                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'A' &&
+                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'V'
                     )
                     )
                 {
@@ -362,15 +362,17 @@ namespace MOOS.GUI
                 Process.Start(buffer);
             }
             else if (
-                name[name.Length - 3].ToUpper() == 'P' &&
-                name[name.Length - 2].ToUpper() == 'C' &&
-                name[name.Length - 1].ToUpper() == 'M'
+                name[name.Length - 3].ToUpper() == 'W' &&
+                name[name.Length - 2].ToUpper() == 'A' &&
+                name[name.Length - 1].ToUpper() == 'V'
                 )
             {
                 if (Audio.HasAudioDevice)
                 {
                     byte[] buffer = File.Instance.ReadAllBytes(path);
-                    Audio.Play(buffer);
+                    WAV.Decode(buffer, out var pcm);
+                    Audio.Play(pcm);
+                    pcm.Dispose();
                     buffer.Dispose();
                 }
                 else

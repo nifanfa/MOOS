@@ -85,6 +85,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\USB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\WAV.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NES\CPU.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NES\GameRender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NES\Input.cs" />
