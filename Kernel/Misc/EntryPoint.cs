@@ -31,27 +31,23 @@ namespace MOOS.Misc
 
             PageTable.Initialise();
 
-            GDT.Initialise();
-
             ASC16.Initialise();
 
-            ACPI.Initialize();
-
-            VBEInfo* vbe = (VBEInfo*)Info->VBEInfo;
-            if (vbe->PhysBase != 0)
+            VBEInfo* info = (VBEInfo*)Info->VBEInfo;
+            if (info->PhysBase != 0)
             {
-                Framebuffer.VideoMemory = (uint*)vbe->PhysBase;
-                Framebuffer.SetVideoMode(vbe->ScreenWidth, vbe->ScreenHeight);
+                Framebuffer.VideoMemory = (uint*)info->PhysBase;
+                Framebuffer.SetVideoMode(info->ScreenWidth, info->ScreenHeight);
                 Framebuffer.Graphics.Clear(0x0);
             }
             else 
             {
-                ACPI.Shutdown();
                 for (; ; ) Native.Hlt();
             }
 
             Console.Setup();
             IDT.Disable();
+            GDT.Initialise();
             IDT.Initialize();
             Interrupts.Initialize();
             IDT.Enable();
@@ -59,6 +55,7 @@ namespace MOOS.Misc
             SSE.enable_sse();
             //AVX.init_avx();
 
+            ACPI.Initialize();
 #if UseAPIC
             PIC.Disable();
             LocalAPIC.Initialize();
