@@ -4,16 +4,30 @@ namespace MOOS.Driver
 {
     public static class Timer
     {
+        public static ulong Bus_Clock;
         public static ulong CPU_Clock;
 
-        public static void Initialize() 
+        public static void Initialize()
+        {
+            //PIT.Initialise(1000);
+            //HPET.Initialize();
+
+            CPU_Clock = EstimateCPUSpeed();
+            Console.WriteLine($"[Timer] CPU clock is {CPU_Clock / 1048576}mhz");
+            Bus_Clock = LocalAPIC.EstimateBusSpeed();
+            Console.WriteLine($"[Timer] Bus clock is {Bus_Clock / 1048576}mhz");
+
+            LocalAPIC.StartTimer(1000, 0x20);
+        }
+
+        private static ulong EstimateCPUSpeed()
         {
             ulong prev = Native.Rdtsc();
-            Timer.Sleep(10);
+            ACPI.Sleep(100000);
             ulong next = Native.Rdtsc();
-            CPU_Clock = next - prev;
-            CPU_Clock *= 100;
-            Console.WriteLine($"[Timer] CPU clock is {CPU_Clock / 1048576}mhz");
+            ulong cpuclock = next - prev;
+            cpuclock *= 10;
+            return cpuclock;
         }
 
         public static ulong Ticks { get; private set; }
