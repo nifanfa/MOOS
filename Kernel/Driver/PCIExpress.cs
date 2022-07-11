@@ -152,7 +152,7 @@ namespace MOOS.Driver
                         device.Bar5 = Dev->Bar5;
                     }
 
-                    Console.WriteLine($"[PCI Express {device.Bus}:{device.Slot}:{device.Function}] Vendor:{VendorID.GetName(device.VendorID)} Class:{ClassID.GetName(device.ClassID)}");
+                    Console.WriteLine($"[PCI Express {device.Bus}:{device.Slot}:{device.Function}] {VendorID.GetName(device.VendorID)} {ClassID.GetName(device.ClassID)}");
 
                     PCI.Devices.Add(device);
                 }
