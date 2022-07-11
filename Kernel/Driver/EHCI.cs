@@ -12,8 +12,6 @@ namespace MOOS.Driver
 
         public static byte AvailablePorts;
 
-        public static byte DeviceAddr;
-
         public const int FrameSize = 1024;
 
         public static void Initialize()
@@ -612,16 +610,16 @@ namespace MOOS.Driver
                 return;
             }
 
-            byte addr = SetDeviceAddr(DeviceAddr);
+            byte addr = SetDeviceAddr(USB.DeviceAddr);
             if (addr == 0)
             {
                 Console.WriteLine($"Port {port} Failed to set device address");
                 return;
             }
-            device.AssignedSloth = DeviceAddr;
-            device.NumPort = DeviceAddr;
+            device.AssignedSloth = USB.DeviceAddr;
+            device.NumPort = USB.DeviceAddr;
 
-            byte* _desc = GetDesc(DeviceAddr, 8);
+            byte* _desc = GetDesc(USB.DeviceAddr, 8);
             if (_desc == 0)
             {
                 Console.WriteLine($"Port {port} Failed to get descriptor");
@@ -641,7 +639,7 @@ namespace MOOS.Driver
             byte Protocol = 0;
             if (Class == 0x00)
             {
-                ConfigDesc* cdesc = (ConfigDesc*)GetConfig(DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)));
+                ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)));
                 if (cdesc == 0)
                 {
                     Console.WriteLine($"[ECHI] Port {port} Failed to get descriptor");
@@ -675,14 +673,14 @@ namespace MOOS.Driver
             }
             Console.WriteLine($"Port{port} Class: {Class}");
 
-            byte config_res = SetConfig(DeviceAddr, 1);
+            byte config_res = SetConfig(USB.DeviceAddr, 1);
             if (config_res == 0)
             {
                 Console.WriteLine($"Port {port} failed to set configuration");
                 return;
             }
 
-            DeviceAddr++;
+            USB.DeviceAddr++;
 
             USB.DriveDevice(device);
         }
@@ -690,8 +688,6 @@ namespace MOOS.Driver
 
         public static void ScanPorts()
         {
-            DeviceAddr = 1;
-
             for (int i = 0; i < AvailablePorts; i++)
             {
                 uint reg_port = (uint)(BaseAddr + 0x44 + (i * 4));
