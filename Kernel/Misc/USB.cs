@@ -70,9 +70,9 @@ namespace MOOS.Misc
             if(HID.Keyboard != null)
             {
                 HID.GetKeyboardThings(HID.Keyboard, out byte ScanCode, out ConsoleKey Key);
-                Keyboard.KeyInfo.KeyState = ScanCode >= 4 ? ConsoleKeyState.Pressed : ConsoleKeyState.Released;
+                Keyboard.KeyInfo.KeyState = Key != ConsoleKey.None ? ConsoleKeyState.Pressed : ConsoleKeyState.Released;
 
-                if (Keyboard.KeyInfo.KeyState == ConsoleKeyState.Pressed)
+                if(Key != ConsoleKey.None)
                 {
                     Keyboard.KeyInfo.ScanCode = ScanCode;
                     Keyboard.KeyInfo.Key = Key;
