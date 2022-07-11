@@ -7,9 +7,9 @@ namespace MOOS
     {
         public const int PIT_Clock = 1193182;
 
-        public static void Initialise()
+        public static void Initialise(int hz)
         {
-            ushort timerCount = PIT_Clock / 1000;
+            ushort timerCount = (ushort)(PIT_Clock / hz);
 
             Native.Out8(0x43, 0x36);
             Native.Out8(0x40, (byte)(timerCount & 0xFF));

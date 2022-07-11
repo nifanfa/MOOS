@@ -63,7 +63,6 @@ namespace MOOS.Misc
             PIC.Disable();
             LocalAPIC.Initialize();
             IOAPIC.Initialize();
-            HPET.Initialize();
 #else
         PIC.Enable();
 #endif
@@ -76,7 +75,6 @@ namespace MOOS.Misc
 
             Serial.Initialise();
             
-            PIT.Initialise();
             Timer.Initialize();
 
             PS2Mouse.Initialise();
