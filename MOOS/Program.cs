@@ -48,9 +48,13 @@ unsafe class Program
 
         //Use qemu for USB debug
         //VMware won't connect virtual USB HIDs
-        if (HID.Keyboard == null || HID.Mouse == null)
+        if (HID.Mouse == null)
         {
-            Console.WriteLine("Either USB Mouse or USB Keyboard not present");
+            Console.WriteLine("USB Mouse not present");
+        }
+        if (HID.Keyboard == null)
+        {
+            Console.WriteLine("USB Keyboard not present");
         }
 
         //Sized width to 512
