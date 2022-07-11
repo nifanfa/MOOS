@@ -43,7 +43,6 @@ unsafe class Program
     static void KMain()
     {
         HID.Initialize();
-        USB.Initialize();
         EHCI.Initialize();
         USB.StartPoll();
 
