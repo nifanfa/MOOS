@@ -103,7 +103,7 @@ namespace MOOS.Misc
             }
         }
 
-        public static void Initialize()
+        public static void Reset()
         {
             USB.NumDevice = 0;
             USB.DeviceAddr = 1;

@@ -688,6 +688,8 @@ namespace MOOS.Driver
 
         public static void ScanPorts()
         {
+            USB.Reset();
+
             for (int i = 0; i < AvailablePorts; i++)
             {
                 uint reg_port = (uint)(BaseAddr + 0x44 + (i * 4));
