@@ -10,7 +10,7 @@ namespace MOOS.Driver
         public static void Initialize()
         {
             //PIT.Initialise(1000);
-            //HPET.Initialize();
+            HPET.Initialize();
 
             CPU_Clock = EstimateCPUSpeed();
             Console.WriteLine($"[Timer] CPU clock is {CPU_Clock / 1048576}mhz");
@@ -25,7 +25,16 @@ namespace MOOS.Driver
             ulong prev = Native.Rdtsc();
             ACPI.Sleep(100000);
             ulong next = Native.Rdtsc();
-            ulong cpuclock = next - prev;
+            ulong cpuclock = 0;
+            if (next > prev) 
+            {
+                cpuclock = next - prev;
+            }
+            else 
+            {
+                //Overflow
+                cpuclock = prev - next;
+            }
             cpuclock *= 10;
             return cpuclock;
         }
