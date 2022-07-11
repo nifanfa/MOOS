@@ -6,11 +6,12 @@ namespace MOOS.Driver
     {
         public static ulong Ticks => In(0x390);
 
-        public static void StartTimer(ulong freq, uint irq)
+        public static void StartTimer(ulong hz, uint irq)
         {
+            hz *= 16;
             Out(0x320, 0x00020000 | irq);
             Out(0x3e0, 0x3);
-            Out(0x380, (uint)(freq));
+            Out(0x380, (uint)(Timer.CPU_Clock / hz));
             Interrupts.EnableInterrupt(0x20);
         }
 
