@@ -28,7 +28,7 @@ namespace MOOS
         {
             SSE.enable_sse();
             LocalAPIC.Initialize();
-            LocalAPIC.StartTimer(100000, 0x20);
+            LocalAPIC.StartTimer(1000, 0x20);
             ThreadPool.Initialize();
             NumActivedProcessors++;
             for (; ; ) Native.Hlt();
