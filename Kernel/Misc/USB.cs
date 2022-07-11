@@ -109,22 +109,24 @@ namespace MOOS.Misc
             USB.DeviceAddr = 1;
         }
 
-        public static void StartPoll()
+        public static void StartPolling()
         {
-            new Thread(() =>
+            new Thread(&LoopPoll).Start();
+        }
+
+        static void LoopPoll()
+        {
+            for (; ; )
             {
-                for (; ; )
+                if (USB.NumDevice != 0)
                 {
-                    if (USB.NumDevice != 0)
-                    {
-                        USB.OnInterrupt();
-                    }
-                    else
-                    {
-                        ThreadPool.Schedule_Next();
-                    }
+                    USB.OnInterrupt();
                 }
-            }).Start();
+                else
+                {
+                    ThreadPool.Schedule_Next();
+                }
+            }
         }
     }
 }
