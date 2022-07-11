@@ -28,12 +28,12 @@ namespace MOOS.Driver
             PCIDevice device = PCI.GetDevice(0x0C, 0x03, 0x20);
             if (device == null) return;
 
-            Console.WriteLine("EHCI controller found!");
+            Console.WriteLine("[EHCI] EHCI controller found!");
 
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
             uint bar0 = device.Bar0;
-            Console.WriteLine($"Bar0: {bar0.ToString("x2")}");
+            Console.WriteLine($"[EHCI] Bar0: {bar0.ToString("x2")}");
             BaseAddr = bar0 + *(byte*)bar0;
             ushort ver = *(ushort*)(bar0 + 0x02);
             if (ver != 0x100)
@@ -43,7 +43,7 @@ namespace MOOS.Driver
             }
             uint hcsparams = *(uint*)(bar0 + 0x04);
             AvailablePorts = (byte)(hcsparams & 0xF);
-            Console.WriteLine($"{AvailablePorts} Ports available");
+            Console.WriteLine($"[EHCI] {AvailablePorts} Ports available");
             uint hccparams = *(uint*)(bar0 + 0x08);
             byte cap = (byte)((hccparams & 0xFF00) >> 8);
             if (cap)
@@ -51,7 +51,7 @@ namespace MOOS.Driver
                 uint eecp = (hccparams & (255 << 8)) >> 8;
                 if (eecp >= 0x40)
                 {
-                    Console.WriteLine("Disabling BIOS EHCI Hand-off");
+                    Console.WriteLine("[EHCI] Disabling BIOS EHCI Hand-off");
                     uint legsup = PCI.ReadRegister32(device.Bus, device.Slot, device.Function, (byte)eecp);
 
                     if (legsup & 0x00010000)
@@ -59,7 +59,7 @@ namespace MOOS.Driver
                         PCI.WriteRegister32(device.Bus, device.Slot, device.Function, (byte)eecp, legsup | 0x01000000);
                         for (; ; )
                         {
-                            Console.WriteLine("Waitting for BIOS ready");
+                            Console.WriteLine("[EHCI] Waitting for BIOS ready");
                             legsup = PCI.ReadRegister32(device.Bus, device.Slot, device.Function, (byte)eecp);
                             if ((~legsup & 0x00010000) != 0 && (legsup & 0x01000000) != 0)
                             {
@@ -75,7 +75,7 @@ namespace MOOS.Driver
                 uint default_cmd = *(uint*)CMDReg;
                 if (default_cmd & 1)
                 {
-                    Console.WriteLine("Stopping this controller");
+                    Console.WriteLine("[EHCI] Stopping this controller");
                     *(uint*)CMDReg &= ~1u;
                     while (1)
                     {
@@ -89,7 +89,7 @@ namespace MOOS.Driver
                 *(uint*)CMDReg |= 2;
                 while (1)
                 {
-                    Console.WriteLine("Waitting for controller ready");
+                    Console.WriteLine("[EHCI] Waitting for controller ready");
                     if ((*(uint*)CMDReg & 2) == 0)
                     {
                         break;
@@ -112,7 +112,7 @@ namespace MOOS.Driver
 
                 ScanPorts();
 
-                Console.WriteLine("EHCI controller initialized");
+                Console.WriteLine("[EHCI] EHCI controller initialized");
             }
         }
 
@@ -364,7 +364,7 @@ namespace MOOS.Driver
             }
             if (lsts == 0)
             {
-                Console.WriteLine("Transmission failed");
+                Console.WriteLine("[EHCI] Transmission failed");
             }
             return lsts;
         }
@@ -606,14 +606,14 @@ namespace MOOS.Driver
 
             if ((portinfo & 4) == 0)
             {
-                Console.WriteLine($"Port {port} Is not enabled");
+                Console.WriteLine($"[EHCI] Port {port} Is not enabled");
                 return;
             }
 
             byte addr = SetDeviceAddr(USB.DeviceAddr);
             if (addr == 0)
             {
-                Console.WriteLine($"Port {port} Failed to set device address");
+                Console.WriteLine($"[EHCI] Port {port} Failed to set device address");
                 return;
             }
             device.AssignedSloth = USB.DeviceAddr;
@@ -622,17 +622,17 @@ namespace MOOS.Driver
             byte* _desc = GetDesc(USB.DeviceAddr, 8);
             if (_desc == 0)
             {
-                Console.WriteLine($"Port {port} Failed to get descriptor");
+                Console.WriteLine($"[EHCI] Port {port} Failed to get descriptor");
                 return;
             }
 
             if (!(_desc[0] == 0x12 && _desc[1] == 0x1))
             {
-                Console.WriteLine($"Port {port} Invalid magic number");
+                Console.WriteLine($"[EHCI] Port {port} Invalid magic number");
                 return;
             }
             byte max_packet_size = _desc[7];
-            Console.WriteLine($"Port {port} Max Packet Size {max_packet_size}");
+            Console.WriteLine($"[EHCI] Port {port} Max Packet Size {max_packet_size}");
 
             byte Class = _desc[4];
             byte SubClass = 0;
@@ -642,7 +642,7 @@ namespace MOOS.Driver
                 ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)));
                 if (cdesc == 0)
                 {
-                    Console.WriteLine($"[ECHI] Port {port} Failed to get descriptor");
+                    Console.WriteLine($"[EHCI] [ECHI] Port {port} Failed to get descriptor");
                     return;
                 }
                 InterfaceDesc* idesc = (InterfaceDesc*)(((uint)cdesc) + sizeof(ConfigDesc));
@@ -671,12 +671,12 @@ namespace MOOS.Driver
             {
                 return;
             }
-            Console.WriteLine($"Port{port} Class: {Class}");
+            Console.WriteLine($"[EHCI] Port{port} Class: {Class}");
 
             byte config_res = SetConfig(USB.DeviceAddr, 1);
             if (config_res == 0)
             {
-                Console.WriteLine($"Port {port} failed to set configuration");
+                Console.WriteLine($"[EHCI] Port {port} failed to set configuration");
                 return;
             }
 
@@ -695,7 +695,7 @@ namespace MOOS.Driver
                 uint reg_port = (uint)(BaseAddr + 0x44 + (i * 4));
                 if (*(uint*)reg_port & 3)
                 {
-                    Console.WriteLine($"Port {i} Present");
+                    Console.WriteLine($"[EHCI] Port {i} Present");
                     InitPort(i);
                 }
             }
