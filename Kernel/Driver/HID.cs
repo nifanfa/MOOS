@@ -80,7 +80,7 @@ namespace MOOS.Driver
             bool res = USB.SendAndReceive(device, cmd, null);
             if (!res)
             {
-                Console.WriteLine("Unable to set protocol");
+                Console.WriteLine("[HID] Unable to set protocol");
                 return;
             }
 
@@ -88,14 +88,14 @@ namespace MOOS.Driver
             {
                 USB.NumDevice++;
 
-                Console.WriteLine($"USB Keyboard at port:{device.NumPort}");
+                Console.WriteLine($"[HID] USB Keyboard at port:{device.NumPort}");
                 InitializeKeyboard(device);
             }
             else if (device.Protocol == 2)
             {
                 USB.NumDevice++;
 
-                Console.WriteLine($"USB Mouse at port:{device.NumPort}");
+                Console.WriteLine($"[HID] USB Mouse at port:{device.NumPort}");
                 InitializeMouse(device);
             }
         }
