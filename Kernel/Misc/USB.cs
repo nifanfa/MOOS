@@ -50,6 +50,7 @@ namespace MOOS.Misc
 
     public static unsafe class USB
     {
+        public static byte NumDevice;
         public static byte DeviceAddr;
 
         public static bool SendAndReceive(USBDevice device, USBRequest* cmd, void* buffer)
@@ -100,6 +101,12 @@ namespace MOOS.Misc
                     break;
 
             }
+        }
+
+        internal static void Initialize()
+        {
+            USB.NumDevice = 0;
+            USB.DeviceAddr = 1;
         }
     }
 }
