@@ -87,7 +87,7 @@ namespace MOOS.Misc
 
             ThreadPool.Initialize();
 
-            Console.WriteLine($"Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
+            Console.WriteLine($"[SMP] Trampoline: 0x{((ulong)Trampoline).ToString("x2")}");
             Native.Movsb((byte*)SMP.Trampoline, (byte*)Trampoline, 512);
 
             SMP.Initialize((uint)SMP.Trampoline);
@@ -97,9 +97,9 @@ namespace MOOS.Misc
 #endif
 
             //Only fixed size vhds are supported!
-            Console.Write("Initrd: 0x");
+            Console.Write("[Initrd] Initrd: 0x");
             Console.WriteLine((Info->Mods[0]).ToString("x2"));
-            Console.WriteLine("Initializing Ramdisk");
+            Console.WriteLine("[Initrd] Initializing Ramdisk");
             new Ramdisk((IntPtr)(Info->Mods[0]));
             new FATFS();
 
