@@ -19,26 +19,26 @@ namespace MOOS.Driver
             }
 
             //1 Femtosecond= 1e-15 sec
-            Clock = (In(0) >> 32);
-            Out(0x10, 0);
-            Out(0xF0, 0);
-            Out(0x10, 1);
+            Clock = (ReadRegister(0) >> 32);
+            WriteRegister(0x10, 0);
+            WriteRegister(0xF0, 0);
+            WriteRegister(0x10, 1);
             Console.WriteLine("[HPET] HPET Initialized");
         }
 
-        public static void Out(ulong reg,ulong value)
+        public static void WriteRegister(ulong reg,ulong value)
         {
             Out64((ulong*)(ACPI.HPET->Addresses.Address + reg), value);
         }
 
-        public static ulong In(ulong reg)
+        public static ulong ReadRegister(ulong reg)
         {
             return In64((ulong*)(ACPI.HPET->Addresses.Address + reg));
         }
 
         public static ulong GetTickCount()
         {
-            return In(0xF0);
+            return ReadRegister(0xF0);
         }
 
         public static void Wait(ulong Millionseconds) 
