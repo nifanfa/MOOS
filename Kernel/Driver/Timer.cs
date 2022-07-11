@@ -9,7 +9,7 @@ namespace MOOS.Driver
         public static void Initialize() 
         {
             ulong prev = Native.Rdtsc();
-            Timer.Wait(10);
+            Timer.Sleep(10);
             ulong next = Native.Rdtsc();
             CPU_Clock = next - prev;
             CPU_Clock *= 100;
@@ -32,7 +32,7 @@ namespace MOOS.Driver
             }
         }
 
-        public static void Wait(ulong millisecond)
+        public static void Sleep(ulong millisecond)
         {
             ulong T = Ticks;
             while (Ticks < (T + millisecond)) Native.Hlt();

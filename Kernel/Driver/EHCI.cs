@@ -599,9 +599,9 @@ namespace MOOS.Driver
             uint portinfo = *(uint*)reg_port;
 
             *(uint*)reg_port |= 0x100;
-            Timer.Wait(60);
+            Timer.Sleep(60);
             *(uint*)reg_port &= ~0x100u;
-            Timer.Wait(20);
+            Timer.Sleep(20);
             portinfo = *(uint*)reg_port;
 
             if ((portinfo & 4) == 0)
