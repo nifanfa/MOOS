@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)AVX.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\AC97.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPITimer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\EHCI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Framebuffer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\HID.cs" />
