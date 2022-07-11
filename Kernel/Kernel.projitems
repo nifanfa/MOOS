@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\LocalAPIC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\LocalAPICTimer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PCI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\PCIExpress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PIC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PIT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Power.cs" />

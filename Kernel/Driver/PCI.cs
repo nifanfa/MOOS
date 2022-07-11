@@ -1,3 +1,4 @@
+using MOOS.Driver;
 using MOOS.Misc;
 using System.Collections.Generic;
 
@@ -23,6 +24,10 @@ namespace MOOS
         public uint Bar3;
         public uint Bar4;
         public uint Bar5;
+
+        //PCI Express
+        public ushort Segment;
+        public bool IsPCIEDevice;
 
         public void WriteRegister(ushort Register, ushort Value)
         {
@@ -90,12 +95,14 @@ namespace MOOS
                 }
             }
 
+            PCIExpress.Initialize();
+
             Console.Write("[PCI] PCI Initialized. ");
             Console.Write(((ulong)Devices.Count).ToString());
             Console.WriteLine(" Devices");
         }
 
-        private static void CheckBus(ushort Bus)
+        public static void CheckBus(ushort Bus)
         {
             for (ushort slot = 0; slot < 32; slot++)
             {
@@ -110,6 +117,8 @@ namespace MOOS
                 device.Slot = slot;
                 device.Function = 0;
                 device.VendorID = vendorID;
+                device.Segment = 0;
+                device.IsPCIEDevice = false;
 
                 device.Bar0 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x10);
                 device.Bar1 = ReadRegister32(device.Bus, device.Slot, device.Function, 0x14);
@@ -124,6 +133,8 @@ namespace MOOS
                 device.IRQ = (byte)(0x20 + ReadRegister8(device.Bus, device.Slot, device.Function, 60));
 
                 device.DeviceID = ReadRegister16(device.Bus, device.Slot, device.Function, 2);
+
+                Console.WriteLine($"[PCI {device.Bus}:{device.Slot}:{device.Function}] Vendor:{VendorID.GetName(device.VendorID)} Class:{ClassID.GetName(device.ClassID)}");
 
                 Devices.Add(device);
 
