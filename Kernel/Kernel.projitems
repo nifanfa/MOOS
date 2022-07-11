@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PIC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PIT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Power.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\PS2Controller.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PS2Keyboard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PS2Mouse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Ramdisk.cs" />

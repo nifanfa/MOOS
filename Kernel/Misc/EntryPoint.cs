@@ -66,15 +66,12 @@ namespace MOOS.Misc
 
             Keyboard.Initialize();
 
-            PS2Keyboard.Initialize();
-            //Enable keyboard interrupts
-            Interrupts.EnableInterrupt(0x21);
+            PS2Controller.Initialize();
 
             Serial.Initialise();
             
             Timer.Initialize();
 
-            PS2Mouse.Initialise();
             SMBIOS.Initialise();
 
             PCI.Initialise();

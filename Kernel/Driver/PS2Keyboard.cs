@@ -4,6 +4,7 @@
 
 //http://cc.etsii.ull.es/ftp/antiguo/EC/AOA/APPND/Apndxc.pdf
 
+using MOOS.Misc;
 using System;
 using static System.ConsoleKey;
 
@@ -49,6 +50,7 @@ namespace MOOS
             };
 
             Keyboard.CleanKeyInfo();
+            Interrupts.EnableInterrupt(0x21);
             return true;
         }
 
