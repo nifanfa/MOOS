@@ -5,7 +5,7 @@ namespace MOOS.Misc
 {
     public static unsafe class Audio
     {
-        public const int SampleRate = 48000;
+        public const int SampleRate = 44100;
 
         public static Queue<byte[]> Queue;
 
@@ -27,7 +27,10 @@ namespace MOOS.Misc
         {
             fixed(byte* ptr_pcm = pcm)
             {
-                for (int i = pcm.Length; i >= 0; i -= SampleRate * 2)
+                //Align down
+                int i = pcm.Length - (pcm.Length % (SampleRate * 2));
+                if (i < 0) return;
+                for (; i >= 0; i -= SampleRate * 2)
                 {
                     byte[] pack = new byte[SampleRate * 2];
                     fixed (byte* ptr = pack)
