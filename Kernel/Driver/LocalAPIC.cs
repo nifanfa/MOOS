@@ -56,12 +56,12 @@ namespace MOOS.Driver
 
         private const int ICR_DESTINATION_SHIFT = 24;
 
-        static uint ReadRegister(uint reg)
+        public static uint ReadRegister(uint reg)
         {
             return MMIO.In32((uint*)(ACPI.MADT->LocalAPICAddress + reg));
         }
 
-        static void WriteRegister(uint reg, uint data)
+        public static void WriteRegister(uint reg, uint data)
         {
             MMIO.Out32((uint*)(ACPI.MADT->LocalAPICAddress + reg), data);
         }

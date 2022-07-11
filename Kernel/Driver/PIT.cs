@@ -5,11 +5,11 @@ namespace MOOS
 {
     public class PIT
     {
-        public const int PIT_Clock = 1193182;
+        public const int Clock = 1193182;
 
         public static void Initialise(int hz)
         {
-            ushort timerCount = (ushort)(PIT_Clock / hz);
+            ushort timerCount = (ushort)(Clock / hz);
 
             Native.Out8(0x43, 0x36);
             Native.Out8(0x40, (byte)(timerCount & 0xFF));

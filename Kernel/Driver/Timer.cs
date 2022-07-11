@@ -14,16 +14,16 @@ namespace MOOS.Driver
 
             CPU_Clock = EstimateCPUSpeed();
             Console.WriteLine($"[Timer] CPU clock is {CPU_Clock / 1048576}mhz");
-            Bus_Clock = LocalAPIC.EstimateBusSpeed();
+            Bus_Clock = LocalAPICTimer.EstimateBusSpeed();
             Console.WriteLine($"[Timer] Bus clock is {Bus_Clock / 1048576}mhz");
 
-            LocalAPIC.StartTimer(1000, 0x20);
+            LocalAPICTimer.StartTimer(1000, 0x20);
         }
 
         private static ulong EstimateCPUSpeed()
         {
             ulong prev = Native.Rdtsc();
-            ACPI.Sleep(100000);
+            ACPITimer.Sleep(100000);
             ulong next = Native.Rdtsc();
             ulong cpuclock = 0;
             if (next > prev) 
