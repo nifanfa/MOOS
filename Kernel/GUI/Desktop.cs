@@ -119,16 +119,9 @@ namespace MOOS.GUI
                 ClickEvent(names[i].Name, names[i].Attribute == FileAttribute.Directory, X, Y, i + (IsAtRoot ? BuiltInAppNames.Length : 0));
 
                 if (
-                    (
                     names[i].Name[names[i].Name.Length - 3].ToUpper() == 'P' &&
                     names[i].Name[names[i].Name.Length - 2].ToUpper() == 'N' &&
                     names[i].Name[names[i].Name.Length - 1].ToUpper() == 'G'
-                    ) ||
-                    (
-                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'B' &&
-                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'M' &&
-                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'P'
-                    )
                     )
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
