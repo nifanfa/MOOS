@@ -182,7 +182,8 @@ namespace MOOS
             {
                 if (
                     PCI.Devices[i] != null &&
-                    PCI.Devices[i].Bar5 > 0xE000_0000
+                    PCI.Devices[i].ClassID == 0x01 &&
+                    PCI.Devices[i].SubClassID == 0x06
                     )
                 {
                     var dev = PCI.Devices[i];
