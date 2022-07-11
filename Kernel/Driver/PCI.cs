@@ -134,7 +134,7 @@ namespace MOOS
 
                 device.DeviceID = ReadRegister16(device.Bus, device.Slot, device.Function, 2);
 
-                Console.WriteLine($"[PCI Express {device.Bus}:{device.Slot}:{device.Function}] {VendorID.GetName(device.VendorID)} {ClassID.GetName(device.ClassID)}");
+                Console.WriteLine($"[PCI {device.Bus}:{device.Slot}:{device.Function}] {VendorID.GetName(device.VendorID)} {ClassID.GetName(device.ClassID)}");
 
                 Devices.Add(device);
 
