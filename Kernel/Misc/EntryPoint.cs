@@ -63,14 +63,13 @@ namespace MOOS.Misc
 #else
         PIC.Enable();
 #endif
+            Timer.Initialize();
 
             Keyboard.Initialize();
 
-            PS2Controller.Initialize();
-
             Serial.Initialise();
-            
-            Timer.Initialize();
+
+            PS2Controller.Initialize();
 
             SMBIOS.Initialise();
 
