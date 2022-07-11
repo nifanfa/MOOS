@@ -6,6 +6,8 @@ namespace MOOS.Driver
 #pragma warning disable CS0649
     public unsafe class ACPI
     {
+        public const int ACPI_Timer_Clock = 3579545;
+
         private static short SLP_TYPa;
         private static short SLP_TYPb;
         private static short SLP_EN;
@@ -180,6 +182,34 @@ namespace MOOS.Driver
             }
 
             return null;
+        }
+
+        public static void Sleep(ulong Microseconds)
+        {
+            if (FADT->PMTimerLength != 4) return;
+
+            ulong Clock;
+            ulong Counter;
+            ulong Last;
+
+            Clock = (ACPI_Timer_Clock * Microseconds) / 1000000;
+
+            Last = Native.In32(FADT->PMTimerBlock);
+            Counter = 0;
+            while (Counter < Clock)
+            {
+                ulong Current = Native.In32(FADT->PMTimerBlock);
+                if (Current < Last)
+                {
+                    Counter += ((((FADT->Flags >> 8) & 0x01) ? 0x1000000000ul : 0x1000000000)) + Current - Last;
+                }
+                else
+                {
+                    Counter += Current - Last;
+                }
+                Last = Current;
+                Native.Nop();
+            }
         }
 
         public static void Shutdown()
