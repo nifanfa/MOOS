@@ -103,10 +103,28 @@ namespace MOOS.Misc
             }
         }
 
-        internal static void Initialize()
+        public static void Initialize()
         {
             USB.NumDevice = 0;
             USB.DeviceAddr = 1;
+        }
+
+        public static void StartPoll()
+        {
+            new Thread(() =>
+            {
+                for (; ; )
+                {
+                    if (USB.NumDevice != 0)
+                    {
+                        USB.OnInterrupt();
+                    }
+                    else
+                    {
+                        ThreadPool.Schedule_Next();
+                    }
+                }
+            }).Start();
         }
     }
 }

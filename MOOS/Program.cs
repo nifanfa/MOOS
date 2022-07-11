@@ -43,27 +43,16 @@ unsafe class Program
     static void KMain()
     {
         HID.Initialize();
-
+        USB.Initialize();
         EHCI.Initialize();
+        USB.StartPoll();
 
         //Use qemu for USB debug
         //VMware won't connect virtual USB HIDs
-#if true
-        if (HID.Keyboard != null && HID.Mouse != null) 
-        {
-            new Thread(() =>
-            {
-                for (; ; )
-                {
-                    USB.OnInterrupt();
-                }
-            }).Start();
-        }
-        else 
+        if (HID.Keyboard == null || HID.Mouse == null)
         {
             Console.WriteLine("Either USB Mouse or USB Keyboard not present");
         }
-#endif
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
