@@ -20,7 +20,7 @@ namespace MOOS
 
             if (device == null) return;
 
-            Console.WriteLine("Intel 82801AA AC97 Audio Controller Found");
+            Console.WriteLine("[AC97] Intel 82801AA AC97 Audio Controller Found");
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
             NumDescriptors = 31;
@@ -40,7 +40,7 @@ namespace MOOS
             for(int i = 0; i < NumDescriptors; i++)
             {
                 ulong ptr = (ulong)Allocator.Allocate(Audio.SampleRate*2);
-                if (ptr > 0xFFFFFFFF) Panic.Error("[AC97] Invalid buf");
+                if (ptr > 0xFFFFFFFF) Panic.Error("Invalid buf");
                 BufferDescriptors[i].Address = (uint)ptr;
                 //48Khz dual channel
                 BufferDescriptors[i].SampleRate = Audio.SampleRate;
