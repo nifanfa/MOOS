@@ -68,7 +68,7 @@ namespace MOOS.Misc
 
         public static void Sleep(ulong Millionsecos)
         {
-            Timer.Wait(Millionsecos);
+            Timer.Sleep(Millionsecos);
         }
     }
 
