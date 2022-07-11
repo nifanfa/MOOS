@@ -44,7 +44,7 @@ unsafe class Program
     {
         HID.Initialize();
         EHCI.Initialize();
-        USB.StartPoll();
+        USB.StartPolling();
 
         //Use qemu for USB debug
         //VMware won't connect virtual USB HIDs
