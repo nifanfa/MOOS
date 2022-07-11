@@ -56,25 +56,25 @@ namespace MOOS.Driver
 
         private const int ICR_DESTINATION_SHIFT = 24;
 
-        static uint In(uint reg)
+        static uint ReadRegister(uint reg)
         {
             return MMIO.In32((uint*)(ACPI.MADT->LocalAPICAddress + reg));
         }
 
-        static void Out(uint reg, uint data)
+        static void WriteRegister(uint reg, uint data)
         {
             MMIO.Out32((uint*)(ACPI.MADT->LocalAPICAddress + reg), data);
         }
 
         public static void EndOfInterrupt()
         {
-            Out((uint)LAPIC_EOI, 0);
+            WriteRegister((uint)LAPIC_EOI, 0);
         }
 
         public static void Initialize()
         {
             // Configure Spurious Interrupt Vector Register
-            Out((uint)LAPIC_SVR, 0x1FF);
+            WriteRegister((uint)LAPIC_SVR, 0x1FF);
 
             if (SMP.ThisCPU == 0)
                 Console.WriteLine("[Local APIC] Local APIC initialized");
@@ -82,7 +82,7 @@ namespace MOOS.Driver
 
         public static uint GetId()
         {
-            return In((uint)LAPIC_ID) >> 24;
+            return ReadRegister((uint)LAPIC_ID) >> 24;
         }
 
         public static void SendInit(uint apic_id)
@@ -108,10 +108,10 @@ namespace MOOS.Driver
 
         public static void SendIPI(uint apic_id, uint vector)
         {
-            Out((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
-            Out((uint)LAPIC_ICRLO, vector);
+            WriteRegister((uint)LAPIC_ICRHI, apic_id << ICR_DESTINATION_SHIFT);
+            WriteRegister((uint)LAPIC_ICRLO, vector);
 
-            while ((In((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
+            while ((ReadRegister((uint)LAPIC_ICRLO) & ICR_SEND_PENDING) != 0) ;
         }
 
         public static void SendStartup(uint apic_id, uint vector)
