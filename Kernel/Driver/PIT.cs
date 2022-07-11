@@ -1,8 +1,10 @@
+using System;
 using MOOS.Driver;
 using MOOS.Misc;
 
 namespace MOOS
 {
+    [Obsolete("Use ACPI Timer or Local APIC Timer")]
     public class PIT
     {
         public const int Clock = 1193182;
