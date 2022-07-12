@@ -10,7 +10,7 @@ namespace MOOS.Misc
     {
         public byte USBVersion;
 
-        public byte NumPort;
+        public byte Address;
 
         public uint Ring;
         public uint RingOffset;
@@ -29,6 +29,8 @@ namespace MOOS.Misc
         public uint Localinringoffset;
         public uint EndpointOut;
         public uint Localoutringoffset;
+        internal int Port;
+        internal USBDevice Parent;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -53,11 +55,11 @@ namespace MOOS.Misc
         public static byte NumDevice;
         public static byte DeviceAddr;
 
-        public static bool SendAndReceive(USBDevice device, USBRequest* cmd, void* buffer)
+        public static bool SendAndReceive(USBDevice device, USBRequest* cmd, void* buffer,USBDevice parent)
         {
             if (device.USBVersion == 2)
             {
-                return EHCI.SendAndReceive(device.NumPort, cmd, buffer);
+                return EHCI.SendAndReceive(device.Address, cmd, buffer, parent);
             }
             else
             {
@@ -92,12 +94,20 @@ namespace MOOS.Misc
             }
         }
 
+        public static void InitPort(int port, USBDevice parent) 
+        {
+            EHCI.InitPort(port,parent);
+        }
+
         public static void DriveDevice(USBDevice device)
         {
             switch (device.Class)
             {
                 case 3:
                     HID.Initialize(device);
+                    break;
+                case 9:
+                    Hub.Initialize(device);
                     break;
                 default:
                     Console.WriteLine($"[USB] Unrecognized device class:{device.Class} subClass:{device.SubClass}");
