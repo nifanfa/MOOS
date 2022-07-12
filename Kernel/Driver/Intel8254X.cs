@@ -222,7 +222,6 @@ namespace MOOS.Driver
             TXInitialize();
 
             WriteRegister(0x00D0, 0x1F6DC);
-            WriteRegister(0x00D0, 0xFF & ~4);
             ReadRegister(0xC0);
 
             Console.Write("Speed: ");
