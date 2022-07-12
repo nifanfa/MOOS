@@ -21,7 +21,7 @@
                 ulong Current = Native.In32(ACPI.FADT->PMTimerBlock);
                 if (Current < Last)
                 {
-                    Counter += (((ACPI.FADT->Flags >> 8) & 0x01) ? 0x1000000000ul : 0x1000000000) + Current - Last;
+                    Counter += (((ACPI.FADT->Flags >> 8) & 0x01) ? 0x100000000ul : 0x1000000) + Current - Last;
                 }
                 else
                 {
