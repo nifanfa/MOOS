@@ -103,7 +103,7 @@ namespace MOOS
                 phase++;
                 phase %= 8;
                 Console.CursorX--;
-                Timer.Sleep(100);
+                ACPITimer.Sleep(100000);
             }
         }
 
