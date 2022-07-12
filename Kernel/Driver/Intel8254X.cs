@@ -369,7 +369,7 @@ namespace MOOS.Driver
         {
             WriteRegister(0, ReadRegister(0) | 0x40);
 
-            Console.WriteLine("Waiting for network connection ");
+            Console.Write("Waiting for network connection ");
             int phase = 0;
             while (!BitHelpers.IsBitSet(ReadRegister(8),1))
             {
@@ -405,6 +405,7 @@ namespace MOOS.Driver
                 Console.CursorX--;
                 ACPITimer.Sleep(100000);
             }
+            Console.WriteLine();
         }
 
         public override void Send(byte* Buffer, int Length)
