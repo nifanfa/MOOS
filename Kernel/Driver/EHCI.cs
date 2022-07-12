@@ -201,7 +201,7 @@ namespace MOOS.Driver
         static TD* sts;
         static USBRequest* cmd;
 
-        public static bool SendAndReceive(byte port, USBRequest* cmd, void* buffer)
+        public static bool SendAndReceive(byte port, USBRequest* cmd, void* buffer,USBDevice parent)
         {
             (*qh).Clean();
             (*qh1).Clean();
@@ -247,6 +247,11 @@ namespace MOOS.Driver
             qh1->Characteristics |= 2 << 12;
             qh1->Characteristics |= port;
             qh1->Capabilities = 0x40000000;
+            if (parent != null)
+            {
+                qh1->Capabilities |= (uint)(parent.Port << 23);
+                qh1->Capabilities |= (uint)(parent.Address << 16);
+            }
 
             qh->AltLink = 1;
             qh->NextLink = 1;
@@ -271,7 +276,7 @@ namespace MOOS.Driver
             return true;
         }
 
-        static byte SetDeviceAddr(byte addr)
+        static byte SetDeviceAddr(byte addr, USBDevice parent)
         {
             (*cmd).Clean();
             (*trans).Clean();
@@ -310,6 +315,11 @@ namespace MOOS.Driver
             qh1->Characteristics |= 64 << 16;
             qh1->Characteristics |= 2 << 12;
             qh1->Capabilities = 0x40000000;
+            if (parent != null)
+            {
+                qh1->Capabilities |= (uint)(parent.Port << 23);
+                qh1->Capabilities |= (uint)(parent.Address << 16);
+            }
 
             qh->AltLink = 1;
             qh->NextLink = 1;
@@ -361,12 +371,12 @@ namespace MOOS.Driver
             }
             if (lsts == 0)
             {
-                Console.WriteLine("[EHCI] Transmission failed");
+                //Console.WriteLine("[EHCI] Transmission failed");
             }
             return lsts;
         }
 
-        static byte* GetDesc(byte addr, byte size)
+        static byte* GetDesc(byte addr, byte size, USBDevice parent)
         {
             (*qh).Clean();
             (*qh1).Clean();
@@ -418,6 +428,11 @@ namespace MOOS.Driver
             qh1->Characteristics |= 2 << 12;
             qh1->Characteristics |= addr;
             qh1->Capabilities = 0x40000000;
+            if (parent != null)
+            {
+                qh1->Capabilities |= (uint)(parent.Port << 23);
+                qh1->Capabilities |= (uint)(parent.Address << 16);
+            }
 
             qh->AltLink = 1;
             qh->NextLink = 1;
@@ -441,7 +456,7 @@ namespace MOOS.Driver
             return buffer;
         }
 
-        static byte* GetConfig(byte addr, byte size)
+        static byte* GetConfig(byte addr, byte size, USBDevice parent)
         {
             (*qh).Clean();
             (*qh1).Clean();
@@ -507,6 +522,11 @@ namespace MOOS.Driver
             qh1->Characteristics |= 2 << 12;
             qh1->Characteristics |= addr;
             qh1->Capabilities = 0x40000000;
+            if (parent != null)
+            {
+                qh1->Capabilities |= (uint)(parent.Port << 23);
+                qh1->Capabilities |= (uint)(parent.Address << 16);
+            }
 
             qh->AltLink = 1;
             qh->NextLink = 1;
@@ -530,7 +550,7 @@ namespace MOOS.Driver
             return buffer;
         }
 
-        static byte SetConfig(byte addr, byte config)
+        static byte SetConfig(byte addr, byte config, USBDevice parent)
         {
             (*cmd).Clean();
             (*td).Clean();
@@ -570,6 +590,11 @@ namespace MOOS.Driver
             qh1->Characteristics |= 2 << 12;
             qh1->Characteristics |= addr;
             qh1->Capabilities = 0x40000000;
+            if(parent!= null) 
+            {
+                qh1->Capabilities |= (uint)(parent.Port << 23);
+                qh1->Capabilities |= (uint)(parent.Address << 16);
+            }
 
             qh->AltLink = 1;
             qh->NextLink = 1;
@@ -588,35 +613,40 @@ namespace MOOS.Driver
             return lstatus;
         }
 
-        static void InitPort(int port)
+        public static void InitPort(int port,USBDevice parent)
         {
             USBDevice device = new USBDevice();
             device.USBVersion = 2;
-            uint reg_port = (uint)(BaseAddr + 0x44 + (port * 4));
-            uint portinfo = *(uint*)reg_port;
 
-            *(uint*)reg_port |= 0x100;
-            Timer.Sleep(60);
-            *(uint*)reg_port &= ~0x100u;
-            Timer.Sleep(20);
-            portinfo = *(uint*)reg_port;
-
-            if ((portinfo & 4) == 0)
+            if(parent == null) 
             {
-                Console.WriteLine($"[EHCI] Port {port} Is not enabled");
-                return;
+                uint reg_port = (uint)(BaseAddr + 0x44 + (port * 4));
+                uint portinfo = *(uint*)reg_port;
+
+                *(uint*)reg_port |= 0x100;
+                Timer.Sleep(60);
+                *(uint*)reg_port &= ~0x100u;
+                Timer.Sleep(20);
+                portinfo = *(uint*)reg_port;
+
+                if ((portinfo & 4) == 0)
+                {
+                    Console.WriteLine($"[EHCI] Port {port} Is not enabled");
+                    return;
+                }
             }
 
-            byte addr = SetDeviceAddr(USB.DeviceAddr);
+            byte addr = SetDeviceAddr(USB.DeviceAddr, parent);
             if (addr == 0)
             {
                 Console.WriteLine($"[EHCI] Port {port} Failed to set device address");
                 return;
             }
             device.AssignedSloth = USB.DeviceAddr;
-            device.NumPort = USB.DeviceAddr;
+            device.Address = USB.DeviceAddr;
+            device.Port = port;
 
-            byte* _desc = GetDesc(USB.DeviceAddr, 8);
+            byte* _desc = GetDesc(USB.DeviceAddr, 8, parent);
             if (_desc == 0)
             {
                 Console.WriteLine($"[EHCI] Port {port} Failed to get descriptor");
@@ -631,7 +661,7 @@ namespace MOOS.Driver
             byte max_packet_size = _desc[7];
             Console.WriteLine($"[EHCI] Port {port} Max Packet Size {max_packet_size}");
 
-            ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)));
+            ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)), parent);
             if (cdesc == 0)
             {
                 Console.WriteLine($"[EHCI] [ECHI] Port {port} Failed to get descriptor");
@@ -664,7 +694,7 @@ namespace MOOS.Driver
             }
             Console.WriteLine($"[EHCI] Port{port} Class: {Class}");
 
-            byte config_res = SetConfig(USB.DeviceAddr, 1);
+            byte config_res = SetConfig(USB.DeviceAddr, 1, parent);
             if (config_res == 0)
             {
                 Console.WriteLine($"[EHCI] Port {port} failed to set configuration");
@@ -672,6 +702,8 @@ namespace MOOS.Driver
             }
 
             USB.DeviceAddr++;
+
+            device.Parent = parent;
 
             USB.DriveDevice(device);
         }
@@ -687,7 +719,7 @@ namespace MOOS.Driver
                 Console.WriteLine($"[EHCI] Port {i} {((*(uint*)reg_port & 3)?"Present" : "Not present")}");
                 if (*(uint*)reg_port & 3)
                 {
-                    InitPort(i);
+                    USB.InitPort(i,null);
                 }
             }
         }

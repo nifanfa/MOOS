@@ -42,6 +42,7 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
+        Hub.Initialize();
         HID.Initialize();
         EHCI.Initialize();
         USB.StartPolling();
