@@ -45,75 +45,72 @@ namespace MOOS.Driver
             AvailablePorts = (byte)(hcsparams & 0xF);
             Console.WriteLine($"[EHCI] {AvailablePorts} Ports available");
             uint hccparams = *(uint*)(bar0 + 0x08);
-            byte cap = (byte)((hccparams & 0xFF00) >> 8);
-            if (cap)
+
+            uint eecp = (hccparams & (255 << 8)) >> 8;
+            if (eecp >= 0x40)
             {
-                uint eecp = (hccparams & (255 << 8)) >> 8;
-                if (eecp >= 0x40)
+                Console.WriteLine("[EHCI] Disabling BIOS EHCI Hand-off");
+                uint legsup = PCI.ReadRegister32(device.Bus, device.Slot, device.Function, (byte)eecp);
+
+                if (legsup & 0x00010000)
                 {
-                    Console.WriteLine("[EHCI] Disabling BIOS EHCI Hand-off");
-                    uint legsup = PCI.ReadRegister32(device.Bus, device.Slot, device.Function, (byte)eecp);
-
-                    if (legsup & 0x00010000)
+                    PCI.WriteRegister32(device.Bus, device.Slot, device.Function, (byte)eecp, legsup | 0x01000000);
+                    for (; ; )
                     {
-                        PCI.WriteRegister32(device.Bus, device.Slot, device.Function, (byte)eecp, legsup | 0x01000000);
-                        for (; ; )
-                        {
-                            Console.WriteLine("[EHCI] Waitting for BIOS ready");
-                            legsup = PCI.ReadRegister32(device.Bus, device.Slot, device.Function, (byte)eecp);
-                            if ((~legsup & 0x00010000) != 0 && (legsup & 0x01000000) != 0)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                CMDReg = BaseAddr + 0x00;
-                AsyncListReg = BaseAddr + 0x18;
-
-                uint default_cmd = *(uint*)CMDReg;
-                if (default_cmd & 1)
-                {
-                    Console.WriteLine("[EHCI] Stopping this controller");
-                    *(uint*)CMDReg &= ~1u;
-                    while (1)
-                    {
-                        if ((*(uint*)CMDReg & 1) == 0)
+                        Console.WriteLine("[EHCI] Waitting for BIOS ready");
+                        legsup = PCI.ReadRegister32(device.Bus, device.Slot, device.Function, (byte)eecp);
+                        if ((~legsup & 0x00010000) != 0 && (legsup & 0x01000000) != 0)
                         {
                             break;
                         }
                     }
                 }
+            }
 
-                *(uint*)CMDReg |= 2;
+            CMDReg = BaseAddr + 0x00;
+            AsyncListReg = BaseAddr + 0x18;
+
+            uint default_cmd = *(uint*)CMDReg;
+            if (default_cmd & 1)
+            {
+                Console.WriteLine("[EHCI] Stopping this controller");
+                *(uint*)CMDReg &= ~1u;
                 while (1)
                 {
-                    Console.WriteLine("[EHCI] Waitting for controller ready");
-                    if ((*(uint*)CMDReg & 2) == 0)
+                    if ((*(uint*)CMDReg & 1) == 0)
                     {
                         break;
                     }
                 }
-
-                uint* framelist = (uint*)Allocator.Allocate(FrameSize * sizeof(uint));
-
-                for (int i = 0; i < FrameSize; i++)
-                {
-                    framelist[i] |= 1;
-                }
-
-                *(uint*)(BaseAddr + 0x08) = 0;
-
-                *(uint*)(BaseAddr + 0x10) = 0;
-                *(uint*)(BaseAddr + 0x14) = (uint)&framelist;
-                *(uint*)CMDReg |= 0x400001;
-                *(uint*)(BaseAddr + 0x40) |= 1;
-
-                ScanPorts();
-
-                Console.WriteLine("[EHCI] EHCI controller initialized");
             }
+
+            *(uint*)CMDReg |= 2;
+            while (1)
+            {
+                Console.WriteLine("[EHCI] Waitting for controller ready");
+                if ((*(uint*)CMDReg & 2) == 0)
+                {
+                    break;
+                }
+            }
+
+            uint* framelist = (uint*)Allocator.Allocate(FrameSize * sizeof(uint));
+
+            for (int i = 0; i < FrameSize; i++)
+            {
+                framelist[i] |= 1;
+            }
+
+            *(uint*)(BaseAddr + 0x08) = 0;
+
+            *(uint*)(BaseAddr + 0x10) = 0;
+            *(uint*)(BaseAddr + 0x14) = (uint)&framelist;
+            *(uint*)CMDReg |= 0x400001;
+            *(uint*)(BaseAddr + 0x40) |= 1;
+
+            ScanPorts();
+
+            Console.WriteLine("[EHCI] EHCI controller initialized");
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
