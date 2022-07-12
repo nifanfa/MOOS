@@ -6,7 +6,7 @@ using static Native;
 
 namespace MOOS
 {
-    public static class PS2Mouse
+    public static unsafe class PS2Mouse
     {
         private const byte Data = 0x60;
         private const byte Command = 0x64;
@@ -25,7 +25,7 @@ namespace MOOS
         public static void Initialise()
         {
             MData = new byte[3];
-            Interrupts.EnableInterrupt(0x2c);
+            Interrupts.EnableInterrupt(0x2c,&OnInterrupt);
 
             byte _status;
 

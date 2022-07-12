@@ -10,7 +10,7 @@ using static System.ConsoleKey;
 
 namespace MOOS
 {
-    public static class PS2Keyboard
+    public static unsafe class PS2Keyboard
     {
         private static char[] keyChars;
         private static char[] keyCharsShift;
@@ -50,8 +50,14 @@ namespace MOOS
             };
 
             Keyboard.CleanKeyInfo();
-            Interrupts.EnableInterrupt(0x21);
+            Interrupts.EnableInterrupt(0x21, &OnInterrupt);
             return true;
+        }
+
+        public static void OnInterrupt()
+        {
+            byte b = Native.In8(0x60);
+            PS2Keyboard.ProcessKey(b);
         }
 
         public static void ProcessKey(byte b)

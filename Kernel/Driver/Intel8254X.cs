@@ -233,7 +233,7 @@ namespace MOOS.Driver
             Console.WriteLine("Configuration Done");
 
             Network.MAC = MAC;
-            Interrupts.EnableInterrupt(device.IRQ);
+            Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
             IRQ = device.IRQ;
 
             //Literally instance
