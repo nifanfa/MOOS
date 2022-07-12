@@ -631,37 +631,31 @@ namespace MOOS.Driver
             byte max_packet_size = _desc[7];
             Console.WriteLine($"[EHCI] Port {port} Max Packet Size {max_packet_size}");
 
-            byte Class = _desc[4];
-            byte SubClass = 0;
-            byte Protocol = 0;
-            if (Class == 0x00)
+            ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)));
+            if (cdesc == 0)
             {
-                ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)));
-                if (cdesc == 0)
-                {
-                    Console.WriteLine($"[EHCI] [ECHI] Port {port} Failed to get descriptor");
-                    return;
-                }
-                InterfaceDesc* idesc = (InterfaceDesc*)(((uint)cdesc) + sizeof(ConfigDesc));
-                Class = idesc->InterfaceClass;
-                SubClass = idesc->InterfaceSubClass;
-                Protocol = idesc->InterfaceProtocol;
-                device.Class = Class;
-                device.SubClass = SubClass;
-                device.Protocol = Protocol;
+                Console.WriteLine($"[EHCI] [ECHI] Port {port} Failed to get descriptor");
+                return;
+            }
+            InterfaceDesc* idesc = (InterfaceDesc*)(((uint)cdesc) + sizeof(ConfigDesc));
+            byte Class = idesc->InterfaceClass;
+            byte SubClass = idesc->InterfaceSubClass;
+            byte Protocol = idesc->InterfaceProtocol;
+            device.Class = Class;
+            device.SubClass = SubClass;
+            device.Protocol = Protocol;
 
-                if (idesc->NumEndpoints == 2)
-                {
-                    EndPoint* ep = (EndPoint*)(((uint)cdesc) + sizeof(ConfigDesc) + sizeof(InterfaceDesc));
-                    EndPoint* ep1 = (EndPoint*)(((uint)cdesc) + sizeof(ConfigDesc) + sizeof(InterfaceDesc) + 7);
-                    device.EndpointIn = (uint)(ep->EndpointAddress & 0x80 ? ep->EndpointAddress & 0xF : ep1->EndpointAddress & 0xF);
-                    device.EndpointOut = (uint)((ep->EndpointAddress & 0x80) == 0 ? ep->EndpointAddress & 0xF : ep1->EndpointAddress & 0xF);
-                }
-                else if (idesc->NumEndpoints == 1)
-                {
-                    EndPoint* ep = (EndPoint*)(((uint)cdesc) + sizeof(ConfigDesc) + sizeof(InterfaceDesc));
-                    device.EndpointIn = (uint)(ep->EndpointAddress & 0xF);
-                }
+            if (idesc->NumEndpoints == 2)
+            {
+                EndPoint* ep = (EndPoint*)(((uint)cdesc) + sizeof(ConfigDesc) + sizeof(InterfaceDesc));
+                EndPoint* ep1 = (EndPoint*)(((uint)cdesc) + sizeof(ConfigDesc) + sizeof(InterfaceDesc) + 7);
+                device.EndpointIn = (uint)(ep->EndpointAddress & 0x80 ? ep->EndpointAddress & 0xF : ep1->EndpointAddress & 0xF);
+                device.EndpointOut = (uint)((ep->EndpointAddress & 0x80) == 0 ? ep->EndpointAddress & 0xF : ep1->EndpointAddress & 0xF);
+            }
+            else if (idesc->NumEndpoints == 1)
+            {
+                EndPoint* ep = (EndPoint*)(((uint)cdesc) + sizeof(ConfigDesc) + sizeof(InterfaceDesc));
+                device.EndpointIn = (uint)(ep->EndpointAddress & 0xF);
             }
 
             if (Class == 0x00)
