@@ -68,7 +68,7 @@ namespace MOOS
             Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xE0) | 15));
         }
 
-        private static void Wait(bool b)
+        public static void Wait(bool b)
         {
             int phase = 0;
             while (!b)
