@@ -60,25 +60,6 @@ namespace MOOS.NET
                 MAC[5] = hdr->SourceMAC[5];
                 ARPEntry entry = new ARPEntry() { IP = IP, MAC = MAC };
                 ARPEntries.Add(entry);
-                Console.Write(((ulong)IP[0]).ToString());
-                Console.Write(".");
-                Console.Write(((ulong)IP[1]).ToString());
-                Console.Write(".");
-                Console.Write(((ulong)IP[2]).ToString());
-                Console.Write(".");
-                Console.Write(((ulong)IP[3]).ToString());
-                Console.Write(" -> ");
-                Console.Write(((ulong)MAC[0]).ToStringHex());
-                Console.Write(":");
-                Console.Write(((ulong)MAC[1]).ToStringHex());
-                Console.Write(":");
-                Console.Write(((ulong)MAC[2]).ToStringHex());
-                Console.Write(":");
-                Console.Write(((ulong)MAC[3]).ToStringHex());
-                Console.Write(":");
-                Console.Write(((ulong)MAC[4]).ToStringHex());
-                Console.Write(":");
-                Console.WriteLine(((ulong)MAC[5]).ToStringHex());
             }
             if (
                 hdr->DestIP[0] == Network.IP[0] &&
@@ -127,31 +108,75 @@ namespace MOOS.NET
             }
         }
 
+        public static bool Exist(byte[] destIP) 
+        {
+            for (int i = 0; i < ARPEntries.Count; i++)
+            {
+                if (
+                    ARPEntries[i].IP[0] == destIP[0] &&
+                    ARPEntries[i].IP[1] == destIP[1] &&
+                    ARPEntries[i].IP[2] == destIP[2] &&
+                    ARPEntries[i].IP[3] == destIP[3]
+                    ) return true;
+            }
+            ARP.Require(destIP);
+            return false;
+        }
+
+        static byte[] currIP;
+
+        static bool chkExist() 
+        {
+            return Exist(currIP);
+        }
+
         internal static byte[] Lookup(byte[] destIP)
         {
-            bool msgSaid = false;
-
-            byte[] MAC = null;
-            while(MAC == null) 
+            lock (destIP)
             {
-                for (int i = 0; i < ARPEntries.Count; i++)
+                Console.Write("Waitting for ARP reply ");
+                currIP = destIP;
+                Console.Wait(&chkExist); 
+
+                byte[] MAC = null;
+                while (MAC == null)
                 {
-                    if (
-                        ARPEntries[i].IP[0] == destIP[0] &&
-                        ARPEntries[i].IP[1] == destIP[1] &&
-                        ARPEntries[i].IP[2] == destIP[2] &&
-                        ARPEntries[i].IP[3] == destIP[3]
-                        ) return ARPEntries[i].MAC;
+                    for (int i = 0; i < ARPEntries.Count; i++)
+                    {
+                        if (
+                            ARPEntries[i].IP[0] == destIP[0] &&
+                            ARPEntries[i].IP[1] == destIP[1] &&
+                            ARPEntries[i].IP[2] == destIP[2] &&
+                            ARPEntries[i].IP[3] == destIP[3]
+                            )
+                        {
+                            MAC = ARPEntries[i].MAC;
+                        }
+                    }
                 }
-                if (!msgSaid)
-                {
-                    Console.WriteLine("ARP entry not found! Making requests");
-                    msgSaid = true;
-                }
-                Native.Hlt();
-                ARP.Require(destIP);
+
+                Console.Write(((ulong)destIP[0]).ToString());
+                Console.Write(".");
+                Console.Write(((ulong)destIP[1]).ToString());
+                Console.Write(".");
+                Console.Write(((ulong)destIP[2]).ToString());
+                Console.Write(".");
+                Console.Write(((ulong)destIP[3]).ToString());
+                Console.Write(" -> ");
+                Console.Write(((ulong)MAC[0]).ToStringHex());
+                Console.Write(":");
+                Console.Write(((ulong)MAC[1]).ToStringHex());
+                Console.Write(":");
+                Console.Write(((ulong)MAC[2]).ToStringHex());
+                Console.Write(":");
+                Console.Write(((ulong)MAC[3]).ToStringHex());
+                Console.Write(":");
+                Console.Write(((ulong)MAC[4]).ToStringHex());
+                Console.Write(":");
+                Console.WriteLine(((ulong)MAC[5]).ToStringHex());
+
+                return MAC;
             }
-            return null;
         }
 
         internal static void Require(byte[] IP)
