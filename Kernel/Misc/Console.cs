@@ -107,6 +107,45 @@ namespace MOOS
             }
         }
 
+        public static void Wait(uint* provider, int bit)
+        {
+            int phase = 0;
+            while (!BitHelpers.IsBitSet(*provider, bit)) 
+            {
+                switch (phase)
+                {
+                    case 0:
+                        Console.Write('/');
+                        break;
+                    case 1:
+                        Console.Write('-');
+                        break;
+                    case 2:
+                        Console.Write('\\');
+                        break;
+                    case 3:
+                        Console.Write('|');
+                        break;
+                    case 4:
+                        Console.Write('/');
+                        break;
+                    case 5:
+                        Console.Write('-');
+                        break;
+                    case 6:
+                        Console.Write('\\');
+                        break;
+                    case 7:
+                        Console.Write('|');
+                        break;
+                }
+                phase++;
+                phase %= 8;
+                Console.CursorX--;
+                ACPITimer.Sleep(100000);
+            }
+        }
+
         public static void Write(string s)
         {
             for (byte i = 0; i < s.Length; i++)
