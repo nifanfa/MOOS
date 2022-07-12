@@ -25,21 +25,20 @@ namespace MOOS.NET
             PCIDevice dev = PCI.GetDevice(0x10EC, 0x8139);
             if (dev == null)
             {
-                Console.WriteLine("RTL8139 Not Found!");
                 return;
             }
-            Console.WriteLine("RTL8139 Found!");
+            Console.WriteLine("[RTL8139] RTL8139 Found!");
             IOBase = (ushort)(dev.Bar0 & ~0x3);
             dev.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
             Out8((ushort)(IOBase + 0x52), 0x00);
             Out8((ushort)(IOBase + 0x37), 0x10);
             while ((In8((ushort)(IOBase + 0x37)) & 0x10) != 0) ;
-            Console.WriteLine("Soft-Reset Done");
+            Console.WriteLine("[RTL8139] Soft-Reset Done");
 
             uint p = (uint)Allocator.Allocate(8192 + 16 + 1500 + 0xF);
             p = p & ~0xFU;
-            Console.Write("RX is at:");
+            Console.Write("[RTL8139] RX is at:");
             Console.WriteLine(((ulong)p).ToStringHex());
             RX = p;
 
@@ -48,8 +47,8 @@ namespace MOOS.NET
             Out16((ushort)(IOBase + 0x3C), 0x5);
             Out32((ushort)(IOBase + 0x44), 0xF | (1 << 7));
             Out8((ushort)(IOBase + 0x37), 0xC);
-            Console.WriteLine("RTL8139 Configuration D0ne");
-            Console.Write("IRQ:");
+            Console.WriteLine("[RTL8139] RTL8139 Configuration D0ne");
+            Console.Write("[RTL8139] IRQ:");
             Console.WriteLine(((ulong)dev.IRQ).ToStringHex());
 
             MAC = new byte[6];
@@ -59,7 +58,7 @@ namespace MOOS.NET
             MAC[3] = In8((ushort)(IOBase + 3));
             MAC[4] = In8((ushort)(IOBase + 4));
             MAC[5] = In8((ushort)(IOBase + 5));
-            Console.Write("MAC:");
+            Console.Write("[RTL8139] MAC:");
             Console.Write(((ulong)MAC[0]).ToStringHex());
             Console.Write(":");
             Console.Write(((ulong)MAC[1]).ToStringHex());
@@ -85,11 +84,11 @@ namespace MOOS.NET
             ushort Status = In16((ushort)(IOBase + 0x3E));
             if ((Status & (1 << 2)) != 0)
             {
-                //Debug.WriteLine("Transmit OK");
+                //Debug.WriteLine("[RTL8139] Transmit OK");
             }
             if ((Status & (1 << 0)) != 0)
             {
-                //Debug.WriteLine("Receive OK");
+                //Debug.WriteLine("[RTL8139] Receive OK");
 
                 ushort* t = (ushort*)(RX + CurrentPointer);
                 ushort length = *(t + 1);
