@@ -632,8 +632,8 @@ namespace MOOS.Driver
             Console.WriteLine($"[EHCI] Port {port} Max Packet Size {max_packet_size}");
 
             byte Class = _desc[4];
-            byte SubClass = 0;
-            byte Protocol = 0;
+            byte SubClass = _desc[5];
+            byte Protocol = _desc[6];
             if (Class == 0x00)
             {
                 ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)));
@@ -662,6 +662,12 @@ namespace MOOS.Driver
                     EndPoint* ep = (EndPoint*)(((uint)cdesc) + sizeof(ConfigDesc) + sizeof(InterfaceDesc));
                     device.EndpointIn = (uint)(ep->EndpointAddress & 0xF);
                 }
+            }
+            else 
+            {
+                device.Class = Class;
+                device.SubClass = SubClass;
+                device.Protocol = Protocol;
             }
 
             if (Class == 0x00)
