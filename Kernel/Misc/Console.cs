@@ -1,5 +1,6 @@
 #define ASCII
 
+using MOOS.Driver;
 using System;
 using System.Drawing;
 
@@ -65,6 +66,45 @@ namespace MOOS
 
             Native.Out8(0x3D4, 0x0B);
             Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xE0) | 15));
+        }
+
+        private static void Wait(bool b)
+        {
+            int phase = 0;
+            while (!b)
+            {
+                switch (phase)
+                {
+                    case 0:
+                        Console.Write('/');
+                        break;
+                    case 1:
+                        Console.Write('-');
+                        break;
+                    case 2:
+                        Console.Write('\\');
+                        break;
+                    case 3:
+                        Console.Write('|');
+                        break;
+                    case 4:
+                        Console.Write('/');
+                        break;
+                    case 5:
+                        Console.Write('-');
+                        break;
+                    case 6:
+                        Console.Write('\\');
+                        break;
+                    case 7:
+                        Console.Write('|');
+                        break;
+                }
+                phase++;
+                phase %= 8;
+                Console.CursorX--;
+                Timer.Sleep(100);
+            }
         }
 
         public static void Write(string s)
