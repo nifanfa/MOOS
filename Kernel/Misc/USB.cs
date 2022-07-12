@@ -99,6 +99,9 @@ namespace MOOS.Misc
                 case 3:
                     HID.Initialize(device);
                     break;
+                default:
+                    Console.WriteLine($"[USB] Unrecognized device class:{device.Class} subClass:{device.SubClass}");
+                    break;
 
             }
         }
