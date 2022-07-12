@@ -693,9 +693,9 @@ namespace MOOS.Driver
             for (int i = 0; i < AvailablePorts; i++)
             {
                 uint reg_port = (uint)(BaseAddr + 0x44 + (i * 4));
+                Console.WriteLine($"[EHCI] Port {i} {((*(uint*)reg_port & 3)?"Present" : "Not present")}");
                 if (*(uint*)reg_port & 3)
                 {
-                    Console.WriteLine($"[EHCI] Port {i} Present");
                     InitPort(i);
                 }
             }
