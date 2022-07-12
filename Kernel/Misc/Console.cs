@@ -76,28 +76,28 @@ namespace MOOS
                 switch (phase)
                 {
                     case 0:
-                        Console.Write('/');
+                        Console.Write('/', true);
                         break;
                     case 1:
-                        Console.Write('-');
+                        Console.Write('-', true);
                         break;
                     case 2:
-                        Console.Write('\\');
+                        Console.Write('\\', true);
                         break;
                     case 3:
-                        Console.Write('|');
+                        Console.Write('|', true);
                         break;
                     case 4:
-                        Console.Write('/');
+                        Console.Write('/', true);
                         break;
                     case 5:
-                        Console.Write('-');
+                        Console.Write('-', true);
                         break;
                     case 6:
-                        Console.Write('\\');
+                        Console.Write('\\', true);
                         break;
                     case 7:
-                        Console.Write('|');
+                        Console.Write('|', true);
                         break;
                 }
                 phase++;
@@ -115,28 +115,28 @@ namespace MOOS
                 switch (phase)
                 {
                     case 0:
-                        Console.Write('/');
+                        Console.Write('/', true);
                         break;
                     case 1:
-                        Console.Write('-');
+                        Console.Write('-', true);
                         break;
                     case 2:
-                        Console.Write('\\');
+                        Console.Write('\\', true);
                         break;
                     case 3:
-                        Console.Write('|');
+                        Console.Write('|', true);
                         break;
                     case 4:
-                        Console.Write('/');
+                        Console.Write('/', true);
                         break;
                     case 5:
-                        Console.Write('-');
+                        Console.Write('-', true);
                         break;
                     case 6:
-                        Console.Write('\\');
+                        Console.Write('\\', true);
                         break;
                     case 7:
-                        Console.Write('|');
+                        Console.Write('|', true);
                         break;
                 }
                 phase++;
@@ -154,28 +154,28 @@ namespace MOOS
                 switch (phase)
                 {
                     case 0:
-                        Console.Write('/');
+                        Console.Write('/', true);
                         break;
                     case 1:
-                        Console.Write('-');
+                        Console.Write('-', true);
                         break;
                     case 2:
-                        Console.Write('\\');
+                        Console.Write('\\', true);
                         break;
                     case 3:
-                        Console.Write('|');
+                        Console.Write('|', true);
                         break;
                     case 4:
-                        Console.Write('/');
+                        Console.Write('/', true);
                         break;
                     case 5:
-                        Console.Write('-');
+                        Console.Write('-', true);
                         break;
                     case 6:
-                        Console.Write('\\');
+                        Console.Write('\\', true);
                         break;
                     case 7:
-                        Console.Write('|');
+                        Console.Write('|', true);
                         break;
                 }
                 phase++;
@@ -212,7 +212,7 @@ namespace MOOS
             }
         }
 
-        public static void Write(char chr)
+        public static void Write(char chr, bool dontInvoke = false)
         {
             if(chr == '\n') 
             {
@@ -225,7 +225,11 @@ namespace MOOS
             unsafe
 #endif
             {
-                OnWrite?.Invoke(chr);
+                if(!dontInvoke)
+                {
+                    OnWrite?.Invoke(chr);
+                }
+
                 WriteFramebuffer(chr);
 
                 byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
