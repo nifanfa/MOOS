@@ -370,41 +370,7 @@ namespace MOOS.Driver
             WriteRegister(0, ReadRegister(0) | 0x40);
 
             Console.Write("Waiting for network connection ");
-            int phase = 0;
-            while (!BitHelpers.IsBitSet(ReadRegister(8),1))
-            {
-                switch (phase)
-                {
-                    case 0:
-                        Console.Write('/');
-                        break;
-                    case 1:
-                        Console.Write('-');
-                        break;
-                    case 2:
-                        Console.Write('\\');
-                        break;
-                    case 3:
-                        Console.Write('|');
-                        break;
-                    case 4:
-                        Console.Write('/');
-                        break;
-                    case 5:
-                        Console.Write('-');
-                        break;
-                    case 6:
-                        Console.Write('\\');
-                        break;
-                    case 7:
-                        Console.Write('|');
-                        break;
-                }
-                phase++;
-                phase %= 8;
-                Console.CursorX--;
-                ACPITimer.Sleep(100000);
-            }
+            Console.Wait((uint*)(BAR0 + 0x08), 1);
             Console.WriteLine();
         }
 
