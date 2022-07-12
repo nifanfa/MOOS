@@ -6,12 +6,12 @@ namespace MOOS.Driver
     {
         struct Desc
         {
-            public byte len;
-            public byte type;
-            public byte portCount;
-            public ushort chars;
-            public byte portPowerTime;
-            public byte current;
+            public byte Length;
+            public byte Type;
+            public byte PortCount;
+            public ushort Characteristic;
+            public byte PortPowerTime;
+            public byte Current;
         }
 
         static USBRequest* req;
@@ -34,12 +34,12 @@ namespace MOOS.Driver
             bool b= USB.SendAndReceive(device, req, desc, null);
             if (!b) 
             {
-                Console.WriteLine("Can't get Hub descriptor");
+                Console.WriteLine("[USB Hub] Can't get Hub descriptor");
             }
 
-            Console.WriteLine($"This hub has {desc->portCount} ports");
+            Console.WriteLine($"[USB Hub] This hub has {desc->PortCount} ports");
 
-            for(int i = 0; i < desc->portCount; i++) 
+            for(int i = 0; i < desc->PortCount; i++) 
             {
                 (*req).Clean();
                 req->RequestType = 0x23;
@@ -72,7 +72,7 @@ namespace MOOS.Driver
                     b = USB.SendAndReceive(device, req, &status, null);
                     if (!b)
                     {
-                        Console.WriteLine($"Can't get Hub port {i} status");
+                        Console.WriteLine($"[USB Hub] Can't get Hub port {i} status");
                         return;
                     }
 
