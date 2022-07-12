@@ -129,6 +129,8 @@ namespace MOOS.NET
 
         internal static byte[] Lookup(byte[] destIP)
         {
+            bool msgSaid = false;
+
             byte[] MAC = null;
             while(MAC == null) 
             {
@@ -141,7 +143,12 @@ namespace MOOS.NET
                         ARPEntries[i].IP[3] == destIP[3]
                         ) return ARPEntries[i].MAC;
                 }
-                Console.WriteLine("ARP entry not found! Making requests");
+                if (!msgSaid)
+                {
+                    Console.WriteLine("ARP entry not found! Making requests");
+                    msgSaid = true;
+                }
+                Native.Hlt();
                 ARP.Require(destIP);
             }
             return null;
