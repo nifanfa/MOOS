@@ -157,11 +157,11 @@ namespace MOOS.Driver
 
             if (device == null) return;
 
-            Console.WriteLine("Intel 8254X Series Gigabit Ethernet Controller Found");
+            Console.WriteLine("[Intel8254X] Intel 8254X Series Gigabit Ethernet Controller Found");
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
             BAR0 = (uint)(device.Bar0 & (~0xF));
-            Console.Write("BAR0: 0x");
+            Console.Write("[Intel8254X] BAR0: 0x");
             Console.WriteLine(((ulong)BAR0).ToStringHex());
 
             WriteRegister(0x14, 0x1);
@@ -186,7 +186,7 @@ namespace MOOS.Driver
                 MAC[3] = In8((byte*)(BAR0 + 0x5403));
                 MAC[4] = In8((byte*)(BAR0 + 0x5404));
                 MAC[5] = In8((byte*)(BAR0 + 0x5405));
-                Console.WriteLine("This controller has no EEPROM");
+                Console.WriteLine("[Intel8254X] This controller has no EEPROM");
             }
             else
             {
@@ -196,10 +196,10 @@ namespace MOOS.Driver
                 MAC[3] = (byte)(ReadROM(1) >> 8);
                 MAC[4] = (byte)(ReadROM(2) & 0xFF);
                 MAC[5] = (byte)(ReadROM(2) >> 8);
-                Console.WriteLine("EEPROM on this controller");
+                Console.WriteLine("[Intel8254X] EEPROM on this controller");
             }
 
-            Console.Write("MAC:");
+            Console.Write("[Intel8254X] MAC:");
             Console.Write(((ulong)MAC[0]).ToStringHex());
             Console.Write(":");
             Console.Write(((ulong)MAC[1]).ToStringHex());
@@ -216,7 +216,7 @@ namespace MOOS.Driver
             for (int i = 0; i < 0x80; i++)
                 WriteRegister((ushort)(0x5200 + i * 4), 0);
 
-            Console.Write("IRQ: ");
+            Console.Write("[Intel8254X] IRQ: ");
             Console.WriteLine(((ulong)device.IRQ).ToString("x2"));
 
             RXInitialize();
@@ -225,12 +225,12 @@ namespace MOOS.Driver
             WriteRegister(0x00D0, 0x1F6DC);
             ReadRegister(0xC0);
 
-            Console.Write("Speed: ");
+            Console.Write("[Intel8254X] Speed: ");
             Console.Write(((ulong)Speed).ToString());
             Console.Write(' ');
             Console.Write("FullDuplex: ");
             Console.WriteLine(FullDuplex?"Yes":"No");
-            Console.WriteLine("Configuration Done");
+            Console.WriteLine("[Intel8254X] Configuration Done");
 
             Network.MAC = MAC;
             Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
@@ -341,17 +341,17 @@ namespace MOOS.Driver
 
             if ((Status & 0x04) != 0)
             {
-                //Console.WriteLine("Linking Up");
+                //Console.WriteLine("[Intel8254X] Linking Up");
                 Linkup();
             }
             if ((Status & 0x10) != 0)
             {
-                //Console.WriteLine("Good Threshold");
+                //Console.WriteLine("[Intel8254X] Good Threshold");
             }
 
             if ((Status & 0x80) != 0)
             {
-                //Console.WriteLine("Packet Received");
+                //Console.WriteLine("[Intel8254X] Packet Received");
                 uint _RXCurr = RXCurr;
                 RXDesc* desc = (RXDesc*)(RXDescs + (RXCurr * 16));
                 while ((desc->status & 0x1) != 0)
@@ -369,7 +369,7 @@ namespace MOOS.Driver
         {
             WriteRegister(0, ReadRegister(0) | 0x40);
 
-            Console.Write("Waiting for network connection ");
+            Console.Write("[Intel8254X] Waiting for network connection ");
             Console.Wait((uint*)(BAR0 + 0x08), 1);
             Console.WriteLine();
         }
