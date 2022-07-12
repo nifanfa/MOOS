@@ -26,7 +26,7 @@ namespace MOOS.Driver
             cmd->Index = 0;
             cmd->Length = 3;
             cmd->Value = 0x0100;
-            bool res = USB.SendAndReceive(device, cmd, (void*)devicedesc,null);
+            bool res = USB.SendAndReceive(device, cmd, (void*)devicedesc, device.Parent);
             return res;
         }
 
