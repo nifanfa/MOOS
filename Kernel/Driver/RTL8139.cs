@@ -74,7 +74,7 @@ namespace MOOS.NET
 
             Network.MAC = MAC;
             IRQ = dev.IRQ;
-            Interrupts.EnableInterrupt(dev.IRQ);
+            Interrupts.EnableInterrupt(dev.IRQ,&OnInterrupt);
 
             //Literally instance
             Network.Controller = new RTL8139();

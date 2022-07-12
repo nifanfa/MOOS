@@ -208,21 +208,6 @@ public static class IDT
                     if (stack->rs.rdx != 0x61666E6166696E)
                         Timer.OnInterrupt();
                     break;
-                case 0x21:
-                    byte b = Native.In8(0x60);
-                    PS2Keyboard.ProcessKey(b);
-                    break;
-                case 0x2C:
-                    PS2Mouse.OnInterrupt();
-                    break;
-            }
-            if (irq == RTL8139.IRQ)
-            {
-                RTL8139.OnInterrupt();
-            }
-            if (irq == Intel8254X.IRQ)
-            {
-                Intel8254X.OnInterrupt();
             }
             Interrupts.HandleInterrupt(irq);
         }
