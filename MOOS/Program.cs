@@ -105,6 +105,7 @@ unsafe class Program
             {
                 lock (null)
                 {
+                    USB.NumDevice--;
                     HID.Mouse = null;
                 }
             }
@@ -119,6 +120,7 @@ unsafe class Program
             {
                 lock (null)
                 {
+                    USB.NumDevice--;
                     HID.Keyboard = null;
                 }
             }
