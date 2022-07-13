@@ -1,3 +1,4 @@
+//#define USBDebug
 //#define NETWORK
 
 using Internal.Runtime.CompilerHelpers;
@@ -42,10 +43,11 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
+#if USBDebug
         Hub.Initialize();
         HID.Initialize();
         EHCI.Initialize();
-        USB.StartPolling();
+        //USB.StartPolling();
 
         //Use qemu for USB debug
         //VMware won't connect virtual USB HIDs
@@ -57,6 +59,32 @@ unsafe class Program
         {
             Console.WriteLine("USB Keyboard not present");
         }
+
+        for(; ; )
+        {
+            if (HID.Mouse != null)
+            {
+                HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out var Buttons);
+                if (AxisX != 0 && AxisY != 0)
+                {
+                    Console.WriteLine($"X:{AxisX} Y:{AxisY}");
+                }
+            }
+            if(HID.Keyboard != null) 
+            {
+                HID.GetKeyboardThings(HID.Keyboard, out var ScanCode, out var Key);
+                if(ScanCode != 0)
+                {
+                    Console.WriteLine($"ScanCode:{ScanCode}");
+                }
+            }
+        }
+#else
+        Hub.Initialize();
+        HID.Initialize();
+        EHCI.Initialize();
+        USB.StartPolling();
+#endif
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
