@@ -21,13 +21,9 @@ namespace MOOS.Misc
         public byte SubClass;
         public byte Protocol;
 
-        public uint SendMessage;
-        public uint SendBulk;
-        public uint RecieveBulk;
-        public byte EndpointControl;
         public uint EndpointIn;
-        public uint Localinringoffset;
         public uint EndpointOut;
+
         public uint Localoutringoffset;
         internal int Port;
         internal USBDevice Parent;
@@ -94,9 +90,13 @@ namespace MOOS.Misc
             }
         }
 
-        public static void InitPort(int port, USBDevice parent) 
+        public static bool InitPort(int port, USBDevice parent,int version) 
         {
-            EHCI.InitPort(port,parent);
+            if(version == 2)
+            {
+                return EHCI.InitPort(port, parent);
+            }
+            return false;
         }
 
         public static void DriveDevice(USBDevice device)
