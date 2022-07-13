@@ -12,7 +12,7 @@ namespace MOOS
         public static ushort Width;
         public static ushort Height;
 
-        public static uint* VideoMemory;
+        public static uint* VideoMemory { get; private set; }
 
         public static uint* FirstBuffer;
         public static uint* SecondBuffer;
@@ -61,7 +61,7 @@ namespace MOOS
             if(Graphics != null) Graphics.Update();
         }
 
-        public static void SetVideoMode(ushort XRes, ushort YRes)
+        public static void Initialize(ushort XRes, ushort YRes,uint* FB)
         {
             Width = XRes;
             Height = YRes;
@@ -71,7 +71,10 @@ namespace MOOS
             Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
             Control.MousePosition.X = XRes / 2;
             Control.MousePosition.Y = YRes / 2;
-            Graphics = new Graphics(Width, Height, VideoMemory);
+            Graphics = new Graphics(Width, Height, FB);
+            VideoMemory = FB;
+
+            Console.Clear();
         }
     }
 }

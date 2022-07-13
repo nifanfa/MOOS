@@ -8,8 +8,8 @@ namespace MOOS
 {
     public static unsafe class Console
     {
-        public static int Width;
-        public static int Height;
+        public static int Width { get => Framebuffer.Width / 8; }
+        public static int Height { get => Framebuffer.Height / 16; }
 
         public static int CursorX = 0;
         public static int CursorY = 0;
@@ -23,9 +23,6 @@ namespace MOOS
 
         internal static void Setup()
         {
-            Width = Framebuffer.Width / 8;
-            Height = Framebuffer.Height / 16;
-
             OnWrite = null;
 
             Clear();

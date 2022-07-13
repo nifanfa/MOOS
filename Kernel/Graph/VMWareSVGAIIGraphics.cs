@@ -6,11 +6,12 @@ namespace MOOS.Graph
     {
         VMWareSVGAII svga;
 
-        public VMWareSVGAIIGraphics() : base(Framebuffer.Width, Framebuffer.Height, Framebuffer.FirstBuffer)
+        public VMWareSVGAIIGraphics(ushort Width = 1280,ushort Height = 768) : base(Width,Height,null)
         {
             svga = new VMWareSVGAII();
-            svga.SetMode(Framebuffer.Width, Framebuffer.Height);
-            Framebuffer.VideoMemory = svga.Video_Memory;
+            svga.SetMode(Width,Height);
+            Framebuffer.Initialize(Width, Height, svga.Video_Memory);
+            base.VideoMemory = Framebuffer.FirstBuffer;
         }
 
         public override void Update()
