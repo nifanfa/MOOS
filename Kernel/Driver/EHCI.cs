@@ -613,7 +613,7 @@ namespace MOOS.Driver
             return lstatus;
         }
 
-        public static void InitPort(int port,USBDevice parent)
+        public static bool InitPort(int port,USBDevice parent)
         {
             USBDevice device = new USBDevice();
             device.USBVersion = 2;
@@ -632,7 +632,9 @@ namespace MOOS.Driver
                 if ((portinfo & 4) == 0)
                 {
                     Console.WriteLine($"[EHCI] Port {port} Is not enabled");
-                    return;
+
+                    device.Dispose();
+                    return false;
                 }
             }
 
@@ -640,7 +642,9 @@ namespace MOOS.Driver
             if (addr == 0)
             {
                 Console.WriteLine($"[EHCI] Port {port} Failed to set device address");
-                return;
+
+                device.Dispose();
+                return false;
             }
             device.AssignedSloth = USB.DeviceAddr;
             device.Address = USB.DeviceAddr;
@@ -650,13 +654,17 @@ namespace MOOS.Driver
             if (_desc == 0)
             {
                 Console.WriteLine($"[EHCI] Port {port} Failed to get descriptor");
-                return;
+
+                device.Dispose();
+                return false;
             }
 
             if (!(_desc[0] == 0x12 && _desc[1] == 0x1))
             {
                 Console.WriteLine($"[EHCI] Port {port} Invalid magic number");
-                return;
+
+                device.Dispose();
+                return false;
             }
             byte max_packet_size = _desc[7];
             Console.WriteLine($"[EHCI] Port {port} Max Packet Size {max_packet_size}");
@@ -665,7 +673,9 @@ namespace MOOS.Driver
             if (cdesc == 0)
             {
                 Console.WriteLine($"[EHCI] [ECHI] Port {port} Failed to get descriptor");
-                return;
+
+                device.Dispose();
+                return false;
             }
             InterfaceDesc* idesc = (InterfaceDesc*)(((uint)cdesc) + sizeof(ConfigDesc));
             byte Class = idesc->InterfaceClass;
@@ -690,7 +700,8 @@ namespace MOOS.Driver
 
             if (Class == 0x00)
             {
-                return;
+                device.Dispose();
+                return false;
             }
             Console.WriteLine($"[EHCI] Port{port} Class: {Class}");
 
@@ -698,7 +709,9 @@ namespace MOOS.Driver
             if (config_res == 0)
             {
                 Console.WriteLine($"[EHCI] Port {port} failed to set configuration");
-                return;
+
+                device.Dispose();
+                return false;
             }
 
             USB.DeviceAddr++;
@@ -706,6 +719,8 @@ namespace MOOS.Driver
             device.Parent = parent;
 
             USB.DriveDevice(device);
+
+            return true;
         }
 
 
@@ -719,7 +734,7 @@ namespace MOOS.Driver
                 Console.WriteLine($"[EHCI] Port {i} {((*(uint*)reg_port & 3)?"Present" : "Not present")}");
                 if (*(uint*)reg_port & 3)
                 {
-                    USB.InitPort(i,null);
+                    USB.InitPort(i,null,2);
                 }
             }
         }
