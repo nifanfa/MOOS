@@ -24,7 +24,7 @@ Welcome to ***MOOS(My own operating system)-Project***
 C# operating system demo, using Native AOT (Core RT) boot via multiboot  
 | Screenshot(English is default) |
 | ------ |
-| ![image](Screenshot.png) |
+| ![image](Screenshot1.png) |
 
 | Items | Implemented | Working On Real Hardware (Tested on Supermicro X9DRI-LN4F+) | Note |
 | ----- | ----------- | ----------------------------------------------------------- | ----- |
