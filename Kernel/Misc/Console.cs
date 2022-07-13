@@ -131,11 +131,17 @@ namespace MOOS
             }
         }
 
-        public static void Wait(delegate* <bool> func)
+        public static bool Wait(delegate* <bool> func,int timeOutMS = -1)
         {
+            ulong prev = Timer.Ticks;
+
             int phase = 0;
             while (!func())
             {
+                if(timeOutMS >= 0 && Timer.Ticks > (prev + (uint)timeOutMS))
+                {
+                    return false;
+                }
                 switch (phase)
                 {
                     case 0:
@@ -168,6 +174,7 @@ namespace MOOS
                 Console.CursorX--;
                 ACPITimer.Sleep(100000);
             }
+            return true;
         }
 
         public static void Write(string s)
