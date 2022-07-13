@@ -95,7 +95,6 @@ unsafe class Program
         Hub.Initialize();
         HID.Initialize();
         EHCI.Initialize();
-#endif
 
         if (HID.Mouse != null)
         {
@@ -137,6 +136,7 @@ unsafe class Program
         {
             Console.WriteLine("USB Keyboard not present");
         }
+#endif
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
