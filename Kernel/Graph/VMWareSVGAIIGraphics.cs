@@ -1,4 +1,6 @@
 using MOOS.Driver;
+using MOOS.FS;
+using MOOS.Misc;
 
 namespace MOOS.Graph
 {
@@ -12,6 +14,9 @@ namespace MOOS.Graph
             svga.SetMode(Width,Height);
             Framebuffer.Initialize(Width, Height, svga.Video_Memory);
             base.VideoMemory = Framebuffer.FirstBuffer;
+
+            //Image from unsplash
+            Program.Wallpaper = new PNG(File.Instance.ReadAllBytes("Images/Wallpaper.png"));
         }
 
         public override void Update()

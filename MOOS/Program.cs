@@ -28,9 +28,7 @@ unsafe class Program
 
     static Image Cursor;
     static Image CursorMoving;
-    static Image Wallpaper;
-
-    public static Image[] SizedScreens;
+    public static Image Wallpaper;
 
     static bool USBMouseTest()
     {
@@ -146,7 +144,6 @@ unsafe class Program
         CursorMoving = new PNG(File.Instance.ReadAllBytes("Images/Grab.png"));
         //Image from unsplash
         Wallpaper = new PNG(File.Instance.ReadAllBytes("Images/Wallpaper1.png"));
-        //Wallpaper = new PNG(File.Instance.ReadAllBytes("Wallpaper.png"));
 
         BitFont.Initialize();
 
@@ -245,7 +242,7 @@ unsafe class Program
         Image _screen = Framebuffer.Graphics.Save();
         Framebuffer.Graphics.Clear(0x0);
 
-        SizedScreens = new Image[60];
+        var SizedScreens = new Image[60];
         int startat = 40;
         for (int i = startat; i < SizedScreens.Length; i++)
         {
