@@ -172,9 +172,18 @@ namespace MOOS
 
         public static void Write(string s)
         {
+            ConsoleColor col = Console.ForegroundColor;
             for (byte i = 0; i < s.Length; i++)
             {
+                if (s[i] == '[') 
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
                 Console.Write(s[i]);
+                if (s[i] == ']')
+                {
+                    Console.ForegroundColor = col;
+                }
             }
             s.Dispose();
         }
