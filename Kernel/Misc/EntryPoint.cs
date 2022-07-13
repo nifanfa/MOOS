@@ -36,8 +36,7 @@ namespace MOOS.Misc
             VBEInfo* info = (VBEInfo*)Info->VBEInfo;
             if (info->PhysBase != 0)
             {
-                Framebuffer.VideoMemory = (uint*)info->PhysBase;
-                Framebuffer.SetVideoMode(info->ScreenWidth, info->ScreenHeight);
+                Framebuffer.Initialize(info->ScreenWidth, info->ScreenHeight, (uint*)info->PhysBase);
                 Framebuffer.Graphics.Clear(0x0);
             }
             else 
