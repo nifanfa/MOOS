@@ -82,7 +82,7 @@ namespace MOOS.Driver
 
                 if(status & 2) 
                 {
-                    USB.InitPort(i, device);
+                    USB.InitPort(i, device, 2);
                 }
             }
         }
