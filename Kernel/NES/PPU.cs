@@ -546,13 +546,12 @@ namespace NES
         {
             // Update all previously retreived sprite values as the new current values
             spritesFound = spritesFoundT;           // Stores the location of each sprite found
-            spriteToDraw.Dispose();
             spriteToDraw = spriteToDrawT;           // Number of sprites found
             spriteIndex = spriteIndexT;             // Any sprites found?
             memory.memCPU[0x2002] &= memCPU2002T;   // Reset '8 sprites on a scanline' bit
 
             // Reset Temp Sprite Values for next evaluation
-            spriteToDrawT = new byte[8];    // Stores the location of each sprite found
+            //spriteToDrawT = new byte[8];    // Stores the location of each sprite found
             spriteIndexT = 0x00;            // Number of sprites found
             spritesFoundT = false;          // Any sprites found?
             memCPU2002T = 0xDF;             // Reset '8 sprites on a scanline' bit
@@ -749,6 +748,8 @@ namespace NES
         {
             memory = memoryRef;
             tn = tnRef;
+
+            spriteToDrawT = new byte[8];    // Stores the location of each sprite found
         }
     }
 }
