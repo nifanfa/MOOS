@@ -32,6 +32,18 @@ unsafe class Program
 
     public static Image[] SizedScreens;
 
+    static bool USBMouseTest()
+    {
+        HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out var Buttons);
+        return Buttons != MouseButtons.None;
+    }
+
+    static bool USBKeyboardTest()
+    {
+        HID.GetKeyboardThings(HID.Keyboard, out var ScanCode, out var Key);
+        return ScanCode != 0;
+    }
+
     /*
      * Minimum system requirement:
      * 1024MiB of RAM
@@ -83,8 +95,48 @@ unsafe class Program
         Hub.Initialize();
         HID.Initialize();
         EHCI.Initialize();
-        USB.StartPolling();
 #endif
+
+        if (HID.Mouse != null)
+        {
+            Console.Write("[Warning] Press please press Mouse any key to validate USB Mouse ");
+            bool res = Console.Wait(&USBMouseTest,2000);
+            Console.WriteLine();
+            if (!res) 
+            {
+                lock (null)
+                {
+                    HID.Mouse = null;
+                }
+            }
+        }
+
+        if (HID.Keyboard != null)
+        {
+            Console.Write("[Warning] Press please press any key to validate USB keyboard ");
+            bool res = Console.Wait(&USBKeyboardTest, 2000);
+            Console.WriteLine();
+            if (!res)
+            {
+                lock (null)
+                {
+                    HID.Keyboard = null;
+                }
+            }
+        }
+
+        USB.StartPolling();
+
+        //Use qemu for USB debug
+        //VMware won't connect virtual USB HIDs
+        if (HID.Mouse == null)
+        {
+            Console.WriteLine("USB Mouse not present");
+        }
+        if (HID.Keyboard == null)
+        {
+            Console.WriteLine("USB Keyboard not present");
+        }
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
