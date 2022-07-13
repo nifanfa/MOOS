@@ -8,8 +8,8 @@ namespace MOOS
 {
     public static unsafe class Console
     {
-        public const byte Width = 80;
-        public const byte Height = 25;
+        public static int Width;
+        public static int Height;
 
         public static int CursorX = 0;
         public static int CursorY = 0;
@@ -23,12 +23,12 @@ namespace MOOS
 
         internal static void Setup()
         {
+            Width = Framebuffer.Width / 8;
+            Height = Framebuffer.Height / 16;
+
             OnWrite = null;
 
             Clear();
-
-            EnableCursor();
-            SetCursorStyle(0b1110);
 
             ColorsFB = new uint[16]
             {
@@ -51,21 +51,6 @@ namespace MOOS
             };
 
             ForegroundColor = ConsoleColor.White;
-        }
-
-        private static void SetCursorStyle(byte style)
-        {
-            Native.Out8(0x3D4, 0x0A);
-            Native.Out8(0x3D5, style);
-        }
-
-        private static void EnableCursor()
-        {
-            Native.Out8(0x3D4, 0x0A);
-            Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xC0) | 0));
-
-            Native.Out8(0x3D4, 0x0B);
-            Native.Out8(0x3D5, (byte)((Native.In8(0x3D5) & 0xE0) | 15));
         }
 
         public static void Wait(ref bool b)
@@ -199,17 +184,8 @@ namespace MOOS
             if (CursorX == 0) return;
             WriteFramebuffer(' ');
             CursorX--;
-            WriteAt(' ', CursorX, CursorY);
             WriteFramebuffer(' ');
             UpdateCursor();
-        }
-
-        public static void WriteStrAt(string s, byte line)
-        {
-            for (byte i = 0; i < s.Length; i++)
-            {
-                Console.WriteAt(s[i], i, line);
-            }
         }
 
         public static void Write(char chr, bool dontInvoke = false)
@@ -232,11 +208,6 @@ namespace MOOS
 
                 WriteFramebuffer(chr);
 
-                byte* p = ((byte*)(0xb8000 + (CursorY * Width * 2) + (CursorX * 2)));
-                *p = (byte)chr;
-                p++;
-                *p = (byte)((byte)(ForegroundColor));
-                //*p = 0x0F;
                 CursorX++;
                 if (CursorX == Width)
                 {
@@ -313,9 +284,6 @@ namespace MOOS
         {
             if (CursorY >= Height - 1)
             {
-                Native.Movsb((void*)0xb8000, (void*)0xB80A0, 0xF00);
-                for (int i = 0; i < Width; i++) WriteAt(' ', i, CursorY);
-
                 MoveUpFramebuffer();
                 CursorY--;
             }
@@ -340,11 +308,6 @@ namespace MOOS
 
         private static void UpdateCursor()
         {
-            int pos = (CursorY * Width) + CursorX;
-            Native.Out8(0x3D4, 0x0F);
-            Native.Out8(0x3D5, (byte)(pos & 0xFF));
-            Native.Out8(0x3D4, 0x0E);
-            Native.Out8(0x3D5, (byte)((pos >> 8) & 0xFF));
             UpdateCursorFramebuffer();
         }
 
@@ -382,25 +345,10 @@ namespace MOOS
             UpdateCursor();
         }
 
-        public static void WriteAt(char chr, int x, int y)
-        {
-            byte* p = (byte*)0xb8000 + ((y * Width + x) * 2);
-            *p = (byte)chr;
-            p++;
-            *p = 0x0F;
-        }
-
         public static void Clear()
         {
             CursorX = 0;
             CursorY = 0;
-            for (int x = 0; x < Width; x++)
-            {
-                for (int y = 0; y < Height; y++)
-                {
-                    WriteAt(' ', x, y);
-                }
-            }
             ClearFramebuffer();
         }
 
