@@ -34,13 +34,13 @@ namespace MOOS
             {
                 if (Graphics == null) return;
                 if (_TripleBuffered == value) return;
-                Graphics.VideoMemory = value ? FirstBuffer : VideoMemory;
+
                 Graphics.Clear(0x0);
+                Graphics.VideoMemory = value ? FirstBuffer : VideoMemory;
                 _TripleBuffered = value;
                 if (!_TripleBuffered)
                 {
                     Console.Clear();
-                    Graphics.Clear(0x0);
                 }
             }
         }
