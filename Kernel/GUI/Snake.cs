@@ -33,7 +33,7 @@ namespace MOOS.GUI
 
         Random random;
 
-        public Snake(int X, int Y) : base(X, Y, 450, 450)
+        public Snake(int X, int Y) : base(X, Y, aWidth*15, aHeight*15)
         {
 #if Chinese
             Title = "贪吃蛇";
