@@ -6,8 +6,8 @@ namespace MOOS.GUI
 {
     class Snake : Window
     {
-        const int aWidth = 30;
-        const int aHeight = 30;
+        const int aWidth = 20;
+        const int aHeight = 20;
 
         enum Direction
         {
@@ -108,7 +108,7 @@ namespace MOOS.GUI
 
         private void Control()
         {
-            if (Timer.Ticks < W + 100)
+            if (Timer.Ticks < W + 150)
             {
                 return;
             }
