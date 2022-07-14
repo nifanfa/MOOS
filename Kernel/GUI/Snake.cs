@@ -6,8 +6,8 @@ namespace MOOS.GUI
 {
     class Snake : Window
     {
-        const int aWidth = 20;
-        const int aHeight = 20;
+        const int aWidth = 15;
+        const int aHeight = 15;
 
         enum Direction
         {
@@ -193,8 +193,6 @@ namespace MOOS.GUI
 
         void NewFood()
         {
-            Console.WriteLine("Food Eat!");
-
             int newX = random.Next(2, aWidth - 3);
             int newY = random.Next(2, aHeight - 3);
             for (int i = 0; i < Count; i++)
@@ -221,8 +219,8 @@ namespace MOOS.GUI
                     {
                         if (SnakeNodes[i].X == SnakeNodes[k].X && SnakeNodes[i].Y == SnakeNodes[k].Y)
                         {
+                            System.Windows.Forms.MessageBox.Show($"Game over! Your score: {Count}");
                             NewGame();
-                            Console.WriteLine("Game Over!");
                         }
                     }
                 }
