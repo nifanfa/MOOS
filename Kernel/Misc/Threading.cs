@@ -16,6 +16,7 @@ namespace MOOS.Misc
         public bool Terminated;
         public IDT.IDTStackGeneric* Stack;
         public int RunOnWhichCPU;
+        public bool IsIdleThread = false;
 
         public Thread(delegate*<void> method,ulong stack_size = 16384)
         {
@@ -106,14 +107,18 @@ namespace MOOS.Misc
                 Initialized = false;
                 Threads = new();
                 //At least a thread for each CPU to make Thread Pool work
-                new Thread(&IdleThread).Start();
+                var t = new Thread(&IdleThread);
+                t.IsIdleThread = true;
+                t.Start(0);
                 Initialized = true;
             }
             //Application CPU
             else
             {
                 //At least a thread for each CPU to make Thread Pool work
-                new Thread(&IdleThread).Start((int)SMP.ThisCPU);
+                var t = new Thread(&IdleThread);
+                t.IsIdleThread = true;
+                t.Start((int)SMP.ThisCPU);
             }
             Native.Sti();
             Schedule_Next(); //start scheduling
@@ -172,6 +177,11 @@ namespace MOOS.Misc
 
         public static int ThreadCount => Threads.Count;
 
+        private static uint TickAll;
+        private static uint TickIdle;
+
+        public static uint CPUUsage;
+
         public static void Schedule(IDT.IDTStackGeneric* stack)
         {
             if (!Initialized) return;
@@ -207,6 +217,24 @@ namespace MOOS.Misc
                 Threads[Index].Terminated ||
                 Threads[Index].RunOnWhichCPU != SMP.ThisCPU
             );
+
+            #region CPU Usage
+            if(SMP.ThisCPU== 0)
+            {
+                if ((Timer.Ticks % 100) == 0)
+                {
+                    if (TickAll != 0 && TickIdle != 0)
+                        CPUUsage = 100 - ((TickIdle * 100) / TickAll);
+                    TickIdle = 0;
+                    TickAll = 0;
+                }
+            }
+            if (Threads[Index].IsIdleThread)
+            {
+                TickIdle++;
+            }
+            TickAll++;
+            #endregion
 
             Native.Movsb(stack, Threads[Index].Stack, (ulong)sizeof(IDT.IDTStackGeneric));
         }
