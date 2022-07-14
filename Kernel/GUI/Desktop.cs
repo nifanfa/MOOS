@@ -66,12 +66,14 @@ namespace MOOS.GUI
                 " 画图",
                 "贪吃蛇",
                 "控制台",
+                "监视器"
 #else
                 "Calculator",
                 "Clock",
                 "Paint",
                 "Snake",
                 "Console",
+                "Monitor"
 #endif
             };
 
@@ -399,6 +401,14 @@ namespace MOOS.GUI
 #endif
             {
                 new Calculator(300, 500);
+            }
+#if Chinese
+            else if (name == "监视器")
+#else
+            else if (name == "Monitor")
+#endif
+            {
+                new Monitor(200, 450);
             }
 #if Chinese
             else if (name == " 时钟")
