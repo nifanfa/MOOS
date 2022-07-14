@@ -15,8 +15,10 @@ namespace MOOS.Graph
             Framebuffer.Initialize(Width, Height, svga.Video_Memory);
             base.VideoMemory = Framebuffer.FirstBuffer;
 
+#if HasGUI
             //Image from unsplash
             Program.Wallpaper = new PNG(File.Instance.ReadAllBytes("Images/Wallpaper.png"));
+#endif
         }
 
         public override void Update()
