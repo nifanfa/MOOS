@@ -292,7 +292,12 @@ unsafe class Program
             }
             else
             {
-                if (rightClicked == true) rightmenu.Visible = !rightmenu.Visible;
+                if (rightClicked == true)
+                {
+                    rightmenu.Visible = !rightmenu.Visible;
+                    WindowManager.MoveToEnd(rightmenu);
+                }
+
                 rightClicked = false;
             }
 #endregion
