@@ -42,7 +42,7 @@ namespace MOOS.GUI
             Interrupts.EnableInterrupt(0x20, &OnInterrupt);
 
             Add(new Nofity("Welcome to MOOS"));
-            Add(new Nofity("https://github.com/nifanfa/MOOS"));
+            Add(new Nofity(Audio.HasAudioDevice ? "Info: Audio controller available" : "Warning: No audio controller on this PC"));
         }
 
         public static void Add(Nofity nofity)
