@@ -54,6 +54,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\ImageViewer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\NESEmu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GUI\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Paint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\RightMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Snake.cs" />
