@@ -51,7 +51,7 @@ namespace MOOS.GUI
 
 #if Chinese
             Add(new Nofity("欢迎使用MOOS"));
-            Add(new Nofity(Audio.HasAudioDevice ? "信息: 声卡不可用" : "警告: 此设备上没有可用的声卡", Audio.HasAudioDevice ? NotificationLevel.None : NotificationLevel.Error));
+            Add(new Nofity(Audio.HasAudioDevice ? "信息: 声卡可用" : "警告: 此设备上没有可用的声卡", Audio.HasAudioDevice ? NotificationLevel.None : NotificationLevel.Error));
 #else
             Add(new Nofity("Welcome to MOOS"));
             Add(new Nofity(Audio.HasAudioDevice ? "Info: Audio controller available" : "Warning: No audio controller on this PC", Audio.HasAudioDevice ? NotificationLevel.None : NotificationLevel.Error));
