@@ -6,8 +6,8 @@ namespace MOOS.GUI
 {
     class Snake : Window
     {
-        int aWidth = 10;
-        int aHeight = 10;
+        const int aWidth = 30;
+        const int aHeight = 30;
 
         enum Direction
         {
@@ -26,14 +26,14 @@ namespace MOOS.GUI
         Direction Dir = Direction.Right;
         SnakeNode[] SnakeNodes;
 
-        int Max = 20;
+        int Max = aWidth* aHeight;
 
         int FoodX = -1;
         int FoodY = -1;
 
         Random random;
 
-        public Snake(int X, int Y) : base(X, Y, 150, 150)
+        public Snake(int X, int Y) : base(X, Y, 450, 450)
         {
 #if Chinese
             Title = "贪吃蛇";
@@ -108,7 +108,7 @@ namespace MOOS.GUI
 
         private void Control()
         {
-            if (Timer.Ticks < W + 200)
+            if (Timer.Ticks < W + 100)
             {
                 return;
             }
