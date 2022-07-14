@@ -6,8 +6,8 @@ namespace MOOS.GUI
 {
     class Snake : Window
     {
-        const int aWidth = 15;
-        const int aHeight = 15;
+        const int aWidth = 10;
+        const int aHeight = 10;
 
         enum Direction
         {
