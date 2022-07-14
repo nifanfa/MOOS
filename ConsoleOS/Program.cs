@@ -1,11 +1,8 @@
 using MOOS;
-using MOOS.Misc;
 using System.Runtime;
 
 unsafe class Program
 {
-    internal static PNG Wallpaper;
-
     static void Main() { }
 
     /*
