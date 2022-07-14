@@ -269,7 +269,9 @@ unsafe class Program
         _screen.Dispose();
         for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
         SizedScreens.Dispose();
-#endregion
+        #endregion
+
+        NotificationManager.Initialize();
 
         for (; ; )
         {
@@ -305,6 +307,7 @@ unsafe class Program
 
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
             Desktop.Update();
+            NotificationManager.Update();
             WindowManager.DrawAll();
             /*
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
