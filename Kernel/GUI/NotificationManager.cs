@@ -6,22 +6,30 @@ using System.Collections.Generic;
 
 namespace MOOS.GUI
 {
+    public enum NotificationLevel 
+    {
+        None,
+        Error
+    }
+
     public class Nofity
     {
         public int X, Y;
         public readonly string Message;
+        public NotificationLevel NotificationLevel;
         public int SWidth;
         public int SHeight;
 
         public int Remain;
 
-        public Nofity(string msg)
+        public Nofity(string msg,NotificationLevel level = NotificationLevel.None)
         {
             Remain = 0;
             Message = msg;
             X = 0; Y = 0;
             SWidth = WindowManager.font.MeasureString(msg);
             SHeight = WindowManager.font.FontSize;
+            NotificationLevel = level;
         }
 
         public override void Dispose()
@@ -42,7 +50,7 @@ namespace MOOS.GUI
             Interrupts.EnableInterrupt(0x20, &OnInterrupt);
 
             Add(new Nofity("Welcome to MOOS"));
-            Add(new Nofity(Audio.HasAudioDevice ? "Info: Audio controller available" : "Warning: No audio controller on this PC"));
+            Add(new Nofity(Audio.HasAudioDevice ? "Info: Audio controller available" : "Warning: No audio controller on this PC", Audio.HasAudioDevice ? NotificationLevel.None : NotificationLevel.Error));
         }
 
         public static void Add(Nofity nofity)
@@ -65,7 +73,7 @@ namespace MOOS.GUI
 
                 Framebuffer.Graphics.FillRectangle(Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide, 0xFF111111);
                 Framebuffer.Graphics.DrawRectangle(Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide, 0xFF222222);
-                Framebuffer.Graphics.FillRectangle(Framebuffer.Width - v.X, v.Y + y, 5, v.SHeight + Devide, 0xFF80B000);
+                Framebuffer.Graphics.FillRectangle(Framebuffer.Width - v.X, v.Y + y, 5, v.SHeight + Devide, v.NotificationLevel == NotificationLevel.None? 0xFF80B000 : 0xFFE74C3C);
                 WindowManager.font.DrawString(Framebuffer.Width - v.X + (Devide / 2), v.Y + y + (Devide / 2), v.Message);
 
                 y += v.SHeight + Devide;
