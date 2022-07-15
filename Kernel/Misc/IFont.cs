@@ -56,7 +56,7 @@ namespace MOOS.Misc
                         g.DrawPoint(X + w, Y + h, color, true);
                     if ((color & 0xFF000000) == 0) counter++;
                 }
-                if (w > 5 && counter == FontSize) return w;
+                if (w > (FontSize/3) && counter == FontSize) return w;
             }
 
             return FontSize;
