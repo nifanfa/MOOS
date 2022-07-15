@@ -52,6 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Doom.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\FConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\ImageViewer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GUI\Lockscreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Monitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\NESEmu.cs" />
