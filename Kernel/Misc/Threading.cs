@@ -4,6 +4,7 @@
 
 using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
+using MOOS.GUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,6 +62,22 @@ namespace MOOS.Misc
         {
             lock (this)
             {
+                bool hasThatCPU = false;
+                for(int i = 0; i < ACPI.LocalAPIC_CPUIDs.Count; i++) 
+                {
+                    if (ACPI.LocalAPIC_CPUIDs[i] == run_on_which_cpu) 
+                    {
+                        hasThatCPU = true;
+                    }
+                }
+                if (!hasThatCPU)
+                {
+                    run_on_which_cpu = 0;
+#if HasGUI
+                    NotificationManager.Add(new Nofity($"CPU{run_on_which_cpu} not found! running this Thread on CPU0", NotificationLevel.Error));
+#endif
+                }
+
                 this.RunOnWhichCPU = run_on_which_cpu;
                 ThreadPool.Threads.Add(this);
                 return this;
