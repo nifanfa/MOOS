@@ -31,16 +31,17 @@ namespace MOOS.GUI
 
             lsfont = new IFont(new PNG(File.Instance.ReadAllBytes("Images/Yahei128.png")), "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", 128);
 
-            int alpha = 0;
-            while (alpha < 0xFF)
+            byte alpha = 0;
+            const byte alpha_add = 16;
+            while (alpha < (0xFF - alpha_add))
             {
-                alpha += 16;
                 Framebuffer.Graphics.Clear(0x0);
                 Framebuffer.Graphics.ADrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), ((Framebuffer.Height / 2) - ((Program.Wallpaper.Height) / 2)), Program.Wallpaper, (byte)alpha);
                 Framebuffer.Update();
+                alpha += alpha_add;
             }
 
-            while (Keyboard.KeyInfo.Key != System.ConsoleKey.Up && Keyboard.KeyInfo.Key != System.ConsoleKey.W) 
+            while (Keyboard.KeyInfo.Key != System.ConsoleKey.Up && Keyboard.KeyInfo.Key != System.ConsoleKey.W)
             {
                 Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), Program.Wallpaper, false);
                 
