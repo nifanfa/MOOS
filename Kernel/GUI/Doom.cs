@@ -69,7 +69,7 @@ namespace MOOS.GUI
             {
                 fixed (byte* ptr = gb)
                     doommain(ptr, gb.Length);
-            })).Start();
+            })).Start(1);
         }
 
         private void PS2Keyboard_OnKeyChanged(ConsoleKeyInfo key)
