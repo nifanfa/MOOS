@@ -223,6 +223,8 @@ unsafe class Program
         Wallpaper = wall.ResizeImage(Framebuffer.Width, Framebuffer.Height);
         wall.Dispose();
 
+        Lockscreen.Initialize();
+
         FConsole = new FConsole(350, 300);
         FConsole.Visible = false;
 
