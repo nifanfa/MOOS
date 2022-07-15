@@ -76,9 +76,18 @@ namespace MOOS.GUI
             lsfont.DrawString((Framebuffer.Width / 2) - (lsfont.MeasureString(s) / 2), Framebuffer.Height / 6, s);
             s.Dispose();
 
-            string m = $"{mon[DateTime.Now.Month]}, {DateTime.Now.Day}th";
-            WindowManager.font.DrawString((Framebuffer.Width / 2) - (WindowManager.font.MeasureString(m) / 2), (Framebuffer.Height / 6) + lsfont.FontSize, m);
-            m.Dispose();
+            string _1 = mon[DateTime.Now.Month];
+            string _2 = ", ";
+            string _3 = DateTime.Now.Day.ToString();
+            string _4 = "th";
+            string res = _1 + _2 + _3 + _4;
+            WindowManager.font.DrawString((Framebuffer.Width / 2) - (WindowManager.font.MeasureString(res) / 2), (Framebuffer.Height / 6) + lsfont.FontSize, res);
+            
+            _1.Dispose();
+            _2.Dispose();
+            _3.Dispose();
+            _4.Dispose();
+            res.Dispose();
         }
     }
 }
