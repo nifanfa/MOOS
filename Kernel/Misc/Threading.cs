@@ -72,10 +72,10 @@ namespace MOOS.Misc
                 }
                 if (!hasThatCPU)
                 {
-                    run_on_which_cpu = 0;
 #if HasGUI
                     NotificationManager.Add(new Nofity($"CPU{run_on_which_cpu} not found! running this Thread on CPU0", NotificationLevel.Error));
 #endif
+                    run_on_which_cpu = 0;
                 }
 
                 this.RunOnWhichCPU = run_on_which_cpu;
