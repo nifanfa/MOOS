@@ -46,5 +46,7 @@ namespace System
             Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
 #endif
         }
+
+        public static implicit operator bool(object obj)=> obj != null;
     }
 }
