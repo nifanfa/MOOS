@@ -49,11 +49,10 @@ namespace Internal.Runtime.CompilerHelpers
         }
 #endif
 
-        internal static unsafe byte* StringToAnsiString(string str, bool bestFit, bool throwOnUnmappableChar) 
+        internal static unsafe string StringToAnsiString(string str, bool bestFit, bool throwOnUnmappableChar) 
         {
-            //String will become char* if we use DllImport
             //No Ansi support, Return unicode
-            fixed (char* ptr = str) return (byte*)ptr;
+            return str;
         }
 
         internal unsafe static void CoTaskMemFree(void* p)

@@ -13,23 +13,15 @@ namespace MOOS
                 case "SayHello":
                     return (delegate*<void>)&SayHello;
                 case "Console.WriteLine":
-                    return (delegate*<char*, void>)&API_WriteLine;
+                    return (delegate*<string, void>)&API_WriteLine;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
         }
 
-        //String will become char* if we use DllImport
-        public static void API_WriteLine(char* c) 
+        public static void API_WriteLine(string s) 
         {
-            int i = 0;
-            while (c[i] != 0)
-            {
-                Console.Write(c[i]);
-                i++;
-            }
-
-            Console.WriteLine();
+            Console.WriteLine(s);
         }
 
         public static void SayHello()
