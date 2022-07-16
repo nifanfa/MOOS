@@ -72,7 +72,15 @@ namespace MOOS.GUI
         {
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), Program.Wallpaper, false);
 
-            string s = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}";
+            string s = null;
+            if(DateTime.Now.Minute < 10)
+            {
+                s = $"{DateTime.Now.Hour}:0{DateTime.Now.Minute}";
+            }
+            else
+            {
+                s = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}";
+            }
             lsfont.DrawString((Framebuffer.Width / 2) - (lsfont.MeasureString(s) / 2), Framebuffer.Height / 6, s);
             s.Dispose();
 
