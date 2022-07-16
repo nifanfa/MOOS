@@ -8,62 +8,61 @@ namespace System.Collections.Generic
         {
             get
             {
-                return values[keys.IndexOf(key)];
+                return Values[Keys.IndexOf(key)];
             }
             set
             {
-                values[keys.IndexOf(key)] = value;
+                Values[Keys.IndexOf(key)] = value;
             }
         }
 
-        public int Count { get { return values.Count; } }
+        public int Count { get { return Values.Count; } }
 
         public void Remove(TKey key)
         {
-            values.Remove(values[keys.IndexOf(key)]);
-            keys.Remove(key);
+            Values.Remove(Values[Keys.IndexOf(key)]);
+            Keys.Remove(key);
         }
 
         public Dictionary()
         {
-            keys = new List<TKey>();
-            values = new List<TValue>();
+            Keys = new List<TKey>();
+            Values = new List<TValue>();
         }
 
 
         public bool ContainsKey(TKey key)
         {
-            return keys.IndexOf(key) != -1;
+            return Keys.IndexOf(key) != -1;
         }
 
         public bool ContainsValue(TValue value)
         {
-            return values.IndexOf(value) != -1;
+            return Values.IndexOf(value) != -1;
         }
 
         public void Add(TKey key, TValue value)
         {
-            keys.Add(key);
-            values.Add(value);
+            Keys.Add(key);
+            Values.Add(value);
         }
 
         public void Clear()
         {
-            keys.Clear();
-            values.Clear();
+            Keys.Clear();
+            Values.Clear();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            keys.Clear();
-            values.Clear();
-            values.Dispose();
-            keys.Dispose();
-            object obj = this;
-            Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
+            Keys.Clear();
+            Values.Clear();
+            Values.Dispose();
+            Keys.Dispose();
+            base.Dispose();
         }
 
-        List<TKey> keys;
-        List<TValue> values;
+        public List<TKey> Keys;
+        public List<TValue> Values;
     }
 }
