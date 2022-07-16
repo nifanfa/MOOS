@@ -14,6 +14,12 @@ namespace ConsoleApp1
         [DllImport("Console.WriteLine")]
         public static extern void WriteLine(string s);
 
+        [DllImport("Allocate")]
+        public static extern nint Allocate(ulong size);
+
+        [DllImport("Free")]
+        public static extern ulong Free(nint ptr);
+
         [RuntimeExport("Main")]
         public static void Main()
         {
