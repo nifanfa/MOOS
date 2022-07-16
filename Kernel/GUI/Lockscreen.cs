@@ -40,7 +40,7 @@ namespace MOOS.GUI
             while (alpha < (0xFF - alpha_add))
             {
                 Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.ADrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), ((Framebuffer.Height / 2) - ((Program.Wallpaper.Height) / 2)), i, (byte)alpha);
+                Framebuffer.Graphics.ADrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), i, alpha);
                 Framebuffer.Update();
                 alpha += alpha_add;
             }
@@ -59,10 +59,10 @@ namespace MOOS.GUI
             int y = 0;
             while (y < Program.Wallpaper.Height)
             {
-                y+=8;
+                y += 8;
 
                 Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), ((Framebuffer.Height / 2) - ((Program.Wallpaper.Height) / 2)) - y, i, false);
+                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2) - y, i, false);
                 Framebuffer.Update();
             }
             i.Dispose();
@@ -73,7 +73,7 @@ namespace MOOS.GUI
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), Program.Wallpaper, false);
 
             string s = null;
-            if(RTC.Minute < 10)
+            if (RTC.Minute < 10)
             {
                 s = $"{RTC.Hour}:0{RTC.Minute}";
             }
@@ -90,7 +90,7 @@ namespace MOOS.GUI
             string _4 = "th";
             string res = _1 + _2 + _3 + _4;
             WindowManager.font.DrawString((Framebuffer.Width / 2) - (WindowManager.font.MeasureString(res) / 2), (Framebuffer.Height / 6) + lsfont.FontSize, res);
-            
+
             _1.Dispose();
             _2.Dispose();
             _3.Dispose();
