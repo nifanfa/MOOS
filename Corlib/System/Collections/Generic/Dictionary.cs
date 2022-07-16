@@ -2,7 +2,7 @@ using Internal.Runtime.CompilerServices;
 
 namespace System.Collections.Generic
 {
-    class Dictionary<TKey, TValue>
+    public class Dictionary<TKey, TValue>
     {
         public TValue this[TKey key]
         {
