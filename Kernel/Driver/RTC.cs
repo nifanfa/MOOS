@@ -12,18 +12,6 @@ namespace MOOS
             return result;
         }
 
-        public static void Set(byte index, byte value)
-        {
-            Native.Out8(0x70, index);
-            Native.Out8(0x71, value);
-        }
-
-        private static void Delay()
-        {
-            Native.In8(0x80);
-            Native.Out8(0x80, 0);
-        }
-
         public static byte Second
         {
             get
