@@ -53,6 +53,8 @@ unsafe class Program
     [RuntimeExport("KMain")]
     static void KMain()
     {
+        Animator.Initialize();
+
 #if USBDebug
         Hub.Initialize();
         HID.Initialize();
@@ -254,9 +256,18 @@ unsafe class Program
                 );
         }
 
-        ulong lasttick = Timer.Ticks;
-        for (int i = startat + 1; i < SizedScreens.Length; i++)
+        Animation ani = new Animation()
         {
+            Value = startat + 1,
+            MinimumValue = startat + 1,
+            MaximumValue = SizedScreens.Length - 1,
+            ValueChangesInPeriod = 1,
+            PeriodInMS = 16
+        };
+        Animator.AddAnimation(ani);
+        while(ani.Value < SizedScreens.Length - 1)
+        {
+            int i = ani.Value;
             Image img = SizedScreens[i];
             Framebuffer.Graphics.Clear(0x0);
             Framebuffer.Graphics.ADrawImage(
@@ -264,9 +275,8 @@ unsafe class Program
                 (Framebuffer.Graphics.Height / 2) - (img.Height / 2),
                 img, (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
             Framebuffer.Update();
-            while (lasttick + 10 > Timer.Ticks) Native.Hlt();
-            lasttick = Timer.Ticks;
         }
+        Animator.DisposeAnimation(ani);
 
         _screen.Dispose();
         for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();

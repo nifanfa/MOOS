@@ -35,15 +35,20 @@ namespace MOOS.GUI
             DrawLockscreenUI();
             Image i = Framebuffer.Graphics.Save();
 
-            byte alpha = 0;
-            const byte alpha_add = 16;
-            while (alpha < (0xFF - alpha_add))
+            Animation a0 = new Animation()
+            {
+                MinimumValue = 0,
+                MaximumValue = 255,
+                ValueChangesInPeriod = 1
+            };
+            Animator.AddAnimation(a0);
+            while (a0.Value < a0.MaximumValue)
             {
                 Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.ADrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), i, alpha);
+                Framebuffer.Graphics.ADrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), i, (byte)a0.Value);
                 Framebuffer.Update();
-                alpha += alpha_add;
             }
+            Animator.DisposeAnimation(a0);
 
             while (Keyboard.KeyInfo.Key != System.ConsoleKey.Up && Keyboard.KeyInfo.Key != System.ConsoleKey.W)
             {
@@ -56,15 +61,21 @@ namespace MOOS.GUI
             i.Dispose();
             i = Framebuffer.Graphics.Save();
 
-            int y = 0;
-            while (y < Program.Wallpaper.Height)
+            Animation a1 = new Animation()
             {
-                y += 8;
-
+                MinimumValue = 0,
+                MaximumValue = Program.Wallpaper.Height,
+                ValueChangesInPeriod = 1
+            };
+            Animator.AddAnimation(a1);
+            while (a1.Value < Program.Wallpaper.Height)
+            {
                 Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2) - y, i, false);
+                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2) - a1.Value, i, false);
                 Framebuffer.Update();
             }
+            Animator.DisposeAnimation(a1);
+
             i.Dispose();
         }
 
