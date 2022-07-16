@@ -73,20 +73,20 @@ namespace MOOS.GUI
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), Program.Wallpaper, false);
 
             string s = null;
-            if(DateTime.Now.Minute < 10)
+            if(RTC.Minute < 10)
             {
-                s = $"{DateTime.Now.Hour}:0{DateTime.Now.Minute}";
+                s = $"{RTC.Hour}:0{RTC.Minute}";
             }
             else
             {
-                s = $"{DateTime.Now.Hour}:{DateTime.Now.Minute}";
+                s = $"{RTC.Hour}:{RTC.Minute}";
             }
             lsfont.DrawString((Framebuffer.Width / 2) - (lsfont.MeasureString(s) / 2), Framebuffer.Height / 6, s);
             s.Dispose();
 
-            string _1 = mon[Math.Clamp(DateTime.Now.Month, 0, mon.Length - 1)];
+            string _1 = mon[Math.Clamp(RTC.Month, 0, mon.Length - 1)];
             string _2 = ", ";
-            string _3 = DateTime.Now.Day.ToString();
+            string _3 = RTC.Day.ToString();
             string _4 = "th";
             string res = _1 + _2 + _3 + _4;
             WindowManager.font.DrawString((Framebuffer.Width / 2) - (WindowManager.font.MeasureString(res) / 2), (Framebuffer.Height / 6) + lsfont.FontSize, res);
