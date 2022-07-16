@@ -40,8 +40,8 @@ namespace System.Diagnostics
             delegate*<void> p = (delegate*<void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
             //TO-DO disposing
             StartupCodeHelpers.InitializeModules(moduleSeg);
-            p();
-            Allocator.Free((IntPtr)ptr);
+            new Thread(p).Start();
+            //Allocator.Free((IntPtr)ptr);
         }
 
         static void FixImageRelocations(DOSHeader* dos_header, NtHeaders64* nt_header, long delta)
