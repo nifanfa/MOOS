@@ -6,22 +6,20 @@ namespace MOOS
 
         public static byte Get(byte index)
         {
+            Wait();
+
             Native.Out8(0x70, index);
             byte result = Native.In8(0x71);
 
             return result;
         }
 
-        public static void Set(byte index, byte value)
+        public static void Wait() 
         {
-            Native.Out8(0x70, index);
-            Native.Out8(0x71, value);
-        }
-
-        private static void Delay()
-        {
-            Native.In8(0x80);
-            Native.Out8(0x80, 0);
+            do
+            {
+                Native.Out8(0x70, 10);
+            } while (Native.In8(0x71 & 0x80));
         }
 
         public static byte Second
