@@ -1120,6 +1120,7 @@ namespace System
 
         // Returns a DateTime representing the current date and time. The
         // resolution of the returned value depends on the system timer.
+        [Obsolete("This can cause breakpoint on real hardware")]
         public static DateTime Now =>
             new DateTime(
                 RTC.Century * 100 + RTC.Year,
