@@ -55,6 +55,12 @@ namespace Internal.Runtime.CompilerHelpers
             return str;
         }
 
+        public static unsafe char WideCharToAnsiChar(char managedValue, bool bestFit, bool throwOnUnmappableChar)
+        {
+            //No Ansi support, Return unicode
+            return managedValue;
+        }
+
         internal unsafe static void CoTaskMemFree(void* p)
         {
             //TO-DO
