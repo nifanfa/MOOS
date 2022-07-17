@@ -76,6 +76,9 @@ namespace MOOS.GUI
             }
             Animator.DisposeAnimation(a1);
 
+            Framebuffer.Graphics.Clear(0x0);
+            Framebuffer.Update();
+
             i.Dispose();
         }
 
