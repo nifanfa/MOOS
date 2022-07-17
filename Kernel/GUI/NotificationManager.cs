@@ -77,7 +77,7 @@ namespace MOOS.GUI
 
         public const int Threshold = 50;
 
-        public const int DisposeUntil = 2000;
+        public const int DisposeUntil = 1000;
 
         public static void Update()
         {
@@ -110,6 +110,7 @@ namespace MOOS.GUI
                     {
                         Notifications.Remove(v);
                         v.Dispose();
+                        break;
                     }
                     else
                     {
