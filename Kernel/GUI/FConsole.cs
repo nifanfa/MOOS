@@ -85,6 +85,14 @@ namespace MOOS.GUI
                             Console.WriteLine($"frequency: {Timer.CPU_Clock/1048576}mhz");
                             break;
 
+                        case "null":
+                            unsafe
+                            {
+                                uint* ptr = null;
+                                *ptr = 0xDEADBEEF;
+                            }
+                            break;
+
                         case "reboot":
                             Power.Reboot();
                             break;
