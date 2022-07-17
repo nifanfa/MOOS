@@ -1,6 +1,7 @@
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
+using System;
 using System.Diagnostics;
 using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
@@ -15,8 +16,8 @@ namespace MOOS
             {
                 case "SayHello":
                     return (delegate*<void>)&SayHello;
-                case "Console.WriteLine":
-                    return (delegate*<string, void>)&API_WriteLine;
+                case "WriteLine":
+                    return (delegate*<void>)&API_WriteLine;
                 case "Allocate":
                     return (delegate*<ulong, nint>)&API_Allocate;
                 case "Free":
@@ -27,9 +28,18 @@ namespace MOOS
                     return (delegate*<ulong>)&API_GetTick;
                 case "ReadAllBytes":
                     return (delegate*<string, ulong*, byte**, void>)&API_ReadAllBytes;
+                case "Write":
+                    return (delegate*<char, void>)&API_Write;
+                case "SwitchToConsoleMode":
+                    return (delegate*<void>)&API_SwitchToConsoleMode;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        public static void API_SwitchToConsoleMode() 
+        {
+            Framebuffer.TripleBuffered = false;
         }
 
         public static void API_ReadAllBytes(string name,ulong* length,byte** data) 
@@ -53,9 +63,14 @@ namespace MOOS
             return Timer.Ticks;
         }
 
-        public static void API_WriteLine(string s) 
+        public static void API_Write(char c) 
         {
-            Console.WriteLine(s);
+            Console.Write(c);
+        }
+
+        public static void API_WriteLine() 
+        {
+            Console.WriteLine();
         }
 
         public static nint API_Allocate(ulong size)
