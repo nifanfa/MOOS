@@ -38,6 +38,9 @@ namespace ConsoleApp1
         [DllImport("SwitchToConsoleMode")]
         public static extern void SwitchToConsoleMode();
 
+        [DllImport("DrawPoint")]
+        public static extern void DrawPoint(int x, int y, uint color);
+
         [RuntimeExport("Main")]
         public static void Main()
         {
