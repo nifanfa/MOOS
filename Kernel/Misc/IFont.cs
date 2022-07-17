@@ -10,13 +10,9 @@ namespace MOOS.Misc
         private readonly Image image;
         private readonly string charset;
 
-        public int Width => image.Width;
-
-        public int Height => image.Height;
-
         public int FontSize;
 
-        public int NumRow => Width / FontSize;
+        public int NumRow => image.Width / FontSize;
 
         public IFont(Image _img, string _charset,int size)
         {
