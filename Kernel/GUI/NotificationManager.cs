@@ -20,16 +20,24 @@ namespace MOOS.GUI
         public int SWidth;
         public int SHeight;
 
-        public int Remain;
+        public ulong DisposeUntil;
+        public Animation ani;
 
         public Nofity(string msg,NotificationLevel level = NotificationLevel.None)
         {
-            Remain = 0;
+            DisposeUntil = 0;
             Message = msg;
             X = 0; Y = 0;
             SWidth = WindowManager.font.MeasureString(msg);
             SHeight = WindowManager.font.FontSize;
             NotificationLevel = level;
+
+            ani = new Animation()
+            {
+                MaximumValue = NotificationManager.Threshold + SWidth,
+                Stopped = true,
+            };
+            Animator.AddAnimation(ani);
         }
 
         public override void Dispose()
@@ -46,8 +54,6 @@ namespace MOOS.GUI
         public static unsafe void Initialize()
         {
             Notifications = new();
-
-            Interrupts.EnableInterrupt(0x20, &OnInterrupt);
 
 #if Chinese
             Add(new Nofity("欢迎使用MOOS"));
@@ -71,10 +77,47 @@ namespace MOOS.GUI
 
         public const int Threshold = 50;
 
-        public const int DisposeAfter = 2000;
+        public const int DisposeUntil = 2000;
 
         public static void Update()
         {
+            for (int i = 0; i < Notifications.Count; i++)
+            {
+                var v = Notifications[i];
+                if (v.X < (Threshold + v.SWidth))
+                {
+                    v.ani.Stopped = false;
+                    v.X = v.ani.Value;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < Notifications.Count; i++)
+            {
+                var v = Notifications[i];
+
+                if (v.X < (Threshold + v.SWidth))
+                {
+                    break;
+                }
+                else
+                {
+                    if (v.DisposeUntil == 0)
+                    {
+                        v.DisposeUntil = Timer.Ticks + DisposeUntil;
+                    }
+                    if (Timer.Ticks > v.DisposeUntil)
+                    {
+                        Notifications.Remove(v);
+                        v.Dispose();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
             int y = Devide * 2;
             for (int i = 0; i < Notifications.Count; i++)
             {
@@ -87,58 +130,6 @@ namespace MOOS.GUI
 
                 y += v.SHeight + Devide;
                 y += Devide;
-            }
-        }
-
-        public static void OnInterrupt()
-        {
-            int num = 0;
-
-            for (int i = 0; i < Notifications.Count; i++)
-            {
-                var v = Notifications[i];
-
-                if (v.X < (Threshold + v.SWidth))
-                {
-                    num++;
-                }
-            }
-
-            if((Timer.Ticks % 2) == 0)
-            for (int i = 0; i < Notifications.Count; i++)
-            {
-                var v = Notifications[i];
-                if (v.X < (Threshold + v.SWidth))
-                {
-                    v.X ++;
-                    break;
-                }
-            }
-
-            if (num == 0)
-            {
-                for (int i = 0; i < Notifications.Count; i++)
-                {
-                    var v = Notifications[i];
-
-                    if (v.X < (Threshold + v.SWidth))
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        v.Remain++;
-                        if (v.Remain > DisposeAfter)
-                        {
-                            Notifications.Remove(v);
-                            v.Dispose();
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
             }
         }
     }
