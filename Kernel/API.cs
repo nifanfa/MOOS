@@ -1,4 +1,5 @@
 using MOOS.Driver;
+using MOOS.FS;
 using MOOS.Misc;
 using System.Diagnostics;
 using static IDT;
@@ -24,9 +25,22 @@ namespace MOOS
                     return (delegate*<ulong, void>)&API_Sleep;
                 case "GetTick":
                     return (delegate*<ulong>)&API_GetTick;
+                case "ReadAllBytes":
+                    return (delegate*<string, ulong*, byte**, void>)&API_ReadAllBytes;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        public static void API_ReadAllBytes(string name,ulong* length,byte** data) 
+        {
+            byte[] buffer = File.Instance.ReadAllBytes(name);
+
+            *data = (byte*)Allocator.Allocate((ulong)buffer.Length);
+            *length = (ulong)buffer.Length;
+            fixed (byte* p = buffer) Native.Movsb(*data, p, *length);
+
+            buffer.Dispose();
         }
 
         public static void API_Sleep(ulong ms) 

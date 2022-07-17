@@ -26,6 +26,9 @@ namespace ConsoleApp1
         [DllImport("Sleep")]
         public static extern void Sleep(ulong ms);
 
+        [DllImport("ReadAllBytes")]
+        public static extern void ReadAllBytes(string name, out ulong size, out byte* data);
+
         [RuntimeExport("Main")]
         public static void Main()
         {
