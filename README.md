@@ -1,4 +1,4 @@
-[Discord server](https://discord.gg/uJstXbx8Pt)  
+![Discord Shield](https://discordapp.com/api/guilds/987075686256762890/widget.png?style=shield)  
 
 *See screenshot below...*
 
