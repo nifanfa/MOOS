@@ -1,7 +1,9 @@
 using MOOS;
+using System;
 
 namespace MOOS.Driver
 {
+    [Obsolete("This driver does not support unbuffered mode")]
     public unsafe class VMWareSVGAII
     {
         public enum Register : ushort

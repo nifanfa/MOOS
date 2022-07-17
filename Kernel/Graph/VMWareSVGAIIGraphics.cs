@@ -1,9 +1,11 @@
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
+using System;
 
 namespace MOOS.Graph
 {
+    [Obsolete("This graphics does not support unbuffered mode",true)]
     internal unsafe class VMWareSVGAIIGraphics : Graphics
     {
         VMWareSVGAII svga;
