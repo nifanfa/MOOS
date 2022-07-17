@@ -43,6 +43,7 @@ namespace MOOS.GUI
         public override void Dispose()
         {
             Message.Dispose();
+            Animator.DisposeAnimation(ani);
             base.Dispose();
         }
     }
