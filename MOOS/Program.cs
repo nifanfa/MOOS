@@ -183,7 +183,7 @@ unsafe class Program
         //Make sure this IP is pointing your gateway
         TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 137, 1), 80);
         client.OnData += Client_OnData;
-        client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.1.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
+        client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
         for (; ; ) Native.Hlt();
 #endif
 
