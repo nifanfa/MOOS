@@ -34,9 +34,19 @@ namespace MOOS
                     return (delegate*<char, void>)&API_Write;
                 case "SwitchToConsoleMode":
                     return (delegate*<void>)&API_SwitchToConsoleMode;
+                case "DrawPoint":
+                    return (delegate*<int, int, uint, void>)&API_DrawPoint;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        public static void API_DrawPoint(int x, int y, uint color)
+        {
+            if (!Framebuffer.TripleBuffered) 
+            {
+                Framebuffer.Graphics.DrawPoint(x, y, color);
+            }
         }
 
         public static void API_SwitchToConsoleMode() 
