@@ -76,28 +76,16 @@ public static class IDT
         InterruptReturnStack* irs;
         switch (code) 
         {
-            case 0x00:
-            case 0x01:
-            case 0x02:
-            case 0x03:
-            case 0x04:
-            case 0x05:
-            case 0x06:
-            case 0x07:
-            case 0x09:
-            case 0x0F:
-            case 0x10:
-            case 0x12:
-            case 0x13:
-            case 0x14:
-            case 0x16:
-            case 0x17:
-            case 0x18:
-            case 0x19:
-            case 0x1A:
-            case 0x1B:
-            case 0x1C:
-            case 0x1F:
+            case 8:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            case 17:
+            case 21:
+            case 29:
+            case 30:
                 irs = (InterruptReturnStack*)(((byte*)stack) + sizeof(RegistersStack));
                 break;
 
