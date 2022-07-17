@@ -11,8 +11,8 @@ namespace ConsoleApp1
         //Check out
         //Kernel.API
         //Internal.Runtime.CompilerHelpers.InteropHelpers
-        [DllImport("Console.WriteLine")]
-        public static extern void WriteLine(string s);
+        [DllImport("WriteLine")]
+        public static extern void WriteLine();
 
         [DllImport("Allocate")]
         public static extern nint Allocate(ulong size);
@@ -29,10 +29,46 @@ namespace ConsoleApp1
         [DllImport("ReadAllBytes")]
         public static extern void ReadAllBytes(string name, out ulong size, out byte* data);
 
+        [DllImport("Write")]
+        public static extern void Write(char c);
+
+        [DllImport("SwitchToConsoleMode")]
+        public static extern void SwitchToConsoleMode();
+
         [RuntimeExport("Main")]
         public static void Main()
         {
-            WriteLine("Hello From ConsoleApp1.exe");
+            SwitchToConsoleMode();
+
+            Write('C');
+            Write('o');
+            Write('n');
+            Write('t');
+            Write('e');
+            Write('n');
+            Write('t');
+            Write(' ');
+            Write('o');
+            Write('f');
+            Write(' ');
+            Write('T');
+            Write('e');
+            Write('x');
+            Write('t');
+            Write('.');
+            Write('t');
+            Write('x');
+            Write('t');
+            Write(':');
+
+            ReadAllBytes("Text.txt", out var size, out var data);
+            for(ulong i = 0; i < size; i++) 
+            {
+                Write((char)data[i]);
+            }
+            WriteLine();
+
+            for (; ; );
         }
     }
 }
