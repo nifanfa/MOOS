@@ -1,7 +1,4 @@
-**LEON ROBI**  
- 
-**Please join our new server!**  
-https://discord.gg/uJstXbx8Pt  
+[Discord server](https://discord.gg/uJstXbx8Pt)  
 
 *See screenshot below...*
 
