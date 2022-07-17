@@ -20,6 +20,12 @@ namespace ConsoleApp1
         [DllImport("Free")]
         public static extern ulong Free(nint ptr);
 
+        [DllImport("GetTick")]
+        public static extern uint GetTick();
+
+        [DllImport("Sleep")]
+        public static extern void Sleep(ulong ms);
+
         [RuntimeExport("Main")]
         public static void Main()
         {
