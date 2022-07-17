@@ -218,8 +218,11 @@ unsafe class Program
 
         Framebuffer.TripleBuffered = true;
 
+        /*
+        //This driver doesn't support drawing without update
         if(PCI.GetDevice(0x15AD, 0x0405) != null)
             Framebuffer.Graphics = new VMWareSVGAIIGraphics();
+        */
 
         Image wall = Wallpaper;
         Wallpaper = wall.ResizeImage(Framebuffer.Width, Framebuffer.Height);
