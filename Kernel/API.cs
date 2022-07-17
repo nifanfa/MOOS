@@ -20,6 +20,8 @@ namespace MOOS
                     return (delegate*<void>)&API_WriteLine;
                 case "Allocate":
                     return (delegate*<ulong, nint>)&API_Allocate;
+                case "Reallocate":
+                    return (delegate*<nint, ulong, nint>)&API_Reallocate;
                 case "Free":
                     return (delegate*<nint, ulong>)&API_Free;
                 case "Sleep":
@@ -83,6 +85,11 @@ namespace MOOS
         {
             //Debug.WriteLine($"API_Free 0x{((ulong)ptr).ToString("x2")}");
             return Allocator.Free(ptr);
+        }
+
+        public static nint API_Reallocate(nint intPtr, ulong size) 
+        {
+            return Allocator.Reallocate(intPtr, size);
         }
 
         public static void SayHello()

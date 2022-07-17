@@ -20,6 +20,9 @@ namespace ConsoleApp1
         [DllImport("Free")]
         public static extern ulong Free(nint ptr);
 
+        [DllImport("Reallocate")]
+        public static extern nint Reallocate(nint intPtr, ulong size);
+
         [DllImport("GetTick")]
         public static extern uint GetTick();
 
