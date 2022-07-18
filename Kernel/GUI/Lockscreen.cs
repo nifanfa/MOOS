@@ -105,7 +105,7 @@ namespace MOOS.GUI
             string res = _1 + _2 + _3 + _4;
             WindowManager.font.DrawString((Framebuffer.Width / 2) - (WindowManager.font.MeasureString(res) / 2), (Framebuffer.Height / 6) + lsfont.FontSize, res);
 
-            _1.Dispose();
+            //_1.Dispose();
             _2.Dispose();
             _3.Dispose();
             _4.Dispose();
