@@ -70,6 +70,9 @@ namespace System.Collections.Generic
         {
             for(int i = 0; i < Count;i++)
             {
+                T first =  this[i];
+                T second = item;
+
                 if (this[i] == item)
                     return i;
             }
