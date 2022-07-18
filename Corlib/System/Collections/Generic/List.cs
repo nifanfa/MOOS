@@ -70,10 +70,7 @@ namespace System.Collections.Generic
         {
             for(int i = 0; i < Count;i++)
             {
-                object first =  this[i];
-                object second = item;
-
-                if (first == second)
+                if (this[i] == item)
                     return i;
             }
 
