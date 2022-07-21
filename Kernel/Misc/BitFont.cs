@@ -39,7 +39,7 @@ namespace MOOS.Misc
         private const int FontAlpha = 96;
         private static bool AtEdge = false;
 
-        private static int DrawChar(byte[] Raw, int Size, int Size8, uint Color, int Index, int X, int Y, bool Calculate = false, bool AntiAliasing = true)
+        private static int DrawChar(byte[] Raw, int Size, int Size8, uint Color, int Index, int X, int Y, bool Calculate = false)
         {
             if (Index < 0)
             {
@@ -67,12 +67,7 @@ namespace MOOS.Misc
                             {
                                 Framebuffer.Graphics.DrawPoint(x, y, Color);
 
-                                if (AntiAliasing && AtEdge)
-                                {
-                                    int tx = X + (aw * 8) + ww - 1;
-                                    int ty = Y + h;
-                                    Framebuffer.Graphics.DrawPoint(tx, ty, (Color & ~0xFF000000) | ((uint)FontAlpha << 24), true);
-                                }
+                                //AA
 
                                 AtEdge = false;
                             }
@@ -124,7 +119,7 @@ namespace MOOS.Misc
             return UsedX;
         }
 
-        public static int DrawString(string FontName, uint color, string Text, int X, int Y, int LineWidth = -1, bool AntiAlising = true, int Divide = 0)
+        public static int DrawString(string FontName, uint color, string Text, int X, int Y, int LineWidth = -1, int Divide = 0)
         {
             BitFontDescriptor bitFontDescriptor = GetBitFontDescriptor(FontName);
 
@@ -142,7 +137,7 @@ namespace MOOS.Misc
                     UsedX = 0;
                     continue;
                 }
-                UsedX += BitFont.DrawChar(bitFontDescriptor.Raw, Size, Size8, color, bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y + bitFontDescriptor.Size * Line, false, AntiAlising) + 2 + Divide;
+                UsedX += BitFont.DrawChar(bitFontDescriptor.Raw, Size, Size8, color, bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y + bitFontDescriptor.Size * Line, false) + 2 + Divide;
             }
 
             return UsedX;
