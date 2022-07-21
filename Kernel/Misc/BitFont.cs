@@ -69,9 +69,25 @@ namespace MOOS.Misc
 
                                 if (AntiAliasing && AtEdge)
                                 {
+                                    /*
                                     int tx = X + (aw * 8) + ww - 1;
                                     int ty = Y + h;
-                                    Framebuffer.Graphics.DrawPoint(tx, ty, (Color & ~0xFF000000) | ((uint)FontAlpha << 24), true);
+                                    Color ac = System.Drawing.Color.FromArgb(Framebuffer.Graphics.GetPoint(tx, ty));
+                                    ac.R = (byte)((((((byte)((Color >> 16) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ac.R)) >> 8) & 0xFF);
+                                    ac.G = (byte)((((((byte)((Color >> 8) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ac.G)) >> 8) & 0xFF);
+                                    ac.B = (byte)((((((byte)((Color) & 0xFF)) * FontAlpha) + ((255 - FontAlpha) * ac.B)) >> 8) & 0xFF);
+                                    Framebuffer.Graphics.DrawPoint(tx, ty, ac.ToArgb());
+                                    ac.Dispose();
+                                    */
+                                    int threshhold = 2;
+                                    int maxalpha = 150;
+
+                                    for (int ax = -threshhold; ax <= threshhold; ax++)
+                                    {
+                                        if (ax == 0) continue;
+                                        int alpha = Math.Abs(((-maxalpha) * ax * ax / (threshhold * threshhold)) + maxalpha);
+                                        Framebuffer.Graphics.DrawPoint(x + ax, y, (Color & ~0xFF000000) | ((uint)alpha << 24), true);
+                                    }
                                 }
 
                                 AtEdge = false;
