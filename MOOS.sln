@@ -19,9 +19,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Doom", "Doom\Doom.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibC", "LibC\LibC.vcxproj", "{19D564FF-D5CE-4566-9EF6-088112A4F08F}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Forms", "Forms\Forms.shproj", "{6725838B-AFAC-415D-A3F2-70FA977B699B}"
-EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Kernel\Kernel.projitems*{066034bc-37fe-4605-8bdb-c525ec29dbe4}*SharedItemsImports = 13
+		Corlib\Corlib.projitems*{2ea1f38f-f26e-4148-8ffd-38713478e015}*SharedItemsImports = 13
+		Corlib\Corlib.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
+		Kernel\Kernel.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
+		Corlib\Corlib.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
+		Kernel\Kernel.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
+		Corlib\Corlib.projitems*{4937d3a9-2f20-43ba-a794-89067f060502}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -109,16 +116,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {520E811A-5371-4234-B39B-9189715E441D}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Kernel\Kernel.projitems*{066034bc-37fe-4605-8bdb-c525ec29dbe4}*SharedItemsImports = 13
-		Corlib\Corlib.projitems*{2ea1f38f-f26e-4148-8ffd-38713478e015}*SharedItemsImports = 13
-		Corlib\Corlib.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
-		Forms\Forms.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
-		Kernel\Kernel.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
-		Corlib\Corlib.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
-		Kernel\Kernel.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
-		Corlib\Corlib.projitems*{4937d3a9-2f20-43ba-a794-89067f060502}*SharedItemsImports = 5
-		Forms\Forms.projitems*{6725838b-afac-415d-a3f2-70fa977b699b}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
