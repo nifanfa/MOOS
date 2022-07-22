@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6725838b-afac-415d-a3f2-70fa977b699b</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>
+    </Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)System\ComponentModel\Container.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ComponentModel\IContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\AutoScaleMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\Control.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\Form.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MessageBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MouseButtons.cs" />
+  </ItemGroup>
+</Project>
