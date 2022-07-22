@@ -47,6 +47,11 @@ namespace System
 #endif
         }
 
+        protected virtual void Dispose(bool disposing) 
+        {
+            this.Dispose();
+        }
+
         public static implicit operator bool(object obj)=> obj != null;
     }
 }
