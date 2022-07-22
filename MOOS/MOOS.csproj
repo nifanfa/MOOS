@@ -2,11 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		
-		<!--To make it can use Windows form designer-->
-		<UseWindowsForms>true</UseWindowsForms>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		
+		<TargetFramework>net6.0</TargetFramework>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 
@@ -48,8 +44,6 @@
 	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
 
 	<Import Project="..\Kernel\Kernel.projitems" Label="Shared" />
-
-	<Import Project="..\Forms\Forms.projitems" Label="Shared" />
 
 	<Target Name="BuildISO" AfterTargets="Publish">
 		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\Trampoline.asm&quot; -o &quot;$(MSBuildStartupDirectory)\Tools\Trampoline&quot;"></Exec>
