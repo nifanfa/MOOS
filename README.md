@@ -38,7 +38,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | DOOM(doomgeneric) | ✅ | ✅ |
 | Intel® Gigabit Ethernet Network | ✅ | ✅ |
 | Realtek RTL8139 | ✅ | ❓ |
-| ExFAT | ✅ | ✅ | FAT32/16/12 is no supported! |
+| ExFAT | ✅ | ✅ | Unfortunately FAT32/16/12 isn't supported! |
 | I/O APIC | ✅ | ✅ |
 | Local APIC | ✅ | ✅ |
 | SATA | ✅ | ❓ |
@@ -47,7 +47,7 @@ C# operating system demo, using Native AOT (Core RT) boot via multiboot
 | ACPI | ✅ | ✅ |
 | IPv4 | ✅ | ✅ |
 | IPv6 | ❌ | ❌ |
-| TCP(WIP) | ⚠️ | ❓ | Can't receive large package |
+| TCP(WIP) | ⚠️ | ❓ | Network can't receive large packages  |
 | UDP | ✅ | ❓ |
 | Lan | ✅ | ✅ |
 | Wan | ✅ | ✅ 
