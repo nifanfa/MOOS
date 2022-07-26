@@ -1,8 +1,6 @@
 ![Discord Shield](https://discordapp.com/api/guilds/987075686256762890/widget.png?style=shield)  
 https://discord.gg/uJstXbx8Pt  
 
-*See screenshot below...*
-
 **Build**  
 For more information on compiling MOOS please read the build wiki page: https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS%3F
 

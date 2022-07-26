@@ -1,28 +1,28 @@
 ﻿{
   "profiles": {
-    "QEMU(click this dropdown menu for more build options)": {
+    "QEMU Normal": {
       "commandName": "Executable",
       "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug MOOS",
+      "commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug MOOS --self-contained",
       "workingDirectory": "..\\"
     },
     "QEMU with USB": {
-      "commandName": "Executable",
-      "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -p:vm=qemuusb -r win-x64 -c debug MOOS",
-      "workingDirectory": "..\\"
+        "commandName": "Executable",
+        "executablePath": "cmd.exe",
+        "commandLineArgs": "/c dotnet publish -p:vm=qemuusb -r win-x64 -c debug MOOS --self-contained",
+        "workingDirectory": "..\\"
     },
-    "QEMU with network(make sure windows TAP is installed)": {
-      "commandName": "Executable",
-      "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -p:vm=qemutap -r win-x64 -c debug MOOS",
-      "workingDirectory": "..\\"
+    "QEMU with network": {
+        "commandName": "Executable",
+        "executablePath": "cmd.exe",
+        "commandLineArgs": "/c dotnet publish -p:vm=qemutap -r win-x64 -c debug MOOS --self-contained",
+        "workingDirectory": "..\\"
     },
     "VMware": {
-      "commandName": "Executable",
-      "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -p:vm=vmware -r win-x64 -c debug MOOS",
-      "workingDirectory": "..\\"
+        "commandName": "Executable",
+        "executablePath": "cmd.exe",
+        "commandLineArgs": "/c dotnet publish -p:vm=vmware -r win-x64 -c debug MOOS --self-contained",
+        "workingDirectory": "..\\"
     }
   }
 }

@@ -30,7 +30,6 @@
     <ClCompile Include="lodepng.c" />
     <ClCompile Include="mem.cpp" />
     <ClCompile Include="native.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm" />
