@@ -3,6 +3,7 @@ using MOOS.FS;
 using MOOS.Misc;
 using System;
 using System.Diagnostics;
+using System.Runtime;
 using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
 
@@ -18,6 +19,8 @@ namespace MOOS
                     return (delegate*<void>)&SayHello;
                 case "WriteLine":
                     return (delegate*<void>)&API_WriteLine;
+                case "DebugWriteLine":
+                    return (delegate*<void>)&API_DebugWriteLine;
                 case "Allocate":
                     return (delegate*<ulong, nint>)&API_Allocate;
                 case "Reallocate":
@@ -32,13 +35,58 @@ namespace MOOS
                     return (delegate*<string, ulong*, byte**, void>)&API_ReadAllBytes;
                 case "Write":
                     return (delegate*<char, void>)&API_Write;
+                case "DebugWrite":
+                    return (delegate*<char, void>)&API_DebugWrite;
                 case "SwitchToConsoleMode":
                     return (delegate*<void>)&API_SwitchToConsoleMode;
                 case "DrawPoint":
                     return (delegate*<int, int, uint, void>)&API_DrawPoint;
+                case "Lock":
+                    return (delegate*<void>)&API_Lock;
+                case "Unlock":
+                    return (delegate*<void>)&API_Unlock;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        [RuntimeExport("DebugWrite")]
+        public static void API_DebugWrite(char c)
+        {
+            Serial.Write(c);
+        }
+
+        [RuntimeExport("DebugWriteLine")]
+        public static void API_DebugWriteLine()
+        {
+            Serial.WriteLine();
+        }
+
+        [RuntimeExport("Lock")]
+        public static void API_Lock() 
+        {
+            if (ThreadPool.CanLock)
+            {
+                if (!ThreadPool.Locked)
+                {
+                    ThreadPool.Lock();
+                }
+            }
+        }
+
+        [RuntimeExport("Unlock")]
+        public static void API_Unlock()
+        {
+            if (ThreadPool.CanLock)
+            {
+                if (ThreadPool.Locked)
+                {
+                    if (ThreadPool.Locker == SMP.ThisCPU)
+                    {
+                        ThreadPool.UnLock();
+                    }
+                }
+            }
         }
 
         public static void API_DrawPoint(int x, int y, uint color)

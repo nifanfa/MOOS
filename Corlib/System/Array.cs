@@ -1,8 +1,5 @@
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
-#if Kernel
-using MOOS;
-#endif
 using System.Runtime.CompilerServices;
 
 namespace System
@@ -26,7 +23,6 @@ namespace System
 
         public const int MaxArrayLength = 0x7FEFFFFF;
 
-#if Kernel
         internal static unsafe Array NewMultiDimArray(EETypePtr eeType, int* pLengths, int rank)
         {
             ulong totalLength = 1;
@@ -51,7 +47,6 @@ namespace System
 
             return ret;
         }
-#endif
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ref int GetRawMultiDimArrayBounds()

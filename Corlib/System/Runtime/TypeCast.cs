@@ -1,8 +1,5 @@
 using Internal.Runtime;
 using Internal.Runtime.CompilerHelpers;
-#if Kernel
-using MOOS;
-#endif
 using static Internal.Runtime.EEType;
 
 namespace System.Runtime

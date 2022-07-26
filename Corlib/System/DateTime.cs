@@ -1,8 +1,6 @@
-#if Kernel
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using MOOS;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -1120,7 +1118,8 @@ namespace System
 
         // Returns a DateTime representing the current date and time. The
         // resolution of the returned value depends on the system timer.
-        [Obsolete("This can cause breakpoint on real hardware")] 
+        [Obsolete("This can cause breakpoint on real hardware")]
+        /*
         public static DateTime Now =>
             new DateTime(
                 RTC.Century * 100 + RTC.Year,
@@ -1129,6 +1128,15 @@ namespace System
                 RTC.Hour,
                 RTC.Minute,
                 RTC.Second);
+        */
+        public static DateTime Now =>
+            new DateTime(
+                0,
+                0,
+                0,
+                0,
+                0,
+                0);
 
         // Returns the second part of this DateTime. The returned value is
         // an integer between 0 and 59.
@@ -1694,4 +1702,3 @@ namespace System
         */
     }
 }
-#endif

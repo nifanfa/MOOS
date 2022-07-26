@@ -1,6 +1,6 @@
 namespace System
 {
-    static class BitHelpers
+    public static class BitHelpers
     {
         public static bool IsBitSet(sbyte val, int pos) => (((byte)val) & (1U << pos)) != 0;
         public static bool IsBitSet(byte val, int pos) => (val & (1U << pos)) != 0;

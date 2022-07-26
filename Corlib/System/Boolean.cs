@@ -1,7 +1,3 @@
-﻿#if Kernel
-using MOOS;
-#endif
-
 namespace System
 {
     // The layout of primitive types is special cased because it would be recursive.

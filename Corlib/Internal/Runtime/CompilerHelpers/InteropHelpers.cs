@@ -1,17 +1,12 @@
-#if Kernel
-using MOOS;
-using MOOS.Misc;
-#endif
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
-    internal static class InteropHelpers
+    public static class InteropHelpers
     {
         [StructLayout(LayoutKind.Sequential)]
-        internal unsafe struct MethodFixupCell
+        public unsafe struct MethodFixupCell
         {
             public IntPtr Target;
             public IntPtr MethodName;
@@ -20,7 +15,7 @@ namespace Internal.Runtime.CompilerHelpers
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal unsafe struct ModuleFixupCell
+        public unsafe struct ModuleFixupCell
         {
             public IntPtr Handle;
             public IntPtr ModuleName;
@@ -28,28 +23,14 @@ namespace Internal.Runtime.CompilerHelpers
             public uint DllImportSearchPathAndCookie;
         }
 
-        internal static unsafe IntPtr ResolvePInvoke(MethodFixupCell* pCell)
+        public static unsafe IntPtr ResolvePInvoke(MethodFixupCell* pCell)
         {
-#if Kernel
-            Console.Write("Method Name: ");
-            Console.WriteLine(string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName)));
-            //Return the pointer of method
-            return (IntPtr)(delegate*<void>)&Hello;
-#else
             uint int0x80 = 0xC380CD;
             uint* ptr = &int0x80;
             return ((delegate*<MethodFixupCell*, IntPtr>)ptr)(pCell);
-#endif
         }
 
-#if Kernel
-        internal static void Hello() 
-        {
-            Panic.Error("Not implemented, check out Internal.Runtime.CompilerHelpers.InteropHelpers");
-        }
-#endif
-
-        internal static unsafe string StringToAnsiString(string str, bool bestFit, bool throwOnUnmappableChar) 
+        public static unsafe string StringToAnsiString(string str, bool bestFit, bool throwOnUnmappableChar) 
         {
             //No Ansi support, Return unicode
             return str;
@@ -61,7 +42,7 @@ namespace Internal.Runtime.CompilerHelpers
             return managedValue;
         }
 
-        internal unsafe static void CoTaskMemFree(void* p)
+        public unsafe static void CoTaskMemFree(void* p)
         {
             //TO-DO
         }

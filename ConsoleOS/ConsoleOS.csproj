@@ -6,6 +6,12 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 
+		<!--CustomizeReferences-->
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
+		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+
 		<Optimize>true</Optimize>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
@@ -33,16 +39,9 @@
 		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
-	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
-		<ItemGroup>
-			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
-			<ReferencePath Remove="@(ReferencePath)" />
-		</ItemGroup>
-	</Target>
+	<Import Project="..\Kernel\Kernel.projitems" Label="Shared" />
 
 	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
-
-	<Import Project="..\Kernel\Kernel.projitems" Label="Shared" />
 
 	<Target Name="BuildISO" AfterTargets="Publish">
 		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\Trampoline.asm&quot; -o &quot;$(MSBuildStartupDirectory)\Tools\Trampoline&quot;"></Exec>

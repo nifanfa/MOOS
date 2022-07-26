@@ -1,7 +1,7 @@
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
 using System.Runtime.CompilerServices;
-
+using System.Runtime.InteropServices;
 
 namespace System
 {
@@ -20,7 +20,7 @@ namespace System
         {
             [Intrinsic]
             get { return _length; }
-            internal set { _length = value; }
+            set { _length = value; }
         }
 
         public unsafe char this[int index]
@@ -81,7 +81,6 @@ namespace System
             return s;
         }
 
-#if Kernel
         static unsafe string Ctor(char* ptr)
         {
             var i = 0;
@@ -90,22 +89,16 @@ namespace System
 
             return Ctor(ptr, 0, i - 1);
         }
-#endif
 
-#if Kernel
         static unsafe string Ctor(IntPtr ptr)
             => Ctor((char*)ptr);
-#endif
 
-#if Kernel
         static unsafe string Ctor(char[] buf)
         {
             fixed (char* _buf = buf)
                 return Ctor(_buf, 0, buf.Length);
         }
-#endif
 
-#if Kernel
         static unsafe string Ctor(char* ptr, int index, int length)
         {
             var et = EETypePtr.EETypePtrOf<string>();
@@ -116,21 +109,21 @@ namespace System
 
             fixed (char* c = &s._firstChar)
             {
-                Allocator.MemoryCopy((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
+                memcpy((byte*)c, (byte*)start, (ulong)length * sizeof(char));
                 c[length] = '\0';
             }
 
             return s;
         }
-#endif
 
-#if Kernel
+        [DllImport("*")]
+        static unsafe extern void memcpy(byte* dest, byte* src, ulong count);
+
         static unsafe string Ctor(char[] ptr, int index, int length)
         {
             fixed (char* _ptr = ptr)
                 return Ctor(_ptr, index, length);
         }
-#endif
 
         public override string ToString()
         {
@@ -188,7 +181,7 @@ namespace System
             return new string(ptr, 0, Length);
         }
 
-        internal int IndexOf(char j)
+        public int IndexOf(char j)
         {
             for (int i = 0; i < this.Length; i++) if (this[i] == j) return i;
             return -1;
@@ -225,7 +218,6 @@ namespace System
             return s;
         }
 
-#if Kernel
         public static string Format(string format, params object[] args) 
         {
             lock (format)
@@ -254,6 +246,5 @@ namespace System
                 return res;
             }
         }
-#endif
     }
 }

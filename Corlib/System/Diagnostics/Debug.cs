@@ -1,5 +1,5 @@
-#if Kernel
-using MOOS;
+
+using System.Runtime.InteropServices;
 
 namespace System.Diagnostics
 {
@@ -7,25 +7,37 @@ namespace System.Diagnostics
     {
         public static void WriteLine(string s) 
         {
-            Serial.WriteLine(s);
+            for(int i = 0; i < s.Length; i++) 
+            {
+                DebugWrite(s[i]);
+            }
+            DebugWriteLine();
             s.Dispose();
         }
 
         public static void WriteLine()
         {
-            Serial.WriteLine();
+            DebugWriteLine();
         }
 
         public static void Write(char c)
         {
-            Serial.Write(c);
+            DebugWrite(c);
         }
 
         public static void Write(string s)
         {
-            Serial.Write(s);
+            for (int i = 0; i < s.Length; i++)
+            {
+                DebugWrite(s[i]);
+            }
             s.Dispose();
         }
+
+        [DllImport("*")]
+        static extern void DebugWrite(char c);
+
+        [DllImport("*")]
+        static extern void DebugWriteLine();
     }
 }
-#endif

@@ -41,12 +41,13 @@ namespace System
 
         public virtual void Dispose()
         {
-#if Kernel
             var obj = this;
-            Allocator.Free(Unsafe.As<object, IntPtr>(ref obj));
-#endif
+            free(Unsafe.As<object, IntPtr>(ref obj));
         }
 
         public static implicit operator bool(object obj)=> obj != null;
+
+        [DllImport("*")]
+        static extern ulong free(nint ptr);
     }
 }

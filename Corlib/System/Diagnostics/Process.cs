@@ -1,7 +1,6 @@
-#if Kernel
 using Internal.Runtime.CompilerHelpers;
-using MOOS;
-using MOOS.Misc;
+using System.Reflection.PortableExecutable;
+using System.Runtime.InteropServices;
 
 namespace System.Diagnostics
 {
@@ -14,14 +13,20 @@ namespace System.Diagnostics
                 DOSHeader* doshdr = (DOSHeader*)ptr;
                 NtHeaders64* nthdr = (NtHeaders64*)(ptr + doshdr->e_lfanew);
 
-                if (!nthdr->OptionalHeader.BaseRelocationTable.VirtualAddress) Panic.Error("[Process.Start] Invalid Base Relocation Table");
-                if (nthdr->OptionalHeader.ImageBase != 0x140000000) Panic.Error("[Process.Start] Invalid Base Address");
+                if (!nthdr->OptionalHeader.BaseRelocationTable.VirtualAddress) return;
+                if (nthdr->OptionalHeader.ImageBase != 0x140000000) return;
 
-                byte* newPtr = (byte*)Allocator.Allocate(nthdr->OptionalHeader.SizeOfImage + 0x1000);
-                Native.Movsb(newPtr, ptr, (ulong)exe.Length);
+                byte* newPtr = (byte*)malloc(nthdr->OptionalHeader.SizeOfImage + 0x1000);
+                memcpy(newPtr, ptr, (ulong)exe.Length);
                 LoadUnfixedPE(newPtr);
             }
         }
+
+        [DllImport("*")]
+        static extern nint malloc(ulong size);
+
+        [DllImport("*")]
+        static extern ulong free(nint ptr);
 
         public static void LoadUnfixedPE(byte* ptr) 
         {
@@ -34,15 +39,21 @@ namespace System.Diagnostics
             for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
             {
                 if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
-                Native.Movsb((void*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ptr + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+                memcpy((byte*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ptr + sections[i].PointerToRawData, sections[i].SizeOfRawData);
             }
             FixImageRelocations(doshdr, nthdr, (long)(nthdr->OptionalHeader.ImageBase - orignalBase));
             delegate*<void> p = (delegate*<void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
             //TO-DO disposing
             StartupCodeHelpers.InitializeModules(moduleSeg);
             p();
-            Allocator.Free((IntPtr)ptr);
+            free((IntPtr)ptr);
         }
+
+        [DllImport("*")]
+        static unsafe extern void memset(byte* ptr, int c, int count);
+
+        [DllImport("*")]
+        static unsafe extern void memcpy(byte* dest, byte* src, ulong count);
 
         static void FixImageRelocations(DOSHeader* dos_header, NtHeaders64* nt_header, long delta)
         {
@@ -69,4 +80,3 @@ namespace System.Diagnostics
         }
     }
 }
-#endif

@@ -1,10 +1,9 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace System
 {
     public unsafe struct Double
     {
-#if Kernel
         [DllImport("*")]
         public static extern void double_tostring(byte* buffer, double value);
 
@@ -23,6 +22,5 @@ namespace System
             string s = new string(p, 0, length);
             return s;
         }
-#endif
     }
 }

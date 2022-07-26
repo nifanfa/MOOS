@@ -1,7 +1,4 @@
 using Internal.Runtime.CompilerServices;
-#if Kernel
-using MOOS;
-#endif
 using System;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -53,7 +50,6 @@ namespace Internal.Runtime.CompilerHelpers
         [RuntimeExport("RhpPInvokeReturn")]
         static void RhpPinvokeReturn(IntPtr frame) { }
 
-#if Kernel
         [RuntimeExport("RhpNewFast")]
         static unsafe object RhpNewFast(EEType* pEEType)
         {
@@ -63,16 +59,17 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Allocator.Allocate(size);
+            var data = malloc(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Allocator.ZeroFill(data, size);
+            MemSet((byte*)data,0, (int)size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             return obj;
         }
-#endif
 
-#if Kernel
+        [DllImport("*")]
+        public static extern nint malloc(ulong size);
+
         [RuntimeExport("RhpNewArray")]
         internal static unsafe object RhpNewArray(EEType* pEEType, int length)
         {
@@ -82,18 +79,17 @@ namespace Internal.Runtime.CompilerHelpers
             if (size % 8 > 0)
                 size = ((size / 8) + 1) * 8;
 
-            var data = Allocator.Allocate(size);
+            var data = malloc(size);
             var obj = Unsafe.As<IntPtr, object>(ref data);
-            Allocator.ZeroFill(data, size);
+            MemSet((byte*)data,0, (int)size);
             *(IntPtr*)data = (IntPtr)pEEType;
 
             var b = (byte*)data;
             b += sizeof(IntPtr);
-            Allocator.MemoryCopy((IntPtr)b, (IntPtr)(&length), sizeof(int));
+            MemCpy(b, (byte*)(&length), sizeof(int));
 
             return obj;
         }
-#endif
 
         [RuntimeExport("RhpAssignRef")]
         static unsafe void RhpAssignRef(void** address, void* obj)
@@ -149,7 +145,6 @@ namespace Internal.Runtime.CompilerHelpers
             }
         }
 
-#if Kernel
         public static void InitializeModules(IntPtr Modules) 
         {
             for (int i = 0; ; i++)
@@ -177,9 +172,7 @@ namespace Internal.Runtime.CompilerHelpers
             DateTime.s_daysToMonth366 = new int[]{
                 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 };
         }
-#endif
 
-#if Kernel
         static unsafe void InitializeStatics(IntPtr rgnStart, IntPtr rgnEnd)
         {
             for (IntPtr* block = (IntPtr*)rgnStart; block < (IntPtr*)rgnEnd; block++)
@@ -200,12 +193,11 @@ namespace Internal.Runtime.CompilerHelpers
                         }
                     }
 
-                    var handle = Allocator.Allocate((ulong)sizeof(IntPtr));
+                    var handle = malloc((ulong)sizeof(IntPtr));
                     *(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
                     *pBlock = handle;
                 }
             }
         }
-#endif
     }
 }
