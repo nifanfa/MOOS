@@ -32,6 +32,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\MulticastDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Nullable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DataDirectory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DllCharacteristicsType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DOSHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\FileHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\NtHeaders64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\OptionalHeaders64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SectionHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SubSystemType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeMethodHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeTypeHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\SByte.cs" />
@@ -97,7 +105,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Void.cs" />
     <Compile Include="..\Corlib\System\RuntimeFieldHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\Control.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MouseButtons.cs" />
   </ItemGroup>
 </Project>

@@ -41,6 +41,9 @@ namespace ConsoleApp1
         [DllImport("DrawPoint")]
         public static extern void DrawPoint(int x, int y, uint color);
 
+        [RuntimeExport("malloc")]
+        public static nint malloc(ulong size) => Allocate(size);
+
         [RuntimeExport("Main")]
         public static void Main()
         {

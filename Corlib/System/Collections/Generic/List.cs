@@ -1,7 +1,3 @@
-#if Kernel
-using MOOS;
-#endif
-
 namespace System.Collections.Generic
 {
     public class List<T>
