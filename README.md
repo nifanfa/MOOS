@@ -1,5 +1,5 @@
 # MOOS  
-Welcome to the ***MOOS(My own operating system)-Project***
+Welcome to the *MOOS(to make **M**y **O**wn **O**perating **S**ystem)-Project*
 > MOOS is a C# x64 operating system programming with the .NET native ahead-of-time compilation technology.
 
 [![Discord Shield](https://discordapp.com/api/guilds/987075686256762890/widget.png?style=shield)](https://discord.gg/uJstXbx8Pt)
