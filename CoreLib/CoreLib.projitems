@@ -46,9 +46,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Process.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Stopwatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Double.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Brush.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Image.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Pen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Point.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Rectangle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Size.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EETypePtr.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Enum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Environment.cs" />
@@ -56,6 +60,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\FlagsAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Func.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Globalization\CharUnicodeInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Globalization\CultureInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Int16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Int32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Int64.cs" />
@@ -68,6 +73,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\ObsoleteAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ParamArrayAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Random.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DOSHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SubSystemType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SectionHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\OptionalHeaders64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\NtHeaders64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\FileHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DllCharacteristicsType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DataDirectory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeFieldHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeMethodHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeType.cs" />

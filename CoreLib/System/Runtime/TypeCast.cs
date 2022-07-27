@@ -1,7 +1,5 @@
 using Internal.Runtime;
 using Internal.Runtime.CompilerHelpers;
-#if Kernel
-#endif
 
 namespace System.Runtime
 {

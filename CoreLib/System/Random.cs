@@ -1,4 +1,3 @@
-#if Kernel
 /*
 Authors:
   Bob Smith (bob@thestuff.net)
@@ -29,8 +28,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
-using MOOS.Misc;
 
 namespace System
 {
@@ -70,7 +67,7 @@ namespace System
         {
             if (minValue > maxValue)
             {
-                Panic.Error("Maximum value is less than minimal value.");
+                return 0;
             }
 
             // special case: a difference of one (or less) will always return the minimum
@@ -81,12 +78,7 @@ namespace System
 
         public virtual int Next(int maxValue)
         {
-            if (maxValue < 0)
-            {
-                Panic.Error("Maximum value is less than minimal value.");
-            }
-
-            return maxValue > 0 ? (int)(JKiss() % maxValue) : 0;
+            return maxValue < 0 ? 0 : maxValue > 0 ? (int)(JKiss() % maxValue) : 0;
         }
 
         public virtual int Next()
@@ -109,7 +101,7 @@ namespace System
         {
             if (buffer == null)
             {
-                Panic.Error("buffer");
+                return;
             }
 
             // each random `int` can fill 4 bytes
@@ -152,4 +144,3 @@ namespace System
         }
     }
 }
-#endif

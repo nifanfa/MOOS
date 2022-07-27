@@ -1,6 +1,3 @@
-#if Kernel
-#endif
-
 namespace System.Collections.Generic
 {
 	public class List<T>

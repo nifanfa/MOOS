@@ -1,17 +1,16 @@
 #if HasGUI
-using MOOS.Graph;
-using MOOS.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using static MOOS.GUI.Calculator;
+using MOOS.Graph;
+using MOOS.GUI.Widgets;
 
 namespace MOOS.GUI
 {
     internal unsafe class Paint : Window
     {
-        Image img;
-        Graphics g;
+        private Image img;
+        private Graphics g;
 
         public Paint(int X, int Y) : base(X, Y, 490, 500)
         {
@@ -42,10 +41,13 @@ namespace MOOS.GUI
             AddButton(430, 10, 0xFF333333, 50, "Clear");
 #endif
 
-            img = new Image(this.Width, this.Height);
+            img = new Image(Width, Height);
             fixed (uint* p = img.RawData)
-                g = new Graphics(this.Width, this.Height, p);
-            g.Clear(0xFF222222);
+            {
+                g = new Graphics(Width, Height, p);
+            }
+
+            g.Clear(Color.FromArgb(0xFF222222));
 
             CurrentColor = 0xFFF0F0F0;
             LastX = -1;
@@ -56,7 +58,7 @@ namespace MOOS.GUI
         {
             base.OnDraw();
 
-            Framebuffer.Graphics.DrawImage(X, Y, img, false);
+            Framebuffer.Graphics.DrawImage(img, X, Y, false);
 
             for (int i = 0; i < Btns.Count; i++)
             {
@@ -72,10 +74,9 @@ namespace MOOS.GUI
             }
         }
 
-        int LastX,
+        private int LastX,
             LastY;
-
-        uint CurrentColor;
+        private uint CurrentColor;
 
         public override void OnInput()
         {
@@ -83,17 +84,17 @@ namespace MOOS.GUI
 
             if (Control.MouseButtons.HasFlag(MouseButtons.Left))
             {
-                if (Control.MousePosition.X >= this.X && Control.MousePosition.X <= this.X + this.Width && Control.MousePosition.Y >= this.Y && Control.MousePosition.Y <= this.Y + this.Height)
+                if (Control.MousePosition.X >= X && Control.MousePosition.X <= X + Width && Control.MousePosition.Y >= Y && Control.MousePosition.Y <= Y + Height)
                 {
                     WindowManager.MouseHandled = true;
-                    if (Control.MousePosition.X - this.X != LastX || Control.MousePosition.Y - this.Y != LastY)
+                    if (Control.MousePosition.X - X != LastX || Control.MousePosition.Y - Y != LastY)
                     {
-                        g.DrawLine(LastX, LastY, Control.MousePosition.X - this.X, Control.MousePosition.Y - this.Y, CurrentColor);
+                        g.DrawLine(LastX, LastY, Control.MousePosition.X - X, Control.MousePosition.Y - Y, CurrentColor);
                     }
 
                     for (int i = 0; i < Btns.Count; i++)
                     {
-                        if (Control.MousePosition.X > this.X + Btns[i].X && Control.MousePosition.X < this.X + Btns[i].X + Btns[i].Width && Control.MousePosition.Y > this.Y + Btns[i].Y && Control.MousePosition.Y < this.Y + Btns[i].Y + Btns[i].Height)
+                        if (Control.MousePosition.X > X + Btns[i].X && Control.MousePosition.X < X + Btns[i].X + Btns[i].Width && Control.MousePosition.Y > Y + Btns[i].Y && Control.MousePosition.Y < Y + Btns[i].Y + Btns[i].Height)
                         {
 #if Chinese
                             if (Btns[i].Name == "清除")
@@ -101,26 +102,24 @@ namespace MOOS.GUI
                             if (Btns[i].Name == "Clear")
 #endif
                             {
-                                g.Clear(0xFF222222);
-                            }
-                            else
+                                g.Clear(Color.FromArgb(0xFF222222));
+                            } else
                             {
                                 CurrentColor = Btns[i].UIntParam;
                             }
                         }
                     }
                 }
-            }
-            else
+            } else
             {
                 WindowManager.MouseHandled = false;
             }
 
-            LastX = Control.MousePosition.X - this.X;
-            LastY = Control.MousePosition.Y - this.Y;
+            LastX = Control.MousePosition.X - X;
+            LastY = Control.MousePosition.Y - Y;
         }
 
-        List<Button> Btns;
+        private List<Button> Btns;
 
         private void AddButton(int X, int Y, uint Color, int aWidth = 20, string aName = "")
         {

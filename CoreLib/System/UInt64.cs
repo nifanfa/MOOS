@@ -1,7 +1,4 @@
-﻿#if Kernel
-#endif
-
-namespace System
+﻿namespace System
 {
 	public struct UInt64
 	{

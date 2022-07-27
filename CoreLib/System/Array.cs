@@ -1,5 +1,5 @@
-//Copyright © 2022 Contributors of moose-org, This code is licensed under the BSD 3-Clause "New" or "Revised" License.
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
 
@@ -7,6 +7,9 @@ namespace System
 {
     public abstract unsafe partial class Array
     {
+        [DllImport("*")]
+        private static extern void Panic(string message);
+
         internal int _numComponents;
 
         // We impose limits on maximum array length in each dimension to allow efficient
@@ -33,12 +36,12 @@ namespace System
         {
             if (array == null)
             {
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             if (action == null)
             {
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -50,12 +53,12 @@ namespace System
         {
             if (array == null)
             {
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             if (func == null)
             {
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -73,7 +76,7 @@ namespace System
                 if (length > MaxLength)
                 {
                     /*throw new Exception*/
-                    MOOS.Misc.Panic.Error("Length of array is too large, Max: " + MaxLength);
+                    Panic("Length of array is too large, Max: " + MaxLength);
                 }
 
                 totalLength *= (ulong)length;
@@ -108,7 +111,7 @@ namespace System
             if (newSize < 0)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
 
@@ -135,7 +138,7 @@ namespace System
             if (length < MaxLength)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             return new T[length];
         }
@@ -165,22 +168,22 @@ namespace System
             if (sourceArray == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (destinationArray == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (startIndex < 0)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (destinationArray.Length < sourceArray.Length - count)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (count <= 0)
             {
@@ -202,22 +205,22 @@ namespace System
             if (sourceArray == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (destinationArray == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (startIndex < 0)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (destinationArray.Length > sourceArray.Length - count)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
             if (count <= 0)
             {
@@ -242,7 +245,7 @@ namespace System
             if (index != iindex)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             return GetValue(iindex);
@@ -258,13 +261,13 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             return GetValue(iindex1, iindex2);
@@ -281,19 +284,19 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (index3 != iindex3)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             return GetValue(iindex1, iindex2, iindex3);
@@ -308,7 +311,7 @@ namespace System
             if (index != iindex)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             SetValue(value, iindex);
@@ -324,13 +327,13 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             SetValue(value, iindex1, iindex2);
@@ -347,19 +350,19 @@ namespace System
             if (index1 != iindex1)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (index2 != iindex2)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (index3 != iindex3)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             SetValue(value, iindex1, iindex2, iindex3);
@@ -400,7 +403,7 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -414,19 +417,19 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             if (startIndex < 0 || startIndex > array.Length)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (count < 0 || startIndex > array.Length - count)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             for (int i = startIndex; i < startIndex + count; i++)
@@ -453,13 +456,13 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             for (int i = startIndex; i < array.Length; i++)
@@ -485,13 +488,13 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             for (int i = startIndex; i < startIndex + array.Length; i++)
@@ -524,25 +527,25 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             if (index < 0)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (length < 0)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (array.Length - index < length)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (length <= 1)
@@ -619,25 +622,25 @@ namespace System
             if (array == null)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument null");
+                Panic("Argument null");
             }
 
             if (index < 0)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (length < 0)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (array.Length - index < length)
             {
                 /*throw new Exception*/
-                MOOS.Misc.Panic.Error("Argument out of range");
+                Panic("Argument out of range");
             }
 
             if (length <= 1)

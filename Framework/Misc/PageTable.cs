@@ -12,7 +12,7 @@ namespace MOOS
 
 		public static ulong* PML4;
 
-		internal static void Initialise()
+		internal static void Initialize()
 		{
 			PML4 = (ulong*)SMP.SharedPageTable;
 

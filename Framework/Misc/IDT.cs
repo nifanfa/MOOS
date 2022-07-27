@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerServices;
 using MOOS;
 using MOOS.Driver;
-using MOOS.Graph;
 using MOOS.Misc;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
 
@@ -72,7 +71,7 @@ public static class IDT
 	[RuntimeExport("exception_handler")]
 	public static unsafe void ExceptionHandler(int code, IDTStackGeneric* stack)
 	{
-		Panic.Error($"CPU{SMP.ThisCPU} KERNEL PANIC!!!", true);
+		Panic.Error($"Kernel panic on CPU {SMP.ThisCPU}", true);
 		InterruptReturnStack* irs = code switch
 		{
 			8 or 10 or 11 or 12 or 13 or 14 or 17 or 21 or 29 or 30 => (InterruptReturnStack*)(((byte*)stack) + sizeof(RegistersStack)),
@@ -105,6 +104,10 @@ public static class IDT
 		};
 		Console.WriteLine($"Cause: {description}");
 		Framebuffer.Update();
+		for (; ; )
+		{
+
+		}
 	}
 
 	public struct RegistersStack

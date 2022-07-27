@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
 
@@ -19,7 +20,7 @@ namespace System
         {
             [Intrinsic]
             get => _length;
-            internal set => _length = value;
+            set => _length = value;
         }
 
         public unsafe char this[int index]
@@ -114,12 +115,14 @@ namespace System
 
             fixed (char* c = &s._firstChar)
             {
-                Allocator.MemoryCopy((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
+                memcpy((byte*)c, (byte*)start, (ulong)length * sizeof(char));
                 c[length] = '\0';
             }
 
             return s;
         }
+        [DllImport("*")]
+        private static extern unsafe void memcpy(byte* dest, byte* src, ulong count);
         private static unsafe string Ctor(char[] ptr, int index, int length)
         {
             fixed (char* _ptr = ptr)
@@ -191,7 +194,7 @@ namespace System
             return new string(ptr, 0, Length);
         }
 
-        internal int IndexOf(char j)
+        public int IndexOf(char j)
         {
             for (int i = 0; i < Length; i++)
             {
@@ -266,16 +269,6 @@ namespace System
             }
         }
 
-        internal static string FastAllocateString(int length)
-        {
-            return new(Allocator.Allocate((ulong)(2 * length)));
-        }
-
-        internal static unsafe void wstrcpy(char* dmem, char* smem, int charCount)
-        {
-            Native.Movsb((byte*)dmem, (byte*)smem, (ulong)(charCount * 2));
-        }
-
         public string Substring(int startIndex)
         {
             if ((Length == 0) && (startIndex == 0))
@@ -341,24 +334,8 @@ namespace System
     }
 }
 /*
- * Working on .NET string, you may modify this to remove errors, Last error count: 616
- * 
- * 
-// ==++==
-// 
-//   Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
-// ==--==
-*//*============================================================
-**
-** Class:  String
-**
-**
-** Purpose: Your favorite String class.  Native methods 
-** are implemented in StringNative.cpp
-**
-**
-===========================================================*//*
+ * TODO: .NET String
+####################
 namespace System
 {
     using System.Runtime.CompilerServices;

@@ -46,7 +46,7 @@ namespace MOOS
 				Color.MediumVioletRed.ToArgb(),
 				Color.MediumPurple.ToArgb(),
 				Color.Yellow.ToArgb(),
-				Color.White.ToArgb(),
+				Color.White.ToArgb()
 			};
 
 			ForegroundColor = ConsoleColor.White;
@@ -257,7 +257,7 @@ namespace MOOS
 
 		private static void WriteFramebuffer(char chr)
 		{
-			if (Framebuffer.FirstBuffer != null && !Framebuffer.TripleBuffered)
+			if (Framebuffer.FirstBuffer != null && !Framebuffer.DoubleBuffered)
 			{
 				Framebuffer.Graphics.FillRectangle(CursorX, CursorY, 8, 16, ColorsFB[(int)BackgroundColor]);
 				ASC16.DrawChar(chr, CursorX, CursorY, ColorsFB[(int)ForegroundColor]);
@@ -310,10 +310,10 @@ namespace MOOS
 			{
 				CursorY -= 16;
 				Native.Movsb((void*)0xb8000, (void*)0xB80A0, 0xF00);
-				if (Framebuffer.FirstBuffer != null && !Framebuffer.TripleBuffered)
+				if (Framebuffer.FirstBuffer != null && !Framebuffer.DoubleBuffered)
 				{
 					Framebuffer.Graphics.FillRectangle(0, Framebuffer.Height - 16, Framebuffer.Width, 16, ColorsFB[(int)BackgroundColor]);
-					Framebuffer.Graphics.Copy(0, -16, 0, 0, Framebuffer.Width, Framebuffer.Height);
+					Framebuffer.Graphics.CopyFromScreen(0, -16, 0, 0, new Size(Framebuffer.Width, Framebuffer.Height));
 				}
 				UpdateCursor();
 			}
@@ -326,7 +326,7 @@ namespace MOOS
 
 		private static void UpdateCursorFramebuffer()
 		{
-			if (Framebuffer.FirstBuffer != null && !Framebuffer.TripleBuffered)
+			if (Framebuffer.FirstBuffer != null && !Framebuffer.DoubleBuffered)
 			{
 				ASC16.DrawChar('_',
 				CursorX,
@@ -372,7 +372,7 @@ namespace MOOS
 		{
 			CursorX = 0;
 			CursorY = 0;
-			Framebuffer.Graphics.Clear(background);
+			Framebuffer.Graphics.Clear(Color.FromArgb(background));
 			Framebuffer.Update();
 		}
 		public static void Clear()

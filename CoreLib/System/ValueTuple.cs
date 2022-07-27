@@ -38,15 +38,7 @@ namespace System
         /// Get the element at position <param name="index"/>.
         /// </summary>
 
-        object? ITuple.this[int index]
-
-        {
-            get
-            {
-                MOOS.Misc.Panic.Error("Index Out Of Range");
-                return null;
-            }
-        }
+        object? ITuple.this[int index] => null;
 
         /// <summary>Creates a new struct 0-tuple.</summary>
         /// <returns>A 0-tuple.</returns>
@@ -207,18 +199,7 @@ namespace System
         /// Get the element at position <param name="index"/>.
         /// </summary>
 
-        object? ITuple.this[int index]
-
-        {
-            get
-            {
-                if (index != 0)
-                {
-                    MOOS.Misc.Panic.Error("Index Out Of Range");
-                }
-                return Item1;
-            }
-        }
+        object? ITuple.this[int index] => index != 0 ? null : Item1;
     }
 
     /// <summary>
@@ -265,7 +246,7 @@ namespace System
         {
             0 => Item1,
             1 => Item2,
-            _ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+            _ => null,
         };
     }
 
@@ -319,7 +300,7 @@ namespace System
             0 => Item1,
             1 => Item2,
             2 => Item3,
-            _ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+            _ => null,
         };
     }
 
@@ -381,7 +362,7 @@ namespace System
             1 => Item2,
             2 => Item3,
             3 => Item4,
-            _ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+            _ => null,
         };
     }
 
@@ -451,7 +432,7 @@ namespace System
             2 => Item3,
             3 => Item4,
             4 => Item5,
-            _ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+            _ => null,
         };
     }
 
@@ -531,7 +512,7 @@ namespace System
             3 => Item4,
             4 => Item5,
             5 => Item6,
-            _ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+            _ => null,
         };
     }
 
@@ -618,7 +599,7 @@ namespace System
             4 => Item5,
             5 => Item6,
             6 => Item7,
-            _ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+            _ => null,
         };
     }
 
@@ -684,7 +665,7 @@ namespace System
         {
             if (rest is not IValueTupleInternal)
             {
-                MOOS.Misc.Panic.Error("Argument Exeption, TRest is not a Tuple");
+                rest = (TRest)(ITupleInternal)rest;
             }
 
             Item1 = item1;
@@ -731,19 +712,7 @@ namespace System
                         break;
                 }
 
-                if (Rest is IValueTupleInternal @internal)
-                {
-                    return @internal[index - 7];
-                }
-
-
-                if (index == 7)
-                {
-                    return Rest;
-                }
-
-                MOOS.Misc.Panic.Error("Argument Exeption, TRest is not a Tuple");
-                return null;
+                return Rest is IValueTupleInternal @internal ? @internal[index - 7] : index == 7 ? Rest : null;
             }
         }
     }

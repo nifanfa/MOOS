@@ -1,5 +1,4 @@
 using MOOS.Driver;
-using MOOS.Graph;
 
 namespace MOOS.Misc
 {
@@ -10,10 +9,22 @@ namespace MOOS.Misc
 			//Kill all CPUs
 			LocalAPIC.SendAllInterrupt(0xFD);
 			IDT.Disable();
-			Framebuffer.TripleBuffered = false;
-			Console.Write("PANIC: ");
-			Console.WriteLine(msg);
-			Console.WriteLine("All CPU Halted Now!");
+			Framebuffer.DoubleBuffered = false;
+			Console.BackgroundColor = System.ConsoleColor.Blue;
+			Console.Clear(0x0000FF);
+			Console.Write("A problem has been detected and MOOS has been shut down to prevent damage to your computer.\n\n");
+			Console.Write($"There seems to be a {msg}\n\n");
+			Console.Write("If this is the first time you've seen this Stop error screen, restart\n");
+			Console.Write("your computer. If this screen appears again, follow these steps:\n\n");
+			Console.Write("Check to make sure any new hardware or software is properly installed.\n");
+			Console.Write("If this is a new installation, ask your hardware or software manufacturer\n");
+			Console.Write("for any MOOS updates you might need.\n\n");
+			Console.Write("If problems continue, disable or remove any newly installed hardware or\n");
+			Console.Write("software. Disable BIOS memory options such as caching or shadowing. If you\n");
+			Console.Write("need to use Safe Mode to remove or disable components, restart your computer,\n");
+			Console.Write("press F8, select Advanced Startup options, and then select Safe Mode.\n\n");
+			Console.Write("Technical information:\n\n");
+
 			if (!skippable)
 			{
 				Framebuffer.Update();

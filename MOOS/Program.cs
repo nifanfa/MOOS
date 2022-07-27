@@ -132,9 +132,11 @@ internal unsafe class Program
 		}
 #endif
 
+
 		//Sized width to 512
 		//https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
 		Cursor = new PNG(File.Instance.ReadAllBytes("Images/Cursor.png"));
+
 		CursorMoving = new PNG(File.Instance.ReadAllBytes("Images/Grab.png"));
 		//Image from unsplash
 		Wallpaper = new PNG(File.Instance.ReadAllBytes("Images/Wallpaper1.png"));
@@ -202,7 +204,7 @@ internal unsafe class Program
 
 	public static void SMain()
 	{
-		Framebuffer.TripleBuffered = true;
+		Framebuffer.DoubleBuffered = true;
 
 		/*
         //This driver doesn't support drawing without update
@@ -219,7 +221,7 @@ internal unsafe class Program
 		FConsole = new FConsole(350, 300);
 		FConsole.Visible = false;
 
-		Welcome welcome = new(400, 250);
+		//Welcome welcome = new(400, 250);
 
 		rightmenu = new RightMenu();
 		rightClicked = false;
@@ -228,12 +230,12 @@ internal unsafe class Program
 		Console.WriteLine("Thanks to all the Contributors of nifanfa/MOOS.");
 
 		#region Animation of entering Desktop
-		Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
+		Framebuffer.Graphics.DrawImage(Wallpaper, (Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), false);
 		Desktop.Update();
 		WindowManager.DrawAll();
-		Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor, true);
+		Framebuffer.Graphics.DrawImage(Cursor, Control.MousePosition.X, Control.MousePosition.Y, true);
 		Image _screen = Framebuffer.Graphics.Save();
-		Framebuffer.Graphics.Clear(0x0);
+		Framebuffer.Graphics.Clear(Color.FromArgb(0x0));
 
 		Image[] SizedScreens = new Image[60];
 		int startat = 40;
@@ -259,11 +261,8 @@ internal unsafe class Program
 		{
 			int i = ani.Value;
 			Image img = SizedScreens[i];
-			Framebuffer.Graphics.Clear(0x0);
-			Framebuffer.Graphics.DrawImage(
-				(Framebuffer.Graphics.Width / 2) - (img.Width / 2),
-				(Framebuffer.Graphics.Height / 2) - (img.Height / 2),
-				img, (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
+			Framebuffer.Graphics.Clear(Color.FromArgb(0x0));
+			Framebuffer.Graphics.DrawImage(img, (Framebuffer.Graphics.Width / 2) - (img.Width / 2), (Framebuffer.Graphics.Height / 2) - (img.Height / 2), (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
 			Framebuffer.Update();
 		}
 		ani.Dispose();
@@ -311,7 +310,7 @@ internal unsafe class Program
 			#endregion
 			WindowManager.InputAll();
 
-			Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
+			Framebuffer.Graphics.DrawImage(Wallpaper, (Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), false);
 			Desktop.Update();
 			NotificationManager.Update();
 			WindowManager.DrawAll();
@@ -319,7 +318,7 @@ internal unsafe class Program
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
             ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
             */
-			Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, WindowManager.HasWindowMoving ? CursorMoving : Cursor, true);
+			Framebuffer.Graphics.DrawImage(WindowManager.HasWindowMoving ? CursorMoving : Cursor, Control.MousePosition.X, Control.MousePosition.Y, true);
 			Framebuffer.Update();
 
 			FPSMeter.Update();

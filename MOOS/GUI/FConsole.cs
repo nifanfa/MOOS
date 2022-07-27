@@ -1,17 +1,15 @@
 #if HasGUI
 
-using MOOS.Driver;
-using MOOS.Graph;
-using MOOS.Misc;
 using System.Drawing;
+using MOOS.Driver;
 
 namespace MOOS.GUI
 {
     internal class FConsole : Window
     {
-        string Data;
+        private string Data;
         public Image ScreenBuf;
-        string Cmd;
+        private string Cmd;
 
         public FConsole(int X, int Y) : base(X, Y, 640, 320)
         {
@@ -41,9 +39,10 @@ namespace MOOS.GUI
                 if (key.Key == System.ConsoleKey.Backspace)
                 {
                     if (Data.Length != 0)
+                    {
                         Data.Length -= 1;
-                }
-                else if (key.KeyChar != '\0')
+                    }
+                } else if (key.KeyChar != '\0')
                 {
                     Console_OnWrite(key.KeyChar);
 
@@ -55,7 +54,10 @@ namespace MOOS.GUI
 
                 if (key.Key == System.ConsoleKey.Enter)
                 {
-                    if (Cmd.Length != 0) Cmd.Length -= 1;
+                    if (Cmd.Length != 0)
+                    {
+                        Cmd.Length -= 1;
+                    }
 
                     // when a command is invoked
                     switch (Cmd)
@@ -81,8 +83,11 @@ namespace MOOS.GUI
                         case "cpu":
                             Console.WriteLine("multi-processor IDs:");
                             for (int i = 0; i < ACPI.LocalAPIC_CPUIDs.Count; i++)
+                            {
                                 Console.WriteLine($" cpu id:{ACPI.LocalAPIC_CPUIDs[i]}");
-                            Console.WriteLine($"frequency: {Timer.CPU_Clock/1048576}mhz");
+                            }
+
+                            Console.WriteLine($"frequency: {Timer.CPU_Clock / 1048576}mhz");
                             break;
 
                         case "null":
@@ -106,8 +111,13 @@ namespace MOOS.GUI
 
                     Cmd.Dispose();
                     Cmd = string.Empty;
+                } else if (key.Key == System.ConsoleKey.Backspace)
+                {
+                    if (Cmd.Length != 0)
+                    {
+                        Cmd.Length -= 1;
+                    }
                 }
-                else if (key.Key == System.ConsoleKey.Backspace) if (Cmd.Length != 0) Cmd.Length -= 1;
             }
         }
 
@@ -125,21 +135,21 @@ namespace MOOS.GUI
             //BitFont.DrawString("Song", 0xFFFFFFFF, Data, X, Y, 640);
         }
 
-        public void DrawString(int X, int Y, string Str,int HeightLimit = -1, int LineLimit = -1)
+        public void DrawString(int X, int Y, string Str, int HeightLimit = -1, int LineLimit = -1)
         {
             int w = 0, h = 0;
             for (int i = 0; i < Str.Length; i++)
             {
-                w += WindowManager.font.DrawChar(Framebuffer.Graphics,X + w, Y + h, Str[i]);
-                if (w + WindowManager.font.FontSize > LineLimit && LineLimit != -1 || Str[i] == '\n')
+                w += WindowManager.font.DrawChar(Framebuffer.Graphics, X + w, Y + h, Str[i]);
+                if ((w + WindowManager.font.FontSize > LineLimit && LineLimit != -1) || Str[i] == '\n')
                 {
                     w = 0;
                     h += WindowManager.font.FontSize;
 
-                    if(HeightLimit != -1 && h >= HeightLimit)
+                    if (HeightLimit != -1 && h >= HeightLimit)
                     {
-                        Framebuffer.Graphics.Copy(X, Y, X, Y + WindowManager.font.FontSize, LineLimit, HeightLimit - (WindowManager.font.FontSize));
-                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - (WindowManager.font.FontSize), LineLimit, WindowManager.font.FontSize, 0xFF222222);
+                        Framebuffer.Graphics.CopyFromScreen(X, Y, X, Y + WindowManager.font.FontSize, new Size(LineLimit, HeightLimit - WindowManager.font.FontSize));
+                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - WindowManager.font.FontSize, LineLimit, WindowManager.font.FontSize, 0xFF222222);
                         h -= WindowManager.font.FontSize;
                     }
                 }

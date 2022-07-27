@@ -1,9 +1,7 @@
-//Copyright © 2022 Contributors of moose-org, This code is licensed under the BSD 3-Clause "New" or "Revised" License.
 namespace System
 {
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
-    using MOOS;
 
     // This value type represents a date and time.  Every DateTime
     // object has a private field (Ticks) of type Int64 that stores the
@@ -114,14 +112,18 @@ namespace System
         private const string DateDataField = "dateData";
         public static DateTime Today => DateTime.Now.Date;
 
+        /*
+        [Obsolete("This can cause breakpoint on real hardware")]
         public static DateTime Now =>
-            new(
-                (RTC.Century * 100) + RTC.Year,
+            new DateTime(
+                RTC.Century * 100 + RTC.Year,
                 RTC.Month,
                 RTC.Day,
                 RTC.Hour,
                 RTC.Minute,
                 RTC.Second);
+        */
+        public static DateTime Now => new(0, 0, 0, 0, 0, 0);
 
         // The data is stored as an unsigned 64-bit integer
         //   Bits 01-62: The value of 100-nanosecond ticks where 0 represents 1/1/0001 12:00am, up until the value

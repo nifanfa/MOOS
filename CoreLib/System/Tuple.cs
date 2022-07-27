@@ -1,5 +1,4 @@
-﻿//Copyright © 2022 Contributors of moose-org, This code is licensed under the BSD 3-Clause "New" or "Revised" License.
-namespace System
+﻿namespace System
 {
 	public interface ITuple
 	{
@@ -69,7 +68,6 @@ namespace System
 	}
 	public class Tuple<T1> : ITupleInternal, ITuple
 	{
-
 		private readonly T1 m_Item1;
 
 		public T1 Item1 => m_Item1;
@@ -87,17 +85,8 @@ namespace System
 		/// <summary>
 		/// Get the element at position <param name="index"/>.
 		/// </summary>
-		object ITuple.this[int index]
-		{
-			get
-			{
-				if (index != 0)
-				{
-					MOOS.Misc.Panic.Error("Index Out Of Range");
-				}
-				return Item1;
-			}
-		}
+
+		object ITuple.this[int index] => index != 0 ? null : Item1;
 	}
 	public class Tuple<T1, T2> : ITupleInternal, ITuple
 	{
@@ -126,7 +115,7 @@ namespace System
 		{
 			0 => Item1,
 			1 => Item2,
-			_ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+			_ => null,
 		};
 	}
 	public class Tuple<T1, T2, T3> : ITupleInternal, ITuple
@@ -160,7 +149,7 @@ namespace System
 			0 => Item1,
 			1 => Item2,
 			2 => Item3,
-			_ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+			_ => null,
 
 		};
 	}
@@ -199,7 +188,7 @@ namespace System
 			1 => Item2,
 			2 => Item3,
 			3 => Item4,
-			_ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+			_ => null,
 		};
 	}
 	public class Tuple<T1, T2, T3, T4, T5> : ITupleInternal, ITuple
@@ -241,7 +230,7 @@ namespace System
 			2 => Item3,
 			3 => Item4,
 			4 => Item5,
-			_ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+			_ => null,
 		};
 	}
 	public class Tuple<T1, T2, T3, T4, T5, T6> : ITupleInternal, ITuple
@@ -287,7 +276,7 @@ namespace System
 			3 => Item4,
 			4 => Item5,
 			5 => Item6,
-			_ => MOOS.Misc.Panic.Error("Index Out Of Range")
+			_ => null
 		};
 	}
 
@@ -338,7 +327,7 @@ namespace System
 			4 => Item5,
 			5 => Item6,
 			6 => Item7,
-			_ => MOOS.Misc.Panic.Error("Index Out Of Range"),
+			_ => null,
 		};
 	}
 
@@ -367,7 +356,7 @@ namespace System
 		{
 			if (rest is not ITupleInternal)
 			{
-				MOOS.Misc.Panic.Error("Argument Exeption, TRest is not a Tuple");
+				return;
 			}
 
 			m_Item1 = item1;

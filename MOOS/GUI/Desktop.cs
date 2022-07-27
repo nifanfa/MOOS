@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using MOOS.FS;
-using MOOS.Graph;
 using MOOS.Misc;
 
 namespace MOOS.GUI
@@ -99,7 +98,7 @@ namespace MOOS.GUI
 
 					ClickEvent(BuiltInAppNames[i], false, X, Y, i);
 
-					Framebuffer.Graphics.DrawImage(X, Y, BuiltInAppIcon, true);
+					Framebuffer.Graphics.DrawImage(BuiltInAppIcon, X, Y, true);
 					WindowManager.font.DrawString(X, Y + FileIcon.Height, BuiltInAppNames[i], FileIcon.Width + 8, WindowManager.font.FontSize * 3);
 					Y += FileIcon.Height + Devide;
 				}
@@ -121,7 +120,7 @@ namespace MOOS.GUI
 					names[i].Name[names[i].Name.Length - 1].ToUpper() == 'G'
 					)
 				{
-					Framebuffer.Graphics.DrawImage(X, Y, ImageIcon, true);
+					Framebuffer.Graphics.DrawImage(ImageIcon, X, Y, true);
 				} else if
 					  (
 
@@ -131,7 +130,7 @@ namespace MOOS.GUI
 
 					  )
 				{
-					Framebuffer.Graphics.DrawImage(X, Y, GameIcon, true);
+					Framebuffer.Graphics.DrawImage(GameIcon, X, Y, true);
 				} else if
 					  (
 
@@ -141,7 +140,7 @@ namespace MOOS.GUI
 
 					  )
 				{
-					Framebuffer.Graphics.DrawImage(X, Y, AppIcon, true);
+					Framebuffer.Graphics.DrawImage(AppIcon, X, Y, true);
 				} else if
 					  (
 
@@ -151,16 +150,16 @@ namespace MOOS.GUI
 
 					  )
 				{
-					Framebuffer.Graphics.DrawImage(X, Y, AudioIcon, true);
+					Framebuffer.Graphics.DrawImage(AudioIcon, X, Y, true);
 				} else if
 					  (
 					  names[i].Attribute == FileAttribute.Directory
 					  )
 				{
-					Framebuffer.Graphics.DrawImage(X, Y, FolderIcon, true);
+					Framebuffer.Graphics.DrawImage(FolderIcon, X, Y, true);
 				} else
 				{
-					Framebuffer.Graphics.DrawImage(X, Y, FileIcon, true);
+					Framebuffer.Graphics.DrawImage(FileIcon, X, Y, true);
 				}
 				//BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
 				WindowManager.font.DrawString(X, Y + FileIcon.Height, names[i].Name, FileIcon.Width + 8, WindowManager.font.FontSize * 3);

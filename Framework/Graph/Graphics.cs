@@ -24,32 +24,118 @@ namespace MOOS.Graph
 			}
 		}
 
-		public void Clear(uint Color)
+		public void Clear(Color Color)
 		{
-			//if (Framebuffer.TripleBuffered)
-			//{
-			//				Native.Stosd(VideoMemory, Color, (ulong)(Width * Height));
-			//} else
-			//{
-			Native.Stosd(VideoMemory, Color, (ulong)(Width * Height));
-			//}
+			Native.Stosd(VideoMemory, Color.ToArgb(), (ulong)(Width * Height));
 		}
 
-		//public void Update()
-		//{
-		//			Framebuffer.Update();
-		//}
-
-		public void Copy(int dX, int dY, int sX, int sY, int Width, int Height)
+		public void CopyFromScreen(int sourceX, int sourceY, int destinationX, int destinationY, Size blockRegionSize)
 		{
-			for (int w = 0; w < Width; w++)
+			for (int X = 0; X < blockRegionSize.Width; X++)
 			{
-				for (int h = 0; h < Height; h++)
+				for (int Y = 0; Y < blockRegionSize.Height; Y++)
 				{
-					DrawPoint(dX + w, dY + h, GetPoint(sX + w, sY + h));
+					DrawPoint(X + destinationX, Y + destinationY, GetPoint(X + sourceX, Y + sourceY));
 				}
 			}
 		}
+
+		public void CopyFromScreen(Point source, Point destination, Size blockRegionSize)
+		{
+			for (int X = 0; X < blockRegionSize.Width; X++)
+			{
+				for (int Y = 0; Y < blockRegionSize.Height; Y++)
+				{
+					DrawPoint(X + destination.X, Y + destination.Y, GetPoint(X + source.X, Y + source.Y));
+				}
+			}
+		}
+
+		// TODO: DrawArc
+		// TODO: DrawBeizer
+		// TODO: DrawBeizers
+		// TODO: DrawClosedCurve
+		// TODO: DrawCurve
+		// TODO: DrawElipse
+
+		private void DrawImageInternal(Image image, int X, int Y, int cutWidth, int cutHeight, int startX, int startY, bool AlphaBlending)
+		{
+			if (AlphaBlending)
+			{
+				for (int h = startY; h < cutHeight; h++)
+				{
+					for (int w = startX; w < cutWidth; w++)
+					{
+						uint foreground = image.RawData[(cutWidth * h) + w];
+						int fA = (byte)((foreground >> 24) & 0xFF);
+
+						if (fA != 0)
+						{
+							//if (w > image.Width || h > image.Height || w <= image.Width || h <= image.Height)
+							//{
+							//								foreground = 0xFFFFFF;
+							//}
+							DrawPoint(X + w, Y + h, foreground, true);
+						}
+					}
+				}
+			} else
+			{
+				for (int h = startY; h < cutHeight; h++)
+				{
+					for (int w = startX; w < cutWidth; w++)
+					{
+						uint color = image.RawData[(cutWidth * h) + w];
+						//if (w > image.Width || h > image.Height || w <= image.Width || h <= image.Height)
+						//{
+						//							color = 0xFFFFFF;
+						//}
+						DrawPoint(X + w, Y + h, color);
+					}
+				}
+			}
+		}
+
+		public void DrawImage(Image image, int x, int y, bool AlphaBlending = false)
+		{
+			DrawImageInternal(image, x, y, image.Width, image.Height, 0, 0, AlphaBlending);
+		}
+
+		public void DrawImage(Image image, int x, int y, int w, int h, bool AlphaBlending = false)
+		{
+			Image resized = image.ResizeImage(w, h);
+			DrawImageInternal(resized, x, y, resized.Width, resized.Height, 0, 0, AlphaBlending);
+		}
+
+		public void DrawImage(Image image, int x, int y, Rectangle srcRect, bool AlphaBlending = false)
+		{
+			DrawImageInternal(image, x, y, srcRect.Width, srcRect.Height, srcRect.X, srcRect.Y, AlphaBlending);
+		}
+
+		public void DrawImage(Image image, Point position, bool AlphaBlending = false)
+		{
+			DrawImageInternal(image, position.X, position.Y, image.Width, image.Height, 0, 0, AlphaBlending);
+		}
+
+		public void DrawImage(Image image, Rectangle destRect, bool AlphaBlending = false)
+		{
+			Image resized = image.ResizeImage(destRect.Width, destRect.Height);
+			DrawImageInternal(resized, destRect.X, destRect.Y, resized.Width, resized.Height, 0, 0, AlphaBlending);
+		}
+
+		public void DrawImage(Image image, Rectangle destRect, int srcX, int srcY, int srcWidth, int srcHeight, bool AlphaBlending = false)
+		{
+			Image resized = image.ResizeImage(destRect.Width, destRect.Height);
+			DrawImageInternal(resized, destRect.X, destRect.Y, srcWidth, srcHeight, srcX, srcY, AlphaBlending);
+		}
+
+		public void DrawImage(Image image, Rectangle destRect, Rectangle srcRect, bool AlphaBlending = false)
+		{
+			Image resized = image.ResizeImage(destRect.Width, destRect.Height);
+			DrawImageInternal(resized, destRect.X, destRect.Y, srcRect.Width, srcRect.Height, srcRect.X, srcRect.Y, AlphaBlending);
+		}
+
+		// TODO: Finish GDI+
 
 		public void FillRectangle(int X, int Y, int Width, int Height, uint Color)
 		{
@@ -115,122 +201,78 @@ namespace MOOS.Graph
 			return image;
 		}
 
-		public void DrawImage(int X, int Y, Image image, bool AlphaBlending = false)
+		/*public void DrawCircle(int x, int y, int radius, uint color)
 		{
-			if (AlphaBlending)
+			double i, angle, x1, y1;
+
+			for (i = 0; i < 360; i += 0.1)
 			{
-				for (int h = 0; h < image.Height; h++)
-				{
-					for (int w = 0; w < image.Width; w++)
-					{
-						uint foreground = image.RawData[(image.Width * h) + w];
-						int fA = (byte)((foreground >> 24) & 0xFF);
+				angle = i;
+				x1 = radius * Math.Cos(angle * Math.PI / 180);
+				y1 = radius * Math.Sin(angle * Math.PI / 180);
+				DrawPoint((int)(x + x1), (int)(y + y1), color, true);
+			}
+		}*/
+		public void DrawCircle(int x_center, int y_center, int radius, uint color)
+		{
+			int x = radius;
+			int y = 0;
+			int e = 0;
 
-						if (fA != 0)
-						{
-							DrawPoint(X + w, Y + h, foreground, true);
-						}
-					}
-				}
-			} else
+			while (x >= y)
 			{
-				int _x = 0;
-				int _y = 0;
-				int clip_x = 0;
-				int clip_y = 0;
+				DrawPoint(x_center + x, y_center + y, color);
+				DrawPoint(x_center + y, y_center + x, color);
+				DrawPoint(x_center - y, y_center + x, color);
+				DrawPoint(x_center - x, y_center + y, color);
+				DrawPoint(x_center - x, y_center - y, color);
+				DrawPoint(x_center - y, y_center - x, color);
+				DrawPoint(x_center + y, y_center - x, color);
+				DrawPoint(x_center + x, y_center - y, color);
 
-				if (X < 0)
+				y++;
+				if (e <= 0)
 				{
-					_x = X;
+					e += (2 * y) + 1;
 				}
-
-				if (Y < 0)
+				if (e > 0)
 				{
-					_y = Y;
+					x--;
+					e -= (2 * x) + 1;
 				}
+			}
+		}
+		public void FillCircle(int x0, int y0, int radius, uint color)
+		{
+			for (int x = -radius; x < radius; x++)
+			{
+				int height = (int)Math.Sqrt((radius * radius) - (x * x));
 
-				if (X + image.Width >= Width)
+				for (int y = -height; y < height; y++)
 				{
-					clip_x = X - (Width - image.Width - 1);
-				}
-
-				if (Y + image.Height >= Height)
-				{
-					clip_y = Y - (Height - image.Height - 1);
-				}
-
-				if (
-					_x! >= -image.Width &&
-					_y! >= -image.Height &&
-
-					clip_x < image.Width &&
-					clip_y < image.Height
-					)
-				{
-					fixed (uint* ptr = image.RawData)
-					{
-						for (int h = 1; h < image.Height + _y - clip_y + 1; h++)
-						{
-							Native.Movsd(VideoMemory + ((Width * (Y - _y + h)) + (X - _x)) + 1, ptr + ((h - _y) * image.Width) + 1 - _x, (ulong)(image.Width + _x - clip_x));
-						}
-					}
+					DrawPoint(x + x0, y + y0, color);
 				}
 			}
 		}
 
-		#region Xiaolin Wu's line algorithm
-		// swaps two numbers
-		private void Swap(int* a, int* b)
-		{
-			(*b, *a) = (*a, *b);
-		}
-
-		// returns absolute value of number
-		private float Absolute(float x)
-		{
-			return x < 0 ? -x : x;
-		}
-
-		//returns integer part of a floating point number
-		private int IPartOfNumber(float x)
-		{
-			return (int)x;
-		}
-
-		//rounds off a number
-		private int RoundNumber(float x)
-		{
-			return IPartOfNumber(x + 0.5f);
-		}
-
-		//returns fractional part of a number
-		private float FPartOfNumber(float x)
-		{
-			return x > 0 ? x - IPartOfNumber(x) : x - (IPartOfNumber(x) + 1);
-		}
-
-		//returns 1 - fractional part of number
-		private float RFPartOfNumber(float x)
-		{
-			return 1 - FPartOfNumber(x);
-		}
-
-		// draws a pixel on screen of given brightness
-		// 0<=brightness<=1. We can use your own library
-		// to draw on screen
-		private void DrawPoint(int x, int y, uint color, float Brightness)
-		{
-			byte A = (byte)((color >> 24) & 0xFF);
-			byte R = (byte)((color >> 16) & 0xFF);
-			byte G = (byte)((color >> 8) & 0xFF);
-			byte B = (byte)((color) & 0xFF);
-			A = (byte)(A * (1f - Brightness));
-			DrawPoint(x, y, Color.ToArgb(A, R, G, B));
-		}
-
 		public void DrawLine(int x0, int y0, int x1, int y1, uint color)
 		{
-			bool steep = Absolute(y1 - y0) > Absolute(x1 - x0);
+			void Swap(int* a, int* b)
+			{
+				(*b, *a) = (*a, *b);
+			}
+
+			float FPartOfNumber(float x)
+			{
+				return x > 0 ? x - (int)x : x - ((int)x + 1);
+			}
+
+			float RFPartOfNumber(float x)
+			{
+				return 1 - FPartOfNumber(x);
+			}
+
+			bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
 
 			// swap the co-ordinates if slope > 1 or we
 			// draw backwards
@@ -270,10 +312,10 @@ namespace MOOS.Graph
 					Color A = Color.FromArgb(color);
 
 					A.A = (byte)(1f - RFPartOfNumber(intersectY));
-					DrawPoint(IPartOfNumber(intersectY), x, A.ToArgb());
+					DrawPoint((int)intersectY, x, A.ToArgb());
 
 					A.A = (byte)(1f - FPartOfNumber(intersectY));
-					DrawPoint(IPartOfNumber(intersectY) - 1, x, A.ToArgb());
+					DrawPoint((int)intersectY - 1, x, A.ToArgb());
 
 					A.Dispose();
 
@@ -290,10 +332,10 @@ namespace MOOS.Graph
 					Color B = Color.FromArgb(color);
 
 					B.A = (byte)(1f - RFPartOfNumber(intersectY));
-					DrawPoint(x, IPartOfNumber(intersectY), B.ToArgb());
+					DrawPoint(x, (int)intersectY, B.ToArgb());
 
 					B.A = (byte)(1f - FPartOfNumber(intersectY));
-					DrawPoint(x, IPartOfNumber(intersectY) - 1, B.ToArgb());
+					DrawPoint(x, (int)intersectY - 1, B.ToArgb());
 
 					B.Dispose();
 					intersectY += gradient;
@@ -301,7 +343,7 @@ namespace MOOS.Graph
 			}
 
 		}
-		#endregion
+
 		#region SMNX Blur
 		/*
 		 * Copyright © 2018-2022 SMNX & private contributors

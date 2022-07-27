@@ -1,10 +1,8 @@
 ﻿#if HasGUI
+using System.Drawing;
 using MOOS.Driver;
 using MOOS.Graph;
 using MOOS.Misc;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 
 namespace MOOS.GUI
 {
@@ -15,34 +13,33 @@ namespace MOOS.GUI
 
         public Monitor(int X, int Y) : base(X, Y, 200, 200)
         {
-            this.Title = "System Monitor";
-            img = new Image(this.Width, this.Height);
+            Title = "System Monitor";
+            img = new Image(Width, Height);
             g = Graphics.FromImage(img);
-            g.Clear(0xFF222222);
+            g.Clear(Color.FromArgb(0xFF222222));
         }
 
-        int lastCPUUsage;
-
-        const int lineWidth = 5;
+        private int lastCPUUsage;
+        private const int lineWidth = 5;
 
         public override void OnDraw()
         {
             base.OnDraw();
 
 
-            if((Timer.Ticks % 10) == 0)
+            if ((Timer.Ticks % 10) == 0)
             {
-                int cpuUsage = (int)(100 -ThreadPool.CPUUsage);
+                int cpuUsage = (int)(100 - ThreadPool.CPUUsage);
 
                 g.FillRectangle(Width - lineWidth, 0, lineWidth, Height, 0xFF222222);
-                g.DrawLine(Width - lineWidth, (Height / 100) * lastCPUUsage, Width, (Height / 100) * cpuUsage, 0xFFFF0000);
+                g.DrawLine(Width - lineWidth, Height / 100 * lastCPUUsage, Width, Height / 100 * cpuUsage, 0xFFFF0000);
 
                 lastCPUUsage = cpuUsage;
 
-                g.Copy(-lineWidth, 0, 0, 0, Width, Height);
+                g.CopyFromScreen(-lineWidth, 0, 0, 0, new Size(Width, Height));
             }
 
-            Framebuffer.Graphics.DrawImage(X, Y, img, false);
+            Framebuffer.Graphics.DrawImage(img, X, Y, false);
         }
     }
 }

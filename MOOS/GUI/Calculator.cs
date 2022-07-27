@@ -1,18 +1,16 @@
 #if HasGUI
-using MOOS;
-using MOOS.Graph;
-using MOOS.GUI;
-using MOOS.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using MOOS.Graph;
+using MOOS.GUI.Widgets;
 
 namespace MOOS.GUI
 {
-    class Calculator : Window
+    internal class Calculator : Window
     {
-        Image image;
-        Graphics g;
+        private Image image;
+        private Graphics g;
 
         public unsafe Calculator(int X, int Y) : base(X, Y, 270, 140)
         {
@@ -23,9 +21,11 @@ namespace MOOS.GUI
 #endif
             Btns = new List<Button>();
 
-            image = new Image(this.Width, this.Height);
+            image = new Image(Width, Height);
             fixed (uint* p = image.RawData)
-            g = new Graphics(image.Width, image.Height, p);
+            {
+                g = new Graphics(image.Width, image.Height, p);
+            }
 
             PressedButton = new();
 
@@ -75,10 +75,10 @@ namespace MOOS.GUI
         {
             base.OnDraw();
 
-            Framebuffer.Graphics.DrawImage(X, Y, image);
+            Framebuffer.Graphics.DrawImage(image, X, Y);
 
             string v = ValueToDisplay.ToString();
-            WindowManager.font.DrawString( X, Y + 2,v);
+            WindowManager.font.DrawString(X, Y + 2, v);
 
             if (Pressed)
             {
@@ -90,9 +90,8 @@ namespace MOOS.GUI
             v.Dispose();
         }
 
-        bool Pressed = false;
-
-        Button PressedButton;
+        private bool Pressed = false;
+        private Button PressedButton;
 
         public override void OnInput()
         {
@@ -104,7 +103,7 @@ namespace MOOS.GUI
                 {
                     for (int i = 0; i < Btns.Count; i++)
                     {
-                        if (Control.MousePosition.X > this.X + Btns[i].X && Control.MousePosition.X < this.X + Btns[i].X + Btns[i].Width && Control.MousePosition.Y > this.Y + Btns[i].Y && Control.MousePosition.Y < this.Y + Btns[i].Y + Btns[i].Height)
+                        if (Control.MousePosition.X > X + Btns[i].X && Control.MousePosition.X < X + Btns[i].X + Btns[i].Width && Control.MousePosition.Y > Y + Btns[i].Y && Control.MousePosition.Y < Y + Btns[i].Y + Btns[i].Height)
                         {
                             ProcessButton(Btns[i]);
                             PressedButton = Btns[i];
@@ -112,26 +111,23 @@ namespace MOOS.GUI
                         }
                     }
                 }
-            }
-            else
+            } else
             {
                 Pressed = false;
             }
         }
 
-        enum Opreation
+        private enum Opreation
         {
             None,
             Plus,
             Minus
         }
 
-        ulong Num1 = 0;
-        ulong Num2 = 0;
-
-        ulong ValueToDisplay = 0;
-
-        Opreation opreation = Opreation.None;
+        private ulong Num1 = 0;
+        private ulong Num2 = 0;
+        private ulong ValueToDisplay = 0;
+        private Opreation opreation = Opreation.None;
 
         private unsafe void ProcessButton(Button btn)
         {
@@ -139,55 +135,55 @@ namespace MOOS.GUI
             {
                 if (Num2 == 0)
                 {
-                    Num2 = (btn.Name[0] - 0x30UL);
-                }
-                else
+                    Num2 = btn.Name[0] - 0x30UL;
+                } else
                 {
                     Num2 *= 10;
-                    Num2 += (btn.Name[0] - 0x30UL);
+                    Num2 += btn.Name[0] - 0x30UL;
                 }
 
                 ValueToDisplay = Num2;
-            }
-            else if (btn.Name == "+")
+            } else if (btn.Name == "+")
             {
-                if (Num1 == 0) Num1 = Num2;
+                if (Num1 == 0)
+                {
+                    Num1 = Num2;
+                }
 
                 opreation = Opreation.Plus;
 
                 Num2 = 0;
-            }
-            else if (btn.Name == "-")
+            } else if (btn.Name == "-")
             {
-                if (Num1 == 0) Num1 = Num2;
+                if (Num1 == 0)
+                {
+                    Num1 = Num2;
+                }
 
                 opreation = Opreation.Minus;
 
                 Num2 = 0;
-            }
-            else if (btn.Name == "C")
+            } else if (btn.Name == "C")
             {
                 Num1 = 0;
                 Num2 = 0;
                 ValueToDisplay = 0;
-            }
-            else if (btn.Name == "=")
+            } else if (btn.Name == "=")
             {
                 if (opreation == Opreation.Plus)
                 {
                     Num1 += Num2;
-                }
-                else if (opreation == Opreation.Minus)
+                } else if (opreation == Opreation.Minus)
                 {
                     if (Num1 >= Num2)
+                    {
                         Num1 -= Num2;
-                    else
+                    } else
                     {
                         Num1 = 0;
                         Num2 = 0;
                     }
-                }
-                else if (opreation == Opreation.None)
+                } else if (opreation == Opreation.None)
                 {
                     Num2 = 0;
                 }
@@ -196,14 +192,14 @@ namespace MOOS.GUI
             }
         }
 
-        List<Button> Btns;
+        private List<Button> Btns;
 
 
         private void AddButton(int X, int Y, string s)
         {
             g.FillRectangle(X, Y, 60, 20, 0xFF333333);
             int i = WindowManager.font.MeasureString(s);
-            WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2,s,g);
+            WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2, s, g);
 
             Btns.Add(new Button()
             {

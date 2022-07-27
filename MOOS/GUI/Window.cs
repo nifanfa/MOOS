@@ -1,7 +1,6 @@
 #if HasGUI
 
 using System.Windows.Forms;
-using MOOS.Graph;
 
 namespace MOOS.GUI
 {
@@ -100,7 +99,7 @@ namespace MOOS.GUI
             Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, 0xFF222222);
             DrawBorder();
 
-            Framebuffer.Graphics.DrawImage(CloseButtonX, CloseButtonY, WindowManager.CloseButton, true);
+            Framebuffer.Graphics.DrawImage(WindowManager.CloseButton, CloseButtonX, CloseButtonY, true);
         }
 
         public void DrawBorder(bool HasBar = true)

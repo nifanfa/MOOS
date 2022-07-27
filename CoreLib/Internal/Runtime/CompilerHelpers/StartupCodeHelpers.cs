@@ -1,8 +1,7 @@
-using Internal.Runtime.CompilerServices;
-#if Kernel
-#endif
 using System;
 using System.Runtime;
+using System.Runtime.InteropServices;
+using Internal.Runtime.CompilerServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
@@ -74,7 +73,6 @@ namespace Internal.Runtime.CompilerHelpers
 		[RuntimeExport("RhpPInvokeReturn")]
 		private static void RhpPinvokeReturn(IntPtr frame) { }
 
-#if Kernel
 		[RuntimeExport("RhpNewFast")]
 		private static unsafe object RhpNewFast(EEType* pEEType)
 		{
@@ -86,16 +84,17 @@ namespace Internal.Runtime.CompilerHelpers
 				size = ((size / 8) + 1) * 8;
 			}
 
-			IntPtr data = Allocator.Allocate(size);
+			IntPtr data = malloc(size);
 			object obj = Unsafe.As<IntPtr, object>(ref data);
-			Allocator.ZeroFill(data, size);
+			MemSet((byte*)data, 0, (int)size);
 			*(IntPtr*)data = (IntPtr)pEEType;
 
 			return obj;
 		}
-#endif
 
-#if Kernel
+		[DllImport("*")]
+		public static extern nint malloc(ulong size);
+
 		[RuntimeExport("RhpNewArray")]
 		internal static unsafe object RhpNewArray(EEType* pEEType, int length)
 		{
@@ -107,18 +106,17 @@ namespace Internal.Runtime.CompilerHelpers
 				size = ((size / 8) + 1) * 8;
 			}
 
-			IntPtr data = Allocator.Allocate(size);
+			IntPtr data = malloc(size);
 			object obj = Unsafe.As<IntPtr, object>(ref data);
-			Allocator.ZeroFill(data, size);
+			MemSet((byte*)data, 0, (int)size);
 			*(IntPtr*)data = (IntPtr)pEEType;
 
 			byte* b = (byte*)data;
 			b += sizeof(IntPtr);
-			Allocator.MemoryCopy((IntPtr)b, (IntPtr)(&length), sizeof(int));
+			MemCpy(b, (byte*)&length, sizeof(int));
 
 			return obj;
 		}
-#endif
 
 		[RuntimeExport("RhpAssignRef")]
 		private static unsafe void RhpAssignRef(void** address, void* obj)
@@ -182,7 +180,6 @@ namespace Internal.Runtime.CompilerHelpers
 			}
 		}
 
-#if Kernel
 		public static void InitializeModules(IntPtr Modules)
 		{
 			for (int i = 0; ; i++)
@@ -209,9 +206,6 @@ namespace Internal.Runtime.CompilerHelpers
 				}
 			}
 		}
-#endif
-
-#if Kernel
 		private static unsafe void InitializeStatics(IntPtr rgnStart, IntPtr rgnEnd)
 		{
 			for (IntPtr* block = (IntPtr*)rgnStart; block < (IntPtr*)rgnEnd; block++)
@@ -232,12 +226,11 @@ namespace Internal.Runtime.CompilerHelpers
 						}
 					}
 
-					IntPtr handle = Allocator.Allocate((ulong)sizeof(IntPtr));
+					IntPtr handle = malloc((ulong)sizeof(IntPtr));
 					*(IntPtr*)handle = Unsafe.As<object, IntPtr>(ref obj);
 					*pBlock = handle;
 				}
 			}
 		}
-#endif
 	}
 }

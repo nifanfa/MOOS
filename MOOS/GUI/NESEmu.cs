@@ -1,5 +1,4 @@
 #if HasGUI
-using MOOS.Graph;
 using MOOS.Misc;
 
 namespace MOOS.GUI
@@ -54,7 +53,7 @@ namespace MOOS.GUI
         public override void OnDraw()
         {
             base.OnDraw();
-            Framebuffer.Graphics.DrawImage(X, Y, nes.gameRender.image, false);
+            Framebuffer.Graphics.DrawImage(nes.gameRender.image, X, Y, false);
         }
 
         public static void RunGame()

@@ -43,8 +43,8 @@ namespace MOOS.GUI
             Animator.AddAnimation(a0);
             while (a0.Value < a0.MaximumValue)
             {
-                Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), i, (byte)a0.Value);
+                Framebuffer.Graphics.Clear(Color.Black);
+                Framebuffer.Graphics.DrawImage(i, (Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), (byte)a0.Value);
                 Framebuffer.Update();
             }
             a0.Dispose();
@@ -69,13 +69,13 @@ namespace MOOS.GUI
             Animator.AddAnimation(a1);
             while (a1.Value < Program.Wallpaper.Height)
             {
-                Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2) - a1.Value, i, false);
+                Framebuffer.Graphics.Clear(Color.Black);
+                Framebuffer.Graphics.DrawImage(i, (Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2) - a1.Value, false);
                 Framebuffer.Update();
             }
             a1.Dispose();
 
-            Framebuffer.Graphics.Clear(0x0);
+            Framebuffer.Graphics.Clear(Color.Black);
             Framebuffer.Update();
 
             i.Dispose();
@@ -83,7 +83,7 @@ namespace MOOS.GUI
 
         private static void DrawLockscreenUI()
         {
-            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), Program.Wallpaper, false);
+            Framebuffer.Graphics.DrawImage(Program.Wallpaper, (Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), false);
 
             /* Standard Time */
             // string s = (RTC.Minute < 10 ? $"{RTC.Hour - (RTC.Hour > 12 ? 12 : 0)}:0{RTC.Minute}" : $"{RTC.Hour - (RTC.Hour > 12 ? 12 : 0)}:{RTC.Minute}") + (RTC.Hour > 12 ? "PM" : "AM");

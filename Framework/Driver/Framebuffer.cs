@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Windows.Forms;
 using MOOS.Graph;
 
@@ -12,10 +13,6 @@ namespace MOOS
         public static ushort Height;
 #pragma warning restore CA2211 // Non-constant fields should not be visible
 
-        //#pragma warning disable CA2211 // Non-constant fields should not be visible
-        //public static uint* VideoMemory;
-        //#pragma warning restore CA2211 // Non-constant fields should not be visible
-
 #pragma warning disable CA2211 // Non-constant fields should not be visible
         public static uint* FirstBuffer;
 #pragma warning restore CA2211 // Non-constant fields should not be visible
@@ -26,11 +23,11 @@ namespace MOOS
 #pragma warning disable CA2211 // Non-constant fields should not be visible
         public static Graphics Graphics;
 #pragma warning restore CA2211 // Non-constant fields should not be visible
-        private static bool _TripleBuffered = false;
+        private static bool _DoubleBuffered = false;
 
-        public static bool TripleBuffered
+        public static bool DoubleBuffered
         {
-            get => _TripleBuffered;
+            get => _DoubleBuffered;
             set
             {
                 if (Graphics == null)
@@ -38,13 +35,16 @@ namespace MOOS
                     return;
                 }
 
-                if (_TripleBuffered == value)
+                if (_DoubleBuffered == value)
                 {
                     return;
                 }
-
-                Graphics.Clear(0x0);
-                _TripleBuffered = value;
+                if (!value)
+                {
+                    Console.Clear();
+                }
+                Graphics.Clear(Color.FromArgb(0x0));
+                _DoubleBuffered = value;
                 Graphics.VideoMemory = value ? SecondBuffer : FirstBuffer;
                 Update();
             }
@@ -52,7 +52,7 @@ namespace MOOS
 
         public static void Update()
         {
-            if (_TripleBuffered)
+            if (_DoubleBuffered)
             {
                 for (int i = 0; i < Width * Height; i++)
                 {

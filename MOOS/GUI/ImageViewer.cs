@@ -1,6 +1,5 @@
 #if HasGUI
 using System.Drawing;
-using MOOS.Graph;
 
 namespace MOOS.GUI
 {
@@ -24,7 +23,7 @@ namespace MOOS.GUI
 
             if (image != null)
             {
-                Framebuffer.Graphics.DrawImage(X + (Width / 2) - (image.Width / 2), Y + (Height / 2) - (image.Height / 2), image);
+                Framebuffer.Graphics.DrawImage(image, X + (Width / 2) - (image.Width / 2), Y + (Height / 2) - (image.Height / 2));
             }
         }
 

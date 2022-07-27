@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerHelpers;
@@ -20,7 +21,7 @@ namespace MOOS.Misc
 			GC.AllowCollect = false;
 #endif
 
-			PageTable.Initialise();
+			PageTable.Initialize();
 
 			ASC16.Initialize();
 
@@ -28,7 +29,7 @@ namespace MOOS.Misc
 			if (info->PhysBase != 0)
 			{
 				Framebuffer.Initialize(info->ScreenWidth, info->ScreenHeight, (uint*)info->PhysBase);
-				Framebuffer.Graphics.Clear(0x0);
+				Framebuffer.Graphics.Clear(Color.Black);
 			} else
 			{
 				for (; ; )

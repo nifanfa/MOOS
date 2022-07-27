@@ -332,17 +332,24 @@ namespace System.Drawing
 
 		public uint ToArgb()
 		{
-			return ToArgb(A, R, G, B);
+			return (uint)((A << 24) | (R << 16) | (G << 8) | B);
 		}
 
-		public static uint ToRgb(byte r, byte g, byte b)
+		public static Color FromArgb(uint argb)
 		{
-			return (uint)((0xFF << 24) | (r << 16) | (g << 8) | b);
+			return new Color() { A = (byte)((argb >> 24) & 0xFF), R = (byte)((argb >> 16) & 0xFF), G = (byte)((argb >> 8) & 0xFF), B = (byte)((argb) & 0xFF) };
 		}
 
-		public static uint ToArgb(byte a, byte r, byte g, byte b)
+		public static Color FromArgb(byte alpha, Color rgb)
 		{
-			return (uint)((a << 24) | (r << 16) | (g << 8) | b);
+			uint argb = rgb.ToArgb();
+			return new Color()
+			{
+				A = alpha,
+				R = (byte)((argb >> 16) & 0xFF),
+				G = (byte)((argb >> 8) & 0xFF),
+				B = (byte)((argb) & 0xFF)
+			};
 		}
 
 		public static Color FromArgb(byte red, byte green, byte blue)
@@ -355,9 +362,7 @@ namespace System.Drawing
 			return new Color() { A = alpha, R = red, G = green, B = blue };
 		}
 
-		public static Color FromArgb(uint argb)
-		{
-			return new Color() { A = (byte)((argb >> 24) & 0xFF), R = (byte)((argb >> 16) & 0xFF), G = (byte)((argb >> 8) & 0xFF), B = (byte)((argb) & 0xFF) };
-		}
+
+
 	}
 }

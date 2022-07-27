@@ -1,7 +1,6 @@
 #if HasGUI
 using System.Drawing;
 using MOOS.FS;
-using MOOS.Graph;
 using MOOS.Misc;
 
 namespace MOOS.GUI
@@ -23,7 +22,7 @@ namespace MOOS.GUI
         public override void OnDraw()
         {
             base.OnDraw();
-            Framebuffer.Graphics.DrawImage(X, Y, img);
+            Framebuffer.Graphics.DrawImage(img, X, Y);
 #if Chinese
             WindowManager.font.DrawString(X, Y + img.Height, "欢迎使用Moos(原Mosa)操作系统!\n这个项目的目标是实现一款麻雀虽小但五脏俱全的操作系统.\n源码: https://github.com/nifanfa/Moos!", Width);
 #else

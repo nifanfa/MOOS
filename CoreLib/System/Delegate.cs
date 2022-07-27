@@ -1,14 +1,11 @@
-﻿#if Kernel
-#endif
-
-namespace System
+﻿namespace System
 {
 	public abstract class Delegate
 	{
-		protected internal object m_firstParameter;
-		protected internal object m_helperObject;
-		protected internal IntPtr m_extraFunctionPointerOrData;
-		protected internal IntPtr m_functionPointer;
+		public object m_firstParameter;
+		public object m_helperObject;
+		public IntPtr m_extraFunctionPointerOrData;
+		public IntPtr m_functionPointer;
 #nullable enable
 		public static Delegate? Combine(Delegate? a, Delegate? b)
 #nullable disable
