@@ -63,6 +63,7 @@ namespace MOOS
         public static void API_WriteString(string s) 
         {
             Console.Write(s);
+            s.Dispose();
         }
 
         public static uint API_Width() => Framebuffer.Width;
