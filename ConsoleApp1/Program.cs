@@ -44,31 +44,15 @@ namespace ConsoleApp1
         [RuntimeExport("malloc")]
         public static nint malloc(ulong size) => Allocate(size);
 
+        [DllImport("WriteString")]
+        public static extern void WriteString(string s);
+
         [RuntimeExport("Main")]
         public static void Main()
         {
             SwitchToConsoleMode();
 
-            Write('C');
-            Write('o');
-            Write('n');
-            Write('t');
-            Write('e');
-            Write('n');
-            Write('t');
-            Write(' ');
-            Write('o');
-            Write('f');
-            Write(' ');
-            Write('T');
-            Write('e');
-            Write('x');
-            Write('t');
-            Write('.');
-            Write('t');
-            Write('x');
-            Write('t');
-            Write(':');
+            WriteString("Content of Text.txt is: ");
 
             ReadAllBytes("Text.txt", out var size, out var data);
             for(ulong i = 0; i < size; i++) 
