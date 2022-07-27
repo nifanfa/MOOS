@@ -13,7 +13,7 @@ namespace System.Collections.Generic
         {
             get 
             {
-                if (Length == 0) return default;
+                if (Count == 0) return default;
                 else 
                 {
                     return list[list.Count - 1];
@@ -25,7 +25,7 @@ namespace System.Collections.Generic
         {
             get
             {
-                if (Length == 0) return default;
+                if (Count == 0) return default;
                 else
                 {
                     return list[0];
@@ -33,7 +33,7 @@ namespace System.Collections.Generic
             }
         }
 
-        public int Length => list.Count;
+        public int Count => list.Count;
 
 
         public void Enqueue(T item)

@@ -45,10 +45,21 @@ namespace MOOS
                     return (delegate*<void>)&API_Lock;
                 case "Unlock":
                     return (delegate*<void>)&API_Unlock;
+                case "Clear":
+                    return (delegate*<uint, void>)&API_Clear;
+                case "Update":
+                    return (delegate*<void>)&API_Update;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
         }
+
+        public static void API_Update()
+        {
+            Framebuffer.Update();
+        }
+
+        public static void API_Clear(uint color) => Framebuffer.Graphics.Clear(color);
 
         [RuntimeExport("DebugWrite")]
         public static void API_DebugWrite(char c)
@@ -91,10 +102,7 @@ namespace MOOS
 
         public static void API_DrawPoint(int x, int y, uint color)
         {
-            if (!Framebuffer.TripleBuffered) 
-            {
-                Framebuffer.Graphics.DrawPoint(x, y, color);
-            }
+            Framebuffer.Graphics.DrawPoint(x, y, color);
         }
 
         public static void API_SwitchToConsoleMode() 

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Build": {
+      "commandName": "Executable",
+      "executablePath": "cmd.exe",
+      "commandLineArgs": "/c dotnet publish -r win-x64 -c debug NESPortable",
+      "workingDirectory": "..\\"
+    }
+  }
+}
