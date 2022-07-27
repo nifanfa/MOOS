@@ -9,6 +9,12 @@ namespace NES
     {
         //Warning: This program doesn't have input support!
 
+        [DllImport("Width")]
+        public static extern uint Width();
+
+        [DllImport("Height")]
+        public static extern uint Height();
+
         [RuntimeExport("malloc")]
         public static nint malloc(ulong size) => Allocate(size);
 
