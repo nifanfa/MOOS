@@ -6,12 +6,6 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 		
-		<!--CustomizeReferences-->
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
-		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
-
 		<Optimize>true</Optimize>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
@@ -23,6 +17,14 @@
 		<!--Make the code faster!-->
 		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
 	</PropertyGroup>
+
+	<!--CustomizeReferences-->
+	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
+		<ItemGroup>
+			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
+			<ReferencePath Remove="@(ReferencePath)" />
+		</ItemGroup>
+	</Target>
 
 	<ItemGroup>
 		<LinkerArg Include="/filealign:0x1000" />
