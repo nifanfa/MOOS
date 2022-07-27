@@ -49,10 +49,18 @@ namespace MOOS
                     return (delegate*<uint, void>)&API_Clear;
                 case "Update":
                     return (delegate*<void>)&API_Update;
+                case "Width":
+                    return (delegate*<uint>)&API_Width;
+                case "Height":
+                    return (delegate*<uint>)&API_Height;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
         }
+
+        public static uint API_Width() => Framebuffer.Width;
+
+        public static uint API_Height() => Framebuffer.Height;
 
         public static void API_Update()
         {

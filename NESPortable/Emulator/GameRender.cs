@@ -23,12 +23,15 @@ namespace NES
                 int w = 0;
                 int h = 0;
 
+                uint fbWidth = Program.Width();
+                uint fbHeight = Program.Height();
+
                 for (int i = 0; i < byteToWrite.Length; i += 4)
                 {
                     Color color = Color.FromArgb(byteToWrite[i + 3], byteToWrite[i + 2], byteToWrite[i + 1], byteToWrite[i + 0]);
                     if (color.A != 0)
                     {
-                        Program.DrawPoint(w, h, color.ToArgb());
+                        Program.DrawPoint((int)((fbWidth/2) - (256/2) + w), (int)((fbHeight / 2) - (240 / 2) + h), color.ToArgb());
                     }
                     //
                     w++;
