@@ -53,9 +53,16 @@ namespace MOOS
                     return (delegate*<uint>)&API_Width;
                 case "Height":
                     return (delegate*<uint>)&API_Height;
+                case "WriteString":
+                    return (delegate*<string, void>)&API_WriteString;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        public static void API_WriteString(string s) 
+        {
+            Console.Write(s);
         }
 
         public static uint API_Width() => Framebuffer.Width;
