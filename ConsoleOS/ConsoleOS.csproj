@@ -6,12 +6,6 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 
-		<!--CustomizeReferences-->
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-		<DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
-		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
-
 		<Optimize>true</Optimize>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
@@ -25,6 +19,14 @@
 		<!--Make the code faster!-->
 		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
 	</PropertyGroup>
+
+	<!--CustomizeReferences-->
+	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
+		<ItemGroup>
+			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
+			<ReferencePath Remove="@(ReferencePath)" />
+		</ItemGroup>
+	</Target>
 
 	<ItemGroup>
 		<NativeLibrary Include="$(MSBuildStartupDirectory)\x64\Debug\NativeLib.lib" />
