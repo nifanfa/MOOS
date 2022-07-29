@@ -26,13 +26,10 @@ namespace CosmosKernel1
         [RuntimeExport("KMain")]
         static void KMain()
         {
-            lock (null)
-            {
-                MOOS.Console.WriteLine("Entering Cosmos Kernel");
-                Kernel kernel = new Kernel();
-                kernel.BeforeRun();
-                for (; ; ) kernel.Run();
-            }
+            MOOS.Console.WriteLine("Entering Cosmos Kernel");
+            Kernel kernel = new Kernel();
+            kernel.BeforeRun();
+            for (; ; ) kernel.Run();
         }
 
         public static uint screenWidth = 640;
