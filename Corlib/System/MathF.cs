@@ -14,7 +14,7 @@ namespace System
         static extern void _fsqrt(float* x);
 
         [DllImport("*")]
-        static extern void frndint(float* x);
+        static extern void _frndint(float* x);
 
         public static float Sin(float x) 
         {
@@ -41,7 +41,7 @@ namespace System
 
         public static float Round(float x)
         {
-            frndint(&x);
+            _frndint(&x);
             return x;
         }
 
