@@ -23,14 +23,14 @@ namespace MOOS.FS
         Archive = 0x20,
     }
 
-    public abstract class File
+    public abstract class FileSystem
     {
         /// <summary>
         /// This will be overwritten if you initialize file system
         /// </summary>
-        public static File Instance;
+        public static FileSystem Instance;
 
-        public File()
+        public FileSystem()
         {
             Instance = this;
         }
