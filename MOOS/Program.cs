@@ -293,7 +293,7 @@ unsafe class Program
 #region ConsoleHotKey
             if (
                 Keyboard.KeyInfo.Key == ConsoleKey.T &&
-                Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Ctrl) &&
+                Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control) &&
                 Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt)
                 )
             {

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>86e84b0f-9ede-4f25-ad24-75b350d6cb26</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Cosmos</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Core\ACPI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\CPU.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HAL\IOPort.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HAL\MemoryBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HAL\PCI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HAL\PCIDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\FileSystem\CosmosVFS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\FileSystem\VFS\VFSBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\FileSystem\VFS\VFSManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Graphics\Bitmap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Graphics\Canvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Graphics\FullScreenCanvas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Graphics\Image.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Kernel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\KeyboardManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\KeyEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\MouseManager.cs" />
+  </ItemGroup>
+</Project>

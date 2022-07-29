@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "QEMU": {
+      "commandName": "Executable",
+      "executablePath": "cmd.exe",
+      "commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug CosmosKernel1",
+      "workingDirectory": "..\\"
+    }
+  }
+}

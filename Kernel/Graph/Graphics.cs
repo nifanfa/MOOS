@@ -9,16 +9,16 @@ namespace MOOS.Graph
         public int Width;
         public int Height;
 
-        public Graphics(int width,int height,uint* vm)
+        public Graphics(int width,int height,void* vm)
         {
             this.Width = width;
             this.Height = height;
-            this.VideoMemory = vm;
+            this.VideoMemory = (uint*)vm;
         }
 
         public static Graphics FromImage(Image img)
         {
-            fixed (uint* ptr = img.RawData)
+            fixed (int* ptr = img.RawData)
                 return new Graphics(img.Width, img.Height, ptr);
         }
 
@@ -116,9 +116,9 @@ namespace MOOS.Graph
         public virtual Image Save()
         {
             Image image = new Image(Width, Height);
-            fixed (uint* ptr = image.RawData)
+            fixed (int* ptr = image.RawData)
             {
-                Native.Movsd(ptr, VideoMemory, (ulong)(Width * Height));
+                Native.Movsd((uint*)ptr, VideoMemory, (ulong)(Width * Height));
             }
             return image;
         }
@@ -128,7 +128,7 @@ namespace MOOS.Graph
             for (int h = 0; h < image.Height; h++)
                 for (int w = 0; w < image.Width; w++)
                 {
-                    uint foreground = image.RawData[image.Width * h + w];
+                    uint foreground = (uint)image.RawData[image.Width * h + w];
                     foreground &= ~0xFF000000;
                     foreground |= (uint)alpha << 24;
                     int fA = (byte)((foreground >> 24) & 0xFF);
@@ -147,7 +147,7 @@ namespace MOOS.Graph
                 for (int h = 0; h < image.Height; h++)
                     for (int w = 0; w < image.Width; w++)
                     {
-                        uint foreground = image.RawData[image.Width * h + w];
+                        uint foreground = (uint)image.RawData[image.Width * h + w];
                         int fA = (byte)((foreground >> 24) & 0xFF);
 
                         if (fA != 0)
@@ -174,10 +174,10 @@ namespace MOOS.Graph
                     clip_x < image.Width &&
                     clip_y < image.Height
                     )
-                fixed(uint* ptr = image.RawData)
+                fixed(int* ptr = image.RawData)
                 for(int h = 1; h < image.Height + _y - clip_y + 1; h++) 
                 {
-                    Native.Movsd(VideoMemory + (Width * ((Y-_y) + h) + (X-_x)) + 1, ptr + ((h-_y) * image.Width) + 1 - _x, (ulong)(image.Width + _x - clip_x));
+                    Native.Movsd(VideoMemory + (Width * ((Y-_y) + h) + (X-_x)) + 1, (uint*)(ptr + ((h-_y) * image.Width) + 1 - _x), (ulong)(image.Width + _x - clip_x));
                 }
             }
         }

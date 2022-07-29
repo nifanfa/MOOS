@@ -1,5 +1,6 @@
 using Internal.Runtime.CompilerHelpers;
 using Internal.Runtime.CompilerServices;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -216,6 +217,15 @@ namespace System
             }
             vs.Dispose();
             return s;
+        }
+
+        internal string Remove(int startIndex)
+        {
+            fixed(char* ptr = this)
+            {
+                string s = new string(ptr, 0, Length - (startIndex+1));
+                return s;
+            }
         }
 
         public static string Format(string format, params object[] args) 

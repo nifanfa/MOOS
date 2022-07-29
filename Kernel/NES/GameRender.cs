@@ -22,7 +22,7 @@ namespace NES
         {
             lock(this)
             {
-                fixed (uint* ptr = image.RawData)
+                fixed (int* ptr = image.RawData)
                 {
                     Native.Stosd(ptr, XColor.ToArgb(), (ulong)(image.Width * image.Height));
                 }
@@ -35,7 +35,7 @@ namespace NES
                     Color color = Color.FromArgb(byteToWrite[i + 3], byteToWrite[i + 2], byteToWrite[i + 1], byteToWrite[i + 0]);
                     if (color.A != 0)
                     {
-                        image.RawData[image.Width * h + w] = color.ToArgb();
+                        image.RawData[image.Width * h + w] = (int)color.ToArgb();
                     }
                     //
                     w++;
