@@ -7,6 +7,6 @@ namespace System
         Alt = 1,
         Shift = 2,
         CapsLock = 3,
-        Ctrl = 4,
+        Control = 4,
     }
 }

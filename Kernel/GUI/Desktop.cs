@@ -121,9 +121,17 @@ namespace MOOS.GUI
                 ClickEvent(names[i].Name, names[i].Attribute == FileAttribute.Directory, X, Y, i + (IsAtRoot ? BuiltInAppNames.Length : 0));
 
                 if (
+                    (
                     names[i].Name[names[i].Name.Length - 3].ToUpper() == 'P' &&
                     names[i].Name[names[i].Name.Length - 2].ToUpper() == 'N' &&
                     names[i].Name[names[i].Name.Length - 1].ToUpper() == 'G'
+                    )
+                    ||
+                    (
+                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'B' &&
+                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'M' &&
+                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'P'
+                    )
                     )
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
@@ -320,6 +328,20 @@ namespace MOOS.GUI
             {
                 byte[] buffer = File.Instance.ReadAllBytes(path);
                 PNG png = new PNG(buffer);
+                buffer.Dispose();
+                imageViewer.SetImage(png);
+                png.Dispose();
+                WindowManager.MoveToEnd(imageViewer);
+                imageViewer.Visible = true;
+            }
+            else if (
+                name[name.Length - 3].ToUpper() == 'B' &&
+                name[name.Length - 2].ToUpper() == 'M' &&
+                name[name.Length - 1].ToUpper() == 'P'
+                )
+            {
+                byte[] buffer = File.Instance.ReadAllBytes(path);
+                Bitmap png = new Bitmap(buffer);
                 buffer.Dispose();
                 imageViewer.SetImage(png);
                 png.Dispose();

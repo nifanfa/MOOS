@@ -24,8 +24,8 @@ namespace MOOS.GUI
             Btns = new List<Button>();
 
             image = new Image(this.Width, this.Height);
-            fixed (uint* p = image.RawData)
-            g = new Graphics(image.Width, image.Height, p);
+            fixed (int* p = image.RawData)
+            g = new Graphics(image.Width, image.Height, (uint*)p);
 
             PressedButton = new();
 

@@ -65,7 +65,7 @@ namespace MOOS
             Keyboard.KeyInfo.ScanCode = b;
             Keyboard.KeyInfo.KeyState = b > 0x80 ? ConsoleKeyState.Released : ConsoleKeyState.Pressed;
 
-            SetIfKeyModifier(b, 0x1D, ConsoleModifiers.Ctrl);
+            SetIfKeyModifier(b, 0x1D, ConsoleModifiers.Control);
             SetIfKeyModifier(b, 0x2A, ConsoleModifiers.Shift);
             SetIfKeyModifier(b, 0x36, ConsoleModifiers.Shift);
             SetIfKeyModifier(b, 0x38, ConsoleModifiers.Alt);

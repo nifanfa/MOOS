@@ -2,7 +2,7 @@ namespace System.Drawing
 {
     public class Image
     {
-        public uint[] RawData;
+        public int[] RawData;
         public int Bpp;
         public int Width;
         public int Height;
@@ -12,7 +12,7 @@ namespace System.Drawing
             Width = width;
             Height = height;
             Bpp = 4;
-            RawData = new uint[width * height];
+            RawData = new int[width * height];
         }
 
         public Image()
@@ -22,7 +22,7 @@ namespace System.Drawing
 
         public uint GetPixel(int X, int Y)
         {
-            return RawData[Y * Width + X];
+            return (uint)RawData[Y * Width + X];
         }
 
         public Image ResizeImage(int NewWidth, int NewHeight)
@@ -33,7 +33,7 @@ namespace System.Drawing
             }
 
             int w1 = Width, h1 = Height;
-            uint[] temp = new uint[NewWidth * NewHeight];
+            int[] temp = new int[NewWidth * NewHeight];
 
             int x_ratio = ((w1 << 16) / NewWidth) + 1, y_ratio = ((h1 << 16) / NewHeight) + 1;
             int x2, y2;

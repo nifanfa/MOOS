@@ -43,8 +43,8 @@ namespace MOOS.GUI
 #endif
 
             img = new Image(this.Width, this.Height);
-            fixed (uint* p = img.RawData)
-                g = new Graphics(this.Width, this.Height, p);
+            fixed (int* p = img.RawData)
+                g = new Graphics(this.Width, this.Height, (uint*)p);
             g.Clear(0xFF222222);
 
             CurrentColor = 0xFFF0F0F0;
