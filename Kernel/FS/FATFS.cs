@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace MOOS.FS
 {
-    public unsafe class FATFS : File
+    public unsafe class FATFS : FileSystem
     {
         [DllImport("*")]
         private static extern void fatfs_init();

@@ -23,16 +23,19 @@ namespace MOOS.FS
         Archive = 0x20,
     }
 
-    public abstract class File
+    public static class File
     {
         /// <summary>
         /// This will be overwritten if you initialize file system
         /// </summary>
-        public static File Instance;
+        public static FileSystem Instance;
+    }
 
-        public File()
+    public abstract class FileSystem
+    {
+        public FileSystem()
         {
-            Instance = this;
+            File.Instance = this;
         }
 
         public abstract List<FileInfo> GetFiles(string Directory);
