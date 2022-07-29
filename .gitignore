@@ -362,12 +362,10 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 Tools/grub2/boot/kernel
-Kernel/Kernel.map
+Tools/Trampoline
 *.scoreboard
 *.vmem
 *.lck
 *.gz
 *.dmp
-Tools/Trampoline
-MOOS/Kernel.map
-ConsoleOS/Kernel.map
+*.map
