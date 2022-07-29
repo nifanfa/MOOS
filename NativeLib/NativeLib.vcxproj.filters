@@ -68,6 +68,9 @@
     <MASM Include="misc.asm">
       <Filter>源文件</Filter>
     </MASM>
+    <MASM Include="mathf.asm">
+      <Filter>源文件</Filter>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lodepng.h">
