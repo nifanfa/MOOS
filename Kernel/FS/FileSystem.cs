@@ -29,6 +29,9 @@ namespace MOOS.FS
         /// This will be overwritten if you initialize file system
         /// </summary>
         public static FileSystem Instance;
+
+        public static List<FileInfo> GetFiles(string Directory) => Instance.GetFiles(Directory);
+        public static byte[] ReadAllBytes(string name) => Instance.ReadAllBytes(name);
     }
 
     public abstract class FileSystem

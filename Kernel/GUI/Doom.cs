@@ -55,7 +55,7 @@ namespace MOOS.GUI
             di = new Image(640, 400);
             dg = Graphics.FromImage(di);
 
-            gb = File.Instance.ReadAllBytes("DOOM1.WAD");
+            gb = File.ReadAllBytes("DOOM1.WAD");
 
             Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
 
