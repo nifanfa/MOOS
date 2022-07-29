@@ -257,15 +257,14 @@ namespace System
         // Constructs a DateTime from a given year, month, day, hour,
         // minute, and second.
         //
-        /*
         public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
         {
             if (millisecond < 0 || millisecond >= MillisPerSecond)
             {
-                throw new ArgumentOutOfRangeException(nameof(millisecond), SR.Format(SR.ArgumentOutOfRange_Range, 0, MillisPerSecond - 1));
+                //throw new ArgumentOutOfRangeException(nameof(millisecond), SR.Format(SR.ArgumentOutOfRange_Range, 0, MillisPerSecond - 1));
             }
 
-            if (second == 60 && s_systemSupportsLeapSeconds && IsValidTimeWithLeapSeconds(year, month, day, hour, minute, second, DateTimeKind.Unspecified))
+            if (second == 60 /*&& s_systemSupportsLeapSeconds && IsValidTimeWithLeapSeconds(year, month, day, hour, minute, second, DateTimeKind.Unspecified)*/)
             {
                 // if we have leap second (second = 60) then we'll need to check if it is valid time.
                 // if it is valid, then we adjust the second to 59 so DateTime will consider this second is last second
@@ -276,11 +275,14 @@ namespace System
 
             long ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);
             ticks += millisecond * TicksPerMillisecond;
+            /*
             if (ticks < MinTicks || ticks > MaxTicks)
                 throw new ArgumentException(SR.Arg_DateTimeRange);
+            */
             _dateData = (ulong)ticks;
         }
 
+        /*
         public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, DateTimeKind kind)
         {
             if (millisecond < 0 || millisecond >= MillisPerSecond)
@@ -1129,14 +1131,30 @@ namespace System
                 RTC.Minute,
                 RTC.Second);
         */
-        public static DateTime Now =>
-            new DateTime(
-                0,
-                0,
-                0,
-                0,
-                0,
-                0);
+        public static DateTime Now
+        {
+            get
+            {
+                ulong time = GetTime();
+
+                int century =     (int)((time & 0xFF_00_00_00_00_00_00_00)>>56);
+                int year =        (int)((time & 0x00_FF_00_00_00_00_00_00)>>48);
+                int month =       (int)((time & 0x00_00_FF_00_00_00_00_00)>>40);
+                int day =         (int)((time & 0x00_00_00_FF_00_00_00_00)>>32);
+                int hour =        (int)((time & 0x00_00_00_00_FF_00_00_00)>>24);
+                int minute =      (int)((time & 0x00_00_00_00_00_FF_00_00)>>16);
+                int second =      (int)((time & 0x00_00_00_00_00_00_FF_00)>>8);
+
+                year += century * 100;
+
+                var date = new DateTime(year, month, day, hour, minute, second);
+
+                return date;
+            }
+        }
+
+        [DllImport("GetTime")]
+        public static extern ulong GetTime();
 
         // Returns the second part of this DateTime. The returned value is
         // an integer between 0 and 59.
@@ -1409,7 +1427,14 @@ namespace System
         {
             return DateTimeFormat.Format(this, format, provider);
         }
+        */
 
+        public override string ToString()
+        {
+            return $"{Year}/{Month}/{Day} {Hour}:{Minute}:{Second}";
+        }
+
+        /*
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) =>
             DateTimeFormat.TryFormat(this, destination, out charsWritten, format, provider);
 
