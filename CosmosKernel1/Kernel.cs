@@ -10,6 +10,8 @@ using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
 using Cosmos.System.Graphics;
 using MOOS.Driver;
+using MOOS.FS;
+using MOOS.Misc;
 using nifanfa.CosmosDrawString;
 using System;
 using System.Collections.Generic;
@@ -35,9 +37,9 @@ namespace CosmosKernel1
         public static uint screenWidth;
         public static uint screenHeight;
         public static Canvas vMWareSVGAII;
-        Sys.Graphics.Image bitmap;
+        Image bitmap;
         public static Bitmap programlogo;
-        Sys.Graphics.Image bootBitmap;
+        Image bootBitmap;
 
         int[] cursor = new int[]
             {
@@ -85,7 +87,9 @@ namespace CosmosKernel1
             screenWidth = (uint)vMWareSVGAII.Width;
             screenHeight = (uint)vMWareSVGAII.Height;
 
-            bootBitmap = new Bitmap(@"0:\boot.bmp");
+            //Who ever need .bmp
+            //bootBitmap = new Bitmap(File.ReadAllBytes(@"0:\boot.bmp"));
+            bootBitmap = new PNG(File.ReadAllBytes(@"0:\boot.png"));
             bootBitmap = bootBitmap.ResizeImage((int)screenWidth, (int)screenHeight);
 
             vMWareSVGAII.Clear(0x0);
@@ -94,22 +98,24 @@ namespace CosmosKernel1
 
             Timer.Sleep(1000);
 
-            bitmap = new Bitmap(@"0:\timg.bmp");
+            //Who ever need .bmp
+            //bitmap = new Bitmap(File.ReadAllBytes(@"0:\timg.bmp"));
+            bitmap = new PNG(File.ReadAllBytes(@"0:\timg.png"));
             bitmap = bitmap.ResizeImage((int)screenWidth, (int)screenHeight);
 
-            programlogo = new Bitmap(@"0:\program.bmp");
+            programlogo = new Bitmap(File.ReadAllBytes(@"0:\program.bmp"));
 
             uint r = 0;
             uint g = 0;
             uint b = 0;
-            for (uint i = 0; i < bitmap.rawData.Length; i++)
+            for (uint i = 0; i < bitmap.RawData.Length; i++)
             {
-                Color color = Color.FromArgb((uint)bitmap.rawData[i]);
+                Color color = Color.FromArgb((uint)bitmap.RawData[i]);
                 r += color.R;
                 g += color.G;
                 b += color.B;
             }
-            avgCol = Color.FromArgb((byte)(r / bitmap.rawData.Length), (byte)(g / bitmap.rawData.Length), (byte)(b / bitmap.rawData.Length));
+            avgCol = Color.FromArgb((byte)(r / bitmap.RawData.Length), (byte)(g / bitmap.RawData.Length), (byte)(b / bitmap.RawData.Length));
 
             MouseManager.ScreenWidth = (int)screenWidth;
             MouseManager.ScreenHeight = (int)screenHeight;

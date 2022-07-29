@@ -1,4 +1,5 @@
 ﻿using MOOS;
+using System.Drawing;
 
 namespace Cosmos.System.Graphics
 {
@@ -23,7 +24,7 @@ namespace Cosmos.System.Graphics
             {
                 for(int h = 0; h < image.Height; h++) 
                 {
-                    DrawPoint((uint)(X + w), (uint)(Y + h), (uint)image.rawData[h * image.Width + w]);
+                    DrawPoint((uint)(X + w), (uint)(Y + h), (uint)image.RawData[h * image.Width + w]);
                 }
             }
         }
