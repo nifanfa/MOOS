@@ -9,6 +9,7 @@ using Cosmos.System;
 using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
 using Cosmos.System.Graphics;
+using MOOS.Driver;
 using nifanfa.CosmosDrawString;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,8 @@ namespace CosmosKernel1
             vMWareSVGAII.Clear(0x0);
             vMWareSVGAII.DrawImage(bootBitmap, 0, 0);
             vMWareSVGAII.Update();
+
+            Timer.Sleep(1000);
 
             bitmap = new Bitmap(@"0:\timg.bmp");
             programlogo = new Bitmap(@"0:\program.bmp");
