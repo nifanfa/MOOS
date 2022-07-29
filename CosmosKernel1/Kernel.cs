@@ -32,12 +32,12 @@ namespace CosmosKernel1
             for (; ; ) kernel.Run();
         }
 
-        public static uint screenWidth = 640;
-        public static uint screenHeight = 480;
+        public static uint screenWidth;
+        public static uint screenHeight;
         public static Canvas vMWareSVGAII;
-        Bitmap bitmap;
+        Sys.Graphics.Image bitmap;
         public static Bitmap programlogo;
-        Bitmap bootBitmap;
+        Sys.Graphics.Image bootBitmap;
 
         int[] cursor = new int[]
             {
@@ -81,9 +81,12 @@ namespace CosmosKernel1
             CosmosVFS cosmosVFS = new CosmosVFS();
             VFSManager.RegisterVFS(cosmosVFS);
 
-            bootBitmap = new Bitmap(@"0:\boot.bmp");
-
             vMWareSVGAII = FullScreenCanvas.GetFullScreenCanvas();
+            screenWidth = (uint)vMWareSVGAII.Width;
+            screenHeight = (uint)vMWareSVGAII.Height;
+
+            bootBitmap = new Bitmap(@"0:\boot.bmp");
+            bootBitmap = bootBitmap.ResizeImage((int)screenWidth, (int)screenHeight);
 
             vMWareSVGAII.Clear(0x0);
             vMWareSVGAII.DrawImage(bootBitmap, 0, 0);
@@ -92,6 +95,8 @@ namespace CosmosKernel1
             Timer.Sleep(1000);
 
             bitmap = new Bitmap(@"0:\timg.bmp");
+            bitmap = bitmap.ResizeImage((int)screenWidth, (int)screenHeight);
+
             programlogo = new Bitmap(@"0:\program.bmp");
 
             uint r = 0;
