@@ -19,7 +19,7 @@ namespace MOOS.Graph
 
 #if HasGUI
             //Image from unsplash
-            Program.Wallpaper = new PNG(File.Instance.ReadAllBytes("Images/Wallpaper.png"));
+            Program.Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper.png"));
 #endif
         }
 

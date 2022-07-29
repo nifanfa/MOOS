@@ -40,7 +40,7 @@ namespace MOOS
         {
             string sname = string.FromASCII((System.IntPtr)name, strings.strlen(name));
             FILE file = new FILE();
-            byte[] buffer = File.Instance.ReadAllBytes(sname);
+            byte[] buffer = File.ReadAllBytes(sname);
             if(buffer == null) 
             {
                 Panic.Error("fopen: file not found!");
