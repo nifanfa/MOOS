@@ -146,7 +146,7 @@ namespace CosmosKernel1
 
             vMWareSVGAII.Clear(avgCol.ToArgb());
             vMWareSVGAII.DrawImage(bitmap, 0, 0);
-            logView.text = $"Time: ?? \nInstall RAM: {CPU.GetAmountOfRAM()}MB, Video RAM: ?? Bytes";
+            logView.text = $"Time: {DateTime.Now} \nInstall RAM: {CPU.GetAmountOfRAM()}MB, Video RAM: ?? Bytes";
 
             for(int i = 0; i < apps.Count; i++) 
             {

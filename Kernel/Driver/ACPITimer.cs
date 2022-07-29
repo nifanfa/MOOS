@@ -4,6 +4,10 @@
     {
         public const int Clock = 3579545;
 
+        public static uint Ticks => Native.In32(ACPI.FADT->PMTimerBlock);
+
+        public static bool Is32Bit => (ACPI.FADT->Flags >> 8) & 0x01;
+
         public static void Sleep(ulong Microseconds)
         {
             if (ACPI.FADT->PMTimerLength != 4) return;
@@ -14,14 +18,14 @@
 
             Clock = ACPITimer.Clock * Microseconds / 1000000;
 
-            Last = Native.In32(ACPI.FADT->PMTimerBlock);
+            Last = Ticks;
             Counter = 0;
             while (Counter < Clock)
             {
-                ulong Current = Native.In32(ACPI.FADT->PMTimerBlock);
+                ulong Current = Ticks;
                 if (Current < Last)
                 {
-                    Counter += (((ACPI.FADT->Flags >> 8) & 0x01) ? 0x100000000ul : 0x1000000) + Current - Last;
+                    Counter += (((Is32Bit) & 0x01) ? 0x100000000ul : 0x1000000) + Current - Last;
                 }
                 else
                 {

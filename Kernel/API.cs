@@ -55,9 +55,34 @@ namespace MOOS
                     return (delegate*<uint>)&API_Height;
                 case "WriteString":
                     return (delegate*<string, void>)&API_WriteString;
+                case "GetTime":
+                    return (delegate*<ulong>)&API_GetTime;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        public static ulong API_GetTime()
+        {
+            ulong century = RTC.Century;
+            ulong year = RTC.Year;
+            ulong month = RTC.Month;
+            ulong day = RTC.Day;
+            ulong hour = RTC.Hour;
+            ulong minute = RTC.Minute;
+            ulong second = RTC.Second;
+
+            ulong time = 0;
+
+            time |= century << 56;
+            time |= year << 48;
+            time |= month << 40;
+            time |= day << 32;
+            time |= hour << 24;
+            time |= minute << 16;
+            time |= second << 8;
+
+            return time;
         }
 
         public static void API_WriteString(string s) 
