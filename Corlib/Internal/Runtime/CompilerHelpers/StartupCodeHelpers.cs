@@ -164,6 +164,9 @@ namespace Internal.Runtime.CompilerHelpers
                 {
                     if (sections[k].SectionId == ReadyToRunSectionType.GCStaticRegion)
                         InitializeStatics(sections[k].Start, sections[k].End);
+
+                    if (sections[k].SectionId == ReadyToRunSectionType.EagerCctor)
+                        RunEagerClassConstructors(sections[k].Start, sections[k].End);
                 }
             }
 
@@ -171,6 +174,14 @@ namespace Internal.Runtime.CompilerHelpers
                 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
             DateTime.s_daysToMonth366 = new int[]{
                 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 };
+        }
+
+        private static unsafe void RunEagerClassConstructors(IntPtr cctorTableStart, IntPtr cctorTableEnd)
+        {
+            for (IntPtr* tab = (IntPtr*)cctorTableStart; tab < (IntPtr*)cctorTableEnd; tab++)
+            {
+                ((delegate*<void>)(*tab))();
+            }
         }
 
         static unsafe void InitializeStatics(IntPtr rgnStart, IntPtr rgnEnd)
