@@ -9,12 +9,15 @@ namespace Cosmos.System.Graphics
             Framebuffer.TripleBuffered = true;
         }
 
+        public int Width => Framebuffer.Graphics.Width;
+        public int Height => Framebuffer.Graphics.Height;
+
         internal void Update()
         {
             Framebuffer.Update();
         }
 
-        internal unsafe void DrawImage(Bitmap image, int X, int Y)
+        internal unsafe void DrawImage(Image image, int X, int Y)
         {
             for(int w = 0; w < image.Width; w++) 
             {
