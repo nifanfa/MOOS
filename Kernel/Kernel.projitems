@@ -45,7 +45,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)FS\Disk.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\FAT32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\FATFS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FS\FileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FS\File.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Graph\Graphics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Graph\VMWareSVGAIIGraphics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Calculator.cs" />

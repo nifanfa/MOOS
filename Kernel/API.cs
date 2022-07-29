@@ -128,7 +128,7 @@ namespace MOOS
 
         public static void API_ReadAllBytes(string name,ulong* length,byte** data) 
         {
-            byte[] buffer = FileSystem.Instance.ReadAllBytes(name);
+            byte[] buffer = File.Instance.ReadAllBytes(name);
 
             *data = (byte*)Allocator.Allocate((ulong)buffer.Length);
             *length = (ulong)buffer.Length;
