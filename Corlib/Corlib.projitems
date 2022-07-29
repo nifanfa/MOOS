@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\ModuleHeaders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\RuntimeConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\MathF.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\MulticastDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Nullable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DataDirectory.cs" />
