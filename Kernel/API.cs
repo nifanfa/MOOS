@@ -61,9 +61,16 @@ namespace MOOS
                     return (delegate*<ulong>)&API_GetTime;
                 case "DrawImage":
                     return (delegate*<int,int,Image,void>)&API_DrawImage;
+                case "Error":
+                    return (delegate*<string, bool, void>)&API_Error;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        public static void API_Error(string s,bool skippable)
+        {
+            Panic.Error(s,skippable);
         }
 
         public static ulong API_GetTime()
