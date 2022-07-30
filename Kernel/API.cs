@@ -98,9 +98,6 @@ namespace MOOS
 
         public static void API_DrawImage(int X, int Y, Image image)
         {
-            Debug.WriteLine($"Width: {image.Width}");
-            Debug.WriteLine($"Height: {image.Height}");
-
             Framebuffer.Graphics.DrawImage(X, Y, image, false);
         }
 
