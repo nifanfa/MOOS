@@ -1,5 +1,7 @@
 ﻿global using NES;
+using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
 
@@ -65,6 +67,9 @@ namespace NES
 
         [DllImport("Update")]
         public static extern void Update();
+
+        [DllImport("DrawImage")]
+        public static extern void DrawImage(int X, int Y, IntPtr image);
 
         [RuntimeExport("Main")]
         public static void Main()

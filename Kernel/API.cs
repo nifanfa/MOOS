@@ -1,8 +1,10 @@
+using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime;
 using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
@@ -57,6 +59,8 @@ namespace MOOS
                     return (delegate*<string, void>)&API_WriteString;
                 case "GetTime":
                     return (delegate*<ulong>)&API_GetTime;
+                case "DrawImage":
+                    return (delegate*<int,int,Image,void>)&API_DrawImage;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
@@ -83,6 +87,14 @@ namespace MOOS
             time |= second << 8;
 
             return time;
+        }
+
+        public static void API_DrawImage(int X, int Y, Image image)
+        {
+            Debug.WriteLine($"Width: {image.Width}");
+            Debug.WriteLine($"Height: {image.Height}");
+
+            Framebuffer.Graphics.DrawImage(X, Y, image, false);
         }
 
         public static void API_WriteString(string s) 
