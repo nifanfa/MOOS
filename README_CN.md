@@ -1,8 +1,8 @@
 # MOOS  
 欢迎来到 *MOOS(to make **M**y **O**wn **O**perating **S**ystem)-项目*
 > MOOS 是一个使用微软Native AOT技术编译的C# 64位操作系统.
-
-[![Discord Shield](https://discordapp.com/api/guilds/987075686256762890/widget.png?style=shield)](https://discord.gg/uJstXbx8Pt)
+  
+作者QQ: 3244735564  
 
 *请看下面的截图*
 
