@@ -28,7 +28,6 @@ namespace System
         public Object() { }
         ~Object() { }
 
-
         public virtual bool Equals(object o)
             => false;
 
@@ -38,7 +37,6 @@ namespace System
         public virtual string ToString()
             => "System.Object";
 
-
         public virtual void Dispose()
         {
             var obj = this;
@@ -46,6 +44,8 @@ namespace System
         }
 
         public static implicit operator bool(object obj)=> obj != null;
+
+        public static implicit operator IntPtr(object obj) => (IntPtr)Unsafe.AsPointer(ref obj);
 
         [DllImport("*")]
         static extern ulong free(nint ptr);
