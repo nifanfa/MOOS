@@ -45,7 +45,7 @@ namespace System
 
         public static implicit operator bool(object obj)=> obj != null;
 
-        public static implicit operator IntPtr(object obj) => (IntPtr)Unsafe.AsPointer(ref obj);
+        public static implicit operator IntPtr(object obj) => Unsafe.As<object, IntPtr>(ref obj);
 
         [DllImport("*")]
         static extern ulong free(nint ptr);
