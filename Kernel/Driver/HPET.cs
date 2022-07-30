@@ -9,6 +9,19 @@ namespace MOOS.Driver
     public static unsafe class HPET
     {
         public static ulong Clock;
+        public static ulong Ticks
+        {
+            get
+            {
+                return ReadRegister(0xF0);
+            }
+            set
+            {
+                WriteRegister(0x10, 0);
+                WriteRegister(0xF0, value);
+                WriteRegister(0x10, 1);
+            }
+        }
 
         public static void Initialize()
         {
@@ -36,11 +49,6 @@ namespace MOOS.Driver
             return In64((ulong*)(ACPI.HPET->Addresses.Address + reg));
         }
 
-        public static ulong GetTickCount()
-        {
-            return ReadRegister(0xF0);
-        }
-
         public static void Wait(ulong Millionseconds) 
         {
             WaitMicrosecond(Millionseconds * 10000);
@@ -48,8 +56,9 @@ namespace MOOS.Driver
 
         public static void WaitMicrosecond(ulong Microsecond)
         {
-            ulong Until = GetTickCount() + (Microsecond * 1000000000) / Clock;
-            while ((GetTickCount()) < Until) Native.Nop();
+            Ticks = 0;
+            ulong Until = Ticks + (Microsecond * 1000000000) / Clock;
+            while (Ticks < Until) Native.Nop();
         }
     }
 }
