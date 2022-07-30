@@ -10,6 +10,8 @@ namespace MOOS.Misc
             LocalAPIC.SendAllInterrupt(0xFD);
             IDT.Disable();
             Framebuffer.TripleBuffered = false;
+
+            Console.ForegroundColor = System.ConsoleColor.Red;
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
             Console.WriteLine("All CPU Halted Now!");
