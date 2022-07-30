@@ -1,4 +1,5 @@
 using MOOS.Driver;
+using System;
 
 namespace MOOS.Misc
 {
@@ -11,10 +12,15 @@ namespace MOOS.Misc
             IDT.Disable();
             Framebuffer.TripleBuffered = false;
 
+            ConsoleColor color = Console.ForegroundColor;
+
             Console.ForegroundColor = System.ConsoleColor.Red;
             Console.Write("PANIC: ");
             Console.WriteLine(msg);
             Console.WriteLine("All CPU Halted Now!");
+
+            Console.ForegroundColor = color;
+
             if (!skippable)
             {
                 Framebuffer.Update();
