@@ -1,6 +1,7 @@
 using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
 using MOOS.FS;
+using MOOS.GUI;
 using MOOS.Misc;
 using System;
 using System.Diagnostics;
@@ -63,9 +64,37 @@ namespace MOOS
                     return (delegate*<int,int,Image,void>)&API_DrawImage;
                 case "Error":
                     return (delegate*<string, bool, void>)&API_Error;
+                case "StartThread":
+                    return (delegate*<delegate*<void>, void>)&API_StartThread;
+#if Kernel && HasGUI
+                case "CreateWindow":
+                    return (delegate*<int, int, int, int, string, IntPtr>)&API_CreateWindow;
+                case "GetWindowScreenBuf":
+                    return (delegate*<IntPtr, IntPtr>)&API_GetWindowScreenBuf;
+#endif
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+#if Kernel && HasGUI
+        public static IntPtr API_CreateWindow(int X, int Y, int Width, int Height, string Title)
+        {
+            PortableApp papp = new PortableApp(X, Y, Width, Height);
+            papp.Title = Title;
+            return papp;
+        }
+
+        public static IntPtr API_GetWindowScreenBuf(IntPtr handle)
+        {
+            PortableApp papp = Unsafe.As<IntPtr, PortableApp>(ref handle);
+            return papp.ScreenBuf;
+        }
+#endif
+
+        public static void API_StartThread(delegate* <void> func)
+        {
+            new Thread(func).Start();
         }
 
         public static void API_Error(string s,bool skippable)

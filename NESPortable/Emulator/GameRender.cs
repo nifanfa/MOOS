@@ -13,19 +13,15 @@ namespace NES
         public void InitializeGame()
         {
             colorBG = Color.Blue;
-            image = new Image(256, 240);
         }
-
-        public Image image;
 
         public unsafe void WriteBitmap(byte[] byteToWrite, Color XColor)
         {
-            Program.Clear(XColor.ToArgb());
             lock (this)
             {
-                fixed (int* ptr = image.RawData)
+                fixed (int* ptr = Program.ScreenBuf.RawData)
                 {
-                    for (int i = 0; i < image.Width * image.Height; i++) ptr[i] = (int)XColor.ToArgb();
+                    for (int i = 0; i < Program.ScreenBuf.Width * Program.ScreenBuf.Height; i++) ptr[i] = (int)XColor.ToArgb();
                 }
 
                 int w = 0;
@@ -36,7 +32,7 @@ namespace NES
                     Color color = Color.FromArgb(byteToWrite[i + 3], byteToWrite[i + 2], byteToWrite[i + 1], byteToWrite[i + 0]);
                     if (color.A != 0)
                     {
-                        image.RawData[image.Width * h + w] = (int)color.ToArgb();
+                        Program.ScreenBuf.RawData[Program.ScreenBuf.Width * h + w] = (int)color.ToArgb();
                     }
                     //
                     w++;
@@ -48,8 +44,6 @@ namespace NES
                     }
                 }
             }
-            Program.DrawImage((int)((Program.Width()/2)- (image.Width/2)), (int)((Program.Height() / 2) - (image.Height / 2)), image);
-            Program.Update();
         }
 
         public GameRender(NES formObject)

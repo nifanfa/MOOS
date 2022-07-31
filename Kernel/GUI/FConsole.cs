@@ -24,9 +24,10 @@ namespace MOOS.GUI
             Data = string.Empty;
             ScreenBuf = new Image(640, 320);
 
-            Console.OnWrite += Console_OnWrite;
             Rebind();
             Console.WriteLine("Type help to get information!");
+
+            Console.OnWrite += Console_OnWrite;
         }
 
         public void Rebind()
@@ -148,6 +149,10 @@ namespace MOOS.GUI
 
         private void Console_OnWrite(char chr)
         {
+            WindowManager.MoveToEnd(Program.FConsole);
+            if (Program.FConsole.Visible == false)
+                Program.FConsole.Visible = true;
+
             string cs = chr.ToString();
             string cache = Data;
             Data = cache + cs;

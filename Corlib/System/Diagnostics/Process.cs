@@ -45,9 +45,12 @@ namespace System.Diagnostics
             delegate*<void> p = (delegate*<void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
             //TO-DO disposing
             StartupCodeHelpers.InitializeModules(moduleSeg);
-            p();
-            free((IntPtr)ptr);
+            StartThread(p);
+            //free((IntPtr)ptr);
         }
+
+        [DllImport("StartThread")]
+        static extern void StartThread(delegate*<void> func);
 
         [DllImport("*")]
         static unsafe extern void memset(byte* ptr, int c, int count);
