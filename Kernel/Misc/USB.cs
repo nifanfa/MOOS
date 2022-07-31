@@ -94,7 +94,11 @@ namespace MOOS.Misc
         {
             if(version == 2)
             {
-                return EHCI.InitPort(port, parent);
+                int failTime = 0;
+                while(failTime++ != 5)
+                {
+                    if (EHCI.InitPort(port, parent)) break;
+                }
             }
             return false;
         }
