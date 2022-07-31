@@ -618,11 +618,6 @@ namespace MOOS.Driver
             qh1->Characteristics |= 2 << 12;
             qh1->Characteristics |= addr;
             qh1->Capabilities = 0x40000000;
-            if(parent!= null) 
-            {
-                qh1->Capabilities |= (uint)(parent.Port << 23);
-                qh1->Capabilities |= (uint)(parent.Address << 16);
-            }
 
             qh->AltLink = 1;
             qh->NextLink = 1;
@@ -630,6 +625,18 @@ namespace MOOS.Driver
             qh->CurrentLink = 0;
             qh->Characteristics = 1 << 15;
             qh->Token = 0x40;
+
+            if (parent != null)
+            {
+                qh->Capabilities |= (uint)(parent.Port << 23);
+                qh->Capabilities |= (uint)(parent.Address << 16);
+
+                qh1->Capabilities |= (uint)(parent.Port << 23);
+                qh1->Capabilities |= (uint)(parent.Address << 16);
+
+                qh2->Capabilities |= (uint)(parent.Port << 23);
+                qh2->Capabilities |= (uint)(parent.Address << 16);
+            }
 
             *(uint*)AsyncListReg = (uint)qh;
             *(uint*)CMDReg |= 0x20;
