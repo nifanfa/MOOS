@@ -1,1 +1,0 @@
-Only fixed size vhds are supported!
