@@ -80,9 +80,11 @@ namespace MOOS.Driver
                     ACPITimer.Sleep(100000);
                 }
 
-                if(status & 2) 
+                int speed = (int)((status & ((3 << 9))) >> 9);
+
+                if (status & 2) 
                 {
-                    USB.InitPort(i, device, 2);
+                    USB.InitPort(i, device, 2, speed);
                 }
             }
         }
