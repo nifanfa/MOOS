@@ -75,8 +75,9 @@ namespace System.Drawing
                     byte blue = (byte)((byte)p1 * d1 + (byte)p2 * d2 + (byte)p3 * d3 + (byte)p4 * d4);
                     byte green = (byte)((byte)(p1 >> 8) * d1 + (byte)(p2 >> 8) * d2 + (byte)(p3 >> 8) * d3 + (byte)(p4 >> 8) * d4);
                     byte red = (byte)((byte)(p1 >> 16) * d1 + (byte)(p2 >> 16) * d2 + (byte)(p3 >> 16) * d3 + (byte)(p4 >> 16) * d4);
+                    byte alpha = (byte)((byte)(p1 >> 24) * d1 + (byte)(p2 >> 24) * d2 + (byte)(p3 >> 24) * d3 + (byte)(p4 >> 24) * d4);
 
-                    *((uint*)output + (i * neww) + j) = (uint)((red << 16) | (green << 8) | (blue));
+                    *((uint*)output + (i * neww) + j) = (uint)((alpha<<24) | (red << 16) | (green << 8) | (blue));
                 }
             }
         }
