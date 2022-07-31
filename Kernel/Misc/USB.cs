@@ -95,7 +95,7 @@ namespace MOOS.Misc
             if(version == 2)
             {
                 int failTime = 0;
-                while(failTime++ != 5)
+                while(failTime++ <= 10)
                 {
                     if (EHCI.InitPort(port, parent)) break;
                 }
