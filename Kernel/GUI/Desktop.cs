@@ -368,13 +368,6 @@ namespace MOOS.GUI
                 name[name.Length - 1].ToUpper() == 'E'
                 )
             {
-                WindowManager.MoveToEnd(Program.FConsole);
-                if (Program.FConsole.Visible == false)
-                    Program.FConsole.Visible = true;
-
-                //TO-DO disposing
-                Console.WriteLine("Loading EXE...");
-
                 byte[] buffer = File.ReadAllBytes(path);
                 Process.Start(buffer);
             }

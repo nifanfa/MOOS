@@ -1,4 +1,5 @@
 ﻿global using NES;
+using Internal.Runtime.CompilerServices;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,23 +12,11 @@ namespace NES
     {
         //Warning: This program doesn't have input support!
 
-        [DllImport("Width")]
-        public static extern uint Width();
-
-        [DllImport("Height")]
-        public static extern uint Height();
-
         [RuntimeExport("malloc")]
         public static nint malloc(ulong size) => Allocate(size);
 
         [DllImport("Allocate")]
         public static extern nint Allocate(ulong size);
-
-        [DllImport("SwitchToConsoleMode")]
-        public static extern void SwitchToConsoleMode();
-
-        [DllImport("DrawPoint")]
-        public static extern void DrawPoint(int x, int y, uint color);
 
         [DllImport("ReadAllBytes")]
         public static extern void ReadAllBytes(string name, out ulong size, out byte* data);
@@ -62,18 +51,21 @@ namespace NES
         [RuntimeExport("free")]
         public static ulong free(nint ptr) => AFree(ptr);
 
-        [DllImport("Clear")]
-        public static extern void Clear(uint color);
+        [DllImport("CreateWindow")]
+        public static extern IntPtr CreateWindow(int X, int Y, int Width, int Height, string Title);
 
-        [DllImport("Update")]
-        public static extern void Update();
+        [DllImport("GetWindowScreenBuf")]
+        public static extern IntPtr GetWindowScreenBuf(IntPtr handle);
 
-        [DllImport("DrawImage")]
-        public static extern void DrawImage(int X, int Y, IntPtr image);
+        public static Image ScreenBuf;
 
         [RuntimeExport("Main")]
         public static void Main()
         {
+            var handle = CreateWindow(300, 350, 256, 240, "NES Portable");
+            var screenBufHandle = GetWindowScreenBuf(handle);
+            ScreenBuf = Unsafe.As<IntPtr, Image>(ref screenBufHandle);
+
             ReadAllBytes("Super Mario.nes", out var size, out var data);
             NES nes = new NES();
             nes.openROM(data);

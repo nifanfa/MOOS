@@ -50,8 +50,6 @@ namespace ConsoleApp1
         [RuntimeExport("Main")]
         public static void Main()
         {
-            SwitchToConsoleMode();
-
             WriteString("Content of Text.txt is: ");
 
             ReadAllBytes("Text.txt", out var size, out var data);

@@ -240,9 +240,6 @@ unsafe class Program
         rightmenu = new RightMenu();
         rightClicked = false;
 
-        Console.WriteLine("Welcome to MOOS!");
-        Console.WriteLine("Thanks to all the Contributors of nifanfa/MOOS.");
-
 #region Animation of entering Desktop
         Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
         Desktop.Update();
