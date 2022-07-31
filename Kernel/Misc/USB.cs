@@ -10,6 +10,8 @@ namespace MOOS.Misc
     {
         public byte USBVersion;
 
+        public int Speed;
+
         public byte Address;
 
         public uint Ring;
@@ -55,7 +57,7 @@ namespace MOOS.Misc
         {
             if (device.USBVersion == 2)
             {
-                return EHCI.SendAndReceive(device.Address, cmd, buffer, parent);
+                return EHCI.SendAndReceive(device.Address, cmd, buffer, parent,device.Speed);
             }
             else
             {
@@ -90,14 +92,14 @@ namespace MOOS.Misc
             }
         }
 
-        public static bool InitPort(int port, USBDevice parent,int version) 
+        public static bool InitPort(int port, USBDevice parent,int version,int speed) 
         {
             if(version == 2)
             {
                 int failTime = 0;
                 while(failTime++ <= 10)
                 {
-                    if (EHCI.InitPort(port, parent)) break;
+                    if (EHCI.InitPort(port, parent,speed)) break;
                 }
             }
             return false;
@@ -123,7 +125,7 @@ namespace MOOS.Misc
         public static void Reset()
         {
             USB.NumDevice = 0;
-            USB.DeviceAddr = 1;
+            USB.DeviceAddr = 0;
         }
 
         public static void StartPolling()
