@@ -124,8 +124,6 @@ namespace MOOS.GUI
         public override void OnDraw()
         {
             base.OnDraw();
-            int w = 0, h = 0;
-
             string s0 = "_";
             string s1 = Data + s0;
             //BitFont.DrawString("Song", 0xFFFFFFFF, s, X, Y, Width);

@@ -117,17 +117,17 @@ namespace MOOS.GUI
             }
         }
 
-        private enum Opreation
+        private enum CalculatorOperation
         {
             None,
             Plus,
             Minus
         }
 
-        private ulong Num1 = 0;
-        private ulong Num2 = 0;
-        private ulong ValueToDisplay = 0;
-        private Opreation opreation = Opreation.None;
+        private long Num1 = 0;
+        private long Num2 = 0;
+        private long ValueToDisplay = 0;
+        private CalculatorOperation opreation = CalculatorOperation.None;
 
         private unsafe void ProcessButton(Button btn)
         {
@@ -135,11 +135,11 @@ namespace MOOS.GUI
             {
                 if (Num2 == 0)
                 {
-                    Num2 = btn.Name[0] - 0x30UL;
+                    Num2 = btn.Name[0] - 0x30L;
                 } else
                 {
                     Num2 *= 10;
-                    Num2 += btn.Name[0] - 0x30UL;
+                    Num2 += btn.Name[0] - 0x30L;
                 }
 
                 ValueToDisplay = Num2;
@@ -150,7 +150,7 @@ namespace MOOS.GUI
                     Num1 = Num2;
                 }
 
-                opreation = Opreation.Plus;
+                opreation = CalculatorOperation.Plus;
 
                 Num2 = 0;
             } else if (btn.Name == "-")
@@ -160,7 +160,7 @@ namespace MOOS.GUI
                     Num1 = Num2;
                 }
 
-                opreation = Opreation.Minus;
+                opreation = CalculatorOperation.Minus;
 
                 Num2 = 0;
             } else if (btn.Name == "C")
@@ -170,10 +170,10 @@ namespace MOOS.GUI
                 ValueToDisplay = 0;
             } else if (btn.Name == "=")
             {
-                if (opreation == Opreation.Plus)
+                if (opreation == CalculatorOperation.Plus)
                 {
                     Num1 += Num2;
-                } else if (opreation == Opreation.Minus)
+                } else if (opreation == CalculatorOperation.Minus)
                 {
                     if (Num1 >= Num2)
                     {
@@ -183,7 +183,7 @@ namespace MOOS.GUI
                         Num1 = 0;
                         Num2 = 0;
                     }
-                } else if (opreation == Opreation.None)
+                } else if (opreation == CalculatorOperation.None)
                 {
                     Num2 = 0;
                 }

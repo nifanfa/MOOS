@@ -5,10 +5,9 @@ namespace MOOS.GUI
 {
     internal class NESEmu : Window
     {
-        public static NES.NES nes;
         public static Thread nesThread;
         public bool GameStarted = false;
-
+        public static NES.NES nes = new();
         public NESEmu(int X, int Y) : base(X, Y, 256, 240)
         {
 #if Chinese
@@ -16,8 +15,6 @@ namespace MOOS.GUI
 #else
             Title = "NES Emulator";
 #endif
-            nes = new NES.NES();
-
 #if Chinese
             System.Windows.Forms.MessageBox.Show("键位: WASD ZC QE");
 #else
@@ -29,7 +26,6 @@ namespace MOOS.GUI
         {
             if (GameStarted)
             {
-                nesThread.Terminated = !value;
                 if (value)
                 {
                     Keyboard.OnKeyChanged += nes.PS2Keyboard_OnKeyChangedHandler;
@@ -58,7 +54,7 @@ namespace MOOS.GUI
 
         public static void RunGame()
         {
-            for (; ; )
+            while (nes.bolRunGame)
             {
                 nes.runGame();
             }

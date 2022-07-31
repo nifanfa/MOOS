@@ -100,7 +100,7 @@ namespace MOOS.GUI
 
                 if (v.X < (Threshold + v.SWidth))
                 {
-                    break;
+                    continue;
                 } else
                 {
                     if (v.DisposeUntil == 0)
@@ -111,10 +111,10 @@ namespace MOOS.GUI
                     {
                         Notifications.Remove(v);
                         v.Dispose();
-                        break;
+                        continue;
                     } else
                     {
-                        break;
+                        continue;
                     }
                 }
             }

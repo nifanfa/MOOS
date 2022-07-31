@@ -5,7 +5,7 @@ namespace MOOS.GUI.Widgets
     {
         public int X, Y, Width, Height;
 
-        public virtual void Update() 
+        public virtual void Update()
         {
         }
     }

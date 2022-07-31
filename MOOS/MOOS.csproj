@@ -35,9 +35,9 @@
 		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
-	<Import Project="..\CoreLib\CoreLib.projitems" Label="Shared" />
+	<Import Project="..\Kernel\Framework.projitems" Label="Shared" />
 
-	<Import Project="..\Framework\Framework.projitems" Label="Shared" />
+	<Import Project="..\Corlib\CoreLib.projitems" Label="Shared" />
 
 	<Target Name="BuildISO" AfterTargets="Publish">
 		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\Trampoline.asm&quot; -o &quot;$(MSBuildStartupDirectory)\Tools\Trampoline&quot;"></Exec>

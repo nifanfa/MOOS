@@ -1,3 +1,6 @@
+# Access to old history
+As you might have noticed, some of the history for previous versions of files has been deleted, This is due to the renaming of a directory. The old versions are avalible at https://github.com/nifanfa/MOOS/tree/79943401102e88c25b5304c3df3f541d7443f98f
+
 # MOOS  
 Welcome to the *MOOS(to make **M**y **O**wn **O**perating **S**ystem)-Project*
 > MOOS is a C# x64 operating system programming with the .NET native ahead-of-time compilation technology.
