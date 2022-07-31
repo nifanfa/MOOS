@@ -1,4 +1,7 @@
 # MOOS  
+  
+Also provide [简体中文](README_CN.md)  
+  
 Welcome to the *MOOS(to make **M**y **O**wn **O**perating **S**ystem)-Project*
 > MOOS is a C# x64 operating system programming with the .NET native ahead-of-time compilation technology.
 
