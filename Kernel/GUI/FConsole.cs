@@ -149,9 +149,11 @@ namespace MOOS.GUI
 
         private void Console_OnWrite(char chr)
         {
-            WindowManager.MoveToEnd(Program.FConsole);
             if (Program.FConsole.Visible == false)
+            {
+                WindowManager.MoveToEnd(Program.FConsole);
                 Program.FConsole.Visible = true;
+            }
 
             string cs = chr.ToString();
             string cache = Data;
