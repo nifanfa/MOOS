@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerHelpers;
@@ -54,7 +55,8 @@ namespace System
 
             for (int i = 0; i < length; i++)
             {
-                buf[i] = (char)_ptr[i];
+                char c = (char)_ptr[i];
+                buf[i] = c;
             }
 
             string s = new(buf);
@@ -74,7 +76,8 @@ namespace System
             {
                 if (_ptr[i] != ignore)
                 {
-                    buf[i] = (char)_ptr[i];
+                    char c = (char)_ptr[i];
+                    buf[i] = c;
                     len++;
                 }
             }
@@ -269,6 +272,35 @@ namespace System
             }
         }
 
+        public string Remove(int startIndex)
+        {
+            return Substring(0, startIndex);
+        }
+
+        public string[] Split(char chr)
+        {
+            List<string> strings = new();
+            string tmp = string.Empty;
+            for (int i = 0; i < Length; i++)
+            {
+                if (this[i] == chr)
+                {
+                    strings.Add(tmp);
+                    tmp = string.Empty;
+                } else
+                {
+                    tmp += this[i];
+                }
+
+                if (i == (Length - 1))
+                {
+                    strings.Add(tmp);
+                    tmp = string.Empty;
+                }
+            }
+            return strings.ToArray();
+        }
+
         public string Substring(int startIndex)
         {
             if ((Length == 0) && (startIndex == 0))
@@ -279,7 +311,7 @@ namespace System
             // so all we need to worry about is startIndex compared to value.Length.
             if ((startIndex < 0) || (startIndex >= Length))
             {
-                //throw new ArgumentOutOfRangeException("startIndex");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex");
             }
 
             string substring = "";
@@ -299,7 +331,7 @@ namespace System
             // so all we need to worry about is startIndex compared to value.Length.
             if ((startIndex < 0) || (startIndex >= Length) || (endIndex >= Length) || (endIndex <= startIndex))
             {
-                //throw new ArgumentOutOfRangeException("startIndex");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex");
             }
 
             string substring = "";
@@ -318,6 +350,7 @@ namespace System
         {
             if (value == null)
             {
+                value.Dispose();
                 return true;
             }
 
@@ -325,11 +358,72 @@ namespace System
             {
                 if (!char.IsWhiteSpace(value[i]))
                 {
+                    value.Dispose();
                     return false;
                 }
             }
-
+            value.Dispose();
             return true;
+        }
+
+        public bool EndsWith(char value)
+        {
+            int thisLen = Length;
+            if (thisLen != 0)
+            {
+                if (this[thisLen - 1] == value)
+                {
+                    thisLen.Dispose();
+                    return true;
+                }
+            }
+            thisLen.Dispose();
+            return false;
+        }
+
+        public bool EndsWith(string value)
+        {
+            if (value.Length > Length)
+            {
+                value.Dispose();
+                return false;
+            }
+
+            if (value == this)
+            {
+                value.Dispose();
+                return true;
+            }
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (value[i] != this[Length - value.Length + i])
+                {
+                    value.Dispose();
+                    return false;
+                }
+            }
+            value.Dispose();
+            return true;
+        }
+
+        public string ToUpper()
+        {
+            string output = "";
+            for (int i = 0; i < Length; i++)
+            {
+                output += this[i].ToUpper();
+            }
+            return output;
+        }
+        public string ToLower()
+        {
+            string output = "";
+            for (int i = 0; i < Length; i++)
+            {
+                output += this[i].ToLower();
+            }
+            return output;
         }
     }
 }
@@ -382,7 +476,7 @@ namespace System
         {
             if (value == null)
             {
-                //throw new ArgumentNullException("value");
+                ThrowHelpers.ThrowArgumentNullException("value");
                 MOOS.Misc.Panic.Error("Argument Null Exception: value [String.Join]");
             }
 
@@ -446,19 +540,19 @@ namespace System
             if (startIndex < 0)
             {
                 MOOS.Misc.Panic.Error("Argument Out Of Range Exception: startIndex [String.Join]");
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_StartIndex"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_StartIndex"));
             }
 
             if (count < 0)
             {
                 MOOS.Misc.Panic.Error("Argument Out Of Range Exception: count [String.Join]");
-                //throw new ArgumentOutOfRangeException("count", Environment.GetResourceString("ArgumentOutOfRange_NegativeCount"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count", Environment.GetResourceString("ArgumentOutOfRange_NegativeCount"));
             }
 
             if (startIndex > value.Length - count)
             {
                 MOOS.Misc.Panic.Error("Argument Out Of Range Exception: startIndex [String.Join]");
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_IndexCountBuffer"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_IndexCountBuffer"));
             }
 
             //Treat null as empty string.
@@ -490,7 +584,7 @@ namespace System
             if ((jointLength < 0) || ((jointLength + 1) < 0))
             {
                 MOOS.Misc.Panic.Error("Out of memory Exception:  [String.Join]");
-                //throw new OutOfMemoryException();
+                ThrowHelpers.ThrowOutOfMemoryException();
             }
 
             //If this is an empty string, just return.
@@ -814,7 +908,7 @@ namespace System
             if (this == null)                        //this is necessary to guard against reverse-pinvokes and
             {
                 MOOS.Misc.Panic.Error("Null Reference Exception:  [String.Equals]");
-                //throw new NullReferenceException();  //other callers who do not use the callvirt instruction
+                ThrowHelpers.ThrowNullReferenceException();  //other callers who do not use the callvirt instruction
             }
 
             string str = obj as string;
@@ -837,7 +931,7 @@ namespace System
             if (this == null)                        //this is necessary to guard against reverse-pinvokes and
             {
                 MOOS.Misc.Panic.Error("Null Reference Exception:  [String.Equals]");
-                //throw new NullReferenceException();  //other callers who do not use the callvirt instruction
+                ThrowHelpers.ThrowNullReferenceException();  //other callers who do not use the callvirt instruction
             }
 
             if (value == null)
@@ -906,27 +1000,27 @@ namespace System
         {
             if (destination == null)
             {
-                //throw new ArgumentNullException("destination");
+                ThrowHelpers.ThrowArgumentNullException("destination");
             }
 
             if (count < 0)
             {
-                //throw new ArgumentOutOfRangeException("count", Environment.GetResourceString("ArgumentOutOfRange_NegativeCount"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count", Environment.GetResourceString("ArgumentOutOfRange_NegativeCount"));
             }
 
             if (sourceIndex < 0)
             {
-                //throw new ArgumentOutOfRangeException("sourceIndex", Environment.GetResourceString("ArgumentOutOfRange_Index"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("sourceIndex", Environment.GetResourceString("ArgumentOutOfRange_Index"));
             }
 
             if (count > Length - sourceIndex)
             {
-                //throw new ArgumentOutOfRangeException("sourceIndex", Environment.GetResourceString("ArgumentOutOfRange_IndexCount"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("sourceIndex", Environment.GetResourceString("ArgumentOutOfRange_IndexCount"));
             }
 
             if (destinationIndex > destination.Length - count || destinationIndex < 0)
             {
-                //throw new ArgumentOutOfRangeException("destinationIndex", Environment.GetResourceString("ArgumentOutOfRange_IndexCount"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("destinationIndex", Environment.GetResourceString("ArgumentOutOfRange_IndexCount"));
             }
 
 
@@ -965,12 +1059,12 @@ namespace System
             // Range check everything.
             if (startIndex < 0 || startIndex > Length || startIndex > Length - length)
             {
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_Index"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_Index"));
             }
 
             if (length < 0)
             {
-                //throw new ArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_Index"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_Index"));
             }
 
             
@@ -1134,13 +1228,13 @@ namespace System
         {
             if (count < 0)
             {
-                //throw new ArgumentOutOfRangeException("count",
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count",
                     //Environment.GetResourceString("ArgumentOutOfRange_NegativeCount"));
             }
 
             if (options < StringSplitOptions.None || options > StringSplitOptions.RemoveEmptyEntries)
             {
-                //throw new ArgumentException(Environment.GetResourceString("Arg_EnumIllegalVal", options));
+                ThrowHelpers.ThrowArgumentException(Environment.GetResourceString("Arg_EnumIllegalVal", options));
             }
 
             bool omitEmptyEntries = options == StringSplitOptions.RemoveEmptyEntries;
@@ -1175,13 +1269,13 @@ namespace System
         {
             if (count < 0)
             {
-                //throw new ArgumentOutOfRangeException("count",
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count",
                   //  Environment.GetResourceString("ArgumentOutOfRange_NegativeCount"));
             }
 
             if (options < StringSplitOptions.None || options > StringSplitOptions.RemoveEmptyEntries)
             {
-                //throw new ArgumentException(Environment.GetResourceString("Arg_EnumIllegalVal", (int)options));
+                ThrowHelpers.ThrowArgumentException(Environment.GetResourceString("Arg_EnumIllegalVal", (int)options));
             }
             //Contract.EndContractBlock();
 
@@ -1408,22 +1502,22 @@ namespace System
             //Bounds Checking.
             if (startIndex < 0)
             {
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_StartIndex"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_StartIndex"));
             }
 
             if (startIndex > Length)
             {
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_StartIndexLargerThanLength"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_StartIndexLargerThanLength"));
             }
 
             if (length < 0)
             {
-                //throw new ArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_NegativeLength"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_NegativeLength"));
             }
 
             if (startIndex > Length - length)
             {
-                //throw new ArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_IndexLength"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_IndexLength"));
             }
 
             if (length == 0)
@@ -1490,7 +1584,7 @@ namespace System
         {
             if (src.Length > dest.Length - destPos)
             {
-                //throw new IndexOutOfRangeException();
+                ThrowHelpers.ThrowIndexOutOfRangeException();
             }
 
             fixed (char* pDest = &dest.m_firstChar)

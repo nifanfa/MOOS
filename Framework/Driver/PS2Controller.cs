@@ -5,7 +5,7 @@
 		public static void Initialize()
 		{
 			PS2Keyboard.Initialize();
-			PS2Mouse.Initialise();
+			PS2Mouse.Initialize();
 		}
 	}
 }

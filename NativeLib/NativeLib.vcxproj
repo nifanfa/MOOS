@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <MASM Include="interrupts_asm.asm" />
+    <MASM Include="mathf.asm" />
     <MASM Include="misc.asm" />
   </ItemGroup>
   <ItemGroup>

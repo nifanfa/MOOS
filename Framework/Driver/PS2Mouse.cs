@@ -1,6 +1,5 @@
 using System;
 using System.Windows.Forms;
-using MOOS.Graph;
 using MOOS.Misc;
 using static Native;
 
@@ -22,7 +21,7 @@ namespace MOOS
 		public static int ScreenWidth = 0;
 		public static int ScreenHeight = 0;
 
-		public static void Initialise()
+		public static void Initialize()
 		{
 			MData = new byte[3];
 			Interrupts.EnableInterrupt(0x2c, &OnInterrupt);

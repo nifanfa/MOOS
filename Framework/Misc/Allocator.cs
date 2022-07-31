@@ -35,7 +35,6 @@ internal abstract unsafe class Allocator
 
     internal static ulong Free(IntPtr intPtr)
     {
-        //You can use lock(null) in Moos
         lock (null)
         {
             long p = GetPageIndexStart(intPtr);

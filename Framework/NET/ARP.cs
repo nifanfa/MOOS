@@ -34,7 +34,7 @@ namespace MOOS.NET
 
         public static List<ARPEntry> ARPEntries;
 
-        public static void Initialise()
+        public static void Initialize()
         {
             ARPEntries = new List<ARPEntry>(32);
         }

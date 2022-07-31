@@ -1,7 +1,7 @@
 ﻿#if HasGUI
 using System.Collections.Generic;
+using System.Drawing;
 using MOOS.Driver;
-using MOOS.Graph;
 using MOOS.Misc;
 
 namespace MOOS.GUI
@@ -124,9 +124,9 @@ namespace MOOS.GUI
             {
                 Nofity v = Notifications[i];
 
-                Framebuffer.Graphics.FillRectangle(Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide, 0xFF111111);
-                Framebuffer.Graphics.DrawRectangle(Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide, 0xFF222222);
-                Framebuffer.Graphics.FillRectangle(Framebuffer.Width - v.X, v.Y + y, 5, v.SHeight + Devide, v.NotificationLevel == NotificationLevel.None ? 0xFF80B000 : 0xFFE74C3C);
+                Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF111111), Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide);
+                Framebuffer.Graphics.DrawRectangle(Color.FromArgb(0xFF222222), Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide);
+                Framebuffer.Graphics.FillRectangle(Color.FromArgb(v.NotificationLevel == NotificationLevel.None ? 0xFF80B000 : 0xFFE74C3C), Framebuffer.Width - v.X, v.Y + y, 5, v.SHeight + Devide);
                 WindowManager.font.DrawString(Framebuffer.Width - v.X + (Devide / 2), v.Y + y + (Devide / 2), v.Message);
 
                 y += v.SHeight + Devide;

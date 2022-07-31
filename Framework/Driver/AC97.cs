@@ -78,7 +78,7 @@ namespace MOOS
                 Index++;
                 Index %= (byte)NumDescriptors;
 
-                if (Audio.Queue.Length > 0)
+                if (Audio.Queue.Count > 0)
                 {
                     byte[] buffer = Audio.Queue.Dequeue();
                     fixed (byte* ptr = buffer)

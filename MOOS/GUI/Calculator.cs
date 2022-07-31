@@ -29,8 +29,8 @@ namespace MOOS.GUI
 
             PressedButton = new();
 
-            g.FillRectangle(0, 0, Width, Height, 0xFF222222);
-            g.FillRectangle(0, 0, Width, 20, 0xFF333333);
+            g.FillRectangle(Color.FromArgb(0xFF222222), 0, 0, Width, Height);
+            g.FillRectangle(Color.FromArgb(0xFF333333), 0, 0, Width, 20);
 
             //7
             AddButton(0, 30, "7");
@@ -82,7 +82,7 @@ namespace MOOS.GUI
 
             if (Pressed)
             {
-                Framebuffer.Graphics.FillRectangle(X + PressedButton.X, Y + PressedButton.Y, 60, 20, 0xFF222222);
+                Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF222222), X + PressedButton.X, Y + PressedButton.Y, 60, 20);
                 int i = WindowManager.font.MeasureString(PressedButton.Name);
                 WindowManager.font.DrawString(X + PressedButton.X + (60 / 2) - (i / 2), Y + PressedButton.Y + 2, PressedButton.Name);
             }
@@ -197,7 +197,7 @@ namespace MOOS.GUI
 
         private void AddButton(int X, int Y, string s)
         {
-            g.FillRectangle(X, Y, 60, 20, 0xFF333333);
+            g.FillRectangle(Color.FromArgb(0xFF333333), X, Y, 60, 20);
             int i = WindowManager.font.MeasureString(s);
             WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2, s, g);
 

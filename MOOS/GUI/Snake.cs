@@ -1,7 +1,7 @@
 #if HasGUI
 using System;
+using System.Drawing;
 using MOOS.Driver;
-using MOOS.Graph;
 
 namespace MOOS.GUI
 {
@@ -245,12 +245,12 @@ namespace MOOS.GUI
 
         private void Refresh()
         {
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, 0xFF9FAE87);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF9FAE87), X, Y, Width, Height);
             for (int h = 0; h < aHeight; h++)
             {
                 for (int w = 0; w < aWidth; w++)
                 {
-                    Framebuffer.Graphics.FillRectangle(X + (w * SizePerBlock) + 3, Y + (h * SizePerBlock) + 3, SizePerBlock - 6, SizePerBlock - 6, 0xFF98A682);
+                    Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF98A682), X + (w * SizePerBlock) + 3, Y + (h * SizePerBlock) + 3, SizePerBlock - 6, SizePerBlock - 6);
                 }
             }
         }
@@ -263,37 +263,37 @@ namespace MOOS.GUI
             {
                 if (i == Count - 1)
                 {
-                    Framebuffer.Graphics.DrawRectangle(X + (SnakeNodes[i].X * SizePerBlock), Y + (SnakeNodes[i].Y * SizePerBlock), SizePerBlock, SizePerBlock, 0xFF262627);
+                    Framebuffer.Graphics.DrawRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock), Y + (SnakeNodes[i].Y * SizePerBlock), SizePerBlock, SizePerBlock);
 
                     switch (Dir)
                     {
                         case Direction.Up:
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5);
                             break;
                         case Direction.Down:
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5);
                             break;
                         case Direction.Left:
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + (SizePerBlock / 5), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5);
                             break;
                         case Direction.Right:
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
-                            Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5, 0xFF262627);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + (SizePerBlock / 5), SizePerBlock / 5, SizePerBlock / 5);
+                            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), Y + (SnakeNodes[i].Y * SizePerBlock) + SizePerBlock - (SizePerBlock / 5 * 2), SizePerBlock / 5, SizePerBlock / 5);
                             break;
                     }
                 } else
                 {
-                    Framebuffer.Graphics.DrawRectangle(X + (SnakeNodes[i].X * SizePerBlock), Y + (SnakeNodes[i].Y * SizePerBlock), SizePerBlock, SizePerBlock, 2);
-                    Framebuffer.Graphics.FillRectangle(X + (SnakeNodes[i].X * SizePerBlock) + 3, Y + (SnakeNodes[i].Y * SizePerBlock) + 3, SizePerBlock - 6, SizePerBlock - 6, 0xFF262627);
+                    Framebuffer.Graphics.DrawRectangle(Color.FromArgb(2), X + (SnakeNodes[i].X * SizePerBlock), Y + (SnakeNodes[i].Y * SizePerBlock), SizePerBlock, SizePerBlock);
+                    Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (SnakeNodes[i].X * SizePerBlock) + 3, Y + (SnakeNodes[i].Y * SizePerBlock) + 3, SizePerBlock - 6, SizePerBlock - 6);
                 }
             }
 
             //Food
-            Framebuffer.Graphics.DrawRectangle(X + (FoodX * SizePerBlock), Y + (FoodY * SizePerBlock), SizePerBlock, SizePerBlock, 2);
-            Framebuffer.Graphics.FillRectangle(X + (FoodX * SizePerBlock) + 3, Y + (FoodY * SizePerBlock) + 3, SizePerBlock - 6, SizePerBlock - 6, 0xFF262627);
+            Framebuffer.Graphics.DrawRectangle(Color.FromArgb(2), X + (FoodX * SizePerBlock), Y + (FoodY * SizePerBlock), SizePerBlock, SizePerBlock);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF262627), X + (FoodX * SizePerBlock) + 3, Y + (FoodY * SizePerBlock) + 3, SizePerBlock - 6, SizePerBlock - 6);
         }
     }
 }

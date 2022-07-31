@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MOOS.Graph;
+using System.Drawing;
 
 namespace MOOS.Misc
 {
@@ -36,7 +36,7 @@ namespace MOOS.Misc
         private const int FontAlpha = 96;
         private static bool AtEdge = false;
 
-        private static int DrawChar(byte[] Raw, int Size, int Size8, uint Color, int Index, int X, int Y, bool Calculate = false)
+        private static int DrawChar(byte[] Raw, int Size, int Size8, Color color, int Index, int X, int Y, bool Calculate = false)
         {
             if (Index < 0)
             {
@@ -62,7 +62,7 @@ namespace MOOS.Misc
 
                             if (!Calculate)
                             {
-                                Framebuffer.Graphics.DrawPoint(x, y, Color);
+                                Framebuffer.Graphics.DrawPoint(color, x, y);
 
                                 //AA
 
@@ -109,13 +109,13 @@ namespace MOOS.Misc
             for (int i = 0; i < Text.Length; i++)
             {
                 char c = Text[i];
-                UsedX += BitFont.DrawChar(bitFontDescriptor.Raw, Size, Size8, 0, bitFontDescriptor.Charset.IndexOf(c), 0, 0, true) + 2 + Divide;
+                UsedX += BitFont.DrawChar(bitFontDescriptor.Raw, Size, Size8, Color.Black, bitFontDescriptor.Charset.IndexOf(c), 0, 0, true) + 2 + Divide;
             }
 
             return UsedX;
         }
 
-        public static int DrawString(string FontName, uint color, string Text, int X, int Y, int LineWidth = -1, int Divide = 0)
+        public static int DrawString(string FontName, Color color, string Text, int X, int Y, int LineWidth = -1, int Divide = 0)
         {
             BitFontDescriptor bitFontDescriptor = GetBitFontDescriptor(FontName);
 

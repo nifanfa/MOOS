@@ -53,7 +53,7 @@ namespace Internal.Runtime.CompilerHelpers
                         {
                             return null;
                         }
-                        //throw new PlatformNotSupportedException(SR.Arg_NotSupportedNonZeroLowerBound);
+                        ThrowHelpers.ThrowPlatformNotSupportedException();
 
                         pDimensions[i] = pDimensions[(2 * i) + 1];
                     }
@@ -67,7 +67,7 @@ namespace Internal.Runtime.CompilerHelpers
                     if (length < 0)
                     {
                         // Compat: we need to throw OverflowException. Array.CreateInstance would throw ArgumentOutOfRange
-                        //throw new OverflowException();
+                        ThrowHelpers.ThrowOverflowException();
                     }
 
                     RuntimeTypeHandle elementTypeHandle = new(eeType.ArrayElementType);

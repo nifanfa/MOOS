@@ -16,7 +16,7 @@ namespace MOOS.NET
 
 		public delegate void OnDataHandler(byte[] buffer);
 
-		public static void Initialise(IPAddress IPAddress, IPAddress GatewayAddress, IPAddress SubnetMask)
+		public static void Initialize(IPAddress IPAddress, IPAddress GatewayAddress, IPAddress SubnetMask)
 		{
 			Controller = null;
 			Boardcast = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
@@ -24,7 +24,7 @@ namespace MOOS.NET
 			Mask = SubnetMask.Address;
 			IP = IPAddress.Address;
 			UDP.Clients = new();
-			ARP.Initialise();
+			ARP.Initialize();
 			TCP.Clients = new();
 
 			MAC = null;

@@ -3,7 +3,7 @@
     "Build": {
       "commandName": "Executable",
       "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -r win-x64 -c debug consoleapp1",
+      "commandLineArgs": "/c dotnet publish -r win-x64 -c debug ConsoleApp1",
       "workingDirectory": "..\\"
     }
   }

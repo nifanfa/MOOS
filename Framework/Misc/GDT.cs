@@ -79,7 +79,7 @@ internal static class GDT
 	public static GDTDescriptor gdtr;
 
 
-	public static void Initialise()
+	public static void Initialize()
 	{
 		gdts.KernelCode.LimitLow = 0xFFFF;
 		gdts.KernelCode.Access = 0x9A;

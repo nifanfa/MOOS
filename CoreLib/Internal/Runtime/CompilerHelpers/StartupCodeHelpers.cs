@@ -203,7 +203,18 @@ namespace Internal.Runtime.CompilerHelpers
 					{
 						InitializeStatics(sections[k].Start, sections[k].End);
 					}
+					if (sections[k].SectionId == ReadyToRunSectionType.EagerCctor)
+					{
+						RunEagerClassConstructors(sections[k].Start, sections[k].End);
+					}
 				}
+			}
+		}
+		private static unsafe void RunEagerClassConstructors(IntPtr cctorTableStart, IntPtr cctorTableEnd)
+		{
+			for (IntPtr* tab = (IntPtr*)cctorTableStart; tab < (IntPtr*)cctorTableEnd; tab++)
+			{
+				((delegate*<void>)(*tab))();
 			}
 		}
 		private static unsafe void InitializeStatics(IntPtr rgnStart, IntPtr rgnEnd)

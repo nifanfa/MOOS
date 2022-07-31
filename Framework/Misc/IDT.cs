@@ -41,12 +41,10 @@ public static class IDT
 	{
 		idt = new IDTEntry[256];
 
-		// TODO: Figure out a way to do this in C#
 		set_idt_entries(Unsafe.AsPointer(ref idt[0]));
 
 		fixed (IDTEntry* _idt = idt)
 		{
-			// Fill IDT descriptor
 			idtr.Limit = (ushort)((sizeof(IDTEntry) * 256) - 1);
 			idtr.Base = (ulong)_idt;
 		}

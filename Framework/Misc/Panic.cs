@@ -8,12 +8,14 @@ namespace MOOS.Misc
 		{
 			//Kill all CPUs
 			LocalAPIC.SendAllInterrupt(0xFD);
+			GC.Collect();
+			GC.AllowCollect = false;
 			IDT.Disable();
 			Framebuffer.DoubleBuffered = false;
 			Console.BackgroundColor = System.ConsoleColor.Blue;
 			Console.Clear(0x0000FF);
 			Console.Write("A problem has been detected and MOOS has been shut down to prevent damage to your computer.\n\n");
-			Console.Write($"There seems to be a {msg}\n\n");
+			Console.Write($"{msg}\n\n");
 			Console.Write("If this is the first time you've seen this Stop error screen, restart\n");
 			Console.Write("your computer. If this screen appears again, follow these steps:\n\n");
 			Console.Write("Check to make sure any new hardware or software is properly installed.\n");

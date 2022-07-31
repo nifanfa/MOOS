@@ -4,7 +4,7 @@ namespace MOOS
 	{
 		public const ushort COM1 = 0x3F8;
 
-		public static void Initialise()
+		public static void Initialize()
 		{
 			Native.Out8(COM1 + 1, 0x00);    // Disable all interrupts
 			Native.Out8(COM1 + 3, 0x80);    // Enable DLAB (set baud rate divisor)

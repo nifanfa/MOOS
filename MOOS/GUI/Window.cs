@@ -1,5 +1,6 @@
 #if HasGUI
 
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MOOS.GUI
@@ -38,7 +39,7 @@ namespace MOOS.GUI
 #if Chinese
             Title = "窗体1";
 #else
-            Title = "Window1";
+            Title = "Window";
 #endif
             WindowManager.MoveToEnd(this);
         }
@@ -89,14 +90,14 @@ namespace MOOS.GUI
 
         public virtual void OnDraw()
         {
-            Framebuffer.Graphics.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFF111111);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF111111), X, Y - BarHeight, Width, BarHeight);
             //ASC16.DrawString(Title, X + ((Width/2)-((Title.Length*8)/2)), Y - BarHeight + (BarHeight / 4), 0xFFFFFFFF);
 
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - ((BitFont.MeasureString("Song", Title)) / 2), Y - BarHeight + (BarHeight / 4));
             WindowManager.font.DrawString(X + (Width / 2) - (WindowManager.font.MeasureString(Title) / 2), Y - BarHeight + (BarHeight / 4), Title);
             //BitFont.DrawString("Song", 0xFFFFFFFF, Title, X + (Width / 2) - (BitFont.MeasureString("Song", Title) / 2), Y - BarHeight + (BarHeight / 4));
 
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, 0xFF222222);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF222222), X, Y, Width, Height);
             DrawBorder();
 
             Framebuffer.Graphics.DrawImage(WindowManager.CloseButton, CloseButtonX, CloseButtonY, true);
@@ -104,7 +105,7 @@ namespace MOOS.GUI
 
         public void DrawBorder(bool HasBar = true)
         {
-            Framebuffer.Graphics.DrawRectangle(X - 1, Y - (HasBar ? BarHeight : 0) - 1, Width + 2, (HasBar ? BarHeight : 0) + Height + 2, 0xFF333333);
+            Framebuffer.Graphics.DrawRectangle(Color.FromArgb(0xFF333333), X - 1, Y - (HasBar ? BarHeight : 0) - 1, Width + 2, (HasBar ? BarHeight : 0) + Height + 2);
         }
     }
 }

@@ -294,14 +294,6 @@ namespace System.Drawing
 			};
 		}
 
-		/*
-		case "":
-		break;
-		//throw new ArgumentException("Color Name must be passed to FromName");
-
-		default:
-		break;
-		//throw new ArgumentException("{0} is not a valid Color Name", name);*/
 		public static bool operator ==(Color a, Color b)
 		{
 			return Equals(a, b);
@@ -361,8 +353,5 @@ namespace System.Drawing
 		{
 			return new Color() { A = alpha, R = red, G = green, B = blue };
 		}
-
-
-
 	}
 }

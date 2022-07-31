@@ -77,7 +77,7 @@ namespace MOOS
 			return null;
 		}
 
-		public static void Initialise()
+		public static void Initialize()
 		{
 			Devices = new List<PCIDevice>();
 			if ((GetHeaderType(0x0, 0x0, 0x0) & 0x80) == 0)

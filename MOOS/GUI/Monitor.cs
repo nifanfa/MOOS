@@ -31,8 +31,8 @@ namespace MOOS.GUI
             {
                 int cpuUsage = (int)(100 - ThreadPool.CPUUsage);
 
-                g.FillRectangle(Width - lineWidth, 0, lineWidth, Height, 0xFF222222);
-                g.DrawLine(Width - lineWidth, Height / 100 * lastCPUUsage, Width, Height / 100 * cpuUsage, 0xFFFF0000);
+                g.FillRectangle(Color.FromArgb(0xFF222222), Width - lineWidth, 0, lineWidth, Height);
+                g.DrawLine(Color.FromArgb(0xFFFF0000), Width - lineWidth, Height / 100 * lastCPUUsage, Width, Height / 100 * cpuUsage);
 
                 lastCPUUsage = cpuUsage;
 

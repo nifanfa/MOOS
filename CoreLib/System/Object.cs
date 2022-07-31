@@ -57,5 +57,9 @@ namespace System
 		{
 			return obj != null;
 		}
+		public static implicit operator IntPtr(object obj)
+		{
+			return Unsafe.As<object, IntPtr>(ref obj);
+		}
 	}
 }

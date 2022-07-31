@@ -3,14 +3,19 @@ namespace System.Collections.Generic
 	public class List<T>
 	{
 		private T[] _value;
-
+		private int size;
 		public int Count = 0;
 
 		public List(int initsize = 256)
 		{
+			size = initsize;
 			_value = new T[initsize];
 		}
-
+		public List(T[] array)
+		{
+			size = array.Length;
+			_value = array;
+		}
 		public T this[int index]
 		{
 			get => _value[index];
@@ -19,6 +24,11 @@ namespace System.Collections.Generic
 
 		public void Add(T t)
 		{
+			if (size == Count)
+			{
+				Array.Resize(ref _value, size + 1);
+				size++;
+			}
 			_value[Count] = t;
 			Count++;
 		}

@@ -1,5 +1,4 @@
-using MOOS;
-using MOOS.Misc;
+using System.Runtime.InteropServices;
 
 namespace System.Threading
 {
@@ -7,27 +6,18 @@ namespace System.Threading
     {
         public static void Enter(object obj)
         {
-            if (ThreadPool.CanLock)
-            {
-                if (!ThreadPool.Locked)
-                {
-                    ThreadPool.Lock();
-                }
-            }
+            Lock();
         }
 
         public static void Exit(object obj)
         {
-            if (ThreadPool.CanLock)
-            {
-                if (ThreadPool.Locked)
-                {
-                    if (ThreadPool.Locker == SMP.ThisCPU)
-                    {
-                        ThreadPool.UnLock();
-                    }
-                }
-            }
+            UnLock();
         }
+
+        [DllImport("*")]
+        private static extern void Lock();
+
+        [DllImport("*")]
+        private static extern void UnLock();
     }
 }

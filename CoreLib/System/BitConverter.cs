@@ -1,4 +1,6 @@
-﻿namespace System
+﻿using Internal.Runtime.CompilerHelpers;
+
+namespace System
 {
     // The BitConverter class contains methods for
     // converting an array of bytes to one of the base data 
@@ -342,22 +344,22 @@
         {
             if (value == null)
             {
-                //throw new ArgumentNullException("value");
+                ThrowHelpers.ThrowArgumentNullException("value");
             }
 
             if (startIndex < 0 || (startIndex >= value.Length && startIndex > 0))
             {  // Don't throw for a 0 length array.
-               //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_StartIndex"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_StartIndex);
             }
 
             if (length < 0)
             {
-                //throw new ArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_GenericPositive"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length", SR.ArgumentOutOfRange_GenericPositive);
             }
 
             if (startIndex > value.Length - length)
             {
-                //throw new ArgumentException(Environment.GetResourceString("Arg_ArrayPlusOffTooSmall"));
+                ThrowHelpers.ThrowArgumentException("value.Length, length, startIndex", SR.Arg_ArrayPlusOffTooSmall);
             }
 
             if (length == 0)
@@ -368,7 +370,7 @@
             if (length > (int.MaxValue / 3))
             {
                 // (Int32.MaxValue / 3) == 715,827,882 Bytes == 699 MB
-                //throw new ArgumentOutOfRangeException("length", Environment.GetResourceString("ArgumentOutOfRange_LengthTooLarge", int.MaxValue / 3));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length", string.Format(SR.ArgumentOutOfRange_LengthTooLarge, int.MaxValue / 3));
             }
 
             int chArrayLength = length * 3;
@@ -392,7 +394,7 @@
         {
             if (value == null)
             {
-                //throw new ArgumentNullException("value");
+                ThrowHelpers.ThrowArgumentNullException("value");
             }
 
             return ToString(value, 0, value.Length);
@@ -403,7 +405,7 @@
         {
             if (value == null)
             {
-                //throw new ArgumentNullException("value");
+                ThrowHelpers.ThrowArgumentNullException("value");
             }
 
             return ToString(value, startIndex, value.Length - startIndex);
@@ -422,17 +424,17 @@
         {
             if (value == null)
             {
-                //throw new ArgumentNullException("value");
+                ThrowHelpers.ThrowArgumentNullException("value");
             }
 
             if (startIndex < 0)
             {
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_NeedNonNegNum"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             if (startIndex > value.Length - 1)
             {
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_Index"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
             }
 
             return value[startIndex] != 0;

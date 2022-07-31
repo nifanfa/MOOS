@@ -58,14 +58,6 @@ namespace MOOS.Misc
 
 					i += pages;
 				}
-				if (memSaved != 0)
-				{
-					Console.Write("GC Collected: ");
-					Console.Write(counter.ToString());
-					Console.Write(" Unused Handle(s) ");
-					Console.Write((memSaved / 1048576).ToString());
-					Console.WriteLine("MiB");
-				}
 			}
 		}
 	}

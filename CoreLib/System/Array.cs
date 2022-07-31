@@ -75,8 +75,7 @@ namespace System
                 int length = pLengths[i];
                 if (length > MaxLength)
                 {
-                    /*throw new Exception*/
-                    Panic("Length of array is too large, Max: " + MaxLength);
+                    ThrowHelpers.ThrowArgumentOutOfRangeException("length");
                 }
 
                 totalLength *= (ulong)length;
@@ -110,8 +109,7 @@ namespace System
         {
             if (newSize < 0)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("newSize");
             }
 
 
@@ -137,8 +135,7 @@ namespace System
         {
             if (length < MaxLength)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length");
             }
             return new T[length];
         }
@@ -167,27 +164,23 @@ namespace System
         {
             if (sourceArray == null)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("sourceArray");
             }
             if (destinationArray == null)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("destinationArray");
             }
             if (startIndex < 0)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex");
             }
             if (destinationArray.Length < sourceArray.Length - count)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("sourceArray.Length - count");
             }
             if (count <= 0)
             {
-                return;
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count");
             }
 
             int x = 0;
@@ -204,27 +197,23 @@ namespace System
         {
             if (sourceArray == null)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("sourceArray");
             }
             if (destinationArray == null)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("destinationArray");
             }
             if (startIndex < 0)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex");
             }
             if (destinationArray.Length > sourceArray.Length - count)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("sourceArray.Length - count");
             }
             if (count <= 0)
             {
-                return;
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count");
             }
 
             int x = 0;
@@ -244,8 +233,7 @@ namespace System
             int iindex = (int)index;
             if (index != iindex)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index");
             }
 
             return GetValue(iindex);
@@ -260,14 +248,12 @@ namespace System
 
             if (index1 != iindex1)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index1");
             }
 
             if (index2 != iindex2)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index2");
             }
 
             return GetValue(iindex1, iindex2);
@@ -283,20 +269,17 @@ namespace System
 
             if (index1 != iindex1)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index1");
             }
 
             if (index2 != iindex2)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index2");
             }
 
             if (index3 != iindex3)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index3");
             }
 
             return GetValue(iindex1, iindex2, iindex3);
@@ -310,8 +293,7 @@ namespace System
 
             if (index != iindex)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index");
             }
 
             SetValue(value, iindex);
@@ -326,14 +308,12 @@ namespace System
 
             if (index1 != iindex1)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index1");
             }
 
             if (index2 != iindex2)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index2");
             }
 
             SetValue(value, iindex1, iindex2);
@@ -349,20 +329,17 @@ namespace System
 
             if (index1 != iindex1)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index1");
             }
 
             if (index2 != iindex2)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index2");
             }
 
             if (index3 != iindex3)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentException("index3");
             }
 
             SetValue(value, iindex1, iindex2, iindex3);
@@ -402,8 +379,7 @@ namespace System
         {
             if (array == null)
             {
-                /*throw new Exception*/
-                Panic("Argument null");
+                ThrowHelpers.ThrowArgumentNullException("array");
             }
 
             for (int i = 0; i < array.Length; i++)
@@ -416,20 +392,17 @@ namespace System
         {
             if (array == null)
             {
-                /*throw new Exception*/
-                Panic("Argument null");
+                ThrowHelpers.ThrowArgumentNullException("array");
             }
 
             if (startIndex < 0 || startIndex > array.Length)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex, array.Length");
             }
 
             if (count < 0 || startIndex > array.Length - count)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count, array.Length - count, startIndex");
             }
 
             for (int i = startIndex; i < startIndex + count; i++)
@@ -455,14 +428,12 @@ namespace System
         {
             if (array == null)
             {
-                /*throw new Exception*/
-                Panic("Argument null");
+                ThrowHelpers.ThrowArgumentNullException("array");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex, array.Length");
             }
 
             for (int i = startIndex; i < array.Length; i++)
@@ -487,14 +458,12 @@ namespace System
         {
             if (array == null)
             {
-                /*throw new Exception*/
-                Panic("Argument null");
+                ThrowHelpers.ThrowArgumentNullException("array");
             }
 
             if ((uint)startIndex > (uint)array.Length)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex, array.Length");
             }
 
             for (int i = startIndex; i < startIndex + array.Length; i++)
@@ -526,26 +495,22 @@ namespace System
         {
             if (array == null)
             {
-                /*throw new Exception*/
-                Panic("Argument null");
+                ThrowHelpers.ThrowArgumentNullException("array");
             }
 
             if (index < 0)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("index");
             }
 
             if (length < 0)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length");
             }
 
             if (array.Length - index < length)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentOutOfRangeException("length, index");
             }
 
             if (length <= 1)
@@ -565,7 +530,7 @@ namespace System
         {
             if (array == null)
             {
-                //throw new ArgumentNullException("array");
+                ThrowHelpers.ThrowArgumentNullException("array");
             }
 
             if (array.Length == 0)
@@ -575,17 +540,17 @@ namespace System
 
             if (startIndex < 0 || startIndex >= array.Length)
             {
-                //throw new ArgumentOutOfRangeException("startIndex", Environment.GetResourceString("ArgumentOutOfRange_Index"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
             }
 
             if (count < 0)
             {
-                //throw new ArgumentOutOfRangeException("count", Environment.GetResourceString("ArgumentOutOfRange_Count"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("count", SR.ArgumentOutOfRange_Count);
             }
 
             if (count > startIndex - 1)
             {
-                //throw new ArgumentOutOfRangeException("endIndex", Environment.GetResourceString("ArgumentOutOfRange_EndIndexStartIndex"));
+                ThrowHelpers.ThrowArgumentOutOfRangeException("endIndex", SR.ArgumentOutOfRange_EndIndexStartIndex);
             }
 
             int endIndex = startIndex - count + 1;
@@ -621,26 +586,22 @@ namespace System
         {
             if (array == null)
             {
-                /*throw new Exception*/
-                Panic("Argument null");
+                ThrowHelpers.ThrowArgumentNullException("array");
             }
 
             if (index < 0)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentNullException("index");
             }
 
             if (length < 0)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentNullException("length");
             }
 
             if (array.Length - index < length)
             {
-                /*throw new Exception*/
-                Panic("Argument out of range");
+                ThrowHelpers.ThrowArgumentNullException("array.Length, index, length");
             }
 
             if (length <= 1)

@@ -10,12 +10,19 @@ using MOOS.Driver;
 using MOOS.FS;
 using MOOS.GUI;
 using MOOS.Misc;
+#if NETWORK
+using MOOS.NET;
+using System.Net;
+#endif
 
 internal unsafe class Program
 {
-	/* Compiler requires a static void main method for compilation to succeed,
-	 * Do not remove!
-	 */
+	/// <summary>
+	/// Compiler requires a static main method in class 'Program'
+	/// <![CDATA[
+	/// Do not remove!
+	/// ]]>
+	/// </summary>
 	private static void Main() { }
 
 	private static Image Cursor;
@@ -91,7 +98,7 @@ internal unsafe class Program
 		if (HID.Mouse != null)
 		{
 			Console.WriteInfo("Warning", "Press please press Mouse any key to validate USB Mouse ");
-			bool res = Console.Wait(&USBMouseTest, 2000);
+			bool res = Console.Wait(&USBMouseTest, 3500);
 			Console.WriteLine();
 			if (!res)
 			{
@@ -106,7 +113,7 @@ internal unsafe class Program
 		if (HID.Keyboard != null)
 		{
 			Console.WriteInfo("Warning", "Press please press any key to validate USB keyboard ");
-			bool res = Console.Wait(&USBKeyboardTest, 2000);
+			bool res = Console.Wait(&USBKeyboardTest, 3500);
 			Console.WriteLine();
 			if (!res)
 			{
@@ -131,8 +138,6 @@ internal unsafe class Program
 			Console.WriteLine("USB Keyboard not present");
 		}
 #endif
-
-
 		//Sized width to 512
 		//https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
 		Cursor = new PNG(File.Instance.ReadAllBytes("Images/Cursor.png"));
@@ -158,20 +163,30 @@ internal unsafe class Program
 		AC97.Initialize();
 
 		#region Network
+		/// <![CDATA[
 		/// How to use network
-		/// 1. Install OpenVPN's Windows tap driver
+		/// 
+		/// 1. Install OpenVPN's Windows tap driver ( Availible here: http://swupdate.openvpn.org/community/releases/openvpn-2.2.2-install.exe )
 		/// 2. Open "Control Panel\Network and Internet\Network Connections" in the Windows Control Panel.
 		/// 3. Rename the newly created network adapter to "tap" in the Windows Control Panel.
 		/// 4. Ctrl-Click your network adapter and the "tap" network adapter, then right-click on the "tap" network adapter and click "Bridge Connections"
 		/// 5. The network has been successfully linked.
 		/// To Un-Bridge the connections, Click on "Network Bridge" and then click at the top of the window "Delete this connection". ( Do this when you are not using the network as it slows down your internet connection )
+		///
+		/// <remember>
+		/// BUILD WITH 'QEMU Network' not 'QEMU Normal' or 'QEMU USB' for Networking to work
+		/// </remember>
+		/// ]]>
 #if NETWORK
-		Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
+		Network.Initialize(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
 		//Make sure this IP is pointing your gateway
-		TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 137, 1), 80);
+		TcpClient client = TcpClient.Connect(IPAddress.Parse(192, 168, 137, 1), 80);
 		client.OnData += Client_OnData;
 		client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
-		for (; ; ) Native.Hlt();
+		for (; ; )
+		{
+			Native.Hlt();
+		}
 #endif
 		#endregion
 
@@ -181,18 +196,22 @@ internal unsafe class Program
 #if NETWORK
 	private static void Client_OnData(byte[] data)
 	{
-	for (int i = 0; i < data.Length; i++)
-	{
-	Console.Write((char)data[i]);
-	}
-	Console.WriteLine();
+		for (int i = 0; i < data.Length; i++)
+		{
+			Console.Write((char)data[i]);
+		}
+		Console.WriteLine();
 	}
 
-	public static byte[] ToASCII(string s) 
+	public static byte[] ToASCII(string s)
 	{
-	byte[] buffer = new byte[s.Length];
-	for (int i = 0; i < buffer.Length; i++) buffer[i] = (byte)s[i];
-	return buffer;
+		byte[] buffer = new byte[s.Length];
+		for (int i = 0; i < buffer.Length; i++)
+		{
+			buffer[i] = (byte)s[i];
+		}
+
+		return buffer;
 	}
 #endif
 
@@ -221,7 +240,7 @@ internal unsafe class Program
 		FConsole = new FConsole(350, 300);
 		FConsole.Visible = false;
 
-		//Welcome welcome = new(400, 250);
+		_ = new Welcome(400, 250);
 
 		rightmenu = new RightMenu();
 		rightClicked = false;

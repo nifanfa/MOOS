@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MOOS.Graph
@@ -24,9 +25,10 @@ namespace MOOS.Graph
 			}
 		}
 
-		public void Clear(Color Color)
+		public void Clear(Color color)
 		{
-			Native.Stosd(VideoMemory, Color.ToArgb(), (ulong)(Width * Height));
+			Native.Stosd(VideoMemory, color.ToArgb(), (ulong)(Width * Height));
+			color.Dispose();
 		}
 
 		public void CopyFromScreen(int sourceX, int sourceY, int destinationX, int destinationY, Size blockRegionSize)
@@ -35,9 +37,14 @@ namespace MOOS.Graph
 			{
 				for (int Y = 0; Y < blockRegionSize.Height; Y++)
 				{
-					DrawPoint(X + destinationX, Y + destinationY, GetPoint(X + sourceX, Y + sourceY));
+					DrawPoint(GetPoint(X + sourceX, Y + sourceY), X + destinationX, Y + destinationY);
 				}
 			}
+			sourceX.Dispose();
+			sourceY.Dispose();
+			destinationX.Dispose();
+			destinationY.Dispose();
+			blockRegionSize.Dispose();
 		}
 
 		public void CopyFromScreen(Point source, Point destination, Size blockRegionSize)
@@ -46,17 +53,145 @@ namespace MOOS.Graph
 			{
 				for (int Y = 0; Y < blockRegionSize.Height; Y++)
 				{
-					DrawPoint(X + destination.X, Y + destination.Y, GetPoint(X + source.X, Y + source.Y));
+					DrawPoint(GetPoint(X + source.X, Y + source.Y), X + destination.X, Y + destination.Y);
+				}
+			}
+			source.Dispose();
+			destination.Dispose();
+			blockRegionSize.Dispose();
+		}
+
+		public void DrawArc(Color color, int x, int y, double start_angle, double end_angle, int radius)
+		{
+			List<int> xs = new();
+			List<int> ys = new();
+
+			for (double i = start_angle; i < end_angle; i += 0.05)
+			{
+				xs.Add((int)(x + (Math.Cos(i) * radius)));
+				ys.Add((int)(y + (Math.Sin(i) * radius)));
+			}
+
+			for (int i = 0; i < xs.Count - 1; i++)
+			{
+				DrawLine(color, xs[i], ys[i], xs[i + 1], ys[i + 1]);
+			}
+			xs.Dispose();
+			ys.Dispose();
+		}
+
+		public void DrawBezier(Color color, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+		{
+			for (double t = 0.0; t <= 1.0; t += 0.001)
+			{
+				int x = (int)((Math.Pow(1 - t, 3) * x1) + (3 * t * Math.Pow(1 - t, 2) * x2) + (3 * t * t * (1 - t) * x3) + (Math.Pow(t, 3) * x4));
+				int y = (int)((Math.Pow(1 - t, 3) * y1) + (3 * t * Math.Pow(1 - t, 2) * y2) + (3 * t * t * (1 - t) * y3) + (Math.Pow(t, 3) * y4));
+				DrawPoint(color, x, y);
+			}
+			x1.Dispose();
+			y1.Dispose();
+			x2.Dispose();
+			y2.Dispose();
+			x3.Dispose();
+			y3.Dispose();
+			x4.Dispose();
+			y4.Dispose();
+			color.Dispose();
+		}
+
+		public void DrawBezier(Color color, Point pt1, Point pt2, Point pt3, Point pt4)
+		{
+			for (double t = 0.0; t <= 1.0; t += 0.001)
+			{
+				int x = (int)((Math.Pow(1 - t, 3) * pt1.X) + (3 * t * Math.Pow(1 - t, 2) * pt2.X) + (3 * t * t * (1 - t) * pt3.X) + (Math.Pow(t, 3) * pt4.X));
+				int y = (int)((Math.Pow(1 - t, 3) * pt1.Y) + (3 * t * Math.Pow(1 - t, 2) * pt2.Y) + (3 * t * t * (1 - t) * pt3.Y) + (Math.Pow(t, 3) * pt4.Y));
+				DrawPoint(color, x, y);
+			}
+			pt1.Dispose();
+			pt2.Dispose();
+			pt3.Dispose();
+			pt4.Dispose();
+			color.Dispose();
+		}
+
+		// TODO: DrawBeziers
+		// TODO: DrawClosedCurve
+		// TODO: DrawCurve
+
+		public void DrawEllipse(Color color, int x, int y, int width, int height)
+		{
+			int a = 2 * width;
+			int b = 2 * height;
+			int b1 = b & 1;
+			int dx = 4 * (1 - a) * b * b;
+			int dy = 4 * (b1 + 1) * a * a;
+			int err = dx + dy + (b1 * a * a);
+			int e2;
+			int _y = 0;
+			int _x = width;
+			a *= 8 * a;
+			b1 = 8 * b * b;
+
+			while (_x >= 0)
+			{
+				DrawPoint(color, x + _x, y + _y);
+				DrawPoint(color, x - _x, y + _y);
+				DrawPoint(color, x - _x, y - _y);
+				DrawPoint(color, x + _x, y - _y);
+				e2 = 2 * err;
+				if (e2 <= dy)
+				{ _y++; err += dy += a; }
+				if (e2 >= dx || 2 * err > dy)
+				{ _x--; err += dx += b1; }
+			}
+		}
+
+		public void DrawEllipse(Color color, Rectangle rect)
+		{
+			DrawEllipse(color, rect.X, rect.Y, rect.Width, rect.Height);
+		}
+
+		public void FillEllipse(Color color, int x, int y, int height, int width)
+		{
+			int hh = height * height;
+			int ww = width * width;
+			int hhww = hh * ww;
+			int x0 = width;
+			int dx = 0;
+
+			// do the horizontal diameter
+			for (int _x = -width; _x <= width; _x++)
+			{
+				DrawPoint(color, x + _x, y);
+			}
+
+			// now do both halves at the same time, away from the diameter
+			for (int _y = 1; _y <= height; _y++)
+			{
+				int x1 = x0 - (dx - 1);  // try slopes of dx - 1 or more
+				for (; x1 > 0; x1--)
+				{
+					if ((x1 * x1 * hh) + (_y * _y * ww) <= hhww)
+					{
+						break;
+					}
+				}
+
+				dx = x0 - x1;  // current approximation of the slope
+				x0 = x1;
+
+				for (int _x = -x0; _x <= x0; _x++)
+				{
+					DrawPoint(color, x + _x, y - _y);
+					DrawPoint(color, x + _x, y + _y);
 				}
 			}
 		}
 
-		// TODO: DrawArc
-		// TODO: DrawBeizer
-		// TODO: DrawBeizers
-		// TODO: DrawClosedCurve
-		// TODO: DrawCurve
-		// TODO: DrawElipse
+		public void FillEllipse(Color color, Rectangle rect)
+		{
+			FillEllipse(color, rect.X, rect.Y, rect.Width, rect.Height);
+		}
 
 		private void DrawImageInternal(Image image, int X, int Y, int cutWidth, int cutHeight, int startX, int startY, bool AlphaBlending)
 		{
@@ -75,7 +210,7 @@ namespace MOOS.Graph
 							//{
 							//								foreground = 0xFFFFFF;
 							//}
-							DrawPoint(X + w, Y + h, foreground, true);
+							DrawPoint(Color.FromArgb(foreground), X + w, Y + h, true);
 						}
 					}
 				}
@@ -90,7 +225,7 @@ namespace MOOS.Graph
 						//{
 						//							color = 0xFFFFFF;
 						//}
-						DrawPoint(X + w, Y + h, color);
+						DrawPoint(Color.FromArgb(color), X + w, Y + h);
 					}
 				}
 			}
@@ -135,60 +270,130 @@ namespace MOOS.Graph
 			DrawImageInternal(resized, destRect.X, destRect.Y, srcRect.Width, srcRect.Height, srcRect.X, srcRect.Y, AlphaBlending);
 		}
 
-		// TODO: Finish GDI+
+		private void DrawLineInternal(Color color, int x0, int y0, int x1, int y1)
+		{
+			int dx = Math.Abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+			int dy = Math.Abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+			int err = dx - dy, e2, x2;                       /* error value e_xy */
+			int ed = (int)(dx + dy == 0 ? 1 : Math.Sqrt(((float)dx * dx) + ((float)dy * dy)));
 
-		public void FillRectangle(int X, int Y, int Width, int Height, uint Color)
+			for (; ; ) /* pixel loop */
+			{
+				color.A = (byte)(Math.Abs(err - dx + dy) / ed);
+				DrawPoint(color, x0, y0);
+				e2 = err;
+				x2 = x0;
+				if (2 * e2 >= -dx)
+				{
+					/* x step */
+					if (x0 == x1)
+					{
+						break;
+					}
+
+					if (e2 + dy < ed)
+					{
+						color.A = (byte)((e2 + dy) / ed);
+						DrawPoint(color, x0, y0 + sy);
+					}
+
+					err -= dy;
+					x0 += sx;
+				}
+				if (2 * e2 <= dy)
+				{
+					/* y step */
+					if (y0 == y1)
+					{
+						break;
+					}
+
+					if (dx - e2 < ed)
+					{
+						color.A = (byte)((dx - e2) / ed);
+						DrawPoint(color, x2 + sx, y0);
+					}
+
+					err += dx;
+					y0 += sy;
+				}
+			}
+		}
+
+		public void DrawLine(Color color, int x1, int y1, int x2, int y2)
+		{
+			DrawLineInternal(color, x1, y1, x2, y2);
+		}
+
+		public void DrawLine(Color color, Point a, Point b)
+		{
+			DrawLineInternal(color, a.X, a.Y, b.X, b.Y);
+		}
+
+		public void FillRectangle(Color color, int X, int Y, int Width, int Height)
 		{
 			for (int w = 0; w < Width; w++)
 			{
 				for (int h = 0; h < Height; h++)
 				{
-					DrawPoint(X + w, Y + h, Color);
+					DrawPoint(color, X + w, Y + h);
 				}
 			}
 		}
 
-		public uint GetPoint(int X, int Y)
+		public Color GetPoint(int X, int Y)
 		{
-			return X > 0 && Y > 0 && X < Width && Y < Height ? VideoMemory[(Width * Y) + X] : 0;
+			return X > 0 && Y > 0 && X < Width && Y < Height ? Color.FromArgb(VideoMemory[(Width * Y) + X]) : Color.Black;
+		}
+		public void DrawPoint(Color color, Point point, bool alphaBlending = false)
+		{
+			DrawPoint(color, point.X, point.Y, alphaBlending);
 		}
 
-		public void DrawPoint(int X, int Y, uint color, bool alphaBlending = false)
+		public void DrawPoint(Color color, int X, int Y, bool alphaBlending = false)
 		{
 			if (alphaBlending)
 			{
-				int fA = (byte)((color >> 24) & 0xFF);
-				int fR = (byte)((color >> 16) & 0xFF);
-				int fG = (byte)((color >> 8) & 0xFF);
-				int fB = (byte)(color & 0xFF);
+				Color background = GetPoint(X, Y);
 
-				uint background = GetPoint(X, Y);
-				int bA = (byte)((background >> 24) & 0xFF);
-				int bR = (byte)((background >> 16) & 0xFF);
-				int bG = (byte)((background >> 8) & 0xFF);
-				int bB = (byte)(background & 0xFF);
+				int inv_alpha = 0xFF - color.A;
 
-				int alpha = fA;
-				int inv_alpha = 0xFF - alpha;
+				int newR = ((color.R * color.A) + (inv_alpha * background.R)) >> 8;
+				int newG = ((color.G * color.A) + (inv_alpha * background.G)) >> 8;
+				int newB = ((color.B * color.A) + (inv_alpha * background.B)) >> 8;
 
-				int newR = ((fR * alpha) + (inv_alpha * bR)) >> 8;
-				int newG = ((fG * alpha) + (inv_alpha * bG)) >> 8;
-				int newB = ((fB * alpha) + (inv_alpha * bB)) >> 8;
-
-				color = Color.FromArgb((byte)newR, (byte)newG, (byte)newB).ToArgb();
+				color = Color.FromArgb((byte)newR, (byte)newG, (byte)newB);
+				/*fA.Dispose();
+				fR.Dispose();
+				fG.Dispose();
+				fB.Dispose();
+				background.Dispose();
+				bA.Dispose();
+				bR.Dispose();
+				bG.Dispose();
+				bB.Dispose();
+				alpha.Dispose();
+				inv_alpha.Dispose();
+				newR.Dispose();
+				newG.Dispose();
+				newB.Dispose();*/
 			}
 			if (X > 0 && Y > 0 && X < Width && Y < Height)
 			{
-				VideoMemory[(Width * Y) + X] = color;
+				VideoMemory[(Width * Y) + X] = color.ToArgb();
 			}
+			//alphaBlending.Dispose();
+			//color.Dispose();
+			//X.Dispose();
+			//Y.Dispose();
 		}
 
-		public void DrawRectangle(int X, int Y, int Width, int Height, uint Color)
+		public void DrawRectangle(Color color, int X, int Y, int Width, int Height)
 		{
-			DrawLine(X, Y, X + Width, Y, Color);
-			DrawLine(X, Y + Height, X + Width, Y + Height, Color);
-			DrawLine(X, Y, X, Y + Height, Color);
-			DrawLine(X + Width, Y, X + Width, Y + Height, Color);
+			DrawLine(color, X, Y, X + Width, Y);
+			DrawLine(color, X, Y + Height, X + Width, Y + Height);
+			DrawLine(color, X, Y, X, Y + Height);
+			DrawLine(color, X + Width, Y, X + Width, Y + Height);
 		}
 
 		public Image Save()
@@ -200,148 +405,58 @@ namespace MOOS.Graph
 			}
 			return image;
 		}
-
-		/*public void DrawCircle(int x, int y, int radius, uint color)
+		public void DrawCircle(Color color, int x, int y, int radius)
 		{
-			double i, angle, x1, y1;
-
-			for (i = 0; i < 360; i += 0.1)
+			int _x = -radius, _y = 0, err = 2 - (2 * radius);
+			do
 			{
-				angle = i;
-				x1 = radius * Math.Cos(angle * Math.PI / 180);
-				y1 = radius * Math.Sin(angle * Math.PI / 180);
-				DrawPoint((int)(x + x1), (int)(y + y1), color, true);
-			}
-		}*/
-		public void DrawCircle(int x_center, int y_center, int radius, uint color)
-		{
-			int x = radius;
-			int y = 0;
-			int e = 0;
-
-			while (x >= y)
-			{
-				DrawPoint(x_center + x, y_center + y, color);
-				DrawPoint(x_center + y, y_center + x, color);
-				DrawPoint(x_center - y, y_center + x, color);
-				DrawPoint(x_center - x, y_center + y, color);
-				DrawPoint(x_center - x, y_center - y, color);
-				DrawPoint(x_center - y, y_center - x, color);
-				DrawPoint(x_center + y, y_center - x, color);
-				DrawPoint(x_center + x, y_center - y, color);
-
-				y++;
-				if (e <= 0)
+				DrawPoint(color, x - _x, y + _y);
+				DrawPoint(color, x - _y, y - _x);
+				DrawPoint(color, x + _x, y - _y);
+				DrawPoint(color, x + _y, y + _x);
+				radius = err;
+				if (radius <= y)
 				{
-					e += (2 * y) + 1;
+					err += (++_y * 2) + 1;
 				}
-				if (e > 0)
+
+				if (radius > _x || err > _y)
 				{
-					x--;
-					e -= (2 * x) + 1;
+					err += (++_x * 2) + 1;
 				}
-			}
+			} while (_x < 0);
 		}
-		public void FillCircle(int x0, int y0, int radius, uint color)
+		public void FillCircle(Color color, int x, int y, int radius)
 		{
-			for (int x = -radius; x < radius; x++)
-			{
-				int height = (int)Math.Sqrt((radius * radius) - (x * x));
+			int _x = radius;
+			int _y = 0;
+			int xChange = 1 - (radius << 1);
+			int yChange = 0;
+			int radiusError = 0;
 
-				for (int y = -height; y < height; y++)
+			while (_x >= _y)
+			{
+				for (int i = x - _x; i <= x + _x; i++)
 				{
-					DrawPoint(x + x0, y + y0, color);
+					DrawPoint(color, i, y + _y);
+					DrawPoint(color, i, y - _y);
+				}
+				for (int i = x - _y; i <= x + _y; i++)
+				{
+					DrawPoint(color, i, y + _x);
+					DrawPoint(color, i, y - _x);
+				}
+
+				_y++;
+				radiusError += yChange;
+				yChange += 2;
+				if (((radiusError << 1) + xChange) > 0)
+				{
+					_x--;
+					radiusError += xChange;
+					xChange += 2;
 				}
 			}
-		}
-
-		public void DrawLine(int x0, int y0, int x1, int y1, uint color)
-		{
-			void Swap(int* a, int* b)
-			{
-				(*b, *a) = (*a, *b);
-			}
-
-			float FPartOfNumber(float x)
-			{
-				return x > 0 ? x - (int)x : x - ((int)x + 1);
-			}
-
-			float RFPartOfNumber(float x)
-			{
-				return 1 - FPartOfNumber(x);
-			}
-
-			bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
-
-			// swap the co-ordinates if slope > 1 or we
-			// draw backwards
-			if (steep)
-			{
-				Swap(&x0, &y0);
-				Swap(&x1, &y1);
-			}
-			if (x0 > x1)
-			{
-				Swap(&x0, &x1);
-				Swap(&y0, &y1);
-			}
-
-			//compute the slope
-			float dx = x1 - x0;
-			float dy = y1 - y0;
-			float gradient = dy / dx;
-			if (dx == 0.0)
-			{
-				gradient = 1;
-			}
-
-			int xpxl1 = x0;
-			int xpxl2 = x1;
-			float intersectY = y0;
-
-			// main loop
-			if (steep)
-			{
-				int x;
-				for (x = xpxl1; x <= xpxl2; x++)
-				{
-					// pixel coverage is determined by fractional
-					// part of y co-ordinate
-
-					Color A = Color.FromArgb(color);
-
-					A.A = (byte)(1f - RFPartOfNumber(intersectY));
-					DrawPoint((int)intersectY, x, A.ToArgb());
-
-					A.A = (byte)(1f - FPartOfNumber(intersectY));
-					DrawPoint((int)intersectY - 1, x, A.ToArgb());
-
-					A.Dispose();
-
-					intersectY += gradient;
-				}
-			} else
-			{
-				int x;
-				for (x = xpxl1; x <= xpxl2; x++)
-				{
-					// pixel coverage is determined by fractional
-					// part of y co-ordinate
-
-					Color B = Color.FromArgb(color);
-
-					B.A = (byte)(1f - RFPartOfNumber(intersectY));
-					DrawPoint(x, (int)intersectY, B.ToArgb());
-
-					B.A = (byte)(1f - FPartOfNumber(intersectY));
-					DrawPoint(x, (int)intersectY - 1, B.ToArgb());
-
-					B.Dispose();
-					intersectY += gradient;
-				}
-			}
-
 		}
 
 		#region SMNX Blur
@@ -483,9 +598,9 @@ namespace MOOS.Graph
 						for (x = X; x < Width; x++)
 						{
 							uint alpha = dst_ptr[3];
-							dst_ptr[0] = (byte)Math.Clamp((long)(sum_r * mul_sum) >> shr_sum, 0, alpha);
-							dst_ptr[1] = (byte)Math.Clamp((long)(sum_g * mul_sum) >> shr_sum, 0, alpha);
-							dst_ptr[2] = (byte)Math.Clamp((long)(sum_b * mul_sum) >> shr_sum, 0, alpha);
+							dst_ptr[0] = (byte)Math.Clamp((long)(sum_r * mul_sum) >> shr_sum, (long)0, (long)alpha);
+							dst_ptr[1] = (byte)Math.Clamp((long)(sum_g * mul_sum) >> shr_sum, (long)0, (long)alpha);
+							dst_ptr[2] = (byte)Math.Clamp((long)(sum_b * mul_sum) >> shr_sum, (long)0, (long)alpha);
 							dst_ptr += 4;
 
 							sum_r -= sum_out_r;
@@ -593,9 +708,9 @@ namespace MOOS.Graph
 						for (y = Y; y < Height; y++)
 						{
 							uint alpha = dst_ptr[3];
-							dst_ptr[0] = (byte)Math.Clamp((long)(sum_r * mul_sum) >> shr_sum, 0, alpha);
-							dst_ptr[1] = (byte)Math.Clamp((long)(sum_g * mul_sum) >> shr_sum, 0, alpha);
-							dst_ptr[2] = (byte)Math.Clamp((long)(sum_b * mul_sum) >> shr_sum, 0, alpha);
+							dst_ptr[0] = (byte)Math.Clamp((long)(sum_r * mul_sum) >> shr_sum, (long)0, (long)alpha);
+							dst_ptr[1] = (byte)Math.Clamp((long)(sum_g * mul_sum) >> shr_sum, (long)0, (long)alpha);
+							dst_ptr[2] = (byte)Math.Clamp((long)(sum_b * mul_sum) >> shr_sum, (long)0, (long)alpha);
 							dst_ptr += w4;
 
 							sum_r -= sum_out_r;

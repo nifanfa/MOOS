@@ -1,6 +1,6 @@
 #if HasGUI
+using System.Drawing;
 using System.Windows.Forms;
-using MOOS.Graph;
 
 namespace MOOS.GUI
 {
@@ -60,7 +60,7 @@ namespace MOOS.GUI
             Height = WindowManager.font.FontSize * 2;
             Width = len;
 
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, 0xFF222222);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF222222), X, Y, Width, Height);
             WindowManager.font.DrawString(X, Y + (WindowManager.font.FontSize / 2), str);
             DrawBorder(false);
         }

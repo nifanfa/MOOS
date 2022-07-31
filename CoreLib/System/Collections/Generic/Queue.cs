@@ -9,11 +9,11 @@ namespace System.Collections.Generic
 			list = new List<T>(initsize);
 		}
 
-		public T Tail => Length == 0 ? default : list[list.Count - 1];
+		public T Tail => Count == 0 ? default : list[list.Count - 1];
 
-		public T Head => Length == 0 ? default : list[0];
+		public T Head => Count == 0 ? default : list[0];
 
-		public int Length => list.Count;
+		public int Count => list.Count;
 
 
 		public void Enqueue(T item)

@@ -113,48 +113,21 @@ namespace MOOS.GUI
 				}
 
 				ClickEvent(names[i].Name, names[i].Attribute == FileAttribute.Directory, X, Y, i + (IsAtRoot ? BuiltInAppNames.Length : 0));
-
-				if (
-					names[i].Name[names[i].Name.Length - 3].ToUpper() == 'P' &&
-					names[i].Name[names[i].Name.Length - 2].ToUpper() == 'N' &&
-					names[i].Name[names[i].Name.Length - 1].ToUpper() == 'G'
-					)
+				string name = names[i].Name;//.ToLower();
+				if (name.EndsWith(".png"))
 				{
 					Framebuffer.Graphics.DrawImage(ImageIcon, X, Y, true);
-				} else if
-					  (
-
-					  names[i].Name[names[i].Name.Length - 3].ToUpper() == 'N' &&
-					  names[i].Name[names[i].Name.Length - 2].ToUpper() == 'E' &&
-					  names[i].Name[names[i].Name.Length - 1].ToUpper() == 'S'
-
-					  )
+				} else if (name.EndsWith(".nes"))
 				{
 					Framebuffer.Graphics.DrawImage(GameIcon, X, Y, true);
-				} else if
-					  (
+				} else if (name.EndsWith(".exe"))
 
-					  names[i].Name[names[i].Name.Length - 3].ToUpper() == 'E' &&
-					  names[i].Name[names[i].Name.Length - 2].ToUpper() == 'X' &&
-					  names[i].Name[names[i].Name.Length - 1].ToUpper() == 'E'
-
-					  )
 				{
 					Framebuffer.Graphics.DrawImage(AppIcon, X, Y, true);
-				} else if
-					  (
-
-					  names[i].Name[names[i].Name.Length - 3].ToUpper() == 'W' &&
-					  names[i].Name[names[i].Name.Length - 2].ToUpper() == 'A' &&
-					  names[i].Name[names[i].Name.Length - 1].ToUpper() == 'V'
-
-					  )
+				} else if (name.EndsWith(".wav"))
 				{
 					Framebuffer.Graphics.DrawImage(AudioIcon, X, Y, true);
-				} else if
-					  (
-					  names[i].Attribute == FileAttribute.Directory
-					  )
+				} else if (names[i].Attribute == FileAttribute.Directory)
 				{
 					Framebuffer.Graphics.DrawImage(FolderIcon, X, Y, true);
 				} else
@@ -164,11 +137,12 @@ namespace MOOS.GUI
 				//BitFont.DrawString("Song", 0xFFFFFFFF, names[i], X, Y + FileIcon.Height, FileIcon.Width + 16);
 				WindowManager.font.DrawString(X, Y + FileIcon.Height, names[i].Name, FileIcon.Width + 8, WindowManager.font.FontSize * 3);
 				Y += FileIcon.Height + Devide;
+				name.Dispose();
 				names[i].Dispose();
 			}
 			names.Dispose();
 
-			Framebuffer.Graphics.FillRectangle(0, 0, Framebuffer.Graphics.Width, BarHeight, 0xFF111111);
+			Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF111111), 0, 0, Framebuffer.Graphics.Width, BarHeight);
 			//BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
 
 			string pre = Prefix + Dir;
@@ -194,41 +168,41 @@ namespace MOOS.GUI
 					if (Control.MousePosition.X > LastPoint.X && Control.MousePosition.Y > LastPoint.Y)
 					{
 						Framebuffer.Graphics.FillRectangle(
+							Color.FromArgb(0x7F2E86C1),
 							LastPoint.X,
 							LastPoint.Y,
 							Control.MousePosition.X - LastPoint.X,
-							Control.MousePosition.Y - LastPoint.Y,
-							0x7F2E86C1);
+							Control.MousePosition.Y - LastPoint.Y);
 					}
 
 					if (Control.MousePosition.X < LastPoint.X && Control.MousePosition.Y < LastPoint.Y)
 					{
 						Framebuffer.Graphics.FillRectangle(
+							Color.FromArgb(0x7F2E86C1),
 							Control.MousePosition.X,
 							Control.MousePosition.Y,
 							LastPoint.X - Control.MousePosition.X,
-							LastPoint.Y - Control.MousePosition.Y,
-							0x7F2E86C1);
+							LastPoint.Y - Control.MousePosition.Y);
 					}
 
 					if (Control.MousePosition.X < LastPoint.X && Control.MousePosition.Y > LastPoint.Y)
 					{
 						Framebuffer.Graphics.FillRectangle(
+							Color.FromArgb(0x7F2E86C1),
 							Control.MousePosition.X,
 							LastPoint.Y,
 							LastPoint.X - Control.MousePosition.X,
-							Control.MousePosition.Y - LastPoint.Y,
-							0x7F2E86C1);
+							Control.MousePosition.Y - LastPoint.Y);
 					}
 
 					if (Control.MousePosition.X > LastPoint.X && Control.MousePosition.Y < LastPoint.Y)
 					{
 						Framebuffer.Graphics.FillRectangle(
+							Color.FromArgb(0x7F2E86C1),
 							LastPoint.X,
 							Control.MousePosition.Y,
 							Control.MousePosition.X - LastPoint.X,
-							LastPoint.Y - Control.MousePosition.Y,
-							0x7F2E86C1);
+							LastPoint.Y - Control.MousePosition.Y);
 					}
 				}
 			} else
@@ -271,7 +245,7 @@ namespace MOOS.GUI
 			if (IndexClicked == i)
 			{
 				int w = (int)(FileIcon.Width * 1.5f);
-				Framebuffer.Graphics.FillRectangle(X + ((FileIcon.Width / 2) - (w / 2)), Y, w, FileIcon.Height * 2, 0x7F2E86C1);
+				Framebuffer.Graphics.FillRectangle(Color.FromArgb(0x7F2E86C1), X + ((FileIcon.Width / 2) - (w / 2)), Y, w, FileIcon.Height * 2);
 			}
 		}
 
@@ -284,12 +258,7 @@ namespace MOOS.GUI
 
 			string devider = "/";
 			string path = Dir + devider + name;
-
-			if (
-				name[name.Length - 3].ToUpper() == 'P' &&
-				name[name.Length - 2].ToUpper() == 'N' &&
-				name[name.Length - 1].ToUpper() == 'G'
-				)
+			if (name.ToLower().EndsWith(".png"))
 			{
 				byte[] buffer = File.Instance.ReadAllBytes(path);
 				PNG png = new(buffer);
@@ -298,11 +267,7 @@ namespace MOOS.GUI
 				png.Dispose();
 				WindowManager.MoveToEnd(imageViewer);
 				imageViewer.Visible = true;
-			} else if (
-				  name[name.Length - 3].ToUpper() == 'E' &&
-				  name[name.Length - 2].ToUpper() == 'X' &&
-				  name[name.Length - 1].ToUpper() == 'E'
-				  )
+			} else if (name.ToLower().EndsWith(".exe"))
 			{
 				WindowManager.MoveToEnd(Program.FConsole);
 				if (Program.FConsole.Visible == false)
@@ -312,14 +277,9 @@ namespace MOOS.GUI
 
 				//TO-DO disposing
 				Console.WriteLine("Loading EXE...");
-
 				byte[] buffer = File.Instance.ReadAllBytes(path);
 				Process.Start(buffer);
-			} else if (
-				  name[name.Length - 3].ToUpper() == 'W' &&
-				  name[name.Length - 2].ToUpper() == 'A' &&
-				  name[name.Length - 1].ToUpper() == 'V'
-				  )
+			} else if (name.ToLower().EndsWith(".wav"))
 			{
 				if (Audio.HasAudioDevice)
 				{
@@ -340,17 +300,12 @@ namespace MOOS.GUI
 					WindowManager.MoveToEnd(msgbox);
 					msgbox.Visible = true;
 				}
-			} else if (
-				  name[name.Length - 3].ToUpper() == 'N' &&
-				  name[name.Length - 2].ToUpper() == 'E' &&
-				  name[name.Length - 1].ToUpper() == 'S'
-				  )
+			} else if (name.ToLower().EndsWith(".nes"))
 			{
 				nesemu.OpenROM(File.Instance.ReadAllBytes(path));
 				WindowManager.MoveToEnd(nesemu);
 				nesemu.Visible = true;
 			}
-
 #if Chinese
 			else if (name == "计算器")
 #else
@@ -405,19 +360,11 @@ namespace MOOS.GUI
 				Dir = newd;
 			} else
 			{
-				msgbox.X = itemX + 75;
-				msgbox.Y = itemY + 75;
-#if Chinese
-				msgbox.SetText("没有程序可用打开此文件!");
-#else
-				msgbox.SetText("No application can open this file!");
-#endif
-				WindowManager.MoveToEnd(msgbox);
-				msgbox.Visible = true;
+				WindowManager.MoveToEnd(new FileViewer(100, 100, path));
 			}
-
 			path.Dispose();
 			devider.Dispose();
+			name.Dispose();
 		}
 	}
 }

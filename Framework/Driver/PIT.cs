@@ -8,7 +8,7 @@ namespace MOOS
 	{
 		public const int Clock = 1193182;
 
-		public static void Initialise(int hz)
+		public static void Initialize(int hz)
 		{
 			ushort timerCount = (ushort)(Clock / hz);
 

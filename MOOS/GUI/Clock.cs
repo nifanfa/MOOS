@@ -1,7 +1,7 @@
 #if HasGUI
 
 using System;
-using MOOS.Graph;
+using System.Drawing;
 
 namespace MOOS.GUI
 {
@@ -89,7 +89,7 @@ namespace MOOS.GUI
                         xEnd += x_flip * ((sine[angle] * radius) >> 8);
                         yEnd += y_flip * ((sine[15 - angle] * radius) >> 8);
 
-                        Framebuffer.Graphics.DrawLine(xStart, yStart, xEnd, yEnd, color);
+                        Framebuffer.Graphics.DrawLine(Color.FromArgb(color), xStart, yStart, xEnd, yEnd);
                     }
                 }
             }

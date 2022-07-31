@@ -1,5 +1,5 @@
+using System;
 using System.Runtime;
-using System.Threading;
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
@@ -12,41 +12,95 @@ namespace MOOS
         {
             switch (name)
             {
-                case "WriteLine":
-                    return (delegate*<string, void>)&Console.WriteLine;
-                case "DebugWriteLine":
-                    return (delegate*<string, void>)&API_DebugWriteLine;
                 case "Allocate":
                     return (delegate*<ulong, nint>)&Allocator.Allocate;
                 case "Reallocate":
                     return (delegate*<nint, ulong, nint>)&Allocator.Reallocate;
-                case "Free":
-                    return (delegate*<nint, ulong>)&Allocator.Free;
-                case "Sleep":
-                    return (delegate*<ulong, void>)&Thread.Sleep;
-                case "GetTick":
-                    return (delegate*<ulong>)&GetTick;
-                case "ReadAllBytes":
-                    return (delegate*<string, ulong*, byte**, void>)&ReadAllBytes;
+                case "MemCopy":
+                    return (delegate*<nint, nint, ulong, void>)&Allocator.MemoryCopy;
                 case "Write":
                     return (delegate*<string, void>)&Console.Write;
-                case "DebugWrite":
-                    return (delegate*<char, void>)&API_DebugWrite;
-                case "SwitchToConsoleMode":
-                    return (delegate*<void>)&SwitchToConsoleMode;
-                case "DrawPoint":
-                    return (delegate*<int, int, uint, bool, void>)&DrawPoint;
-                case "Lock":
-                    return (delegate*<object, void>)&Monitor.Enter;
-                case "Unlock":
-                    return (delegate*<object, void>)&Monitor.Exit;
+                case "SingleBuffered":
+                    return (delegate*<void>)new Action(() =>
+                    {
+                        Framebuffer.DoubleBuffered = false;
+                    }).m_functionPointer;
+                case "DoubleBuffered":
+                    return (delegate*<void>)new Action(() =>
+                    {
+                        Framebuffer.DoubleBuffered = true;
+                    }).m_functionPointer;
+                case "Sleep":
+                    return (delegate*<ulong, void>)&Thread.Sleep;
+                case "GetTime":
+                    return (delegate*<ulong>)&API_GetTime;
+                case "Error":
+                    return (delegate*<string, bool, void>)&Panic.Error;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
         }
+        public static ulong API_GetTime()
+        {
+            ulong century = RTC.Century;
+            ulong year = RTC.Year;
+            ulong month = RTC.Month;
+            ulong day = RTC.Day;
+            ulong hour = RTC.Hour;
+            ulong minute = RTC.Minute;
+            ulong second = RTC.Second;
 
-        [RuntimeExport("Panic")]
-        public static void API_Panic(string message)
+            ulong time = 0;
+
+            time |= century << 56;
+            time |= year << 48;
+            time |= month << 40;
+            time |= day << 32;
+            time |= hour << 24;
+            time |= minute << 16;
+            time |= second << 8;
+
+            return time;
+        }
+
+        private static void Write(char s)
+        {
+            Console.Write(s);
+        }
+
+        private static void WriteLine()
+        {
+            Console.WriteLine();
+        }
+
+        [RuntimeExport("UnLock")]
+        private static void UnLock()
+        {
+            if (ThreadPool.CanLock)
+            {
+                if (ThreadPool.Locked)
+                {
+                    if (ThreadPool.Locker == SMP.ThisCPU)
+                    {
+                        ThreadPool.UnLock();
+                    }
+                }
+            }
+        }
+        [RuntimeExport("Lock")]
+        private static void Lock()
+        {
+            if (ThreadPool.CanLock)
+            {
+                if (!ThreadPool.Locked)
+                {
+                    ThreadPool.Lock();
+                }
+            }
+        }
+
+        [RuntimeExport("Error")]
+        public static void Error(string message)
         {
             Panic.Error(message);
         }
@@ -60,11 +114,6 @@ namespace MOOS
         public static void API_DebugWriteLine(string s)
         {
             Serial.WriteLine(s);
-        }
-
-        public static void DrawPoint(int x, int y, uint color, bool alphaBlending = false)
-        {
-            Framebuffer.Graphics.DrawPoint(x, y, color, alphaBlending);
         }
 
         public static void SwitchToConsoleMode()

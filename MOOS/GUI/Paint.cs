@@ -62,7 +62,7 @@ namespace MOOS.GUI
 
             for (int i = 0; i < Btns.Count; i++)
             {
-                Framebuffer.Graphics.FillRectangle(X + Btns[i].X, Y + Btns[i].Y, Btns[i].Width, Btns[i].Height, Btns[i].UIntParam);
+                Framebuffer.Graphics.FillRectangle(Color.FromArgb(Btns[i].UIntParam), X + Btns[i].X, Y + Btns[i].Y, Btns[i].Width, Btns[i].Height);
 #if Chinese
                 if (Btns[i].Name == "清除")
 #else
@@ -89,7 +89,7 @@ namespace MOOS.GUI
                     WindowManager.MouseHandled = true;
                     if (Control.MousePosition.X - X != LastX || Control.MousePosition.Y - Y != LastY)
                     {
-                        g.DrawLine(LastX, LastY, Control.MousePosition.X - X, Control.MousePosition.Y - Y, CurrentColor);
+                        g.DrawLine(Color.FromArgb(CurrentColor), LastX, LastY, Control.MousePosition.X - X, Control.MousePosition.Y - Y);
                     }
 
                     for (int i = 0; i < Btns.Count; i++)

@@ -14,13 +14,12 @@ namespace System
 
         public char ToUpper()
         {
-            char chr = this;
-            if (chr >= 'a' && chr <= 'z')
-            {
-                chr -= (char)('a' - 'A');
-            }
+            return this >= 'a' && this <= 'z' ? (char)(this - 32) : this;
+        }
 
-            return chr;
+        public char ToLower()
+        {
+            return this >= 'A' && this <= 'Z' ? (char)(this + 32) : this;
         }
 
         public static bool IsDigit(char c)

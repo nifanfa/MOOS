@@ -21,6 +21,12 @@ namespace System.Drawing
             X = size.Width;
             Y = size.Height;
         }
+        public override void Dispose()
+        {
+            X.Dispose();
+            Y.Dispose();
+            base.Dispose();
+        }
         public static Point Add(Point point, Size size)
         {
             return new Point(point.X + size.Width, point.Y + size.Height);

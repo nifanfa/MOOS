@@ -95,7 +95,7 @@ namespace MOOS.Driver
 			public ulong ExtendedMaximumCapacity;
 		}
 
-		public static void Initialise()
+		public static void Initialize()
 		{
 			byte* p = (byte*)0xF0000;
 			while (*(uint*)p != 0x5F4D535F)

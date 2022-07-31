@@ -9,7 +9,7 @@ namespace MOOS.Driver
 
 		public static void Initialize()
 		{
-			//PIT.Initialise(1000);
+			//PIT.Initialize(1000);
 			HPET.Initialize();
 
 			CPU_Clock = EstimateCPUSpeed();

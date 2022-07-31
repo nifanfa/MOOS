@@ -149,7 +149,7 @@ namespace MOOS.GUI
                     if (HeightLimit != -1 && h >= HeightLimit)
                     {
                         Framebuffer.Graphics.CopyFromScreen(X, Y, X, Y + WindowManager.font.FontSize, new Size(LineLimit, HeightLimit - WindowManager.font.FontSize));
-                        Framebuffer.Graphics.FillRectangle(X, Y + HeightLimit - WindowManager.font.FontSize, LineLimit, WindowManager.font.FontSize, 0xFF222222);
+                        Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF222222), X, Y + HeightLimit - WindowManager.font.FontSize, LineLimit, WindowManager.font.FontSize);
                         h -= WindowManager.font.FontSize;
                     }
                 }

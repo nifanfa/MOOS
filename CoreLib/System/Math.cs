@@ -191,7 +191,7 @@ namespace System
 		}
 		public static int Sign(nuint value)
 		{
-			return value < 0 ? -1 : value == 0 ? 0 : 1;
+			return value < (nuint)0 ? -1 : value == (nuint)0 ? 0 : 1;
 		}
 		public static int Sign(float value)
 		{
@@ -268,12 +268,12 @@ namespace System
 			return Sin(x) / Cos(x);
 		}
 
-		public static double Sqrt(double _d)
+		public static unsafe double Sqrt(double x)
 		{
-			double w = _d, h = 1;
+			double w = x, h = 1, t;
 			if (w < 1)
 			{
-				h = _d;
+				h = x;
 				w = 1;
 			}
 			do
@@ -283,11 +283,46 @@ namespace System
 			} while (w > h);
 			for (int i = 0; i < 4; i++)
 			{
-				double t = (w + h) * 0.5;
+				t = (w + h) * 0.5;
 				h = h / t * w;
 				w = t;
 			}
 			return (w + h) * 0.5;
+		}
+
+		public static double Round(double number, int decimal_places)
+		{
+			if (decimal_places <= 0)
+			{
+				return number;
+			}
+
+			double power = Pow(10, decimal_places - 1);
+			number *= power;
+
+			return (number >= 0) ? ((int)(number + 0.5)) / power : ((int)(number - 0.5)) / power;
+		}
+
+		public static int Ceiling(double val)
+		{
+			return (int)((val + 10 - 1) / 10);
+		}
+
+		public static double Floor(double x)
+		{
+			if (x >= 0.0)
+			{
+				return x < (((long.MaxValue / 2) + 1) * 2.0) ? (long)x : x;
+			} else if (x < 0.0)
+			{
+				if (x >= long.MinValue)
+				{
+					long ix = (long)x;
+					return (ix == x) ? x : ix - 1;
+				}
+				return x;
+			}
+			return x;
 		}
 	}
 }

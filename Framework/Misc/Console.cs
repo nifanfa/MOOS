@@ -21,7 +21,7 @@ namespace MOOS
 		public delegate void OnWriteHandler(char chr);
 		public static event OnWriteHandler OnWrite;
 
-		private static uint[] ColorsFB;
+		private static Color[] ColorsFB;
 
 		internal static void Setup()
 		{
@@ -29,24 +29,24 @@ namespace MOOS
 
 			Clear();
 
-			ColorsFB = new uint[16]
+			ColorsFB = new Color[16]
 			{
-				Color.Black.ToArgb(),
-				Color.Blue.ToArgb(),
-				Color.Green.ToArgb(),
-				Color.Cyan.ToArgb(),
-				Color.Red.ToArgb(),
-				Color.Purple.ToArgb(),
-				Color.Brown.ToArgb(),
-				Color.Gray.ToArgb(),
-				Color.DarkGray.ToArgb(),
-				Color.LightBlue.ToArgb(),
-				Color.LightGreen.ToArgb(),
-				Color.LightCyan.ToArgb(),
-				Color.MediumVioletRed.ToArgb(),
-				Color.MediumPurple.ToArgb(),
-				Color.Yellow.ToArgb(),
-				Color.White.ToArgb()
+				Color.Black,
+				Color.Blue,
+				Color.Green,
+				Color.Cyan,
+				Color.Red,
+				Color.Purple,
+				Color.Brown,
+				Color.Gray,
+				Color.DarkGray,
+				Color.LightBlue,
+				Color.LightGreen,
+				Color.LightCyan,
+				Color.MediumVioletRed,
+				Color.MediumPurple,
+				Color.Yellow,
+				Color.White
 			};
 
 			ForegroundColor = ConsoleColor.White;
@@ -184,6 +184,15 @@ namespace MOOS
 			}
 			s.Dispose();
 		}
+		public static void Write(object obj)
+		{
+			string s = obj.ToString();
+			for (byte i = 0; i < s.Length; i++)
+			{
+				Console.Write(s[i]);
+			}
+			s.Dispose();
+		}
 
 		public static void WriteInfo(string catagory, string message)
 		{
@@ -214,7 +223,7 @@ namespace MOOS
 				CursorX = Framebuffer.Width;
 				CursorY -= 16;
 			}
-			Framebuffer.Graphics.FillRectangle(CursorX - 8, CursorY, 16, 16, ColorsFB[(int)BackgroundColor]);
+			Framebuffer.Graphics.FillRectangle(ColorsFB[(int)BackgroundColor], CursorX, CursorY, 16, 16);
 			CursorX -= 8;
 			UpdateCursor();
 		}
@@ -259,8 +268,8 @@ namespace MOOS
 		{
 			if (Framebuffer.FirstBuffer != null && !Framebuffer.DoubleBuffered)
 			{
-				Framebuffer.Graphics.FillRectangle(CursorX, CursorY, 8, 16, ColorsFB[(int)BackgroundColor]);
-				ASC16.DrawChar(chr, CursorX, CursorY, ColorsFB[(int)ForegroundColor]);
+				Framebuffer.Graphics.FillRectangle(ColorsFB[(int)BackgroundColor], CursorX, CursorY, 8, 16);
+				ASC16.DrawChar(ColorsFB[(int)ForegroundColor], chr, CursorX, CursorY);
 			}
 		}
 
@@ -312,7 +321,7 @@ namespace MOOS
 				Native.Movsb((void*)0xb8000, (void*)0xB80A0, 0xF00);
 				if (Framebuffer.FirstBuffer != null && !Framebuffer.DoubleBuffered)
 				{
-					Framebuffer.Graphics.FillRectangle(0, Framebuffer.Height - 16, Framebuffer.Width, 16, ColorsFB[(int)BackgroundColor]);
+					Framebuffer.Graphics.FillRectangle(ColorsFB[(int)BackgroundColor], 0, Framebuffer.Height - 16, Framebuffer.Width, 16);
 					Framebuffer.Graphics.CopyFromScreen(0, -16, 0, 0, new Size(Framebuffer.Width, Framebuffer.Height));
 				}
 				UpdateCursor();
@@ -328,11 +337,7 @@ namespace MOOS
 		{
 			if (Framebuffer.FirstBuffer != null && !Framebuffer.DoubleBuffered)
 			{
-				ASC16.DrawChar('_',
-				CursorX,
-				CursorY,
-				0xFFFFFFFF
-				);
+				ASC16.DrawChar(Color.White, '_', CursorX, CursorY);
 			}
 		}
 

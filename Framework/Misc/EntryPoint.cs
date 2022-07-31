@@ -19,6 +19,14 @@ namespace MOOS.Misc
 
 #if HasGC
 			GC.AllowCollect = false;
+			new Thread(() =>
+			{
+				for (; ; )
+				{
+					Thread.Sleep(1500);
+					GC.Collect();
+				}
+			});
 #endif
 
 			PageTable.Initialize();
@@ -40,7 +48,7 @@ namespace MOOS.Misc
 
 			Console.Setup();
 			IDT.Disable();
-			GDT.Initialise();
+			GDT.Initialize();
 			IDT.Initialize();
 			Interrupts.Initialize();
 			IDT.Enable();
@@ -60,13 +68,13 @@ namespace MOOS.Misc
 
 			Keyboard.Initialize();
 
-			Serial.Initialise();
+			Serial.Initialize();
 
 			PS2Controller.Initialize();
 
-			SMBIOS.Initialise();
+			SMBIOS.Initialize();
 
-			PCI.Initialise();
+			PCI.Initialize();
 
 			IDE.Initialize();
 			SATA.Initialize();
