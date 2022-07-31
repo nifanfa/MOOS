@@ -246,7 +246,7 @@ namespace MOOS
         public static ConsoleKeyInfo ReadKey(bool intercept = false)
         {
             Keyboard.CleanKeyInfo(true);
-            while (Keyboard.KeyInfo.Key == ConsoleKey.None) Native.Hlt();
+            while (Keyboard.KeyInfo.KeyChar == '\0') Native.Hlt();
             if (!intercept)
             {
                 switch (Keyboard.KeyInfo.Key) 
