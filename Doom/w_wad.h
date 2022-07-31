@@ -40,15 +40,15 @@ typedef struct lumpinfo_s lumpinfo_t;
 
 struct lumpinfo_s
 {
-    char	name[8];
-    wad_file_t *wad_file;
-    int		position;
-    int		size;
-    void       *cache;
+	char	name[8];
+	wad_file_t *wad_file;
+	int		position;
+	int		size;
+	void       *cache;
 
-    // Used for hash table lookups
+	// Used for hash table lookups
 
-    lumpinfo_t *next;
+	lumpinfo_t *next;
 };
 
 

@@ -1,1 +1,0 @@
-﻿//Use MOOS's bitmap

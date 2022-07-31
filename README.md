@@ -1,22 +1,18 @@
 # MOOS  
-  
-Also provide [简体中文](README_CN.md)  
-  
 Welcome to the *MOOS(to make **M**y **O**wn **O**perating **S**ystem)-Project*
 > MOOS is a C# x64 operating system programming with the .NET native ahead-of-time compilation technology.
-
 [![Discord Shield](https://discordapp.com/api/guilds/987075686256762890/widget.png?style=shield)](https://discord.gg/uJstXbx8Pt)
 
 *See screenshot below*
 
 ## Building
-For information on compiling MOOS, please read the [build wiki page](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS%3F).
+For information on compiling MOOS, please read the [build wiki page](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS).
 
-### Debug requirements
-- *VMware Workstation Player - https://www.vmware.com/products/workstation-player.html*
-- *Intel Hardware Accelerated Execution Manager (HAXM) - https://github.com/intel/haxm/releases*  
-- *Visual studio 2022 - https://visualstudio.microsoft.com/*  
-- *QEMU - https://www.qemu.org/download/ - Or you can use VMware, it's your choice*
+### Build requirements
+- VMware Workstation Player - https://www.vmware.com/products/workstation-player.html
+- Intel Hardware Accelerated Execution Manager (HAXM) - https://github.com/intel/haxm/releases
+- Visual studio 2022 - https://visualstudio.microsoft.com/
+- QEMU - https://www.qemu.org/download/ - Or you can use VMware, it's your choice
 
 Note: Please make sure you have at least 8GB of RAM and running a 64bit operating system.
 

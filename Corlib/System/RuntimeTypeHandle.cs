@@ -1,13 +1,12 @@
-
-namespace System
+﻿namespace System
 {
-    public struct RuntimeTypeHandle 
-    {
-        IntPtr Value;
+	public struct RuntimeTypeHandle
+	{
+		private IntPtr Value;
 
-        public RuntimeTypeHandle(EETypePtr ptr)
-        {
-            Value = ptr.RawValue;
-        }
-    }
+		public RuntimeTypeHandle(EETypePtr ptr)
+		{
+			Value = ptr.RawValue;
+		}
+	}
 }

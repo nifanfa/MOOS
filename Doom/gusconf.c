@@ -33,8 +33,8 @@
 
 typedef struct
 {
-    char *patch_names[MAX_INSTRUMENTS];
-    int mapping[MAX_INSTRUMENTS];
+	char *patch_names[MAX_INSTRUMENTS];
+	int mapping[MAX_INSTRUMENTS];
 } gus_config_t;
 
 char *gus_patch_path = "";
@@ -42,154 +42,154 @@ unsigned int gus_ram_kb = 1024;
 
 static unsigned int MappingIndex(void)
 {
-    unsigned int result = gus_ram_kb / 256;
+	unsigned int result = gus_ram_kb / 256;
 
-    if (result < 1)
-    {
-        return 1;
-    }
-    else if (result > 4)
-    {
-        return 4;
-    }
-    else
-    {
-        return result;
-    }
+	if (result < 1)
+	{
+		return 1;
+	}
+	else if (result > 4)
+	{
+		return 4;
+	}
+	else
+	{
+		return result;
+	}
 }
 
 static int SplitLine(char *line, char **fields, unsigned int max_fields)
 {
-    unsigned int num_fields;
-    char *p;
+	unsigned int num_fields;
+	char *p;
 
-    fields[0] = line;
-    num_fields = 1;
+	fields[0] = line;
+	num_fields = 1;
 
-    for (p = line; *p != '\0'; ++p)
-    {
-        if (*p == ',')
-        {
-            *p = '\0';
+	for (p = line; *p != '\0'; ++p)
+	{
+		if (*p == ',')
+		{
+			*p = '\0';
 
-            // Skip spaces following the comma.
-            do
-            {
-                ++p;
-            } while (*p != '\0' && myisspace(*p));
+			// Skip spaces following the comma.
+			do
+			{
+				++p;
+			} while (*p != '\0' && myisspace(*p));
 
-            fields[num_fields] = p;
-            ++num_fields;
-            --p;
+			fields[num_fields] = p;
+			++num_fields;
+			--p;
 
-            if (num_fields >= max_fields)
-            {
-                break;
-            }
-        }
-        else if (*p == '#')
-        {
-            *p = '\0';
-            break;
-        }
-    }
+			if (num_fields >= max_fields)
+			{
+				break;
+			}
+		}
+		else if (*p == '#')
+		{
+			*p = '\0';
+			break;
+		}
+	}
 
-    // Strip off trailing whitespace from the end of the line.
-    p = fields[num_fields - 1] + mystrlen(fields[num_fields - 1]);
-    while (p > fields[num_fields - 1] && myisspace(*(p - 1)))
-    {
-        --p;
-        *p = '\0';
-    }
+	// Strip off trailing whitespace from the end of the line.
+	p = fields[num_fields - 1] + mystrlen(fields[num_fields - 1]);
+	while (p > fields[num_fields - 1] && myisspace(*(p - 1)))
+	{
+		--p;
+		*p = '\0';
+	}
 
-    return num_fields;
+	return num_fields;
 }
 
 static void ParseLine(gus_config_t *config, char *line)
 {
-    char *fields[6];
-    unsigned int num_fields;
-    unsigned int instr_id, mapped_id;
+	char *fields[6];
+	unsigned int num_fields;
+	unsigned int instr_id, mapped_id;
 
-    num_fields = SplitLine(line, fields, 6);
+	num_fields = SplitLine(line, fields, 6);
 
-    if (num_fields < 6)
-    {
-        return;
-    }
+	if (num_fields < 6)
+	{
+		return;
+	}
 
-    instr_id = myatoi(fields[0]);
-    mapped_id = myatoi(fields[MappingIndex()]);
+	instr_id = myatoi(fields[0]);
+	mapped_id = myatoi(fields[MappingIndex()]);
 
-    kfree(config->patch_names[instr_id]);
-    config->patch_names[instr_id] = mystrdup(fields[5]);
-    config->mapping[instr_id] = mapped_id;
+	kfree(config->patch_names[instr_id]);
+	config->patch_names[instr_id] = mystrdup(fields[5]);
+	config->mapping[instr_id] = mapped_id;
 }
 
 static void ParseDMXConfig(char *dmxconf, gus_config_t *config)
 {
-    char *p, *newline;
-    unsigned int i;
+	char *p, *newline;
+	unsigned int i;
 
-    memset(config, 0, sizeof(gus_config_t));
+	memset(config, 0, sizeof(gus_config_t));
 
-    for (i = 0; i < MAX_INSTRUMENTS; ++i)
-    {
-        config->mapping[i] = -1;
-    }
+	for (i = 0; i < MAX_INSTRUMENTS; ++i)
+	{
+		config->mapping[i] = -1;
+	}
 
-    p = dmxconf;
+	p = dmxconf;
 
-    for (;;)
-    {
-        newline = strchr(p, '\n');
+	for (;;)
+	{
+		newline = strchr(p, '\n');
 
-        if (newline != NULL)
-        {
-            *newline = '\0';
-        }
+		if (newline != NULL)
+		{
+			*newline = '\0';
+		}
 
-        ParseLine(config, p);
+		ParseLine(config, p);
 
-        if (newline == NULL)
-        {
-            break;
-        }
-        else
-        {
-            p = newline + 1;
-        }
-    }
+		if (newline == NULL)
+		{
+			break;
+		}
+		else
+		{
+			p = newline + 1;
+		}
+	}
 }
 
 static void FreeDMXConfig(gus_config_t *config)
 {
-    unsigned int i;
+	unsigned int i;
 
-    for (i = 0; i < MAX_INSTRUMENTS; ++i)
-    {
-        kfree(config->patch_names[i]);
-    }
+	for (i = 0; i < MAX_INSTRUMENTS; ++i)
+	{
+		kfree(config->patch_names[i]);
+	}
 }
 
 static char *ReadDMXConfig(void)
 {
-    int lumpnum;
-    unsigned int len;
-    char *data;
+	int lumpnum;
+	unsigned int len;
+	char *data;
 
-    // TODO: This should be chosen based on gamemode == commercial:
+	// TODO: This should be chosen based on gamemode == commercial:
 
-    lumpnum = W_CheckNumForName("DMXGUS");
+	lumpnum = W_CheckNumForName("DMXGUS");
 
-    if (lumpnum < 0)
-    {
-        lumpnum = W_GetNumForName("DMXGUSC");
-    }
+	if (lumpnum < 0)
+	{
+		lumpnum = W_GetNumForName("DMXGUSC");
+	}
 
-    len = W_LumpLength(lumpnum);
-    data = Z_Malloc(len + 1, PU_STATIC, NULL);
-    W_ReadLump(lumpnum, data);
+	len = W_LumpLength(lumpnum);
+	data = Z_Malloc(len + 1, PU_STATIC, NULL);
+	W_ReadLump(lumpnum, data);
 
-    return data;
+	return data;
 }

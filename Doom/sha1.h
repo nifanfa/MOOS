@@ -24,10 +24,10 @@ typedef struct sha1_context_s sha1_context_t;
 typedef byte sha1_digest_t[20];
 
 struct sha1_context_s {
-    uint32_t h0,h1,h2,h3,h4;
-    uint32_t nblocks;
-    byte buf[64];
-    int count;
+	uint32_t h0,h1,h2,h3,h4;
+	uint32_t nblocks;
+	byte buf[64];
+	int count;
 };
 
 void SHA1_Init(sha1_context_t *context);

@@ -1,7 +1,8 @@
 namespace System
 {
-    public sealed class ParamArrayAttribute : Attribute
-    {
-        public ParamArrayAttribute() { }
-    }
+	[AttributeUsage(AttributeTargets.All)]
+	public sealed class ParamArrayAttribute : Attribute
+	{
+		public ParamArrayAttribute() { }
+	}
 }

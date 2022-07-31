@@ -1,6 +1,6 @@
 namespace System.Runtime.CompilerServices
 {
-    public static class IsVolatile
-    {
-    }
+	public static class IsVolatile
+	{
+	}
 }

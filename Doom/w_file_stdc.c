@@ -25,23 +25,23 @@
 
 typedef struct
 {
-    wad_file_t wad;
-    FILE *fstream;
+	wad_file_t wad;
+	FILE *fstream;
 } stdc_wad_file_t;
 
 extern wad_file_class_t stdc_wad_file;
 
 static wad_file_t *W_StdC_OpenFile(char *path)
 {
-    stdc_wad_file_t *result;
+	stdc_wad_file_t *result;
 
-    result = Z_Malloc(sizeof(stdc_wad_file_t), PU_STATIC, 0);
-    result->wad.file_class = &stdc_wad_file;
-    result->wad.mapped = NULL;
-    result->wad.length = gameBinaryLength;
-    result->fstream = NULL;
+	result = Z_Malloc(sizeof(stdc_wad_file_t), PU_STATIC, 0);
+	result->wad.file_class = &stdc_wad_file;
+	result->wad.mapped = NULL;
+	result->wad.length = gameBinaryLength;
+	result->fstream = NULL;
 
-    return &result->wad;
+	return &result->wad;
 }
 
 static void W_StdC_CloseFile(wad_file_t *wad)
@@ -52,18 +52,18 @@ static void W_StdC_CloseFile(wad_file_t *wad)
 // provided buffer.  Returns the number of bytes read.
 
 size_t W_StdC_Read(wad_file_t *wad, unsigned int offset,
-                   void *buffer, size_t buffer_len)
+				   void *buffer, size_t buffer_len)
 {
-    memcpy(buffer, gameBinary + offset, buffer_len);
-    return buffer_len;
+	memcpy(buffer, gameBinary + offset, buffer_len);
+	return buffer_len;
 }
 
 
 wad_file_class_t stdc_wad_file = 
 {
-    W_StdC_OpenFile,
-    W_StdC_CloseFile,
-    W_StdC_Read,
+	W_StdC_OpenFile,
+	W_StdC_CloseFile,
+	W_StdC_Read,
 };
 
 
