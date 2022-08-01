@@ -22,7 +22,8 @@ namespace MOOS
         static bool _TripleBuffered = false;
 
         /// <summary>
-        /// Since you enabled TripleBuffered you have to call Framebuffer.Graphics.Update() in order to make it display
+        /// Since you enabled TripleBuffered you have to call Framebuffer.Graphics.Update() in order to make it display. 
+        /// This is optimized for real hardware
         /// </summary>
         public static bool TripleBuffered
         {
