@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace MOOS.Graph
 {
-	public sealed unsafe class Graphics
+	public unsafe class Graphics
 	{
 		public uint* VideoMemory;
 		public int Width;
@@ -330,13 +330,13 @@ namespace MOOS.Graph
 			DrawLineInternal(color, a.X, a.Y, b.X, b.Y);
 		}
 
-		public void FillRectangle(Color color, int X, int Y, int Width, int Height)
+		public void FillRectangle(Color color, int X, int Y, int Width, int Height, bool alpha = false)
 		{
 			for (int w = 0; w < Width; w++)
 			{
 				for (int h = 0; h < Height; h++)
 				{
-					DrawPoint(color, X + w, Y + h);
+					DrawPoint(color, X + w, Y + h, alpha);
 				}
 			}
 		}

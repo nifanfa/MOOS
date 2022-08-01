@@ -1,9 +1,4 @@
-﻿//Copyright © 2022 Contributors of moose-org, This code is licensed under the BSD 3-Clause "New" or "Revised" License.
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace System
 {

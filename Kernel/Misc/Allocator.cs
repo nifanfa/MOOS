@@ -2,7 +2,7 @@ using System;
 using MOOS.Misc;
 
 /// <summary>
-/// Nifanfa's Super Fast Memory Allocation Lib
+/// Nifanfa's Memory allocation class
 /// </summary>
 internal abstract unsafe class Allocator
 {

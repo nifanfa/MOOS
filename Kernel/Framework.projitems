@@ -52,6 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ASC16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Audio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\BitFont.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\Bitmap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ClassID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Console.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\CPUID.cs" />

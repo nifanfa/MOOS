@@ -40,6 +40,8 @@ namespace MOOS
 			Panic.Error($"System call \"{name}\" is not found");
 			return null;
 		}
+
+		[RuntimeExport("GetTime")]
 		public static ulong API_GetTime()
 		{
 			ulong century = RTC.Century;
