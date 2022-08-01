@@ -10,16 +10,16 @@ namespace MOOS.Graph
 		public int Width;
 		public int Height;
 
-		public Graphics(int width, int height, uint* vm)
+		public Graphics(int width, int height, void* vm)
 		{
 			Width = width;
 			Height = height;
-			VideoMemory = vm;
+			VideoMemory = (uint*)vm;
 		}
 
 		public static Graphics FromImage(Image img)
 		{
-			fixed (uint* ptr = img.RawData)
+			fixed (int* ptr = img.RawData)
 			{
 				return new Graphics(img.Width, img.Height, ptr);
 			}
@@ -201,7 +201,7 @@ namespace MOOS.Graph
 				{
 					for (int w = startX; w < cutWidth; w++)
 					{
-						uint foreground = image.RawData[(cutWidth * h) + w];
+						uint foreground = (uint)image.RawData[(cutWidth * h) + w];
 						int fA = (byte)((foreground >> 24) & 0xFF);
 
 						if (fA != 0)
@@ -220,7 +220,7 @@ namespace MOOS.Graph
 				{
 					for (int w = startX; w < cutWidth; w++)
 					{
-						uint color = image.RawData[(cutWidth * h) + w];
+						uint color = (uint)image.RawData[(cutWidth * h) + w];
 						//if (w > image.Width || h > image.Height || w <= image.Width || h <= image.Height)
 						//{
 						//                            color = 0xFFFFFF;
@@ -418,9 +418,9 @@ namespace MOOS.Graph
 		public Image Save()
 		{
 			Image image = new(Width, Height);
-			fixed (uint* ptr = image.RawData)
+			fixed (int* ptr = image.RawData)
 			{
-				Native.Movsd(ptr, VideoMemory, (ulong)(Width * Height));
+				Native.Movsd((uint*)ptr, VideoMemory, (ulong)(Width * Height));
 			}
 			return image;
 		}

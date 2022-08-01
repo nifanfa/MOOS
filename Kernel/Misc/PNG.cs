@@ -28,14 +28,14 @@ namespace MOOS.Misc
 						Panic.Error("lodepng error");
 					}
 
-					RawData = new uint[w * h];
-					fixed (uint* pdata = RawData)
+					RawData = new int[w * h];
+					fixed (int* pdata = RawData)
 					{
 						for (int x = 0; x < w; x++)
 						{
 							for (int y = 0; y < h; y++)
 							{
-								RawData[(y * w) + x] = (_out[(y * w) + x] & 0xFF000000) | ((Ethernet.SwapLeftRight32(_out[(y * w) + x] & 0x00FFFFFF)) >> 8);
+								RawData[(y * w) + x] = (int)((_out[(y * w) + x] & 0xFF000000) | ((Ethernet.SwapLeftRight32(_out[(y * w) + x] & 0x00FFFFFF)) >> 8));
 							}
 						}
 					}

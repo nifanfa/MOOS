@@ -12,7 +12,7 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 
-		<DefineConstants>Kernel;HasGC;UseAPIC;HasGUI</DefineConstants>
+		<DefineConstants>Kernel;HasGC;UseAPIC</DefineConstants>
 
 		<IlcSystemModule>ConsoleOS</IlcSystemModule>
 		<EntryPointSymbol>Entry</EntryPointSymbol>

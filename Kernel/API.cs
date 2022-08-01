@@ -1,145 +1,255 @@
-using System;
-using System.Runtime;
+using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Runtime;
+using static IDT;
+using static Internal.Runtime.CompilerHelpers.InteropHelpers;
+
+#if HasGUI
+using MOOS.GUI;
+#endif
 
 namespace MOOS
 {
-	public static unsafe class API
-	{
-		public static unsafe void* HandleSystemCall(string name)
-		{
-			switch (name)
-			{
-				case "Allocate":
-					return (delegate*<ulong, nint>)&Allocator.Allocate;
-				case "Reallocate":
-					return (delegate*<nint, ulong, nint>)&Allocator.Reallocate;
-				case "MemCopy":
-					return (delegate*<nint, nint, ulong, void>)&Allocator.MemoryCopy;
-				case "Write":
-					return (delegate*<string, void>)&Console.Write;
-				case "SingleBuffered":
-					return (delegate*<void>)new Action(() =>
-					{
-						Framebuffer.DoubleBuffered = false;
-					}).m_functionPointer;
-				case "DoubleBuffered":
-					return (delegate*<void>)new Action(() =>
-					{
-						Framebuffer.DoubleBuffered = true;
-					}).m_functionPointer;
-				case "Sleep":
-					return (delegate*<ulong, void>)&Thread.Sleep;
-				case "GetTime":
-					return (delegate*<ulong>)&API_GetTime;
-				case "Error":
-					return (delegate*<string, bool, void>)&Panic.Error;
-			}
-			Panic.Error($"System call \"{name}\" is not found");
-			return null;
-		}
+    public static unsafe class API
+    {
+        public static unsafe void* HandleSystemCall(string name)
+        {
+            switch (name)
+            {
+                case "SayHello":
+                    return (delegate*<void>)&SayHello;
+                case "WriteLine":
+                    return (delegate*<void>)&API_WriteLine;
+                case "DebugWriteLine":
+                    return (delegate*<void>)&API_DebugWriteLine;
+                case "Allocate":
+                    return (delegate*<ulong, nint>)&API_Allocate;
+                case "Reallocate":
+                    return (delegate*<nint, ulong, nint>)&API_Reallocate;
+                case "Free":
+                    return (delegate*<nint, ulong>)&API_Free;
+                case "Sleep":
+                    return (delegate*<ulong, void>)&API_Sleep;
+                case "GetTick":
+                    return (delegate*<ulong>)&API_GetTick;
+                case "ReadAllBytes":
+                    return (delegate*<string, ulong*, byte**, void>)&API_ReadAllBytes;
+                case "Write":
+                    return (delegate*<char, void>)&API_Write;
+                case "DebugWrite":
+                    return (delegate*<char, void>)&API_DebugWrite;
+                case "SwitchToConsoleMode":
+                    return (delegate*<void>)&API_SwitchToConsoleMode;
+                case "DrawPoint":
+                    return (delegate*<int, int, uint, void>)&API_DrawPoint;
+                case "Lock":
+                    return (delegate*<void>)&API_Lock;
+                case "Unlock":
+                    return (delegate*<void>)&API_Unlock;
+                case "Clear":
+                    return (delegate*<uint, void>)&API_Clear;
+                case "Update":
+                    return (delegate*<void>)&API_Update;
+                case "Width":
+                    return (delegate*<uint>)&API_Width;
+                case "Height":
+                    return (delegate*<uint>)&API_Height;
+                case "WriteString":
+                    return (delegate*<string, void>)&API_WriteString;
+                case "GetTime":
+                    return (delegate*<ulong>)&API_GetTime;
+                case "DrawImage":
+                    return (delegate*<int, int, Image, void>)&API_DrawImage;
+                case "Error":
+                    return (delegate*<string, bool, void>)&API_Error;
+                case "StartThread":
+                    return (delegate*<delegate*<void>, void>)&API_StartThread;
+#if Kernel && HasGUI
+                case "CreateWindow":
+                    return (delegate*<int, int, int, int, string, IntPtr>)&API_CreateWindow;
+                case "GetWindowScreenBuf":
+                    return (delegate*<IntPtr, IntPtr>)&API_GetWindowScreenBuf;
+#endif
+            }
+            Panic.Error($"System call \"{name}\" is not found");
+            return null;
+        }
 
-		[RuntimeExport("GetTime")]
-		public static ulong API_GetTime()
-		{
-			ulong century = RTC.Century;
-			ulong year = RTC.Year;
-			ulong month = RTC.Month;
-			ulong day = RTC.Day;
-			ulong hour = RTC.Hour;
-			ulong minute = RTC.Minute;
-			ulong second = RTC.Second;
+#if Kernel && HasGUI
+        public static IntPtr API_CreateWindow(int X, int Y, int Width, int Height, string Title)
+        {
+            PortableApp papp = new PortableApp(X, Y, Width, Height);
+            papp.Title = Title;
+            return papp;
+        }
 
-			ulong time = 0;
+        public static IntPtr API_GetWindowScreenBuf(IntPtr handle)
+        {
+            PortableApp papp = Unsafe.As<IntPtr, PortableApp>(ref handle);
+            return papp.ScreenBuf;
+        }
+#endif
 
-			time |= century << 56;
-			time |= year << 48;
-			time |= month << 40;
-			time |= day << 32;
-			time |= hour << 24;
-			time |= minute << 16;
-			time |= second << 8;
+        public static void API_StartThread(delegate*<void> func)
+        {
+            new Thread(func).Start();
+        }
 
-			return time;
-		}
+        public static void API_Error(string s, bool skippable)
+        {
+            Panic.Error(s, skippable);
+        }
 
-		private static void Write(char s)
-		{
-			Console.Write(s);
-		}
+        public static ulong API_GetTime()
+        {
+            ulong century = RTC.Century;
+            ulong year = RTC.Year;
+            ulong month = RTC.Month;
+            ulong day = RTC.Day;
+            ulong hour = RTC.Hour;
+            ulong minute = RTC.Minute;
+            ulong second = RTC.Second;
 
-		private static void WriteLine()
-		{
-			Console.WriteLine();
-		}
+            ulong time = 0;
 
-		[RuntimeExport("UnLock")]
-		private static void UnLock()
-		{
-			if (ThreadPool.CanLock)
-			{
-				if (ThreadPool.Locked)
-				{
-					if (ThreadPool.Locker == SMP.ThisCPU)
-					{
-						ThreadPool.UnLock();
-					}
-				}
-			}
-		}
-		[RuntimeExport("Lock")]
-		private static void Lock()
-		{
-			if (ThreadPool.CanLock)
-			{
-				if (!ThreadPool.Locked)
-				{
-					ThreadPool.Lock();
-				}
-			}
-		}
+            time |= century << 56;
+            time |= year << 48;
+            time |= month << 40;
+            time |= day << 32;
+            time |= hour << 24;
+            time |= minute << 16;
+            time |= second << 8;
 
-		[RuntimeExport("Error")]
-		public static void Error(string message)
-		{
-			Panic.Error(message);
-		}
-		[RuntimeExport("DebugWrite")]
-		public static void API_DebugWrite(char c)
-		{
-			Serial.Write(c);
-		}
+            return time;
+        }
 
-		[RuntimeExport("DebugWriteLine")]
-		public static void API_DebugWriteLine(string s)
-		{
-			Serial.WriteLine(s);
-		}
+        public static void API_DrawImage(int X, int Y, Image image)
+        {
+            Framebuffer.Graphics.DrawImage(image,X, Y, false);
+        }
 
-		public static void SwitchToConsoleMode()
-		{
-			Framebuffer.DoubleBuffered = false;
-		}
+        public static void API_WriteString(string s)
+        {
+            Console.Write(s);
+            s.Dispose();
+        }
 
-		public static void ReadAllBytes(string name, ulong* length, byte** data)
-		{
-			byte[] buffer = File.Instance.ReadAllBytes(name);
+        public static uint API_Width() => Framebuffer.Width;
 
-			*data = (byte*)Allocator.Allocate((ulong)buffer.Length);
-			*length = (ulong)buffer.Length;
-			fixed (byte* p = buffer)
-			{
-				Native.Movsb(*data, p, *length);
-			}
+        public static uint API_Height() => Framebuffer.Height;
 
-			buffer.Dispose();
-		}
+        public static void API_Update()
+        {
+            Framebuffer.Update();
+        }
 
-		public static ulong GetTick()
-		{
-			return Timer.Ticks;
-		}
-	}
+        public static void API_Clear(uint color) => Framebuffer.Graphics.Clear(Color.Black);
+
+        [RuntimeExport("DebugWrite")]
+        public static void API_DebugWrite(char c)
+        {
+            Serial.Write(c);
+        }
+
+        [RuntimeExport("DebugWriteLine")]
+        public static void API_DebugWriteLine()
+        {
+            Serial.WriteLine();
+        }
+
+        [RuntimeExport("Lock")]
+        public static void API_Lock()
+        {
+            if (ThreadPool.CanLock)
+            {
+                if (!ThreadPool.Locked)
+                {
+                    ThreadPool.Lock();
+                }
+            }
+        }
+
+        [RuntimeExport("UnLock")]
+        public static void API_Unlock()
+        {
+            if (ThreadPool.CanLock)
+            {
+                if (ThreadPool.Locked)
+                {
+                    if (ThreadPool.Locker == SMP.ThisCPU)
+                    {
+                        ThreadPool.UnLock();
+                    }
+                }
+            }
+        }
+
+        public static void API_DrawPoint(int x, int y, uint color)
+        {
+            Framebuffer.Graphics.DrawPoint(Color.FromArgb(color),x, y);
+        }
+
+        public static void API_SwitchToConsoleMode()
+        {
+            Framebuffer.DoubleBuffered = false;
+        }
+
+        public static void API_ReadAllBytes(string name, ulong* length, byte** data)
+        {
+            byte[] buffer = File.Instance.ReadAllBytes(name);
+
+            *data = (byte*)Allocator.Allocate((ulong)buffer.Length);
+            *length = (ulong)buffer.Length;
+            fixed (byte* p = buffer) Native.Movsb(*data, p, *length);
+
+            buffer.Dispose();
+        }
+
+        public static void API_Sleep(ulong ms)
+        {
+            Thread.Sleep(ms);
+        }
+
+        public static ulong API_GetTick()
+        {
+            return Timer.Ticks;
+        }
+
+        public static void API_Write(char c)
+        {
+            Console.Write(c);
+        }
+
+        public static void API_WriteLine()
+        {
+            Console.WriteLine();
+        }
+
+        public static nint API_Allocate(ulong size)
+        {
+            //Debug.WriteLine($"API_Allocate {size}");
+            return Allocator.Allocate(size);
+        }
+
+        public static ulong API_Free(nint ptr)
+        {
+            //Debug.WriteLine($"API_Free 0x{((ulong)ptr).ToString("x2")}");
+            return Allocator.Free(ptr);
+        }
+
+        public static nint API_Reallocate(nint intPtr, ulong size)
+        {
+            return Allocator.Reallocate(intPtr, size);
+        }
+
+        public static void SayHello()
+        {
+            Console.WriteLine("Hello from exe!");
+        }
+    }
 }

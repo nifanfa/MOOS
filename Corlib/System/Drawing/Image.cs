@@ -2,7 +2,7 @@ namespace System.Drawing
 {
 	public class Image
 	{
-		public uint[] RawData;
+		public int[] RawData;
 		public int Bpp;
 		public int Width;
 		public int Height;
@@ -12,7 +12,7 @@ namespace System.Drawing
 			Width = width;
 			Height = height;
 			Bpp = 4;
-			RawData = new uint[width * height];
+			RawData = new int[width * height];
 		}
 
 		public Image()
@@ -22,7 +22,7 @@ namespace System.Drawing
 
 		public Color GetPixel(int X, int Y)
 		{
-			return Color.FromArgb(RawData[(Y * Width) + X]);
+			return Color.FromArgb((uint)RawData[(Y * Width) + X]);
 		}
 
 		private static unsafe void Resample(void* input, void* output, int oldw, int oldh, int neww, int newh)
@@ -87,11 +87,11 @@ namespace System.Drawing
 			}
 
 			int w1 = Width, h1 = Height;
-			uint[] temp = new uint[NewWidth * NewHeight];
+			int[] temp = new int[NewWidth * NewHeight];
 
-			fixed (uint* output = temp)
+			fixed (int* output = temp)
 			{
-				fixed (uint* input = RawData)
+				fixed (int* input = RawData)
 				{
 					lock (null)
 					{

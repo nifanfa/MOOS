@@ -37,7 +37,7 @@ namespace MOOS.Misc
                 Width = (int)_Width;
                 Height = (int)_Height;
                 Bpp = (int)_Bpp;
-                RawData = new uint[_Width * _Height];
+                RawData = new int[_Width * _Height];
 
                 uint[] temp = new uint[Width];
                 uint w = 0;
@@ -48,7 +48,7 @@ namespace MOOS.Misc
                     {
                         for (uint k = 0; k < temp.Length; k++)
                         {
-                            RawData[(Width * h) + k] = temp[k];
+                            RawData[(Width * h) + k] = (int)temp[k];
                         }
                         w = 0;
                         h--;
