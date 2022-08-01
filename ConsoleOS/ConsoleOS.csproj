@@ -58,23 +58,4 @@
 		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime"></Exec>
 	</Target>
 
-	<Target Name="RunQemuUSB" AfterTargets="BuildISO" Condition="$(vm) == 'qemuusb'">
-		<Error Text="Please install QEMU in order to debug MOOS! https://www.qemu.org/download/#windows" Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')"></Error>
-
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime -device usb-ehci,id=ehci -device usb-kbd,bus=ehci.0 -device usb-mouse,bus=ehci.0"></Exec>
-	</Target>
-
-	<Target Name="RunQemuNET" AfterTargets="BuildISO" Condition="$(vm) == 'qemutap'">
-		<Error Text="Please install QEMU in order to debug MOOS! https://www.qemu.org/download/#windows" Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')"></Error>
-
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime -net nic,model=e1000 -net tap,ifname=tap"></Exec>
-	</Target>
-
-	<Target Name="RunVMware" AfterTargets="BuildISO" Condition="$(vm) == 'vmware'">
-		<Error Text="Please install VMWare Player in order to Run MOOS!" Condition="!Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')"></Error>
-
-		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\MOOS\MOOS.vmx"></Exec>
-		<Exec Condition="Exists('C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe')And!Exists('C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe')" Command="&quot;C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe&quot; &quot;$(MSBuildStartupDirectory)\Tools\VMWare\MOOS\MOOS.vmx"></Exec>
-	</Target>
-
 </Project>
