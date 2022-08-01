@@ -89,8 +89,8 @@ namespace CosmosKernel1
             Kernel.vMWareSVGAII.DoubleBuffer_DrawFillRectangle(_x, _y, _width, _height, (uint)Color.FromArgb(200, 200, 200).ToArgb());
             Kernel.vMWareSVGAII.DoubleBuffer_DrawFillRectangle(_x + 1, _y + 1, _width - 2, 20, (uint)Color.FromArgb(0, 0, 135).ToArgb());
             */
-            Kernel.vMWareSVGAII.DrawFillRectangle(_x, _y, _width, _height, (uint)Color.White.ToArgb());
-            Kernel.vMWareSVGAII.DrawRectangle((uint)Kernel.avgCol.ToArgb(), (int)_x, (int)_y, (int)_width, (int)_height);
+            Kernel.vMWareSVGAII.DrawFilledRectangle(Color.White,_x, _y, _width, _height);
+            Kernel.vMWareSVGAII.DrawRectangle(Kernel.avgCol, (int)_x, (int)_y, (int)_width, (int)_height);
 
             Kernel.vMWareSVGAII._DrawACSIIString(name, (uint)Color.Black.ToArgb(), _x + 2, _y + 2);
             //Kernel.vMWareSVGAII.DoubleBuffer_DrawFillRectangle(_x + 22, _y, 1, 22, (uint)Color.FromArgb(200, 200, 200).ToArgb());

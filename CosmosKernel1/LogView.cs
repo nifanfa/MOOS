@@ -17,7 +17,7 @@ namespace CosmosKernel1
 
         public override void _Update()
         {
-            Kernel.vMWareSVGAII.DrawFillRectangle(x, y, width, height, (uint)Color.Black.ToArgb());
+            Kernel.vMWareSVGAII.DrawFilledRectangle(Color.Black,x, y, width, height);
 
             string s = string.Empty;
             int i = 0;

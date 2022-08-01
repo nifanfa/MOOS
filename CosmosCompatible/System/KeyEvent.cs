@@ -38,7 +38,7 @@ namespace Cosmos.System
             }
             if (control)
             {
-                this.Modifiers |= ConsoleModifiers.Control;
+                this.Modifiers |= ConsoleModifiers.Ctrl;
             }
             this.Type = type;
         }

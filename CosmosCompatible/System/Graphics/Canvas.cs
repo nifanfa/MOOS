@@ -24,34 +24,34 @@ namespace Cosmos.System.Graphics
             {
                 for(int h = 0; h < image.Height; h++) 
                 {
-                    DrawPoint((uint)(X + w), (uint)(Y + h), (uint)image.RawData[h * image.Width + w]);
+                    DrawPoint(Color.FromArgb((uint)image.RawData[h * image.Width + w]),(uint)(X + w), (uint)(Y + h));
                 }
             }
         }
 
-        internal void DrawPoint(uint v1, uint v2, uint v3)
+        internal void DrawPoint(Color color,uint x, uint y)
         {
-            Framebuffer.Graphics.DrawPoint((int)v1, (int)v2, v3);
+            Framebuffer.Graphics.DrawPoint(color, (int)x, (int)y);
         }
 
-        internal void DrawFillRectangle(uint x, uint y, uint width, uint height, uint v)
+        internal void DrawFilledRectangle(Color color,uint x, uint y, uint width, uint height)
         {
-            Framebuffer.Graphics.FillRectangle((int)x, (int)y, (int)width, (int)height, v);
+            Framebuffer.Graphics.FillRectangle(color,(int)x, (int)y, (int)width, (int)height);
         }
 
-        internal void DrawRectangle(uint v, int x, int y, int width, int height)
+        internal void DrawRectangle(Color color, int x, int y, int width, int height)
         {
-            Framebuffer.Graphics.DrawRectangle(x, y, width, height, v);
+            Framebuffer.Graphics.DrawRectangle(color,x, y, width, height);
         }
 
-        internal void DrawLine(uint color, int xStart, int yStart, int xEnd, int yEnd)
+        internal void DrawLine(Color color, int xStart, int yStart, int xEnd, int yEnd)
         {
-            Framebuffer.Graphics.DrawLine(xStart, yStart, xEnd, yEnd, color);
+            Framebuffer.Graphics.DrawLine(color, xStart, yStart, xEnd, yEnd);
         }
 
-        internal void Clear(uint v)
+        internal void Clear(Color color)
         {
-            Framebuffer.Graphics.Clear(v);
+            Framebuffer.Graphics.Clear(color);
         }
     }
 }

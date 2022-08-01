@@ -22,7 +22,8 @@ namespace MOOS
         static bool _TripleBuffered = false;
 
         /// <summary>
-        /// Since you enabled TripleBuffered you have to call Framebuffer.Graphics.Update() in order to make it display
+        /// Since you enabled TripleBuffered you have to call Framebuffer.Graphics.Update() in order to make it display. 
+        /// This is optimized for real hardware
         /// </summary>
         public static bool TripleBuffered 
         {
@@ -35,7 +36,7 @@ namespace MOOS
                 if (Graphics == null) return;
                 if (_TripleBuffered == value) return;
 
-                Graphics.Clear(0x0);
+                Graphics.Clear(Color.Black);
                 Graphics.VideoMemory = value ? FirstBuffer : VideoMemory;
                 _TripleBuffered = value;
                 if (!_TripleBuffered)
@@ -73,8 +74,6 @@ namespace MOOS
             Control.MousePosition.Y = YRes / 2;
             Graphics = new Graphics(Width, Height, FB);
             VideoMemory = FB;
-
-            Console.Clear();
         }
     }
 }

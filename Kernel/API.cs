@@ -1,7 +1,6 @@
 using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
 using MOOS.FS;
-using MOOS.GUI;
 using MOOS.Misc;
 using System;
 using System.Diagnostics;
@@ -9,6 +8,10 @@ using System.Drawing;
 using System.Runtime;
 using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
+
+#if HasGUI
+using MOOS.GUI;
+#endif
 
 namespace MOOS
 {
@@ -61,7 +64,7 @@ namespace MOOS
                 case "GetTime":
                     return (delegate*<ulong>)&API_GetTime;
                 case "DrawImage":
-                    return (delegate*<int,int,Image,void>)&API_DrawImage;
+                    return (delegate*<int, int, Image, void>)&API_DrawImage;
                 case "Error":
                     return (delegate*<string, bool, void>)&API_Error;
                 case "StartThread":
@@ -92,14 +95,14 @@ namespace MOOS
         }
 #endif
 
-        public static void API_StartThread(delegate* <void> func)
+        public static void API_StartThread(delegate*<void> func)
         {
             new Thread(func).Start();
         }
 
-        public static void API_Error(string s,bool skippable)
+        public static void API_Error(string s, bool skippable)
         {
-            Panic.Error(s,skippable);
+            Panic.Error(s, skippable);
         }
 
         public static ulong API_GetTime()
@@ -127,10 +130,10 @@ namespace MOOS
 
         public static void API_DrawImage(int X, int Y, Image image)
         {
-            Framebuffer.Graphics.DrawImage(X, Y, image, false);
+            Framebuffer.Graphics.DrawImage(image,X, Y, false);
         }
 
-        public static void API_WriteString(string s) 
+        public static void API_WriteString(string s)
         {
             Console.Write(s);
             s.Dispose();
@@ -145,7 +148,7 @@ namespace MOOS
             Framebuffer.Update();
         }
 
-        public static void API_Clear(uint color) => Framebuffer.Graphics.Clear(color);
+        public static void API_Clear(uint color) => Framebuffer.Graphics.Clear(Color.Black);
 
         [RuntimeExport("DebugWrite")]
         public static void API_DebugWrite(char c)
@@ -160,7 +163,7 @@ namespace MOOS
         }
 
         [RuntimeExport("Lock")]
-        public static void API_Lock() 
+        public static void API_Lock()
         {
             if (ThreadPool.CanLock)
             {
@@ -171,7 +174,7 @@ namespace MOOS
             }
         }
 
-        [RuntimeExport("Unlock")]
+        [RuntimeExport("UnLock")]
         public static void API_Unlock()
         {
             if (ThreadPool.CanLock)
@@ -188,15 +191,15 @@ namespace MOOS
 
         public static void API_DrawPoint(int x, int y, uint color)
         {
-            Framebuffer.Graphics.DrawPoint(x, y, color);
+            Framebuffer.Graphics.DrawPoint(Color.FromArgb(color),x, y);
         }
 
-        public static void API_SwitchToConsoleMode() 
+        public static void API_SwitchToConsoleMode()
         {
             Framebuffer.TripleBuffered = false;
         }
 
-        public static void API_ReadAllBytes(string name,ulong* length,byte** data) 
+        public static void API_ReadAllBytes(string name, ulong* length, byte** data)
         {
             byte[] buffer = File.ReadAllBytes(name);
 
@@ -207,22 +210,22 @@ namespace MOOS
             buffer.Dispose();
         }
 
-        public static void API_Sleep(ulong ms) 
+        public static void API_Sleep(ulong ms)
         {
             Thread.Sleep(ms);
         }
 
-        public static ulong API_GetTick() 
+        public static ulong API_GetTick()
         {
             return Timer.Ticks;
         }
 
-        public static void API_Write(char c) 
+        public static void API_Write(char c)
         {
             Console.Write(c);
         }
 
-        public static void API_WriteLine() 
+        public static void API_WriteLine()
         {
             Console.WriteLine();
         }
@@ -239,7 +242,7 @@ namespace MOOS
             return Allocator.Free(ptr);
         }
 
-        public static nint API_Reallocate(nint intPtr, ulong size) 
+        public static nint API_Reallocate(nint intPtr, ulong size)
         {
             return Allocator.Reallocate(intPtr, size);
         }
