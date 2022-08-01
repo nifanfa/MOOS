@@ -1,5 +1,6 @@
 ﻿using Cosmos.System.Graphics;
 using CosmosKernel1;
+using System.Drawing;
 
 namespace nifanfa.CosmosDrawString
 {
@@ -34,7 +35,7 @@ namespace nifanfa.CosmosDrawString
                     {
                         if ((buffer[offset + i] & (0x80 >> (int)j)) != 0)
                         {
-                            vMWareSVGAII.DrawPoint((uint)(ax + j), (uint)(ay + i), color);
+                            vMWareSVGAII.DrawPoint(Color.FromArgb(color),(uint)(ax + j), (uint)(ay + i));
                         }
                     }
                 }

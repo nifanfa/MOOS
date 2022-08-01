@@ -38,7 +38,7 @@ namespace CosmosKernel1
                 }
             }
 
-            Kernel.vMWareSVGAII.DrawFillRectangle(x, y, width, height, (uint)Color.Black.ToArgb());
+            Kernel.vMWareSVGAII.DrawFilledRectangle(Color.Black,x, y, width, height);
 
             if (text.Length != 0)
             {

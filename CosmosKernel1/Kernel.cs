@@ -92,7 +92,7 @@ namespace CosmosKernel1
             bootBitmap = new PNG(File.ReadAllBytes(@"0:\boot.png"));
             bootBitmap = bootBitmap.ResizeImage((int)screenWidth, (int)screenHeight);
 
-            vMWareSVGAII.Clear(0x0);
+            vMWareSVGAII.Clear(Color.Black);
             vMWareSVGAII.DrawImage(bootBitmap, 0, 0);
             vMWareSVGAII.Update();
 
@@ -144,7 +144,7 @@ namespace CosmosKernel1
                     break;
             }
 
-            vMWareSVGAII.Clear(avgCol.ToArgb());
+            vMWareSVGAII.Clear(avgCol);
             vMWareSVGAII.DrawImage(bitmap, 0, 0);
             logView.text = $"Time: {DateTime.Now} \nInstall RAM: {CPU.GetAmountOfRAM()}MB, Video RAM: ?? Bytes";
 
@@ -170,11 +170,11 @@ namespace CosmosKernel1
                 {
                     if (cursor[h * 12 + w] == 1)
                     {
-                        vMWareSVGAII.DrawPoint(w + x, h + y, (uint)Color.Black.ToArgb());
+                        vMWareSVGAII.DrawPoint(Color.Black,w + x, h + y);
                     }
                     if (cursor[h * 12 + w] == 2)
                     {
-                        vMWareSVGAII.DrawPoint(w + x, h + y, (uint)Color.White.ToArgb());
+                        vMWareSVGAII.DrawPoint(Color.White,w + x, h + y);
                     }
                 }
             }
