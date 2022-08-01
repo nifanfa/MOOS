@@ -1,10 +1,10 @@
-﻿{
-  "profiles": {
-    "QEMU": {
-      "commandName": "Executable",
-      "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug ConsoleOS",
-      "workingDirectory": "..\\"
-    }
-  }
+{
+	"profiles": {
+		"QEMU Normal": {
+			"commandName": "Executable",
+			"executablePath": "cmd.exe",
+			"commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug ConsoleOS --self-contained",
+			"workingDirectory": "..\\"
+		}
+	}
 }

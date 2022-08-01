@@ -21,9 +21,9 @@
 #include "net_defs.h"
 
 typedef void (*net_query_callback_t)(net_addr_t *addr,
-                                     net_querydata_t *querydata,
-                                     unsigned int ping_time,
-                                     void *user_data);
+									 net_querydata_t *querydata,
+									 unsigned int ping_time,
+									 void *user_data);
 
 extern int NET_StartLANQuery(void);
 extern int NET_StartMasterQuery(void);

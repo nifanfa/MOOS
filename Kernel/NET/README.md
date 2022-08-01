@@ -1,7 +1,7 @@
 ```
 ARP.Initialise();
-Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
-RTL8139.Initialise();
+Network.Initialize(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1));
+RTL8139.Initialize();
 ARP.Require(Network.Gateway);
 ```
 And install OpenVPN's Windows TAP rename the device name to tap

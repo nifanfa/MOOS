@@ -1,5 +1,7 @@
-
-namespace System
+﻿namespace System
 {
-    public abstract class MulticastDelegate : Delegate { }
+	public abstract class MulticastDelegate : Delegate
+	{
+
+	}
 }

@@ -1,5 +1,5 @@
-﻿using MOOS;
-using System.Drawing;
+﻿using System.Drawing;
+using Internal.Runtime.CompilerHelpers;
 
 namespace MOOS.Misc
 {
@@ -24,31 +24,31 @@ namespace MOOS.Misc
 
                 if (p[0] != (byte)'B' && p[1] != (byte)'M')
                 {
-                    Console.WriteLine("This is not a bitmap");
+                    ThrowHelpers.ThrowArgumentException("p", "Is not a bitmap");
                     return;
                 }
 
                 if (_Bpp != 24 && _Bpp != 32)
                 {
-                    Console.WriteLine("Only support 24bit or 32bit bitmap");
+                    ThrowHelpers.ThrowArgumentException("p", "MOOS Only supports 24 or 32 bit bitmaps");
                     return;
                 }
 
-                this.Width = (int)_Width;
-                this.Height = (int)_Height;
-                this.Bpp = (int)_Bpp;
-                this.RawData = new int[_Width * _Height];
+                Width = (int)_Width;
+                Height = (int)_Height;
+                Bpp = (int)_Bpp;
+                RawData = new int[_Width * _Height];
 
-                int[] temp = new int[Width];
+                uint[] temp = new uint[Width];
                 uint w = 0;
                 uint h = (uint)Height - 1;
-                for (uint i = 0; i < this.Width * this.Height * (_Bpp / 8); i += (_Bpp / 8))
+                for (uint i = 0; i < Width * Height * (_Bpp / 8); i += _Bpp / 8)
                 {
                     if (w == Width)
                     {
                         for (uint k = 0; k < temp.Length; k++)
                         {
-                            RawData[Width * h + k] = temp[k];
+                            RawData[(Width * h) + k] = (int)temp[k];
                         }
                         w = 0;
                         h--;
@@ -56,10 +56,10 @@ namespace MOOS.Misc
                     switch (_Bpp)
                     {
                         case 24:
-                            temp[w] = (int)((*(uint*)(p + _DataSectionOffset + i) & 0x00FFFFFF) | 0xFF000000);
+                            temp[w] = (*(uint*)(p + _DataSectionOffset + i) & 0x00FFFFFF) | 0xFF000000;
                             break;
                         case 32:
-                            temp[w] = (int)*(uint*)(p + _DataSectionOffset + i);
+                            temp[w] = *(uint*)(p + _DataSectionOffset + i);
                             break;
 
                     }

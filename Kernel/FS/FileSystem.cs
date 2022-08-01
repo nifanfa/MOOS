@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MOOS.FS
 {
-    public class FileInfo 
+    public class FileInfo
     {
         public string Name;
         public FileAttribute Attribute;

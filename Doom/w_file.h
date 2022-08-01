@@ -27,36 +27,36 @@ typedef struct _wad_file_s wad_file_t;
 
 typedef struct
 {
-    // Open a file for reading.
+	// Open a file for reading.
 
-    wad_file_t *(*OpenFile)(char *path);
+	wad_file_t *(*OpenFile)(char *path);
 
-    // Close the specified file.
+	// Close the specified file.
 
-    void (*CloseFile)(wad_file_t *file);
+	void (*CloseFile)(wad_file_t *file);
 
-    // Read data from the specified position in the file into the 
-    // provided buffer.  Returns the number of bytes read.
+	// Read data from the specified position in the file into the 
+	// provided buffer.  Returns the number of bytes read.
 
-    size_t (*Read)(wad_file_t *file, unsigned int offset,
-                   void *buffer, size_t buffer_len);
+	size_t (*Read)(wad_file_t *file, unsigned int offset,
+				   void *buffer, size_t buffer_len);
 
 } wad_file_class_t;
 
 struct _wad_file_s
 {
-    // Class of this file.
+	// Class of this file.
 
-    wad_file_class_t *file_class;
+	wad_file_class_t *file_class;
 
-    // If this is NULL, the file cannot be mapped into memory.  If this
-    // is non-NULL, it is a pointer to the mapped file.
+	// If this is NULL, the file cannot be mapped into memory.  If this
+	// is non-NULL, it is a pointer to the mapped file.
 
-    byte *mapped;
+	byte *mapped;
 
-    // Length of the file, in bytes.
+	// Length of the file, in bytes.
 
-    unsigned int length;
+	unsigned int length;
 };
 
 // Open the specified file. Returns a pointer to a new wad_file_t 
@@ -73,6 +73,6 @@ void W_CloseFile(wad_file_t *wad);
 // Returns the number of bytes read.
 
 size_t W_Read(wad_file_t *wad, unsigned int offset,
-              void *buffer, size_t buffer_len);
+			  void *buffer, size_t buffer_len);
 
 #endif /* #ifndef __W_FILE__ */

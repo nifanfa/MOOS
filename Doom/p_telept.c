@@ -44,30 +44,30 @@ EV_Teleport
   int		side,
   mobj_t*	thing )
 {
-    int		i;
-    int		tag;
-    mobj_t*	m;
-    mobj_t*	fog;
-    unsigned	an;
-    thinker_t*	thinker;
-    sector_t*	sector;
-    fixed_t	oldx;
-    fixed_t	oldy;
-    fixed_t	oldz;
+	int		i;
+	int		tag;
+	mobj_t*	m;
+	mobj_t*	fog;
+	unsigned	an;
+	thinker_t*	thinker;
+	sector_t*	sector;
+	fixed_t	oldx;
+	fixed_t	oldy;
+	fixed_t	oldz;
 
-    // don't teleport missiles
-    if (thing->flags & MF_MISSILE)
+	// don't teleport missiles
+	if (thing->flags & MF_MISSILE)
 	return 0;		
 
-    // Don't teleport if hit back of line,
-    //  so you can get out of teleporter.
-    if (side == 1)		
+	// Don't teleport if hit back of line,
+	//  so you can get out of teleporter.
+	if (side == 1)		
 	return 0;	
 
-    
-    tag = line->tag;
-    for (i = 0; i < numsectors; i++)
-    {
+	
+	tag = line->tag;
+	for (i = 0; i < numsectors; i++)
+	{
 	if (sectors[ i ].tag == tag )
 	{
 	    thinker = thinkercap.next;
@@ -97,12 +97,12 @@ EV_Teleport
 		if (!P_TeleportMove (thing, m->x, m->y))
 		    return 0;
 
-                // The first Final Doom executable does not set thing->z
-                // when teleporting. This quirk is unique to this
-                // particular version; the later version included in
-                // some versions of the Id Anthology fixed this.
+				// The first Final Doom executable does not set thing->z
+				// when teleporting. This quirk is unique to this
+				// particular version; the later version included in
+				// some versions of the Id Anthology fixed this.
 
-                if (gameversion != exe_final)
+				if (gameversion != exe_final)
 		    thing->z = thing->floorz;
 
 		if (thing->player)
@@ -127,7 +127,7 @@ EV_Teleport
 		return 1;
 	    }	
 	}
-    }
-    return 0;
+	}
+	return 0;
 }
 

@@ -51,51 +51,51 @@ typedef struct _net_context_s net_context_t;
 
 struct _net_packet_s
 {
-    byte *data;
-    size_t len;
-    size_t alloced;
-    unsigned int pos;
+	byte *data;
+	size_t len;
+	size_t alloced;
+	unsigned int pos;
 };
 
 struct _net_module_s
 {
-    // Initialize this module for use as a client
+	// Initialize this module for use as a client
 
-    boolean (*InitClient)(void);
+	boolean (*InitClient)(void);
 
-    // Initialize this module for use as a server
+	// Initialize this module for use as a server
 
-    boolean (*InitServer)(void);
+	boolean (*InitServer)(void);
 
-    // Send a packet
+	// Send a packet
 
-    void (*SendPacket)(net_addr_t *addr, net_packet_t *packet);
+	void (*SendPacket)(net_addr_t *addr, net_packet_t *packet);
 
-    // Check for new packets to receive
-    //
-    // Returns true if packet received
+	// Check for new packets to receive
+	//
+	// Returns true if packet received
 
-    boolean (*RecvPacket)(net_addr_t **addr, net_packet_t **packet);
+	boolean (*RecvPacket)(net_addr_t **addr, net_packet_t **packet);
 
-    // Converts an address to a string
+	// Converts an address to a string
 
-    void (*AddrToString)(net_addr_t *addr, char *buffer, int buffer_len);
+	void (*AddrToString)(net_addr_t *addr, char *buffer, int buffer_len);
 
-    // Free back an address when no longer in use
+	// Free back an address when no longer in use
 
-    void (*FreeAddress)(net_addr_t *addr);
+	void (*FreeAddress)(net_addr_t *addr);
 
-    // Try to resolve a name to an address
+	// Try to resolve a name to an address
 
-    net_addr_t *(*ResolveAddress)(char *addr);
+	net_addr_t *(*ResolveAddress)(char *addr);
 };
 
 // net_addr_t
 
 struct _net_addr_s
 {
-    net_module_t *module;
-    void *handle;
+	net_module_t *module;
+	void *handle;
 };
 
 // magic number sent when connecting to check this is a valid client
@@ -110,51 +110,51 @@ struct _net_addr_s
 
 typedef enum
 {
-    NET_PACKET_TYPE_SYN,
-    NET_PACKET_TYPE_ACK,
-    NET_PACKET_TYPE_REJECTED,
-    NET_PACKET_TYPE_KEEPALIVE,
-    NET_PACKET_TYPE_WAITING_DATA,
-    NET_PACKET_TYPE_GAMESTART,
-    NET_PACKET_TYPE_GAMEDATA,
-    NET_PACKET_TYPE_GAMEDATA_ACK,
-    NET_PACKET_TYPE_DISCONNECT,
-    NET_PACKET_TYPE_DISCONNECT_ACK,
-    NET_PACKET_TYPE_RELIABLE_ACK,
-    NET_PACKET_TYPE_GAMEDATA_RESEND,
-    NET_PACKET_TYPE_CONSOLE_MESSAGE,
-    NET_PACKET_TYPE_QUERY,
-    NET_PACKET_TYPE_QUERY_RESPONSE,
-    NET_PACKET_TYPE_LAUNCH,
+	NET_PACKET_TYPE_SYN,
+	NET_PACKET_TYPE_ACK,
+	NET_PACKET_TYPE_REJECTED,
+	NET_PACKET_TYPE_KEEPALIVE,
+	NET_PACKET_TYPE_WAITING_DATA,
+	NET_PACKET_TYPE_GAMESTART,
+	NET_PACKET_TYPE_GAMEDATA,
+	NET_PACKET_TYPE_GAMEDATA_ACK,
+	NET_PACKET_TYPE_DISCONNECT,
+	NET_PACKET_TYPE_DISCONNECT_ACK,
+	NET_PACKET_TYPE_RELIABLE_ACK,
+	NET_PACKET_TYPE_GAMEDATA_RESEND,
+	NET_PACKET_TYPE_CONSOLE_MESSAGE,
+	NET_PACKET_TYPE_QUERY,
+	NET_PACKET_TYPE_QUERY_RESPONSE,
+	NET_PACKET_TYPE_LAUNCH,
 } net_packet_type_t;
 
 typedef enum
 {
-    NET_MASTER_PACKET_TYPE_ADD,
-    NET_MASTER_PACKET_TYPE_ADD_RESPONSE,
-    NET_MASTER_PACKET_TYPE_QUERY,
-    NET_MASTER_PACKET_TYPE_QUERY_RESPONSE,
-    NET_MASTER_PACKET_TYPE_GET_METADATA,
-    NET_MASTER_PACKET_TYPE_GET_METADATA_RESPONSE,
-    NET_MASTER_PACKET_TYPE_SIGN_START,
-    NET_MASTER_PACKET_TYPE_SIGN_START_RESPONSE,
-    NET_MASTER_PACKET_TYPE_SIGN_END,
-    NET_MASTER_PACKET_TYPE_SIGN_END_RESPONSE,
+	NET_MASTER_PACKET_TYPE_ADD,
+	NET_MASTER_PACKET_TYPE_ADD_RESPONSE,
+	NET_MASTER_PACKET_TYPE_QUERY,
+	NET_MASTER_PACKET_TYPE_QUERY_RESPONSE,
+	NET_MASTER_PACKET_TYPE_GET_METADATA,
+	NET_MASTER_PACKET_TYPE_GET_METADATA_RESPONSE,
+	NET_MASTER_PACKET_TYPE_SIGN_START,
+	NET_MASTER_PACKET_TYPE_SIGN_START_RESPONSE,
+	NET_MASTER_PACKET_TYPE_SIGN_END,
+	NET_MASTER_PACKET_TYPE_SIGN_END_RESPONSE,
 } net_master_packet_type_t;
 
 // Settings specified when the client connects to the server.
 
 typedef struct
 {
-    int gamemode;
-    int gamemission;
-    int lowres_turn;
-    int drone;
-    int max_players;
-    int is_freedoom;
-    sha1_digest_t wad_sha1sum;
-    sha1_digest_t deh_sha1sum;
-    int player_class;
+	int gamemode;
+	int gamemission;
+	int lowres_turn;
+	int drone;
+	int max_players;
+	int is_freedoom;
+	sha1_digest_t wad_sha1sum;
+	sha1_digest_t deh_sha1sum;
+	int player_class;
 } net_connect_data_t;
 
 // Game settings sent by client to server when initiating game start,
@@ -162,31 +162,31 @@ typedef struct
 
 typedef struct
 {
-    int ticdup;
-    int extratics;
-    int deathmatch;
-    int episode;
-    int nomonsters;
-    int fast_monsters;
-    int respawn_monsters;
-    int map;
-    int skill;
-    int gameversion;
-    int lowres_turn;
-    int new_sync;
-    int timelimit;
-    int loadgame;
-    int random;  // [Strife only]
+	int ticdup;
+	int extratics;
+	int deathmatch;
+	int episode;
+	int nomonsters;
+	int fast_monsters;
+	int respawn_monsters;
+	int map;
+	int skill;
+	int gameversion;
+	int lowres_turn;
+	int new_sync;
+	int timelimit;
+	int loadgame;
+	int random;  // [Strife only]
 
-    // These fields are only used by the server when sending a game
-    // start message:
+	// These fields are only used by the server when sending a game
+	// start message:
 
-    int num_players;
-    int consoleplayer;
+	int num_players;
+	int consoleplayer;
 
-    // Hexen player classes:
+	// Hexen player classes:
 
-    int player_classes[NET_MAXPLAYERS];
+	int player_classes[NET_MAXPLAYERS];
 
 } net_gamesettings_t;
 
@@ -201,48 +201,48 @@ typedef struct
 
 typedef struct
 {
-    unsigned int diff;
-    ticcmd_t cmd;
+	unsigned int diff;
+	ticcmd_t cmd;
 } net_ticdiff_t;
 
 // Complete set of ticcmds from all players
 
 typedef struct 
 {
-    signed int latency;
-    unsigned int seq;
-    boolean playeringame[NET_MAXPLAYERS];
-    net_ticdiff_t cmds[NET_MAXPLAYERS];
+	signed int latency;
+	unsigned int seq;
+	boolean playeringame[NET_MAXPLAYERS];
+	net_ticdiff_t cmds[NET_MAXPLAYERS];
 } net_full_ticcmd_t;
 
 // Data sent in response to server queries
 
 typedef struct
 {
-    char *version;
-    int server_state;
-    int num_players;
-    int max_players;
-    int gamemode;
-    int gamemission;
-    char *description;
+	char *version;
+	int server_state;
+	int num_players;
+	int max_players;
+	int gamemode;
+	int gamemission;
+	char *description;
 } net_querydata_t;
 
 // Data sent by the server while waiting for the game to start.
 
 typedef struct
 {
-    int num_players;
-    int num_drones;
-    int ready_players;
-    int max_players;
-    int is_controller;
-    int consoleplayer;
-    char player_names[NET_MAXPLAYERS][MAXPLAYERNAME];
-    char player_addrs[NET_MAXPLAYERS][MAXPLAYERNAME];
-    sha1_digest_t wad_sha1sum;
-    sha1_digest_t deh_sha1sum;
-    int is_freedoom;
+	int num_players;
+	int num_drones;
+	int ready_players;
+	int max_players;
+	int is_controller;
+	int consoleplayer;
+	char player_names[NET_MAXPLAYERS][MAXPLAYERNAME];
+	char player_addrs[NET_MAXPLAYERS][MAXPLAYERNAME];
+	sha1_digest_t wad_sha1sum;
+	sha1_digest_t deh_sha1sum;
+	int is_freedoom;
 } net_waitdata_t;
 
 #endif /* #ifndef NET_DEFS_H */

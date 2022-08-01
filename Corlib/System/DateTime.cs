@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -56,23 +52,23 @@ namespace System
         // Number of days in a non-leap year
         private const int DaysPerYear = 365;
         // Number of days in 4 years
-        private const int DaysPer4Years = DaysPerYear * 4 + 1;       // 1461
+        private const int DaysPer4Years = (DaysPerYear * 4) + 1;       // 1461
         // Number of days in 100 years
-        private const int DaysPer100Years = DaysPer4Years * 25 - 1;  // 36524
+        private const int DaysPer100Years = (DaysPer4Years * 25) - 1;  // 36524
         // Number of days in 400 years
-        private const int DaysPer400Years = DaysPer100Years * 4 + 1; // 146097
+        private const int DaysPer400Years = (DaysPer100Years * 4) + 1; // 146097
 
         // Number of days from 1/1/0001 to 12/31/1600
         private const int DaysTo1601 = DaysPer400Years * 4;          // 584388
         // Number of days from 1/1/0001 to 12/30/1899
-        private const int DaysTo1899 = DaysPer400Years * 4 + DaysPer100Years * 3 - 367;
+        private const int DaysTo1899 = (DaysPer400Years * 4) + (DaysPer100Years * 3) - 367;
         // Number of days from 1/1/0001 to 12/31/1969
-        internal const int DaysTo1970 = DaysPer400Years * 4 + DaysPer100Years * 3 + DaysPer4Years * 17 + DaysPerYear; // 719,162
+        internal const int DaysTo1970 = (DaysPer400Years * 4) + (DaysPer100Years * 3) + (DaysPer4Years * 17) + DaysPerYear; // 719,162
         // Number of days from 1/1/0001 to 12/31/9999
-        private const int DaysTo10000 = DaysPer400Years * 25 - 366;  // 3652059
+        private const int DaysTo10000 = (DaysPer400Years * 25) - 366;  // 3652059
 
         internal const long MinTicks = 0;
-        internal const long MaxTicks = DaysTo10000 * TicksPerDay - 1;
+        internal const long MaxTicks = (DaysTo10000 * TicksPerDay) - 1;
         private const long MaxMillis = (long)DaysTo10000 * MillisPerDay;
 
         internal const long UnixEpochTicks = DaysTo1970 * TicksPerDay;
@@ -91,8 +87,10 @@ namespace System
         private const int DatePartMonth = 2;
         private const int DatePartDay = 3;
 
-        internal static int[] s_daysToMonth365;
-        internal static int[] s_daysToMonth366;
+        internal static int[] DaysToMonth365 = new int[]{
+                0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
+        internal static int[] DaysToMonth366 = new int[]{
+                0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 };
 
         /*
         public static readonly DateTime MinValue = new DateTime(MinTicks, DateTimeKind.Unspecified);
@@ -138,7 +136,7 @@ namespace System
 
         private DateTime(ulong dateData)
         {
-            this._dateData = dateData;
+            _dateData = dateData;
         }
 
         /*
@@ -154,7 +152,6 @@ namespace System
             }
             _dateData = ((ulong)ticks | ((ulong)kind << KindShift));
         }
-
         internal DateTime(long ticks, DateTimeKind kind, bool isAmbiguousDst)
         {
             if (ticks < MinTicks || ticks > MaxTicks)
@@ -210,7 +207,6 @@ namespace System
             {
                 throw new ArgumentException(SR.Argument_InvalidDateTimeKind, nameof(kind));
             }
-
             if (second == 60 && s_systemSupportsLeapSeconds && IsValidTimeWithLeapSeconds(year, month, day, hour, minute, second, kind))
             {
                 // if we have leap second (second = 60) then we'll need to check if it is valid time.
@@ -219,7 +215,6 @@ namespace System
                 // if it is not valid time, we'll eventually throw.
                 second = 59;
             }
-
             long ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);
             _dateData = ((ulong)ticks | ((ulong)kind << KindShift));
         }
@@ -233,16 +228,13 @@ namespace System
         {
             if (calendar == null)
                 throw new ArgumentNullException(nameof(calendar));
-
             int originalSecond = second;
             if (second == 60 && s_systemSupportsLeapSeconds)
             {
                 // Reset the second value now and then we'll validate it later when we get the final Gregorian date.
                 second = 59;
             }
-
             _dateData = (ulong)calendar.ToDateTime(year, month, day, hour, minute, second, 0).Ticks;
-
             if (originalSecond == 60)
             {
                 DateTime dt = new DateTime(_dateData);
@@ -293,7 +285,6 @@ namespace System
             {
                 throw new ArgumentException(SR.Argument_InvalidDateTimeKind, nameof(kind));
             }
-
             if (second == 60 && s_systemSupportsLeapSeconds && IsValidTimeWithLeapSeconds(year, month, day, hour, minute, second, kind))
             {
                 // if we have leap second (second = 60) then we'll need to check if it is valid time.
@@ -302,14 +293,12 @@ namespace System
                 // if it is not valid time, we'll eventually throw.
                 second = 59;
             }
-
             long ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);
             ticks += millisecond * TicksPerMillisecond;
             if (ticks < MinTicks || ticks > MaxTicks)
                 throw new ArgumentException(SR.Arg_DateTimeRange);
             _dateData = ((ulong)ticks | ((ulong)kind << KindShift));
         }
-
         // Constructs a DateTime from a given year, month, day, hour,
         // minute, and second for the specified calendar.
         //
@@ -321,20 +310,17 @@ namespace System
             {
                 throw new ArgumentOutOfRangeException(nameof(millisecond), SR.Format(SR.ArgumentOutOfRange_Range, 0, MillisPerSecond - 1));
             }
-
             int originalSecond = second;
             if (second == 60 && s_systemSupportsLeapSeconds)
             {
                 // Reset the second value now and then we'll validate it later when we get the final Gregorian date.
                 second = 59;
             }
-
             long ticks = calendar.ToDateTime(year, month, day, hour, minute, second, 0).Ticks;
             ticks += millisecond * TicksPerMillisecond;
             if (ticks < MinTicks || ticks > MaxTicks)
                 throw new ArgumentException(SR.Arg_DateTimeRange);
             _dateData = (ulong)ticks;
-
             if (originalSecond == 60)
             {
                 DateTime dt = new DateTime(_dateData);
@@ -344,7 +330,6 @@ namespace System
                 }
             }
         }
-
         public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, Calendar calendar, DateTimeKind kind)
         {
             if (calendar == null)
@@ -357,20 +342,17 @@ namespace System
             {
                 throw new ArgumentException(SR.Argument_InvalidDateTimeKind, nameof(kind));
             }
-
             int originalSecond = second;
             if (second == 60 && s_systemSupportsLeapSeconds)
             {
                 // Reset the second value now and then we'll validate it later when we get the final Gregorian date.
                 second = 59;
             }
-
             long ticks = calendar.ToDateTime(year, month, day, hour, minute, second, 0).Ticks;
             ticks += millisecond * TicksPerMillisecond;
             if (ticks < MinTicks || ticks > MaxTicks)
                 throw new ArgumentException(SR.Arg_DateTimeRange);
             _dateData = ((ulong)ticks | ((ulong)kind << KindShift));
-
             if (originalSecond == 60)
             {
                 DateTime dt = new DateTime(_dateData);
@@ -380,17 +362,14 @@ namespace System
                 }
             }
         }
-
         private DateTime(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
                 throw new ArgumentNullException(nameof(info));
-
             bool foundTicks = false;
             bool foundDateData = false;
             long serializedTicks = 0;
             ulong serializedDateData = 0;
-
             // Get the data
             SerializationInfoEnumerator enumerator = info.GetEnumerator();
             while (enumerator.MoveNext())
@@ -442,19 +421,15 @@ namespace System
         {
             return AddTicks(value._ticks);
         }
-
         // Returns the DateTime resulting from adding a fractional number of
         // time units to this DateTime.
         private DateTime Add(double value, int scale)
         {
             double millis_double = value * (double)scale + (value >= 0 ? 0.5 : -0.5);
-
             if (millis_double <= (double)-MaxMillis || millis_double >= (double)MaxMillis)
                 throw new ArgumentOutOfRangeException(nameof(value), SR.ArgumentOutOfRange_AddValue);
-
             return AddTicks((long)millis_double * TicksPerMillisecond);
         }
-
         // Returns the DateTime resulting from adding a fractional number of
         // days to this DateTime. The result is computed by rounding the
         // fractional number of days given by value to the nearest
@@ -465,7 +440,6 @@ namespace System
         {
             return Add(value, MillisPerDay);
         }
-
         // Returns the DateTime resulting from adding a fractional number of
         // hours to this DateTime. The result is computed by rounding the
         // fractional number of hours given by value to the nearest
@@ -476,7 +450,6 @@ namespace System
         {
             return Add(value, MillisPerHour);
         }
-
         // Returns the DateTime resulting from the given number of
         // milliseconds to this DateTime. The result is computed by rounding
         // the number of milliseconds given by value to the nearest integer,
@@ -487,7 +460,6 @@ namespace System
         {
             return Add(value, 1);
         }
-
         // Returns the DateTime resulting from adding a fractional number of
         // minutes to this DateTime. The result is computed by rounding the
         // fractional number of minutes given by value to the nearest
@@ -524,12 +496,11 @@ namespace System
             int i = m - 1 + months;
             if (i >= 0)
             {
-                m = i % 12 + 1;
+                m = (i % 12) + 1;
                 y += i / 12;
-            }
-            else
+            } else
             {
-                m = 12 + (i + 1) % 12;
+                m = 12 + ((i + 1) % 12);
                 y += (i - 11) / 12;
             }
             /*
@@ -539,8 +510,12 @@ namespace System
             }
             */
             int days = DaysInMonth(y, m);
-            if (d > days) d = days;
-            return new DateTime((ulong)(DateToTicks(y, m, d) + InternalTicks % TicksPerDay) | InternalKind);
+            if (d > days)
+            {
+                d = days;
+            }
+
+            return new DateTime((ulong)(DateToTicks(y, m, d) + (InternalTicks % TicksPerDay)) | InternalKind);
         }
 
         // Returns the DateTime resulting from adding a fractional number of
@@ -613,9 +588,7 @@ namespace System
         {
             long ticks1 = t1.InternalTicks;
             long ticks2 = t2.InternalTicks;
-            if (ticks1 > ticks2) return 1;
-            if (ticks1 < ticks2) return -1;
-            return 0;
+            return ticks1 > ticks2 ? 1 : ticks1 < ticks2 ? -1 : 0;
         }
 
         // Compares this DateTime to a given object. This method provides an
@@ -626,13 +599,16 @@ namespace System
         // Returns a value less than zero if this  object
         public int CompareTo(object? value)
         {
-            if (value == null) return 1;
-            /*
-            if (!(value is DateTime))
+            if (value == null)
             {
-                throw new ArgumentException(SR.Arg_MustBeDateTime);
+                return 1;
             }
-            */
+            /*
+if (!(value is DateTime))
+{
+   throw new ArgumentException(SR.Arg_MustBeDateTime);
+}
+*/
 
             return Compare(this, (DateTime)value);
         }
@@ -654,7 +630,7 @@ namespace System
             }
             */
 
-            int[] days = IsLeapYear(year) ? s_daysToMonth366 : s_daysToMonth365;
+            int[] days = IsLeapYear(year) ? DaysToMonth366 : DaysToMonth365;
             /*
             if (day > days[month] - days[month - 1])
             {
@@ -663,7 +639,7 @@ namespace System
             */
 
             int y = year - 1;
-            int n = y * 365 + y / 4 - y / 100 + y / 400 + days[month - 1] + day - 1;
+            int n = (y * 365) + (y / 4) - (y / 100) + (y / 400) + days[month - 1] + day - 1;
             return n * TicksPerDay;
         }
 
@@ -693,7 +669,7 @@ namespace System
             if (month < 1 || month > 12) throw new ArgumentOutOfRangeException(nameof(month), SR.ArgumentOutOfRange_Month);
             */
             // IsLeapYear checks the year argument
-            int[] days = IsLeapYear(year) ? s_daysToMonth366 : s_daysToMonth365;
+            int[] days = IsLeapYear(year) ? DaysToMonth366 : DaysToMonth365;
             return days[month] - days[month - 1];
         }
 
@@ -708,13 +684,13 @@ namespace System
             */
 
             // Conversion to long will not cause an overflow here, as at this point the "value" is in between OADateMinAsDouble and OADateMaxAsDouble
-            long millis = (long)(value * MillisPerDay + (value >= 0 ? 0.5 : -0.5));
+            long millis = (long)((value * MillisPerDay) + (value >= 0 ? 0.5 : -0.5));
             // The interesting thing here is when you have a value like 12.5 it all positive 12 days and 12 hours from 01/01/1899
             // However if you a value of -12.25 it is minus 12 days but still positive 6 hours, almost as though you meant -11.75 all negative
             // This line below fixes up the millis in the negative case
             if (millis < 0)
             {
-                millis -= (millis % MillisPerDay) * 2;
+                millis -= millis % MillisPerDay * 2;
             }
 
             millis += DoubleDateOffset / TicksPerMillisecond;
@@ -732,11 +708,7 @@ namespace System
         //
         public override bool Equals(object? value)
         {
-            if (value is DateTime)
-            {
-                return InternalTicks == ((DateTime)value).InternalTicks;
-            }
-            return false;
+            return value is DateTime && InternalTicks == ((DateTime)value).InternalTicks;
         }
 
         public bool Equals(DateTime value)
@@ -837,38 +809,32 @@ namespace System
             {
                 throw new ArgumentOutOfRangeException(nameof(fileTime), SR.ArgumentOutOfRange_FileTimeInvalid);
             }
-
 #pragma warning disable 162 // Unrechable code on Unix
             if (s_systemSupportsLeapSeconds)
             {
                 return FromFileTimeLeapSecondsAware(fileTime);
             }
 #pragma warning restore 162
-
             // This is the ticks in Universal time for this fileTime.
             long universalTicks = fileTime + FileTimeOffset;
             return new DateTime(universalTicks, DateTimeKind.Utc);
         }
-
         // Creates a DateTime from an OLE Automation Date.
         //
         public static DateTime FromOADate(double d)
         {
             return new DateTime(DoubleDateToTicks(d), DateTimeKind.Unspecified);
         }
-
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
             {
                 throw new ArgumentNullException(nameof(info));
             }
-
             // Serialize both the old and the new format
             info.AddValue(TicksField, InternalTicks);
             info.AddValue(DateDataField, _dateData);
         }
-
         public bool IsDaylightSavingTime()
         {
             if (Kind == DateTimeKind.Utc)
@@ -877,12 +843,10 @@ namespace System
             }
             return TimeZoneInfo.Local.IsDaylightSavingTime(this, TimeZoneInfoOptions.NoThrowOnInvalidTime);
         }
-
         public static DateTime SpecifyKind(DateTime value, DateTimeKind kind)
         {
             return new DateTime(value.InternalTicks, kind);
         }
-
         public long ToBinary()
         {
             if (Kind == DateTimeKind.Local)
@@ -891,7 +855,6 @@ namespace System
                 // just as they are when serializing in text. As such the format for local times
                 // changes to store the ticks of the UTC time, but with flags that look like a
                 // local date.
-
                 // To match serialization in text we need to be able to handle cases where
                 // the UTC value would be out of range. Unused parts of the ticks range are
                 // used for this, so that values just past max value are stored just past the
@@ -922,7 +885,7 @@ namespace System
             get
             {
                 long ticks = InternalTicks;
-                return new DateTime((ulong)(ticks - ticks % TicksPerDay) | InternalKind);
+                return new DateTime((ulong)(ticks - (ticks % TicksPerDay)) | InternalKind);
             }
         }
 
@@ -940,7 +903,10 @@ namespace System
             // y100 = number of whole 100-year periods within 400-year period
             int y100 = n / DaysPer100Years;
             // Last 100-year period has an extra day, so decrement result if 4
-            if (y100 == 4) y100 = 3;
+            if (y100 == 4)
+            {
+                y100 = 3;
+            }
             // n = day number within 100-year period
             n -= y100 * DaysPer100Years;
             // y4 = number of whole 4-year periods within 100-year period
@@ -950,27 +916,39 @@ namespace System
             // y1 = number of whole years within 4-year period
             int y1 = n / DaysPerYear;
             // Last year has an extra day, so decrement result if 4
-            if (y1 == 4) y1 = 3;
+            if (y1 == 4)
+            {
+                y1 = 3;
+            }
             // If year was requested, compute and return it
             if (part == DatePartYear)
             {
-                return y400 * 400 + y100 * 100 + y4 * 4 + y1 + 1;
+                return (y400 * 400) + (y100 * 100) + (y4 * 4) + y1 + 1;
             }
             // n = day number within year
             n -= y1 * DaysPerYear;
             // If day-of-year was requested, return it
-            if (part == DatePartDayOfYear) return n + 1;
+            if (part == DatePartDayOfYear)
+            {
+                return n + 1;
+            }
             // Leap year calculation looks different from IsLeapYear since y1, y4,
             // and y100 are relative to year 1, not year 0
             bool leapYear = y1 == 3 && (y4 != 24 || y100 == 3);
-            int[] days = leapYear ? s_daysToMonth366 : s_daysToMonth365;
+            int[] days = leapYear ? DaysToMonth366 : DaysToMonth365;
             // All months have less than 32 days, so n >> 5 is a good conservative
             // estimate for the month
             int m = (n >> 5) + 1;
             // m = 1-based month number
-            while (n >= days[m]) m++;
+            while (n >= days[m])
+            {
+                m++;
+            }
             // If month was requested, return it
-            if (part == DatePartMonth) return m;
+            if (part == DatePartMonth)
+            {
+                return m;
+            }
             // Return 1-based day-of-month
             return n - days[m - 1] + 1;
         }
@@ -990,7 +968,10 @@ namespace System
             // y100 = number of whole 100-year periods within 400-year period
             int y100 = n / DaysPer100Years;
             // Last 100-year period has an extra day, so decrement result if 4
-            if (y100 == 4) y100 = 3;
+            if (y100 == 4)
+            {
+                y100 = 3;
+            }
             // n = day number within 100-year period
             n -= y100 * DaysPer100Years;
             // y4 = number of whole 4-year periods within 100-year period
@@ -1000,21 +981,27 @@ namespace System
             // y1 = number of whole years within 4-year period
             int y1 = n / DaysPerYear;
             // Last year has an extra day, so decrement result if 4
-            if (y1 == 4) y1 = 3;
+            if (y1 == 4)
+            {
+                y1 = 3;
+            }
             // compute year
-            year = y400 * 400 + y100 * 100 + y4 * 4 + y1 + 1;
+            year = (y400 * 400) + (y100 * 100) + (y4 * 4) + y1 + 1;
             // n = day number within year
             n -= y1 * DaysPerYear;
             // dayOfYear = n + 1;
             // Leap year calculation looks different from IsLeapYear since y1, y4,
             // and y100 are relative to year 1, not year 0
             bool leapYear = y1 == 3 && (y4 != 24 || y100 == 3);
-            int[] days = leapYear ? s_daysToMonth366 : s_daysToMonth365;
+            int[] days = leapYear ? DaysToMonth366 : DaysToMonth365;
             // All months have less than 32 days, so n >> 5 is a good conservative
             // estimate for the month
             int m = (n >> 5) + 1;
             // m = 1-based month number
-            while (n >= days[m]) m++;
+            while (n >= days[m])
+            {
+                m++;
+            }
             // compute month and day
             month = m;
             day = n - days[m - 1] + 1;
@@ -1031,7 +1018,6 @@ namespace System
             minute = (int)m;
             hour = (int)(n % 24);
         }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void GetTime(out int hour, out int minute, out int second, out int millisecond)
         {
@@ -1044,7 +1030,6 @@ namespace System
             minute = (int)m;
             hour = (int)(n % 24);
         }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void GetTimePrecise(out int hour, out int minute, out int second, out int tick)
         {
@@ -1088,10 +1073,12 @@ namespace System
         // Returns the hour part of this DateTime. The returned value is an
         // integer between 0 and 23.
         //
-        public int Hour => (int)((InternalTicks / TicksPerHour) % 24);
+        public int Hour => (int)(InternalTicks / TicksPerHour % 24);
 
-        internal bool IsAmbiguousDaylightSavingTime() =>
-            InternalKind == KindLocalAmbiguousDst;
+        internal bool IsAmbiguousDaylightSavingTime()
+        {
+            return InternalKind == KindLocalAmbiguousDst;
+        }
 
         /*
         public DateTimeKind Kind =>
@@ -1106,12 +1093,12 @@ namespace System
         // Returns the millisecond part of this DateTime. The returned value
         // is an integer between 0 and 999.
         //
-        public int Millisecond => (int)((InternalTicks / TicksPerMillisecond) % 1000);
+        public int Millisecond => (int)(InternalTicks / TicksPerMillisecond % 1000);
 
         // Returns the minute part of this DateTime. The returned value is
         // an integer between 0 and 59.
         //
-        public int Minute => (int)((InternalTicks / TicksPerMinute) % 60);
+        public int Minute => (int)(InternalTicks / TicksPerMinute % 60);
 
         // Returns the month part of this DateTime. The returned value is an
         // integer between 1 and 12.
@@ -1120,8 +1107,8 @@ namespace System
 
         // Returns a DateTime representing the current date and time. The
         // resolution of the returned value depends on the system timer.
-        [Obsolete("This can cause breakpoint on real hardware")]
-        /*
+        /*[Obsolete("This can cause breakpoint on real hardware")]
+        
         public static DateTime Now =>
             new DateTime(
                 RTC.Century * 100 + RTC.Year,
@@ -1137,17 +1124,17 @@ namespace System
             {
                 ulong time = GetTime();
 
-                int century =     (int)((time & 0xFF_00_00_00_00_00_00_00)>>56);
-                int year =        (int)((time & 0x00_FF_00_00_00_00_00_00)>>48);
-                int month =       (int)((time & 0x00_00_FF_00_00_00_00_00)>>40);
-                int day =         (int)((time & 0x00_00_00_FF_00_00_00_00)>>32);
-                int hour =        (int)((time & 0x00_00_00_00_FF_00_00_00)>>24);
-                int minute =      (int)((time & 0x00_00_00_00_00_FF_00_00)>>16);
-                int second =      (int)((time & 0x00_00_00_00_00_00_FF_00)>>8);
+                int century = (int)((time & 0xFF_00_00_00_00_00_00_00) >> 56);
+                int year = (int)((time & 0x00_FF_00_00_00_00_00_00) >> 48);
+                int month = (int)((time & 0x00_00_FF_00_00_00_00_00) >> 40);
+                int day = (int)((time & 0x00_00_00_FF_00_00_00_00) >> 32);
+                int hour = (int)((time & 0x00_00_00_00_FF_00_00_00) >> 24);
+                int minute = (int)((time & 0x00_00_00_00_00_FF_00_00) >> 16);
+                int second = (int)((time & 0x00_00_00_00_00_00_FF_00) >> 8);
 
                 year += century * 100;
 
-                var date = new DateTime(year, month, day, hour, minute, second);
+                DateTime date = new(year, month, day, hour, minute, second);
 
                 return date;
             }
@@ -1159,7 +1146,7 @@ namespace System
         // Returns the second part of this DateTime. The returned value is
         // an integer between 0 and 59.
         //
-        public int Second => (int)((InternalTicks / TicksPerSecond) % 60);
+        public int Second => (int)(InternalTicks / TicksPerSecond % 60);
 
         // Returns the tick count for this DateTime. The returned value is
         // the number of 100-nanosecond intervals that have elapsed since 1/1/0001
@@ -1210,7 +1197,6 @@ namespace System
             if (s == null) ThrowHelper.ThrowArgumentNullException(ExceptionArgument.s);
             return DateTimeParse.Parse(s, DateTimeFormatInfo.CurrentInfo, DateTimeStyles.None);
         }
-
         // Constructs a DateTime from a string. The string must specify a
         // date and optionally a time in a culture-specific or universal format.
         // Leading and trailing whitespace characters are allowed.
@@ -1220,20 +1206,17 @@ namespace System
             if (s == null) ThrowHelper.ThrowArgumentNullException(ExceptionArgument.s);
             return DateTimeParse.Parse(s, DateTimeFormatInfo.GetInstance(provider), DateTimeStyles.None);
         }
-
         public static DateTime Parse(string s, IFormatProvider? provider, DateTimeStyles styles)
         {
             DateTimeFormatInfo.ValidateStyles(styles, nameof(styles));
             if (s == null) ThrowHelper.ThrowArgumentNullException(ExceptionArgument.s);
             return DateTimeParse.Parse(s, DateTimeFormatInfo.GetInstance(provider), styles);
         }
-
         public static DateTime Parse(ReadOnlySpan<char> s, IFormatProvider? provider = null, DateTimeStyles styles = DateTimeStyles.None)
         {
             DateTimeFormatInfo.ValidateStyles(styles, nameof(styles));
             return DateTimeParse.Parse(s, DateTimeFormatInfo.GetInstance(provider), styles);
         }
-
         // Constructs a DateTime from a string. The string must specify a
         // date and optionally a time in a culture-specific or universal format.
         // Leading and trailing whitespace characters are allowed.
@@ -1244,7 +1227,6 @@ namespace System
             if (format == null) ThrowHelper.ThrowArgumentNullException(ExceptionArgument.format);
             return DateTimeParse.ParseExact(s, format, DateTimeFormatInfo.GetInstance(provider), DateTimeStyles.None);
         }
-
         // Constructs a DateTime from a string. The string must specify a
         // date and optionally a time in a culture-specific or universal format.
         // Leading and trailing whitespace characters are allowed.
@@ -1256,20 +1238,17 @@ namespace System
             if (format == null) ThrowHelper.ThrowArgumentNullException(ExceptionArgument.format);
             return DateTimeParse.ParseExact(s, format, DateTimeFormatInfo.GetInstance(provider), style);
         }
-
         public static DateTime ParseExact(ReadOnlySpan<char> s, ReadOnlySpan<char> format, IFormatProvider? provider, DateTimeStyles style = DateTimeStyles.None)
         {
             DateTimeFormatInfo.ValidateStyles(style, nameof(style));
             return DateTimeParse.ParseExact(s, format, DateTimeFormatInfo.GetInstance(provider), style);
         }
-
         public static DateTime ParseExact(string s, string[] formats, IFormatProvider? provider, DateTimeStyles style)
         {
             DateTimeFormatInfo.ValidateStyles(style, nameof(style));
             if (s == null) ThrowHelper.ThrowArgumentNullException(ExceptionArgument.s);
             return DateTimeParse.ParseExactMultiple(s, formats, DateTimeFormatInfo.GetInstance(provider), style);
         }
-
         public static DateTime ParseExact(ReadOnlySpan<char> s, string[] formats, IFormatProvider? provider, DateTimeStyles style = DateTimeStyles.None)
         {
             DateTimeFormatInfo.ValidateStyles(style, nameof(style));
@@ -1299,20 +1278,28 @@ namespace System
         private static double TicksToOADate(long value)
         {
             if (value == 0)
+            {
                 return 0.0;  // Returns OleAut's zero'ed date value.
+            }
+
             if (value < TicksPerDay) // This is a fix for VB. They want the default day to be 1/1/0001 rathar then 12/30/1899.
+            {
                 value += DoubleDateOffset; // We could have moved this fix down but we would like to keep the bounds check.
+            }
             /*
-            if (value < OADateMinAsTicks)
-                throw new OverflowException(SR.Arg_OleAutDateInvalid);
-            */
+if (value < OADateMinAsTicks)
+   throw new OverflowException(SR.Arg_OleAutDateInvalid);
+*/
             // Currently, our max date == OA's max date (12/31/9999), so we don't
             // need an overflow check in that direction.
             long millis = (value - DoubleDateOffset) / TicksPerMillisecond;
             if (millis < 0)
             {
                 long frac = millis % MillisPerDay;
-                if (frac != 0) millis -= (MillisPerDay + frac) * 2;
+                if (frac != 0)
+                {
+                    millis -= (MillisPerDay + frac) * 2;
+                }
             }
             return (double)millis / MillisPerDay;
         }
@@ -1337,20 +1324,17 @@ namespace System
         {
             // Treats the input as universal if it is not specified
             long ticks = ((InternalKind & LocalMask) != 0) ? ToUniversalTime().InternalTicks : this.InternalTicks;
-
 #pragma warning disable 162 // Unrechable code on Unix
             if (s_systemSupportsLeapSeconds)
             {
                 return ToFileTimeLeapSecondsAware(ticks);
             }
 #pragma warning restore 162
-
             ticks -= FileTimeOffset;
             if (ticks < 0)
             {
                 throw new ArgumentOutOfRangeException(null, SR.ArgumentOutOfRange_FileTimeInvalid);
             }
-
             return ticks;
         }
         */
@@ -1387,42 +1371,34 @@ namespace System
             }
             return new DateTime(tick, DateTimeKind.Local, isAmbiguousLocalDst);
         }
-
         public string ToLongDateString()
         {
             return DateTimeFormat.Format(this, "D", null);
         }
-
         public string ToLongTimeString()
         {
             return DateTimeFormat.Format(this, "T", null);
         }
-
         public string ToShortDateString()
         {
             return DateTimeFormat.Format(this, "d", null);
         }
-
         public string ToShortTimeString()
         {
             return DateTimeFormat.Format(this, "t", null);
         }
-
         public override string ToString()
         {
             return DateTimeFormat.Format(this, null, null);
         }
-
         public string ToString(string? format)
         {
             return DateTimeFormat.Format(this, format, null);
         }
-
         public string ToString(IFormatProvider? provider)
         {
             return DateTimeFormat.Format(this, null, provider);
         }
-
         public string ToString(string? format, IFormatProvider? provider)
         {
             return DateTimeFormat.Format(this, format, provider);
@@ -1437,12 +1413,10 @@ namespace System
         /*
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) =>
             DateTimeFormat.TryFormat(this, destination, out charsWritten, format, provider);
-
         public DateTime ToUniversalTime()
         {
             return TimeZoneInfo.ConvertTimeToUtc(this, TimeZoneInfoOptions.NoThrowOnInvalidTime);
         }
-
         public static bool TryParse([NotNullWhen(true)] string? s, out DateTime result)
         {
             if (s == null)
@@ -1452,63 +1426,50 @@ namespace System
             }
             return DateTimeParse.TryParse(s, DateTimeFormatInfo.CurrentInfo, DateTimeStyles.None, out result);
         }
-
         public static bool TryParse(ReadOnlySpan<char> s, out DateTime result)
         {
             return DateTimeParse.TryParse(s, DateTimeFormatInfo.CurrentInfo, DateTimeStyles.None, out result);
         }
-
         public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, DateTimeStyles styles, out DateTime result)
         {
             DateTimeFormatInfo.ValidateStyles(styles, nameof(styles));
-
             if (s == null)
             {
                 result = default;
                 return false;
             }
-
             return DateTimeParse.TryParse(s, DateTimeFormatInfo.GetInstance(provider), styles, out result);
         }
-
         public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, DateTimeStyles styles, out DateTime result)
         {
             DateTimeFormatInfo.ValidateStyles(styles, nameof(styles));
             return DateTimeParse.TryParse(s, DateTimeFormatInfo.GetInstance(provider), styles, out result);
         }
-
         public static bool TryParseExact([NotNullWhen(true)] string? s, [NotNullWhen(true)] string? format, IFormatProvider? provider, DateTimeStyles style, out DateTime result)
         {
             DateTimeFormatInfo.ValidateStyles(style, nameof(style));
-
             if (s == null || format == null)
             {
                 result = default;
                 return false;
             }
-
             return DateTimeParse.TryParseExact(s, format, DateTimeFormatInfo.GetInstance(provider), style, out result);
         }
-
         public static bool TryParseExact(ReadOnlySpan<char> s, ReadOnlySpan<char> format, IFormatProvider? provider, DateTimeStyles style, out DateTime result)
         {
             DateTimeFormatInfo.ValidateStyles(style, nameof(style));
             return DateTimeParse.TryParseExact(s, format, DateTimeFormatInfo.GetInstance(provider), style, out result);
         }
-
         public static bool TryParseExact([NotNullWhen(true)] string? s, [NotNullWhen(true)] string?[]? formats, IFormatProvider? provider, DateTimeStyles style, out DateTime result)
         {
             DateTimeFormatInfo.ValidateStyles(style, nameof(style));
-
             if (s == null)
             {
                 result = default;
                 return false;
             }
-
             return DateTimeParse.TryParseExactMultiple(s, formats, DateTimeFormatInfo.GetInstance(provider), style, out result);
         }
-
         public static bool TryParseExact(ReadOnlySpan<char> s, [NotNullWhen(true)] string?[]? formats, IFormatProvider? provider, DateTimeStyles style, out DateTime result)
         {
             DateTimeFormatInfo.ValidateStyles(style, nameof(style));
@@ -1542,19 +1503,40 @@ namespace System
             return new DateTime((ulong)(ticks - valueTicks) | d.InternalKind);
         }
 
-        public static TimeSpan operator -(DateTime d1, DateTime d2) => new TimeSpan(d1.InternalTicks - d2.InternalTicks);
+        public static TimeSpan operator -(DateTime d1, DateTime d2)
+        {
+            return new TimeSpan(d1.InternalTicks - d2.InternalTicks);
+        }
 
-        public static bool operator ==(DateTime d1, DateTime d2) => d1.InternalTicks == d2.InternalTicks;
+        public static bool operator ==(DateTime d1, DateTime d2)
+        {
+            return d1.InternalTicks == d2.InternalTicks;
+        }
 
-        public static bool operator !=(DateTime d1, DateTime d2) => d1.InternalTicks != d2.InternalTicks;
+        public static bool operator !=(DateTime d1, DateTime d2)
+        {
+            return d1.InternalTicks != d2.InternalTicks;
+        }
 
-        public static bool operator <(DateTime t1, DateTime t2) => t1.InternalTicks < t2.InternalTicks;
+        public static bool operator <(DateTime t1, DateTime t2)
+        {
+            return t1.InternalTicks < t2.InternalTicks;
+        }
 
-        public static bool operator <=(DateTime t1, DateTime t2) => t1.InternalTicks <= t2.InternalTicks;
+        public static bool operator <=(DateTime t1, DateTime t2)
+        {
+            return t1.InternalTicks <= t2.InternalTicks;
+        }
 
-        public static bool operator >(DateTime t1, DateTime t2) => t1.InternalTicks > t2.InternalTicks;
+        public static bool operator >(DateTime t1, DateTime t2)
+        {
+            return t1.InternalTicks > t2.InternalTicks;
+        }
 
-        public static bool operator >=(DateTime t1, DateTime t2) => t1.InternalTicks >= t2.InternalTicks;
+        public static bool operator >=(DateTime t1, DateTime t2)
+        {
+            return t1.InternalTicks >= t2.InternalTicks;
+        }
 
         // Returns a string array containing all of the known date and time options for the
         // current culture.  The strings returned are properly formatted date and
@@ -1564,7 +1546,6 @@ namespace System
         {
             return GetDateTimeFormats(CultureInfo.CurrentCulture);
         }
-
         // Returns a string array containing all of the known date and time options for the
         // using the information provided by IFormatProvider.  The strings returned are properly formatted date and
         // time strings for the current instance of DateTime.
@@ -1572,7 +1553,6 @@ namespace System
         {
             return DateTimeFormat.GetAllDateTimes(this, DateTimeFormatInfo.GetInstance(provider));
         }
-
         // Returns a string array containing all of the date and time options for the
         // given format format and current culture.  The strings returned are properly formatted date and
         // time strings for the current instance of DateTime.
@@ -1580,7 +1560,6 @@ namespace System
         {
             return GetDateTimeFormats(format, CultureInfo.CurrentCulture);
         }
-
         // Returns a string array containing all of the date and time options for the
         // given format format and given culture.  The strings returned are properly formatted date and
         // time strings for the current instance of DateTime.
@@ -1588,91 +1567,73 @@ namespace System
         {
             return DateTimeFormat.GetAllDateTimes(this, format, DateTimeFormatInfo.GetInstance(provider));
         }
-
         //
         // IConvertible implementation
         //
-
         public TypeCode GetTypeCode()
         {
             return TypeCode.DateTime;
         }
-
         bool IConvertible.ToBoolean(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Boolean"));
         }
-
         char IConvertible.ToChar(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Char"));
         }
-
         sbyte IConvertible.ToSByte(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "SByte"));
         }
-
         byte IConvertible.ToByte(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Byte"));
         }
-
         short IConvertible.ToInt16(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Int16"));
         }
-
         ushort IConvertible.ToUInt16(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "UInt16"));
         }
-
         int IConvertible.ToInt32(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Int32"));
         }
-
         uint IConvertible.ToUInt32(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "UInt32"));
         }
-
         long IConvertible.ToInt64(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Int64"));
         }
-
         ulong IConvertible.ToUInt64(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "UInt64"));
         }
-
         float IConvertible.ToSingle(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Single"));
         }
-
         double IConvertible.ToDouble(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Double"));
         }
-
         decimal IConvertible.ToDecimal(IFormatProvider? provider)
         {
             throw new InvalidCastException(SR.Format(SR.InvalidCast_FromTo, "DateTime", "Decimal"));
         }
-
         DateTime IConvertible.ToDateTime(IFormatProvider? provider)
         {
             return this;
         }
-
         object IConvertible.ToType(Type type, IFormatProvider? provider)
         {
             return Convert.DefaultToType((IConvertible)this, type, provider);
         }
-
         // Tries to construct a DateTime from a given year, month, day, hour,
         // minute, second and millisecond.
         //
@@ -1696,7 +1657,6 @@ namespace System
             {
                 return false;
             }
-
             if (second == 60)
             {
                 if (s_systemSupportsLeapSeconds && IsValidTimeWithLeapSeconds(year, month, day, hour, minute, second, DateTimeKind.Unspecified))
@@ -1713,9 +1673,7 @@ namespace System
                     return false;
                 }
             }
-
             long ticks = DateToTicks(year, month, day) + TimeToTicks(hour, minute, second);
-
             ticks += millisecond * TicksPerMillisecond;
             if (ticks < MinTicks || ticks > MaxTicks)
             {

@@ -1,5 +1,4 @@
-
-namespace System
+﻿namespace System
 {
-    public struct Void { }
+	public struct Void { }
 }

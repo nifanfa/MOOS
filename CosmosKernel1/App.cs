@@ -1,6 +1,6 @@
-﻿using Cosmos.System;
+﻿using System.Drawing;
+using Cosmos.System;
 using nifanfa.CosmosDrawString;
-using System.Drawing;
 
 namespace CosmosKernel1
 {
@@ -21,18 +21,17 @@ namespace CosmosKernel1
         public uint x;
         public uint y;
         public string name;
-
-        bool pressed;
+        private bool pressed;
         public bool visible = false;
 
         public int _i = 0;
 
         public App(uint width, uint height, uint x = 0, uint y = 0)
         {
-            this._width = width;
-            this._height = height;
-            this._x = x;
-            this._y = y;
+            _width = width;
+            _height = height;
+            _x = x;
+            _y = y;
 
             this.x = x + 2;
             this.y = y + 22;
@@ -49,7 +48,7 @@ namespace CosmosKernel1
 
             if (MouseManager.X > dockX && MouseManager.X < dockX + dockWidth && MouseManager.Y > dockY && MouseManager.Y < dockY + dockHeight)
             {
-                Kernel.vMWareSVGAII._DrawACSIIString(name, (uint)Color.White.ToArgb(), (uint)(dockX - ((name.Length * 8) / 2) + dockWidth / 2), dockY - 20);
+                Kernel.vMWareSVGAII._DrawACSIIString(name, Color.White.ToArgb(), (uint)(dockX - (name.Length * 8 / 2) + (dockWidth / 2)), dockY - 20);
             }
 
             if (MouseManager.MouseState == MouseState.Left && _i == 0)
@@ -65,39 +64,41 @@ namespace CosmosKernel1
             {
                 if (MouseManager.X > _x && MouseManager.X < _x + 22 && MouseManager.Y > _y && MouseManager.Y < _y + 22)
                 {
-                    this.pressed = true;
+                    pressed = true;
                 }
-            }
-            else
+            } else
             {
-                this.pressed = false;
+                pressed = false;
             }
 
             if (!visible)
-                goto end;
-
-            if (this.pressed)
             {
-                this._x = (uint)MouseManager.X;
-                this._y = (uint)MouseManager.Y;
+                goto end;
+            }
 
-                this.x = (uint)(MouseManager.X + 2);
-                this.y = (uint)(MouseManager.Y + 22);
+            if (pressed)
+            {
+                _x = (uint)MouseManager.X;
+                _y = (uint)MouseManager.Y;
+
+                x = (uint)(MouseManager.X + 2);
+                y = (uint)(MouseManager.Y + 22);
             }
 
             /*
             Kernel.vMWareSVGAII.DoubleBuffer_DrawFillRectangle(_x, _y, _width, _height, (uint)Color.FromArgb(200, 200, 200).ToArgb());
             Kernel.vMWareSVGAII.DoubleBuffer_DrawFillRectangle(_x + 1, _y + 1, _width - 2, 20, (uint)Color.FromArgb(0, 0, 135).ToArgb());
             */
-            Kernel.vMWareSVGAII.DrawFillRectangle(_x, _y, _width, _height, (uint)Color.White.ToArgb());
-            Kernel.vMWareSVGAII.DrawRectangle((uint)Kernel.avgCol.ToArgb(), (int)_x, (int)_y, (int)_width, (int)_height);
+            Kernel.vMWareSVGAII.FillRectangle(Color.Black, (int)_x, (int)_y, (int)_width, (int)_height);
+            Kernel.vMWareSVGAII.DrawRectangle(Kernel.color, (int)_x, (int)_y, (int)_width, (int)_height);
 
-            Kernel.vMWareSVGAII._DrawACSIIString(name, (uint)Color.Black.ToArgb(), _x + 2, _y + 2);
+            Kernel.vMWareSVGAII._DrawACSIIString(name, Color.Black.ToArgb(), _x + 2, _y + 2);
             //Kernel.vMWareSVGAII.DoubleBuffer_DrawFillRectangle(_x + 22, _y, 1, 22, (uint)Color.FromArgb(200, 200, 200).ToArgb());
             //Kernel.vMWareSVGAII.DoubleBuffer_DrawFillRectangle(x, y, 20, 20, (uint)Color.Gray.ToArgb());
             _Update();
 
-            end:;
+        end:
+            ;
         }
 
         public virtual void _Update()

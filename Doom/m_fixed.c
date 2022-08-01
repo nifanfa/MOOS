@@ -35,7 +35,7 @@ FixedMul
 ( fixed_t	a,
   fixed_t	b )
 {
-    return ((int64_t) a * (int64_t) b) >> FRACBITS;
+	return ((int64_t) a * (int64_t) b) >> FRACBITS;
 }
 
 
@@ -46,17 +46,17 @@ FixedMul
 
 fixed_t FixedDiv(fixed_t a, fixed_t b)
 {
-    if ((myabs(a) >> 14) >= myabs(b))
-    {
+	if ((myabs(a) >> 14) >= myabs(b))
+	{
 	return (a^b) < 0 ? INT_MIN : INT_MAX;
-    }
-    else
-    {
+	}
+	else
+	{
 	int64_t result;
 
 	result = ((int64_t) a << 16) / b;
 
 	return (fixed_t) result;
-    }
+	}
 }
 

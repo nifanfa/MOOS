@@ -47,12 +47,12 @@ T_MovePlane
   int		floorOrCeiling,
   int		direction )
 {
-    boolean	flag;
-    fixed_t	lastpos;
+	boolean	flag;
+	fixed_t	lastpos;
 	
-    switch(floorOrCeiling)
-    {
-      case 0:
+	switch(floorOrCeiling)
+	{
+	  case 0:
 	// FLOOR
 	switch(direction)
 	{
@@ -119,7 +119,7 @@ T_MovePlane
 	}
 	break;
 									
-      case 1:
+	  case 1:
 	// CEILING
 	switch(direction)
 	{
@@ -191,8 +191,8 @@ T_MovePlane
 	}
 	break;
 		
-    }
-    return ok;
+	}
+	return ok;
 }
 
 
@@ -201,18 +201,18 @@ T_MovePlane
 //
 void T_MoveFloor(floormove_t* floor)
 {
-    result_e	res;
+	result_e	res;
 	
-    res = T_MovePlane(floor->sector,
+	res = T_MovePlane(floor->sector,
 		      floor->speed,
 		      floor->floordestheight,
 		      floor->crush,0,floor->direction);
-    
-    if (!(leveltime&7))
+	
+	if (!(leveltime&7))
 	S_StartSound(&floor->sector->soundorg, sfx_stnmov);
-    
-    if (res == pastdest)
-    {
+	
+	if (res == pastdest)
+	{
 	floor->sector->specialdata = NULL;
 
 	if (floor->direction == 1)
@@ -240,7 +240,7 @@ void T_MoveFloor(floormove_t* floor)
 	P_RemoveThinker(&floor->thinker);
 
 	S_StartSound(&floor->sector->soundorg, sfx_pstop);
-    }
+	}
 
 }
 
@@ -252,16 +252,16 @@ EV_DoFloor
 ( line_t*	line,
   floor_e	floortype )
 {
-    int			secnum;
-    int			rtn;
-    int			i;
-    sector_t*		sec;
-    floormove_t*	floor;
+	int			secnum;
+	int			rtn;
+	int			i;
+	sector_t*		sec;
+	floormove_t*	floor;
 
-    secnum = -1;
-    rtn = 0;
-    while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
-    {
+	secnum = -1;
+	rtn = 0;
+	while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+	{
 	sec = &sectors[secnum];
 		
 	// ALREADY MOVING?  IF SO, KEEP GOING...
@@ -430,8 +430,8 @@ EV_DoFloor
 	  default:
 	    break;
 	}
-    }
-    return rtn;
+	}
+	return rtn;
 }
 
 
@@ -445,26 +445,26 @@ EV_BuildStairs
 ( line_t*	line,
   stair_e	type )
 {
-    int			secnum;
-    int			height;
-    int			i;
-    int			newsecnum;
-    int			texture;
-    int			ok;
-    int			rtn;
-    
-    sector_t*		sec;
-    sector_t*		tsec;
+	int			secnum;
+	int			height;
+	int			i;
+	int			newsecnum;
+	int			texture;
+	int			ok;
+	int			rtn;
+	
+	sector_t*		sec;
+	sector_t*		tsec;
 
-    floormove_t*	floor;
-    
-    fixed_t		stairsize = 0;
-    fixed_t		speed = 0;
+	floormove_t*	floor;
+	
+	fixed_t		stairsize = 0;
+	fixed_t		speed = 0;
 
-    secnum = -1;
-    rtn = 0;
-    while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
-    {
+	secnum = -1;
+	rtn = 0;
+	while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+	{
 	sec = &sectors[secnum];
 		
 	// ALREADY MOVING?  IF SO, KEEP GOING...
@@ -540,7 +540,7 @@ EV_BuildStairs
 		break;
 	    }
 	} while(ok);
-    }
-    return rtn;
+	}
+	return rtn;
 }
 

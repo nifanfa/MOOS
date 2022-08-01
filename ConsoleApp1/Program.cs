@@ -53,7 +53,7 @@ namespace ConsoleApp1
             WriteString("Content of Text.txt is: ");
 
             ReadAllBytes("Text.txt", out var size, out var data);
-            for(ulong i = 0; i < size; i++) 
+            for (ulong i = 0; i < size; i++)
             {
                 Write((char)data[i]);
             }

@@ -40,21 +40,21 @@ void dg_Create();
 
 int doommain(char* gb,long gl)
 {
-    // save arguments
+	// save arguments
 
-    myargc = 0;
-    myargv = NULL;
+	myargc = 0;
+	myargv = NULL;
 
-    gameBinary = gb;
-    gameBinaryLength = gl;
+	gameBinary = gb;
+	gameBinaryLength = gl;
 
-    M_FindResponseFile();
+	M_FindResponseFile();
 
-    // start doom
+	// start doom
 	dg_Create();
 
 	D_DoomMain ();
 
-    return 0;
+	return 0;
 }
 

@@ -34,5 +34,5 @@
 		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
-	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
+	<Import Project="..\Corlib\CoreLib.projitems" Label="Shared" />
 </Project>

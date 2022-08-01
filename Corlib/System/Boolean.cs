@@ -1,22 +1,71 @@
-namespace System
+﻿namespace System
 {
-    // The layout of primitive types is special cased because it would be recursive.
-    // These really don't need any fields to work.
-    public unsafe struct Boolean
-    {
-        public override string ToString()
-            => this ? "true" : "false";
+	public unsafe struct Boolean
+	{
+		internal const int True = 1;
+		internal const int False = 0;
+		internal const string TrueLiteral = "True";
+		internal const string FalseLiteral = "False";
+		public static readonly string TrueString = TrueLiteral;
+		public static readonly string FalseString = FalseLiteral;
+		public override string ToString()
+		{
+			return false == this ? FalseLiteral : TrueLiteral;
+		}
 
-        public static implicit operator bool(byte value)=>value !=0;
-        public static implicit operator bool(sbyte value)=>value !=0;
-        public static implicit operator bool(short value)=>value !=0;
-        public static implicit operator bool(ushort value)=>value !=0;
-        public static implicit operator bool(int value)=>value !=0;
-        public static implicit operator bool(uint value)=>value !=0;
-        public static implicit operator bool(long value) => value != 0;
-        public static implicit operator bool(ulong value) => value != 0;
-        public static implicit operator bool(float value) => value != 0;
-        public static implicit operator bool(double value) => value != 0;
-        public static implicit operator bool(void* value) => value != null;
-    }
+		public static implicit operator bool(byte value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(sbyte value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(short value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(ushort value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(int value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(uint value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(long value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(ulong value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(float value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(double value)
+		{
+			return value != 0;
+		}
+
+		public static implicit operator bool(void* value)
+		{
+			return value != null;
+		}
+	}
 }

@@ -76,10 +76,10 @@ int fb_scaling = 1;
 int usemouse = 0;
 
 struct color {
-    uint32_t b:8;
-    uint32_t g:8;
-    uint32_t r:8;
-    uint32_t a:8;
+	uint32_t b:8;
+	uint32_t g:8;
+	uint32_t r:8;
+	uint32_t a:8;
 };
 
 static struct color colors[256];
@@ -128,55 +128,55 @@ static uint16_t rgb565_palette[256];
 
 void cmap_to_rgb565(uint16_t * out, uint8_t * in, int in_pixels)
 {
-    int i, j;
-    struct color c;
-    uint16_t r, g, b;
+	int i, j;
+	struct color c;
+	uint16_t r, g, b;
 
-    for (i = 0; i < in_pixels; i++)
-    {
-        c = colors[*in]; 
-        r = ((uint16_t)(c.r >> 3)) << 11;
-        g = ((uint16_t)(c.g >> 2)) << 5;
-        b = ((uint16_t)(c.b >> 3)) << 0;
-        *out = (r | g | b);
+	for (i = 0; i < in_pixels; i++)
+	{
+		c = colors[*in]; 
+		r = ((uint16_t)(c.r >> 3)) << 11;
+		g = ((uint16_t)(c.g >> 2)) << 5;
+		b = ((uint16_t)(c.b >> 3)) << 0;
+		*out = (r | g | b);
 
-        in++;
-        for (j = 0; j < fb_scaling; j++) {
-            out++;
-        }
-    }
+		in++;
+		for (j = 0; j < fb_scaling; j++) {
+			out++;
+		}
+	}
 }
 
 void cmap_to_fb(uint8_t * out, uint8_t * in, int in_pixels)
 {
-    int i, j, k;
-    struct color c;
-    uint32_t pix;
-    uint16_t r, g, b;
+	int i, j, k;
+	struct color c;
+	uint32_t pix;
+	uint16_t r, g, b;
 
-    for (i = 0; i < in_pixels; i++)
-    {
-        c = colors[*in];  /* R:8 G:8 B:8 format! */
-        r = (uint16_t)(c.r >> (8 - s_Fb.red.length));
-        g = (uint16_t)(c.g >> (8 - s_Fb.green.length));
-        b = (uint16_t)(c.b >> (8 - s_Fb.blue.length));
-        pix = r << s_Fb.red.offset;
-        pix |= g << s_Fb.green.offset;
-        pix |= b << s_Fb.blue.offset;
+	for (i = 0; i < in_pixels; i++)
+	{
+		c = colors[*in];  /* R:8 G:8 B:8 format! */
+		r = (uint16_t)(c.r >> (8 - s_Fb.red.length));
+		g = (uint16_t)(c.g >> (8 - s_Fb.green.length));
+		b = (uint16_t)(c.b >> (8 - s_Fb.blue.length));
+		pix = r << s_Fb.red.offset;
+		pix |= g << s_Fb.green.offset;
+		pix |= b << s_Fb.blue.offset;
 
-        for (k = 0; k < fb_scaling; k++) {
-            for (j = 0; j < s_Fb.bits_per_pixel/8; j++) {
-                *out = (pix >> (j*8));
-                out++;
-            }
-        }
-        in++;
-    }
+		for (k = 0; k < fb_scaling; k++) {
+			for (j = 0; j < s_Fb.bits_per_pixel/8; j++) {
+				*out = (pix >> (j*8));
+				out++;
+			}
+		}
+		in++;
+	}
 }
 
 void I_InitGraphics (void)
 {
-    int i;
+	int i;
 
 	memset(&s_Fb, 0, sizeof(struct FB_ScreenInfo));
 	s_Fb.xres = DOOMGENERIC_RESX;
@@ -195,24 +195,24 @@ void I_InitGraphics (void)
 	s_Fb.red.offset = 16;
 	s_Fb.transp.offset = 24;
 	
-    i = M_CheckParmWithArgs("-scaling", 1);
-    if (i > 0) {
-        i = myatoi(myargv[i + 1]);
-        fb_scaling = i;
-    } else {
-        fb_scaling = s_Fb.xres / SCREENWIDTH;
-        if (s_Fb.yres / SCREENHEIGHT < fb_scaling)
-            fb_scaling = s_Fb.yres / SCREENHEIGHT;
-    }
+	i = M_CheckParmWithArgs("-scaling", 1);
+	if (i > 0) {
+		i = myatoi(myargv[i + 1]);
+		fb_scaling = i;
+	} else {
+		fb_scaling = s_Fb.xres / SCREENWIDTH;
+		if (s_Fb.yres / SCREENHEIGHT < fb_scaling)
+			fb_scaling = s_Fb.yres / SCREENHEIGHT;
+	}
 
 
-    /* Allocate screen to draw to */
+	/* Allocate screen to draw to */
 	I_VideoBuffer = (byte*)Z_Malloc (SCREENWIDTH * SCREENHEIGHT, PU_STATIC, NULL);  // For DOOM to draw on
 
 	screenvisible = true;
 
-    extern int I_InitInput(void);
-    I_InitInput();
+	extern int I_InitInput(void);
+	I_InitInput();
 }
 
 void I_ShutdownGraphics (void)
@@ -240,44 +240,44 @@ void I_UpdateNoBlit (void)
 
 void I_FinishUpdate (void)
 {
-    int y;
-    int x_offset, y_offset, x_offset_end;
-    unsigned char *line_in, *line_out;
+	int y;
+	int x_offset, y_offset, x_offset_end;
+	unsigned char *line_in, *line_out;
 
-    /* Offsets in case FB is bigger than DOOM */
-    /* 600 = s_Fb heigt, 200 screenheight */
-    /* 600 = s_Fb heigt, 200 screenheight */
-    /* 2048 =s_Fb width, 320 screenwidth */
-    y_offset     = (((s_Fb.yres - (SCREENHEIGHT * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2;
-    x_offset     = (((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2; // XXX: siglent FB hack: /4 instead of /2, since it seems to handle the resolution in a funny way
-    //x_offset     = 0;
-    x_offset_end = ((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8) - x_offset;
+	/* Offsets in case FB is bigger than DOOM */
+	/* 600 = s_Fb heigt, 200 screenheight */
+	/* 600 = s_Fb heigt, 200 screenheight */
+	/* 2048 =s_Fb width, 320 screenwidth */
+	y_offset     = (((s_Fb.yres - (SCREENHEIGHT * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2;
+	x_offset     = (((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2; // XXX: siglent FB hack: /4 instead of /2, since it seems to handle the resolution in a funny way
+	//x_offset     = 0;
+	x_offset_end = ((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8) - x_offset;
 
-    /* DRAW SCREEN */
-    line_in  = (unsigned char *) I_VideoBuffer;
-    line_out = (unsigned char *) DG_ScreenBuffer;
+	/* DRAW SCREEN */
+	line_in  = (unsigned char *) I_VideoBuffer;
+	line_out = (unsigned char *) DG_ScreenBuffer;
 
-    y = SCREENHEIGHT;
+	y = SCREENHEIGHT;
 
-    while (y--)
-    {
-        int i;
-        for (i = 0; i < fb_scaling; i++) {
-            line_out += x_offset;
+	while (y--)
+	{
+		int i;
+		for (i = 0; i < fb_scaling; i++) {
+			line_out += x_offset;
 #ifdef CMAP256
-            for (fb_scaling == 1) {
-                memcpy(line_out, line_in, SCREENWIDTH); /* fb_width is bigger than Doom SCREENWIDTH... */
-            } else {
-                //XXX FIXME fb_scaling support!
-            }
+			for (fb_scaling == 1) {
+				memcpy(line_out, line_in, SCREENWIDTH); /* fb_width is bigger than Doom SCREENWIDTH... */
+			} else {
+				//XXX FIXME fb_scaling support!
+			}
 #else
-            //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
-            cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
+			//cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
+			cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
 #endif
-            line_out += (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel/8)) + x_offset_end;
-        }
-        line_in += SCREENWIDTH;
-    }
+			line_out += (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel/8)) + x_offset_end;
+		}
+		line_in += SCREENWIDTH;
+	}
 
 	DG_DrawFrame();
 }
@@ -287,7 +287,7 @@ void I_FinishUpdate (void)
 //
 void I_ReadScreen (byte* scr)
 {
-    memcpy (scr, I_VideoBuffer, SCREENWIDTH * SCREENHEIGHT);
+	memcpy (scr, I_VideoBuffer, SCREENWIDTH * SCREENHEIGHT);
 }
 
 //
@@ -313,53 +313,53 @@ void I_SetPalette (byte* palette)
 
 	//	palette += 3;
 	//}
-    
+	
 
-    /* performance boost:
-     * map to the right pixel format over here! */
+	/* performance boost:
+	 * map to the right pixel format over here! */
 
-    for (i=0; i<256; ++i ) {
-        colors[i].a = 0;
-        colors[i].r = gammatable[usegamma][*palette++];
-        colors[i].g = gammatable[usegamma][*palette++];
-        colors[i].b = gammatable[usegamma][*palette++];
-    }
+	for (i=0; i<256; ++i ) {
+		colors[i].a = 0;
+		colors[i].r = gammatable[usegamma][*palette++];
+		colors[i].g = gammatable[usegamma][*palette++];
+		colors[i].b = gammatable[usegamma][*palette++];
+	}
 }
 
 // Given an RGB value, find the closest matching palette index.
 
 int I_GetPaletteIndex (int r, int g, int b)
 {
-    int best, best_diff, diff;
-    int i;
-    col_t color;
+	int best, best_diff, diff;
+	int i;
+	col_t color;
 
-    best = 0;
-    best_diff = INT_MAX;
+	best = 0;
+	best_diff = INT_MAX;
 
-    for (i = 0; i < 256; ++i)
-    {
-    	color.r = GFX_RGB565_R(rgb565_palette[i]);
-    	color.g = GFX_RGB565_G(rgb565_palette[i]);
-    	color.b = GFX_RGB565_B(rgb565_palette[i]);
+	for (i = 0; i < 256; ++i)
+	{
+		color.r = GFX_RGB565_R(rgb565_palette[i]);
+		color.g = GFX_RGB565_G(rgb565_palette[i]);
+		color.b = GFX_RGB565_B(rgb565_palette[i]);
 
-        diff = (r - color.r) * (r - color.r)
-             + (g - color.g) * (g - color.g)
-             + (b - color.b) * (b - color.b);
+		diff = (r - color.r) * (r - color.r)
+			 + (g - color.g) * (g - color.g)
+			 + (b - color.b) * (b - color.b);
 
-        if (diff < best_diff)
-        {
-            best = i;
-            best_diff = diff;
-        }
+		if (diff < best_diff)
+		{
+			best = i;
+			best_diff = diff;
+		}
 
-        if (diff == 0)
-        {
-            break;
-        }
-    }
+		if (diff == 0)
+		{
+			break;
+		}
+	}
 
-    return best;
+	return best;
 }
 
 void I_BeginRead (void)
