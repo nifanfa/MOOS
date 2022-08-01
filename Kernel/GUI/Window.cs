@@ -4,10 +4,12 @@ using MOOS.FS;
 using MOOS.Misc;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace MOOS.GUI
 {
+    /*
     internal class Window
     {
         public bool Visible 
@@ -42,7 +44,7 @@ namespace MOOS.GUI
             this.Width = Width;
             this.Height = Height;
             this.Visible = true;
-            WindowManager.Windows.Add(this);
+            WindowManager.Childrens.Add(this);
 #if Chinese
             Title = "窗体1";
 #else
@@ -57,7 +59,7 @@ namespace MOOS.GUI
         bool Move;
         int OffsetX;
         int OffsetY;
-        public int Index { get => WindowManager.Windows.IndexOf(this); }
+        public int Index { get => WindowManager.Childrens.IndexOf(this); }
 
         public virtual void OnInput()
         {
@@ -117,5 +119,7 @@ namespace MOOS.GUI
             Framebuffer.Graphics.DrawRectangle(X - 1, Y - (HasBar ? BarHeight : 0) - 1, Width + 2, (HasBar ? BarHeight : 0) + Height + 2, 0xFF333333);
         }
     }
+    */
 }
+   
 #endif

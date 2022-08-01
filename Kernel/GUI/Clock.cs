@@ -1,6 +1,7 @@
 #if HasGUI
 
 using System;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -18,9 +19,9 @@ namespace MOOS.GUI
             sine = new int[16] { 0, 27, 54, 79, 104, 128, 150, 171, 190, 201, 221, 233, 243, 250, 254, 255 };
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
 
             int second = RTC.Second * 6;
             DrawHand(X + (Width / 2), Y + (Height / 2), second, Width > Height ? (Height / 3) : (Width / 3), 0xFFFF0000);

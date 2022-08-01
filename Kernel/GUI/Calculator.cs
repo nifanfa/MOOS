@@ -5,6 +5,7 @@ using MOOS.GUI;
 using MOOS.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace MOOS.GUI
@@ -71,9 +72,9 @@ namespace MOOS.GUI
 
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
 
             Framebuffer.Graphics.DrawImage(X, Y, image);
 
@@ -203,7 +204,7 @@ namespace MOOS.GUI
         {
             g.FillRectangle(X, Y, 60, 20, 0xFF333333);
             int i = WindowManager.font.MeasureString(s);
-            WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2,s,g);
+            WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2,s, g);
 
             Btns.Add(new Button()
             {

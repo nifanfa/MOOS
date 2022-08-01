@@ -5,6 +5,7 @@ using MOOS.Misc;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -25,9 +26,9 @@ namespace MOOS.GUI
 
         const int lineWidth = 5;
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
 
 
             if((Timer.Ticks % 10) == 0)

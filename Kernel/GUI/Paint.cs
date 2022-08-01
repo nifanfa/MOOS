@@ -3,6 +3,7 @@ using MOOS.Graph;
 using MOOS.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows;
 using System.Windows.Forms;
 using static MOOS.GUI.Calculator;
 
@@ -52,9 +53,9 @@ namespace MOOS.GUI
             LastY = -1;
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
 
             Framebuffer.Graphics.DrawImage(X, Y, img, false);
 

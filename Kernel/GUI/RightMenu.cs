@@ -1,8 +1,10 @@
 #if HasGUI
+using System.Windows;
 using System.Windows.Forms;
-
+/*
 namespace MOOS.GUI
 {
+    
     internal class RightMenu : Window
     {
         public RightMenu() : base(Control.MousePosition.X, Control.MousePosition.Y, 100, 50)
@@ -53,7 +55,7 @@ namespace MOOS.GUI
             }
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
             int len = WindowManager.font.MeasureString(str);
             Height = WindowManager.font.FontSize * 2;
@@ -64,5 +66,6 @@ namespace MOOS.GUI
             DrawBorder(false);
         }
     }
-}
+    
+}*/
 #endif

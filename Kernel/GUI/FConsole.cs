@@ -4,6 +4,7 @@ using MOOS.Driver;
 using MOOS.Graph;
 using MOOS.Misc;
 using System.Drawing;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -112,9 +113,9 @@ namespace MOOS.GUI
             }
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
             int w = 0, h = 0;
 
             string s0 = "_";

@@ -1,6 +1,7 @@
 #if HasGUI
 using MOOS.Driver;
 using System;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -61,9 +62,9 @@ namespace MOOS.GUI
             Count++;
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
 
             IsEatBody();
             if (Count == Max)
@@ -219,7 +220,7 @@ namespace MOOS.GUI
                     {
                         if (SnakeNodes[i].X == SnakeNodes[k].X && SnakeNodes[i].Y == SnakeNodes[k].Y)
                         {
-                            System.Windows.Forms.MessageBox.Show($"Game over! Your score: {Count}");
+                            System.Windows.MessageBox.Show($"Game over! Your score: {Count}", "Information");
                             NewGame();
                         }
                     }

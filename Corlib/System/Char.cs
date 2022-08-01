@@ -10,11 +10,18 @@ namespace System
             return r;
         }
 
-        public char ToUpper() 
+        public char ToUpper()
         {
             char chr = this;
             if (chr >= 'a' && chr <= 'z')
                 chr -= (char)('a' - 'A');
+            return chr;
+        }
+        public char ToLower()
+        {
+            char chr = this;
+            if (chr >= 'A' && chr <= 'Z')
+                chr += (char)('a' - 'A');
             return chr;
         }
 

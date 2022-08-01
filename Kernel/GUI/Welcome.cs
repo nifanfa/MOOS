@@ -2,6 +2,7 @@
 using MOOS.FS;
 using MOOS.Misc;
 using System.Drawing;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -19,14 +20,14 @@ namespace MOOS.GUI
             img = new PNG(File.ReadAllBytes("Images/Banner.png"));
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
             Framebuffer.Graphics.DrawImage(X, Y, img);
 #if Chinese
             WindowManager.font.DrawString(X, Y + img.Height, "欢迎使用Moos(原Mosa)操作系统!\n这个项目的目标是实现一款麻雀虽小但五脏俱全的操作系统.\n源码: https://github.com/nifanfa/Moos!", Width);
 #else
-            WindowManager.font.DrawString(X, Y + img.Height, "Welcome to Moos!\nThis project is aim to show how to make asimple but powerful operating system.\nCheck out: https://github.com/nifanfa/Moos!", Width);
+            WindowManager.font.DrawString(X, Y + img.Height, "Welcome to Moos!\nThis project is aim to show how to make asimple but powerful operating system.\nCheck out: https://github.com/nifanfa/Moos!",0xFF000000, Width);
 #endif
         }
     }

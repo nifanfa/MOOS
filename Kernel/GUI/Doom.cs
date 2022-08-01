@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -62,7 +63,7 @@ namespace MOOS.GUI
 #if Chinese
             System.Windows.Forms.MessageBox.Show("键位: WASD Ctrl Shift ESC Enter");
 #else
-            System.Windows.Forms.MessageBox.Show("Keymap: WASD Ctrl Shift ESC Enter");
+            System.Windows.MessageBox.Show("Keymap: WASD Ctrl Shift ESC Enter" ,"Information");
 #endif
 
             new Thread(new Action(() =>
@@ -77,9 +78,9 @@ namespace MOOS.GUI
             addKeyToQueue(key.KeyState != ConsoleKeyState.Released ? 1 : 0, (byte)key.Key);
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
             Framebuffer.Graphics.DrawImage(X, Y, di, false);
         }
     }

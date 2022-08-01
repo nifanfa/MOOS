@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2ea1f38f-f26e-4148-8ffd-38713478e015</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>
+    </Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DesktopBar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DesktopBarClock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DesktopBarItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DesktopControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DesktopDocker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DockerItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\DesktopExtentions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\DesktopManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Debug.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Globalization\CultureInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\UIFramebuffer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Application.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\BooleanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\CheckBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\ColumnDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\ColumnDefinitionCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\FontWeight.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\GridCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\Label.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\Slider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\TextBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\CursorConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\CursorManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\FontWeightConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\HorizontalAlignment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Input\Cursor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Media\Brushes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Media\ColorConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Media\Draw.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Media\FontFamily.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Media\FontFamilyConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\MessageBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Input\ICommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Media\BrushConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\Grid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\RowDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\RowDefinitionCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\UIElementCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Controls\Widget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Data\Binding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\GridLength.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\GridLengthConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Media\Brush.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\TextWrapping.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Thickness.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\ThicknessConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\VerticalAlignment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Window.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Windows\WindowManager.cs" />
+  </ItemGroup>
+</Project>

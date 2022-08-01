@@ -1,5 +1,6 @@
 #if HasGUI
 using MOOS.Misc;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -21,7 +22,7 @@ namespace MOOS.GUI
 #if Chinese
             System.Windows.Forms.MessageBox.Show("键位: WASD ZC QE");
 #else
-            System.Windows.Forms.MessageBox.Show("Keymap: WASD ZC QE");
+            System.Windows.MessageBox.Show("Keymap: WASD ZC QE", "Information");
 #endif
         }
 
@@ -51,9 +52,9 @@ namespace MOOS.GUI
             }
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
             Framebuffer.Graphics.DrawImage(X, Y, nes.gameRender.image, false);
         }
 

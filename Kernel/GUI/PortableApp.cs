@@ -1,5 +1,6 @@
 ﻿#if Kernel && HasGUI
 using System.Drawing;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -12,16 +13,16 @@ namespace MOOS.GUI
             ScreenBuf = new Image(Width, Height);
         }
 
-        public override void OnInput()
+        public override void Update()
         {
-            base.OnInput();
+            base.Update();
 
             //TO-DO...
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
 
             Framebuffer.Graphics.DrawImage(this.X, this.Y, ScreenBuf, false);
         }

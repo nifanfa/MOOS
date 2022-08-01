@@ -1,5 +1,6 @@
 #if HasGUI
 using System.Drawing;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -17,9 +18,9 @@ namespace MOOS.GUI
 #endif
         }
 
-        public override void OnDraw()
+        public override void Draw()
         {
-            base.OnDraw();
+            base.Draw();
 
             if(image!=null)
                 Framebuffer.Graphics.DrawImage(X + (Width/2) - (image.Width/2), Y + (Height / 2) - (image.Height / 2), image);

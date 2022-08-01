@@ -1,22 +1,17 @@
 //#define USBDebug
 //#define NETWORK
 
-using Internal.Runtime.CompilerHelpers;
 using MOOS;
 using MOOS.Driver;
 using MOOS.FS;
-using MOOS.Graph;
 using MOOS.GUI;
 using MOOS.Misc;
-using MOOS.NET;
-using MOOS.GUI;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.Desktops;
 using System.Drawing;
-using System.Net;
 using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Forms;
 
 unsafe class Program
@@ -99,9 +94,9 @@ unsafe class Program
         if (HID.Mouse != null)
         {
             Console.Write("[Warning] Press please press Mouse any key to validate USB Mouse ");
-            bool res = Console.Wait(&USBMouseTest,2000);
+            bool res = Console.Wait(&USBMouseTest, 2000);
             Console.WriteLine();
-            if (!res) 
+            if (!res)
             {
                 lock (null)
                 {
@@ -153,9 +148,7 @@ unsafe class Program
         BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.ReadAllBytes("Song.btf"), 16));
 
         FConsole = null;
-        WindowManager.Initialize();
-
-        Desktop.Initialize();
+        DesktopManager.Initialize();
 
         Serial.WriteLine("Hello World");
         Console.WriteLine("Hello, World!");
@@ -212,7 +205,7 @@ unsafe class Program
 
     public static bool rightClicked;
     public static FConsole FConsole;
-    public static RightMenu rightmenu;
+    //public static RightMenu rightmenu;
 
     public static void SMain()
     {
@@ -237,12 +230,12 @@ unsafe class Program
 
         var welcome = new Welcome(400, 250);
 
-        rightmenu = new RightMenu();
+        //rightmenu = new RightMenu();
         rightClicked = false;
 
-#region Animation of entering Desktop
+        #region Animation of entering Desktop
         Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
-        Desktop.Update();
+        DesktopManager.Update();
         WindowManager.DrawAll();
         Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
         Image _screen = Framebuffer.Graphics.Save();
@@ -267,7 +260,7 @@ unsafe class Program
             PeriodInMS = 16
         };
         Animator.AddAnimation(ani);
-        while(ani.Value < SizedScreens.Length - 1)
+        while (ani.Value < SizedScreens.Length - 1)
         {
             int i = ani.Value;
             Image img = SizedScreens[i];
@@ -289,7 +282,8 @@ unsafe class Program
 
         for (; ; )
         {
-#region ConsoleHotKey
+            /*
+            #region ConsoleHotKey
             if (
                 Keyboard.KeyInfo.Key == ConsoleKey.T &&
                 Keyboard.KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control) &&
@@ -300,8 +294,8 @@ unsafe class Program
                 if (FConsole.Visible == false)
                     FConsole.Visible = true;
             }
-#endregion
-#region Right Menu
+            #endregion
+            #region Right Menu
             if (Control.MouseButtons.HasFlag(MouseButtons.Right))
             {
                 rightClicked = true;
@@ -316,18 +310,21 @@ unsafe class Program
 
                 rightClicked = false;
             }
-#endregion
+            #endregion
+            */
             WindowManager.InputAll();
 
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
-            Desktop.Update();
-            NotificationManager.Update();
+
+            //UIKernel
+            DesktopManager.Update();
+            DesktopManager.Draw();
+            WindowManager.UpdateAll();
             WindowManager.DrawAll();
-            /*
-            ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
-            ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);
-            */
-            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, WindowManager.HasWindowMoving ? CursorMoving : Cursor);
+            CursorManager.Update();
+
+            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, CursorManager.GetCursor);
+
             Framebuffer.Update();
 
             FPSMeter.Update();

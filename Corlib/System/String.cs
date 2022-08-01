@@ -21,7 +21,7 @@ namespace System
         {
             [Intrinsic]
             get { return _length; }
-            set { _length = value; }
+            internal set { _length = value; }
         }
 
         public unsafe char this[int index]
@@ -32,7 +32,7 @@ namespace System
                 return Unsafe.Add(ref _firstChar, index);
             }
 
-            set 
+            set
             {
                 fixed (char* p = &_firstChar) p[index] = value;
             }
@@ -82,6 +82,7 @@ namespace System
             return s;
         }
 
+#if Kernel
         static unsafe string Ctor(char* ptr)
         {
             var i = 0;
@@ -90,16 +91,22 @@ namespace System
 
             return Ctor(ptr, 0, i - 1);
         }
+#endif
 
+#if Kernel
         static unsafe string Ctor(IntPtr ptr)
             => Ctor((char*)ptr);
+#endif
 
+#if Kernel
         static unsafe string Ctor(char[] buf)
         {
             fixed (char* _buf = buf)
                 return Ctor(_buf, 0, buf.Length);
         }
+#endif
 
+#if Kernel
         static unsafe string Ctor(char* ptr, int index, int length)
         {
             var et = EETypePtr.EETypePtrOf<string>();
@@ -110,21 +117,21 @@ namespace System
 
             fixed (char* c = &s._firstChar)
             {
-                memcpy((byte*)c, (byte*)start, (ulong)length * sizeof(char));
+                Allocator.MemoryCopy((IntPtr)c, (IntPtr)start, (ulong)length * sizeof(char));
                 c[length] = '\0';
             }
 
             return s;
         }
+#endif
 
-        [DllImport("*")]
-        static unsafe extern void memcpy(byte* dest, byte* src, ulong count);
-
+#if Kernel
         static unsafe string Ctor(char[] ptr, int index, int length)
         {
             fixed (char* _ptr = ptr)
                 return Ctor(_ptr, index, length);
         }
+#endif
 
         public override string ToString()
         {
@@ -152,6 +159,112 @@ namespace System
 
             return true;
         }
+
+        /* ==================================== AvalonTM  ========================================= */
+        public string Remove(int index)
+        {
+            string retult = "";
+
+            if (index >= this.Length)
+            {
+                index = this.Length - 1;
+            }
+
+            for (int i = 0; i < this.Length; i++)
+            {
+                if (i != index)
+                {
+                    retult += this[i];
+                }
+            }
+
+            return retult;
+        }
+
+        public string ToUpper()
+        {
+            string result = "";
+
+            for (int i = 0; i < this.Length; i++)
+            {
+                result += this[i].ToUpper();
+            }
+
+            return result;
+        }
+
+        public string ToLower()
+        {
+            string result = "";
+
+            for (int i = 0; i < this.Length; i++)
+            {
+                result += this[i].ToLower();
+            }
+
+            return result;
+        }
+
+        public char[] ToCharArray()
+        {
+            char[] result = new char[this.Length];
+
+            for (int i = 0; i < this.Length; i++)
+            {
+                result[i] += (char)this[i];
+            }
+
+            return result;
+        }
+
+        public static string FromCharArray(char[] chars)
+        {
+            string result = "";
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                result += chars[i];
+            }
+
+            return result;
+        }
+
+        public static bool IsNullOrEmpty(string value)
+        {
+            if (value == null || value != null && value.Length == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public string[] Split(char limit)
+        {
+            List<string> strings = new List<string>();
+            string tmp = string.Empty;
+            for (int i = 0; i < this.Length; i++)
+            {
+                if (this[i] == limit)
+                {
+                    strings.Add(tmp);
+                    tmp = string.Empty;
+                }
+                else
+                {
+                    tmp += this[i];
+                }
+
+                if (i == (this.Length - 1))
+                {
+                    strings.Add(tmp);
+                    tmp = string.Empty;
+                }
+            }
+            return strings.ToArray();
+        }
+
+        /* ====================================================================== */
 
         public static bool operator ==(string a, string b)
             => a.Equals(b);
@@ -182,7 +295,7 @@ namespace System
             return new string(ptr, 0, Length);
         }
 
-        public int IndexOf(char j)
+        internal int IndexOf(char j)
         {
             for (int i = 0; i < this.Length; i++) if (this[i] == j) return i;
             return -1;
@@ -219,16 +332,8 @@ namespace System
             return s;
         }
 
-        internal string Remove(int startIndex)
-        {
-            fixed(char* ptr = this)
-            {
-                string s = new string(ptr, 0, Length - (startIndex+1));
-                return s;
-            }
-        }
-
-        public static string Format(string format, params object[] args) 
+#if Kernel
+        public static string Format(string format, params object[] args)
         {
             lock (format)
             {
@@ -256,5 +361,33 @@ namespace System
                 return res;
             }
         }
+
+        public string PadLeft(int num, char chr)
+        {
+            string result = "";
+
+            for (int i = 0; i < (num - this.Length); i++)
+            {
+                result += chr;
+            }
+
+            return result + this;
+        }
+
+        public string PadLeft(string str, int num)
+        {
+            string result = "";
+
+            for (int i = 0; i < num; i++)
+            {
+                result += this[i];
+            }
+
+            result += str;
+
+            return result;
+        }
+
+#endif
     }
 }
