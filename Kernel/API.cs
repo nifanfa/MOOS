@@ -196,7 +196,7 @@ namespace MOOS
 
         public static void API_SwitchToConsoleMode()
         {
-            Framebuffer.TripleBuffered = false;
+            Framebuffer.DoubleBuffered = false;
         }
 
         public static void API_ReadAllBytes(string name, ulong* length, byte** data)

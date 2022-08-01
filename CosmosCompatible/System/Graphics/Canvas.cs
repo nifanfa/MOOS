@@ -9,7 +9,7 @@ namespace Cosmos.System.Graphics
         public int Height => Framebuffer.Height;
         public Canvas()
         {
-            Framebuffer.TripleBuffered = true;
+            Framebuffer.DoubleBuffered = true;
         }
         public void Update()
         {
