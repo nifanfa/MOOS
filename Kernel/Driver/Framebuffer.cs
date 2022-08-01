@@ -1,89 +1,78 @@
+using MOOS.Driver;
+using MOOS.Graph;
+using MOOS.Misc;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using MOOS.Graph;
 
 namespace MOOS
 {
-	public static unsafe class Framebuffer
-	{
-#pragma warning disable CA2211 // Non-constant fields should not be visible
-		public static ushort Width;
-#pragma warning restore CA2211 // Non-constant fields should not be visible
-#pragma warning disable CA2211 // Non-constant fields should not be visible
-		public static ushort Height;
-#pragma warning restore CA2211 // Non-constant fields should not be visible
+    public static unsafe class Framebuffer
+    {
+        public static ushort Width;
+        public static ushort Height;
 
-#pragma warning disable CA2211 // Non-constant fields should not be visible
-		public static uint* FirstBuffer;
-#pragma warning restore CA2211 // Non-constant fields should not be visible
-#pragma warning disable CA2211 // Non-constant fields should not be visible
-		public static uint* SecondBuffer;
-#pragma warning restore CA2211 // Non-constant fields should not be visible
+        public static uint* VideoMemory { get; private set; }
 
-#pragma warning disable CA2211 // Non-constant fields should not be visible
-		public static Graphics Graphics;
-#pragma warning restore CA2211 // Non-constant fields should not be visible
-		private static bool _DoubleBuffered = false;
+        public static uint* FirstBuffer;
+        public static uint* SecondBuffer;
 
-		public static bool DoubleBuffered
-		{
-			get => _DoubleBuffered;
-			set
-			{
-				if (Graphics == null)
-				{
-					return;
-				}
+        public static Graphics Graphics;
 
-				if (_DoubleBuffered == value)
-				{
-					return;
-				}
-				if (value == false)
-				{
-					Console.Clear();
-				}
-				Graphics.Clear(Color.FromArgb(0x0));
-				_DoubleBuffered = value;
-				Graphics.VideoMemory = value ? SecondBuffer : FirstBuffer;
-				Update();
-			}
-		}
+        static bool _TripleBuffered = false;
 
-		public static void Update()
-		{
-			if (_DoubleBuffered)
-			{
-				for (int i = 0; i < Width * Height; i++)
-				{
-					if (FirstBuffer[i] != SecondBuffer[i])
-					{
-						FirstBuffer[i] = SecondBuffer[i];
-					}
-				}
-			}
-		}
+        /// <summary>
+        /// Since you enabled TripleBuffered you have to call Framebuffer.Graphics.Update() in order to make it display
+        /// </summary>
+        public static bool TripleBuffered
+        {
+            get
+            {
+                return _TripleBuffered;
+            }
+            set
+            {
+                if (Graphics == null) return;
+                if (_TripleBuffered == value) return;
 
-		public static void Initialize(ushort XRes, ushort YRes, uint* FramebufferHook)
-		{
-			Width = XRes;
-			Height = YRes;
+                Graphics.Clear(Color.Black);
+                Graphics.VideoMemory = value ? FirstBuffer : VideoMemory;
+                _TripleBuffered = value;
+                if (!_TripleBuffered)
+                {
+                    Console.Clear();
+                }
+            }
+        }
 
-			FirstBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
-			SecondBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
+        public static void Update()
+        {
+            if (TripleBuffered)
+            {
+                for (int i = 0; i < Width * Height; i++)
+                {
+                    if (FirstBuffer[i] != SecondBuffer[i])
+                    {
+                        VideoMemory[i] = FirstBuffer[i];
+                    }
+                }
+                Native.Movsd(SecondBuffer, FirstBuffer, (ulong)(Width * Height));
+            }
+            if (Graphics != null) Graphics.Update();
+        }
 
-			Native.Stosd(FirstBuffer, 0, (ulong)(XRes * YRes));
-			Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
-
-			FirstBuffer = FramebufferHook;
-
-			Graphics = new Graphics(Width, Height, FirstBuffer);
-
-			Control.MousePosition.X = XRes / 2;
-			Control.MousePosition.Y = YRes / 2;
-
-			Graphics.Clear(Color.Black);
-			Update();
-		}
-	}
+        public static void Initialize(ushort XRes, ushort YRes, uint* FB)
+        {
+            Width = XRes;
+            Height = YRes;
+            FirstBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
+            SecondBuffer = (uint*)Allocator.Allocate((ulong)(XRes * YRes * 4));
+            Native.Stosd(FirstBuffer, 0, (ulong)(XRes * YRes));
+            Native.Stosd(SecondBuffer, 0, (ulong)(XRes * YRes));
+            Control.MousePosition.X = XRes / 2;
+            Control.MousePosition.Y = YRes / 2;
+            Graphics = new Graphics(Width, Height, FB);
+            VideoMemory = FB;
+        }
+    }
 }
