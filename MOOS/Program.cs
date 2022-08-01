@@ -21,9 +21,6 @@ unsafe class Program
     [DllImport("*")]
     public static extern void test();
 
-    static Image Cursor;
-    static Image CursorMoving;
-    public static Image Wallpaper;
 
     static bool USBMouseTest()
     {
@@ -135,18 +132,7 @@ unsafe class Program
         }
 #endif
 
-        //Sized width to 512
-        //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
-        Cursor = new PNG(File.ReadAllBytes("Images/Cursor.png"));
-        CursorMoving = new PNG(File.ReadAllBytes("Images/Grab.png"));
-        //Image from unsplash
-        Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper1.png"));
-
-        BitFont.Initialize();
-
-        string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-        BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.ReadAllBytes("Song.btf"), 16));
-
+       
         FConsole = null;
         DesktopManager.Initialize();
 
@@ -219,25 +205,20 @@ unsafe class Program
             Framebuffer.Graphics = new VMWareSVGAIIGraphics();
         */
 
-        Image wall = Wallpaper;
-        Wallpaper = wall.ResizeImage(Framebuffer.Width, Framebuffer.Height);
-        wall.Dispose();
-
         Lockscreen.Initialize();
 
         FConsole = new FConsole(350, 300);
         FConsole.Visible = false;
 
-        var welcome = new Welcome(400, 250);
-
         //rightmenu = new RightMenu();
         rightClicked = false;
 
         #region Animation of entering Desktop
-        Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
+        Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), DesktopManager.Wallpaper, false);
         DesktopManager.Update();
+        DesktopManager.Draw();
         WindowManager.DrawAll();
-        Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, Cursor);
+        Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, DesktopManager.Cursor);
         Image _screen = Framebuffer.Graphics.Save();
         Framebuffer.Graphics.Clear(0x0);
 
@@ -313,8 +294,6 @@ unsafe class Program
             #endregion
             */
             WindowManager.InputAll();
-
-            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
 
             //UIKernel
             DesktopManager.Update();

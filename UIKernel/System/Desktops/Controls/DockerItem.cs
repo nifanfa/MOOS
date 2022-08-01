@@ -55,13 +55,13 @@ namespace System.Desktops.Controls
 
                 if (Control.MouseButtons == MouseButtons.Left)
                 {
-                    if (Command != null && Command.Source != null)
+                    if (Command != null && Command != null)
                     {
                         if (!_clicked)
                         {
                             _clicked = true;
 
-                            Command.Source.Execute.Invoke(CommandParameter);
+                            Command.Execute.Invoke(CommandParameter);
                         }
                     }
                 }

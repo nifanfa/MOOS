@@ -11,6 +11,7 @@ namespace System.Desktops
         public static Image AppIcon { set; get; }
         public static Image BuiltInAppIcon { set; get; }
         public static Image AppTerminal { set; get; }
+
         public static void Initialize()
         {
             AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));

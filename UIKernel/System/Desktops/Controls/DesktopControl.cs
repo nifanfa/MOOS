@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace System.Desktops.Controls
@@ -17,7 +18,7 @@ namespace System.Desktops.Controls
         public Brush Background { set; get; }
         public Brush Foreground { set; get; }
         public HorizontalAlignment HorizontalAlignment { set; get; }
-        public Binding Command { set; get; }
+        public ICommand Command { set; get; }
         public object CommandParameter { set; get; }
 
         public DesktopControl()

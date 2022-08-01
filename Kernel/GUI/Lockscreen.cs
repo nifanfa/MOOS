@@ -3,6 +3,7 @@ using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
 using System;
+using System.Desktops;
 using System.Drawing;
 using System.Windows;
 
@@ -46,7 +47,7 @@ namespace MOOS.GUI
             while (a0.Value < a0.MaximumValue)
             {
                 Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.ADrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), i, (byte)a0.Value);
+                Framebuffer.Graphics.ADrawImage((Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), i, (byte)a0.Value);
                 Framebuffer.Update();
             }
             Animator.DisposeAnimation(a0);
@@ -65,14 +66,14 @@ namespace MOOS.GUI
             Animation a1 = new Animation()
             {
                 MinimumValue = 0,
-                MaximumValue = Program.Wallpaper.Height,
+                MaximumValue = DesktopManager.Wallpaper.Height,
                 ValueChangesInPeriod = 1
             };
             Animator.AddAnimation(a1);
-            while (a1.Value < Program.Wallpaper.Height)
+            while (a1.Value < DesktopManager.Wallpaper.Height)
             {
                 Framebuffer.Graphics.Clear(0x0);
-                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2) - a1.Value, i, false);
+                Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2) - a1.Value, i, false);
                 Framebuffer.Update();
             }
             Animator.DisposeAnimation(a1);
@@ -85,7 +86,7 @@ namespace MOOS.GUI
 
         private static void DrawLockscreenUI()
         {
-            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Program.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Program.Wallpaper.Height / 2), Program.Wallpaper, false);
+            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), DesktopManager.Wallpaper, false);
 
             string s = null;
             if (RTC.Minute < 10)

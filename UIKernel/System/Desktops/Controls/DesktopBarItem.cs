@@ -37,13 +37,13 @@ namespace System.Desktops.Controls
                 {
                     _isFocus = true;
 
-                    if (Command != null && Command.Source != null)
+                    if (Command != null && Command != null)
                     {
                         if (!_clicked)
                         {
                             _clicked = true;
 
-                            Command.Source.Execute.Invoke(CommandParameter);
+                            Command.Execute.Invoke(CommandParameter);
                         }
                     }
                 }

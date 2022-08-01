@@ -2,6 +2,7 @@ using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
 using System;
+using System.Desktops;
 
 namespace MOOS.Graph
 {
@@ -19,7 +20,7 @@ namespace MOOS.Graph
 
 #if HasGUI
             //Image from unsplash
-            Program.Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper.png"));
+            DesktopManager.Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper.png"));
 #endif
         }
 

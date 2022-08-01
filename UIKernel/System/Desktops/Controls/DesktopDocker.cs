@@ -40,8 +40,7 @@ namespace System.Desktops.Controls
             item = new DockerItem();
             item.Icon = DesktopExtentions.AppTerminal;
             item.Name = "Terminal";
-            ICommand TerminalCommand = new ICommand(onTermina);
-            item.Command = new Binding() { Source = TerminalCommand};
+            item.Command = new ICommand(onTermina);
             items.Add(item);
 
             item = new DockerItem();
