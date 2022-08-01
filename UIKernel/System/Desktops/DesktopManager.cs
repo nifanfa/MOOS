@@ -225,6 +225,7 @@ namespace System.Desktops
         static void onDesktopIconClick(object obj)
         {
             string file = obj.ToString().ToLower();
+            Window frm = null;
 
             Debug.WriteLine($"[Icon] {file}");
 
@@ -237,15 +238,16 @@ namespace System.Desktops
 
             if (file.EndsWith(".png"))
             {
-                //byte[] buffer = File.ReadAllBytes(file);
-                //PNG png = new(buffer);
-                //buffer.Dispose();
-               // png.Dispose();
-        
+                byte[] buffer = File.ReadAllBytes(file);
+                PNG png = new(buffer);
+                buffer.Dispose();
+                ImageViewer img = new ImageViewer(100, 100);
+                img.SetImage(png);
+                img.ShowDialog();
             }
-            else if (file.EndsWith("DOOM1.wad"))
+            else if (file.EndsWith("doom1.wad"))
             {
-                Doom frm = new Doom(300, 250);
+                frm = new Doom(300, 250);
                 frm.ShowDialog();
             }
             else if (file.EndsWith(".exe"))
@@ -270,9 +272,9 @@ namespace System.Desktops
             }
             else if (file.EndsWith(".nes"))
             {
-                //nesemu.OpenROM(File.ReadAllBytes(file));
-                //WindowManager.MoveToEnd(nesemu);
-                //nesemu.Visible = true;
+                NESEmu nes = new NESEmu(100,100);
+                nes.OpenROM(File.ReadAllBytes(file));
+                nes.ShowDialog();
             }
             else 
             {
