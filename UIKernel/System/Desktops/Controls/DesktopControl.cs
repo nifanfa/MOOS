@@ -18,6 +18,7 @@ namespace System.Desktops.Controls
         public Brush Background { set; get; }
         public Brush Foreground { set; get; }
         public HorizontalAlignment HorizontalAlignment { set; get; }
+        public VerticalAlignment VerticalAlignment { set; get; }
         public ICommand Command { set; get; }
         public object CommandParameter { set; get; }
 

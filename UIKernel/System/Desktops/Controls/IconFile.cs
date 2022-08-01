@@ -1,4 +1,5 @@
 ﻿using MOOS;
+using MOOS.Driver;
 using MOOS.FS;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,10 @@ namespace System.Desktops.Controls
         bool _isFocus;
         bool _clicked;
         int offsetX, offsetY;
+        int _clickCount = 0;
+        bool _prevClick;
+        ulong _timer = 0;
+
         public IconFile()
         {
             Foreground = Brushes.White;
@@ -38,19 +43,21 @@ namespace System.Desktops.Controls
 
         public void onLoadIconExtention()
         {
-            if (Content.EndsWith(".png"))
+            string ext = Content.ToLower();
+
+            if (ext.EndsWith(".png"))
             {
                 icon = DesktopIcons.ImageIcon;
             }
-            else if (Content.EndsWith("DOOM1.wad"))
+            else if (ext.EndsWith("doom1.wad"))
             {
                 icon = DesktopIcons.DoomIcon;
             }
-            else if (Content.EndsWith(".exe"))
+            else if (ext.EndsWith(".exe"))
             {
                 icon = DesktopIcons.AppIcon;
             }
-            else if (Content.EndsWith(".wav"))
+            else if (ext.EndsWith(".wav"))
             {
                 icon = DesktopIcons.AudioIcon;
             }
@@ -62,7 +69,7 @@ namespace System.Desktops.Controls
             {
                 icon = DesktopIcons.FileIcon;
             }
-
+            ext.Dispose();
         }
 
         public override void Update()
@@ -78,30 +85,42 @@ namespace System.Desktops.Controls
 
                     if (Command != null)
                     {
-                        if (!_clicked)
+                        if (!_clicked && !_prevClick)
                         {
-                            _clicked = true;
+                            _prevClick = true;
 
-                            if (isDirectory)
+                            if (_clickCount > 1) //Double Click
                             {
-                                Command.Execute.Invoke(FilePath);
-                            }
-                            else
-                            {
-                                if (Key == 0)
+                                _clicked = true;
+                                _clickCount = 0;
+
+                                if (isDirectory)
                                 {
                                     Command.Execute.Invoke(FilePath);
                                 }
                                 else
                                 {
-                                    Command.Execute.Invoke(Key);
+                                    if (Key == 0)
+                                    {
+                                        Command.Execute.Invoke(FilePath);
+                                    }
+                                    else
+                                    {
+                                        Command.Execute.Invoke(Key);
+                                    }
                                 }
                             }
-                       
                         }
                     }
                 }
 
+                if (Control.MouseButtons == MouseButtons.None && _prevClick)
+                {
+                    _prevClick = false;
+                    _clicked = false;
+                    _clickCount++;
+                    _timer += Timer.Ticks + (10000 * 100); //100ms
+                }
             }
             else
             {
@@ -111,6 +130,15 @@ namespace System.Desktops.Controls
             if (Control.MouseButtons == MouseButtons.None)
             {
                 _clicked = false;
+            }
+
+            if (_clickCount > 0)
+            {
+                if (Timer.Ticks > _timer)
+                {
+                    _clickCount = 0;
+                }
+
             }
         }
 

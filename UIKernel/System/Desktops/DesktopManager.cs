@@ -66,6 +66,7 @@ namespace System.Desktops
             docker = new DesktopDocker();
             barMenu = new List<DesktopControl>();
             icons = new List<IconFile>();
+            BuiltInAppNames = new Dictionary<int, string>();
 
             //Bar Elements
             DesktopBarItem item = new DesktopBarItem();
@@ -93,7 +94,7 @@ namespace System.Desktops
             int Y = BarHeight;
             string devider = "/";
 
-            BuiltInAppNames = new Dictionary<int, string>();
+            BuiltInAppNames.Clear();
 
 #if Chinese
             BuiltInAppNames.Add(1, "计算器");
@@ -131,7 +132,7 @@ namespace System.Desktops
                     {
                         IconFile icon = new IconFile();
                         icon.Key = (i + 1);
-                        icon.Content = BuiltInAppNames[(i + 1)];
+                        icon.Content = BuiltInAppNames[icon.Key];
                         icon.Path = Dir + devider;
                         icon.FilePath = Dir + devider + icon.Content;
                         icon.FileInfo = null;

@@ -1,4 +1,5 @@
 ﻿#if HasGUI && Kernel
+using MOOS;
 using MOOS.Driver;
 using MOOS.FS;
 using MOOS.Misc;
@@ -7,7 +8,7 @@ using System.Desktops;
 using System.Drawing;
 using System.Windows;
 
-namespace MOOS.GUI
+namespace System.Windows
 {
     public static class Lockscreen
     {
@@ -97,7 +98,7 @@ namespace MOOS.GUI
             {
                 s = $"{RTC.Hour}:{RTC.Minute}";
             }
-            lsfont.DrawString((Framebuffer.Width / 2) - (lsfont.MeasureString(s) / 2), Framebuffer.Height / 6, s);
+            lsfont.DrawString((Framebuffer.Width / 2) - (lsfont.MeasureString(s) / 2), Framebuffer.Height / 6, s, 0xFFFFFFFF);
             s.Dispose();
 
             string _1 = mon[Math.Clamp(RTC.Month, 0, mon.Length - 1)];
@@ -105,7 +106,7 @@ namespace MOOS.GUI
             string _3 = RTC.Day.ToString();
             string _4 = "th";
             string res = _1 + _2 + _3 + _4;
-            WindowManager.font.DrawString((Framebuffer.Width / 2) - (WindowManager.font.MeasureString(res) / 2), (Framebuffer.Height / 6) + lsfont.FontSize, res);
+            WindowManager.font.DrawString((Framebuffer.Width / 2) - (WindowManager.font.MeasureString(res) / 2), (Framebuffer.Height / 6) + lsfont.FontSize, res, 0xFFFFFFFF);
 
             //_1.Dispose();
             _2.Dispose();
