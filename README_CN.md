@@ -15,15 +15,15 @@
 
 # MOOS
 
-MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT技术编译的C# 64位操作系统。
+MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个具有.NET 7 Native AOT技术的C# x64操作系统编译器。
 
-## 编译
-关于编译MOOS的信息，请阅读 [编译维基页面](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS)。
+## 建筑物
+关于构建MOOS的信息，请阅读 [建立维基页面](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS)。
 
-### 编译要求
+### 建设要求
 - VMware Workstation Player - https://www.vmware.com/products/workstation-player.html
 - Visual studio 2022 - https://visualstudio.microsoft.com/
-- QEMU - https://www.qemu.org/download 或 VMWare ( 注意，VMware不支持USB键鼠模拟。 )
+- QEMU - https://www.qemu.org/download 或 VMWare ( 注意，USB不能与VMWare一起使用。 )
 - Windows 10-11 x64或x86
 - 8GB Ram
 
@@ -31,43 +31,43 @@ MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT�
 <hr/>
 <br/>
 
-![截图](Screenshot1.png)
+![形象](Screenshot1.png)
 
-## 特色
+## 特点
 
 | Feature | Working in VM | Working on hardware | Information |
 | ------- | ------------- | ------------------- | ----------- |
-| 应用程序(.exe) | 🟩 | 🟩 |
+| EXE运行 | 🟩 | 🟩 |
 | 抛出/捕获错误 | 🟥 | 🟥 | 
 | GC | 🟨 | ⬜ | Not safe |
-| 多处理器 | 🟩 | 🟩 |
+| 多个处理器 | 🟩 | 🟩 |
 | 多线程 | 🟩 | 🟩 |
 | EHCI (USB2.0) | 🟩 | 🟩 |
 | USB键盘 | 🟨 | ⬜ |
 | USB鼠标 | 🟩 | ⬜ |
 | USB HUB | 🟥 | 🟥 |
-| PS2 鼠标/键盘(USB 兼容) | 🟩 | 🟩 |
-| 红白机模拟器 | 🟩 | 🟩 |
+| PS2 Keyboard/Mouse(USB Compatible) | 🟩 | 🟩 |
+| 任天堂家庭电脑仿真器 | 🟩 | 🟩 |
 | DOOM(doomgeneric) | 🟩 | 🟩 |
-| Intel® 千兆位以太网控制器 | 🟩 | 🟩 |
-| 瑞昱 RTL8139 | 🟩 | ⬜ |
+| Intel® 千兆位以太网网络 | 🟩 | 🟩 |
+| Realtek RTL8139 | 🟩 | ⬜ |
 | ExFAT | 🟩 | 🟩 |
 | I/O APIC | 🟩 | 🟩 |
-| Local APIC | 🟩 | 🟩 |
+| 当地APIC | 🟩 | 🟩 |
 | SATA | 🟩 | ⬜ |
 | IDE | 🟩 | 🟩 |
 | SMBIOS | 🟩 | 🟩 |
 | ACPI | 🟩 | 🟩 |
 | IPv4 | 🟩 | 🟩 |
 | IPv6 | 🟥 | 🟥 |
-| TCP(WIP) | 🟨 | 🟥 | 无法接收大包  |
+| TCP(WIP) | 🟨 | 🟥 | 网络无法接收大型包裹  |
 | UDP | 🟩 | ⬜ |
 | Lan | 🟩 | 🟩 |
 | Wan | 🟩 | 🟩 |
 
-| 颜色 | 意思 |
+| 颜色 | 意义 |
 | ----- | ------- |
-| 🟩 | 能用 |
-| 🟥 | 不能用 |
-| 🟨 | 还没完成 |
+| 🟩 | 是 |
+| 🟥 | 没有 |
+| 🟨 | 暂时的/部分的 |
 | ⬜ | 未知 |
