@@ -24,7 +24,7 @@ namespace System.Desktops.Controls
                 }
                 if (IconZoom == null)
                 {
-                    IconZoom = IconNormal.ResizeImage((int)(IconNormal.Width * zoom), (int)(IconNormal.Height * zoom));
+                    IconZoom = _icon.ResizeImage((int)(_icon.Width * zoom), (int)(_icon.Height * zoom));
                 }
             }
             get { return _icon; }
@@ -38,6 +38,7 @@ namespace System.Desktops.Controls
 
         double zoom = 1.5;
         bool isZoom;
+
         public DockerItem()
         {
             Background = Brushes.White;

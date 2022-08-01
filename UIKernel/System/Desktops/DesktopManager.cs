@@ -43,6 +43,8 @@ namespace System.Desktops
 
             DesktopExtentions.Initialize();
             WindowManager.Initialize();
+            MessageBox.Initialize();
+            CursorManager.Initialize();
 
             bar = new DesktopBar();
             docker = new DesktopDocker();

@@ -136,21 +136,12 @@ unsafe class Program
         FConsole = null;
         DesktopManager.Initialize();
 
-        Serial.WriteLine("Hello World");
-        Console.WriteLine("Hello, World!");
-        Console.WriteLine("Use Native AOT (Core RT) Technology.");
-
-        //test();
-
         Audio.Initialize();
         AC97.Initialize();
 
-        /*
-        for (; ; )
-        {
-            Console.WriteLine(Console.ReadLine());
-        }
-        */
+        Serial.WriteLine("Hello World");
+        Console.WriteLine("Hello, World!");
+        Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
 #if NETWORK
         //Install openVPN's windows tap driver
@@ -213,6 +204,7 @@ unsafe class Program
         //rightmenu = new RightMenu();
         rightClicked = false;
 
+        
         #region Animation of entering Desktop
         Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), DesktopManager.Wallpaper, false);
         DesktopManager.Update();
@@ -258,6 +250,7 @@ unsafe class Program
         for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
         SizedScreens.Dispose();
         #endregion
+        
 
         NotificationManager.Initialize();
 
