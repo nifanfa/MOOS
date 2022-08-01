@@ -65,7 +65,7 @@
 
 		public static implicit operator bool(void* value)
 		{
-			return value != 0;
+			return value != null;
 		}
 	}
 }
