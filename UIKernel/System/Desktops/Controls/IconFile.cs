@@ -119,7 +119,7 @@ namespace System.Desktops.Controls
                     _prevClick = false;
                     _clicked = false;
                     _clickCount++;
-                    _timer += Timer.Ticks + (10000 * 100); //100ms
+                    _timer = (Timer.Ticks + 500); //500ms
                 }
             }
             else
@@ -136,7 +136,10 @@ namespace System.Desktops.Controls
             {
                 if (Timer.Ticks > _timer)
                 {
+                    _clicked = false;
+                    _prevClick = false;
                     _clickCount = 0;
+                    _timer = 0;
                 }
 
             }
