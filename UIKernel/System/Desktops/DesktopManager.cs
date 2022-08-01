@@ -27,6 +27,8 @@ namespace System.Desktops
         public static string Dir;
         public static bool IsAtRoot => Dir.Length < 1;
         public static string[] BuiltInAppNames;
+        static ICommand IconClickCommand { get; set; }
+        static ICommand IconNativeClickCommand { get; set; }
 
         public static void Initialize()
         {
@@ -109,6 +111,8 @@ namespace System.Desktops
             #endif
             };
 
+            IconClickCommand = new ICommand(onDesktopIconClick);
+            IconNativeClickCommand = new ICommand(onDesktopNativeOSClick);
 
             List<FileInfo> files = File.GetFiles(Dir);
 
@@ -131,7 +135,7 @@ namespace System.Desktops
                     icon.FilePath = Dir + devider + icon.Content;
                     icon.X = X;
                     icon.Y = Y;
-                    icon.command = new ICommand(onDesktopNativeOSClick);
+                    icon.Command = IconNativeClickCommand;
 
                     if (files[i].Attribute == FileAttribute.Directory)
                     {
@@ -161,7 +165,7 @@ namespace System.Desktops
                 icon.FilePath = Dir + devider + icon.Content;
                 icon.X = X;
                 icon.Y = Y;
-                icon.command = new ICommand(onDesktopIconClick);
+                icon.Command = IconClickCommand;
 
                 if (files[i].Attribute == FileAttribute.Directory)
                 {

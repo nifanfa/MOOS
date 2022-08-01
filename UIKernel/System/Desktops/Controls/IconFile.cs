@@ -2,6 +2,7 @@
 using MOOS.FS;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
@@ -14,7 +15,6 @@ namespace System.Desktops.Controls
     {
         public bool isDirectory { set; get; }
         public Image icon { set; get; }
-        public ICommand command { set; get; }
         public FileInfo FileInfo { get; set; }
         public string Path { set; get; }
         public string FilePath { set; get; }
@@ -75,7 +75,7 @@ namespace System.Desktops.Controls
                 {
                     _isFocus = true;
 
-                    if (Command != null && Command != null)
+                    if (Command != null)
                     {
                         if (!_clicked)
                         {
