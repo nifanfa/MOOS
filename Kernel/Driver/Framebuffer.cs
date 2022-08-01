@@ -82,10 +82,8 @@ namespace MOOS
 			Control.MousePosition.X = XRes / 2;
 			Control.MousePosition.Y = YRes / 2;
 
-			// Setup console so its at first char, Graphics.Clear(0x0) in this method is not the point of this call
-			Console.Clear();
-			XRes.Dispose();
-			YRes.Dispose();
+			Graphics.Clear(Color.Black);
+			Update();
 		}
 	}
 }

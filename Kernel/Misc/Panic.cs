@@ -13,7 +13,7 @@ namespace MOOS.Misc
 			IDT.Disable();
 			Framebuffer.DoubleBuffered = false;
 			Console.BackgroundColor = System.ConsoleColor.Blue;
-			Console.Clear(0x0000FF);
+			Console.Clear();
 			Console.Write("A problem has been detected and MOOS has been shut down to prevent damage to your computer.\n\n");
 			Console.Write($"{msg}\n\n");
 			Console.Write("If this is the first time you've seen this Stop error screen, restart\n");
