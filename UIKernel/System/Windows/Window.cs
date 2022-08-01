@@ -86,6 +86,8 @@ namespace System.Windows
         public void Close()
         {
             this.Visible = false;
+            WindowManager.Childrens.Remove(this);
+            this.Dispose();
         }
 
         void onWindowStartupLocation()

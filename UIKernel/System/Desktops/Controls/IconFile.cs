@@ -13,12 +13,13 @@ namespace System.Desktops.Controls
 {
     public class IconFile : DesktopControl
     {
+        public int Key { set; get; }
         public bool isDirectory { set; get; }
         public Image icon { set; get; }
-        public FileInfo FileInfo { get; set; }
         public string Path { set; get; }
         public string FilePath { set; get; }
         public Brush FocusBackground { set; get; }
+        public FileInfo FileInfo { get; set; }
 
         bool _isFocus;
         bool _clicked;
@@ -81,7 +82,22 @@ namespace System.Desktops.Controls
                         {
                             _clicked = true;
 
-                            Command.Execute.Invoke(FilePath);
+                            if (isDirectory)
+                            {
+                                Command.Execute.Invoke(FilePath);
+                            }
+                            else
+                            {
+                                if (Key == 0)
+                                {
+                                    Command.Execute.Invoke(FilePath);
+                                }
+                                else
+                                {
+                                    Command.Execute.Invoke(Key);
+                                }
+                            }
+                       
                         }
                     }
                 }
