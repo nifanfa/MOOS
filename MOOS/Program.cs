@@ -223,7 +223,7 @@ internal unsafe class Program
 
 	public static void SMain()
 	{
-		Framebuffer.DoubleBuffered = true;
+		Framebuffer.TripleBuffered = true;
 
 		/*
 		//This driver doesn't support drawing without update

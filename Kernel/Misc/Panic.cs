@@ -11,7 +11,7 @@ namespace MOOS.Misc
 			GC.Collect();
 			GC.AllowCollect = false;
 			IDT.Disable();
-			Framebuffer.DoubleBuffered = false;
+			Framebuffer.TripleBuffered = false;
 			Console.BackgroundColor = System.ConsoleColor.Blue;
 			Console.Clear();
 			Console.Write("A problem has been detected and MOOS has been shut down to prevent damage to your computer.\n\n");
