@@ -16,16 +16,23 @@ namespace System.Desktops.Controls
         public Image icon { set; get; }
         public ICommand command { set; get; }
         public FileInfo FileInfo { get; set; }
+        public string Path { set; get; }
+        public string FilePath { set; get; }
+        public Brush FocusBackground { set; get; }
 
         bool _isFocus;
         bool _clicked;
-
+        int offsetX, offsetY;
         public IconFile()
         {
             Foreground = Brushes.White;
+            FocusBackground = Brushes.CornflowerBlue;
+
             icon = DesktopIcons.FileIcon;
             Width = DesktopIcons.FileIcon.Width;
             Height = DesktopIcons.FileIcon.Height;
+            offsetX = 5;
+            offsetY = 5;
         }
 
         public void onLoadIconExtention()
@@ -61,9 +68,10 @@ namespace System.Desktops.Controls
         {
             base.Update();
 
-            if (Control.MouseButtons.HasFlag(MouseButtons.Left) && !WindowManager.HasWindowMoving && !WindowManager.MouseHandled)
+            if (Control.MousePosition.X > (X - offsetX) && Control.MousePosition.X < ((X- offsetX) + Width) && Control.MousePosition.Y > Y && Control.MousePosition.Y < (Y + Height))
             {
-                if (Control.MousePosition.X > X && Control.MousePosition.X < (X + Width) && Control.MousePosition.Y > Y && Control.MousePosition.Y < (Y + Height))
+                _isFocus = true;
+                if (Control.MouseButtons.HasFlag(MouseButtons.Left) && !WindowManager.HasWindowMoving && !WindowManager.MouseHandled)
                 {
                     _isFocus = true;
 
@@ -73,11 +81,15 @@ namespace System.Desktops.Controls
                         {
                             _clicked = true;
 
-                            Command.Execute.Invoke(FileInfo);
+                            Command.Execute.Invoke(FilePath);
                         }
                     }
                 }
 
+            }
+            else
+            {
+                _isFocus = false;
             }
 
             if (Control.MouseButtons == MouseButtons.None)
@@ -90,8 +102,13 @@ namespace System.Desktops.Controls
         {
             base.Draw();
 
+            if (_isFocus)
+            {
+                Framebuffer.Graphics.AFillRectangle((X - offsetX), (Y - offsetY), (Width + (offsetX*2)), (Height + ((WindowManager.font.FontSize * 3) + offsetX)), FocusBackground.Value);
+            }
+
             Framebuffer.Graphics.DrawImage(X, Y, icon);
-            WindowManager.font.DrawString(X, (Y + icon.Height), Content, Foreground.Value, (icon.Width + 8), WindowManager.font.FontSize * 3);
+            WindowManager.font.DrawString(X, (Y + icon.Height), Content, Foreground.Value, (icon.Width + 8), (WindowManager.font.FontSize * 3));
         }
     }
 }

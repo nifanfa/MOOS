@@ -1,5 +1,6 @@
 ﻿using MOOS;
 using MOOS.FS;
+using MOOS.GUI;
 using MOOS.Misc;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,7 @@ namespace System.Desktops
             int Devide = 60;
             int X = 5;
             int Y = BarHeight;
+            string devider = "/";
 
             BuiltInAppNames = new string[]
             {
@@ -125,6 +127,8 @@ namespace System.Desktops
                     IconFile icon = new IconFile();
                     icon.Content = files[i].Name;
                     icon.FileInfo = files[i];
+                    icon.Path = Dir + devider;
+                    icon.FilePath = Dir + devider + icon.Content;
                     icon.X = X;
                     icon.Y = Y;
                     icon.command = new ICommand(onDesktopNativeOSClick);
@@ -153,6 +157,8 @@ namespace System.Desktops
                 IconFile icon = new IconFile();
                 icon.Content = files[i].Name;
                 icon.FileInfo = files[i];
+                icon.Path = Dir + devider;
+                icon.FilePath = Dir + devider + icon.Content;
                 icon.X = X;
                 icon.Y = Y;
                 icon.command = new ICommand(onDesktopIconClick);
@@ -172,15 +178,55 @@ namespace System.Desktops
             files.Dispose();
         }
 
-        static void onDesktopNativeOSClick(object obj)
+        static void onDesktopNativeOSClick(object file)
         {
             Debug.WriteLine($"[Native Icon]");
         }
 
         static void onDesktopIconClick(object obj)
         {
-            FileInfo info = (FileInfo)obj;
-            Debug.WriteLine($"[Icon] {info.Name}");
+            string file = obj as string;
+
+            Debug.WriteLine($"[Icon] {file}");
+
+            if (file.EndsWith(".png"))
+            {
+                byte[] buffer = File.ReadAllBytes(file);
+                PNG png = new(buffer);
+                buffer.Dispose();
+                //imageViewer.SetImage(png);
+                //png.Dispose();
+                //WindowManager.MoveToEnd(imageViewer);
+                //imageViewer.Visible = true;
+            }
+            else if (file.EndsWith("DOOM1.wad"))
+            {
+                _ = new Doom(300, 250);
+            }
+            else if (file.EndsWith(".exe"))
+            {
+                byte[] buffer = File.ReadAllBytes(file);
+                Process.Start(buffer);
+            }
+            else if (file.EndsWith(".wav"))
+            {
+                if (Audio.HasAudioDevice)
+                {
+                    byte[] buffer = File.ReadAllBytes(file);
+                    WAV.Decode(buffer, out byte[] pcm);
+                    Audio.Play(pcm);
+                    pcm.Dispose();
+                    buffer.Dispose();
+                }
+            }
+            else if (file.EndsWith(".nes"))
+            {
+                //nesemu.OpenROM(File.ReadAllBytes(file));
+                //WindowManager.MoveToEnd(nesemu);
+                //nesemu.Visible = true;
+            }
+
+            file.Dispose();
         }
 
         static void onItemDesktop(object obj)
