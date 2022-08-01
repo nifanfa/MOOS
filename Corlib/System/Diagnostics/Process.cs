@@ -28,7 +28,7 @@ namespace System.Diagnostics
         [DllImport("*")]
         static extern ulong free(nint ptr);
 
-        public static void LoadUnfixedPE(byte* ptr)
+        public static void LoadUnfixedPE(byte* ptr) 
         {
             DOSHeader* doshdr = (DOSHeader*)ptr;
             NtHeaders64* nthdr = (NtHeaders64*)(ptr + doshdr->e_lfanew);

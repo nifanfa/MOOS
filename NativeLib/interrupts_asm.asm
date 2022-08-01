@@ -389,7 +389,7 @@ _hlt ENDP
 PUBLIC _inttest
 
 _inttest PROC
-	mov rax,12345678h
+    mov rax,12345678h
 	int 80h
 	ret
 _inttest ENDP
@@ -398,7 +398,7 @@ _inttest ENDP
 PUBLIC _iretq
 
 _iretq PROC
-	mov rsp, rcx
+    mov rsp, rcx
 	popaq
 	iretq
 _iretq ENDP
@@ -407,7 +407,7 @@ _iretq ENDP
 PUBLIC _int20h
 
 _int20h PROC
-	int 20h
+    int 20h
 	ret
 _int20h ENDP
 

@@ -215,15 +215,15 @@ void M_BindHexenControls(void)
 
 void M_BindStrifeControls(void)
 {
-	// These are shared with all games, but have different defaults:
-	key_message_refresh = '/';
+    // These are shared with all games, but have different defaults:
+    key_message_refresh = '/';
 
-	// These keys are shared with Heretic/Hexen but have different defaults:
-	key_jump     = 'a';
-	key_lookup   = KEY_PGUP;
-	key_lookdown = KEY_PGDN;
-	key_invleft  = KEY_INS;
-	key_invright = KEY_DEL;
+    // These keys are shared with Heretic/Hexen but have different defaults:
+    key_jump     = 'a';
+    key_lookup   = KEY_PGUP;
+    key_lookdown = KEY_PGDN;
+    key_invleft  = KEY_INS;
+    key_invright = KEY_DEL;
 }
 
 void M_BindWeaponControls(void)
@@ -240,8 +240,8 @@ void M_BindMenuControls(void)
 
 void M_BindChatControls(unsigned int num_players)
 {
-	char name[32];  // haleyjd: 20 not large enough - Thank you, come again!
-	unsigned int i; // haleyjd: signedness conflict
+    char name[32];  // haleyjd: 20 not large enough - Thank you, come again!
+    unsigned int i; // haleyjd: signedness conflict
 }
 
 //
@@ -251,6 +251,6 @@ void M_BindChatControls(unsigned int num_players)
 
 void M_ApplyPlatformDefaults(void)
 {
-	// no-op. Add your platform-specific patches here.
+    // no-op. Add your platform-specific patches here.
 }
 

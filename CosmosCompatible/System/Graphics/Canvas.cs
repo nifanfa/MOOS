@@ -1,39 +1,57 @@
-﻿using System.Drawing;
-using MOOS;
+﻿using MOOS;
+using System.Drawing;
 
 namespace Cosmos.System.Graphics
 {
-    public unsafe class Canvas
+    public class Canvas
     {
-        public int Width => Framebuffer.Width;
-        public int Height => Framebuffer.Height;
         public Canvas()
         {
             Framebuffer.TripleBuffered = true;
         }
-        public void Update()
+
+        public int Width => Framebuffer.Graphics.Width;
+        public int Height => Framebuffer.Graphics.Height;
+
+        internal void Update()
         {
             Framebuffer.Update();
         }
-        public void FillRectangle(Color color, int X, int Y, int Width, int Height, bool alpha = false)
+
+        internal unsafe void DrawImage(Image image, int X, int Y)
         {
-            Framebuffer.Graphics.FillRectangle(color, X, Y, Width, Height, alpha);
+            for(int w = 0; w < image.Width; w++) 
+            {
+                for(int h = 0; h < image.Height; h++) 
+                {
+                    DrawPoint((uint)(X + w), (uint)(Y + h), (uint)image.RawData[h * image.Width + w]);
+                }
+            }
         }
-        public void DrawRectangle(Color color, int X, int Y, int Width, int Height)
+
+        internal void DrawPoint(uint v1, uint v2, uint v3)
         {
-            Framebuffer.Graphics.FillRectangle(color, X, Y, Width, Height);
+            Framebuffer.Graphics.DrawPoint((int)v1, (int)v2, v3);
         }
-        public void DrawPoint(Color color, int X, int Y)
+
+        internal void DrawFillRectangle(uint x, uint y, uint width, uint height, uint v)
         {
-            Framebuffer.Graphics.DrawPoint(color, X, Y);
+            Framebuffer.Graphics.FillRectangle((int)x, (int)y, (int)width, (int)height, v);
         }
-        public void Clear(Color color)
+
+        internal void DrawRectangle(uint v, int x, int y, int width, int height)
         {
-            Framebuffer.Graphics.Clear(color);
+            Framebuffer.Graphics.DrawRectangle(x, y, width, height, v);
         }
-        public void DrawImage(Image image, int X, int Y)
+
+        internal void DrawLine(uint color, int xStart, int yStart, int xEnd, int yEnd)
         {
-            Framebuffer.Graphics.DrawImage(image, X, Y);
+            Framebuffer.Graphics.DrawLine(xStart, yStart, xEnd, yEnd, color);
+        }
+
+        internal void Clear(uint v)
+        {
+            Framebuffer.Graphics.Clear(v);
         }
     }
 }

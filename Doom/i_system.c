@@ -63,23 +63,23 @@ typedef struct atexit_listentry_s atexit_listentry_t;
 
 struct atexit_listentry_s
 {
-	atexit_func_t func;
-	boolean run_on_error;
-	atexit_listentry_t *next;
+    atexit_func_t func;
+    boolean run_on_error;
+    atexit_listentry_t *next;
 };
 
 static atexit_listentry_t *exit_funcs = NULL;
 
 void I_AtExit(atexit_func_t func, boolean run_on_error)
 {
-	atexit_listentry_t *entry;
+    atexit_listentry_t *entry;
 
-	entry = kmalloc(sizeof(*entry));
+    entry = kmalloc(sizeof(*entry));
 
-	entry->func = func;
-	entry->run_on_error = run_on_error;
-	entry->next = exit_funcs;
-	exit_funcs = entry;
+    entry->func = func;
+    entry->run_on_error = run_on_error;
+    entry->next = exit_funcs;
+    exit_funcs = entry;
 }
 
 // Tactile feedback function, probably used for the Logitech Cyberman
@@ -94,71 +94,71 @@ void I_Tactile(int on, int off, int total)
 
 static byte *AutoAllocMemory(int *size, int default_ram, int min_ram)
 {
-	byte *zonemem;
+    byte *zonemem;
 
-	// Allocate the zone memory.  This loop tries progressively smaller
-	// zone sizes until a size is found that can be allocated.
-	// If we used the -mb command line parameter, only the parameter
-	// provided is accepted.
+    // Allocate the zone memory.  This loop tries progressively smaller
+    // zone sizes until a size is found that can be allocated.
+    // If we used the -mb command line parameter, only the parameter
+    // provided is accepted.
 
-	zonemem = NULL;
+    zonemem = NULL;
 
-	while (zonemem == NULL)
-	{
-		// We need a reasonable minimum amount of RAM to start.
+    while (zonemem == NULL)
+    {
+        // We need a reasonable minimum amount of RAM to start.
 
-		if (default_ram < min_ram)
-		{
-			I_Error("Unable to allocate %i MiB of RAM for zone", default_ram);
-		}
+        if (default_ram < min_ram)
+        {
+            I_Error("Unable to allocate %i MiB of RAM for zone", default_ram);
+        }
 
-		// Try to allocate the zone memory.
+        // Try to allocate the zone memory.
 
-		*size = default_ram * 1024 * 1024;
+        *size = default_ram * 1024 * 1024;
 
-		zonemem = kmalloc(*size);
+        zonemem = kmalloc(*size);
 
-		// Failed to allocate?  Reduce zone size until we reach a size
-		// that is acceptable.
+        // Failed to allocate?  Reduce zone size until we reach a size
+        // that is acceptable.
 
-		if (zonemem == NULL)
-		{
-			default_ram -= 1;
-		}
-	}
+        if (zonemem == NULL)
+        {
+            default_ram -= 1;
+        }
+    }
 
-	return zonemem;
+    return zonemem;
 }
 
 byte *I_ZoneBase (int *size)
 {
-	byte *zonemem;
-	int min_ram, default_ram;
-	int p;
+    byte *zonemem;
+    int min_ram, default_ram;
+    int p;
 
-	//!
-	// @arg <mb>
-	//
-	// Specify the heap size, in MiB (default 16).
-	//
+    //!
+    // @arg <mb>
+    //
+    // Specify the heap size, in MiB (default 16).
+    //
 
-	p = M_CheckParmWithArgs("-mb", 1);
+    p = M_CheckParmWithArgs("-mb", 1);
 
-	if (p > 0)
-	{
-		default_ram = myatoi(myargv[p+1]);
-		min_ram = default_ram;
-	}
-	else
-	{
-		default_ram = DEFAULT_RAM;
-		min_ram = MIN_RAM;
-	}
+    if (p > 0)
+    {
+        default_ram = myatoi(myargv[p+1]);
+        min_ram = default_ram;
+    }
+    else
+    {
+        default_ram = DEFAULT_RAM;
+        min_ram = MIN_RAM;
+    }
 
-	zonemem = AutoAllocMemory(size, default_ram, min_ram);
+    zonemem = AutoAllocMemory(size, default_ram, min_ram);
 
 
-	return zonemem;
+    return zonemem;
 }
 
 // 
@@ -170,11 +170,11 @@ byte *I_ZoneBase (int *size)
 boolean I_ConsoleStdout(void)
 {
 #ifdef _WIN32
-	// SDL "helpfully" always redirects stdout to a file.
-	return 0;
+    // SDL "helpfully" always redirects stdout to a file.
+    return 0;
 #else
 #if ORIGCODE
-	return isatty(fileno(stdout));
+    return isatty(fileno(stdout));
 #else
 	return 0;
 #endif
@@ -187,15 +187,15 @@ boolean I_ConsoleStdout(void)
 /*
 void I_Init (void)
 {
-	I_CheckIsScreensaver();
-	I_InitTimer();
-	I_InitJoystick();
+    I_CheckIsScreensaver();
+    I_InitTimer();
+    I_InitJoystick();
 }
 void I_BindVariables(void)
 {
-	I_BindVideoVariables();
-	I_BindJoystickVariables();
-	I_BindSoundVariables();
+    I_BindVideoVariables();
+    I_BindJoystickVariables();
+    I_BindSoundVariables();
 }
 */
 
@@ -205,22 +205,22 @@ void I_BindVariables(void)
 
 void I_Quit (void)
 {
-	atexit_listentry_t *entry;
+    atexit_listentry_t *entry;
 
-	// Run through all exit functions
+    // Run through all exit functions
  
-	entry = exit_funcs; 
+    entry = exit_funcs; 
 
-	while (entry != NULL)
-	{
-		entry->func();
-		entry = entry->next;
-	}
+    while (entry != NULL)
+    {
+        entry->func();
+        entry = entry->next;
+    }
 
 #if ORIGCODE
-	SDL_Quit();
+    SDL_Quit();
 
-	exit(0);
+    exit(0);
 #endif
 }
 
@@ -231,7 +231,7 @@ void I_Quit (void)
 
 static int ZenityAvailable(void)
 {
-	return system(ZENITY_BINARY " --help >/dev/null 2>&1") == 0;
+    return system(ZENITY_BINARY " --help >/dev/null 2>&1") == 0;
 }
 
 // Escape special characters in the given string so that they can be
@@ -239,70 +239,70 @@ static int ZenityAvailable(void)
 
 static char *EscapeShellString(char *string)
 {
-	char *result;
-	char *r, *s;
+    char *result;
+    char *r, *s;
 
-	// In the worst case, every character might be escaped.
-	result = kmalloc(mystrlen(string) * 2 + 3);
-	r = result;
+    // In the worst case, every character might be escaped.
+    result = kmalloc(mystrlen(string) * 2 + 3);
+    r = result;
 
-	// Enclosing quotes.
-	*r = '"';
-	++r;
+    // Enclosing quotes.
+    *r = '"';
+    ++r;
 
-	for (s = string; *s != '\0'; ++s)
-	{
-		// From the bash manual:
-		//
-		//  "Enclosing characters in double quotes preserves the literal
-		//   value of all characters within the quotes, with the exception
-		//   of $, `, \, and, when history expansion is enabled, !."
-		//
-		// Therefore, escape these characters by prefixing with a backslash.
+    for (s = string; *s != '\0'; ++s)
+    {
+        // From the bash manual:
+        //
+        //  "Enclosing characters in double quotes preserves the literal
+        //   value of all characters within the quotes, with the exception
+        //   of $, `, \, and, when history expansion is enabled, !."
+        //
+        // Therefore, escape these characters by prefixing with a backslash.
 
-		if (strchr("$`\\!", *s) != NULL)
-		{
-			*r = '\\';
-			++r;
-		}
+        if (strchr("$`\\!", *s) != NULL)
+        {
+            *r = '\\';
+            ++r;
+        }
 
-		*r = *s;
-		++r;
-	}
+        *r = *s;
+        ++r;
+    }
 
-	// Enclosing quotes.
-	*r = '"';
-	++r;
-	*r = '\0';
+    // Enclosing quotes.
+    *r = '"';
+    ++r;
+    *r = '\0';
 
-	return result;
+    return result;
 }
 
 // Open a native error box with a message using zenity
 
 static int ZenityErrorBox(char *message)
 {
-	int result;
-	char *escaped_message;
-	char *errorboxpath;
-	static size_t errorboxpath_size;
+    int result;
+    char *escaped_message;
+    char *errorboxpath;
+    static size_t errorboxpath_size;
 
-	if (!ZenityAvailable())
-	{
-		return 0;
-	}
+    if (!ZenityAvailable())
+    {
+        return 0;
+    }
 
-	escaped_message = EscapeShellString(message);
+    escaped_message = EscapeShellString(message);
 
-	errorboxpath_size = mystrlen(ZENITY_BINARY) + mystrlen(escaped_message) + 19;
-	errorboxpath = kmalloc(errorboxpath_size);
+    errorboxpath_size = mystrlen(ZENITY_BINARY) + mystrlen(escaped_message) + 19;
+    errorboxpath = kmalloc(errorboxpath_size);
 
-	result = system(errorboxpath);
+    result = system(errorboxpath);
 
-	kfree(errorboxpath);
-	kfree(escaped_message);
+    kfree(errorboxpath);
+    kfree(escaped_message);
 
-	return result;
+    return result;
 }
 
 #endif /* !defined(_WIN32) && !defined(__MACOSX__) */
@@ -316,66 +316,66 @@ static boolean already_quitting = false;
 
 void I_Error (char *error, ...)
 {
-	char msgbuf[512];
-	va_list argptr;
-	atexit_listentry_t *entry;
-	boolean exit_gui_popup;
+    char msgbuf[512];
+    va_list argptr;
+    atexit_listentry_t *entry;
+    boolean exit_gui_popup;
 
-	if (already_quitting)
-	{
+    if (already_quitting)
+    {
 #if ORIGCODE
-		exit(-1);
+        exit(-1);
 #endif
-	}
-	else
-	{
-		already_quitting = true;
-	}
+    }
+    else
+    {
+        already_quitting = true;
+    }
 
-	// Message first.
-	va_start(argptr, error);
-	//fprintf(stderr, "\nError: ");
-	va_end(argptr);
-	//fflush(stderr);
+    // Message first.
+    va_start(argptr, error);
+    //fprintf(stderr, "\nError: ");
+    va_end(argptr);
+    //fflush(stderr);
 
-	// Write a copy of the message into buffer.
-	va_start(argptr, error);
-	memset(msgbuf, 0, sizeof(msgbuf));
-	va_end(argptr);
+    // Write a copy of the message into buffer.
+    va_start(argptr, error);
+    memset(msgbuf, 0, sizeof(msgbuf));
+    va_end(argptr);
 
-	// Shutdown. Here might be other errors.
+    // Shutdown. Here might be other errors.
 
-	entry = exit_funcs;
+    entry = exit_funcs;
 
-	while (entry != NULL)
-	{
-		if (entry->run_on_error)
-		{
-			entry->func();
-		}
+    while (entry != NULL)
+    {
+        if (entry->run_on_error)
+        {
+            entry->func();
+        }
 
-		entry = entry->next;
-	}
+        entry = entry->next;
+    }
 
-	exit_gui_popup = !M_ParmExists("-nogui");
+    exit_gui_popup = !M_ParmExists("-nogui");
 
-	// Pop up a GUI dialog box to show the error message, if the
-	// game was not run from the console (and the user will
-	// therefore be unable to otherwise see the message).
-	if (exit_gui_popup && !I_ConsoleStdout())
+    // Pop up a GUI dialog box to show the error message, if the
+    // game was not run from the console (and the user will
+    // therefore be unable to otherwise see the message).
+    if (exit_gui_popup && !I_ConsoleStdout())
 #ifdef _WIN32
-	{
-		wchar_t wmsgbuf[512];
+    {
+        wchar_t wmsgbuf[512];
 
-		MultiByteToWideChar(CP_ACP, 0,
-							msgbuf, mystrlen(msgbuf) + 1,
-							wmsgbuf, sizeof(wmsgbuf));
+        MultiByteToWideChar(CP_ACP, 0,
+                            msgbuf, mystrlen(msgbuf) + 1,
+                            wmsgbuf, sizeof(wmsgbuf));
 
-		MessageBoxW(NULL, wmsgbuf, L"", MB_OK);
-	}
+        MessageBoxW(NULL, wmsgbuf, L"", MB_OK);
+    }
 #elif defined(__MACOSX__)
-	{
-		CFStringRef message;
+    {
+        CFStringRef message;
 	int i;
 
 	// The CoreFoundation message box wraps text lines, so replace
@@ -383,40 +383,40 @@ void I_Error (char *error, ...)
 	// are continuous.
 
 	for (i = 0; msgbuf[i] != '\0'; ++i)
-		{
-			if (msgbuf[i] == '\n')
-			{
-				msgbuf[i] = ' ';
-			}
-		}
+        {
+            if (msgbuf[i] == '\n')
+            {
+                msgbuf[i] = ' ';
+            }
+        }
 
-		message = CFStringCreateWithCString(NULL, msgbuf,
-											kCFStringEncodingUTF8);
+        message = CFStringCreateWithCString(NULL, msgbuf,
+                                            kCFStringEncodingUTF8);
 
-		CFUserNotificationDisplayNotice(0,
-										kCFUserNotificationCautionAlertLevel,
-										NULL,
-										NULL,
-										NULL,
-										CFSTR(PACKAGE_STRING),
-										message,
-										NULL);
-	}
+        CFUserNotificationDisplayNotice(0,
+                                        kCFUserNotificationCautionAlertLevel,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        CFSTR(PACKAGE_STRING),
+                                        message,
+                                        NULL);
+    }
 #else
-	{
-		ZenityErrorBox(msgbuf);
-	}
+    {
+        ZenityErrorBox(msgbuf);
+    }
 #endif
 
-	// abort();
+    // abort();
 #if ORIGCODE
-	SDL_Quit();
+    SDL_Quit();
 
-	exit(-1);
+    exit(-1);
 #else
-	while (true)
-	{
-	}
+    while (true)
+    {
+    }
 #endif
 }
 
@@ -452,77 +452,77 @@ static const unsigned char *dos_mem_dump = mem_dump_dos622;
 
 boolean I_GetMemoryValue(unsigned int offset, void *value, int size)
 {
-	static boolean firsttime = true;
+    static boolean firsttime = true;
 
-	if (firsttime)
-	{
-		int p, i, val;
+    if (firsttime)
+    {
+        int p, i, val;
 
-		firsttime = false;
-		i = 0;
+        firsttime = false;
+        i = 0;
 
-		//!
-		// @category compat
-		// @arg <version>
-		//
-		// Specify DOS version to emulate for NULL pointer dereference
-		// emulation.  Supported versions are: dos622, dos71, dosbox.
-		// The default is to emulate DOS 7.1 (Windows 98).
-		//
+        //!
+        // @category compat
+        // @arg <version>
+        //
+        // Specify DOS version to emulate for NULL pointer dereference
+        // emulation.  Supported versions are: dos622, dos71, dosbox.
+        // The default is to emulate DOS 7.1 (Windows 98).
+        //
 
-		p = M_CheckParmWithArgs("-setmem", 1);
+        p = M_CheckParmWithArgs("-setmem", 1);
 
-		if (p > 0)
-		{
-			if (!strcasecmp(myargv[p + 1], "dos622"))
-			{
-				dos_mem_dump = mem_dump_dos622;
-			}
-			if (!strcasecmp(myargv[p + 1], "dos71"))
-			{
-				dos_mem_dump = mem_dump_win98;
-			}
-			else if (!strcasecmp(myargv[p + 1], "dosbox"))
-			{
-				dos_mem_dump = mem_dump_dosbox;
-			}
-			else
-			{
-				for (i = 0; i < DOS_MEM_DUMP_SIZE; ++i)
-				{
-					++p;
+        if (p > 0)
+        {
+            if (!strcasecmp(myargv[p + 1], "dos622"))
+            {
+                dos_mem_dump = mem_dump_dos622;
+            }
+            if (!strcasecmp(myargv[p + 1], "dos71"))
+            {
+                dos_mem_dump = mem_dump_win98;
+            }
+            else if (!strcasecmp(myargv[p + 1], "dosbox"))
+            {
+                dos_mem_dump = mem_dump_dosbox;
+            }
+            else
+            {
+                for (i = 0; i < DOS_MEM_DUMP_SIZE; ++i)
+                {
+                    ++p;
 
-					if (p >= myargc || myargv[p][0] == '-')
-					{
-						break;
-					}
+                    if (p >= myargc || myargv[p][0] == '-')
+                    {
+                        break;
+                    }
 
-					M_StrToInt(myargv[p], &val);
-					mem_dump_custom[i++] = (unsigned char) val;
-				}
+                    M_StrToInt(myargv[p], &val);
+                    mem_dump_custom[i++] = (unsigned char) val;
+                }
 
-				dos_mem_dump = mem_dump_custom;
-			}
-		}
-	}
+                dos_mem_dump = mem_dump_custom;
+            }
+        }
+    }
 
-	switch (size)
-	{
-	case 1:
-		*((unsigned char *) value) = dos_mem_dump[offset];
-		return true;
-	case 2:
-		*((unsigned short *) value) = dos_mem_dump[offset]
-									| (dos_mem_dump[offset + 1] << 8);
-		return true;
-	case 4:
-		*((unsigned int *) value) = dos_mem_dump[offset]
-								  | (dos_mem_dump[offset + 1] << 8)
-								  | (dos_mem_dump[offset + 2] << 16)
-								  | (dos_mem_dump[offset + 3] << 24);
-		return true;
-	}
+    switch (size)
+    {
+    case 1:
+        *((unsigned char *) value) = dos_mem_dump[offset];
+        return true;
+    case 2:
+        *((unsigned short *) value) = dos_mem_dump[offset]
+                                    | (dos_mem_dump[offset + 1] << 8);
+        return true;
+    case 4:
+        *((unsigned int *) value) = dos_mem_dump[offset]
+                                  | (dos_mem_dump[offset + 1] << 8)
+                                  | (dos_mem_dump[offset + 2] << 16)
+                                  | (dos_mem_dump[offset + 3] << 24);
+        return true;
+    }
 
-	return false;
+    return false;
 }
 

@@ -42,15 +42,15 @@ char**		myargv;
 
 int M_CheckParmWithArgs(char *check, int num_args)
 {
-	int i;
+    int i;
 
-	for (i = 1; i < myargc - num_args; i++)
-	{
+    for (i = 1; i < myargc - num_args; i++)
+    {
 	if (!strcasecmp(check, myargv[i]))
 	    return i;
-	}
+    }
 
-	return 0;
+    return 0;
 }
 
 //
@@ -62,12 +62,12 @@ int M_CheckParmWithArgs(char *check, int num_args)
 
 boolean M_ParmExists(char *check)
 {
-	return M_CheckParm(check) != 0;
+    return M_CheckParm(check) != 0;
 }
 
 int M_CheckParm(char *check)
 {
-	return M_CheckParmWithArgs(check, 0);
+    return M_CheckParmWithArgs(check, 0);
 }
 
 #define MAXARGVS        100
@@ -82,32 +82,32 @@ static void LoadResponseFile(int argv_index)
 
 void M_FindResponseFile(void)
 {
-	int             i;
+    int             i;
 
-	for (i = 1; i < myargc; i++)
-	{
-		if (myargv[i][0] == '@')
-		{
-			LoadResponseFile(i);
-		}
-	}
+    for (i = 1; i < myargc; i++)
+    {
+        if (myargv[i][0] == '@')
+        {
+            LoadResponseFile(i);
+        }
+    }
 }
 
 // Return the name of the executable used to start the program:
 
 char *M_GetExecutableName(void)
 {
-	char *sep;
+    char *sep;
 
-	sep = mystrrchr(myargv[0], DIR_SEPARATOR);
+    sep = mystrrchr(myargv[0], DIR_SEPARATOR);
 
-	if (sep == NULL)
-	{
-		return myargv[0];
-	}
-	else
-	{
-		return sep + 1;
-	}
+    if (sep == NULL)
+    {
+        return myargv[0];
+    }
+    else
+    {
+        return sep + 1;
+    }
 }
 

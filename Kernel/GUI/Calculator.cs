@@ -1,215 +1,219 @@
 #if HasGUI
+using MOOS;
+using MOOS.Graph;
+using MOOS.GUI;
+using MOOS.GUI.Widgets;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using MOOS.Graph;
-using MOOS.GUI.Widgets;
 
 namespace MOOS.GUI
 {
-	internal class Calculator : Window
-	{
-		private Image image;
-		private Graphics g;
+    class Calculator : Window
+    {
+        Image image;
+        Graphics g;
 
-		public unsafe Calculator(int X, int Y) : base(X, Y, 270, 140)
-		{
+        public unsafe Calculator(int X, int Y) : base(X, Y, 270, 140)
+        {
 #if Chinese
-			Title = "计算器";
+            Title = "计算器";
 #else
-			Title = "Calculator";
+            Title = "Calculator";
 #endif
-			Btns = new List<Button>();
+            Btns = new List<Button>();
 
-			image = new Image(Width, Height);
-			fixed (int* p = image.RawData)
-			{
-				g = new Graphics(image.Width, image.Height, p);
-			}
+            image = new Image(this.Width, this.Height);
+            fixed (int* p = image.RawData)
+            g = new Graphics(image.Width, image.Height, (uint*)p);
 
-			PressedButton = new();
+            PressedButton = new();
 
-			g.FillRectangle(Color.FromArgb(0xFF222222), 0, 0, Width, Height);
-			g.FillRectangle(Color.FromArgb(0xFF333333), 0, 0, Width, 20);
+            g.FillRectangle(0, 0, Width, Height, 0xFF222222);
+            g.FillRectangle(0, 0, Width, 20, 0xFF333333);
 
-			//7
-			AddButton(0, 30, "7");
-			//8
-			AddButton(70, 30, "8");
-			//9
-			AddButton(140, 30, "9");
+            //7
+            AddButton(0, 30, "7");
+            //8
+            AddButton(70, 30, "8");
+            //9
+            AddButton(140, 30, "9");
 
 
-			//4
-			AddButton(0, 60, "4");
-			//5
-			AddButton(70, 60, "5");
-			//6
-			AddButton(140, 60, "6");
+            //4
+            AddButton(0, 60, "4");
+            //5
+            AddButton(70, 60, "5");
+            //6
+            AddButton(140, 60, "6");
 
 
-			//1
-			AddButton(0, 90, "1");
-			//2
-			AddButton(70, 90, "2");
-			//3
-			AddButton(140, 90, "3");
+            //1
+            AddButton(0, 90, "1");
+            //2
+            AddButton(70, 90, "2");
+            //3
+            AddButton(140, 90, "3");
 
 
-			//0
-			AddButton(70, 120, "0");
+            //0
+            AddButton(70, 120, "0");
 
 
-			//C
-			AddButton(210, 30, "C");
-			//+
-			AddButton(210, 60, "+");
-			//-
-			AddButton(210, 90, "-");
-			//=
-			AddButton(210, 120, "=");
+            //C
+            AddButton(210, 30, "C");
+            //+
+            AddButton(210, 60, "+");
+            //-
+            AddButton(210, 90, "-");
+            //=
+            AddButton(210, 120, "=");
 
-		}
+        }
 
-		public override void OnDraw()
-		{
-			base.OnDraw();
+        public override void OnDraw()
+        {
+            base.OnDraw();
 
-			Framebuffer.Graphics.DrawImage(image, X, Y);
+            Framebuffer.Graphics.DrawImage(X, Y, image);
 
-			string v = ValueToDisplay.ToString();
-			WindowManager.font.DrawString(X, Y + 2, v);
+            string v = ValueToDisplay.ToString();
+            WindowManager.font.DrawString( X, Y + 2,v);
 
-			if (Pressed)
-			{
-				Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF222222), X + PressedButton.X, Y + PressedButton.Y, 60, 20);
-				int i = WindowManager.font.MeasureString(PressedButton.Name);
-				WindowManager.font.DrawString(X + PressedButton.X + (60 / 2) - (i / 2), Y + PressedButton.Y + 2, PressedButton.Name);
-			}
+            if (Pressed)
+            {
+                Framebuffer.Graphics.FillRectangle(X + PressedButton.X, Y + PressedButton.Y, 60, 20, 0xFF222222);
+                int i = WindowManager.font.MeasureString(PressedButton.Name);
+                WindowManager.font.DrawString(X + PressedButton.X + (60 / 2) - (i / 2), Y + PressedButton.Y + 2, PressedButton.Name);
+            }
 
-			v.Dispose();
-		}
+            v.Dispose();
+        }
 
-		private bool Pressed = false;
-		private Button PressedButton;
+        bool Pressed = false;
 
-		public override void OnInput()
-		{
-			base.OnInput();
+        Button PressedButton;
 
-			if (Control.MouseButtons.HasFlag(MouseButtons.Left))
-			{
-				if (!Pressed)
-				{
-					for (int i = 0; i < Btns.Count; i++)
-					{
-						if (Control.MousePosition.X > X + Btns[i].X && Control.MousePosition.X < X + Btns[i].X + Btns[i].Width && Control.MousePosition.Y > Y + Btns[i].Y && Control.MousePosition.Y < Y + Btns[i].Y + Btns[i].Height)
-						{
-							ProcessButton(Btns[i]);
-							PressedButton = Btns[i];
-							Pressed = true;
-						}
-					}
-				}
-			} else
-			{
-				Pressed = false;
-			}
-		}
+        public override void OnInput()
+        {
+            base.OnInput();
 
-		private enum CalculatorOperation
-		{
-			None,
-			Plus,
-			Minus
-		}
+            if (Control.MouseButtons.HasFlag(MouseButtons.Left))
+            {
+                if (!Pressed)
+                {
+                    for (int i = 0; i < Btns.Count; i++)
+                    {
+                        if (Control.MousePosition.X > this.X + Btns[i].X && Control.MousePosition.X < this.X + Btns[i].X + Btns[i].Width && Control.MousePosition.Y > this.Y + Btns[i].Y && Control.MousePosition.Y < this.Y + Btns[i].Y + Btns[i].Height)
+                        {
+                            ProcessButton(Btns[i]);
+                            PressedButton = Btns[i];
+                            Pressed = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Pressed = false;
+            }
+        }
 
-		private long Num1 = 0;
-		private long Num2 = 0;
-		private long ValueToDisplay = 0;
-		private CalculatorOperation opreation = CalculatorOperation.None;
+        enum Opreation
+        {
+            None,
+            Plus,
+            Minus
+        }
 
-		private unsafe void ProcessButton(Button btn)
-		{
-			if (btn.Name[0] >= 0x30 && btn.Name[0] <= 0x39)
-			{
-				if (Num2 == 0)
-				{
-					Num2 = btn.Name[0] - 0x30L;
-				} else
-				{
-					Num2 *= 10;
-					Num2 += btn.Name[0] - 0x30L;
-				}
+        ulong Num1 = 0;
+        ulong Num2 = 0;
 
-				ValueToDisplay = Num2;
-			} else if (btn.Name == "+")
-			{
-				if (Num1 == 0)
-				{
-					Num1 = Num2;
-				}
+        ulong ValueToDisplay = 0;
 
-				opreation = CalculatorOperation.Plus;
+        Opreation opreation = Opreation.None;
 
-				Num2 = 0;
-			} else if (btn.Name == "-")
-			{
-				if (Num1 == 0)
-				{
-					Num1 = Num2;
-				}
+        private unsafe void ProcessButton(Button btn)
+        {
+            if (btn.Name[0] >= 0x30 && btn.Name[0] <= 0x39)
+            {
+                if (Num2 == 0)
+                {
+                    Num2 = (btn.Name[0] - 0x30UL);
+                }
+                else
+                {
+                    Num2 *= 10;
+                    Num2 += (btn.Name[0] - 0x30UL);
+                }
 
-				opreation = CalculatorOperation.Minus;
+                ValueToDisplay = Num2;
+            }
+            else if (btn.Name == "+")
+            {
+                if (Num1 == 0) Num1 = Num2;
 
-				Num2 = 0;
-			} else if (btn.Name == "C")
-			{
-				Num1 = 0;
-				Num2 = 0;
-				ValueToDisplay = 0;
-			} else if (btn.Name == "=")
-			{
-				if (opreation == CalculatorOperation.Plus)
-				{
-					Num1 += Num2;
-				} else if (opreation == CalculatorOperation.Minus)
-				{
-					if (Num1 >= Num2)
-					{
-						Num1 -= Num2;
-					} else
-					{
-						Num1 = 0;
-						Num2 = 0;
-					}
-				} else if (opreation == CalculatorOperation.None)
-				{
-					Num2 = 0;
-				}
+                opreation = Opreation.Plus;
 
-				ValueToDisplay = Num1;
-			}
-		}
+                Num2 = 0;
+            }
+            else if (btn.Name == "-")
+            {
+                if (Num1 == 0) Num1 = Num2;
 
-		private List<Button> Btns;
+                opreation = Opreation.Minus;
+
+                Num2 = 0;
+            }
+            else if (btn.Name == "C")
+            {
+                Num1 = 0;
+                Num2 = 0;
+                ValueToDisplay = 0;
+            }
+            else if (btn.Name == "=")
+            {
+                if (opreation == Opreation.Plus)
+                {
+                    Num1 += Num2;
+                }
+                else if (opreation == Opreation.Minus)
+                {
+                    if (Num1 >= Num2)
+                        Num1 -= Num2;
+                    else
+                    {
+                        Num1 = 0;
+                        Num2 = 0;
+                    }
+                }
+                else if (opreation == Opreation.None)
+                {
+                    Num2 = 0;
+                }
+
+                ValueToDisplay = Num1;
+            }
+        }
+
+        List<Button> Btns;
 
 
-		private void AddButton(int X, int Y, string s)
-		{
-			g.FillRectangle(Color.FromArgb(0xFF333333), X, Y, 60, 20);
-			int i = WindowManager.font.MeasureString(s);
-			WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2, s, g);
+        private void AddButton(int X, int Y, string s)
+        {
+            g.FillRectangle(X, Y, 60, 20, 0xFF333333);
+            int i = WindowManager.font.MeasureString(s);
+            WindowManager.font.DrawString(X + (60 / 2) - (i / 2), Y + 2,s,g);
 
-			Btns.Add(new Button()
-			{
-				X = X,
-				Y = Y,
-				Width = 60,
-				Height = 20,
-				Name = s
-			});
-		}
-	}
+            Btns.Add(new Button()
+            {
+                X = X,
+                Y = Y,
+                Width = 60,
+                Height = 20,
+                Name = s
+            });
+        }
+    }
 }
 #endif

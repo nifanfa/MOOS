@@ -17,39 +17,37 @@ namespace MOOS
         public delegate void OnWriteHandler(char chr);
         public static event OnWriteHandler OnWrite;
 
-        static Color[] ColorsFramebuffer;
+        private static uint[] ColorsFB;
 
         public static ConsoleColor ForegroundColor;
-        public static ConsoleColor BackgroundColor;
 
         internal static void Setup()
         {
             OnWrite = null;
 
-            ColorsFramebuffer = new Color[16]
+            Clear();
+
+            ColorsFB = new uint[16]
             {
-                Color.Black,
-                Color.Blue,
-                Color.Green,
-                Color.Cyan,
-                Color.Red,
-                Color.Purple,
-                Color.Brown,
-                Color.Gray,
-                Color.DarkGray,
-                Color.LightBlue,
-                Color.LightGreen,
-                Color.LightCyan,
-                Color.MediumVioletRed,
-                Color.MediumPurple,
-                Color.Yellow,
-                Color.White,
+                Color.Black.ToArgb(),
+                Color.Blue.ToArgb(),
+                Color.Green.ToArgb(),
+                Color.Cyan.ToArgb(),
+                Color.Red.ToArgb(),
+                Color.Purple.ToArgb(),
+                Color.Brown.ToArgb(),
+                Color.Gray.ToArgb(),
+                Color.DarkGray.ToArgb(),
+                Color.LightBlue.ToArgb(),
+                Color.LightGreen.ToArgb(),
+                Color.LightCyan.ToArgb(),
+                Color.MediumVioletRed.ToArgb(),
+                Color.MediumPurple.ToArgb(),
+                Color.Yellow.ToArgb(),
+                Color.White.ToArgb(),
             };
 
             ForegroundColor = ConsoleColor.White;
-            BackgroundColor = ConsoleColor.Black;
-
-            Clear();
         }
 
         public static void Wait(ref bool b)
@@ -94,7 +92,7 @@ namespace MOOS
         public static void Wait(uint* provider, int bit)
         {
             int phase = 0;
-            while (!BitHelpers.IsBitSet(*provider, bit))
+            while (!BitHelpers.IsBitSet(*provider, bit)) 
             {
                 switch (phase)
                 {
@@ -130,14 +128,14 @@ namespace MOOS
             }
         }
 
-        public static bool Wait(delegate*<bool> func, int timeOutMS = -1)
+        public static bool Wait(delegate* <bool> func,int timeOutMS = -1)
         {
             ulong prev = Timer.Ticks;
 
             int phase = 0;
             while (!func())
             {
-                if (timeOutMS >= 0 && Timer.Ticks > (prev + (uint)timeOutMS))
+                if(timeOutMS >= 0 && Timer.Ticks > (prev + (uint)timeOutMS))
                 {
                     return false;
                 }
@@ -181,7 +179,7 @@ namespace MOOS
             ConsoleColor col = Console.ForegroundColor;
             for (byte i = 0; i < s.Length; i++)
             {
-                if (s[i] == '[')
+                if (s[i] == '[') 
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
@@ -205,18 +203,18 @@ namespace MOOS
 
         public static void Write(char chr, bool dontInvoke = false)
         {
-            if (chr == '\n')
+            if(chr == '\n') 
             {
                 WriteLine();
                 return;
             }
 #if ASCII
-            if (chr >= 0x20 && chr <= 0x7E)
+            if(chr >= 0x20 && chr <= 0x7E)
 #else
             unsafe
 #endif
             {
-                if (!dontInvoke)
+                if(!dontInvoke)
                 {
                     OnWrite?.Invoke(chr);
                 }
@@ -240,8 +238,8 @@ namespace MOOS
             {
                 int X = (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
-                Framebuffer.Graphics.FillRectangle(ColorsFramebuffer[(int)BackgroundColor], X, Y, 8, 16);
-                ASC16.DrawChar(ColorsFramebuffer[(int)ForegroundColor],chr, X, Y);
+                Framebuffer.Graphics.FillRectangle(X, Y, 8, 16, 0x0);
+                ASC16.DrawChar(chr, X, Y, ColorsFB[(int)ForegroundColor]);
             }
         }
 
@@ -251,7 +249,7 @@ namespace MOOS
             while (Keyboard.KeyInfo.KeyChar == '\0') Native.Hlt();
             if (!intercept)
             {
-                switch (Keyboard.KeyInfo.Key)
+                switch (Keyboard.KeyInfo.Key) 
                 {
                     case ConsoleKey.Enter:
                         Console.WriteLine();
@@ -268,13 +266,13 @@ namespace MOOS
             return Keyboard.KeyInfo;
         }
 
-        public static string ReadLine()
+        public static string ReadLine() 
         {
             string s = string.Empty;
             ConsoleKeyInfo key;
             while ((key = Console.ReadKey()).Key != ConsoleKey.Enter)
             {
-                switch (key.Key)
+                switch (key.Key) 
                 {
                     case ConsoleKey.Delete:
                     case ConsoleKey.Backspace:
@@ -306,18 +304,17 @@ namespace MOOS
 
         private static void MoveUpFramebuffer()
         {
-            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if(Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
-                Framebuffer.Graphics.CopyFromScreen(
-                    (Framebuffer.Graphics.Width / 2) - (Width * 8 / 2),
-                    (Framebuffer.Graphics.Height / 2) - (Height * 16 / 2) + 16,
-
+                Framebuffer.Graphics.Copy(
                     (Framebuffer.Graphics.Width / 2) - (Width * 8 / 2),
                     (Framebuffer.Graphics.Height / 2) - (Height * 16 / 2),
 
-                    new Size(
+                    (Framebuffer.Graphics.Width / 2) - (Width * 8 / 2),
+                    (Framebuffer.Graphics.Height / 2) - (Height * 16 / 2) + 16,
+
                     Width * 8,
-                    Height * 16)
+                    Height * 16
                     );
             }
         }
@@ -331,32 +328,13 @@ namespace MOOS
         {
             if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
             {
-                ASC16.DrawChar(
-                            Color.White,
-                            '_',
+                ASC16.DrawChar('_',
                             (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),
-                            (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16)
+                            (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
+                            0xFFFFFFFF
                             );
             }
         }
-
-        public static void WriteInfo(string catagory, string message)
-		{
-			ConsoleColor originalFG = ForegroundColor;
-			ForegroundColor = ConsoleColor.Yellow;
-			Console.Write($"[{catagory}] ");
-			ForegroundColor = originalFG;
-			Console.Write(message);
-		}
-
-		public static void WriteLineInfo(string catagory, string message)
-		{
-			ConsoleColor originalFG = ForegroundColor;
-			ForegroundColor = ConsoleColor.Yellow;
-			Console.Write($"[{catagory}] ");
-			ForegroundColor = originalFG;
-			Console.WriteLine(message);
-		}
 
         public static void WriteLine(string s)
         {
@@ -389,15 +367,15 @@ namespace MOOS
 
         private static void ClearFramebuffer()
         {
-            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered)
+            if (Framebuffer.VideoMemory != null && !Framebuffer.TripleBuffered) 
             {
                 Framebuffer.Graphics.FillRectangle
                     (
-                            ColorsFramebuffer[(int)BackgroundColor],
                             (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + ((CursorX) * 8),
                             (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16),
                             Width * 8,
-                            Height * 16
+                            Height * 16,
+                            0x0
                     );
             }
         }

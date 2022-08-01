@@ -1,10 +1,11 @@
 ﻿using Cosmos.System.Graphics;
+using CosmosKernel1;
 
 namespace nifanfa.CosmosDrawString
 {
     public static unsafe class ASC16
     {
-        private static string buffer;
+        static string buffer;
 
         internal static void Initialise()
         {
@@ -31,9 +32,9 @@ namespace nifanfa.CosmosDrawString
                 {
                     for (int j = 0; j < 8; j++)
                     {
-                        if ((buffer[offset + i] & (0x80 >> j)) != 0)
+                        if ((buffer[offset + i] & (0x80 >> (int)j)) != 0)
                         {
-                            vMWareSVGAII.DrawPoint(System.Drawing.Color.FromArgb(color), ax + j, ay + i);
+                            vMWareSVGAII.DrawPoint((uint)(ax + j), (uint)(ay + i), color);
                         }
                     }
                 }

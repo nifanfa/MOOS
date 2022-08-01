@@ -1,4 +1,5 @@
-﻿namespace System
+
+namespace System
 {
-	public struct Nullable<T> where T : struct { }
+    public struct Nullable<T> where T : struct { }
 }

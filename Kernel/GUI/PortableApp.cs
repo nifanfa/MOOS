@@ -23,7 +23,7 @@ namespace MOOS.GUI
         {
             base.OnDraw();
 
-            Framebuffer.Graphics.DrawImage(ScreenBuf, X, Y);
+            Framebuffer.Graphics.DrawImage(this.X, this.Y, ScreenBuf, false);
         }
     }
 }

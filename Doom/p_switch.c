@@ -41,53 +41,53 @@
 //
 switchlist_t alphSwitchList[] =
 {
-	// Doom shareware episode 1 switches
-	{"SW1BRCOM",	"SW2BRCOM",	1},
-	{"SW1BRN1",	"SW2BRN1",	1},
-	{"SW1BRN2",	"SW2BRN2",	1},
-	{"SW1BRNGN",	"SW2BRNGN",	1},
-	{"SW1BROWN",	"SW2BROWN",	1},
-	{"SW1COMM",	"SW2COMM",	1},
-	{"SW1COMP",	"SW2COMP",	1},
-	{"SW1DIRT",	"SW2DIRT",	1},
-	{"SW1EXIT",	"SW2EXIT",	1},
-	{"SW1GRAY",	"SW2GRAY",	1},
-	{"SW1GRAY1",	"SW2GRAY1",	1},
-	{"SW1METAL",	"SW2METAL",	1},
-	{"SW1PIPE",	"SW2PIPE",	1},
-	{"SW1SLAD",	"SW2SLAD",	1},
-	{"SW1STARG",	"SW2STARG",	1},
-	{"SW1STON1",	"SW2STON1",	1},
-	{"SW1STON2",	"SW2STON2",	1},
-	{"SW1STONE",	"SW2STONE",	1},
-	{"SW1STRTN",	"SW2STRTN",	1},
+    // Doom shareware episode 1 switches
+    {"SW1BRCOM",	"SW2BRCOM",	1},
+    {"SW1BRN1",	"SW2BRN1",	1},
+    {"SW1BRN2",	"SW2BRN2",	1},
+    {"SW1BRNGN",	"SW2BRNGN",	1},
+    {"SW1BROWN",	"SW2BROWN",	1},
+    {"SW1COMM",	"SW2COMM",	1},
+    {"SW1COMP",	"SW2COMP",	1},
+    {"SW1DIRT",	"SW2DIRT",	1},
+    {"SW1EXIT",	"SW2EXIT",	1},
+    {"SW1GRAY",	"SW2GRAY",	1},
+    {"SW1GRAY1",	"SW2GRAY1",	1},
+    {"SW1METAL",	"SW2METAL",	1},
+    {"SW1PIPE",	"SW2PIPE",	1},
+    {"SW1SLAD",	"SW2SLAD",	1},
+    {"SW1STARG",	"SW2STARG",	1},
+    {"SW1STON1",	"SW2STON1",	1},
+    {"SW1STON2",	"SW2STON2",	1},
+    {"SW1STONE",	"SW2STONE",	1},
+    {"SW1STRTN",	"SW2STRTN",	1},
+    
+    // Doom registered episodes 2&3 switches
+    {"SW1BLUE",	"SW2BLUE",	2},
+    {"SW1CMT",		"SW2CMT",	2},
+    {"SW1GARG",	"SW2GARG",	2},
+    {"SW1GSTON",	"SW2GSTON",	2},
+    {"SW1HOT",		"SW2HOT",	2},
+    {"SW1LION",	"SW2LION",	2},
+    {"SW1SATYR",	"SW2SATYR",	2},
+    {"SW1SKIN",	"SW2SKIN",	2},
+    {"SW1VINE",	"SW2VINE",	2},
+    {"SW1WOOD",	"SW2WOOD",	2},
+    
+    // Doom II switches
+    {"SW1PANEL",	"SW2PANEL",	3},
+    {"SW1ROCK",	"SW2ROCK",	3},
+    {"SW1MET2",	"SW2MET2",	3},
+    {"SW1WDMET",	"SW2WDMET",	3},
+    {"SW1BRIK",	"SW2BRIK",	3},
+    {"SW1MOD1",	"SW2MOD1",	3},
+    {"SW1ZIM",		"SW2ZIM",	3},
+    {"SW1STON6",	"SW2STON6",	3},
+    {"SW1TEK",		"SW2TEK",	3},
+    {"SW1MARB",	"SW2MARB",	3},
+    {"SW1SKULL",	"SW2SKULL",	3},
 	
-	// Doom registered episodes 2&3 switches
-	{"SW1BLUE",	"SW2BLUE",	2},
-	{"SW1CMT",		"SW2CMT",	2},
-	{"SW1GARG",	"SW2GARG",	2},
-	{"SW1GSTON",	"SW2GSTON",	2},
-	{"SW1HOT",		"SW2HOT",	2},
-	{"SW1LION",	"SW2LION",	2},
-	{"SW1SATYR",	"SW2SATYR",	2},
-	{"SW1SKIN",	"SW2SKIN",	2},
-	{"SW1VINE",	"SW2VINE",	2},
-	{"SW1WOOD",	"SW2WOOD",	2},
-	
-	// Doom II switches
-	{"SW1PANEL",	"SW2PANEL",	3},
-	{"SW1ROCK",	"SW2ROCK",	3},
-	{"SW1MET2",	"SW2MET2",	3},
-	{"SW1WDMET",	"SW2WDMET",	3},
-	{"SW1BRIK",	"SW2BRIK",	3},
-	{"SW1MOD1",	"SW2MOD1",	3},
-	{"SW1ZIM",		"SW2ZIM",	3},
-	{"SW1STON6",	"SW2STON6",	3},
-	{"SW1TEK",		"SW2TEK",	3},
-	{"SW1MARB",	"SW2MARB",	3},
-	{"SW1SKULL",	"SW2SKULL",	3},
-	
-	{"\0",		"\0",		0}
+    {"\0",		"\0",		0}
 };
 
 int		switchlist[MAXSWITCHES * 2];
@@ -100,20 +100,20 @@ button_t        buttonlist[MAXBUTTONS];
 //
 void P_InitSwitchList(void)
 {
-	int		i;
-	int		index;
-	int		episode;
+    int		i;
+    int		index;
+    int		episode;
 	
-	episode = 1;
+    episode = 1;
 
-	if (gamemode == registered || gamemode == retail)
+    if (gamemode == registered || gamemode == retail)
 	episode = 2;
-	else
+    else
 	if ( gamemode == commercial )
 	    episode = 3;
 		
-	for (index = 0,i = 0;i < MAXSWITCHES;i++)
-	{
+    for (index = 0,i = 0;i < MAXSWITCHES;i++)
+    {
 	if (!alphSwitchList[i].episode)
 	{
 	    numswitches = index/2;
@@ -138,7 +138,7 @@ void P_InitSwitchList(void)
 	    switchlist[index++] = R_TextureNumForName(DEH_String(alphSwitchList[i].name1));
 	    switchlist[index++] = R_TextureNumForName(DEH_String(alphSwitchList[i].name2));
 	}
-	}
+    }
 }
 
 
@@ -152,23 +152,23 @@ P_StartButton
   int		texture,
   int		time )
 {
-	int		i;
-	
-	// See if button is already pressed
-	for (i = 0;i < MAXBUTTONS;i++)
-	{
+    int		i;
+    
+    // See if button is already pressed
+    for (i = 0;i < MAXBUTTONS;i++)
+    {
 	if (buttonlist[i].btimer
 	    && buttonlist[i].line == line)
 	{
 	    
 	    return;
 	}
-	}
-	
+    }
+    
 
-	
-	for (i = 0;i < MAXBUTTONS;i++)
-	{
+    
+    for (i = 0;i < MAXBUTTONS;i++)
+    {
 	if (!buttonlist[i].btimer)
 	{
 	    buttonlist[i].line = line;
@@ -178,9 +178,9 @@ P_StartButton
 	    buttonlist[i].soundorg = &line->frontsector->soundorg;
 	    return;
 	}
-	}
-	
-	I_Error("P_StartButton: no button slots left!");
+    }
+    
+    I_Error("P_StartButton: no button slots left!");
 }
 
 
@@ -196,27 +196,27 @@ P_ChangeSwitchTexture
 ( line_t*	line,
   int 		useAgain )
 {
-	int     texTop;
-	int     texMid;
-	int     texBot;
-	int     i;
-	int     sound;
+    int     texTop;
+    int     texMid;
+    int     texBot;
+    int     i;
+    int     sound;
 	
-	if (!useAgain)
+    if (!useAgain)
 	line->special = 0;
 
-	texTop = sides[line->sidenum[0]].toptexture;
-	texMid = sides[line->sidenum[0]].midtexture;
-	texBot = sides[line->sidenum[0]].bottomtexture;
+    texTop = sides[line->sidenum[0]].toptexture;
+    texMid = sides[line->sidenum[0]].midtexture;
+    texBot = sides[line->sidenum[0]].bottomtexture;
 	
-	sound = sfx_swtchn;
+    sound = sfx_swtchn;
 
-	// EXIT SWITCH?
-	if (line->special == 11)                
+    // EXIT SWITCH?
+    if (line->special == 11)                
 	sound = sfx_swtchx;
 	
-	for (i = 0;i < numswitches*2;i++)
-	{
+    for (i = 0;i < numswitches*2;i++)
+    {
 	if (switchlist[i] == texTop)
 	{
 	    S_StartSound(buttonlist->soundorg,sound);
@@ -253,7 +253,7 @@ P_ChangeSwitchTexture
 		}
 	    }
 	}
-	}
+    }
 }
 
 
@@ -273,10 +273,10 @@ P_UseSpecialLine
   int		side )
 {               
 
-	// Err...
-	// Use the back sides of VERY SPECIAL lines...
-	if (side)
-	{
+    // Err...
+    // Use the back sides of VERY SPECIAL lines...
+    if (side)
+    {
 	switch(line->special)
 	{
 	  case 124:
@@ -288,12 +288,12 @@ P_UseSpecialLine
 	    return false;
 	    break;
 	}
-	}
+    }
 
-	
-	// Switches that other things can activate.
-	if (!thing->player)
-	{
+    
+    // Switches that other things can activate.
+    if (!thing->player)
+    {
 	// never open secret doors
 	if (line->flags & ML_SECRET)
 	    return false;
@@ -310,25 +310,25 @@ P_UseSpecialLine
 	    return false;
 	    break;
 	}
-	}
+    }
 
-	
-	// do something  
-	switch (line->special)
-	{
+    
+    // do something  
+    switch (line->special)
+    {
 	// MANUALS
-	  case 1:		// Vertical Door
-	  case 26:		// Blue Door/Locked
-	  case 27:		// Yellow Door /Locked
-	  case 28:		// Red Door /Locked
+      case 1:		// Vertical Door
+      case 26:		// Blue Door/Locked
+      case 27:		// Yellow Door /Locked
+      case 28:		// Red Door /Locked
 
-	  case 31:		// Manual door open
-	  case 32:		// Blue locked door open
-	  case 33:		// Red locked door open
-	  case 34:		// Yellow locked door open
+      case 31:		// Manual door open
+      case 32:		// Blue locked door open
+      case 33:		// Red locked door open
+      case 34:		// Yellow locked door open
 
-	  case 117:		// Blazing door raise
-	  case 118:		// Blazing door open
+      case 117:		// Blazing door raise
+      case 118:		// Blazing door open
 	EV_VerticalDoor (line, thing);
 	break;
 	
@@ -338,311 +338,311 @@ P_UseSpecialLine
 	// break;
 
 	// SWITCHES
-	  case 7:
+      case 7:
 	// Build Stairs
 	if (EV_BuildStairs(line,build8))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 
-	  case 9:
+      case 9:
 	// Change Donut
 	if (EV_DoDonut(line))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 11:
+      case 11:
 	// Exit level
 	P_ChangeSwitchTexture(line,0);
 	G_ExitLevel ();
 	break;
 	
-	  case 14:
+      case 14:
 	// Raise Floor 32 and change texture
 	if (EV_DoPlat(line,raiseAndChange,32))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 15:
+      case 15:
 	// Raise Floor 24 and change texture
 	if (EV_DoPlat(line,raiseAndChange,24))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 18:
+      case 18:
 	// Raise Floor to next highest floor
 	if (EV_DoFloor(line, raiseFloorToNearest))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 20:
+      case 20:
 	// Raise Plat next highest floor and change texture
 	if (EV_DoPlat(line,raiseToNearestAndChange,0))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 21:
+      case 21:
 	// PlatDownWaitUpStay
 	if (EV_DoPlat(line,downWaitUpStay,0))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 23:
+      case 23:
 	// Lower Floor to Lowest
 	if (EV_DoFloor(line,lowerFloorToLowest))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 29:
+      case 29:
 	// Raise Door
 	if (EV_DoDoor(line,vld_normal))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 41:
+      case 41:
 	// Lower Ceiling to Floor
 	if (EV_DoCeiling(line,lowerToFloor))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 71:
+      case 71:
 	// Turbo Lower Floor
 	if (EV_DoFloor(line,turboLower))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 49:
+      case 49:
 	// Ceiling Crush And Raise
 	if (EV_DoCeiling(line,crushAndRaise))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 50:
+      case 50:
 	// Close Door
 	if (EV_DoDoor(line,vld_close))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 51:
+      case 51:
 	// Secret EXIT
 	P_ChangeSwitchTexture(line,0);
 	G_SecretExitLevel ();
 	break;
 	
-	  case 55:
+      case 55:
 	// Raise Floor Crush
 	if (EV_DoFloor(line,raiseFloorCrush))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 101:
+      case 101:
 	// Raise Floor
 	if (EV_DoFloor(line,raiseFloor))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 102:
+      case 102:
 	// Lower Floor to Surrounding floor height
 	if (EV_DoFloor(line,lowerFloor))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 103:
+      case 103:
 	// Open Door
 	if (EV_DoDoor(line,vld_open))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 111:
+      case 111:
 	// Blazing Door Raise (faster than TURBO!)
 	if (EV_DoDoor (line,vld_blazeRaise))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 112:
+      case 112:
 	// Blazing Door Open (faster than TURBO!)
 	if (EV_DoDoor (line,vld_blazeOpen))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 113:
+      case 113:
 	// Blazing Door Close (faster than TURBO!)
 	if (EV_DoDoor (line,vld_blazeClose))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 122:
+      case 122:
 	// Blazing PlatDownWaitUpStay
 	if (EV_DoPlat(line,blazeDWUS,0))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 127:
+      case 127:
 	// Build Stairs Turbo 16
 	if (EV_BuildStairs(line,turbo16))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 131:
+      case 131:
 	// Raise Floor Turbo
 	if (EV_DoFloor(line,raiseFloorTurbo))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 133:
+      case 133:
 	// BlzOpenDoor BLUE
-	  case 135:
+      case 135:
 	// BlzOpenDoor RED
-	  case 137:
+      case 137:
 	// BlzOpenDoor YELLOW
 	if (EV_DoLockedDoor (line,vld_blazeOpen,thing))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
-	  case 140:
+      case 140:
 	// Raise Floor 512
 	if (EV_DoFloor(line,raiseFloor512))
 	    P_ChangeSwitchTexture(line,0);
 	break;
 	
 	// BUTTONS
-	  case 42:
+      case 42:
 	// Close Door
 	if (EV_DoDoor(line,vld_close))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 43:
+      case 43:
 	// Lower Ceiling to Floor
 	if (EV_DoCeiling(line,lowerToFloor))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 45:
+      case 45:
 	// Lower Floor to Surrounding floor height
 	if (EV_DoFloor(line,lowerFloor))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 60:
+      case 60:
 	// Lower Floor to Lowest
 	if (EV_DoFloor(line,lowerFloorToLowest))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 61:
+      case 61:
 	// Open Door
 	if (EV_DoDoor(line,vld_open))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 62:
+      case 62:
 	// PlatDownWaitUpStay
 	if (EV_DoPlat(line,downWaitUpStay,1))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 63:
+      case 63:
 	// Raise Door
 	if (EV_DoDoor(line,vld_normal))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 64:
+      case 64:
 	// Raise Floor to ceiling
 	if (EV_DoFloor(line,raiseFloor))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 66:
+      case 66:
 	// Raise Floor 24 and change texture
 	if (EV_DoPlat(line,raiseAndChange,24))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 67:
+      case 67:
 	// Raise Floor 32 and change texture
 	if (EV_DoPlat(line,raiseAndChange,32))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 65:
+      case 65:
 	// Raise Floor Crush
 	if (EV_DoFloor(line,raiseFloorCrush))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 68:
+      case 68:
 	// Raise Plat to next highest floor and change texture
 	if (EV_DoPlat(line,raiseToNearestAndChange,0))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 69:
+      case 69:
 	// Raise Floor to next highest floor
 	if (EV_DoFloor(line, raiseFloorToNearest))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 70:
+      case 70:
 	// Turbo Lower Floor
 	if (EV_DoFloor(line,turboLower))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 114:
+      case 114:
 	// Blazing Door Raise (faster than TURBO!)
 	if (EV_DoDoor (line,vld_blazeRaise))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 115:
+      case 115:
 	// Blazing Door Open (faster than TURBO!)
 	if (EV_DoDoor (line,vld_blazeOpen))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 116:
+      case 116:
 	// Blazing Door Close (faster than TURBO!)
 	if (EV_DoDoor (line,vld_blazeClose))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 123:
+      case 123:
 	// Blazing PlatDownWaitUpStay
 	if (EV_DoPlat(line,blazeDWUS,0))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 132:
+      case 132:
 	// Raise Floor Turbo
 	if (EV_DoFloor(line,raiseFloorTurbo))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 99:
+      case 99:
 	// BlzOpenDoor BLUE
-	  case 134:
+      case 134:
 	// BlzOpenDoor RED
-	  case 136:
+      case 136:
 	// BlzOpenDoor YELLOW
 	if (EV_DoLockedDoor (line,vld_blazeOpen,thing))
 	    P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 138:
+      case 138:
 	// Light Turn On
 	EV_LightTurnOn(line,255);
 	P_ChangeSwitchTexture(line,1);
 	break;
 	
-	  case 139:
+      case 139:
 	// Light Turn Off
 	EV_LightTurnOn(line,35);
 	P_ChangeSwitchTexture(line,1);
 	break;
 			
-	}
+    }
 	
-	return true;
+    return true;
 }
 

@@ -1,4 +1,5 @@
-﻿namespace System
+
+namespace System
 {
-	public abstract class ValueType { }
+    public abstract class ValueType { }
 }

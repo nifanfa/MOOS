@@ -3,88 +3,79 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>51e1b402-1d4f-4c9b-831c-45c8603353d5</SharedGUID>
+    <SharedGUID>2ea1f38f-f26e-4148-8ffd-38713478e015</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>CoreLib</Import_RootNamespace>
+    <Import_RootNamespace>
+    </Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)System\Boolean.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Byte.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Char.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\Dictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Delegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Double.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Enum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Int16.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Int32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Int64.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\ArrayHelpers.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\InteropHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\StartupCodeHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\SynchronizedMethodHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\ThrowHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerHelpers\InteropHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\CompilerServices\Unsafe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\EEType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\ModuleHeaders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\Runtime\RuntimeConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internal\TypeSystem\ExceptionStringID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\MathF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\MulticastDelegate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Nullable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DataDirectory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DllCharacteristicsType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DOSHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\FileHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\NtHeaders64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\OptionalHeaders64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SectionHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SubSystemType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeMethodHandle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeTypeHandle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\SByte.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Single.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Action.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\AppContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Array.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Attribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\AttributeUsageAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\BitConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\BitHelpers.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Boolean.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Byte.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Char.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\Dictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\List.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Collections\Generic\Queue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleColor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKey.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleModifiers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Convert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\DateTime.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\DateTimeKind.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\DayOfWeek.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Delegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Debug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Process.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Stopwatch.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Double.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Brush.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Image.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Point.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Rectangle.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Drawing\Size.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EETypePtr.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Enum.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Environment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\EventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\FlagsAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Func.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Globalization\CharUnicodeInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Globalization\CultureInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Int16.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Int32.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Int64.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\IntPtr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleModifiers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\ConsoleKeyState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Math.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\MathF.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\MulticastDelegate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Net\IPAddress.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Nullable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Object.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ObsoleteAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ParamArrayAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Random.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DOSHeader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SubSystemType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SectionHeader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\OptionalHeaders64.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\NtHeaders64.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\FileHeader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DllCharacteristicsType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DataDirectory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeFieldHandle.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeMethodHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\RuntimeTypeHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\ClassConstructorRunner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\ExtensionAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\IntrinsicAttribute.cs" />
@@ -93,7 +84,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\RawCalliHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\RuntimeHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\StaticClassConstructionContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\TupleElementNamesAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\CallingConvention.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\DllImportAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\FieldOffsetAttribute.cs" />
@@ -105,20 +95,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\InteropServices\UnmanagedType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\RuntimeExportAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\TypeCast.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\SByte.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Single.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\String.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\System.SR.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Threading\Monitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\TimeSpan.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Tuple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\UInt16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\UInt32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\UInt64.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\UIntPtr.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\ValueTuple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ValueType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Void.cs" />
+    <Compile Include="..\Corlib\System\RuntimeFieldHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\Control.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Windows\Forms\MouseButtons.cs" />
   </ItemGroup>

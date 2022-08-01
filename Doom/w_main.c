@@ -29,153 +29,153 @@
 
 boolean W_ParseCommandLine(void)
 {
-	boolean modifiedgame = false;
-	int p;
+    boolean modifiedgame = false;
+    int p;
 
 #ifdef FEATURE_WAD_MERGE
 
-	// Merged PWADs are loaded first, because they are supposed to be 
-	// modified IWADs.
+    // Merged PWADs are loaded first, because they are supposed to be 
+    // modified IWADs.
 
-	//!
-	// @arg <files>
-	// @category mod
-	//
-	// Simulates the behavior of deutex's -merge option, merging a PWAD
-	// into the main IWAD.  Multiple files may be specified.
-	//
+    //!
+    // @arg <files>
+    // @category mod
+    //
+    // Simulates the behavior of deutex's -merge option, merging a PWAD
+    // into the main IWAD.  Multiple files may be specified.
+    //
 
-	p = M_CheckParmWithArgs("-merge", 1);
+    p = M_CheckParmWithArgs("-merge", 1);
 
-	if (p > 0)
-	{
-		for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
-		{
-			char *filename;
+    if (p > 0)
+    {
+        for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
+        {
+            char *filename;
 
-			modifiedgame = true;
+            modifiedgame = true;
 
-			filename = D_TryFindWADByName(myargv[p]);
+            filename = D_TryFindWADByName(myargv[p]);
 
-			printf(" merging %s\n", filename);
-			W_MergeFile(filename);
-		}
-	}
+            printf(" merging %s\n", filename);
+            W_MergeFile(filename);
+        }
+    }
 
-	// NWT-style merging:
+    // NWT-style merging:
 
-	// NWT's -merge option:
+    // NWT's -merge option:
 
-	//!
-	// @arg <files>
-	// @category mod
-	//
-	// Simulates the behavior of NWT's -merge option.  Multiple files
-	// may be specified.
+    //!
+    // @arg <files>
+    // @category mod
+    //
+    // Simulates the behavior of NWT's -merge option.  Multiple files
+    // may be specified.
 
-	p = M_CheckParmWithArgs("-nwtmerge", 1);
+    p = M_CheckParmWithArgs("-nwtmerge", 1);
 
-	if (p > 0)
-	{
-		for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
-		{
-			char *filename;
+    if (p > 0)
+    {
+        for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
+        {
+            char *filename;
 
-			modifiedgame = true;
+            modifiedgame = true;
 
-			filename = D_TryFindWADByName(myargv[p]);
+            filename = D_TryFindWADByName(myargv[p]);
 
-			printf(" performing NWT-style merge of %s\n", filename);
-			W_NWTDashMerge(filename);
-		}
-	}
-	
-	// Add flats
+            printf(" performing NWT-style merge of %s\n", filename);
+            W_NWTDashMerge(filename);
+        }
+    }
+    
+    // Add flats
 
-	//!
-	// @arg <files>
-	// @category mod
-	//
-	// Simulates the behavior of NWT's -af option, merging flats into
-	// the main IWAD directory.  Multiple files may be specified.
-	//
+    //!
+    // @arg <files>
+    // @category mod
+    //
+    // Simulates the behavior of NWT's -af option, merging flats into
+    // the main IWAD directory.  Multiple files may be specified.
+    //
 
-	p = M_CheckParmWithArgs("-af", 1);
+    p = M_CheckParmWithArgs("-af", 1);
 
-	if (p > 0)
-	{
-		for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
-		{
-			char *filename;
+    if (p > 0)
+    {
+        for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
+        {
+            char *filename;
 
-			modifiedgame = true;
+            modifiedgame = true;
 
-			filename = D_TryFindWADByName(myargv[p]);
+            filename = D_TryFindWADByName(myargv[p]);
 
-			printf(" merging flats from %s\n", filename);
-			W_NWTMergeFile(filename, W_NWT_MERGE_FLATS);
-		}
-	}
+            printf(" merging flats from %s\n", filename);
+            W_NWTMergeFile(filename, W_NWT_MERGE_FLATS);
+        }
+    }
 
-	//!
-	// @arg <files>
-	// @category mod
-	//
-	// Simulates the behavior of NWT's -as option, merging sprites
-	// into the main IWAD directory.  Multiple files may be specified.
-	//
+    //!
+    // @arg <files>
+    // @category mod
+    //
+    // Simulates the behavior of NWT's -as option, merging sprites
+    // into the main IWAD directory.  Multiple files may be specified.
+    //
 
-	p = M_CheckParmWithArgs("-as", 1);
+    p = M_CheckParmWithArgs("-as", 1);
 
-	if (p > 0)
-	{
-		for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
-		{
-			char *filename;
+    if (p > 0)
+    {
+        for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
+        {
+            char *filename;
 
-			modifiedgame = true;
-			filename = D_TryFindWADByName(myargv[p]);
+            modifiedgame = true;
+            filename = D_TryFindWADByName(myargv[p]);
 
-			printf(" merging sprites from %s\n", filename);
-			W_NWTMergeFile(filename, W_NWT_MERGE_SPRITES);
-		}
-	}
+            printf(" merging sprites from %s\n", filename);
+            W_NWTMergeFile(filename, W_NWT_MERGE_SPRITES);
+        }
+    }
 
-	//!
-	// @arg <files>
-	// @category mod
-	//
-	// Equivalent to "-af <files> -as <files>".
-	//
+    //!
+    // @arg <files>
+    // @category mod
+    //
+    // Equivalent to "-af <files> -as <files>".
+    //
 
-	p = M_CheckParmWithArgs("-aa", 1);
+    p = M_CheckParmWithArgs("-aa", 1);
 
-	if (p > 0)
-	{
-		for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
-		{
-			char *filename;
+    if (p > 0)
+    {
+        for (p = p + 1; p<myargc && myargv[p][0] != '-'; ++p)
+        {
+            char *filename;
 
-			modifiedgame = true;
+            modifiedgame = true;
 
-			filename = D_TryFindWADByName(myargv[p]);
+            filename = D_TryFindWADByName(myargv[p]);
 
-			printf(" merging sprites and flats from %s\n", filename);
-			W_NWTMergeFile(filename, W_NWT_MERGE_SPRITES | W_NWT_MERGE_FLATS);
-		}
-	}
+            printf(" merging sprites and flats from %s\n", filename);
+            W_NWTMergeFile(filename, W_NWT_MERGE_SPRITES | W_NWT_MERGE_FLATS);
+        }
+    }
 
 #endif
 
-	//!
-	// @arg <files>
-	// @vanilla
-	//
-	// Load the specified PWAD files.
-	//
+    //!
+    // @arg <files>
+    // @vanilla
+    //
+    // Load the specified PWAD files.
+    //
 
 //    W_PrintDirectory();
 
-	return modifiedgame;
+    return modifiedgame;
 }
 

@@ -30,58 +30,58 @@ static int num_open_wadfiles = 0;
 
 static int GetFileNumber(wad_file_t *handle)
 {
-	int i;
-	int result;
+    int i;
+    int result;
 
-	for (i=0; i<num_open_wadfiles; ++i)
-	{
-		if (open_wadfiles[i] == handle)
-		{
-			return i;
-		}
-	}
+    for (i=0; i<num_open_wadfiles; ++i)
+    {
+        if (open_wadfiles[i] == handle)
+        {
+            return i;
+        }
+    }
 
-	// Not found in list.  This is a new file we haven't seen yet.
-	// Allocate another slot for this file.
+    // Not found in list.  This is a new file we haven't seen yet.
+    // Allocate another slot for this file.
 
-	open_wadfiles = krealloc(open_wadfiles,
-							sizeof(wad_file_t *) * (num_open_wadfiles + 1));
-	open_wadfiles[num_open_wadfiles] = handle;
+    open_wadfiles = krealloc(open_wadfiles,
+                            sizeof(wad_file_t *) * (num_open_wadfiles + 1));
+    open_wadfiles[num_open_wadfiles] = handle;
 
-	result = num_open_wadfiles;
-	++num_open_wadfiles;
+    result = num_open_wadfiles;
+    ++num_open_wadfiles;
 
-	return result;
+    return result;
 }
 
 static void ChecksumAddLump(sha1_context_t *sha1_context, lumpinfo_t *lump)
 {
-	char buf[9];
+    char buf[9];
 
-	M_StringCopy(buf, lump->name, sizeof(buf));
-	SHA1_UpdateString(sha1_context, buf);
-	SHA1_UpdateInt32(sha1_context, GetFileNumber(lump->wad_file));
-	SHA1_UpdateInt32(sha1_context, lump->position);
-	SHA1_UpdateInt32(sha1_context, lump->size);
+    M_StringCopy(buf, lump->name, sizeof(buf));
+    SHA1_UpdateString(sha1_context, buf);
+    SHA1_UpdateInt32(sha1_context, GetFileNumber(lump->wad_file));
+    SHA1_UpdateInt32(sha1_context, lump->position);
+    SHA1_UpdateInt32(sha1_context, lump->size);
 }
 
 void W_Checksum(sha1_digest_t digest)
 {
-	sha1_context_t sha1_context;
-	unsigned int i;
+    sha1_context_t sha1_context;
+    unsigned int i;
 
-	SHA1_Init(&sha1_context);
+    SHA1_Init(&sha1_context);
 
-	num_open_wadfiles = 0;
+    num_open_wadfiles = 0;
 
-	// Go through each entry in the WAD directory, adding information
-	// about each entry to the SHA1 hash.
+    // Go through each entry in the WAD directory, adding information
+    // about each entry to the SHA1 hash.
 
-	for (i=0; i<numlumps; ++i)
-	{
-		ChecksumAddLump(&sha1_context, &lumpinfo[i]);
-	}
-	
-	SHA1_Final(digest, &sha1_context);
+    for (i=0; i<numlumps; ++i)
+    {
+        ChecksumAddLump(&sha1_context, &lumpinfo[i]);
+    }
+    
+    SHA1_Final(digest, &sha1_context);
 }
 

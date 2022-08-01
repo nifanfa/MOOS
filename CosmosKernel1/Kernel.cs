@@ -4,41 +4,44 @@
 //static constructor is not supported you have to notice that!
 //things like: static string str = "hello world"; is not supported! str will be null
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Runtime;
 using Cosmos.Core;
 using Cosmos.System;
 using Cosmos.System.FileSystem;
 using Cosmos.System.FileSystem.VFS;
 using Cosmos.System.Graphics;
 using MOOS.Driver;
+using MOOS.FS;
+using MOOS.Misc;
 using nifanfa.CosmosDrawString;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Runtime;
 using Sys = Cosmos.System;
 
 namespace CosmosKernel1
 {
     public class Kernel : Sys.Kernel
     {
-        private static extern void Main();
+        static extern void Main();
 
         [RuntimeExport("KMain")]
-        private static void KMain()
+        static void KMain()
         {
             MOOS.Console.WriteLine("Entering Cosmos Kernel");
-            Kernel kernel = new();
+            Kernel kernel = new Kernel();
             kernel.BeforeRun();
-            for (; ; )
-            {
-                kernel.Run();
-            }
+            for (; ; ) kernel.Run();
         }
 
         public static uint screenWidth;
         public static uint screenHeight;
         public static Canvas vMWareSVGAII;
-        private int[] cursor = new int[]
+        Image bitmap;
+        public static Bitmap programlogo;
+        Image bootBitmap;
+
+        int[] cursor = new int[]
             {
                 1,0,0,0,0,0,0,0,0,0,0,0,
                 1,1,0,0,0,0,0,0,0,0,0,0,
@@ -60,15 +63,16 @@ namespace CosmosKernel1
                 0,0,0,0,0,0,1,2,2,1,0,0,
                 0,0,0,0,0,0,0,1,1,0,0,0
             };
-        private LogView logView;
-        private Clock Clock;
-        private Notepad notepad;
-        private Dock dock;
+
+        LogView logView;
+        Clock Clock;
+        Notepad notepad;
+        Dock dock;
         public static bool Pressed;
 
         public static List<App> apps;
 
-        public static Color color;
+        public static Color avgCol;
 
         protected override void BeforeRun()
         {
@@ -76,16 +80,42 @@ namespace CosmosKernel1
 
             apps = new List<App>();
 
-            CosmosVFS cosmosVFS = new();
+            CosmosVFS cosmosVFS = new CosmosVFS();
             VFSManager.RegisterVFS(cosmosVFS);
 
             vMWareSVGAII = FullScreenCanvas.GetFullScreenCanvas();
             screenWidth = (uint)vMWareSVGAII.Width;
             screenHeight = (uint)vMWareSVGAII.Height;
 
+            //Who ever need .bmp
+            //bootBitmap = new Bitmap(File.ReadAllBytes(@"0:\boot.bmp"));
+            bootBitmap = new PNG(File.ReadAllBytes(@"0:\boot.png"));
+            bootBitmap = bootBitmap.ResizeImage((int)screenWidth, (int)screenHeight);
+
+            vMWareSVGAII.Clear(0x0);
+            vMWareSVGAII.DrawImage(bootBitmap, 0, 0);
+            vMWareSVGAII.Update();
+
             Timer.Sleep(1000);
 
-            color = Color.FromArgb(0x3a3a3a);
+            //Who ever need .bmp
+            //bitmap = new Bitmap(File.ReadAllBytes(@"0:\timg.bmp"));
+            bitmap = new PNG(File.ReadAllBytes(@"0:\timg.png"));
+            bitmap = bitmap.ResizeImage((int)screenWidth, (int)screenHeight);
+
+            programlogo = new Bitmap(File.ReadAllBytes(@"0:\program.bmp"));
+
+            uint r = 0;
+            uint g = 0;
+            uint b = 0;
+            for (uint i = 0; i < bitmap.RawData.Length; i++)
+            {
+                Color color = Color.FromArgb((uint)bitmap.RawData[i]);
+                r += color.R;
+                g += color.G;
+                b += color.B;
+            }
+            avgCol = Color.FromArgb((byte)(r / bitmap.RawData.Length), (byte)(g / bitmap.RawData.Length), (byte)(b / bitmap.RawData.Length));
 
             MouseManager.ScreenWidth = (int)screenWidth;
             MouseManager.ScreenHeight = (int)screenHeight;
@@ -114,34 +144,37 @@ namespace CosmosKernel1
                     break;
             }
 
-            vMWareSVGAII.Clear(color);
+            vMWareSVGAII.Clear(avgCol.ToArgb());
+            vMWareSVGAII.DrawImage(bitmap, 0, 0);
             logView.text = $"Time: {DateTime.Now} \nInstall RAM: {CPU.GetAmountOfRAM()}MB, Video RAM: ?? Bytes";
 
-            for (int i = 0; i < apps.Count; i++)
+            for(int i = 0; i < apps.Count; i++) 
             {
                 apps[i].Update();
             }
 
             dock.Update();
 
-            DrawCursor(vMWareSVGAII, MouseManager.X, MouseManager.Y);
+            DrawCursor(vMWareSVGAII, (uint)MouseManager.X, (uint)MouseManager.Y);
+
+            end:
 
             vMWareSVGAII.Update();
         }
 
-        public void DrawCursor(Canvas vMWareSVGAII, int x, int y)
+        public void DrawCursor(Canvas vMWareSVGAII, uint x, uint y)
         {
-            for (int h = 0; h < 19; h++)
+            for (uint h = 0; h < 19; h++)
             {
-                for (int w = 0; w < 12; w++)
+                for (uint w = 0; w < 12; w++)
                 {
-                    if (cursor[(h * 12) + w] == 1)
+                    if (cursor[h * 12 + w] == 1)
                     {
-                        vMWareSVGAII.DrawPoint(Color.Black, w + x, h + y);
+                        vMWareSVGAII.DrawPoint(w + x, h + y, (uint)Color.Black.ToArgb());
                     }
-                    if (cursor[(h * 12) + w] == 2)
+                    if (cursor[h * 12 + w] == 2)
                     {
-                        vMWareSVGAII.DrawPoint(Color.White, w + x, h + y);
+                        vMWareSVGAII.DrawPoint(w + x, h + y, (uint)Color.White.ToArgb());
                     }
                 }
             }

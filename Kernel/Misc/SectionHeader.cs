@@ -1,7 +1,8 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
-namespace System.Reflection.PortableExecutable
+namespace MOOS
 {
+
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct SectionHeader
     {

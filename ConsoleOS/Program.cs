@@ -1,34 +1,27 @@
-﻿using System.Runtime;
 using MOOS;
+using System.Runtime;
 
-internal unsafe class Program
+unsafe class Program
 {
-	/// <summary>
-	/// Compiler requires a static main method in class 'Program'
-	/// 
-	/// <![CDATA[
-	/// Do not remove!
-	/// ]]>
-	/// </summary>
-	private static void Main() { }
+    static void Main() { }
 
-	/**
-	 * Minimum memory is 1024MiB of RAM
-	 * Memory Map:
-	 * 256 MiB - 512MiB    System
-	 * 512 MiB - ∞         Free to use
-	 * <see cref="MOOS.Misc.EntryPoint"/>
-	 */
-	[RuntimeExport("KMain")]
-	private static void KMain()
-	{
-		Console.Clear();
-		Console.WriteLine("Welcome to MOOS! Type some text and press {ENTER} for it to be 'echoed' back, just like the linux 'cat' command");
-
-		for (; ; )
-		{
-			string s = Console.ReadLine();
-			Console.WriteLine(s);
-		}
-	}
+    /*
+     * Minimum system requirement:
+     * 1024MiB of RAM
+     * Memory Map:
+     * 256 MiB - 512MiB   -> System
+     * 512 MiB - ∞     -> Free to use
+     */
+    //Check out Kernel/Misc/EntryPoint.cs
+    [RuntimeExport("KMain")]
+    static void KMain() 
+    {
+        Console.Clear();
+        Console.WriteLine("Now you are in MOOS-ConsoleOS!");
+        for(; ; ) 
+        {
+            string s = Console.ReadLine();
+            Console.WriteLine(s);
+        }
+    }
 }

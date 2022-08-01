@@ -1,49 +1,45 @@
-﻿namespace System
+
+namespace System
 {
-	public abstract class Delegate
-	{
-		public object m_firstParameter;
-		public object m_helperObject;
-		public IntPtr m_extraFunctionPointerOrData;
-		public IntPtr m_functionPointer;
-#nullable enable
-		public static unsafe Delegate? Combine(Delegate? a, Delegate? b)
-#nullable disable
-		{
-			return b;
-		}
+    public abstract class Delegate
+    {
+        public object m_firstParameter;
+        public object m_helperObject;
+        public IntPtr m_extraFunctionPointerOrData;
+        public IntPtr m_functionPointer;
 
-#nullable enable
-		public static Delegate? Remove(Delegate? source, Delegate? value)
-#nullable disable
-		{
-			return source;
-		}
+        public static Delegate? Combine(Delegate? a, Delegate? b)
+        {
+            return b;
+        }
 
-		// This function is known to the compiler backend.
-		protected void InitializeOpenStaticThunk(object firstParameter, IntPtr functionPointer, IntPtr functionPointerThunk)
-		{
-			// This sort of delegate is invoked by calling the thunk function pointer with the arguments to the delegate + a reference to the delegate object itself.
-			m_firstParameter = this;
-			m_functionPointer = functionPointerThunk;
-			m_extraFunctionPointerOrData = functionPointer;
-		}
+        public static Delegate? Remove(Delegate? source, Delegate? value)
+        {
+            return null;
+        }
 
-		// This function is known to the IL Transformer.
-		protected void InitializeClosedInstance(object firstParameter, IntPtr functionPointer)
-		{
-			m_firstParameter = firstParameter ?? this;
+        // This function is known to the compiler backend.
+        protected void InitializeOpenStaticThunk(object firstParameter, IntPtr functionPointer, IntPtr functionPointerThunk)
+        {
+            // This sort of delegate is invoked by calling the thunk function pointer with the arguments to the delegate + a reference to the delegate object itself.
+            m_firstParameter = this;
+            m_functionPointer = functionPointerThunk;
+            m_extraFunctionPointerOrData = functionPointer;
+        }
 
-			m_functionPointer = functionPointer;
-		}
+        // This function is known to the IL Transformer.
+        protected void InitializeClosedInstance(object firstParameter, IntPtr functionPointer)
+        {
+            if (firstParameter == null)
+            {
+                m_firstParameter = this;
+            }
+            else
+            {
+                m_firstParameter = firstParameter;
+            }
 
-		public static Delegate operator +(Delegate a, Delegate b)
-		{
-			return Combine(a, b);
-		}
-		public static Delegate operator -(Delegate a, Delegate b)
-		{
-			return Remove(a, b);
-		}
-	}
+            m_functionPointer = functionPointer;
+        }
+    }
 }

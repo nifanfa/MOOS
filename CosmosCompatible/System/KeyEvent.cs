@@ -19,28 +19,28 @@ namespace Cosmos.System
         {
             KeyChar = '\0';
             Key = ConsoleKeyEx.NoName;
-            Modifiers = ConsoleModifiers.None;
+            this.Modifiers = ConsoleModifiers.None;
             Type = KeyEventType.Make;
         }
 
         public KeyEvent(char keyChar, ConsoleKeyEx key, bool shift, bool alt, bool control, KeyEventType type)
         {
-            KeyChar = keyChar;
-            Key = key;
-            Modifiers = ConsoleModifiers.None;
+            this.KeyChar = keyChar;
+            this.Key = key;
+            this.Modifiers = ConsoleModifiers.None;
             if (shift)
             {
-                Modifiers |= ConsoleModifiers.Shift;
+                this.Modifiers |= ConsoleModifiers.Shift;
             }
             if (alt)
             {
-                Modifiers |= ConsoleModifiers.Alt;
+                this.Modifiers |= ConsoleModifiers.Alt;
             }
             if (control)
             {
-                Modifiers |= ConsoleModifiers.Ctrl;
+                this.Modifiers |= ConsoleModifiers.Control;
             }
-            Type = type;
+            this.Type = type;
         }
     }
 }

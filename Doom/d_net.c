@@ -44,61 +44,61 @@ ticcmd_t *netcmds;
 
 static void PlayerQuitGame(player_t *player)
 {
-	static char exitmsg[80];
-	unsigned int player_num;
+    static char exitmsg[80];
+    unsigned int player_num;
 
-	player_num = player - players;
+    player_num = player - players;
 
-	// Do this the same way as Vanilla Doom does, to allow dehacked
-	// replacements of this message
+    // Do this the same way as Vanilla Doom does, to allow dehacked
+    // replacements of this message
 
-	M_StringCopy(exitmsg, DEH_String("Player 1 left the game"),
-				 sizeof(exitmsg));
+    M_StringCopy(exitmsg, DEH_String("Player 1 left the game"),
+                 sizeof(exitmsg));
 
-	exitmsg[7] += player_num;
+    exitmsg[7] += player_num;
 
-	playeringame[player_num] = false;
-	players[consoleplayer].message = exitmsg;
+    playeringame[player_num] = false;
+    players[consoleplayer].message = exitmsg;
 
-	// TODO: check if it is sensible to do this:
+    // TODO: check if it is sensible to do this:
 
-	if (demorecording) 
-	{
-		G_CheckDemoStatus ();
-	}
+    if (demorecording) 
+    {
+        G_CheckDemoStatus ();
+    }
 }
 
 static void RunTic(ticcmd_t *cmds, boolean *ingame)
 {
-	extern boolean advancedemo;
-	unsigned int i;
+    extern boolean advancedemo;
+    unsigned int i;
 
-	// Check for player quits.
+    // Check for player quits.
 
-	for (i = 0; i < MAXPLAYERS; ++i)
-	{
-		if (!demoplayback && playeringame[i] && !ingame[i])
-		{
-			PlayerQuitGame(&players[i]);
-		}
-	}
+    for (i = 0; i < MAXPLAYERS; ++i)
+    {
+        if (!demoplayback && playeringame[i] && !ingame[i])
+        {
+            PlayerQuitGame(&players[i]);
+        }
+    }
 
-	netcmds = cmds;
+    netcmds = cmds;
 
-	// check that there are players in the game.  if not, we cannot
-	// run a tic.
+    // check that there are players in the game.  if not, we cannot
+    // run a tic.
 
-	if (advancedemo)
-		D_DoAdvanceDemo ();
+    if (advancedemo)
+        D_DoAdvanceDemo ();
 
-	G_Ticker ();
+    G_Ticker ();
 }
 
 static loop_interface_t doom_loop_interface = {
-	D_ProcessEvents,
-	G_BuildTiccmd,
-	RunTic,
-	M_Ticker
+    D_ProcessEvents,
+    G_BuildTiccmd,
+    RunTic,
+    M_Ticker
 };
 
 
@@ -107,24 +107,24 @@ static loop_interface_t doom_loop_interface = {
 
 static void LoadGameSettings(net_gamesettings_t *settings)
 {
-	unsigned int i;
+    unsigned int i;
 
-	deathmatch = settings->deathmatch;
-	startepisode = settings->episode;
-	startmap = settings->map;
-	startskill = settings->skill;
-	startloadgame = settings->loadgame;
-	lowres_turn = settings->lowres_turn;
-	nomonsters = settings->nomonsters;
-	fastparm = settings->fast_monsters;
-	respawnparm = settings->respawn_monsters;
-	timelimit = settings->timelimit;
-	consoleplayer = settings->consoleplayer;
+    deathmatch = settings->deathmatch;
+    startepisode = settings->episode;
+    startmap = settings->map;
+    startskill = settings->skill;
+    startloadgame = settings->loadgame;
+    lowres_turn = settings->lowres_turn;
+    nomonsters = settings->nomonsters;
+    fastparm = settings->fast_monsters;
+    respawnparm = settings->respawn_monsters;
+    timelimit = settings->timelimit;
+    consoleplayer = settings->consoleplayer;
 
-	for (i = 0; i < MAXPLAYERS; ++i)
-	{
-		playeringame[i] = i < settings->num_players;
-	}
+    for (i = 0; i < MAXPLAYERS; ++i)
+    {
+        playeringame[i] = i < settings->num_players;
+    }
 }
 
 // Save the game settings from global variables to the specified
@@ -132,99 +132,99 @@ static void LoadGameSettings(net_gamesettings_t *settings)
 
 static void SaveGameSettings(net_gamesettings_t *settings)
 {
-	// Fill in game settings structure with appropriate parameters
-	// for the new game
+    // Fill in game settings structure with appropriate parameters
+    // for the new game
 
-	settings->deathmatch = deathmatch;
-	settings->episode = startepisode;
-	settings->map = startmap;
-	settings->skill = startskill;
-	settings->loadgame = startloadgame;
-	settings->gameversion = gameversion;
-	settings->nomonsters = nomonsters;
-	settings->fast_monsters = fastparm;
-	settings->respawn_monsters = respawnparm;
-	settings->timelimit = timelimit;
+    settings->deathmatch = deathmatch;
+    settings->episode = startepisode;
+    settings->map = startmap;
+    settings->skill = startskill;
+    settings->loadgame = startloadgame;
+    settings->gameversion = gameversion;
+    settings->nomonsters = nomonsters;
+    settings->fast_monsters = fastparm;
+    settings->respawn_monsters = respawnparm;
+    settings->timelimit = timelimit;
 
-	settings->lowres_turn = M_CheckParm("-record") > 0
-						 && M_CheckParm("-longtics") == 0;
+    settings->lowres_turn = M_CheckParm("-record") > 0
+                         && M_CheckParm("-longtics") == 0;
 }
 
 static void InitConnectData(net_connect_data_t *connect_data)
 {
-	connect_data->max_players = MAXPLAYERS;
-	connect_data->drone = false;
+    connect_data->max_players = MAXPLAYERS;
+    connect_data->drone = false;
 
-	//!
-	// @category net
-	//
-	// Run as the left screen in three screen mode.
-	//
+    //!
+    // @category net
+    //
+    // Run as the left screen in three screen mode.
+    //
 
-	if (M_CheckParm("-left") > 0)
-	{
-		viewangleoffset = ANG90;
-		connect_data->drone = true;
-	}
+    if (M_CheckParm("-left") > 0)
+    {
+        viewangleoffset = ANG90;
+        connect_data->drone = true;
+    }
 
-	//! 
-	// @category net
-	//
-	// Run as the right screen in three screen mode.
-	//
+    //! 
+    // @category net
+    //
+    // Run as the right screen in three screen mode.
+    //
 
-	if (M_CheckParm("-right") > 0)
-	{
-		viewangleoffset = ANG270;
-		connect_data->drone = true;
-	}
+    if (M_CheckParm("-right") > 0)
+    {
+        viewangleoffset = ANG270;
+        connect_data->drone = true;
+    }
 
-	//
-	// Connect data
-	//
+    //
+    // Connect data
+    //
 
-	// Game type fields:
+    // Game type fields:
 
-	connect_data->gamemode = gamemode;
-	connect_data->gamemission = gamemission;
+    connect_data->gamemode = gamemode;
+    connect_data->gamemission = gamemission;
 
-	// Are we recording a demo? Possibly set lowres turn mode
+    // Are we recording a demo? Possibly set lowres turn mode
 
-	connect_data->lowres_turn = M_CheckParm("-record") > 0
-							 && M_CheckParm("-longtics") == 0;
+    connect_data->lowres_turn = M_CheckParm("-record") > 0
+                             && M_CheckParm("-longtics") == 0;
 
-	// Read checksums of our WAD directory and dehacked information
+    // Read checksums of our WAD directory and dehacked information
 
-	W_Checksum(connect_data->wad_sha1sum);
+    W_Checksum(connect_data->wad_sha1sum);
 
 #if ORIGCODE
-	DEH_Checksum(connect_data->deh_sha1sum);
+    DEH_Checksum(connect_data->deh_sha1sum);
 #endif
 
-	// Are we playing with the Freedoom IWAD?
+    // Are we playing with the Freedoom IWAD?
 
-	connect_data->is_freedoom = W_CheckNumForName("FREEDOOM") >= 0;
+    connect_data->is_freedoom = W_CheckNumForName("FREEDOOM") >= 0;
 }
 
 void D_ConnectNetGame(void)
 {
-	net_connect_data_t connect_data;
+    net_connect_data_t connect_data;
 
-	InitConnectData(&connect_data);
-	netgame = D_InitNetGame(&connect_data);
+    InitConnectData(&connect_data);
+    netgame = D_InitNetGame(&connect_data);
 
-	//!
-	// @category net
-	//
-	// Start the game playing as though in a netgame with a single
-	// player.  This can also be used to play back single player netgame
-	// demos.
-	//
+    //!
+    // @category net
+    //
+    // Start the game playing as though in a netgame with a single
+    // player.  This can also be used to play back single player netgame
+    // demos.
+    //
 
-	if (M_CheckParm("-solo-net") > 0)
-	{
-		netgame = true;
-	}
+    if (M_CheckParm("-solo-net") > 0)
+    {
+        netgame = true;
+    }
 }
 
 //
@@ -233,17 +233,17 @@ void D_ConnectNetGame(void)
 //
 void D_CheckNetGame (void)
 {
-	net_gamesettings_t settings;
+    net_gamesettings_t settings;
 
-	if (netgame)
-	{
-		autostart = true;
-	}
+    if (netgame)
+    {
+        autostart = true;
+    }
 
-	D_RegisterLoopCallbacks(&doom_loop_interface);
+    D_RegisterLoopCallbacks(&doom_loop_interface);
 
-	SaveGameSettings(&settings);
-	D_StartNetGame(&settings, NULL);
-	LoadGameSettings(&settings);
+    SaveGameSettings(&settings);
+    D_StartNetGame(&settings, NULL);
+    LoadGameSettings(&settings);
 }
 

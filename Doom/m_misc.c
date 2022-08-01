@@ -50,42 +50,42 @@
 
 boolean M_StrToInt(const char *str, int *result)
 {
-	return false;
+    return false;
 }
 
 void M_ExtractFileBase(char *path, char *dest)
 {
-	char *src;
-	char *filename;
-	int length;
+    char *src;
+    char *filename;
+    int length;
 
-	src = path + mystrlen(path) - 1;
+    src = path + mystrlen(path) - 1;
 
-	// back up until a \ or the start
-	while (src != path && *(src - 1) != DIR_SEPARATOR)
-	{
+    // back up until a \ or the start
+    while (src != path && *(src - 1) != DIR_SEPARATOR)
+    {
 	src--;
-	}
+    }
 
-	filename = src;
+    filename = src;
 
-	// Copy up to eight characters
-	// Note: Vanilla Doom exits with an error if a filename is specified
-	// with a base of more than eight characters.  To remove the 8.3
-	// filename limit, instead we simply truncate the name.
+    // Copy up to eight characters
+    // Note: Vanilla Doom exits with an error if a filename is specified
+    // with a base of more than eight characters.  To remove the 8.3
+    // filename limit, instead we simply truncate the name.
 
-	length = 0;
-	memset(dest, 0, 8);
+    length = 0;
+    memset(dest, 0, 8);
 
-	while (*src != '\0' && *src != '.')
-	{
-		if (length >= 8)
-		{
-			break;
-		}
+    while (*src != '\0' && *src != '.')
+    {
+        if (length >= 8)
+        {
+            break;
+        }
 
 	dest[length++] = mytoupper((int)*src++);
-	}
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -98,12 +98,12 @@ void M_ExtractFileBase(char *path, char *dest)
 
 void M_ForceUppercase(char *text)
 {
-	char *p;
+    char *p;
 
-	for (p = text; *p != '\0'; ++p)
-	{
-		*p = mytoupper(*p);
-	}
+    for (p = text; *p != '\0'; ++p)
+    {
+        *p = mytoupper(*p);
+    }
 }
 
 //
@@ -114,30 +114,30 @@ void M_ForceUppercase(char *text)
 
 char *M_StrCaseStr(char *haystack, char *needle)
 {
-	unsigned int haystack_len;
-	unsigned int needle_len;
-	unsigned int len;
-	unsigned int i;
+    unsigned int haystack_len;
+    unsigned int needle_len;
+    unsigned int len;
+    unsigned int i;
 
-	haystack_len = mystrlen(haystack);
-	needle_len = mystrlen(needle);
+    haystack_len = mystrlen(haystack);
+    needle_len = mystrlen(needle);
 
-	if (haystack_len < needle_len)
-	{
-		return NULL;
-	}
+    if (haystack_len < needle_len)
+    {
+        return NULL;
+    }
 
-	len = haystack_len - needle_len;
+    len = haystack_len - needle_len;
 
-	for (i = 0; i <= len; ++i)
-	{
-		if (!strncasecmp(haystack + i, needle, needle_len))
-		{
-			return haystack + i;
-		}
-	}
+    for (i = 0; i <= len; ++i)
+    {
+        if (!strncasecmp(haystack + i, needle, needle_len))
+        {
+            return haystack + i;
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
 //
@@ -147,17 +147,17 @@ char *M_StrCaseStr(char *haystack, char *needle)
 
 char *M_StringDuplicate(const char *orig)
 {
-	char *result;
+    char *result;
 
-	result = mystrdup(orig);
+    result = mystrdup(orig);
 
-	if (result == NULL)
-	{
-		I_Error("Failed to duplicate string (length %i)\n",
-				mystrlen(orig));
-	}
+    if (result == NULL)
+    {
+        I_Error("Failed to duplicate string (length %i)\n",
+                mystrlen(orig));
+    }
 
-	return result;
+    return result;
 }
 
 //
@@ -165,62 +165,62 @@ char *M_StringDuplicate(const char *orig)
 //
 
 char *M_StringReplace(const char *haystack, const char *needle,
-					  const char *replacement)
+                      const char *replacement)
 {
-	char *result, *dst;
-	const char *p;
-	size_t needle_len = mystrlen(needle);
-	size_t result_len, dst_len;
+    char *result, *dst;
+    const char *p;
+    size_t needle_len = mystrlen(needle);
+    size_t result_len, dst_len;
 
-	// Iterate through occurrences of 'needle' and calculate the size of
-	// the new string.
-	result_len = mystrlen(haystack) + 1;
-	p = haystack;
+    // Iterate through occurrences of 'needle' and calculate the size of
+    // the new string.
+    result_len = mystrlen(haystack) + 1;
+    p = haystack;
 
-	for (;;)
-	{
-		p = mystrstr(p, needle);
-		if (p == NULL)
-		{
-			break;
-		}
+    for (;;)
+    {
+        p = mystrstr(p, needle);
+        if (p == NULL)
+        {
+            break;
+        }
 
-		p += needle_len;
-		result_len += mystrlen(replacement) - needle_len;
-	}
+        p += needle_len;
+        result_len += mystrlen(replacement) - needle_len;
+    }
 
-	// Construct new string.
+    // Construct new string.
 
-	result = kmalloc(result_len);
-	if (result == NULL)
-	{
-		I_Error("M_StringReplace: Failed to allocate new string");
-		return NULL;
-	}
+    result = kmalloc(result_len);
+    if (result == NULL)
+    {
+        I_Error("M_StringReplace: Failed to allocate new string");
+        return NULL;
+    }
 
-	dst = result; dst_len = result_len;
-	p = haystack;
+    dst = result; dst_len = result_len;
+    p = haystack;
 
-	while (*p != '\0')
-	{
-		if (!mystrncmp(p, needle, needle_len))
-		{
-			M_StringCopy(dst, replacement, dst_len);
-			p += needle_len;
-			dst += mystrlen(replacement);
-			dst_len -= mystrlen(replacement);
-		}
-		else
-		{
-			*dst = *p;
-			++dst; --dst_len;
-			++p;
-		}
-	}
+    while (*p != '\0')
+    {
+        if (!mystrncmp(p, needle, needle_len))
+        {
+            M_StringCopy(dst, replacement, dst_len);
+            p += needle_len;
+            dst += mystrlen(replacement);
+            dst_len -= mystrlen(replacement);
+        }
+        else
+        {
+            *dst = *p;
+            ++dst; --dst_len;
+            ++p;
+        }
+    }
 
-	*dst = '\0';
+    *dst = '\0';
 
-	return result;
+    return result;
 }
 
 // Safe string copy function that works like OpenBSD's strlcpy().
@@ -228,20 +228,20 @@ char *M_StringReplace(const char *haystack, const char *needle,
 
 boolean M_StringCopy(char *dest, const char *src, size_t dest_size)
 {
-	size_t len;
+    size_t len;
 
-	if (dest_size >= 1)
-	{
-		dest[dest_size - 1] = '\0';
-		mystrncpy(dest, src, dest_size - 1);
-	}
-	else
-	{
-		return false;
-	}
+    if (dest_size >= 1)
+    {
+        dest[dest_size - 1] = '\0';
+        mystrncpy(dest, src, dest_size - 1);
+    }
+    else
+    {
+        return false;
+    }
 
-	len = mystrlen(dest);
-	return src[len] == '\0';
+    len = mystrlen(dest);
+    return src[len] == '\0';
 }
 
 // Safe string concat function that works like OpenBSD's strlcat().
@@ -249,31 +249,31 @@ boolean M_StringCopy(char *dest, const char *src, size_t dest_size)
 
 boolean M_StringConcat(char *dest, const char *src, size_t dest_size)
 {
-	size_t offset;
+    size_t offset;
 
-	offset = mystrlen(dest);
-	if (offset > dest_size)
-	{
-		offset = dest_size;
-	}
+    offset = mystrlen(dest);
+    if (offset > dest_size)
+    {
+        offset = dest_size;
+    }
 
-	return M_StringCopy(dest + offset, src, dest_size - offset);
+    return M_StringCopy(dest + offset, src, dest_size - offset);
 }
 
 // Returns true if 's' begins with the specified prefix.
 
 boolean M_StringStartsWith(const char *s, const char *prefix)
 {
-	return mystrlen(s) > mystrlen(prefix)
-		&& mystrncmp(s, prefix, mystrlen(prefix)) == 0;
+    return mystrlen(s) > mystrlen(prefix)
+        && mystrncmp(s, prefix, mystrlen(prefix)) == 0;
 }
 
 // Returns true if 's' ends with the specified suffix.
 
 boolean M_StringEndsWith(const char *s, const char *suffix)
 {
-	return mystrlen(s) >= mystrlen(suffix)
-		&& strcmp(s + mystrlen(s) - mystrlen(suffix), suffix) == 0;
+    return mystrlen(s) >= mystrlen(suffix)
+        && strcmp(s + mystrlen(s) - mystrlen(suffix), suffix) == 0;
 }
 
 // Return a newly-malloced string with all the strings given as arguments
@@ -281,50 +281,50 @@ boolean M_StringEndsWith(const char *s, const char *suffix)
 
 char *M_StringJoin(const char *s, ...)
 {
-	char *result;
-	const char *v;
-	va_list args;
-	size_t result_len;
+    char *result;
+    const char *v;
+    va_list args;
+    size_t result_len;
 
-	result_len = mystrlen(s) + 1;
+    result_len = mystrlen(s) + 1;
 
-	va_start(args, s);
-	for (;;)
-	{
-		v = va_arg(args, const char *);
-		if (v == NULL)
-		{
-			break;
-		}
+    va_start(args, s);
+    for (;;)
+    {
+        v = va_arg(args, const char *);
+        if (v == NULL)
+        {
+            break;
+        }
 
-		result_len += mystrlen(v);
-	}
-	va_end(args);
+        result_len += mystrlen(v);
+    }
+    va_end(args);
 
-	result = kmalloc(result_len);
+    result = kmalloc(result_len);
 
-	if (result == NULL)
-	{
-		I_Error("M_StringJoin: Failed to allocate new string.");
-		return NULL;
-	}
+    if (result == NULL)
+    {
+        I_Error("M_StringJoin: Failed to allocate new string.");
+        return NULL;
+    }
 
-	M_StringCopy(result, s, result_len);
+    M_StringCopy(result, s, result_len);
 
-	va_start(args, s);
-	for (;;)
-	{
-		v = va_arg(args, const char *);
-		if (v == NULL)
-		{
-			break;
-		}
+    va_start(args, s);
+    for (;;)
+    {
+        v = va_arg(args, const char *);
+        if (v == NULL)
+        {
+            break;
+        }
 
-		M_StringConcat(result, v, result_len);
-	}
-	va_end(args);
+        M_StringConcat(result, v, result_len);
+    }
+    va_end(args);
 
-	return result;
+    return result;
 }
 
 
@@ -332,17 +332,17 @@ char *M_StringJoin(const char *s, ...)
 
 char *M_OEMToUTF8(const char *oem)
 {
-	unsigned int len = mystrlen(oem) + 1;
-	wchar_t *tmp;
-	char *result;
+    unsigned int len = mystrlen(oem) + 1;
+    wchar_t *tmp;
+    char *result;
 
-	tmp = kmalloc(len * sizeof(wchar_t));
-	MultiByteToWideChar(CP_OEMCP, 0, oem, len, tmp, len);
-	result = kmalloc(len * 4);
-	WideCharToMultiByte(CP_UTF8, 0, tmp, len, result, len * 4, NULL, NULL);
-	kfree(tmp);
+    tmp = kmalloc(len * sizeof(wchar_t));
+    MultiByteToWideChar(CP_OEMCP, 0, oem, len, tmp, len);
+    result = kmalloc(len * 4);
+    WideCharToMultiByte(CP_UTF8, 0, tmp, len, result, len * 4, NULL, NULL);
+    kfree(tmp);
 
-	return result;
+    return result;
 }
 
 #endif

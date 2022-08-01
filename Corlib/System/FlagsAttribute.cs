@@ -1,5 +1,4 @@
 namespace System
 {
-	[AttributeUsage(AttributeTargets.All)]
-	public sealed class FlagsAttribute : Attribute { }
+    public sealed class FlagsAttribute : Attribute { }
 }

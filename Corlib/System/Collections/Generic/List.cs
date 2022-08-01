@@ -1,124 +1,114 @@
 namespace System.Collections.Generic
 {
-	public class List<T>
-	{
-		private T[] _value;
-		private int size;
-		public int Count = 0;
+    public class List<T>
+    {
+        private T[] _value;
 
-		public List(int initsize = 256)
-		{
-			size = initsize;
-			_value = new T[initsize];
-		}
-		public List(T[] array)
-		{
-			size = array.Length;
-			_value = array;
-		}
-		public T this[int index]
-		{
-			get => _value[index];
-			set => _value[index] = value;
-		}
+        public int Count = 0;
 
-		public void Add(T t)
-		{
-			if (size == Count)
-			{
-				Array.Resize(ref _value, size + 1);
-				size++;
-			}
-			_value[Count] = t;
-			Count++;
-		}
+        public List(int initsize = 256)
+        {
+            _value = new T[initsize];
+        }
 
-		public void Insert(int index, T item, bool internalMove = false)
-		{
-			if (index == IndexOf(item))
-			{
-				return;
-			}
+        public T this[int index]
+        {
+            get
+            {
+                return _value[index];
+            }
+            set 
+            {
+                _value[index] = value;
+            }
+        }
 
-			if (!internalMove)
-			{
-				Count++;
-			}
+        public void Add(T t)
+        {
+            _value[Count] = t;
+            Count++;
+        }
 
-			if (internalMove)
-			{
-				int _index = IndexOf(item);
-				for (int i = _index; i < Count - 1; i++)
-				{
-					_value[i] = _value[i + 1];
-				}
-			}
+        public void Insert(int index, T item, bool internalMove = false) 
+        {
+            if (index == IndexOf(item)) return;
 
-			for (int i = Count - 1; i > index; i--)
-			{
-				_value[i] = _value[i - 1];
-			}
-			_value[index] = item;
-		}
+            if(!internalMove)
+                Count++;
 
-		public T[] ToArray()
-		{
-			T[] array = new T[Count];
-			for (int i = 0; i < Count; i++)
-			{
-				array[i] = this[i];
-			}
-			return array;
-		}
+            if (internalMove) 
+            {
+                int _index = IndexOf(item);
+                for(int i = _index; i < Count -1; i++) 
+                {
+                    _value[i] = _value[i + 1];
+                }
+            }
 
-		public int IndexOf(T item)
-		{
-			for (int i = 0; i < Count; i++)
-			{
-				if (this[i] == item)
-				{
-					return i;
-				}
-			}
+            for(int i = Count - 1; i > index; i--) 
+            {
+                _value[i] = _value[i - 1];
+            }
+            _value[index] = item;
+        }
 
-			return -1;
-		}
-		public bool Remove(T item)
-		{
-			int at = IndexOf(item);
+        public T[] ToArray()
+        {
+            T[] array = new T[Count];
+            for (int i = 0; i < Count; i++)
+            {
+                array[i] = this[i];
+            }
+            return array;
+        }
 
-			if (at < 0)
-			{
-				return false;
-			}
+        public int IndexOf(T item)
+        {
+            for(int i = 0; i < Count;i++)
+            {
+                T first =  this[i];
+                T second = item;
 
-			RemoveAt(at);
+                if (this[i] == item)
+                    return i;
+            }
 
-			return true;
-		}
+            return -1;
+        }
+        public bool Remove(T item)
+        {
+            int at = IndexOf(item);
 
-		public void RemoveAt(int index)
-		{
-			Count--;
+            if (at < 0)
+                return false;
 
-			for (int i = index; i < Count; i++)
-			{
-				_value[i] = _value[i + 1];
-			}
+            RemoveAt(at);
 
-			_value[Count] = default;
-		}
+            return true;
+        }
 
-		public override void Dispose()
-		{
-			_value.Dispose();
-			base.Dispose();
-		}
+        public void RemoveAt(int index)
+        {
+            Count--;
 
-		public void Clear()
-		{
-			Count = 0;
-		}
+            for (int i = index; i < Count; i++)
+            {
+                _value[i] = _value[i + 1];
+            }
 
-	}
+            _value[Count] = default(T);
+        }
+
+        public override void Dispose()
+        {
+            _value.Dispose();
+            base.Dispose();
+        }
+
+        public void Clear()
+        {
+            Count = 0;
+        }
+
+    }
 }

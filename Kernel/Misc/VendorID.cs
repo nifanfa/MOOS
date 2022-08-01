@@ -1,1581 +1,1578 @@
 namespace MOOS.Misc
 {
-	public static class VendorID
-	{
-		public static string GetName(ushort id)
-		{
-			return id switch
-			{
-				0x0033 => "Paradyne Corp",
-				0x003D => "master",
-				0x0070 => "Hauppauge Computer Works Inc",
-				0x0100 => "USBPDO-8",
-				0x0123 => "General Dynamics",
-				0x0315 => "SK - Electronics Co, Ltd",
-				0x0402 => "Acer aspire one",
-				0x046D => "Logitech Inc",
-				0x0483 => "UPEK",
-				0x04A9 => "Canon",
-				0x04B3 => "IBM",
-				0x04D9 => "Filco",
-				0x04E8 => "Samsung Windows Portable Devices",
-				0x04F2 => "Chicony Electronics Co",
-				0x051D => "ACPI\\VEN_INT&DEV_33A0",
-				0x0529 => "Aladdin E-Token",
-				0x0553 => "Aiptek USA",
-				0x058f => "Alcor Micro Corp",
-				0x0590 => "Omron Corp",
-				0x05ac => "Apple Inc",
-				0x05E1 => "D-MAX",
-				0x064e => "SUYIN Corporation",
-				0x067B => "Prolific Technology Inc",
-				0x06FE => "Acresso Software Inc",
-				0x0711 => "SIIG, Inc",
-				0x07d1 => "D-Link Corporation",
-				0x093a => "KYE Systems Corp / Pixart Imaging",
-				0x096E => "USB Rockey dongle from Feitain",
-				0x0A5C => "Broadcom Corporation",
-				0x0A89 => "BREA Technologies Inc",
-				0x0A92 => "Egosys, Inc",
-				0x0AC8 => "ASUS",
-				0x0b05 => "Toshiba Bluetooth RFBUS, RFCOM, RFHID",
-				0x0c45 => "Microdia Ltd",
-				0x0cf3 => "TP-Link",
-				0x0D2E => "Feedback Instruments Ltd",
-				0x0D8C => "C-Media Electronics, Inc",
-				0x0DF6 => "Sitecom",
-				0x0E11 => "Compaq Computer Corp",
-				0x0E8D => "MediaTek Inc",
-				0x1000 => "LSI Logic",
-				0x1001 => "Kolter Electronic - Germany",
-				0x1002 => "Advanced Micro Devices, Inc",
-				0x1003 => "ULSI",
-				0x1004 => "VLSI Technology",
-				0x1006 => "Reply Group",
-				0x1007 => "Netframe Systems Inc",
-				0x1008 => "Epson",
-				0x100A => "??as Ltd de Phoenix del ?? de Tecnolog??",
-				0x100B => "National Semiconductors",
-				0x100C => "Tseng Labs",
-				0x100D => "AST Research",
-				0x100E => "Weitek",
-				0x1010 => "Video Logic Ltd",
-				0x1011 => "Digital Equipment Corporation",
-				0x1012 => "Micronics Computers Inc",
-				0x1013 => "Cirrus Logic",
-				0x1014 => "International Business Machines Corp",
-				0x1016 => "Fujitsu ICL Computers",
-				0x1017 => "Spea Software AG",
-				0x1018 => "Unisys Systems",
-				0x1019 => "Elitegroup Computer System",
-				0x101A => "NCR Corporation",
-				0x101B => "Vitesse Semiconductor",
-				0x101E => "American Megatrends Inc",
-				0x101F => "PictureTel Corp",
-				0x1020 => "Hitachi Computer Electronics",
-				0x1021 => "Oki Electric Industry",
-				0x1022 => "Advanced Micro Devices",
-				0x1023 => "TRIDENT MICRO",
-				0x1025 => "Acer Incorporated",
-				0x1028 => "Dell Inc",
-				0x102A => "LSI Logic Headland Division",
-				0x102B => "Matrox Electronic Systems Ltd",
-				0x102C => "Asiliant (Chips And Technologies)",
-				0x102D => "Wyse Technology",
-				0x102E => "Olivetti Advanced Technology",
-				0x102F => "Toshiba America",
-				0x1030 => "TMC Research",
-				0x1031 => "miro Computer Products AG",
-				0x1033 => "NEC Electronics",
-				0x1034 => "Burndy Corporation",
-				0x1036 => "Future Domain",
-				0x1037 => "Hitachi Micro Systems Inc",
-				0x1038 => "AMP Incorporated",
-				0x1039 => "Silicon Integrated Systems",
-				0x103A => "Seiko Epson Corporation",
-				0x103B => "Tatung Corp Of America",
-				0x103C => "Hewlett-Packard",
-				0x103E => "Solliday Engineering",
-				0x103F => "Logic Modeling",
-				0x1041 => "Computrend",
-				0x1043 => "Asustek Computer Inc",
-				0x1044 => "Distributed Processing Tech",
-				0x1045 => "OPTi Inc",
-				0x1046 => "IPC Corporation LTD",
-				0x1047 => "Genoa Systems Corp",
-				0x1048 => "ELSA GmbH",
-				0x1049 => "Fountain Technology",
-				0x104A => "STMicroelectronics",
-				0x104B => "Mylex / Buslogic",
-				0x104C => "Texas Instruments",
-				0x104D => "Sony Corporation",
-				0x104E => "Oak Technology",
-				0x104F => "Co-Time Computer Ltd",
-				0x1050 => "Winbond Electronics Corp",
-				0x1051 => "Anigma Corp",
-				0x1053 => "Young Micro Systems",
-				0x1054 => "Hitachi Ltd",
-				0x1055 => "Standard Microsystems Corp",
-				0x1056 => "ICL",
-				0x1057 => "Motorola",
-				0x1058 => "Electronics & Telecommunication Res",
-				0x1059 => "Kontron Canada",
-				0x105A => "Promise Technology",
-				0x105B => "Mobham chip",
-				0x105C => "Wipro Infotech Limited",
-				0x105D => "Number Nine Visual Technology",
-				0x105E => "Vtech Engineering Canada Ltd",
-				0x105F => "Infotronic America Inc",
-				0x1060 => "United Microelectronics",
-				0x1061 => "8x8 Inc",
-				0x1062 => "Maspar Computer Corp",
-				0x1063 => "Ocean Office Automation",
-				0x1064 => "Alcatel Cit",
-				0x1065 => "Texas Microsystems",
-				0x1066 => "Picopower Technology",
-				0x1067 => "Mitsubishi Electronics",
-				0x1068 => "Diversified Technology",
-				0x106A => "Aten Research Inc",
-				0x106B => "Apple Inc",
-				0x106C => "Hyundai Electronics America",
-				0x106D => "Sequent Computer Systems",
-				0x106E => "DFI Inc",
-				0x106F => "City Gate Development LTD",
-				0x1070 => "Daewoo Telecom Ltd",
-				0x1071 => "Mitac",
-				0x1072 => "GIT Co Ltd",
-				0x1073 => "Yamaha Corporation",
-				0x1074 => "Nexgen Microsystems",
-				0x1075 => "Advanced Integration Research",
-				0x1077 => "QLogic Corporation",
-				0x1078 => "Cyrix Corporation",
-				0x1079 => "I-Bus",
-				0x107A => "Networth controls",
-				0x107B => "Gateway 2000",
-				0x107C => "Goldstar Co Ltd",
-				0x107D => "Leadtek Research",
-				0x107E => "Testernec",
-				0x107F => "Data Technology Corporation",
-				0x1080 => "Cypress Semiconductor",
-				0x1081 => "Radius Inc",
-				0x1082 => "EFA Corporation Of America",
-				0x1083 => "Forex Computer Corporation",
-				0x1084 => "Parador",
-				0x1085 => "Tulip Computers Int'l BV",
-				0x1086 => "J Bond Computer Systems",
-				0x1087 => "Cache Computer",
-				0x1088 => "Microcomputer Systems (M) Son",
-				0x1089 => "Data General Corporation",
-				0x108A => "SBS Operations",
-				0x108C => "Oakleigh Systems Inc",
-				0x108D => "Olicom",
-				0x108E => "Sun Microsystems",
-				0x108F => "Systemsoft Corporation",
-				0x1090 => "Encore Computer Corporation",
-				0x1091 => "Intergraph Corporation",
-				0x1092 => "Diamond Computer Systems",
-				0x1093 => "National Instruments",
-				0x1094 => "Apostolos",
-				0x1095 => "Silicon Image, Inc",
-				0x1096 => "Alacron",
-				0x1097 => "Appian Graphics",
-				0x1098 => "Quantum Designs Ltd",
-				0x1099 => "Samsung Electronics Co Ltd",
-				0x109A => "Packard Bell",
-				0x109B => "Gemlight Computer Ltd",
-				0x109C => "Megachips Corporation",
-				0x109D => "Zida Technologies Ltd",
-				0x109E => "Brooktree Corporation",
-				0x109F => "Trigem Computer Inc",
-				0x10A0 => "Meidensha Corporation",
-				0x10A1 => "Juko Electronics Inc Ltd",
-				0x10A2 => "Quantum Corporation",
-				0x10A3 => "Everex Systems Inc",
-				0x10A4 => "Globe Manufacturing Sales",
-				0x10A5 => "Racal Interlan",
-				0x10A8 => "Sierra Semiconductor",
-				0x10A9 => "Silicon Graphics",
-				0x10AB => "Digicom",
-				0x10AC => "Honeywell IASD",
-				0x10AD => "Winbond Systems Labs",
-				0x10AE => "Cornerstone Technology",
-				0x10AF => "Micro Computer Systems Inc",
-				0x10B0 => "Gainward GmbH",
-				0x10B1 => "Cabletron Systems Inc",
-				0x10B2 => "Raytheon Company",
-				0x10B3 => "Databook Inc",
-				0x10B4 => "STB Systems",
-				0x10B5 => "PLX Technology Inc",
-				0x10B6 => "Madge Networks",
-				0x10B7 => "3Com Corporation",
-				0x10B8 => "Standard Microsystems Corporation",
-				0x10B9 => "Ali Corporation",
-				0x10BA => "Mitsubishi Electronics Corp",
-				0x10BB => "Dapha Electronics Corporation",
-				0x10BC => "Advanced Logic Research Inc",
-				0x10BD => "Surecom Technology",
-				0x10BE => "Tsenglabs International Corp",
-				0x10BF => "MOST Corp",
-				0x10C0 => "Boca Research Inc",
-				0x10C1 => "ICM Corp Ltd",
-				0x10C2 => "Auspex Systems Inc",
-				0x10C3 => "Samsung Semiconductors",
-				0x10C4 => "Award Software Int'l Inc",
-				0x10C5 => "Xerox Corporation",
-				0x10C6 => "Rambus Inc",
-				0x10C8 => "Neomagic Corporation",
-				0x10C9 => "Dataexpert Corporation",
-				0x10CA => "Fujitsu Siemens",
-				0x10CB => "Omron Corporation",
-				0x10CD => "Advanced System Products",
-				0x10CF => "Fujitsu Ltd",
-				0x10D1 => "Future+ Systems",
-				0x10D2 => "Molex Incorporated",
-				0x10D3 => "Jabil Circuit Inc",
-				0x10D4 => "Hualon Microelectronics",
-				0x10D5 => "Autologic Inc",
-				0x10D6 => "Wilson co ltd",
-				0x10D7 => "BCM Advanced Research",
-				0x10D8 => "Advanced Peripherals Labs",
-				0x10D9 => "Macronix International Co Ltd",
-				0x10DB => "Rohm Research",
-				0x10DC => "CERN-European Lab for Particle Physics",
-				0x10DD => "Evans & Sutherland",
-				0x10DE => "NVIDIA",
-				0x10DF => "Emulex Corporation",
-				0x10E1 => "Tekram Technology Corp Ltd",
-				0x10E2 => "Aptix Corporation",
-				0x10E3 => "Tundra Semiconductor Corp",
-				0x10E4 => "Tandem Computers",
-				0x10E5 => "Micro Industries Corporation",
-				0x10E6 => "Gainbery Computer Products Inc",
-				0x10E7 => "Vadem",
-				0x10E8 => "Applied Micro Circuits Corp",
-				0x10E9 => "Alps Electronic Corp Ltd",
-				0x10EA => "Tvia, Inc",
-				0x10EB => "Artist Graphics",
-				0x10EC => "Realtek Semiconductor Corp",
-				0x10ED => "Ascii Corporation",
-				0x10EE => "Xilinx Corporation",
-				0x10EF => "Racore Computer Products",
-				0x10F0 => "Curtiss-Wright Controls Embedded Computing",
-				0x10F1 => "Tyan Computer",
-				0x10F2 => "Achme Computer Inc - GONE !!!!",
-				0x10F3 => "Alaris Inc",
-				0x10F4 => "S-Mos Systems",
-				0x10F5 => "NKK Corporation",
-				0x10F6 => "Creative Electronic Systems SA",
-				0x10F7 => "Matsushita Electric Industrial Corp",
-				0x10F8 => "Altos India Ltd",
-				0x10F9 => "PC Direct",
-				0x10FA => "Truevision",
-				0x10FB => "Thesys Microelectronic's",
-				0x10FC => "I-O Data Device Inc",
-				0x10FD => "Soyo Technology Corp Ltd",
-				0x10FE => "Fast Electronic GmbH",
-				0x10FF => "Ncube",
-				0x1100 => "Jazz Multimedia",
-				0x1101 => "Initio Corporation",
-				0x1102 => "Creative Technology LTD",
-				0x1103 => "HighPoint Technologies, Inc",
-				0x1104 => "Rasterops",
-				0x1105 => "Sigma Designs Inc",
-				0x1106 => "VIA Technologies, Inc",
-				0x1107 => "Stratus Computer",
-				0x1108 => "Proteon Inc",
-				0x1109 => "Adaptec/Cogent Data Technologies",
-				0x110A => "Siemens AG",
-				0x110B => "Chromatic Research Inc",
-				0x110C => "Mini-Max Technology Inc",
-				0x110D => "ZNYX Corporation",
-				0x110E => "CPU Technology",
-				0x110F => "Ross Technology",
-				0x1112 => "Osicom Technologies Inc",
-				0x1113 => "Accton Technology Corporation",
-				0x1114 => "Atmel Corp",
-				0x1116 => "Data Translation, Inc",
-				0x1117 => "Datacube Inc",
-				0x1118 => "Berg Electronics",
-				0x1119 => "ICP vortex Computersysteme GmbH",
-				0x111A => "Efficent Networks",
-				0x111C => "Tricord Systems Inc",
-				0x111D => "Integrated Device Technology Inc",
-				0x111F => "Precision Digital Images",
-				0x1120 => "EMC Corp",
-				0x1121 => "Zilog",
-				0x1123 => "Excellent Design Inc",
-				0x1124 => "Leutron Vision AG",
-				0x1125 => "Eurocore/Vigra",
-				0x1127 => "FORE Systems",
-				0x1129 => "Firmworks",
-				0x112A => "Hermes Electronics Co Ltd",
-				0x112C => "Zenith Data Systems",
-				0x112D => "Ravicad",
-				0x112E => "Infomedia",
-				0x1130 => "Computervision",
-				0x1131 => "NXP Semiconductors NV",
-				0x1132 => "Mitel Corp",
-				0x1133 => "Eicon Networks Corporation",
-				0x1134 => "Mercury Computer Systems Inc",
-				0x1135 => "Fuji Xerox Co Ltd",
-				0x1136 => "Momentum Data Systems",
-				0x1137 => "Cisco Systems Inc",
-				0x1138 => "Ziatech Corporation",
-				0x1139 => "Dynamic Pictures Inc",
-				0x113A => "FWB Inc",
-				0x113B => "Network Computing Devices",
-				0x113C => "Cyclone Microsystems Inc",
-				0x113D => "Leading Edge Products Inc",
-				0x113E => "Sanyo Electric Co",
-				0x113F => "Equinox Systems",
-				0x1140 => "Intervoice Inc",
-				0x1141 => "Crest Microsystem Inc",
-				0x1142 => "Alliance Semiconductor",
-				0x1143 => "Netpower Inc",
-				0x1144 => "Cincinnati Milacron",
-				0x1145 => "Workbit Corp",
-				0x1146 => "Force Computers",
-				0x1147 => "Interface Corp",
-				0x1148 => "Marvell Semiconductor Germany GmbH",
-				0x1149 => "Win System Corporation",
-				0x114A => "VMIC",
-				0x114B => "Canopus corporation",
-				0x114C => "Annabooks",
-				0x114D => "IC Corporation",
-				0x114E => "Nikon Systems Inc",
-				0x114F => "Digi International",
-				0x1150 => "Thinking Machines Corporation",
-				0x1151 => "JAE Electronics Inc",
-				0x1153 => "Land Win Electronic Corp",
-				0x1154 => "Melco Inc",
-				0x1155 => "Pine Technology Ltd",
-				0x1156 => "Periscope Engineering",
-				0x1157 => "Avsys Corporation",
-				0x1158 => "Voarx R&D Inc",
-				0x1159 => "Mutech",
-				0x115A => "Harlequin Ltd",
-				0x115B => "Parallax Graphics",
-				0x115C => "Photron Ltd",
-				0x115D => "Xircom",
-				0x115E => "Peer Protocols Inc",
-				0x115F => "Maxtor Corporation",
-				0x1160 => "Megasoft Inc",
-				0x1161 => "PFU Ltd",
-				0x1162 => "OA Laboratory Co Ltd",
-				0x1163 => "mohamed alsherif",
-				0x1164 => "Advanced Peripherals Tech",
-				0x1165 => "Imagraph Corporation",
-				0x1166 => "Broadcom / ServerWorks",
-				0x1167 => "Mutoh Industries Inc",
-				0x1168 => "Thine Electronics Inc",
-				0x1169 => "Centre f/Dev of Adv Computing",
-				0x116A => "Luminex Software, Inc",
-				0x116B => "Connectware Inc",
-				0x116C => "Intelligent Resources",
-				0x116E => "Electronics for Imaging",
-				0x1170 => "Inventec Corporation",
-				0x1172 => "Altera Corporation",
-				0x1173 => "Adobe Systems",
-				0x1174 => "Bridgeport Machines",
-				0x1175 => "Mitron Computer Inc",
-				0x1176 => "SBE",
-				0x1177 => "Silicon Engineering",
-				0x1178 => "Alfa Inc",
-				0x1179 => "Toshiba corporation",
-				0x117A => "A-Trend Technology",
-				0x117B => "LG (Lucky Goldstar) Electronics Inc",
-				0x117C => "Atto Technology",
-				0x117D => "Becton & Dickinson",
-				0x117E => "T/R Systems",
-				0x117F => "Integrated Circuit Systems",
-				0x1180 => "RicohCompany,Ltd",
-				0x1183 => "Fujikura Ltd",
-				0x1184 => "Forks Inc",
-				0x1185 => "Dataworld",
-				0x1186 => "D-Link System Inc",
-				0x1187 => "Philips Healthcare",
-				0x1188 => "Shima Seiki Manufacturing Ltd",
-				0x1189 => "Matsushita Electronics",
-				0x118A => "Hilevel Technology",
-				0x118B => "Hypertec Pty Ltd",
-				0x118C => "Corollary Inc",
-				0x118D => "BitFlow Inc",
-				0x118E => "Hermstedt AG",
-				0x118F => "Green Logic",
-				0x1190 => "Tripace",
-				0x1191 => "Acard Technology Corp",
-				0x1192 => "Densan Co Ltd",
-				0x1194 => "Toucan Technology",
-				0x1195 => "Ratoc System Inc",
-				0x1196 => "Hytec Electronics Ltd",
-				0x1197 => "Gage Applied Technologies",
-				0x1198 => "Lambda Systems Inc",
-				0x1199 => "Attachmate Corp",
-				0x119A => "Mind/Share Inc",
-				0x119B => "Omega Micro Inc",
-				0x119C => "Information Technology Inst",
-				0x119D => "Bug Sapporo Japan",
-				0x119E => "Fujitsu Microelectronics Ltd",
-				0x119F => "Bull Hn Information Systems",
-				0x11A1 => "Hamamatsu Photonics KK",
-				0x11A2 => "Sierra Research and Technology",
-				0x11A3 => "Deuretzbacher GmbH & Co Eng KG",
-				0x11A4 => "Barco",
-				0x11A5 => "MicroUnity Systems Engineering Inc",
-				0x11A6 => "Pure Data",
-				0x11A7 => "Power Computing Corp",
-				0x11A8 => "Systech Corp",
-				0x11A9 => "InnoSys Inc",
-				0x11AA => "Actel",
-				0x11AB => "Marvell Semiconductor",
-				0x11AC => "Canon Information Systems",
-				0x11AD => "Lite-On Technology Corp",
-				0x11AE => "Scitex Corporation Ltd",
-				0x11AF => "Avid Technology, Inc",
-				0x11B0 => "Quicklogic Corp",
-				0x11B1 => "Apricot Computers",
-				0x11B2 => "Eastman Kodak",
-				0x11B3 => "Barr Systems Inc",
-				0x11B4 => "Leitch Technology International",
-				0x11B5 => "Radstone Technology Ltd",
-				0x11B6 => "United Video Corp",
-				0x11B7 => "Motorola",
-				0x11B8 => "Xpoint Technologies Inc",
-				0x11B9 => "Pathlight Technology Inc",
-				0x11BA => "Videotron Corp",
-				0x11BB => "Pyramid Technology",
-				0x11BC => "Network Peripherals Inc",
-				0x11BD => "Pinnacle system",
-				0x11BE => "International Microcircuits Inc",
-				0x11BF => "Astrodesign Inc",
-				0x11C1 => "LSI Corporation",
-				0x11C2 => "Sand Microelectronics",
-				0x11C4 => "Document Technologies Ind",
-				0x11C5 => "Shiva Corporatin",
-				0x11C6 => "Dainippon Screen Mfg Co",
-				0x11C7 => "DCM Data Systems",
-				0x11C8 => "Dolphin Interconnect Solutions",
-				0x11C9 => "MAGMA",
-				0x11CA => "LSI Systems Inc",
-				0x11CB => "Specialix International Ltd",
-				0x11CC => "Michels & Kleberhoff Computer GmbH",
-				0x11CD => "HAL Computer Systems Inc",
-				0x11CE => "Primary Rate Inc",
-				0x11CF => "Pioneer Electronic Corporation",
-				0x11D0 => "BAE SYSTEMS - Manassas",
-				0x11D1 => "AuraVision Corporation",
-				0x11D2 => "Intercom Inc",
-				0x11D3 => "Trancell Systems Inc",
-				0x11D4 => "Analog Devices, Inc",
-				0x11D5 => "Tahoma Technology",
-				0x11D6 => "Tekelec Technologies",
-				0x11D7 => "TRENTON Technology, Inc",
-				0x11D8 => "Image Technologies Development",
-				0x11D9 => "Tec Corporation",
-				0x11DA => "Novell",
-				0x11DB => "Sega Enterprises Ltd",
-				0x11DC => "Questra Corp",
-				0x11DD => "Crosfield Electronics Ltd",
-				0x11DE => "Zoran Corporation",
-				0x11E1 => "Gec Plessey Semi Inc",
-				0x11E2 => "Samsung Information Systems America",
-				0x11E3 => "Quicklogic Corp",
-				0x11E4 => "Second Wave Inc",
-				0x11E5 => "IIX Consulting",
-				0x11E6 => "Mitsui-Zosen System Research",
-				0x11E8 => "Digital Processing Systems Inc",
-				0x11E9 => "Highwater Designs Ltd",
-				0x11EA => "Elsag Bailey",
-				0x11EB => "Formation, Inc",
-				0x11EC => "Coreco Inc",
-				0x11ED => "Mediamatics",
-				0x11EE => "Dome Imaging Systems Inc",
-				0x11EF => "Nicolet Technologies BV",
-				0x11F0 => "Triya",
-				0x11F2 => "Picture Tel Japan KK",
-				0x11F3 => "Keithley Instruments, Inc",
-				0x11F4 => "Kinetic Systems Corporation",
-				0x11F5 => "Computing Devices Intl",
-				0x11F6 => "Powermatic Data Systems Ltd",
-				0x11F7 => "Scientific Atlanta",
-				0x11F8 => "PMC-Sierra Inc",
-				0x11F9 => "I-Cube Inc",
-				0x11FA => "Kasan Electronics Co Ltd",
-				0x11FB => "Datel Inc",
-				0x11FD => "High Street Consultants",
-				0x11FE => "Comtrol Corp",
-				0x11FF => "Scion Corp",
-				0x1200 => "CSS Corp",
-				0x1201 => "Vista Controls Corp",
-				0x1202 => "Network General Corp",
-				0x1203 => "Bayer Corporation Agfa Div",
-				0x1204 => "Lattice Semiconductor Corp",
-				0x1205 => "Array Corp",
-				0x1206 => "Amdahl Corp",
-				0x1208 => "Parsytec GmbH",
-				0x1209 => "Sci Systems Inc",
-				0x120A => "Synaptel",
-				0x120B => "Adaptive Solutions",
-				0x120D => "Compression Labs Inc",
-				0x120E => "Cyclades Corporation",
-				0x120F => "Essential Communications",
-				0x1210 => "Hyperparallel Technologies",
-				0x1211 => "Braintech Inc",
-				0x1213 => "Applied Intelligent Systems Inc",
-				0x1214 => "Performance Technologies Inc",
-				0x1215 => "Interware Co Ltd",
-				0x1216 => "Purup-Eskofot A/S",
-				0x1217 => "O2Micro Inc",
-				0x1218 => "Hybricon Corp",
-				0x1219 => "First Virtual Corp",
-				0x121A => "3dfx Interactive Inc",
-				0x121B => "Advanced Telecommunications Modules",
-				0x121C => "Nippon Texa Co Ltd",
-				0x121D => "LiPPERT Embedded Computers GmbH",
-				0x121E => "CSPI",
-				0x121F => "Arcus Technology Inc",
-				0x1220 => "Ariel Corporation",
-				0x1221 => "Contec Microelectronics Europe BV",
-				0x1222 => "Ancor Communications Inc",
-				0x1223 => "Artesyn Embedded Technologies",
-				0x1224 => "Interactive Images",
-				0x1225 => "Power I/O Inc",
-				0x1227 => "Tech-Source",
-				0x1228 => "Norsk Elektro Optikk A/S",
-				0x1229 => "Data Kinesis Inc",
-				0x122A => "Integrated Telecom",
-				0x122B => "LG Industrial Systems Co Ltd",
-				0x122C => "sci-worx GmbH",
-				0x122D => "Aztech System Ltd",
-				0x122E => "Absolute Analysis",
-				0x122F => "Andrew Corp",
-				0x1230 => "Fishcamp Engineering",
-				0x1231 => "Woodward McCoach Inc",
-				0x1233 => "Bus-Tech Inc",
-				0x1234 => "Technical Corp",
-				0x1236 => "Sigma Designs, Inc",
-				0x1237 => "Alta Technology Corp",
-				0x1238 => "Adtran",
-				0x1239 => "The 3DO Company",
-				0x123A => "Visicom Laboratories Inc",
-				0x123B => "Seeq Technology Inc",
-				0x123C => "Century Systems Inc",
-				0x123D => "Engineering Design Team Inc",
-				0x123F => "C-Cube Microsystems",
-				0x1240 => "Marathon Technologies Corp",
-				0x1241 => "DSC Communications",
-				0x1242 => "JNI Corporation",
-				0x1243 => "Delphax",
-				0x1244 => "AVM AUDIOVISUELLES MKTG & Computer GmbH",
-				0x1245 => "APD SA",
-				0x1246 => "Dipix Technologies Inc",
-				0x1247 => "Xylon Research Inc",
-				0x1248 => "Central Data Corp",
-				0x1249 => "Samsung Electronics Co Ltd",
-				0x124A => "AEG Electrocom GmbH",
-				0x124C => "Solitron Technologies Inc",
-				0x124D => "Stallion Technologies",
-				0x124E => "Cylink",
-				0x124F => "Infortrend Technology Inc",
-				0x1250 => "Hitachi Microcomputer System Ltd",
-				0x1251 => "VLSI Solution OY",
-				0x1253 => "Guzik Technical Enterprises",
-				0x1254 => "Linear Systems Ltd",
-				0x1255 => "Optibase Ltd",
-				0x1256 => "Perceptive Solutions Inc",
-				0x1257 => "Vertex Networks Inc",
-				0x1258 => "Gilbarco Inc",
-				0x1259 => "Allied Telesyn International",
-				0x125A => "ABB Power Systems",
-				0x125B => "Asix Electronics Corp",
-				0x125C => "Aurora Technologies Inc",
-				0x125D => "ESS Technology",
-				0x125E => "Specialvideo Engineering SRL",
-				0x125F => "Concurrent Technologies Inc",
-				0x1260 => "Intersil Corporation",
-				0x1261 => "Matsushita-Kotobuki Electronics Indu",
-				0x1262 => "ES Computer Co Ltd",
-				0x1263 => "Sonic Solutions",
-				0x1264 => "Aval Nagasaki Corp",
-				0x1265 => "Casio Computer Co Ltd",
-				0x1266 => "Microdyne Corp",
-				0x1267 => "SA Telecommunications",
-				0x1268 => "Tektronix",
-				0x1269 => "Thomson-CSF/TTM",
-				0x126A => "Lexmark International Inc",
-				0x126B => "Adax Inc",
-				0x126C => "Nortel Networks Corp",
-				0x126D => "Splash Technology Inc",
-				0x126E => "Sumitomo Metal Industries Ltd",
-				0x126F => "Silicon Motion",
-				0x1270 => "Olympus Optical Co Ltd",
-				0x1271 => "GW Instruments",
-				0x1272 => "themrtaish",
-				0x1273 => "Hughes Network Systems",
-				0x1274 => "Ensoniq",
-				0x1275 => "Network Appliance",
-				0x1276 => "Switched Network Technologies Inc",
-				0x1277 => "Comstream",
-				0x1278 => "Transtech Parallel Systems",
-				0x1279 => "Transmeta Corp",
-				0x127B => "Pixera Corp",
-				0x127C => "Crosspoint Solutions Inc",
-				0x127D => "Vela Research LP",
-				0x127E => "Winnov LP",
-				0x127F => "Fujifilm",
-				0x1280 => "Photoscript Group Ltd",
-				0x1281 => "Yokogawa Electronic Corp",
-				0x1282 => "Davicom Semiconductor Inc",
-				0x1283 => "Waldo",
-				0x1285 => "Platform Technologies Inc",
-				0x1286 => "MAZeT GmbH",
-				0x1287 => "LuxSonor Inc",
-				0x1288 => "Timestep Corp",
-				0x1289 => "AVC Technology Inc",
-				0x128A => "Asante Technologies Inc",
-				0x128B => "Transwitch Corp",
-				0x128C => "Retix Corp",
-				0x128D => "G2 Networks Inc",
-				0x128F => "Tateno Dennou Inc",
-				0x1290 => "Sord Computer Corp",
-				0x1291 => "NCS Computer Italia",
-				0x1292 => "Tritech Microelectronics Intl PTE",
-				0x1293 => "Media Reality Technology",
-				0x1294 => "Rhetorex Inc",
-				0x1295 => "Imagenation Corp",
-				0x1296 => "Kofax Image Products",
-				0x1297 => "Shuttle Computer",
-				0x1298 => "Spellcaster Telecommunications Inc",
-				0x1299 => "Knowledge Technology Laboratories",
-				0x129A => "Curtiss Wright Controls Electronic Systems",
-				0x129B => "Image Access",
-				0x129D => "CompCore Multimedia Inc",
-				0x129E => "Victor Co of Japan Ltd",
-				0x129F => "OEC Medical Systems Inc",
-				0x12A0 => "Allen Bradley Co",
-				0x12A1 => "Simpact Inc",
-				0x12A2 => "NewGen Systems Corp",
-				0x12A3 => "Lucent Technologies AMR",
-				0x12A4 => "NTT Electronics Corp",
-				0x12A5 => "Vision Dynamics Ltd",
-				0x12A6 => "Scalable Networks Inc",
-				0x12A7 => "AMO GmbH",
-				0x12A8 => "News Datacom",
-				0x12A9 => "Xiotech Corp",
-				0x12AA => "SDL Communications Inc",
-				0x12AB => "Yuan Yuan Enterprise Co Ltd",
-				0x12AC => "MeasureX Corp",
-				0x12AD => "MULTIDATA GmbH",
-				0x12AE => "Alteon Networks Inc",
-				0x12AF => "TDK USA Corp",
-				0x12B0 => "Jorge Scientific Corp",
-				0x12B1 => "GammaLink",
-				0x12B2 => "General Signal Networks",
-				0x12B3 => "Interface Corp Ltd",
-				0x12B4 => "Future Tel Inc",
-				0x12B5 => "Granite Systems Inc",
-				0x12B7 => "Acumen",
-				0x12B8 => "Korg",
-				0x12B9 => "3Com Corporation",
-				0x12BA => "Bittware, Inc",
-				0x12BB => "Nippon Unisoft Corp",
-				0x12BC => "Array Microsystems",
-				0x12BD => "Computerm Corp",
-				0x12BF => "Fujifilm Microdevices",
-				0x12C0 => "Infimed",
-				0x12C1 => "GMM Research Corp",
-				0x12C2 => "Mentec Ltd",
-				0x12C3 => "Holtek Microelectronics Inc",
-				0x12C4 => "Connect Tech Inc",
-				0x12C5 => "Picture Elements Inc",
-				0x12C6 => "Mitani Corp",
-				0x12C7 => "Dialogic Corp",
-				0x12C8 => "G Force Co Ltd",
-				0x12C9 => "Gigi Operations",
-				0x12CA => "Integrated Computing Engines, Inc",
-				0x12CB => "Antex Electronics Corp",
-				0x12CC => "Pluto Technologies International",
-				0x12CD => "Aims Lab",
-				0x12CE => "Netspeed Inc",
-				0x12CF => "Prophet Systems Inc",
-				0x12D0 => "GDE Systems Inc",
-				0x12D1 => "Huawei Technologies Co, Ltd",
-				0x12D3 => "Vingmed Sound A/S",
-				0x12D4 => "Ulticom, Inc",
-				0x12D5 => "Equator Technologies",
-				0x12D6 => "Analogic Corp",
-				0x12D7 => "Biotronic SRL",
-				0x12D8 => "Pericom Semiconductor",
-				0x12D9 => "Aculab Plc",
-				0x12DA => "TrueTime",
-				0x12DB => "Annapolis Micro Systems Inc",
-				0x12DC => "Symicron Computer Communication Ltd",
-				0x12DD => "Management Graphics Inc",
-				0x12DE => "Rainbow Technologies",
-				0x12DF => "SBS Technologies Inc",
-				0x12E0 => "Chase Research PLC",
-				0x12E1 => "Nintendo Co Ltd",
-				0x12E2 => "Datum Inc Bancomm-Timing Division",
-				0x12E3 => "Imation Corp - Medical Imaging Syst",
-				0x12E4 => "Brooktrout Technology Inc",
-				0x12E6 => "Cirel Systems",
-				0x12E7 => "Sebring Systems Inc",
-				0x12E8 => "CRISC Corp",
-				0x12E9 => "GE Spacenet",
-				0x12EB => "Aureal Semiconductor",
-				0x12EC => "3A International Inc",
-				0x12ED => "Optivision Inc",
-				0x12EE => "Orange Micro, Inc",
-				0x12EF => "Vienna Systems",
-				0x12F0 => "Pentek",
-				0x12F1 => "Sorenson Vision Inc",
-				0x12F2 => "Gammagraphx Inc",
-				0x12F4 => "Megatel",
-				0x12F5 => "Forks",
-				0x12F7 => "Cognex",
-				0x12F8 => "Electronic-Design GmbH",
-				0x12F9 => "FourFold Technologies",
-				0x12FB => "Spectrum Signal Processing",
-				0x12FC => "Capital Equipment Corp",
-				0x12FE => "esd Electronic System Design GmbH",
-				0x1303 => "Innovative Integration",
-				0x1304 => "Juniper Networks Inc",
-				0x1307 => "ComputerBoards",
-				0x1308 => "Jato Technologies Inc",
-				0x130A => "Mitsubishi Electric Microcomputer",
-				0x130B => "Colorgraphic Communications Corp",
-				0x130F => "Advanet Inc",
-				0x1310 => "Gespac",
-				0x1312 => "Microscan Systems Inc",
-				0x1313 => "Yaskawa Electric Co",
-				0x1316 => "Teradyne Inc",
-				0x1317 => "ADMtek Inc",
-				0x1318 => "Packet Engines, Inc",
-				0x1319 => "Forte Media",
-				0x131F => "SIIG",
-				0x1325 => "austriamicrosystems",
-				0x1326 => "Seachange International",
-				0x1328 => "CIFELLI SYSTEMS CORPORATION",
-				0x1331 => "RadiSys Corporation",
-				0x1332 => "Curtiss-Wright Controls Embedded Computing",
-				0x1335 => "Videomail Inc",
-				0x133D => "Prisa Networks",
-				0x133F => "SCM Microsystems",
-				0x1342 => "Promax Systems Inc",
-				0x1344 => "Micron Technology, Inc",
-				0x1347 => "Spectracom Corporation",
-				0x134A => "DTC Technology Corp",
-				0x134B => "ARK Research Corp",
-				0x134C => "Chori Joho System Co Ltd",
-				0x134D => "PCTEL Inc",
-				0x135A => "Brain Boxes Limited",
-				0x135B => "Giganet Inc",
-				0x135C => "Quatech Inc",
-				0x135D => "ABB Network Partner AB",
-				0x135E => "Sealevel Systems Inc",
-				0x135F => "I-Data International A-S",
-				0x1360 => "Meinberg Funkuhren GmbH & Co KG",
-				0x1361 => "Soliton Systems KK",
-				0x1363 => "Phoenix Technologies Ltd",
-				0x1365 => "Hypercope Corp",
-				0x1366 => "Teijin Seiki Co Ltd",
-				0x1367 => "Hitachi Zosen Corporation",
-				0x1368 => "Skyware Corporation",
-				0x1369 => "Digigram",
-				0x136B => "Kawasaki Steel Corporation",
-				0x136C => "Adtek System Science Co Ltd",
-				0x1375 => "Boeing - Sunnyvale",
-				0x137A => "Mark Of The Unicorn Inc",
-				0x137B => "PPT Vision",
-				0x137C => "Iwatsu Electric Co Ltd",
-				0x137D => "Dynachip Corporation",
-				0x137E => "Patriot Scientific Corp",
-				0x1380 => "Sanritz Automation Co LTC",
-				0x1381 => "Brains Co Ltd",
-				0x1382 => "Marian - Electronic & Software",
-				0x1384 => "Stellar Semiconductor Inc",
-				0x1385 => "Netgear",
-				0x1387 => "Curtiss-Wright Controls Electronic Systems",
-				0x1388 => "Hitachi Information Technology Co Ltd",
-				0x1389 => "Applicom International",
-				0x138A => "Validity Sensors, Inc",
-				0x138B => "Tokimec Inc",
-				0x138E => "Basler GMBH",
-				0x138F => "Patapsco Designs Inc",
-				0x1390 => "Concept Development Inc",
-				0x1393 => "Moxa Technologies Co Ltd",
-				0x1394 => "Level One Communications",
-				0x1395 => "Ambicom Inc",
-				0x1396 => "Cipher Systems Inc",
-				0x1397 => "Cologne Chip Designs GmbH",
-				0x1398 => "Clarion Co Ltd",
-				0x139A => "Alacritech Inc",
-				0x139D => "Xstreams PLC/ EPL Limited",
-				0x139E => "Echostar Data Networks",
-				0x13A0 => "Crystal Group Inc",
-				0x13A1 => "Kawasaki Heavy Industries Ltd",
-				0x13A3 => "HI-FN Inc",
-				0x13A4 => "Rascom Inc",
-				0x13A7 => "amc330",
-				0x13A8 => "Exar Corp",
-				0x13A9 => "Siemens Healthcare",
-				0x13AA => "Nortel Networks - BWA Division",
-				0x13AF => "TSqware",
-				0x13B1 => "Tamura Corporation",
-				0x13B4 => "Wellbean Co Inc",
-				0x13B5 => "ARM Ltd",
-				0x13B6 => "DLoG Gesellschaft für elektronische Datentechnik mbH",
-				0x13B8 => "Nokia Telecommunications OY",
-				0x13BD => "Sharp Corporation",
-				0x13BF => "Sharewave Inc",
-				0x13C0 => "Microgate Corp",
-				0x13C1 => "LSI",
-				0x13C2 => "Technotrend Systemtechnik GMBH",
-				0x13C3 => "Janz Computer AG",
-				0x13C7 => "Blue Chip Technology Ltd",
-				0x13CC => "Metheus Corporation",
-				0x13CF => "Studio Audio & Video Ltd",
-				0x13D0 => "B2C2 Inc",
-				0x13D1 => "AboCom Systems, Inc",
-				0x13D4 => "Graphics Microsystems Inc",
-				0x13D6 => "KI Technology Co Ltd",
-				0x13D7 => "Toshiba Engineering Corporation",
-				0x13D8 => "Phobos Corporation",
-				0x13D9 => "Apex Inc",
-				0x13DC => "Netboost Corporation",
-				0x13DE => "ABB Robotics Products AB",
-				0x13DF => "E-Tech Inc",
-				0x13E0 => "GVC Corporation",
-				0x13E3 => "Nest Inc",
-				0x13E4 => "Calculex Inc",
-				0x13E5 => "Telesoft Design Ltd",
-				0x13E9 => "Intraserver Technology Inc",
-				0x13EA => "Dallas Semiconductor",
-				0x13F0 => "IC Plus Corporation",
-				0x13F1 => "OCE - Industries SA",
-				0x13F4 => "Troika Networks Inc",
-				0x13F6 => "C-Media Electronics Inc",
-				0x13F9 => "NTT Advanced Technology Corp",
-				0x13FA => "Pentland Systems Ltd",
-				0x13FB => "Aydin Corp",
-				0x13FD => "Micro Science Inc",
-				0x13FE => "Advantech Co, Ltd",
-				0x13FF => "Silicon Spice Inc",
-				0x1400 => "ArtX Inc",
-				0x1402 => "Meilhaus Electronic GmbH Germany",
-				0x1404 => "Fundamental Software Inc",
-				0x1406 => "Oce Print Logics Technologies SA",
-				0x1407 => "Lava Computer MFG Inc",
-				0x1408 => "Aloka Co Ltd",
-				0x1409 => "SUNIX Co, Ltd",
-				0x140A => "DSP Research Inc",
-				0x140B => "Ramix Inc",
-				0x140D => "Matsushita Electric Works Ltd",
-				0x140F => "Salient Systems Corp",
-				0x1412 => "IC Ensemble, Inc",
-				0x1413 => "Addonics",
-				0x1415 => "Oxford Semiconductor Ltd - now part of PLX Technology",
-				0x1418 => "Kyushu Electronics Systems Inc",
-				0x1419 => "Excel Switching Corp",
-				0x141B => "Zoom Telephonics Inc",
-				0x141E => "Fanuc Co Ltd",
-				0x141F => "Visiontech Ltd",
-				0x1420 => "Psion Dacom PLC",
-				0x1425 => "Chelsio Communications",
-				0x1428 => "Edec Co Ltd",
-				0x1429 => "Unex Technology Corp",
-				0x142A => "Kingmax Technology Inc",
-				0x142B => "Radiolan",
-				0x142C => "Minton Optic Industry Co Ltd",
-				0x142D => "Pixstream Inc",
-				0x1430 => "ITT Aerospace/Communications Division",
-				0x1433 => "Eltec Elektronik AG",
-				0x1435 => "RTD Embedded Technologies, Inc",
-				0x1436 => "CIS Technology Inc",
-				0x1437 => "Nissin Inc Co",
-				0x1438 => "Atmel-Dream",
-				0x143F => "Lightwell Co Ltd - Zax Division",
-				0x1441 => "Agie SA",
-				0x1443 => "Unibrain SA",
-				0x1445 => "Logical Co Ltd",
-				0x1446 => "Graphin Co, LTD",
-				0x1447 => "Aim GMBH",
-				0x1448 => "Alesis Studio",
-				0x144A => "ADLINK Technology Inc",
-				0x144B => "Loronix Information Systems, Inc",
-				0x144D => "sanyo",
-				0x1450 => "Octave Communications Ind",
-				0x1451 => "SP3D Chip Design GMBH",
-				0x1453 => "Mycom Inc",
-				0x1458 => "Giga-Byte Technologies",
-				0x145C => "Cryptek",
-				0x145F => "Baldor Electric Company",
-				0x1460 => "Dynarc Inc",
-				0x1462 => "Micro-Star International Co Ltd",
-				0x1463 => "Fast Corporation",
-				0x1464 => "Interactive Circuits & Systems Ltd",
-				0x1468 => "Ambit Microsystems Corp",
-				0x1469 => "Cleveland Motion Controls",
-				0x146C => "Ruby Tech Corp",
-				0x146D => "Tachyon Inc",
-				0x146E => "WMS Gaming",
-				0x1471 => "Integrated Telecom Express Inc",
-				0x1473 => "Zapex Technologies Inc",
-				0x1474 => "Doug Carson & Associates",
-				0x1477 => "Net Insight",
-				0x1478 => "Diatrend Corporation",
-				0x147B => "Abit Computer Corp",
-				0x147F => "Nihon Unisys Ltd",
-				0x1482 => "Isytec - Integrierte Systemtechnik Gmbh",
-				0x1483 => "Labway Coporation",
-				0x1485 => "Erma - Electronic GMBH",
-				0x1489 => "KYE Systems Corporation",
-				0x148A => "Opto 22",
-				0x148B => "Innomedialogic Inc",
-				0x148C => "CP Technology Co Ltd",
-				0x148D => "Digicom Systems Inc",
-				0x148E => "OSI Plus Corporation",
-				0x148F => "Plant Equipment Inc",
-				0x1490 => "TC Labs Pty Ltd",
-				0x1491 => "Futronic",
-				0x1493 => "Maker Communications",
-				0x1495 => "Tokai Communications Industry Co Ltd",
-				0x1496 => "Joytech Computer Co Ltd",
-				0x1497 => "SMA Technologie AG",
-				0x1498 => "Tews Technologies",
-				0x1499 => "Micro-Technology Co Ltd",
-				0x149A => "Andor Technology Ltd",
-				0x149B => "Seiko Instruments Inc",
-				0x149E => "Mapletree Networks Inc",
-				0x149F => "Lectron Co Ltd",
-				0x14A0 => "Softing AG",
-				0x14A2 => "Millennium Engineering Inc",
-				0x14A4 => "GVC/BCM Advanced Research",
-				0x14A9 => "Hivertec Inc",
-				0x14AB => "Mentor Graphics Corp",
-				0x14B1 => "Nextcom KK",
-				0x14B3 => "Xpeed Inc",
-				0x14B4 => "Philips Business Electronics BV",
-				0x14B5 => "Creamware GmbH",
-				0x14B6 => "Quantum Data Corp",
-				0x14B7 => "Proxim Inc",
-				0x14B9 => "Aironet Wireless Communication",
-				0x14BA => "Internix Inc",
-				0x14BB => "Semtech Corporation",
-				0x14BE => "L3 Communications",
-				0x14C0 => "Compal Electronics, Inc",
-				0x14C1 => "Myricom Inc",
-				0x14C2 => "DTK Computer",
-				0x14C4 => "Iwasaki Information Systems Co Ltd",
-				0x14C5 => "ABB AB (Sweden)",
-				0x14C6 => "Data Race Inc",
-				0x14C7 => "Modular Technology Ltd",
-				0x14C8 => "Turbocomm Tech Inc",
-				0x14C9 => "Odin Telesystems Inc",
-				0x14CB => "Billionton Systems Inc/Cadmus Micro Inc",
-				0x14CD => "Universal Scientific Ind",
-				0x14CF => "TEK Microsystems Inc",
-				0x14D4 => "Panacom Technology Corporation",
-				0x14D5 => "Nitsuko Corporation",
-				0x14D6 => "Accusys Inc",
-				0x14D7 => "Hirakawa Hewtech Corp",
-				0x14D8 => "Hopf Elektronik GMBH",
-				0x14D9 => "Alpha Processor Inc",
-				0x14DB => "Avlab Technology Inc",
-				0x14DC => "Amplicon Liveline Limited",
-				0x14DD => "Imodl Inc",
-				0x14DE => "Applied Integration Corporation",
-				0x14E3 => "Amtelco",
-				0x14E4 => "Broadcom",
-				0x14EA => "Planex Communications, Inc",
-				0x14EB => "Seiko Epson Corporation",
-				0x14EC => "Acqiris",
-				0x14ED => "Datakinetics Ltd",
-				0x14EF => "Carry Computer Eng Co Ltd",
-				0x14F1 => "Conexant",
-				0x14F2 => "Mobility Electronics, Inc",
-				0x14F4 => "Tokyo Electronic Industry Co Ltd",
-				0x14F5 => "Sopac Ltd",
-				0x14F6 => "Coyote Technologies LLC",
-				0x14F7 => "Wolf Technology Inc",
-				0x14F8 => "Audiocodes Inc",
-				0x14F9 => "AG Communications",
-				0x14FB => "Transas Marine (UK) Ltd",
-				0x14FC => "Quadrics Ltd",
-				0x14FD => "Silex Technology Inc",
-				0x14FE => "Archtek Telecom Corp",
-				0x14FF => "Twinhead International Corp",
-				0x1501 => "Banksoft Canada Ltd",
-				0x1502 => "Mitsubishi Electric Logistics Support Co",
-				0x1503 => "Kawasaki LSI USA Inc",
-				0x1504 => "Kaiser Electronics",
-				0x1506 => "Chameleon Systems Inc",
-				0x1507 => "Htec Ltd",
-				0x1509 => "First International Computer Inc",
-				0x150B => "Yamashita Systems Corp",
-				0x150C => "Kyopal Co Ltd",
-				0x150D => "Warpspped Inc",
-				0x150E => "C-Port Corporation",
-				0x150F => "Intec GMBH",
-				0x1510 => "Behavior Tech Computer Corp",
-				0x1511 => "Centillium Technology Corp",
-				0x1512 => "Rosun Technologies Inc",
-				0x1513 => "Raychem",
-				0x1514 => "TFL LAN Inc",
-				0x1515 => "ICS Advent",
-				0x1516 => "Myson Technology Inc",
-				0x1517 => "Echotek Corporation",
-				0x1518 => "Kontron Modular Computers GmbH (PEP Modular Computers GMBH)",
-				0x1519 => "Telefon Aktiebolaget LM Ericsson",
-				0x151A => "Globetek Inc",
-				0x151B => "Combox Ltd",
-				0x151C => "Digital Audio Labs Inc",
-				0x151D => "Fujitsu Computer Products Of America",
-				0x151E => "Matrix Corp",
-				0x151F => "Topic Semiconductor Corp",
-				0x1520 => "Chaplet System Inc",
-				0x1521 => "Bell Corporation",
-				0x1522 => "Mainpine Limited",
-				0x1523 => "Music Semiconductors",
-				0x1524 => "ENE Technology Inc",
-				0x1525 => "Impact Technologies",
-				0x1526 => "ISS Inc",
-				0x1527 => "Solectron",
-				0x1528 => "Acksys",
-				0x1529 => "American Microsystems Inc",
-				0x152A => "Quickturn Design Systems",
-				0x152B => "Flytech Technology Co Ltd",
-				0x152C => "Macraigor Systems LLC",
-				0x152D => "Quanta Computer Inc",
-				0x152E => "Melec Inc",
-				0x152F => "Philips - Crypto",
-				0x1532 => "Echelon Corporation",
-				0x1533 => "Baltimore",
-				0x1534 => "Road Corporation",
-				0x1535 => "Evergreen Technologies Inc",
-				0x1537 => "Datalex Communcations",
-				0x1538 => "Aralion Inc",
-				0x1539 => "Atelier Informatiques et Electronique Et",
-				0x153A => "ONO Sokki",
-				0x153B => "Terratec Electronic GMBH",
-				0x153C => "Antal Electronic",
-				0x153D => "Filanet Corporation",
-				0x153E => "Techwell Inc",
-				0x153F => "MIPS Technologies, Inc",
-				0x1540 => "Provideo Multimedia Co Ltd",
-				0x1541 => "Telocity Inc",
-				0x1542 => "Vivid Technology Inc",
-				0x1543 => "Silicon Laboratories",
-				0x1544 => "DCM Technologies Ltd",
-				0x1545 => "VisionTek",
-				0x1546 => "IOI Technology Corp",
-				0x1547 => "Mitutoyo Corporation",
-				0x1548 => "Jet Propulsion Laboratory",
-				0x1549 => "Interconnect Systems Solutions",
-				0x154A => "Max Technologies Inc",
-				0x154B => "Computex Co Ltd",
-				0x154C => "Visual Technology Inc",
-				0x154D => "PAN International Industrial Corp",
-				0x154E => "Servotest Ltd",
-				0x154F => "Stratabeam Technology",
-				0x1550 => "Open Network Co Ltd",
-				0x1551 => "Smart Electronic Development GMBH",
-				0x1553 => "Chicony Electronics Co Ltd",
-				0x1554 => "Prolink Microsystems Corp",
-				0x1555 => "Gesytec GmbH",
-				0x1556 => "PLDA",
-				0x1557 => "Mediastar Co Ltd",
-				0x1558 => "Clevo/Kapok Computer",
-				0x1559 => "SI Logic Ltd",
-				0x155A => "Innomedia Inc",
-				0x155B => "Protac International Corp",
-				0x155C => "s",
-				0x155D => "MAC System Co Ltd",
-				0x155E => "KUKA Roboter GmbH",
-				0x155F => "Perle Systems Limited",
-				0x1560 => "Terayon Communications Systems",
-				0x1561 => "Viewgraphics Inc",
-				0x1562 => "Symbol Technologies, Inc",
-				0x1563 => "A-Trend Technology Co Ltd",
-				0x1564 => "Yamakatsu Electronics Industry Co Ltd",
-				0x1565 => "Biostar Microtech Intl Corp",
-				0x1566 => "Ardent Technologies Inc",
-				0x1567 => "Jungsoft",
-				0x1568 => "DDK Electronics Inc",
-				0x1569 => "Palit Microsystems Inc",
-				0x156A => "Avtec Systems Inc",
-				0x156B => "S2io Inc",
-				0x156C => "Vidac Electronics GMBH",
-				0x156D => "Alpha-Top Corp",
-				0x156E => "Alfa Inc",
-				0x156F => "M-Systems Flash Disk Pioneers Ltd",
-				0x1570 => "Lecroy Corporation",
-				0x1571 => "Contemporary Controls",
-				0x1572 => "Otis Elevator Company",
-				0x1573 => "Lattice - Vantis",
-				0x1574 => "Fairchild Semiconductor",
-				0x1575 => "Voltaire Advanced Data Security Ltd",
-				0x1576 => "Viewcast Com",
-				0x1578 => "Hitt",
-				0x1579 => "Dual Technology Corporation",
-				0x157A => "Japan Elecronics Ind Inc",
-				0x157B => "Star Multimedia Corp",
-				0x157C => "Eurosoft (UK)",
-				0x157D => "Gemflex Networks",
-				0x157E => "Transition Networks",
-				0x157F => "PX Instruments Technology Ltd",
-				0x1580 => "Primex Aerospace Co",
-				0x1581 => "SEH Computertechnik GMBH",
-				0x1582 => "Cytec Corporation",
-				0x1583 => "Inet Technologies Inc",
-				0x1584 => "Vetronix Corporation Engenharia Ltda",
-				0x1585 => "Marconi Commerce Systems SRL",
-				0x1586 => "Lancast Inc",
-				0x1587 => "Konica Corporation",
-				0x1588 => "Solidum Systems Corp",
-				0x1589 => "Atlantek Microsystems Pty Ltd",
-				0x158A => "Digalog Systems Inc",
-				0x158B => "Allied Data Technologies",
-				0x158C => "Hitachi Semiconductor & Devices Sales Co",
-				0x158D => "Point Multimedia Systems",
-				0x158E => "Lara Technology Inc",
-				0x158F => "Ditect Coop",
-				0x1590 => "3pardata Inc",
-				0x1591 => "ARN",
-				0x1592 => "Syba Tech Ltd",
-				0x1593 => "Bops Inc",
-				0x1594 => "Netgame Ltd",
-				0x1595 => "Diva Systems Corp",
-				0x1596 => "Folsom Research Inc",
-				0x1597 => "Memec Design Services",
-				0x1598 => "Granite Microsystems",
-				0x1599 => "Delta Electronics Inc",
-				0x159A => "General Instrument",
-				0x159B => "Faraday Technology Corp",
-				0x159C => "Stratus Computer Systems",
-				0x159D => "Ningbo Harrison Electronics Co Ltd",
-				0x159E => "A-Max Technology Co Ltd",
-				0x159F => "Galea Network Security",
-				0x15A0 => "Compumaster SRL",
-				0x15A1 => "Geocast Network Systems Inc",
-				0x15A2 => "Catalyst Enterprises Inc",
-				0x15A3 => "Italtel",
-				0x15A4 => "X-Net OY",
-				0x15A5 => "Toyota MACS Inc",
-				0x15A6 => "Sunlight Ultrasound Technologies Ltd",
-				0x15A7 => "SSE Telecom Inc",
-				0x15A8 => "Shanghai Communications Technologies Cen",
-				0x15AA => "Moreton Bay",
-				0x15AB => "Bluesteel Networks Inc",
-				0x15AC => "North Atlantic Instruments",
-				0x15AD => "VMware Inc",
-				0x15AE => "Amersham Pharmacia Biotech",
-				0x15B0 => "Zoltrix International Limited",
-				0x15B1 => "Source Technology Inc",
-				0x15B2 => "Mosaid Technologies Inc",
-				0x15B3 => "Mellanox Technology",
-				0x15B4 => "CCI/Triad",
-				0x15B5 => "Cimetrics Inc",
-				0x15B6 => "Texas Memory Systems Inc",
-				0x15B7 => "Sandisk Corp",
-				0x15B8 => "Addi-Data GMBH",
-				0x15B9 => "Maestro Digital Communications",
-				0x15BA => "Impacct Technology Corp",
-				0x15BB => "Portwell Inc",
-				0x15BC => "Agilent Technologies",
-				0x15BD => "DFI Inc",
-				0x15BE => "Sola Electronics",
-				0x15BF => "High Tech Computer Corp (HTC)",
-				0x15C0 => "BVM Limited",
-				0x15C1 => "Quantel",
-				0x15C2 => "Newer Technology Inc",
-				0x15C3 => "Taiwan Mycomp Co Ltd",
-				0x15C4 => "EVSX Inc",
-				0x15C5 => "Procomp Informatics Ltd",
-				0x15C6 => "Technical University Of Budapest",
-				0x15C7 => "Tateyama System Laboratory Co Ltd",
-				0x15C8 => "Penta Media Co Ltd",
-				0x15C9 => "Serome Technology Inc",
-				0x15CA => "Bitboys OY",
-				0x15CB => "AG Electronics Ltd",
-				0x15CC => "Hotrail Inc",
-				0x15CD => "Dreamtech Co Ltd",
-				0x15CE => "Genrad Inc",
-				0x15CF => "Hilscher GMBH",
-				0x15D1 => "Infineon Technologies AG",
-				0x15D2 => "FIC (First International Computer Inc)",
-				0x15D3 => "NDS Technologies Israel Ltd",
-				0x15D4 => "Iwill Corporation",
-				0x15D5 => "Tatung Co",
-				0x15D6 => "Entridia Corporation",
-				0x15D7 => "Rockwell-Collins Inc",
-				0x15D8 => "Cybernetics Technology Co Ltd",
-				0x15D9 => "Super Micro Computer Inc",
-				0x15DA => "Cyberfirm Inc",
-				0x15DB => "Applied Computing Systems Inc",
-				0x15DC => "Litronic Inc",
-				0x15DD => "Sigmatel Inc",
-				0x15DE => "Malleable Technologies Inc",
-				0x15E0 => "Cacheflow Inc",
-				0x15E1 => "Voice Technologies Group",
-				0x15E2 => "Quicknet Technologies Inc",
-				0x15E3 => "Networth Technologies Inc",
-				0x15E4 => "VSN Systemen BV",
-				0x15E5 => "Valley Technologies Inc",
-				0x15E6 => "Agere Inc",
-				0x15E7 => "GET Engineering Corp",
-				0x15E8 => "National Datacomm Corp",
-				0x15E9 => "Pacific Digital Corp",
-				0x15EA => "Tokyo Denshi Sekei KK",
-				0x15EB => "Drsearch GMBH",
-				0x15EC => "Beckhoff Automation GmbH",
-				0x15ED => "Macrolink Inc",
-				0x15EE => "IN Win Development Inc",
-				0x15EF => "Intelligent Paradigm Inc",
-				0x15F0 => "B-Tree Systems Inc",
-				0x15F1 => "Times N Systems Inc",
-				0x15F2 => "SPOT Imaging Solutions a division of Diagnostic Instruments, Inc",
-				0x15F3 => "Digitmedia Corp",
-				0x15F4 => "Valuesoft",
-				0x15F5 => "Power Micro Research",
-				0x15F6 => "Extreme Packet Device Inc",
-				0x15F7 => "Banctec",
-				0x15F8 => "Koga Electronics Co",
-				0x15F9 => "Zenith Electronics Co",
-				0x15FA => "Axzam Corporation",
-				0x15FB => "Zilog Inc",
-				0x15FC => "Techsan Electronics Co Ltd",
-				0x15FD => "N-CubedNet",
-				0x15FE => "Kinpo Electronics Inc",
-				0x15FF => "Fastpoint Technologies Inc",
-				0x1600 => "Northrop Grumman - Canada Ltd",
-				0x1601 => "Tenta Technology",
-				0x1602 => "Prosys-TEC Inc",
-				0x1603 => "Nokia Wireless Business Communications",
-				0x1604 => "Central System Research Co Ltd",
-				0x1605 => "Pairgain Technologies",
-				0x1606 => "Europop AG",
-				0x1607 => "Lava Semiconductor Manufacturing Inc",
-				0x1608 => "Automated Wagering International",
-				0x1609 => "Sciemetric Instruments Inc",
-				0x160A => "Kollmorgen Servotronix",
-				0x160B => "Onkyo Corp",
-				0x160C => "Oregon Micro Systems Inc",
-				0x160D => "Aaeon Electronics Inc",
-				0x160E => "CML Emergency Services",
-				0x160F => "ITEC Co Ltd",
-				0x1610 => "Tottori Sanyo Electric Co Ltd",
-				0x1611 => "Bel Fuse Inc",
-				0x1612 => "Telesynergy Research Inc",
-				0x1613 => "System Craft Inc",
-				0x1614 => "Jace Tech Inc",
-				0x1615 => "Equus Computer Systems Inc",
-				0x1616 => "Iotech Inc",
-				0x1617 => "Rapidstream Inc",
-				0x1618 => "Esec SA",
-				0x1619 => "FarSite Communications Limited",
-				0x161B => "Mobilian Israel Ltd",
-				0x161C => "Berkshire Products",
-				0x161D => "Gatec",
-				0x161E => "Kyoei Sangyo Co Ltd",
-				0x161F => "Arima Computer Corporation",
-				0x1620 => "Sigmacom Co Ltd",
-				0x1621 => "Lynx Studio Technology Inc",
-				0x1622 => "Nokia Home Communications",
-				0x1623 => "KRF Tech Ltd",
-				0x1624 => "CE Infosys GMBH",
-				0x1625 => "Warp Nine Engineering",
-				0x1626 => "TDK Semiconductor Corp",
-				0x1627 => "BCom Electronics Inc",
-				0x1629 => "Kongsberg Spacetec as",
-				0x162A => "Sejin Computerland Co Ltd",
-				0x162B => "Shanghai Bell Company Limited",
-				0x162C => "C&H Technologies Inc",
-				0x162D => "Reprosoft Co Ltd",
-				0x162E => "Margi Systems Inc",
-				0x162F => "Rohde & Schwarz GMBH & Co KG",
-				0x1630 => "Sky Computers Inc",
-				0x1631 => "NEC Computer International",
-				0x1632 => "Verisys Inc",
-				0x1633 => "Adac Corporation",
-				0x1634 => "Visionglobal Network Corp",
-				0x1635 => "Decros / SICZ as",
-				0x1636 => "Jean Company Ltd",
-				0x1637 => "NSI",
-				0x1638 => "Eumitcom Technology Inc",
-				0x163A => "Air Prime Inc",
-				0x163B => "Glotrex Co Ltd",
-				0x163C => "intel",
-				0x163D => "Heidelberg Digital LLC",
-				0x163E => "3dpower",
-				0x163F => "Renishaw PLC",
-				0x1640 => "Intelliworxx Inc",
-				0x1641 => "MKNet Corporation",
-				0x1642 => "Bitland",
-				0x1643 => "Hajime Industries Ltd",
-				0x1644 => "Western Avionics Ltd",
-				0x1645 => "Quick-Serv Computer Co Ltd",
-				0x1646 => "Nippon Systemware Co Ltd",
-				0x1647 => "Hertz Systemtechnik GMBH",
-				0x1648 => "MeltDown Systems LLC",
-				0x1649 => "Jupiter Systems",
-				0x164A => "Aiwa Co Ltd",
-				0x164C => "Department Of Defense",
-				0x164D => "Ishoni Networks",
-				0x164E => "Micrel Inc",
-				0x164F => "Datavoice (Pty) Ltd",
-				0x1650 => "Admore Technology Inc",
-				0x1651 => "Chaparral Network Storage",
-				0x1652 => "Spectrum Digital Inc",
-				0x1653 => "Nature Worldwide Technology Corp",
-				0x1654 => "Sonicwall Inc",
-				0x1655 => "Dazzle Multimedia Inc",
-				0x1656 => "Insyde Software Corp",
-				0x1657 => "Brocade Communications Systems",
-				0x1658 => "Med Associates Inc",
-				0x1659 => "Shiba Denshi Systems Inc",
-				0x165A => "Epix Inc",
-				0x165B => "Real-Time Digital Inc",
-				0x165C => "Kondo Kagaku",
-				0x165D => "Hsing Tech Enterprise Co Ltd",
-				0x165E => "Hyunju Computer Co Ltd",
-				0x165F => "Comartsystem Korea",
-				0x1660 => "Network Security Technologies Inc (NetSec)",
-				0x1661 => "Worldspace Corp",
-				0x1662 => "Int Labs",
-				0x1663 => "Elmec Inc Ltd",
-				0x1664 => "Fastfame Technology Co Ltd",
-				0x1665 => "Edax Inc",
-				0x1666 => "Norpak Corporation",
-				0x1667 => "CoSystems Inc",
-				0x1668 => "Actiontec Electronics Inc",
-				0x166A => "Komatsu Ltd",
-				0x166B => "Supernet Inc",
-				0x166C => "Shade Ltd",
-				0x166D => "Sibyte Inc",
-				0x166E => "Schneider Automation Inc",
-				0x166F => "Televox Software Inc",
-				0x1670 => "Rearden Steel",
-				0x1671 => "Atan Technology Inc",
-				0x1672 => "Unitec Co Ltd",
-				0x1673 => "pctel",
-				0x1675 => "Square Wave Technology",
-				0x1676 => "Emachines Inc",
-				0x1677 => "Bernecker + Rainer",
-				0x1678 => "INH Semiconductor",
-				0x1679 => "Tokyo Electron Device Ltd",
-				0x167F => "iba AG",
-				0x1680 => "Dunti Corp",
-				0x1681 => "Hercules",
-				0x1682 => "PINE Technology, Ltd",
-				0x1688 => "CastleNet Technology Inc",
-				0x168A => "Utimaco Safeware AG",
-				0x168B => "Circut Assembly Corp",
-				0x168C => "Atheros Communications Inc",
-				0x168D => "NMI Electronics Ltd",
-				0x168E => "Hyundai MultiCAV Computer Co Ltd",
-				0x168F => "KDS Innotech Corp",
-				0x1690 => "NetContinuum, Inc",
-				0x1693 => "FERMA",
-				0x1695 => "EPoX Computer Co, Ltd",
-				0x16AE => "SafeNet Inc",
-				0x16B3 => "CNF Mobile Solutions",
-				0x16B8 => "Sonnet Technologies, Inc",
-				0x16CA => "Cenatek Inc",
-				0x16CB => "Minolta Co Ltd",
-				0x16CC => "Inari Inc",
-				0x16D0 => "Systemax",
-				0x16E0 => "Third Millenium Test Solutions, Inc",
-				0x16E5 => "Intellon Corporation",
-				0x16EC => "US Robotics",
-				0x16F0 => "LaserLinc Inc",
-				0x16F1 => "Adicti Corp",
-				0x16F3 => "Jetway Information Co, Ltd",
-				0x16F6 => "VideoTelecom Inc",
-				0x1700 => "Antara LLC",
-				0x1701 => "Interactive Computer Products Inc",
-				0x1702 => "Internet Machines Corp",
-				0x1703 => "Desana Systems",
-				0x1704 => "Clearwater Networks",
-				0x1705 => "Digital First",
-				0x1706 => "Pacific Broadband Communications",
-				0x1707 => "Cogency Semiconductor Inc",
-				0x1708 => "Harris Corp",
-				0x1709 => "Zarlink Semiconductor",
-				0x170A => "Alpine Electronics Inc",
-				0x170B => "NetOctave Inc",
-				0x170C => "YottaYotta Inc",
-				0x170D => "SensoMotoric Instruments GmbH",
-				0x170E => "San Valley Systems, Inc",
-				0x170F => "Cyberdyne Inc",
-				0x1710 => "Pelago Networks",
-				0x1711 => "MyName Technologies, Inc",
-				0x1712 => "NICE Systems Inc",
-				0x1713 => "TOPCON Corp",
-				0x1725 => "Vitesse Semiconductor",
-				0x1734 => "Fujitsu-Siemens Computers GmbH",
-				0x1737 => "LinkSys",
-				0x173B => "Altima Communications Inc",
-				0x1743 => "Peppercon AG",
-				0x174B => "PC Partner Limited",
-				0x1752 => "Global Brands Manufacture Ltd",
-				0x1753 => "TeraRecon, Inc",
-				0x1755 => "Alchemy Semiconductor Inc",
-				0x176A => "General Dynamics Canada",
-				0x1775 => "General Electric",
-				0x1789 => "Ennyah Technologies Corp",
-				0x1793 => "Unitech Electronics Co, Ltd",
-				0x17A1 => "Tascorp",
-				0x17A7 => "Start Network Technology Co, Ltd",
-				0x17AA => "Legend Ltd (Beijing)",
-				0x17AB => "Phillips Components",
-				0x17AF => "Hightech Information Systems, Ltd",
-				0x17BE => "Philips Semiconductors",
-				0x17C0 => "Wistron Corp",
-				0x17C4 => "Movita",
-				0x17CC => "NetChip",
-				0x17cd => "Cadence Design Systems",
-				0x17D5 => "Neterion Inc",
-				0x17db => "Cray, Inc",
-				0x17E9 => "DH electronics GmbH / Sabrent",
-				0x17EE => "Connect Components, Ltd",
-				0x17F3 => "RDC Semiconductor Co, Ltd",
-				0x17FE => "INPROCOMM",
-				0x1813 => "Ambient Technologies Inc",
-				0x1814 => "Ralink Technology, Corp",
-				0x1815 => "devolo AG",
-				0x1820 => "InfiniCon Systems, Inc",
-				0x1824 => "Avocent",
-				0x1841 => "Panda Platinum",
-				0x1860 => "Primagraphics Ltd",
-				0x186C => "Humusoft SRO",
-				0x1887 => "Elan Digital Systems Ltd",
-				0x1888 => "Varisys Limited",
-				0x188D => "Millogic Ltd",
-				0x1890 => "Egenera, Inc",
-				0x18BC => "Info-Tek Corp",
-				0x18C9 => "ARVOO Engineering BV",
-				0x18CA => "XGI Technology Inc",
-				0x18F1 => "Spectrum Systementwicklung Microelectronic GmbH",
-				0x18F4 => "Napatech A/S",
-				0x18F7 => "Commtech, Inc",
-				0x18FB => "Resilience Corporation",
-				0x1904 => "Ritmo",
-				0x1905 => "WIS Technology, Inc",
-				0x1910 => "Seaway Networks",
-				0x1912 => "Renesas Electronics",
-				0x1931 => "Option NV",
-				0x1941 => "Stelar",
-				0x1954 => "One Stop Systems, Inc",
-				0x1969 => "Atheros Communications",
-				0x1971 => "AGEIA Technologies, Inc",
-				0x197B => "JMicron Technology Corp",
-				0x198a => "Nallatech",
-				0x1991 => "Topstar Digital Technologies Co, Ltd",
-				0x19a2 => "ServerEngines",
-				0x19A8 => "DAQDATA GmbH",
-				0x19AC => "Kasten Chase Applied Research",
-				0x19B6 => "Mikrotik",
-				0x19E2 => "Vector Informatik GmbH",
-				0x19E3 => "DDRdrive LLC",
-				0x1A08 => "Linux Networx",
-				0x1a41 => "Tilera Corporation",
-				0x1A42 => "Imaginant",
-				0x1B13 => "Jaton Corporation USA",
-				0x1B21 => "Asustek - ASMedia Technology Inc",
-				0x1B6F => "Etron",
-				0x1B73 => "Fresco Logic Inc",
-				0x1B91 => "Averna",
-				0x1BAD => "ReFLEX CES",
-				0x1C0F => "Monarch Innovative Technologies Pvt Ltd's",
-				0x1C32 => "Highland Technology, Inc",
-				0x1c39 => "Thomson Video Networks",
-				0x1DE1 => "Tekram",
-				0x1FCF => "Miranda Technologies Ltd",
-				0x2001 => "Temporal Research Ltd",
-				0x2646 => "Kingston Technology Co",
-				0x270F => "ChainTek Computer Co Ltd",
-				0x2EC1 => "Zenic Inc",
-				0x3388 => "Hint Corp",
-				0x3411 => "Quantum Designs (HK) Inc",
-				0x3513 => "ARCOM Control Systems Ltd",
-				0x38EF => "4links",
-				0x3D3D => "3Dlabs, Inc Ltd",
-				0x4005 => "Avance Logic Inc",
-				0x4144 => "Alpha Data",
-				0x416C => "Aladdin Knowledge Systems",
-				0x4348 => "wchcn",
-				0x4680 => "UMAX Computer Corp",
-				0x4843 => "Hercules Computer Technology",
-				0x4943 => "Growth Networks",
-				0x4954 => "Integral Technologies",
-				0x4978 => "Axil Computer Inc",
-				0x4C48 => "Lung Hwa Electronics",
-				0x4C53 => "SBS-OR Industrial Computers",
-				0x4CA1 => "Seanix Technology Inc",
-				0x4D51 => "Mediaq Inc",
-				0x4D54 => "Microtechnica Co Ltd",
-				0x4DDC => "ILC Data Device Corp",
-				0x5053 => "TBS/Voyetra Technologies",
-				0x508A => "Samsung T10 MP3 Player",
-				0x5136 => "S S Technologies",
-				0x5143 => "Qualcomm Inc USA",
-				0x5333 => "S3 Graphics Co, Ltd",
-				0x544C => "Teralogic Inc",
-				0x5555 => "Genroco Inc",
-				0x5853 => "Citrix Systems, Inc",
-				0x6409 => "Logitec Corp",
-				0x6666 => "Decision Computer International Co",
-				0x6945 => "ASMedia Technology Inc",
-				0x7604 => "ON Electric Co Ltd",
-				0x8080 => "Xirlink, Inc",
-				0x8086 => "Intel Corporation",
-				0x8087 => "Intel",
-				0x80EE => "Oracle Corporation - InnoTek Systemberatung GmbH",
-				0x8866 => "T-Square Design Inc",
-				0x8888 => "Silicon Magic",
-				0x8E0E => "Computone Corporation",
-				0x9004 => "Adaptec Inc",
-				0x9005 => "Adaptec Inc",
-				0x919A => "Gigapixel Corp",
-				0x9412 => "Holtek",
-				0x9699 => "Omni Media Technology Inc",
-				0x9710 => "MosChip Semiconductor Technology",
-				0x9902 => "StarGen, Inc",
-				0xA0A0 => "Aopen Inc",
-				0xA0F1 => "Unisys Corporation",
-				0xA200 => "NEC Corp",
-				0xA259 => "Hewlett Packard",
-				0xA304 => "Sony",
-				0xA727 => "3com Corporation",
-				0xAA42 => "Abekas, Inc",
-				0xAC1E => "Digital Receiver Technology Inc",
-				0xB1B3 => "Shiva Europe Ltd",
-				0xB894 => "Brown & Sharpe Mfg Co",
-				0xBEEF => "Mindstream Computing",
-				0xC001 => "TSI Telsys",
-				0xC0A9 => "Micron/Crucial Technology",
-				0xC0DE => "Motorola",
-				0xC0FE => "Motion Engineering Inc",
-				0xC622 => "Hudson Soft Co Ltd",
-				0xCA50 => "Varian, Inc",
-				0xCAFE => "Chrysalis-ITS",
-				0xCCCC => "Catapult Communications",
-				0xD4D4 => "Curtiss-Wright Controls Embedded Computing",
-				0xDC93 => "Dawicontrol",
-				0xDEAD => "Indigita Corporation",
-				0xDEAF => "Middle Digital, Inc",
-				0xE159 => "Tiger Jet Network Inc",
-				0xE4BF => "EKF Elektronik GMBH",
-				0xEA01 => "Eagle Technology",
-				0xEABB => "Aashima Technology BV",
-				0xEACE => "Endace Measurement Systems Ltd",
-				0xECC0 => "Echo Digital Audio Corporation",
-				0xEDD8 => "ARK Logic, Inc",
-				0xF5F5 => "F5 Networks Inc",
-				0xFA57 => "Interagon AS",
-				_ => "Unknown"
-			};
-		}
-	}
+    public static class VendorID
+    {
+        public static string GetName(ushort id)
+        {
+            if (id == 0x0033) return "Paradyne Corp";
+            if (id == 0x003D) return "master";
+            if (id == 0x0070) return "Hauppauge Computer Works Inc";
+            if (id == 0x0100) return "USBPDO-8";
+            if (id == 0x0123) return "General Dynamics";
+            if (id == 0x0315) return "SK - Electronics Co, Ltd";
+            if (id == 0x0402) return "Acer aspire one";
+            if (id == 0x046D) return "Logitech Inc";
+            if (id == 0x0483) return "UPEK";
+            if (id == 0x04A9) return "Canon";
+            if (id == 0x04B3) return "IBM";
+            if (id == 0x04D9) return "Filco";
+            if (id == 0x04E8) return "Samsung Windows Portable Devices";
+            if (id == 0x04F2) return "Chicony Electronics Co";
+            if (id == 0x051D) return "ACPI\\VEN_INT&DEV_33A0";
+            if (id == 0x0529) return "Aladdin E-Token";
+            if (id == 0x0553) return "Aiptek USA";
+            if (id == 0x058f) return "Alcor Micro Corp";
+            if (id == 0x0590) return "Omron Corp";
+            if (id == 0x05ac) return "Apple Inc";
+            if (id == 0x05E1) return "D-MAX";
+            if (id == 0x064e) return "SUYIN Corporation";
+            if (id == 0x067B) return "Prolific Technology Inc";
+            if (id == 0x06FE) return "Acresso Software Inc";
+            if (id == 0x0711) return "SIIG, Inc";
+            if (id == 0x07d1) return "D-Link Corporation";
+            if (id == 0x093a) return "KYE Systems Corp / Pixart Imaging";
+            if (id == 0x096E) return "USB Rockey dongle from Feitain";
+            if (id == 0x0A5C) return "Broadcom Corporation";
+            if (id == 0x0A89) return "BREA Technologies Inc";
+            if (id == 0x0A92) return "Egosys, Inc";
+            if (id == 0x0AC8) return "ASUS";
+            if (id == 0x0b05) return "Toshiba Bluetooth RFBUS, RFCOM, RFHID";
+            if (id == 0x0c45) return "Microdia Ltd";
+            if (id == 0x0cf3) return "TP-Link";
+            if (id == 0x0D2E) return "Feedback Instruments Ltd";
+            if (id == 0x0D8C) return "C-Media Electronics, Inc";
+            if (id == 0x0DF6) return "Sitecom";
+            if (id == 0x0E11) return "Compaq Computer Corp";
+            if (id == 0x0E8D) return "MediaTek Inc";
+            if (id == 0x1000) return "LSI Logic";
+            if (id == 0x1001) return "Kolter Electronic - Germany";
+            if (id == 0x1002) return "Advanced Micro Devices, Inc";
+            if (id == 0x1003) return "ULSI";
+            if (id == 0x1004) return "VLSI Technology";
+            if (id == 0x1006) return "Reply Group";
+            if (id == 0x1007) return "Netframe Systems Inc";
+            if (id == 0x1008) return "Epson";
+            if (id == 0x100A) return "??as Ltd de Phoenix del ?? de Tecnolog??";
+            if (id == 0x100B) return "National Semiconductors";
+            if (id == 0x100C) return "Tseng Labs";
+            if (id == 0x100D) return "AST Research";
+            if (id == 0x100E) return "Weitek";
+            if (id == 0x1010) return "Video Logic Ltd";
+            if (id == 0x1011) return "Digital Equipment Corporation";
+            if (id == 0x1012) return "Micronics Computers Inc";
+            if (id == 0x1013) return "Cirrus Logic";
+            if (id == 0x1014) return "International Business Machines Corp";
+            if (id == 0x1016) return "Fujitsu ICL Computers";
+            if (id == 0x1017) return "Spea Software AG";
+            if (id == 0x1018) return "Unisys Systems";
+            if (id == 0x1019) return "Elitegroup Computer System";
+            if (id == 0x101A) return "NCR Corporation";
+            if (id == 0x101B) return "Vitesse Semiconductor";
+            if (id == 0x101E) return "American Megatrends Inc";
+            if (id == 0x101F) return "PictureTel Corp";
+            if (id == 0x1020) return "Hitachi Computer Electronics";
+            if (id == 0x1021) return "Oki Electric Industry";
+            if (id == 0x1022) return "Advanced Micro Devices";
+            if (id == 0x1023) return "TRIDENT MICRO";
+            if (id == 0x1025) return "Acer Incorporated";
+            if (id == 0x1028) return "Dell Inc";
+            if (id == 0x102A) return "LSI Logic Headland Division";
+            if (id == 0x102B) return "Matrox Electronic Systems Ltd";
+            if (id == 0x102C) return "Asiliant (Chips And Technologies)";
+            if (id == 0x102D) return "Wyse Technology";
+            if (id == 0x102E) return "Olivetti Advanced Technology";
+            if (id == 0x102F) return "Toshiba America";
+            if (id == 0x1030) return "TMC Research";
+            if (id == 0x1031) return "miro Computer Products AG";
+            if (id == 0x1033) return "NEC Electronics";
+            if (id == 0x1034) return "Burndy Corporation";
+            if (id == 0x1036) return "Future Domain";
+            if (id == 0x1037) return "Hitachi Micro Systems Inc";
+            if (id == 0x1038) return "AMP Incorporated";
+            if (id == 0x1039) return "Silicon Integrated Systems";
+            if (id == 0x103A) return "Seiko Epson Corporation";
+            if (id == 0x103B) return "Tatung Corp Of America";
+            if (id == 0x103C) return "Hewlett-Packard";
+            if (id == 0x103E) return "Solliday Engineering";
+            if (id == 0x103F) return "Logic Modeling";
+            if (id == 0x1041) return "Computrend";
+            if (id == 0x1043) return "Asustek Computer Inc";
+            if (id == 0x1044) return "Distributed Processing Tech";
+            if (id == 0x1045) return "OPTi Inc";
+            if (id == 0x1046) return "IPC Corporation LTD";
+            if (id == 0x1047) return "Genoa Systems Corp";
+            if (id == 0x1048) return "ELSA GmbH";
+            if (id == 0x1049) return "Fountain Technology";
+            if (id == 0x104A) return "STMicroelectronics";
+            if (id == 0x104B) return "Mylex / Buslogic";
+            if (id == 0x104C) return "Texas Instruments";
+            if (id == 0x104D) return "Sony Corporation";
+            if (id == 0x104E) return "Oak Technology";
+            if (id == 0x104F) return "Co-Time Computer Ltd";
+            if (id == 0x1050) return "Winbond Electronics Corp";
+            if (id == 0x1051) return "Anigma Corp";
+            if (id == 0x1053) return "Young Micro Systems";
+            if (id == 0x1054) return "Hitachi Ltd";
+            if (id == 0x1055) return "Standard Microsystems Corp";
+            if (id == 0x1056) return "ICL";
+            if (id == 0x1057) return "Motorola";
+            if (id == 0x1058) return "Electronics & Telecommunication Res";
+            if (id == 0x1059) return "Kontron Canada";
+            if (id == 0x105A) return "Promise Technology";
+            if (id == 0x105B) return "Mobham chip";
+            if (id == 0x105C) return "Wipro Infotech Limited";
+            if (id == 0x105D) return "Number Nine Visual Technology";
+            if (id == 0x105E) return "Vtech Engineering Canada Ltd";
+            if (id == 0x105F) return "Infotronic America Inc";
+            if (id == 0x1060) return "United Microelectronics";
+            if (id == 0x1061) return "8x8 Inc";
+            if (id == 0x1062) return "Maspar Computer Corp";
+            if (id == 0x1063) return "Ocean Office Automation";
+            if (id == 0x1064) return "Alcatel Cit";
+            if (id == 0x1065) return "Texas Microsystems";
+            if (id == 0x1066) return "Picopower Technology";
+            if (id == 0x1067) return "Mitsubishi Electronics";
+            if (id == 0x1068) return "Diversified Technology";
+            if (id == 0x106A) return "Aten Research Inc";
+            if (id == 0x106B) return "Apple Inc";
+            if (id == 0x106C) return "Hyundai Electronics America";
+            if (id == 0x106D) return "Sequent Computer Systems";
+            if (id == 0x106E) return "DFI Inc";
+            if (id == 0x106F) return "City Gate Development LTD";
+            if (id == 0x1070) return "Daewoo Telecom Ltd";
+            if (id == 0x1071) return "Mitac";
+            if (id == 0x1072) return "GIT Co Ltd";
+            if (id == 0x1073) return "Yamaha Corporation";
+            if (id == 0x1074) return "Nexgen Microsystems";
+            if (id == 0x1075) return "Advanced Integration Research";
+            if (id == 0x1077) return "QLogic Corporation";
+            if (id == 0x1078) return "Cyrix Corporation";
+            if (id == 0x1079) return "I-Bus";
+            if (id == 0x107A) return "Networth controls";
+            if (id == 0x107B) return "Gateway 2000";
+            if (id == 0x107C) return "Goldstar Co Ltd";
+            if (id == 0x107D) return "Leadtek Research";
+            if (id == 0x107E) return "Testernec";
+            if (id == 0x107F) return "Data Technology Corporation";
+            if (id == 0x1080) return "Cypress Semiconductor";
+            if (id == 0x1081) return "Radius Inc";
+            if (id == 0x1082) return "EFA Corporation Of America";
+            if (id == 0x1083) return "Forex Computer Corporation";
+            if (id == 0x1084) return "Parador";
+            if (id == 0x1085) return "Tulip Computers Int'l BV";
+            if (id == 0x1086) return "J Bond Computer Systems";
+            if (id == 0x1087) return "Cache Computer";
+            if (id == 0x1088) return "Microcomputer Systems (M) Son";
+            if (id == 0x1089) return "Data General Corporation";
+            if (id == 0x108A) return "SBS Operations";
+            if (id == 0x108C) return "Oakleigh Systems Inc";
+            if (id == 0x108D) return "Olicom";
+            if (id == 0x108E) return "Sun Microsystems";
+            if (id == 0x108F) return "Systemsoft Corporation";
+            if (id == 0x1090) return "Encore Computer Corporation";
+            if (id == 0x1091) return "Intergraph Corporation";
+            if (id == 0x1092) return "Diamond Computer Systems";
+            if (id == 0x1093) return "National Instruments";
+            if (id == 0x1094) return "Apostolos";
+            if (id == 0x1095) return "Silicon Image, Inc";
+            if (id == 0x1096) return "Alacron";
+            if (id == 0x1097) return "Appian Graphics";
+            if (id == 0x1098) return "Quantum Designs Ltd";
+            if (id == 0x1099) return "Samsung Electronics Co Ltd";
+            if (id == 0x109A) return "Packard Bell";
+            if (id == 0x109B) return "Gemlight Computer Ltd";
+            if (id == 0x109C) return "Megachips Corporation";
+            if (id == 0x109D) return "Zida Technologies Ltd";
+            if (id == 0x109E) return "Brooktree Corporation";
+            if (id == 0x109F) return "Trigem Computer Inc";
+            if (id == 0x10A0) return "Meidensha Corporation";
+            if (id == 0x10A1) return "Juko Electronics Inc Ltd";
+            if (id == 0x10A2) return "Quantum Corporation";
+            if (id == 0x10A3) return "Everex Systems Inc";
+            if (id == 0x10A4) return "Globe Manufacturing Sales";
+            if (id == 0x10A5) return "Racal Interlan";
+            if (id == 0x10A8) return "Sierra Semiconductor";
+            if (id == 0x10A9) return "Silicon Graphics";
+            if (id == 0x10AB) return "Digicom";
+            if (id == 0x10AC) return "Honeywell IASD";
+            if (id == 0x10AD) return "Winbond Systems Labs";
+            if (id == 0x10AE) return "Cornerstone Technology";
+            if (id == 0x10AF) return "Micro Computer Systems Inc";
+            if (id == 0x10B0) return "Gainward GmbH";
+            if (id == 0x10B1) return "Cabletron Systems Inc";
+            if (id == 0x10B2) return "Raytheon Company";
+            if (id == 0x10B3) return "Databook Inc";
+            if (id == 0x10B4) return "STB Systems";
+            if (id == 0x10B5) return "PLX Technology Inc";
+            if (id == 0x10B6) return "Madge Networks";
+            if (id == 0x10B7) return "3Com Corporation";
+            if (id == 0x10B8) return "Standard Microsystems Corporation";
+            if (id == 0x10B9) return "Ali Corporation";
+            if (id == 0x10BA) return "Mitsubishi Electronics Corp";
+            if (id == 0x10BB) return "Dapha Electronics Corporation";
+            if (id == 0x10BC) return "Advanced Logic Research Inc";
+            if (id == 0x10BD) return "Surecom Technology";
+            if (id == 0x10BE) return "Tsenglabs International Corp";
+            if (id == 0x10BF) return "MOST Corp";
+            if (id == 0x10C0) return "Boca Research Inc";
+            if (id == 0x10C1) return "ICM Corp Ltd";
+            if (id == 0x10C2) return "Auspex Systems Inc";
+            if (id == 0x10C3) return "Samsung Semiconductors";
+            if (id == 0x10C4) return "Award Software Int'l Inc";
+            if (id == 0x10C5) return "Xerox Corporation";
+            if (id == 0x10C6) return "Rambus Inc";
+            if (id == 0x10C8) return "Neomagic Corporation";
+            if (id == 0x10C9) return "Dataexpert Corporation";
+            if (id == 0x10CA) return "Fujitsu Siemens";
+            if (id == 0x10CB) return "Omron Corporation";
+            if (id == 0x10CD) return "Advanced System Products";
+            if (id == 0x10CF) return "Fujitsu Ltd";
+            if (id == 0x10D1) return "Future+ Systems";
+            if (id == 0x10D2) return "Molex Incorporated";
+            if (id == 0x10D3) return "Jabil Circuit Inc";
+            if (id == 0x10D4) return "Hualon Microelectronics";
+            if (id == 0x10D5) return "Autologic Inc";
+            if (id == 0x10D6) return "Wilson co ltd";
+            if (id == 0x10D7) return "BCM Advanced Research";
+            if (id == 0x10D8) return "Advanced Peripherals Labs";
+            if (id == 0x10D9) return "Macronix International Co Ltd";
+            if (id == 0x10DB) return "Rohm Research";
+            if (id == 0x10DC) return "CERN-European Lab for Particle Physics";
+            if (id == 0x10DD) return "Evans & Sutherland";
+            if (id == 0x10DE) return "NVIDIA";
+            if (id == 0x10DF) return "Emulex Corporation";
+            if (id == 0x10E1) return "Tekram Technology Corp Ltd";
+            if (id == 0x10E2) return "Aptix Corporation";
+            if (id == 0x10E3) return "Tundra Semiconductor Corp";
+            if (id == 0x10E4) return "Tandem Computers";
+            if (id == 0x10E5) return "Micro Industries Corporation";
+            if (id == 0x10E6) return "Gainbery Computer Products Inc";
+            if (id == 0x10E7) return "Vadem";
+            if (id == 0x10E8) return "Applied Micro Circuits Corp";
+            if (id == 0x10E9) return "Alps Electronic Corp Ltd";
+            if (id == 0x10EA) return "Tvia, Inc";
+            if (id == 0x10EB) return "Artist Graphics";
+            if (id == 0x10EC) return "Realtek Semiconductor Corp";
+            if (id == 0x10ED) return "Ascii Corporation";
+            if (id == 0x10EE) return "Xilinx Corporation";
+            if (id == 0x10EF) return "Racore Computer Products";
+            if (id == 0x10F0) return "Curtiss-Wright Controls Embedded Computing";
+            if (id == 0x10F1) return "Tyan Computer";
+            if (id == 0x10F2) return "Achme Computer Inc - GONE !!!!";
+            if (id == 0x10F3) return "Alaris Inc";
+            if (id == 0x10F4) return "S-Mos Systems";
+            if (id == 0x10F5) return "NKK Corporation";
+            if (id == 0x10F6) return "Creative Electronic Systems SA";
+            if (id == 0x10F7) return "Matsushita Electric Industrial Corp";
+            if (id == 0x10F8) return "Altos India Ltd";
+            if (id == 0x10F9) return "PC Direct";
+            if (id == 0x10FA) return "Truevision";
+            if (id == 0x10FB) return "Thesys Microelectronic's";
+            if (id == 0x10FC) return "I-O Data Device Inc";
+            if (id == 0x10FD) return "Soyo Technology Corp Ltd";
+            if (id == 0x10FE) return "Fast Electronic GmbH";
+            if (id == 0x10FF) return "Ncube";
+            if (id == 0x1100) return "Jazz Multimedia";
+            if (id == 0x1101) return "Initio Corporation";
+            if (id == 0x1102) return "Creative Technology LTD";
+            if (id == 0x1103) return "HighPoint Technologies, Inc";
+            if (id == 0x1104) return "Rasterops";
+            if (id == 0x1105) return "Sigma Designs Inc";
+            if (id == 0x1106) return "VIA Technologies, Inc";
+            if (id == 0x1107) return "Stratus Computer";
+            if (id == 0x1108) return "Proteon Inc";
+            if (id == 0x1109) return "Adaptec/Cogent Data Technologies";
+            if (id == 0x110A) return "Siemens AG";
+            if (id == 0x110B) return "Chromatic Research Inc";
+            if (id == 0x110C) return "Mini-Max Technology Inc";
+            if (id == 0x110D) return "ZNYX Corporation";
+            if (id == 0x110E) return "CPU Technology";
+            if (id == 0x110F) return "Ross Technology";
+            if (id == 0x1112) return "Osicom Technologies Inc";
+            if (id == 0x1113) return "Accton Technology Corporation";
+            if (id == 0x1114) return "Atmel Corp";
+            if (id == 0x1116) return "Data Translation, Inc";
+            if (id == 0x1117) return "Datacube Inc";
+            if (id == 0x1118) return "Berg Electronics";
+            if (id == 0x1119) return "ICP vortex Computersysteme GmbH";
+            if (id == 0x111A) return "Efficent Networks";
+            if (id == 0x111C) return "Tricord Systems Inc";
+            if (id == 0x111D) return "Integrated Device Technology Inc";
+            if (id == 0x111F) return "Precision Digital Images";
+            if (id == 0x1120) return "EMC Corp";
+            if (id == 0x1121) return "Zilog";
+            if (id == 0x1123) return "Excellent Design Inc";
+            if (id == 0x1124) return "Leutron Vision AG";
+            if (id == 0x1125) return "Eurocore/Vigra";
+            if (id == 0x1127) return "FORE Systems";
+            if (id == 0x1129) return "Firmworks";
+            if (id == 0x112A) return "Hermes Electronics Co Ltd";
+            if (id == 0x112C) return "Zenith Data Systems";
+            if (id == 0x112D) return "Ravicad";
+            if (id == 0x112E) return "Infomedia";
+            if (id == 0x1130) return "Computervision";
+            if (id == 0x1131) return "NXP Semiconductors NV";
+            if (id == 0x1132) return "Mitel Corp";
+            if (id == 0x1133) return "Eicon Networks Corporation";
+            if (id == 0x1134) return "Mercury Computer Systems Inc";
+            if (id == 0x1135) return "Fuji Xerox Co Ltd";
+            if (id == 0x1136) return "Momentum Data Systems";
+            if (id == 0x1137) return "Cisco Systems Inc";
+            if (id == 0x1138) return "Ziatech Corporation";
+            if (id == 0x1139) return "Dynamic Pictures Inc";
+            if (id == 0x113A) return "FWB Inc";
+            if (id == 0x113B) return "Network Computing Devices";
+            if (id == 0x113C) return "Cyclone Microsystems Inc";
+            if (id == 0x113D) return "Leading Edge Products Inc";
+            if (id == 0x113E) return "Sanyo Electric Co";
+            if (id == 0x113F) return "Equinox Systems";
+            if (id == 0x1140) return "Intervoice Inc";
+            if (id == 0x1141) return "Crest Microsystem Inc";
+            if (id == 0x1142) return "Alliance Semiconductor";
+            if (id == 0x1143) return "Netpower Inc";
+            if (id == 0x1144) return "Cincinnati Milacron";
+            if (id == 0x1145) return "Workbit Corp";
+            if (id == 0x1146) return "Force Computers";
+            if (id == 0x1147) return "Interface Corp";
+            if (id == 0x1148) return "Marvell Semiconductor Germany GmbH";
+            if (id == 0x1149) return "Win System Corporation";
+            if (id == 0x114A) return "VMIC";
+            if (id == 0x114B) return "Canopus corporation";
+            if (id == 0x114C) return "Annabooks";
+            if (id == 0x114D) return "IC Corporation";
+            if (id == 0x114E) return "Nikon Systems Inc";
+            if (id == 0x114F) return "Digi International";
+            if (id == 0x1150) return "Thinking Machines Corporation";
+            if (id == 0x1151) return "JAE Electronics Inc";
+            if (id == 0x1153) return "Land Win Electronic Corp";
+            if (id == 0x1154) return "Melco Inc";
+            if (id == 0x1155) return "Pine Technology Ltd";
+            if (id == 0x1156) return "Periscope Engineering";
+            if (id == 0x1157) return "Avsys Corporation";
+            if (id == 0x1158) return "Voarx R&D Inc";
+            if (id == 0x1159) return "Mutech";
+            if (id == 0x115A) return "Harlequin Ltd";
+            if (id == 0x115B) return "Parallax Graphics";
+            if (id == 0x115C) return "Photron Ltd";
+            if (id == 0x115D) return "Xircom";
+            if (id == 0x115E) return "Peer Protocols Inc";
+            if (id == 0x115F) return "Maxtor Corporation";
+            if (id == 0x1160) return "Megasoft Inc";
+            if (id == 0x1161) return "PFU Ltd";
+            if (id == 0x1162) return "OA Laboratory Co Ltd";
+            if (id == 0x1163) return "mohamed alsherif";
+            if (id == 0x1164) return "Advanced Peripherals Tech";
+            if (id == 0x1165) return "Imagraph Corporation";
+            if (id == 0x1166) return "Broadcom / ServerWorks";
+            if (id == 0x1167) return "Mutoh Industries Inc";
+            if (id == 0x1168) return "Thine Electronics Inc";
+            if (id == 0x1169) return "Centre f/Dev of Adv Computing";
+            if (id == 0x116A) return "Luminex Software, Inc";
+            if (id == 0x116B) return "Connectware Inc";
+            if (id == 0x116C) return "Intelligent Resources";
+            if (id == 0x116E) return "Electronics for Imaging";
+            if (id == 0x1170) return "Inventec Corporation";
+            if (id == 0x1172) return "Altera Corporation";
+            if (id == 0x1173) return "Adobe Systems";
+            if (id == 0x1174) return "Bridgeport Machines";
+            if (id == 0x1175) return "Mitron Computer Inc";
+            if (id == 0x1176) return "SBE";
+            if (id == 0x1177) return "Silicon Engineering";
+            if (id == 0x1178) return "Alfa Inc";
+            if (id == 0x1179) return "Toshiba corporation";
+            if (id == 0x117A) return "A-Trend Technology";
+            if (id == 0x117B) return "LG (Lucky Goldstar) Electronics Inc";
+            if (id == 0x117C) return "Atto Technology";
+            if (id == 0x117D) return "Becton & Dickinson";
+            if (id == 0x117E) return "T/R Systems";
+            if (id == 0x117F) return "Integrated Circuit Systems";
+            if (id == 0x1180) return "RicohCompany,Ltd";
+            if (id == 0x1183) return "Fujikura Ltd";
+            if (id == 0x1184) return "Forks Inc";
+            if (id == 0x1185) return "Dataworld";
+            if (id == 0x1186) return "D-Link System Inc";
+            if (id == 0x1187) return "Philips Healthcare";
+            if (id == 0x1188) return "Shima Seiki Manufacturing Ltd";
+            if (id == 0x1189) return "Matsushita Electronics";
+            if (id == 0x118A) return "Hilevel Technology";
+            if (id == 0x118B) return "Hypertec Pty Ltd";
+            if (id == 0x118C) return "Corollary Inc";
+            if (id == 0x118D) return "BitFlow Inc";
+            if (id == 0x118E) return "Hermstedt AG";
+            if (id == 0x118F) return "Green Logic";
+            if (id == 0x1190) return "Tripace";
+            if (id == 0x1191) return "Acard Technology Corp";
+            if (id == 0x1192) return "Densan Co Ltd";
+            if (id == 0x1194) return "Toucan Technology";
+            if (id == 0x1195) return "Ratoc System Inc";
+            if (id == 0x1196) return "Hytec Electronics Ltd";
+            if (id == 0x1197) return "Gage Applied Technologies";
+            if (id == 0x1198) return "Lambda Systems Inc";
+            if (id == 0x1199) return "Attachmate Corp";
+            if (id == 0x119A) return "Mind/Share Inc";
+            if (id == 0x119B) return "Omega Micro Inc";
+            if (id == 0x119C) return "Information Technology Inst";
+            if (id == 0x119D) return "Bug Sapporo Japan";
+            if (id == 0x119E) return "Fujitsu Microelectronics Ltd";
+            if (id == 0x119F) return "Bull Hn Information Systems";
+            if (id == 0x11A1) return "Hamamatsu Photonics KK";
+            if (id == 0x11A2) return "Sierra Research and Technology";
+            if (id == 0x11A3) return "Deuretzbacher GmbH & Co Eng KG";
+            if (id == 0x11A4) return "Barco";
+            if (id == 0x11A5) return "MicroUnity Systems Engineering Inc";
+            if (id == 0x11A6) return "Pure Data";
+            if (id == 0x11A7) return "Power Computing Corp";
+            if (id == 0x11A8) return "Systech Corp";
+            if (id == 0x11A9) return "InnoSys Inc";
+            if (id == 0x11AA) return "Actel";
+            if (id == 0x11AB) return "Marvell Semiconductor";
+            if (id == 0x11AC) return "Canon Information Systems";
+            if (id == 0x11AD) return "Lite-On Technology Corp";
+            if (id == 0x11AE) return "Scitex Corporation Ltd";
+            if (id == 0x11AF) return "Avid Technology, Inc";
+            if (id == 0x11B0) return "Quicklogic Corp";
+            if (id == 0x11B1) return "Apricot Computers";
+            if (id == 0x11B2) return "Eastman Kodak";
+            if (id == 0x11B3) return "Barr Systems Inc";
+            if (id == 0x11B4) return "Leitch Technology International";
+            if (id == 0x11B5) return "Radstone Technology Ltd";
+            if (id == 0x11B6) return "United Video Corp";
+            if (id == 0x11B7) return "Motorola";
+            if (id == 0x11B8) return "Xpoint Technologies Inc";
+            if (id == 0x11B9) return "Pathlight Technology Inc";
+            if (id == 0x11BA) return "Videotron Corp";
+            if (id == 0x11BB) return "Pyramid Technology";
+            if (id == 0x11BC) return "Network Peripherals Inc";
+            if (id == 0x11BD) return "Pinnacle system";
+            if (id == 0x11BE) return "International Microcircuits Inc";
+            if (id == 0x11BF) return "Astrodesign Inc";
+            if (id == 0x11C1) return "LSI Corporation";
+            if (id == 0x11C2) return "Sand Microelectronics";
+            if (id == 0x11C4) return "Document Technologies Ind";
+            if (id == 0x11C5) return "Shiva Corporatin";
+            if (id == 0x11C6) return "Dainippon Screen Mfg Co";
+            if (id == 0x11C7) return "DCM Data Systems";
+            if (id == 0x11C8) return "Dolphin Interconnect Solutions";
+            if (id == 0x11C9) return "MAGMA";
+            if (id == 0x11CA) return "LSI Systems Inc";
+            if (id == 0x11CB) return "Specialix International Ltd";
+            if (id == 0x11CC) return "Michels & Kleberhoff Computer GmbH";
+            if (id == 0x11CD) return "HAL Computer Systems Inc";
+            if (id == 0x11CE) return "Primary Rate Inc";
+            if (id == 0x11CF) return "Pioneer Electronic Corporation";
+            if (id == 0x11D0) return "BAE SYSTEMS - Manassas";
+            if (id == 0x11D1) return "AuraVision Corporation";
+            if (id == 0x11D2) return "Intercom Inc";
+            if (id == 0x11D3) return "Trancell Systems Inc";
+            if (id == 0x11D4) return "Analog Devices, Inc";
+            if (id == 0x11D5) return "Tahoma Technology";
+            if (id == 0x11D6) return "Tekelec Technologies";
+            if (id == 0x11D7) return "TRENTON Technology, Inc";
+            if (id == 0x11D8) return "Image Technologies Development";
+            if (id == 0x11D9) return "Tec Corporation";
+            if (id == 0x11DA) return "Novell";
+            if (id == 0x11DB) return "Sega Enterprises Ltd";
+            if (id == 0x11DC) return "Questra Corp";
+            if (id == 0x11DD) return "Crosfield Electronics Ltd";
+            if (id == 0x11DE) return "Zoran Corporation";
+            if (id == 0x11E1) return "Gec Plessey Semi Inc";
+            if (id == 0x11E2) return "Samsung Information Systems America";
+            if (id == 0x11E3) return "Quicklogic Corp";
+            if (id == 0x11E4) return "Second Wave Inc";
+            if (id == 0x11E5) return "IIX Consulting";
+            if (id == 0x11E6) return "Mitsui-Zosen System Research";
+            if (id == 0x11E8) return "Digital Processing Systems Inc";
+            if (id == 0x11E9) return "Highwater Designs Ltd";
+            if (id == 0x11EA) return "Elsag Bailey";
+            if (id == 0x11EB) return "Formation, Inc";
+            if (id == 0x11EC) return "Coreco Inc";
+            if (id == 0x11ED) return "Mediamatics";
+            if (id == 0x11EE) return "Dome Imaging Systems Inc";
+            if (id == 0x11EF) return "Nicolet Technologies BV";
+            if (id == 0x11F0) return "Triya";
+            if (id == 0x11F2) return "Picture Tel Japan KK";
+            if (id == 0x11F3) return "Keithley Instruments, Inc";
+            if (id == 0x11F4) return "Kinetic Systems Corporation";
+            if (id == 0x11F5) return "Computing Devices Intl";
+            if (id == 0x11F6) return "Powermatic Data Systems Ltd";
+            if (id == 0x11F7) return "Scientific Atlanta";
+            if (id == 0x11F8) return "PMC-Sierra Inc";
+            if (id == 0x11F9) return "I-Cube Inc";
+            if (id == 0x11FA) return "Kasan Electronics Co Ltd";
+            if (id == 0x11FB) return "Datel Inc";
+            if (id == 0x11FD) return "High Street Consultants";
+            if (id == 0x11FE) return "Comtrol Corp";
+            if (id == 0x11FF) return "Scion Corp";
+            if (id == 0x1200) return "CSS Corp";
+            if (id == 0x1201) return "Vista Controls Corp";
+            if (id == 0x1202) return "Network General Corp";
+            if (id == 0x1203) return "Bayer Corporation Agfa Div";
+            if (id == 0x1204) return "Lattice Semiconductor Corp";
+            if (id == 0x1205) return "Array Corp";
+            if (id == 0x1206) return "Amdahl Corp";
+            if (id == 0x1208) return "Parsytec GmbH";
+            if (id == 0x1209) return "Sci Systems Inc";
+            if (id == 0x120A) return "Synaptel";
+            if (id == 0x120B) return "Adaptive Solutions";
+            if (id == 0x120D) return "Compression Labs Inc";
+            if (id == 0x120E) return "Cyclades Corporation";
+            if (id == 0x120F) return "Essential Communications";
+            if (id == 0x1210) return "Hyperparallel Technologies";
+            if (id == 0x1211) return "Braintech Inc";
+            if (id == 0x1213) return "Applied Intelligent Systems Inc";
+            if (id == 0x1214) return "Performance Technologies Inc";
+            if (id == 0x1215) return "Interware Co Ltd";
+            if (id == 0x1216) return "Purup-Eskofot A/S";
+            if (id == 0x1217) return "O2Micro Inc";
+            if (id == 0x1218) return "Hybricon Corp";
+            if (id == 0x1219) return "First Virtual Corp";
+            if (id == 0x121A) return "3dfx Interactive Inc";
+            if (id == 0x121B) return "Advanced Telecommunications Modules";
+            if (id == 0x121C) return "Nippon Texa Co Ltd";
+            if (id == 0x121D) return "LiPPERT Embedded Computers GmbH";
+            if (id == 0x121E) return "CSPI";
+            if (id == 0x121F) return "Arcus Technology Inc";
+            if (id == 0x1220) return "Ariel Corporation";
+            if (id == 0x1221) return "Contec Microelectronics Europe BV";
+            if (id == 0x1222) return "Ancor Communications Inc";
+            if (id == 0x1223) return "Artesyn Embedded Technologies";
+            if (id == 0x1224) return "Interactive Images";
+            if (id == 0x1225) return "Power I/O Inc";
+            if (id == 0x1227) return "Tech-Source";
+            if (id == 0x1228) return "Norsk Elektro Optikk A/S";
+            if (id == 0x1229) return "Data Kinesis Inc";
+            if (id == 0x122A) return "Integrated Telecom";
+            if (id == 0x122B) return "LG Industrial Systems Co Ltd";
+            if (id == 0x122C) return "sci-worx GmbH";
+            if (id == 0x122D) return "Aztech System Ltd";
+            if (id == 0x122E) return "Absolute Analysis";
+            if (id == 0x122F) return "Andrew Corp";
+            if (id == 0x1230) return "Fishcamp Engineering";
+            if (id == 0x1231) return "Woodward McCoach Inc";
+            if (id == 0x1233) return "Bus-Tech Inc";
+            if (id == 0x1234) return "Technical Corp";
+            if (id == 0x1236) return "Sigma Designs, Inc";
+            if (id == 0x1237) return "Alta Technology Corp";
+            if (id == 0x1238) return "Adtran";
+            if (id == 0x1239) return "The 3DO Company";
+            if (id == 0x123A) return "Visicom Laboratories Inc";
+            if (id == 0x123B) return "Seeq Technology Inc";
+            if (id == 0x123C) return "Century Systems Inc";
+            if (id == 0x123D) return "Engineering Design Team Inc";
+            if (id == 0x123F) return "C-Cube Microsystems";
+            if (id == 0x1240) return "Marathon Technologies Corp";
+            if (id == 0x1241) return "DSC Communications";
+            if (id == 0x1242) return "JNI Corporation";
+            if (id == 0x1243) return "Delphax";
+            if (id == 0x1244) return "AVM AUDIOVISUELLES MKTG & Computer GmbH";
+            if (id == 0x1245) return "APD SA";
+            if (id == 0x1246) return "Dipix Technologies Inc";
+            if (id == 0x1247) return "Xylon Research Inc";
+            if (id == 0x1248) return "Central Data Corp";
+            if (id == 0x1249) return "Samsung Electronics Co Ltd";
+            if (id == 0x124A) return "AEG Electrocom GmbH";
+            if (id == 0x124C) return "Solitron Technologies Inc";
+            if (id == 0x124D) return "Stallion Technologies";
+            if (id == 0x124E) return "Cylink";
+            if (id == 0x124F) return "Infortrend Technology Inc";
+            if (id == 0x1250) return "Hitachi Microcomputer System Ltd";
+            if (id == 0x1251) return "VLSI Solution OY";
+            if (id == 0x1253) return "Guzik Technical Enterprises";
+            if (id == 0x1254) return "Linear Systems Ltd";
+            if (id == 0x1255) return "Optibase Ltd";
+            if (id == 0x1256) return "Perceptive Solutions Inc";
+            if (id == 0x1257) return "Vertex Networks Inc";
+            if (id == 0x1258) return "Gilbarco Inc";
+            if (id == 0x1259) return "Allied Telesyn International";
+            if (id == 0x125A) return "ABB Power Systems";
+            if (id == 0x125B) return "Asix Electronics Corp";
+            if (id == 0x125C) return "Aurora Technologies Inc";
+            if (id == 0x125D) return "ESS Technology";
+            if (id == 0x125E) return "Specialvideo Engineering SRL";
+            if (id == 0x125F) return "Concurrent Technologies Inc";
+            if (id == 0x1260) return "Intersil Corporation";
+            if (id == 0x1261) return "Matsushita-Kotobuki Electronics Indu";
+            if (id == 0x1262) return "ES Computer Co Ltd";
+            if (id == 0x1263) return "Sonic Solutions";
+            if (id == 0x1264) return "Aval Nagasaki Corp";
+            if (id == 0x1265) return "Casio Computer Co Ltd";
+            if (id == 0x1266) return "Microdyne Corp";
+            if (id == 0x1267) return "SA Telecommunications";
+            if (id == 0x1268) return "Tektronix";
+            if (id == 0x1269) return "Thomson-CSF/TTM";
+            if (id == 0x126A) return "Lexmark International Inc";
+            if (id == 0x126B) return "Adax Inc";
+            if (id == 0x126C) return "Nortel Networks Corp";
+            if (id == 0x126D) return "Splash Technology Inc";
+            if (id == 0x126E) return "Sumitomo Metal Industries Ltd";
+            if (id == 0x126F) return "Silicon Motion";
+            if (id == 0x1270) return "Olympus Optical Co Ltd";
+            if (id == 0x1271) return "GW Instruments";
+            if (id == 0x1272) return "themrtaish";
+            if (id == 0x1273) return "Hughes Network Systems";
+            if (id == 0x1274) return "Ensoniq";
+            if (id == 0x1275) return "Network Appliance";
+            if (id == 0x1276) return "Switched Network Technologies Inc";
+            if (id == 0x1277) return "Comstream";
+            if (id == 0x1278) return "Transtech Parallel Systems";
+            if (id == 0x1279) return "Transmeta Corp";
+            if (id == 0x127B) return "Pixera Corp";
+            if (id == 0x127C) return "Crosspoint Solutions Inc";
+            if (id == 0x127D) return "Vela Research LP";
+            if (id == 0x127E) return "Winnov LP";
+            if (id == 0x127F) return "Fujifilm";
+            if (id == 0x1280) return "Photoscript Group Ltd";
+            if (id == 0x1281) return "Yokogawa Electronic Corp";
+            if (id == 0x1282) return "Davicom Semiconductor Inc";
+            if (id == 0x1283) return "Waldo";
+            if (id == 0x1285) return "Platform Technologies Inc";
+            if (id == 0x1286) return "MAZeT GmbH";
+            if (id == 0x1287) return "LuxSonor Inc";
+            if (id == 0x1288) return "Timestep Corp";
+            if (id == 0x1289) return "AVC Technology Inc";
+            if (id == 0x128A) return "Asante Technologies Inc";
+            if (id == 0x128B) return "Transwitch Corp";
+            if (id == 0x128C) return "Retix Corp";
+            if (id == 0x128D) return "G2 Networks Inc";
+            if (id == 0x128F) return "Tateno Dennou Inc";
+            if (id == 0x1290) return "Sord Computer Corp";
+            if (id == 0x1291) return "NCS Computer Italia";
+            if (id == 0x1292) return "Tritech Microelectronics Intl PTE";
+            if (id == 0x1293) return "Media Reality Technology";
+            if (id == 0x1294) return "Rhetorex Inc";
+            if (id == 0x1295) return "Imagenation Corp";
+            if (id == 0x1296) return "Kofax Image Products";
+            if (id == 0x1297) return "Shuttle Computer";
+            if (id == 0x1298) return "Spellcaster Telecommunications Inc";
+            if (id == 0x1299) return "Knowledge Technology Laboratories";
+            if (id == 0x129A) return "Curtiss Wright Controls Electronic Systems";
+            if (id == 0x129B) return "Image Access";
+            if (id == 0x129D) return "CompCore Multimedia Inc";
+            if (id == 0x129E) return "Victor Co of Japan Ltd";
+            if (id == 0x129F) return "OEC Medical Systems Inc";
+            if (id == 0x12A0) return "Allen Bradley Co";
+            if (id == 0x12A1) return "Simpact Inc";
+            if (id == 0x12A2) return "NewGen Systems Corp";
+            if (id == 0x12A3) return "Lucent Technologies AMR";
+            if (id == 0x12A4) return "NTT Electronics Corp";
+            if (id == 0x12A5) return "Vision Dynamics Ltd";
+            if (id == 0x12A6) return "Scalable Networks Inc";
+            if (id == 0x12A7) return "AMO GmbH";
+            if (id == 0x12A8) return "News Datacom";
+            if (id == 0x12A9) return "Xiotech Corp";
+            if (id == 0x12AA) return "SDL Communications Inc";
+            if (id == 0x12AB) return "Yuan Yuan Enterprise Co Ltd";
+            if (id == 0x12AC) return "MeasureX Corp";
+            if (id == 0x12AD) return "MULTIDATA GmbH";
+            if (id == 0x12AE) return "Alteon Networks Inc";
+            if (id == 0x12AF) return "TDK USA Corp";
+            if (id == 0x12B0) return "Jorge Scientific Corp";
+            if (id == 0x12B1) return "GammaLink";
+            if (id == 0x12B2) return "General Signal Networks";
+            if (id == 0x12B3) return "Interface Corp Ltd";
+            if (id == 0x12B4) return "Future Tel Inc";
+            if (id == 0x12B5) return "Granite Systems Inc";
+            if (id == 0x12B7) return "Acumen";
+            if (id == 0x12B8) return "Korg";
+            if (id == 0x12B9) return "3Com Corporation";
+            if (id == 0x12BA) return "Bittware, Inc";
+            if (id == 0x12BB) return "Nippon Unisoft Corp";
+            if (id == 0x12BC) return "Array Microsystems";
+            if (id == 0x12BD) return "Computerm Corp";
+            if (id == 0x12BF) return "Fujifilm Microdevices";
+            if (id == 0x12C0) return "Infimed";
+            if (id == 0x12C1) return "GMM Research Corp";
+            if (id == 0x12C2) return "Mentec Ltd";
+            if (id == 0x12C3) return "Holtek Microelectronics Inc";
+            if (id == 0x12C4) return "Connect Tech Inc";
+            if (id == 0x12C5) return "Picture Elements Inc";
+            if (id == 0x12C6) return "Mitani Corp";
+            if (id == 0x12C7) return "Dialogic Corp";
+            if (id == 0x12C8) return "G Force Co Ltd";
+            if (id == 0x12C9) return "Gigi Operations";
+            if (id == 0x12CA) return "Integrated Computing Engines, Inc";
+            if (id == 0x12CB) return "Antex Electronics Corp";
+            if (id == 0x12CC) return "Pluto Technologies International";
+            if (id == 0x12CD) return "Aims Lab";
+            if (id == 0x12CE) return "Netspeed Inc";
+            if (id == 0x12CF) return "Prophet Systems Inc";
+            if (id == 0x12D0) return "GDE Systems Inc";
+            if (id == 0x12D1) return "Huawei Technologies Co, Ltd";
+            if (id == 0x12D3) return "Vingmed Sound A/S";
+            if (id == 0x12D4) return "Ulticom, Inc";
+            if (id == 0x12D5) return "Equator Technologies";
+            if (id == 0x12D6) return "Analogic Corp";
+            if (id == 0x12D7) return "Biotronic SRL";
+            if (id == 0x12D8) return "Pericom Semiconductor";
+            if (id == 0x12D9) return "Aculab Plc";
+            if (id == 0x12DA) return "TrueTime";
+            if (id == 0x12DB) return "Annapolis Micro Systems Inc";
+            if (id == 0x12DC) return "Symicron Computer Communication Ltd";
+            if (id == 0x12DD) return "Management Graphics Inc";
+            if (id == 0x12DE) return "Rainbow Technologies";
+            if (id == 0x12DF) return "SBS Technologies Inc";
+            if (id == 0x12E0) return "Chase Research PLC";
+            if (id == 0x12E1) return "Nintendo Co Ltd";
+            if (id == 0x12E2) return "Datum Inc Bancomm-Timing Division";
+            if (id == 0x12E3) return "Imation Corp - Medical Imaging Syst";
+            if (id == 0x12E4) return "Brooktrout Technology Inc";
+            if (id == 0x12E6) return "Cirel Systems";
+            if (id == 0x12E7) return "Sebring Systems Inc";
+            if (id == 0x12E8) return "CRISC Corp";
+            if (id == 0x12E9) return "GE Spacenet";
+            if (id == 0x12EB) return "Aureal Semiconductor";
+            if (id == 0x12EC) return "3A International Inc";
+            if (id == 0x12ED) return "Optivision Inc";
+            if (id == 0x12EE) return "Orange Micro, Inc";
+            if (id == 0x12EF) return "Vienna Systems";
+            if (id == 0x12F0) return "Pentek";
+            if (id == 0x12F1) return "Sorenson Vision Inc";
+            if (id == 0x12F2) return "Gammagraphx Inc";
+            if (id == 0x12F4) return "Megatel";
+            if (id == 0x12F5) return "Forks";
+            if (id == 0x12F7) return "Cognex";
+            if (id == 0x12F8) return "Electronic-Design GmbH";
+            if (id == 0x12F9) return "FourFold Technologies";
+            if (id == 0x12FB) return "Spectrum Signal Processing";
+            if (id == 0x12FC) return "Capital Equipment Corp";
+            if (id == 0x12FE) return "esd Electronic System Design GmbH";
+            if (id == 0x1303) return "Innovative Integration";
+            if (id == 0x1304) return "Juniper Networks Inc";
+            if (id == 0x1307) return "ComputerBoards";
+            if (id == 0x1308) return "Jato Technologies Inc";
+            if (id == 0x130A) return "Mitsubishi Electric Microcomputer";
+            if (id == 0x130B) return "Colorgraphic Communications Corp";
+            if (id == 0x130F) return "Advanet Inc";
+            if (id == 0x1310) return "Gespac";
+            if (id == 0x1312) return "Microscan Systems Inc";
+            if (id == 0x1313) return "Yaskawa Electric Co";
+            if (id == 0x1316) return "Teradyne Inc";
+            if (id == 0x1317) return "ADMtek Inc";
+            if (id == 0x1318) return "Packet Engines, Inc";
+            if (id == 0x1319) return "Forte Media";
+            if (id == 0x131F) return "SIIG";
+            if (id == 0x1325) return "austriamicrosystems";
+            if (id == 0x1326) return "Seachange International";
+            if (id == 0x1328) return "CIFELLI SYSTEMS CORPORATION";
+            if (id == 0x1331) return "RadiSys Corporation";
+            if (id == 0x1332) return "Curtiss-Wright Controls Embedded Computing";
+            if (id == 0x1335) return "Videomail Inc";
+            if (id == 0x133D) return "Prisa Networks";
+            if (id == 0x133F) return "SCM Microsystems";
+            if (id == 0x1342) return "Promax Systems Inc";
+            if (id == 0x1344) return "Micron Technology, Inc";
+            if (id == 0x1347) return "Spectracom Corporation";
+            if (id == 0x134A) return "DTC Technology Corp";
+            if (id == 0x134B) return "ARK Research Corp";
+            if (id == 0x134C) return "Chori Joho System Co Ltd";
+            if (id == 0x134D) return "PCTEL Inc";
+            if (id == 0x135A) return "Brain Boxes Limited";
+            if (id == 0x135B) return "Giganet Inc";
+            if (id == 0x135C) return "Quatech Inc";
+            if (id == 0x135D) return "ABB Network Partner AB";
+            if (id == 0x135E) return "Sealevel Systems Inc";
+            if (id == 0x135F) return "I-Data International A-S";
+            if (id == 0x1360) return "Meinberg Funkuhren GmbH & Co KG";
+            if (id == 0x1361) return "Soliton Systems KK";
+            if (id == 0x1363) return "Phoenix Technologies Ltd";
+            if (id == 0x1365) return "Hypercope Corp";
+            if (id == 0x1366) return "Teijin Seiki Co Ltd";
+            if (id == 0x1367) return "Hitachi Zosen Corporation";
+            if (id == 0x1368) return "Skyware Corporation";
+            if (id == 0x1369) return "Digigram";
+            if (id == 0x136B) return "Kawasaki Steel Corporation";
+            if (id == 0x136C) return "Adtek System Science Co Ltd";
+            if (id == 0x1375) return "Boeing - Sunnyvale";
+            if (id == 0x137A) return "Mark Of The Unicorn Inc";
+            if (id == 0x137B) return "PPT Vision";
+            if (id == 0x137C) return "Iwatsu Electric Co Ltd";
+            if (id == 0x137D) return "Dynachip Corporation";
+            if (id == 0x137E) return "Patriot Scientific Corp";
+            if (id == 0x1380) return "Sanritz Automation Co LTC";
+            if (id == 0x1381) return "Brains Co Ltd";
+            if (id == 0x1382) return "Marian - Electronic & Software";
+            if (id == 0x1384) return "Stellar Semiconductor Inc";
+            if (id == 0x1385) return "Netgear";
+            if (id == 0x1387) return "Curtiss-Wright Controls Electronic Systems";
+            if (id == 0x1388) return "Hitachi Information Technology Co Ltd";
+            if (id == 0x1389) return "Applicom International";
+            if (id == 0x138A) return "Validity Sensors, Inc";
+            if (id == 0x138B) return "Tokimec Inc";
+            if (id == 0x138E) return "Basler GMBH";
+            if (id == 0x138F) return "Patapsco Designs Inc";
+            if (id == 0x1390) return "Concept Development Inc";
+            if (id == 0x1393) return "Moxa Technologies Co Ltd";
+            if (id == 0x1394) return "Level One Communications";
+            if (id == 0x1395) return "Ambicom Inc";
+            if (id == 0x1396) return "Cipher Systems Inc";
+            if (id == 0x1397) return "Cologne Chip Designs GmbH";
+            if (id == 0x1398) return "Clarion Co Ltd";
+            if (id == 0x139A) return "Alacritech Inc";
+            if (id == 0x139D) return "Xstreams PLC/ EPL Limited";
+            if (id == 0x139E) return "Echostar Data Networks";
+            if (id == 0x13A0) return "Crystal Group Inc";
+            if (id == 0x13A1) return "Kawasaki Heavy Industries Ltd";
+            if (id == 0x13A3) return "HI-FN Inc";
+            if (id == 0x13A4) return "Rascom Inc";
+            if (id == 0x13A7) return "amc330";
+            if (id == 0x13A8) return "Exar Corp";
+            if (id == 0x13A9) return "Siemens Healthcare";
+            if (id == 0x13AA) return "Nortel Networks - BWA Division";
+            if (id == 0x13AF) return "TSqware";
+            if (id == 0x13B1) return "Tamura Corporation";
+            if (id == 0x13B4) return "Wellbean Co Inc";
+            if (id == 0x13B5) return "ARM Ltd";
+            if (id == 0x13B6) return "DLoG Gesellschaft für elektronische Datentechnik mbH";
+            if (id == 0x13B8) return "Nokia Telecommunications OY";
+            if (id == 0x13BD) return "Sharp Corporation";
+            if (id == 0x13BF) return "Sharewave Inc";
+            if (id == 0x13C0) return "Microgate Corp";
+            if (id == 0x13C1) return "LSI";
+            if (id == 0x13C2) return "Technotrend Systemtechnik GMBH";
+            if (id == 0x13C3) return "Janz Computer AG";
+            if (id == 0x13C7) return "Blue Chip Technology Ltd";
+            if (id == 0x13CC) return "Metheus Corporation";
+            if (id == 0x13CF) return "Studio Audio & Video Ltd";
+            if (id == 0x13D0) return "B2C2 Inc";
+            if (id == 0x13D1) return "AboCom Systems, Inc";
+            if (id == 0x13D4) return "Graphics Microsystems Inc";
+            if (id == 0x13D6) return "KI Technology Co Ltd";
+            if (id == 0x13D7) return "Toshiba Engineering Corporation";
+            if (id == 0x13D8) return "Phobos Corporation";
+            if (id == 0x13D9) return "Apex Inc";
+            if (id == 0x13DC) return "Netboost Corporation";
+            if (id == 0x13DE) return "ABB Robotics Products AB";
+            if (id == 0x13DF) return "E-Tech Inc";
+            if (id == 0x13E0) return "GVC Corporation";
+            if (id == 0x13E3) return "Nest Inc";
+            if (id == 0x13E4) return "Calculex Inc";
+            if (id == 0x13E5) return "Telesoft Design Ltd";
+            if (id == 0x13E9) return "Intraserver Technology Inc";
+            if (id == 0x13EA) return "Dallas Semiconductor";
+            if (id == 0x13F0) return "IC Plus Corporation";
+            if (id == 0x13F1) return "OCE - Industries SA";
+            if (id == 0x13F4) return "Troika Networks Inc";
+            if (id == 0x13F6) return "C-Media Electronics Inc";
+            if (id == 0x13F9) return "NTT Advanced Technology Corp";
+            if (id == 0x13FA) return "Pentland Systems Ltd";
+            if (id == 0x13FB) return "Aydin Corp";
+            if (id == 0x13FD) return "Micro Science Inc";
+            if (id == 0x13FE) return "Advantech Co, Ltd";
+            if (id == 0x13FF) return "Silicon Spice Inc";
+            if (id == 0x1400) return "ArtX Inc";
+            if (id == 0x1402) return "Meilhaus Electronic GmbH Germany";
+            if (id == 0x1404) return "Fundamental Software Inc";
+            if (id == 0x1406) return "Oce Print Logics Technologies SA";
+            if (id == 0x1407) return "Lava Computer MFG Inc";
+            if (id == 0x1408) return "Aloka Co Ltd";
+            if (id == 0x1409) return "SUNIX Co, Ltd";
+            if (id == 0x140A) return "DSP Research Inc";
+            if (id == 0x140B) return "Ramix Inc";
+            if (id == 0x140D) return "Matsushita Electric Works Ltd";
+            if (id == 0x140F) return "Salient Systems Corp";
+            if (id == 0x1412) return "IC Ensemble, Inc";
+            if (id == 0x1413) return "Addonics";
+            if (id == 0x1415) return "Oxford Semiconductor Ltd - now part of PLX Technology";
+            if (id == 0x1418) return "Kyushu Electronics Systems Inc";
+            if (id == 0x1419) return "Excel Switching Corp";
+            if (id == 0x141B) return "Zoom Telephonics Inc";
+            if (id == 0x141E) return "Fanuc Co Ltd";
+            if (id == 0x141F) return "Visiontech Ltd";
+            if (id == 0x1420) return "Psion Dacom PLC";
+            if (id == 0x1425) return "Chelsio Communications";
+            if (id == 0x1428) return "Edec Co Ltd";
+            if (id == 0x1429) return "Unex Technology Corp";
+            if (id == 0x142A) return "Kingmax Technology Inc";
+            if (id == 0x142B) return "Radiolan";
+            if (id == 0x142C) return "Minton Optic Industry Co Ltd";
+            if (id == 0x142D) return "Pixstream Inc";
+            if (id == 0x1430) return "ITT Aerospace/Communications Division";
+            if (id == 0x1433) return "Eltec Elektronik AG";
+            if (id == 0x1435) return "RTD Embedded Technologies, Inc";
+            if (id == 0x1436) return "CIS Technology Inc";
+            if (id == 0x1437) return "Nissin Inc Co";
+            if (id == 0x1438) return "Atmel-Dream";
+            if (id == 0x143F) return "Lightwell Co Ltd - Zax Division";
+            if (id == 0x1441) return "Agie SA";
+            if (id == 0x1443) return "Unibrain SA";
+            if (id == 0x1445) return "Logical Co Ltd";
+            if (id == 0x1446) return "Graphin Co, LTD";
+            if (id == 0x1447) return "Aim GMBH";
+            if (id == 0x1448) return "Alesis Studio";
+            if (id == 0x144A) return "ADLINK Technology Inc";
+            if (id == 0x144B) return "Loronix Information Systems, Inc";
+            if (id == 0x144D) return "sanyo";
+            if (id == 0x1450) return "Octave Communications Ind";
+            if (id == 0x1451) return "SP3D Chip Design GMBH";
+            if (id == 0x1453) return "Mycom Inc";
+            if (id == 0x1458) return "Giga-Byte Technologies";
+            if (id == 0x145C) return "Cryptek";
+            if (id == 0x145F) return "Baldor Electric Company";
+            if (id == 0x1460) return "Dynarc Inc";
+            if (id == 0x1462) return "Micro-Star International Co Ltd";
+            if (id == 0x1463) return "Fast Corporation";
+            if (id == 0x1464) return "Interactive Circuits & Systems Ltd";
+            if (id == 0x1468) return "Ambit Microsystems Corp";
+            if (id == 0x1469) return "Cleveland Motion Controls";
+            if (id == 0x146C) return "Ruby Tech Corp";
+            if (id == 0x146D) return "Tachyon Inc";
+            if (id == 0x146E) return "WMS Gaming";
+            if (id == 0x1471) return "Integrated Telecom Express Inc";
+            if (id == 0x1473) return "Zapex Technologies Inc";
+            if (id == 0x1474) return "Doug Carson & Associates";
+            if (id == 0x1477) return "Net Insight";
+            if (id == 0x1478) return "Diatrend Corporation";
+            if (id == 0x147B) return "Abit Computer Corp";
+            if (id == 0x147F) return "Nihon Unisys Ltd";
+            if (id == 0x1482) return "Isytec - Integrierte Systemtechnik Gmbh";
+            if (id == 0x1483) return "Labway Coporation";
+            if (id == 0x1485) return "Erma - Electronic GMBH";
+            if (id == 0x1489) return "KYE Systems Corporation";
+            if (id == 0x148A) return "Opto 22";
+            if (id == 0x148B) return "Innomedialogic Inc";
+            if (id == 0x148C) return "CP Technology Co Ltd";
+            if (id == 0x148D) return "Digicom Systems Inc";
+            if (id == 0x148E) return "OSI Plus Corporation";
+            if (id == 0x148F) return "Plant Equipment Inc";
+            if (id == 0x1490) return "TC Labs Pty Ltd";
+            if (id == 0x1491) return "Futronic";
+            if (id == 0x1493) return "Maker Communications";
+            if (id == 0x1495) return "Tokai Communications Industry Co Ltd";
+            if (id == 0x1496) return "Joytech Computer Co Ltd";
+            if (id == 0x1497) return "SMA Technologie AG";
+            if (id == 0x1498) return "Tews Technologies";
+            if (id == 0x1499) return "Micro-Technology Co Ltd";
+            if (id == 0x149A) return "Andor Technology Ltd";
+            if (id == 0x149B) return "Seiko Instruments Inc";
+            if (id == 0x149E) return "Mapletree Networks Inc";
+            if (id == 0x149F) return "Lectron Co Ltd";
+            if (id == 0x14A0) return "Softing AG";
+            if (id == 0x14A2) return "Millennium Engineering Inc";
+            if (id == 0x14A4) return "GVC/BCM Advanced Research";
+            if (id == 0x14A9) return "Hivertec Inc";
+            if (id == 0x14AB) return "Mentor Graphics Corp";
+            if (id == 0x14B1) return "Nextcom KK";
+            if (id == 0x14B3) return "Xpeed Inc";
+            if (id == 0x14B4) return "Philips Business Electronics BV";
+            if (id == 0x14B5) return "Creamware GmbH";
+            if (id == 0x14B6) return "Quantum Data Corp";
+            if (id == 0x14B7) return "Proxim Inc";
+            if (id == 0x14B9) return "Aironet Wireless Communication";
+            if (id == 0x14BA) return "Internix Inc";
+            if (id == 0x14BB) return "Semtech Corporation";
+            if (id == 0x14BE) return "L3 Communications";
+            if (id == 0x14C0) return "Compal Electronics, Inc";
+            if (id == 0x14C1) return "Myricom Inc";
+            if (id == 0x14C2) return "DTK Computer";
+            if (id == 0x14C4) return "Iwasaki Information Systems Co Ltd";
+            if (id == 0x14C5) return "ABB AB (Sweden)";
+            if (id == 0x14C6) return "Data Race Inc";
+            if (id == 0x14C7) return "Modular Technology Ltd";
+            if (id == 0x14C8) return "Turbocomm Tech Inc";
+            if (id == 0x14C9) return "Odin Telesystems Inc";
+            if (id == 0x14CB) return "Billionton Systems Inc/Cadmus Micro Inc";
+            if (id == 0x14CD) return "Universal Scientific Ind";
+            if (id == 0x14CF) return "TEK Microsystems Inc";
+            if (id == 0x14D4) return "Panacom Technology Corporation";
+            if (id == 0x14D5) return "Nitsuko Corporation";
+            if (id == 0x14D6) return "Accusys Inc";
+            if (id == 0x14D7) return "Hirakawa Hewtech Corp";
+            if (id == 0x14D8) return "Hopf Elektronik GMBH";
+            if (id == 0x14D9) return "Alpha Processor Inc";
+            if (id == 0x14DB) return "Avlab Technology Inc";
+            if (id == 0x14DC) return "Amplicon Liveline Limited";
+            if (id == 0x14DD) return "Imodl Inc";
+            if (id == 0x14DE) return "Applied Integration Corporation";
+            if (id == 0x14E3) return "Amtelco";
+            if (id == 0x14E4) return "Broadcom";
+            if (id == 0x14EA) return "Planex Communications, Inc";
+            if (id == 0x14EB) return "Seiko Epson Corporation";
+            if (id == 0x14EC) return "Acqiris";
+            if (id == 0x14ED) return "Datakinetics Ltd";
+            if (id == 0x14EF) return "Carry Computer Eng Co Ltd";
+            if (id == 0x14F1) return "Conexant";
+            if (id == 0x14F2) return "Mobility Electronics, Inc";
+            if (id == 0x14F4) return "Tokyo Electronic Industry Co Ltd";
+            if (id == 0x14F5) return "Sopac Ltd";
+            if (id == 0x14F6) return "Coyote Technologies LLC";
+            if (id == 0x14F7) return "Wolf Technology Inc";
+            if (id == 0x14F8) return "Audiocodes Inc";
+            if (id == 0x14F9) return "AG Communications";
+            if (id == 0x14FB) return "Transas Marine (UK) Ltd";
+            if (id == 0x14FC) return "Quadrics Ltd";
+            if (id == 0x14FD) return "Silex Technology Inc";
+            if (id == 0x14FE) return "Archtek Telecom Corp";
+            if (id == 0x14FF) return "Twinhead International Corp";
+            if (id == 0x1501) return "Banksoft Canada Ltd";
+            if (id == 0x1502) return "Mitsubishi Electric Logistics Support Co";
+            if (id == 0x1503) return "Kawasaki LSI USA Inc";
+            if (id == 0x1504) return "Kaiser Electronics";
+            if (id == 0x1506) return "Chameleon Systems Inc";
+            if (id == 0x1507) return "Htec Ltd";
+            if (id == 0x1509) return "First International Computer Inc";
+            if (id == 0x150B) return "Yamashita Systems Corp";
+            if (id == 0x150C) return "Kyopal Co Ltd";
+            if (id == 0x150D) return "Warpspped Inc";
+            if (id == 0x150E) return "C-Port Corporation";
+            if (id == 0x150F) return "Intec GMBH";
+            if (id == 0x1510) return "Behavior Tech Computer Corp";
+            if (id == 0x1511) return "Centillium Technology Corp";
+            if (id == 0x1512) return "Rosun Technologies Inc";
+            if (id == 0x1513) return "Raychem";
+            if (id == 0x1514) return "TFL LAN Inc";
+            if (id == 0x1515) return "ICS Advent";
+            if (id == 0x1516) return "Myson Technology Inc";
+            if (id == 0x1517) return "Echotek Corporation";
+            if (id == 0x1518) return "Kontron Modular Computers GmbH (PEP Modular Computers GMBH)";
+            if (id == 0x1519) return "Telefon Aktiebolaget LM Ericsson";
+            if (id == 0x151A) return "Globetek Inc";
+            if (id == 0x151B) return "Combox Ltd";
+            if (id == 0x151C) return "Digital Audio Labs Inc";
+            if (id == 0x151D) return "Fujitsu Computer Products Of America";
+            if (id == 0x151E) return "Matrix Corp";
+            if (id == 0x151F) return "Topic Semiconductor Corp";
+            if (id == 0x1520) return "Chaplet System Inc";
+            if (id == 0x1521) return "Bell Corporation";
+            if (id == 0x1522) return "Mainpine Limited";
+            if (id == 0x1523) return "Music Semiconductors";
+            if (id == 0x1524) return "ENE Technology Inc";
+            if (id == 0x1525) return "Impact Technologies";
+            if (id == 0x1526) return "ISS Inc";
+            if (id == 0x1527) return "Solectron";
+            if (id == 0x1528) return "Acksys";
+            if (id == 0x1529) return "American Microsystems Inc";
+            if (id == 0x152A) return "Quickturn Design Systems";
+            if (id == 0x152B) return "Flytech Technology Co Ltd";
+            if (id == 0x152C) return "Macraigor Systems LLC";
+            if (id == 0x152D) return "Quanta Computer Inc";
+            if (id == 0x152E) return "Melec Inc";
+            if (id == 0x152F) return "Philips - Crypto";
+            if (id == 0x1532) return "Echelon Corporation";
+            if (id == 0x1533) return "Baltimore";
+            if (id == 0x1534) return "Road Corporation";
+            if (id == 0x1535) return "Evergreen Technologies Inc";
+            if (id == 0x1537) return "Datalex Communcations";
+            if (id == 0x1538) return "Aralion Inc";
+            if (id == 0x1539) return "Atelier Informatiques et Electronique Et";
+            if (id == 0x153A) return "ONO Sokki";
+            if (id == 0x153B) return "Terratec Electronic GMBH";
+            if (id == 0x153C) return "Antal Electronic";
+            if (id == 0x153D) return "Filanet Corporation";
+            if (id == 0x153E) return "Techwell Inc";
+            if (id == 0x153F) return "MIPS Technologies, Inc";
+            if (id == 0x1540) return "Provideo Multimedia Co Ltd";
+            if (id == 0x1541) return "Telocity Inc";
+            if (id == 0x1542) return "Vivid Technology Inc";
+            if (id == 0x1543) return "Silicon Laboratories";
+            if (id == 0x1544) return "DCM Technologies Ltd";
+            if (id == 0x1545) return "VisionTek";
+            if (id == 0x1546) return "IOI Technology Corp";
+            if (id == 0x1547) return "Mitutoyo Corporation";
+            if (id == 0x1548) return "Jet Propulsion Laboratory";
+            if (id == 0x1549) return "Interconnect Systems Solutions";
+            if (id == 0x154A) return "Max Technologies Inc";
+            if (id == 0x154B) return "Computex Co Ltd";
+            if (id == 0x154C) return "Visual Technology Inc";
+            if (id == 0x154D) return "PAN International Industrial Corp";
+            if (id == 0x154E) return "Servotest Ltd";
+            if (id == 0x154F) return "Stratabeam Technology";
+            if (id == 0x1550) return "Open Network Co Ltd";
+            if (id == 0x1551) return "Smart Electronic Development GMBH";
+            if (id == 0x1553) return "Chicony Electronics Co Ltd";
+            if (id == 0x1554) return "Prolink Microsystems Corp";
+            if (id == 0x1555) return "Gesytec GmbH";
+            if (id == 0x1556) return "PLDA";
+            if (id == 0x1557) return "Mediastar Co Ltd";
+            if (id == 0x1558) return "Clevo/Kapok Computer";
+            if (id == 0x1559) return "SI Logic Ltd";
+            if (id == 0x155A) return "Innomedia Inc";
+            if (id == 0x155B) return "Protac International Corp";
+            if (id == 0x155C) return "s";
+            if (id == 0x155D) return "MAC System Co Ltd";
+            if (id == 0x155E) return "KUKA Roboter GmbH";
+            if (id == 0x155F) return "Perle Systems Limited";
+            if (id == 0x1560) return "Terayon Communications Systems";
+            if (id == 0x1561) return "Viewgraphics Inc";
+            if (id == 0x1562) return "Symbol Technologies, Inc";
+            if (id == 0x1563) return "A-Trend Technology Co Ltd";
+            if (id == 0x1564) return "Yamakatsu Electronics Industry Co Ltd";
+            if (id == 0x1565) return "Biostar Microtech Intl Corp";
+            if (id == 0x1566) return "Ardent Technologies Inc";
+            if (id == 0x1567) return "Jungsoft";
+            if (id == 0x1568) return "DDK Electronics Inc";
+            if (id == 0x1569) return "Palit Microsystems Inc";
+            if (id == 0x156A) return "Avtec Systems Inc";
+            if (id == 0x156B) return "S2io Inc";
+            if (id == 0x156C) return "Vidac Electronics GMBH";
+            if (id == 0x156D) return "Alpha-Top Corp";
+            if (id == 0x156E) return "Alfa Inc";
+            if (id == 0x156F) return "M-Systems Flash Disk Pioneers Ltd";
+            if (id == 0x1570) return "Lecroy Corporation";
+            if (id == 0x1571) return "Contemporary Controls";
+            if (id == 0x1572) return "Otis Elevator Company";
+            if (id == 0x1573) return "Lattice - Vantis";
+            if (id == 0x1574) return "Fairchild Semiconductor";
+            if (id == 0x1575) return "Voltaire Advanced Data Security Ltd";
+            if (id == 0x1576) return "Viewcast Com";
+            if (id == 0x1578) return "Hitt";
+            if (id == 0x1579) return "Dual Technology Corporation";
+            if (id == 0x157A) return "Japan Elecronics Ind Inc";
+            if (id == 0x157B) return "Star Multimedia Corp";
+            if (id == 0x157C) return "Eurosoft (UK)";
+            if (id == 0x157D) return "Gemflex Networks";
+            if (id == 0x157E) return "Transition Networks";
+            if (id == 0x157F) return "PX Instruments Technology Ltd";
+            if (id == 0x1580) return "Primex Aerospace Co";
+            if (id == 0x1581) return "SEH Computertechnik GMBH";
+            if (id == 0x1582) return "Cytec Corporation";
+            if (id == 0x1583) return "Inet Technologies Inc";
+            if (id == 0x1584) return "Vetronix Corporation Engenharia Ltda";
+            if (id == 0x1585) return "Marconi Commerce Systems SRL";
+            if (id == 0x1586) return "Lancast Inc";
+            if (id == 0x1587) return "Konica Corporation";
+            if (id == 0x1588) return "Solidum Systems Corp";
+            if (id == 0x1589) return "Atlantek Microsystems Pty Ltd";
+            if (id == 0x158A) return "Digalog Systems Inc";
+            if (id == 0x158B) return "Allied Data Technologies";
+            if (id == 0x158C) return "Hitachi Semiconductor & Devices Sales Co";
+            if (id == 0x158D) return "Point Multimedia Systems";
+            if (id == 0x158E) return "Lara Technology Inc";
+            if (id == 0x158F) return "Ditect Coop";
+            if (id == 0x1590) return "3pardata Inc";
+            if (id == 0x1591) return "ARN";
+            if (id == 0x1592) return "Syba Tech Ltd";
+            if (id == 0x1593) return "Bops Inc";
+            if (id == 0x1594) return "Netgame Ltd";
+            if (id == 0x1595) return "Diva Systems Corp";
+            if (id == 0x1596) return "Folsom Research Inc";
+            if (id == 0x1597) return "Memec Design Services";
+            if (id == 0x1598) return "Granite Microsystems";
+            if (id == 0x1599) return "Delta Electronics Inc";
+            if (id == 0x159A) return "General Instrument";
+            if (id == 0x159B) return "Faraday Technology Corp";
+            if (id == 0x159C) return "Stratus Computer Systems";
+            if (id == 0x159D) return "Ningbo Harrison Electronics Co Ltd";
+            if (id == 0x159E) return "A-Max Technology Co Ltd";
+            if (id == 0x159F) return "Galea Network Security";
+            if (id == 0x15A0) return "Compumaster SRL";
+            if (id == 0x15A1) return "Geocast Network Systems Inc";
+            if (id == 0x15A2) return "Catalyst Enterprises Inc";
+            if (id == 0x15A3) return "Italtel";
+            if (id == 0x15A4) return "X-Net OY";
+            if (id == 0x15A5) return "Toyota MACS Inc";
+            if (id == 0x15A6) return "Sunlight Ultrasound Technologies Ltd";
+            if (id == 0x15A7) return "SSE Telecom Inc";
+            if (id == 0x15A8) return "Shanghai Communications Technologies Cen";
+            if (id == 0x15AA) return "Moreton Bay";
+            if (id == 0x15AB) return "Bluesteel Networks Inc";
+            if (id == 0x15AC) return "North Atlantic Instruments";
+            if (id == 0x15AD) return "VMware Inc";
+            if (id == 0x15AE) return "Amersham Pharmacia Biotech";
+            if (id == 0x15B0) return "Zoltrix International Limited";
+            if (id == 0x15B1) return "Source Technology Inc";
+            if (id == 0x15B2) return "Mosaid Technologies Inc";
+            if (id == 0x15B3) return "Mellanox Technology";
+            if (id == 0x15B4) return "CCI/Triad";
+            if (id == 0x15B5) return "Cimetrics Inc";
+            if (id == 0x15B6) return "Texas Memory Systems Inc";
+            if (id == 0x15B7) return "Sandisk Corp";
+            if (id == 0x15B8) return "Addi-Data GMBH";
+            if (id == 0x15B9) return "Maestro Digital Communications";
+            if (id == 0x15BA) return "Impacct Technology Corp";
+            if (id == 0x15BB) return "Portwell Inc";
+            if (id == 0x15BC) return "Agilent Technologies";
+            if (id == 0x15BD) return "DFI Inc";
+            if (id == 0x15BE) return "Sola Electronics";
+            if (id == 0x15BF) return "High Tech Computer Corp (HTC)";
+            if (id == 0x15C0) return "BVM Limited";
+            if (id == 0x15C1) return "Quantel";
+            if (id == 0x15C2) return "Newer Technology Inc";
+            if (id == 0x15C3) return "Taiwan Mycomp Co Ltd";
+            if (id == 0x15C4) return "EVSX Inc";
+            if (id == 0x15C5) return "Procomp Informatics Ltd";
+            if (id == 0x15C6) return "Technical University Of Budapest";
+            if (id == 0x15C7) return "Tateyama System Laboratory Co Ltd";
+            if (id == 0x15C8) return "Penta Media Co Ltd";
+            if (id == 0x15C9) return "Serome Technology Inc";
+            if (id == 0x15CA) return "Bitboys OY";
+            if (id == 0x15CB) return "AG Electronics Ltd";
+            if (id == 0x15CC) return "Hotrail Inc";
+            if (id == 0x15CD) return "Dreamtech Co Ltd";
+            if (id == 0x15CE) return "Genrad Inc";
+            if (id == 0x15CF) return "Hilscher GMBH";
+            if (id == 0x15D1) return "Infineon Technologies AG";
+            if (id == 0x15D2) return "FIC (First International Computer Inc)";
+            if (id == 0x15D3) return "NDS Technologies Israel Ltd";
+            if (id == 0x15D4) return "Iwill Corporation";
+            if (id == 0x15D5) return "Tatung Co";
+            if (id == 0x15D6) return "Entridia Corporation";
+            if (id == 0x15D7) return "Rockwell-Collins Inc";
+            if (id == 0x15D8) return "Cybernetics Technology Co Ltd";
+            if (id == 0x15D9) return "Super Micro Computer Inc";
+            if (id == 0x15DA) return "Cyberfirm Inc";
+            if (id == 0x15DB) return "Applied Computing Systems Inc";
+            if (id == 0x15DC) return "Litronic Inc";
+            if (id == 0x15DD) return "Sigmatel Inc";
+            if (id == 0x15DE) return "Malleable Technologies Inc";
+            if (id == 0x15E0) return "Cacheflow Inc";
+            if (id == 0x15E1) return "Voice Technologies Group";
+            if (id == 0x15E2) return "Quicknet Technologies Inc";
+            if (id == 0x15E3) return "Networth Technologies Inc";
+            if (id == 0x15E4) return "VSN Systemen BV";
+            if (id == 0x15E5) return "Valley Technologies Inc";
+            if (id == 0x15E6) return "Agere Inc";
+            if (id == 0x15E7) return "GET Engineering Corp";
+            if (id == 0x15E8) return "National Datacomm Corp";
+            if (id == 0x15E9) return "Pacific Digital Corp";
+            if (id == 0x15EA) return "Tokyo Denshi Sekei KK";
+            if (id == 0x15EB) return "Drsearch GMBH";
+            if (id == 0x15EC) return "Beckhoff Automation GmbH";
+            if (id == 0x15ED) return "Macrolink Inc";
+            if (id == 0x15EE) return "IN Win Development Inc";
+            if (id == 0x15EF) return "Intelligent Paradigm Inc";
+            if (id == 0x15F0) return "B-Tree Systems Inc";
+            if (id == 0x15F1) return "Times N Systems Inc";
+            if (id == 0x15F2) return "SPOT Imaging Solutions a division of Diagnostic Instruments, Inc";
+            if (id == 0x15F3) return "Digitmedia Corp";
+            if (id == 0x15F4) return "Valuesoft";
+            if (id == 0x15F5) return "Power Micro Research";
+            if (id == 0x15F6) return "Extreme Packet Device Inc";
+            if (id == 0x15F7) return "Banctec";
+            if (id == 0x15F8) return "Koga Electronics Co";
+            if (id == 0x15F9) return "Zenith Electronics Co";
+            if (id == 0x15FA) return "Axzam Corporation";
+            if (id == 0x15FB) return "Zilog Inc";
+            if (id == 0x15FC) return "Techsan Electronics Co Ltd";
+            if (id == 0x15FD) return "N-CubedNet";
+            if (id == 0x15FE) return "Kinpo Electronics Inc";
+            if (id == 0x15FF) return "Fastpoint Technologies Inc";
+            if (id == 0x1600) return "Northrop Grumman - Canada Ltd";
+            if (id == 0x1601) return "Tenta Technology";
+            if (id == 0x1602) return "Prosys-TEC Inc";
+            if (id == 0x1603) return "Nokia Wireless Business Communications";
+            if (id == 0x1604) return "Central System Research Co Ltd";
+            if (id == 0x1605) return "Pairgain Technologies";
+            if (id == 0x1606) return "Europop AG";
+            if (id == 0x1607) return "Lava Semiconductor Manufacturing Inc";
+            if (id == 0x1608) return "Automated Wagering International";
+            if (id == 0x1609) return "Sciemetric Instruments Inc";
+            if (id == 0x160A) return "Kollmorgen Servotronix";
+            if (id == 0x160B) return "Onkyo Corp";
+            if (id == 0x160C) return "Oregon Micro Systems Inc";
+            if (id == 0x160D) return "Aaeon Electronics Inc";
+            if (id == 0x160E) return "CML Emergency Services";
+            if (id == 0x160F) return "ITEC Co Ltd";
+            if (id == 0x1610) return "Tottori Sanyo Electric Co Ltd";
+            if (id == 0x1611) return "Bel Fuse Inc";
+            if (id == 0x1612) return "Telesynergy Research Inc";
+            if (id == 0x1613) return "System Craft Inc";
+            if (id == 0x1614) return "Jace Tech Inc";
+            if (id == 0x1615) return "Equus Computer Systems Inc";
+            if (id == 0x1616) return "Iotech Inc";
+            if (id == 0x1617) return "Rapidstream Inc";
+            if (id == 0x1618) return "Esec SA";
+            if (id == 0x1619) return "FarSite Communications Limited";
+            if (id == 0x161B) return "Mobilian Israel Ltd";
+            if (id == 0x161C) return "Berkshire Products";
+            if (id == 0x161D) return "Gatec";
+            if (id == 0x161E) return "Kyoei Sangyo Co Ltd";
+            if (id == 0x161F) return "Arima Computer Corporation";
+            if (id == 0x1620) return "Sigmacom Co Ltd";
+            if (id == 0x1621) return "Lynx Studio Technology Inc";
+            if (id == 0x1622) return "Nokia Home Communications";
+            if (id == 0x1623) return "KRF Tech Ltd";
+            if (id == 0x1624) return "CE Infosys GMBH";
+            if (id == 0x1625) return "Warp Nine Engineering";
+            if (id == 0x1626) return "TDK Semiconductor Corp";
+            if (id == 0x1627) return "BCom Electronics Inc";
+            if (id == 0x1629) return "Kongsberg Spacetec as";
+            if (id == 0x162A) return "Sejin Computerland Co Ltd";
+            if (id == 0x162B) return "Shanghai Bell Company Limited";
+            if (id == 0x162C) return "C&H Technologies Inc";
+            if (id == 0x162D) return "Reprosoft Co Ltd";
+            if (id == 0x162E) return "Margi Systems Inc";
+            if (id == 0x162F) return "Rohde & Schwarz GMBH & Co KG";
+            if (id == 0x1630) return "Sky Computers Inc";
+            if (id == 0x1631) return "NEC Computer International";
+            if (id == 0x1632) return "Verisys Inc";
+            if (id == 0x1633) return "Adac Corporation";
+            if (id == 0x1634) return "Visionglobal Network Corp";
+            if (id == 0x1635) return "Decros / SICZ as";
+            if (id == 0x1636) return "Jean Company Ltd";
+            if (id == 0x1637) return "NSI";
+            if (id == 0x1638) return "Eumitcom Technology Inc";
+            if (id == 0x163A) return "Air Prime Inc";
+            if (id == 0x163B) return "Glotrex Co Ltd";
+            if (id == 0x163C) return "intel";
+            if (id == 0x163D) return "Heidelberg Digital LLC";
+            if (id == 0x163E) return "3dpower";
+            if (id == 0x163F) return "Renishaw PLC";
+            if (id == 0x1640) return "Intelliworxx Inc";
+            if (id == 0x1641) return "MKNet Corporation";
+            if (id == 0x1642) return "Bitland";
+            if (id == 0x1643) return "Hajime Industries Ltd";
+            if (id == 0x1644) return "Western Avionics Ltd";
+            if (id == 0x1645) return "Quick-Serv Computer Co Ltd";
+            if (id == 0x1646) return "Nippon Systemware Co Ltd";
+            if (id == 0x1647) return "Hertz Systemtechnik GMBH";
+            if (id == 0x1648) return "MeltDown Systems LLC";
+            if (id == 0x1649) return "Jupiter Systems";
+            if (id == 0x164A) return "Aiwa Co Ltd";
+            if (id == 0x164C) return "Department Of Defense";
+            if (id == 0x164D) return "Ishoni Networks";
+            if (id == 0x164E) return "Micrel Inc";
+            if (id == 0x164F) return "Datavoice (Pty) Ltd";
+            if (id == 0x1650) return "Admore Technology Inc";
+            if (id == 0x1651) return "Chaparral Network Storage";
+            if (id == 0x1652) return "Spectrum Digital Inc";
+            if (id == 0x1653) return "Nature Worldwide Technology Corp";
+            if (id == 0x1654) return "Sonicwall Inc";
+            if (id == 0x1655) return "Dazzle Multimedia Inc";
+            if (id == 0x1656) return "Insyde Software Corp";
+            if (id == 0x1657) return "Brocade Communications Systems";
+            if (id == 0x1658) return "Med Associates Inc";
+            if (id == 0x1659) return "Shiba Denshi Systems Inc";
+            if (id == 0x165A) return "Epix Inc";
+            if (id == 0x165B) return "Real-Time Digital Inc";
+            if (id == 0x165C) return "Kondo Kagaku";
+            if (id == 0x165D) return "Hsing Tech Enterprise Co Ltd";
+            if (id == 0x165E) return "Hyunju Computer Co Ltd";
+            if (id == 0x165F) return "Comartsystem Korea";
+            if (id == 0x1660) return "Network Security Technologies Inc (NetSec)";
+            if (id == 0x1661) return "Worldspace Corp";
+            if (id == 0x1662) return "Int Labs";
+            if (id == 0x1663) return "Elmec Inc Ltd";
+            if (id == 0x1664) return "Fastfame Technology Co Ltd";
+            if (id == 0x1665) return "Edax Inc";
+            if (id == 0x1666) return "Norpak Corporation";
+            if (id == 0x1667) return "CoSystems Inc";
+            if (id == 0x1668) return "Actiontec Electronics Inc";
+            if (id == 0x166A) return "Komatsu Ltd";
+            if (id == 0x166B) return "Supernet Inc";
+            if (id == 0x166C) return "Shade Ltd";
+            if (id == 0x166D) return "Sibyte Inc";
+            if (id == 0x166E) return "Schneider Automation Inc";
+            if (id == 0x166F) return "Televox Software Inc";
+            if (id == 0x1670) return "Rearden Steel";
+            if (id == 0x1671) return "Atan Technology Inc";
+            if (id == 0x1672) return "Unitec Co Ltd";
+            if (id == 0x1673) return "pctel";
+            if (id == 0x1675) return "Square Wave Technology";
+            if (id == 0x1676) return "Emachines Inc";
+            if (id == 0x1677) return "Bernecker + Rainer";
+            if (id == 0x1678) return "INH Semiconductor";
+            if (id == 0x1679) return "Tokyo Electron Device Ltd";
+            if (id == 0x167F) return "iba AG";
+            if (id == 0x1680) return "Dunti Corp";
+            if (id == 0x1681) return "Hercules";
+            if (id == 0x1682) return "PINE Technology, Ltd";
+            if (id == 0x1688) return "CastleNet Technology Inc";
+            if (id == 0x168A) return "Utimaco Safeware AG";
+            if (id == 0x168B) return "Circut Assembly Corp";
+            if (id == 0x168C) return "Atheros Communications Inc";
+            if (id == 0x168D) return "NMI Electronics Ltd";
+            if (id == 0x168E) return "Hyundai MultiCAV Computer Co Ltd";
+            if (id == 0x168F) return "KDS Innotech Corp";
+            if (id == 0x1690) return "NetContinuum, Inc";
+            if (id == 0x1693) return "FERMA";
+            if (id == 0x1695) return "EPoX Computer Co, Ltd";
+            if (id == 0x16AE) return "SafeNet Inc";
+            if (id == 0x16B3) return "CNF Mobile Solutions";
+            if (id == 0x16B8) return "Sonnet Technologies, Inc";
+            if (id == 0x16CA) return "Cenatek Inc";
+            if (id == 0x16CB) return "Minolta Co Ltd";
+            if (id == 0x16CC) return "Inari Inc";
+            if (id == 0x16D0) return "Systemax";
+            if (id == 0x16E0) return "Third Millenium Test Solutions, Inc";
+            if (id == 0x16E5) return "Intellon Corporation";
+            if (id == 0x16EC) return "US Robotics";
+            if (id == 0x16F0) return "LaserLinc Inc";
+            if (id == 0x16F1) return "Adicti Corp";
+            if (id == 0x16F3) return "Jetway Information Co, Ltd";
+            if (id == 0x16F6) return "VideoTelecom Inc";
+            if (id == 0x1700) return "Antara LLC";
+            if (id == 0x1701) return "Interactive Computer Products Inc";
+            if (id == 0x1702) return "Internet Machines Corp";
+            if (id == 0x1703) return "Desana Systems";
+            if (id == 0x1704) return "Clearwater Networks";
+            if (id == 0x1705) return "Digital First";
+            if (id == 0x1706) return "Pacific Broadband Communications";
+            if (id == 0x1707) return "Cogency Semiconductor Inc";
+            if (id == 0x1708) return "Harris Corp";
+            if (id == 0x1709) return "Zarlink Semiconductor";
+            if (id == 0x170A) return "Alpine Electronics Inc";
+            if (id == 0x170B) return "NetOctave Inc";
+            if (id == 0x170C) return "YottaYotta Inc";
+            if (id == 0x170D) return "SensoMotoric Instruments GmbH";
+            if (id == 0x170E) return "San Valley Systems, Inc";
+            if (id == 0x170F) return "Cyberdyne Inc";
+            if (id == 0x1710) return "Pelago Networks";
+            if (id == 0x1711) return "MyName Technologies, Inc";
+            if (id == 0x1712) return "NICE Systems Inc";
+            if (id == 0x1713) return "TOPCON Corp";
+            if (id == 0x1725) return "Vitesse Semiconductor";
+            if (id == 0x1734) return "Fujitsu-Siemens Computers GmbH";
+            if (id == 0x1737) return "LinkSys";
+            if (id == 0x173B) return "Altima Communications Inc";
+            if (id == 0x1743) return "Peppercon AG";
+            if (id == 0x174B) return "PC Partner Limited";
+            if (id == 0x1752) return "Global Brands Manufacture Ltd";
+            if (id == 0x1753) return "TeraRecon, Inc";
+            if (id == 0x1755) return "Alchemy Semiconductor Inc";
+            if (id == 0x176A) return "General Dynamics Canada";
+            if (id == 0x1775) return "General Electric";
+            if (id == 0x1789) return "Ennyah Technologies Corp";
+            if (id == 0x1793) return "Unitech Electronics Co, Ltd";
+            if (id == 0x17A1) return "Tascorp";
+            if (id == 0x17A7) return "Start Network Technology Co, Ltd";
+            if (id == 0x17AA) return "Legend Ltd (Beijing)";
+            if (id == 0x17AB) return "Phillips Components";
+            if (id == 0x17AF) return "Hightech Information Systems, Ltd";
+            if (id == 0x17BE) return "Philips Semiconductors";
+            if (id == 0x17C0) return "Wistron Corp";
+            if (id == 0x17C4) return "Movita";
+            if (id == 0x17CC) return "NetChip";
+            if (id == 0x17cd) return "Cadence Design Systems";
+            if (id == 0x17D5) return "Neterion Inc";
+            if (id == 0x17db) return "Cray, Inc";
+            if (id == 0x17E9) return "DH electronics GmbH / Sabrent";
+            if (id == 0x17EE) return "Connect Components, Ltd";
+            if (id == 0x17F3) return "RDC Semiconductor Co, Ltd";
+            if (id == 0x17FE) return "INPROCOMM";
+            if (id == 0x1813) return "Ambient Technologies Inc";
+            if (id == 0x1814) return "Ralink Technology, Corp";
+            if (id == 0x1815) return "devolo AG";
+            if (id == 0x1820) return "InfiniCon Systems, Inc";
+            if (id == 0x1824) return "Avocent";
+            if (id == 0x1841) return "Panda Platinum";
+            if (id == 0x1860) return "Primagraphics Ltd";
+            if (id == 0x186C) return "Humusoft SRO";
+            if (id == 0x1887) return "Elan Digital Systems Ltd";
+            if (id == 0x1888) return "Varisys Limited";
+            if (id == 0x188D) return "Millogic Ltd";
+            if (id == 0x1890) return "Egenera, Inc";
+            if (id == 0x18BC) return "Info-Tek Corp";
+            if (id == 0x18C9) return "ARVOO Engineering BV";
+            if (id == 0x18CA) return "XGI Technology Inc";
+            if (id == 0x18F1) return "Spectrum Systementwicklung Microelectronic GmbH";
+            if (id == 0x18F4) return "Napatech A/S";
+            if (id == 0x18F7) return "Commtech, Inc";
+            if (id == 0x18FB) return "Resilience Corporation";
+            if (id == 0x1904) return "Ritmo";
+            if (id == 0x1905) return "WIS Technology, Inc";
+            if (id == 0x1910) return "Seaway Networks";
+            if (id == 0x1912) return "Renesas Electronics";
+            if (id == 0x1931) return "Option NV";
+            if (id == 0x1941) return "Stelar";
+            if (id == 0x1954) return "One Stop Systems, Inc";
+            if (id == 0x1969) return "Atheros Communications";
+            if (id == 0x1971) return "AGEIA Technologies, Inc";
+            if (id == 0x197B) return "JMicron Technology Corp";
+            if (id == 0x198a) return "Nallatech";
+            if (id == 0x1991) return "Topstar Digital Technologies Co, Ltd";
+            if (id == 0x19a2) return "ServerEngines";
+            if (id == 0x19A8) return "DAQDATA GmbH";
+            if (id == 0x19AC) return "Kasten Chase Applied Research";
+            if (id == 0x19B6) return "Mikrotik";
+            if (id == 0x19E2) return "Vector Informatik GmbH";
+            if (id == 0x19E3) return "DDRdrive LLC";
+            if (id == 0x1A08) return "Linux Networx";
+            if (id == 0x1a41) return "Tilera Corporation";
+            if (id == 0x1A42) return "Imaginant";
+            if (id == 0x1B13) return "Jaton Corporation USA";
+            if (id == 0x1B21) return "Asustek - ASMedia Technology Inc";
+            if (id == 0x1B6F) return "Etron";
+            if (id == 0x1B73) return "Fresco Logic Inc";
+            if (id == 0x1B91) return "Averna";
+            if (id == 0x1BAD) return "ReFLEX CES";
+            if (id == 0x1C0F) return "Monarch Innovative Technologies Pvt Ltd's";
+            if (id == 0x1C32) return "Highland Technology, Inc";
+            if (id == 0x1c39) return "Thomson Video Networks";
+            if (id == 0x1DE1) return "Tekram";
+            if (id == 0x1FCF) return "Miranda Technologies Ltd";
+            if (id == 0x2001) return "Temporal Research Ltd";
+            if (id == 0x2646) return "Kingston Technology Co";
+            if (id == 0x270F) return "ChainTek Computer Co Ltd";
+            if (id == 0x2EC1) return "Zenic Inc";
+            if (id == 0x3388) return "Hint Corp";
+            if (id == 0x3411) return "Quantum Designs (HK) Inc";
+            if (id == 0x3513) return "ARCOM Control Systems Ltd";
+            if (id == 0x38EF) return "4links";
+            if (id == 0x3D3D) return "3Dlabs, Inc Ltd";
+            if (id == 0x4005) return "Avance Logic Inc";
+            if (id == 0x4144) return "Alpha Data";
+            if (id == 0x416C) return "Aladdin Knowledge Systems";
+            if (id == 0x4348) return "wchcn";
+            if (id == 0x4680) return "UMAX Computer Corp";
+            if (id == 0x4843) return "Hercules Computer Technology";
+            if (id == 0x4943) return "Growth Networks";
+            if (id == 0x4954) return "Integral Technologies";
+            if (id == 0x4978) return "Axil Computer Inc";
+            if (id == 0x4C48) return "Lung Hwa Electronics";
+            if (id == 0x4C53) return "SBS-OR Industrial Computers";
+            if (id == 0x4CA1) return "Seanix Technology Inc";
+            if (id == 0x4D51) return "Mediaq Inc";
+            if (id == 0x4D54) return "Microtechnica Co Ltd";
+            if (id == 0x4DDC) return "ILC Data Device Corp";
+            if (id == 0x5053) return "TBS/Voyetra Technologies";
+            if (id == 0x508A) return "Samsung T10 MP3 Player";
+            if (id == 0x5136) return "S S Technologies";
+            if (id == 0x5143) return "Qualcomm Inc USA";
+            if (id == 0x5333) return "S3 Graphics Co, Ltd";
+            if (id == 0x544C) return "Teralogic Inc";
+            if (id == 0x5555) return "Genroco Inc";
+            if (id == 0x5853) return "Citrix Systems, Inc";
+            if (id == 0x6409) return "Logitec Corp";
+            if (id == 0x6666) return "Decision Computer International Co";
+            if (id == 0x6945) return "ASMedia Technology Inc";
+            if (id == 0x7604) return "ON Electric Co Ltd";
+            if (id == 0x8080) return "Xirlink, Inc";
+            if (id == 0x8086) return "Intel Corporation";
+            if (id == 0x8087) return "Intel";
+            if (id == 0x80EE) return "Oracle Corporation - InnoTek Systemberatung GmbH";
+            if (id == 0x8866) return "T-Square Design Inc";
+            if (id == 0x8888) return "Silicon Magic";
+            if (id == 0x8E0E) return "Computone Corporation";
+            if (id == 0x9004) return "Adaptec Inc";
+            if (id == 0x9005) return "Adaptec Inc";
+            if (id == 0x919A) return "Gigapixel Corp";
+            if (id == 0x9412) return "Holtek";
+            if (id == 0x9699) return "Omni Media Technology Inc";
+            if (id == 0x9710) return "MosChip Semiconductor Technology";
+            if (id == 0x9902) return "StarGen, Inc";
+            if (id == 0xA0A0) return "Aopen Inc";
+            if (id == 0xA0F1) return "Unisys Corporation";
+            if (id == 0xA200) return "NEC Corp";
+            if (id == 0xA259) return "Hewlett Packard";
+            if (id == 0xA304) return "Sony";
+            if (id == 0xA727) return "3com Corporation";
+            if (id == 0xAA42) return "Abekas, Inc";
+            if (id == 0xAC1E) return "Digital Receiver Technology Inc";
+            if (id == 0xB1B3) return "Shiva Europe Ltd";
+            if (id == 0xB894) return "Brown & Sharpe Mfg Co";
+            if (id == 0xBEEF) return "Mindstream Computing";
+            if (id == 0xC001) return "TSI Telsys";
+            if (id == 0xC0A9) return "Micron/Crucial Technology";
+            if (id == 0xC0DE) return "Motorola";
+            if (id == 0xC0FE) return "Motion Engineering Inc";
+            if (id == 0xC622) return "Hudson Soft Co Ltd";
+            if (id == 0xCA50) return "Varian, Inc";
+            if (id == 0xCAFE) return "Chrysalis-ITS";
+            if (id == 0xCCCC) return "Catapult Communications";
+            if (id == 0xD4D4) return "Curtiss-Wright Controls Embedded Computing";
+            if (id == 0xDC93) return "Dawicontrol";
+            if (id == 0xDEAD) return "Indigita Corporation";
+            if (id == 0xDEAF) return "Middle Digital, Inc";
+            if (id == 0xE159) return "Tiger Jet Network Inc";
+            if (id == 0xE4BF) return "EKF Elektronik GMBH";
+            if (id == 0xEA01) return "Eagle Technology";
+            if (id == 0xEABB) return "Aashima Technology BV";
+            if (id == 0xEACE) return "Endace Measurement Systems Ltd";
+            if (id == 0xECC0) return "Echo Digital Audio Corporation";
+            if (id == 0xEDD8) return "ARK Logic, Inc";
+            if (id == 0xF5F5) return "F5 Networks Inc";
+            if (id == 0xFA57) return "Interagon AS";
+            return "Unknown";
+        }
+    }
 }

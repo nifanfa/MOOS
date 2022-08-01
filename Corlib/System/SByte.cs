@@ -1,10 +1,11 @@
-﻿namespace System
+
+namespace System
 {
-	public struct SByte
-	{
-		public override string ToString()
-		{
-			return ((long)this).ToString();
-		}
-	}
+    public struct SByte
+    {
+        public override string ToString()
+        {
+            return ((long)this).ToString();
+        }
+    }
 }

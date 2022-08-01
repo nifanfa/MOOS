@@ -34,21 +34,21 @@
 
 static const iwad_t iwads[] =
 {
-	{ "doom2.wad",    doom2,     commercial, "Doom II" },
-	{ "plutonia.wad", pack_plut, commercial, "Final Doom: Plutonia Experiment" },
-	{ "tnt.wad",      pack_tnt,  commercial, "Final Doom: TNT: Evilution" },
-	{ "doom.wad",     doom,      retail,     "Doom" },
-	{ "DOOM1.WAD",    doom,      shareware,  "Doom Shareware" },
-	{ "chex.wad",     pack_chex, shareware,  "Chex Quest" },
-	{ "hacx.wad",     pack_hacx, commercial, "Hacx" },
-	{ "freedm.wad",   doom2,     commercial, "FreeDM" },
-	{ "freedoom2.wad", doom2,    commercial, "Freedoom: Phase 2" },
-	{ "freedoom1.wad", doom,     retail,     "Freedoom: Phase 1" },
-	{ "heretic.wad",  heretic,   retail,     "Heretic" },
-	{ "heretic1.wad", heretic,   shareware,  "Heretic Shareware" },
-	{ "hexen.wad",    hexen,     commercial, "Hexen" },
-	//{ "strife0.wad",  strife,    commercial, "Strife" }, // haleyjd: STRIFE-FIXME
-	{ "strife1.wad",  strife,    commercial, "Strife" },
+    { "doom2.wad",    doom2,     commercial, "Doom II" },
+    { "plutonia.wad", pack_plut, commercial, "Final Doom: Plutonia Experiment" },
+    { "tnt.wad",      pack_tnt,  commercial, "Final Doom: TNT: Evilution" },
+    { "doom.wad",     doom,      retail,     "Doom" },
+    { "DOOM1.WAD",    doom,      shareware,  "Doom Shareware" },
+    { "chex.wad",     pack_chex, shareware,  "Chex Quest" },
+    { "hacx.wad",     pack_hacx, commercial, "Hacx" },
+    { "freedm.wad",   doom2,     commercial, "FreeDM" },
+    { "freedoom2.wad", doom2,    commercial, "Freedoom: Phase 2" },
+    { "freedoom1.wad", doom,     retail,     "Freedoom: Phase 1" },
+    { "heretic.wad",  heretic,   retail,     "Heretic" },
+    { "heretic1.wad", heretic,   shareware,  "Heretic Shareware" },
+    { "hexen.wad",    hexen,     commercial, "Hexen" },
+    //{ "strife0.wad",  strife,    commercial, "Strife" }, // haleyjd: STRIFE-FIXME
+    { "strife1.wad",  strife,    commercial, "Strife" },
 };
 
 // Array of locations to search for IWAD files
@@ -63,11 +63,11 @@ static int num_iwad_dirs = 0;
 
 static void AddIWADDir(char *dir)
 {
-	if (num_iwad_dirs < MAX_IWAD_DIRS)
-	{
-		iwad_dirs[num_iwad_dirs] = dir;
-		++num_iwad_dirs;
-	}
+    if (num_iwad_dirs < MAX_IWAD_DIRS)
+    {
+        iwad_dirs[num_iwad_dirs] = dir;
+        ++num_iwad_dirs;
+    }
 }
 
 // This is Windows-specific code that automatically finds the location
@@ -82,9 +82,9 @@ static void AddIWADDir(char *dir)
 
 typedef struct 
 {
-	HKEY root;
-	char *path;
-	char *value;
+    HKEY root;
+    char *path;
+    char *value;
 } registry_value_t;
 
 #define UNINSTALLER_STRING "\\uninstl.exe /S "
@@ -106,189 +106,189 @@ typedef struct
 
 static registry_value_t uninstall_values[] =
 {
-	// Ultimate Doom, CD version (Depths of Doom trilogy)
+    // Ultimate Doom, CD version (Depths of Doom trilogy)
 
-	{
-		HKEY_LOCAL_MACHINE,
-		SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
-			"Uninstall\\Ultimate Doom for Windows 95",
-		"UninstallString",
-	},
+    {
+        HKEY_LOCAL_MACHINE,
+        SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
+            "Uninstall\\Ultimate Doom for Windows 95",
+        "UninstallString",
+    },
 
-	// Doom II, CD version (Depths of Doom trilogy)
+    // Doom II, CD version (Depths of Doom trilogy)
 
-	{
-		HKEY_LOCAL_MACHINE,
-		SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
-			"Uninstall\\Doom II for Windows 95",
-		"UninstallString",
-	},
+    {
+        HKEY_LOCAL_MACHINE,
+        SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
+            "Uninstall\\Doom II for Windows 95",
+        "UninstallString",
+    },
 
-	// Final Doom
+    // Final Doom
 
-	{
-		HKEY_LOCAL_MACHINE,
-		SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
-			"Uninstall\\Final Doom for Windows 95",
-		"UninstallString",
-	},
+    {
+        HKEY_LOCAL_MACHINE,
+        SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
+            "Uninstall\\Final Doom for Windows 95",
+        "UninstallString",
+    },
 
-	// Shareware version
+    // Shareware version
 
-	{
-		HKEY_LOCAL_MACHINE,
-		SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
-			"Uninstall\\Doom Shareware for Windows 95",
-		"UninstallString",
-	},
+    {
+        HKEY_LOCAL_MACHINE,
+        SOFTWARE_KEY "\\Microsoft\\Windows\\CurrentVersion\\"
+            "Uninstall\\Doom Shareware for Windows 95",
+        "UninstallString",
+    },
 };
 
 // Value installed by the Collector's Edition when it is installed
 
 static registry_value_t collectors_edition_value =
 {
-	HKEY_LOCAL_MACHINE,
-	SOFTWARE_KEY "\\Activision\\DOOM Collector's Edition\\v1.0",
-	"INSTALLPATH",
+    HKEY_LOCAL_MACHINE,
+    SOFTWARE_KEY "\\Activision\\DOOM Collector's Edition\\v1.0",
+    "INSTALLPATH",
 };
 
 // Subdirectories of the above install path, where IWADs are installed.
 
 static char *collectors_edition_subdirs[] = 
 {
-	"Doom2",
-	"Final Doom",
-	"Ultimate Doom",
+    "Doom2",
+    "Final Doom",
+    "Ultimate Doom",
 };
 
 // Location where Steam is installed
 
 static registry_value_t steam_install_location =
 {
-	HKEY_LOCAL_MACHINE,
-	SOFTWARE_KEY "\\Valve\\Steam",
-	"InstallPath",
+    HKEY_LOCAL_MACHINE,
+    SOFTWARE_KEY "\\Valve\\Steam",
+    "InstallPath",
 };
 
 // Subdirs of the steam install directory where IWADs are found
 
 static char *steam_install_subdirs[] =
 {
-	"steamapps\\common\\doom 2\\base",
-	"steamapps\\common\\final doom\\base",
-	"steamapps\\common\\ultimate doom\\base",
-	"steamapps\\common\\heretic shadow of the serpent riders\\base",
-	"steamapps\\common\\hexen\\base",
-	"steamapps\\common\\hexen deathkings of the dark citadel\\base",
+    "steamapps\\common\\doom 2\\base",
+    "steamapps\\common\\final doom\\base",
+    "steamapps\\common\\ultimate doom\\base",
+    "steamapps\\common\\heretic shadow of the serpent riders\\base",
+    "steamapps\\common\\hexen\\base",
+    "steamapps\\common\\hexen deathkings of the dark citadel\\base",
 
-	// From Doom 3: BFG Edition:
+    // From Doom 3: BFG Edition:
 
-	"steamapps\\common\\DOOM 3 BFG Edition\\base\\wads",
+    "steamapps\\common\\DOOM 3 BFG Edition\\base\\wads",
 };
 
 #define STEAM_BFG_GUS_PATCHES \
-	"steamapps\\common\\DOOM 3 BFG Edition\\base\\classicmusic\\instruments"
+    "steamapps\\common\\DOOM 3 BFG Edition\\base\\classicmusic\\instruments"
 
 static char *GetRegistryString(registry_value_t *reg_val)
 {
-	HKEY key;
-	DWORD len;
-	DWORD valtype;
-	char *result;
+    HKEY key;
+    DWORD len;
+    DWORD valtype;
+    char *result;
 
-	// Open the key (directory where the value is stored)
+    // Open the key (directory where the value is stored)
 
-	if (RegOpenKeyEx(reg_val->root, reg_val->path,
-					 0, KEY_READ, &key) != ERROR_SUCCESS)
-	{
-		return NULL;
-	}
+    if (RegOpenKeyEx(reg_val->root, reg_val->path,
+                     0, KEY_READ, &key) != ERROR_SUCCESS)
+    {
+        return NULL;
+    }
 
-	result = NULL;
+    result = NULL;
 
-	// Find the type and length of the string, and only accept strings.
+    // Find the type and length of the string, and only accept strings.
 
-	if (RegQueryValueEx(key, reg_val->value,
-						NULL, &valtype, NULL, &len) == ERROR_SUCCESS
-	 && valtype == REG_SZ)
-	{
-		// Allocate a buffer for the value and read the value
+    if (RegQueryValueEx(key, reg_val->value,
+                        NULL, &valtype, NULL, &len) == ERROR_SUCCESS
+     && valtype == REG_SZ)
+    {
+        // Allocate a buffer for the value and read the value
 
-		result = kmalloc(len);
+        result = kmalloc(len);
 
-		if (RegQueryValueEx(key, reg_val->value, NULL, &valtype,
-							(unsigned char *) result, &len) != ERROR_SUCCESS)
-		{
-			kfree(result);
-			result = NULL;
-		}
-	}
+        if (RegQueryValueEx(key, reg_val->value, NULL, &valtype,
+                            (unsigned char *) result, &len) != ERROR_SUCCESS)
+        {
+            kfree(result);
+            result = NULL;
+        }
+    }
 
-	// Close the key
+    // Close the key
 
-	RegCloseKey(key);
+    RegCloseKey(key);
 
-	return result;
+    return result;
 }
 
 // Check for the uninstall strings from the CD versions
 
 static void CheckUninstallStrings(void)
 {
-	unsigned int i;
+    unsigned int i;
 
-	for (i=0; i<arrlen(uninstall_values); ++i)
-	{
-		char *val;
-		char *path;
-		char *unstr;
+    for (i=0; i<arrlen(uninstall_values); ++i)
+    {
+        char *val;
+        char *path;
+        char *unstr;
 
-		val = GetRegistryString(&uninstall_values[i]);
+        val = GetRegistryString(&uninstall_values[i]);
 
-		if (val == NULL)
-		{
-			continue;
-		}
+        if (val == NULL)
+        {
+            continue;
+        }
 
-		unstr = mystrstr(val, UNINSTALLER_STRING);
+        unstr = mystrstr(val, UNINSTALLER_STRING);
 
-		if (unstr == NULL)
-		{
-			kfree(val);
-		}
-		else
-		{
-			path = unstr + mystrlen(UNINSTALLER_STRING);
+        if (unstr == NULL)
+        {
+            kfree(val);
+        }
+        else
+        {
+            path = unstr + mystrlen(UNINSTALLER_STRING);
 
-			AddIWADDir(path);
-		}
-	}
+            AddIWADDir(path);
+        }
+    }
 }
 
 // Check for Doom: Collector's Edition
 
 static void CheckCollectorsEdition(void)
 {
-	char *install_path;
-	char *subpath;
-	unsigned int i;
+    char *install_path;
+    char *subpath;
+    unsigned int i;
 
-	install_path = GetRegistryString(&collectors_edition_value);
+    install_path = GetRegistryString(&collectors_edition_value);
 
-	if (install_path == NULL)
-	{
-		return;
-	}
+    if (install_path == NULL)
+    {
+        return;
+    }
 
-	for (i=0; i<arrlen(collectors_edition_subdirs); ++i)
-	{
-		subpath = M_StringJoin(install_path, DIR_SEPARATOR_S,
-							   collectors_edition_subdirs[i], NULL);
+    for (i=0; i<arrlen(collectors_edition_subdirs); ++i)
+    {
+        subpath = M_StringJoin(install_path, DIR_SEPARATOR_S,
+                               collectors_edition_subdirs[i], NULL);
 
-		AddIWADDir(subpath);
-	}
+        AddIWADDir(subpath);
+    }
 
-	kfree(install_path);
+    kfree(install_path);
 }
 
 
@@ -296,26 +296,26 @@ static void CheckCollectorsEdition(void)
 
 static void CheckSteamEdition(void)
 {
-	char *install_path;
-	char *subpath;
-	size_t i;
+    char *install_path;
+    char *subpath;
+    size_t i;
 
-	install_path = GetRegistryString(&steam_install_location);
+    install_path = GetRegistryString(&steam_install_location);
 
-	if (install_path == NULL)
-	{
-		return;
-	}
+    if (install_path == NULL)
+    {
+        return;
+    }
 
-	for (i=0; i<arrlen(steam_install_subdirs); ++i)
-	{
-		subpath = M_StringJoin(install_path, DIR_SEPARATOR_S,
-							   steam_install_subdirs[i], NULL);
+    for (i=0; i<arrlen(steam_install_subdirs); ++i)
+    {
+        subpath = M_StringJoin(install_path, DIR_SEPARATOR_S,
+                               steam_install_subdirs[i], NULL);
 
-		AddIWADDir(subpath);
-	}
+        AddIWADDir(subpath);
+    }
 
-	kfree(install_path);
+    kfree(install_path);
 }
 
 // The BFG edition ships with a full set of GUS patches. If we find them,
@@ -323,54 +323,54 @@ static void CheckSteamEdition(void)
 
 static void CheckSteamGUSPatches(void)
 {
-	const char *current_path;
-	char *install_path;
-	char *patch_path;
-	int len;
+    const char *current_path;
+    char *install_path;
+    char *patch_path;
+    int len;
 
-	// Already configured? Don't stomp on the user's choices.
-	current_path = M_GetStrVariable("gus_patch_path");
-	if (current_path != NULL && mystrlen(current_path) > 0)
-	{
-		return;
-	}
+    // Already configured? Don't stomp on the user's choices.
+    current_path = M_GetStrVariable("gus_patch_path");
+    if (current_path != NULL && mystrlen(current_path) > 0)
+    {
+        return;
+    }
 
-	install_path = GetRegistryString(&steam_install_location);
+    install_path = GetRegistryString(&steam_install_location);
 
-	if (install_path == NULL)
-	{
-		return;
-	}
+    if (install_path == NULL)
+    {
+        return;
+    }
 
-	len = mystrlen(install_path) + mystrlen(STEAM_BFG_GUS_PATCHES) + 20;
-	patch_path = kmalloc(len);
+    len = mystrlen(install_path) + mystrlen(STEAM_BFG_GUS_PATCHES) + 20;
+    patch_path = kmalloc(len);
 
-	kfree(patch_path);
-	kfree(install_path);
+    kfree(patch_path);
+    kfree(install_path);
 }
 
 // Default install directories for DOS Doom
 
 static void CheckDOSDefaults(void)
 {
-	// These are the default install directories used by the deice
-	// installer program:
+    // These are the default install directories used by the deice
+    // installer program:
 
-	AddIWADDir("\\doom2");              // Doom II
-	AddIWADDir("\\plutonia");           // Final Doom
-	AddIWADDir("\\tnt");
-	AddIWADDir("\\doom_se");            // Ultimate Doom
-	AddIWADDir("\\doom");               // Shareware / Registered Doom
-	AddIWADDir("\\dooms");              // Shareware versions
-	AddIWADDir("\\doomsw");
+    AddIWADDir("\\doom2");              // Doom II
+    AddIWADDir("\\plutonia");           // Final Doom
+    AddIWADDir("\\tnt");
+    AddIWADDir("\\doom_se");            // Ultimate Doom
+    AddIWADDir("\\doom");               // Shareware / Registered Doom
+    AddIWADDir("\\dooms");              // Shareware versions
+    AddIWADDir("\\doomsw");
 
-	AddIWADDir("\\heretic");            // Heretic
-	AddIWADDir("\\hrtic_se");           // Heretic Shareware from Quake disc
+    AddIWADDir("\\heretic");            // Heretic
+    AddIWADDir("\\hrtic_se");           // Heretic Shareware from Quake disc
 
-	AddIWADDir("\\hexen");              // Hexen
-	AddIWADDir("\\hexendk");            // Hexen Deathkings of the Dark Citadel
+    AddIWADDir("\\hexen");              // Hexen
+    AddIWADDir("\\hexendk");            // Hexen Deathkings of the Dark Citadel
 
-	AddIWADDir("\\strife");             // Strife
+    AddIWADDir("\\strife");             // Strife
 }
 
 #endif
@@ -380,15 +380,15 @@ static void CheckDOSDefaults(void)
 
 static boolean DirIsFile(char *path, char *filename)
 {
-	size_t path_len;
-	size_t filename_len;
+    size_t path_len;
+    size_t filename_len;
 
-	path_len = mystrlen(path);
-	filename_len = mystrlen(filename);
+    path_len = mystrlen(path);
+    filename_len = mystrlen(filename);
 
-	return path_len >= filename_len + 1
-		&& path[path_len - filename_len - 1] == DIR_SEPARATOR
-		&& !strcasecmp(&path[path_len - filename_len], filename);
+    return path_len >= filename_len + 1
+        && path[path_len - filename_len - 1] == DIR_SEPARATOR
+        && !strcasecmp(&path[path_len - filename_len], filename);
 }
 
 
@@ -397,38 +397,38 @@ static boolean DirIsFile(char *path, char *filename)
 
 static GameMission_t IdentifyIWADByName(char *name, int mask)
 {
-	size_t i;
-	GameMission_t mission;
-	char *p;
+    size_t i;
+    GameMission_t mission;
+    char *p;
 
-	p = mystrrchr(name, DIR_SEPARATOR);
+    p = mystrrchr(name, DIR_SEPARATOR);
 
-	if (p != NULL)
-	{
-		name = p + 1;
-	}
+    if (p != NULL)
+    {
+        name = p + 1;
+    }
 
-	mission = none;
+    mission = none;
 
-	for (i=0; i<arrlen(iwads); ++i)
-	{
-		// Check if the filename is this IWAD name.
+    for (i=0; i<arrlen(iwads); ++i)
+    {
+        // Check if the filename is this IWAD name.
 
-		// Only use supported missions:
+        // Only use supported missions:
 
-		if (((1 << iwads[i].mission) & mask) == 0)
-			continue;
+        if (((1 << iwads[i].mission) & mask) == 0)
+            continue;
 
-		// Check if it ends in this IWAD name.
+        // Check if it ends in this IWAD name.
 
-		if (!strcasecmp(name, iwads[i].name))
-		{
-			mission = iwads[i].mission;
-			break;
-		}
-	}
+        if (!strcasecmp(name, iwads[i].name))
+        {
+            mission = iwads[i].mission;
+            break;
+        }
+    }
 
-	return mission;
+    return mission;
 }
 
 #if ORIGCODE
@@ -438,47 +438,47 @@ static GameMission_t IdentifyIWADByName(char *name, int mask)
 
 static void AddDoomWadPath(void)
 {
-	char *doomwadpath;
-	char *p;
+    char *doomwadpath;
+    char *p;
 
-	// Check the DOOMWADPATH environment variable.
+    // Check the DOOMWADPATH environment variable.
 
-	doomwadpath = getenv("DOOMWADPATH");
+    doomwadpath = getenv("DOOMWADPATH");
 
-	if (doomwadpath == NULL)
-	{
-		return;
-	}
+    if (doomwadpath == NULL)
+    {
+        return;
+    }
 
-	doomwadpath = mystrdup(doomwadpath);
+    doomwadpath = mystrdup(doomwadpath);
 
-	// Add the initial directory
+    // Add the initial directory
 
-	AddIWADDir(doomwadpath);
+    AddIWADDir(doomwadpath);
 
-	// Split into individual dirs within the list.
+    // Split into individual dirs within the list.
 
-	p = doomwadpath;
+    p = doomwadpath;
 
-	for (;;)
-	{
-		p = strchr(p, PATH_SEPARATOR);
+    for (;;)
+    {
+        p = strchr(p, PATH_SEPARATOR);
 
-		if (p != NULL)
-		{
-			// Break at the separator and store the right hand side
-			// as another iwad dir
+        if (p != NULL)
+        {
+            // Break at the separator and store the right hand side
+            // as another iwad dir
   
-			*p = '\0';
-			p += 1;
+            *p = '\0';
+            p += 1;
 
-			AddIWADDir(p);
-		}
-		else
-		{
-			break;
-		}
-	}
+            AddIWADDir(p);
+        }
+        else
+        {
+            break;
+        }
+    }
 }
 
 #endif
@@ -490,57 +490,57 @@ static void AddDoomWadPath(void)
 static void BuildIWADDirList(void)
 {
 #if ORIGCODE
-	char *doomwaddir;
+    char *doomwaddir;
 
-	if (iwad_dirs_built)
-	{
-		return;
-	}
+    if (iwad_dirs_built)
+    {
+        return;
+    }
 
-	// Look in the current directory.  Doom always does this.
+    // Look in the current directory.  Doom always does this.
 
-	AddIWADDir(".");
+    AddIWADDir(".");
 
-	// Add DOOMWADDIR if it is in the environment
+    // Add DOOMWADDIR if it is in the environment
 
-	doomwaddir = getenv("DOOMWADDIR");
+    doomwaddir = getenv("DOOMWADDIR");
 
-	if (doomwaddir != NULL)
-	{
-		AddIWADDir(doomwaddir);
-	}        
+    if (doomwaddir != NULL)
+    {
+        AddIWADDir(doomwaddir);
+    }        
 
-	// Add dirs from DOOMWADPATH
+    // Add dirs from DOOMWADPATH
 
-	AddDoomWadPath();
+    AddDoomWadPath();
 
 #ifdef _WIN32
 
-	// Search the registry and find where IWADs have been installed.
+    // Search the registry and find where IWADs have been installed.
 
-	CheckUninstallStrings();
-	CheckCollectorsEdition();
-	CheckSteamEdition();
-	CheckDOSDefaults();
+    CheckUninstallStrings();
+    CheckCollectorsEdition();
+    CheckSteamEdition();
+    CheckDOSDefaults();
 
-	// Check for GUS patches installed with the BFG edition!
+    // Check for GUS patches installed with the BFG edition!
 
-	CheckSteamGUSPatches();
+    CheckSteamGUSPatches();
 
 #else
 
-	// Standard places where IWAD files are installed under Unix.
+    // Standard places where IWAD files are installed under Unix.
 
-	AddIWADDir("/usr/share/games/doom");
-	AddIWADDir("/usr/local/share/games/doom");
+    AddIWADDir("/usr/share/games/doom");
+    AddIWADDir("/usr/local/share/games/doom");
 
 #endif
 #else
-	AddIWADDir (FILES_DIR);
+    AddIWADDir (FILES_DIR);
 
-	// Don't run this function again.
+    // Don't run this function again.
 
-	iwad_dirs_built = true;
+    iwad_dirs_built = true;
 #endif
 }
 
@@ -551,56 +551,56 @@ static void BuildIWADDirList(void)
 
 char *D_SaveGameIWADName(GameMission_t gamemission)
 {
-	size_t i;
+    size_t i;
 
-	// Determine the IWAD name to use for savegames.
-	// This determines the directory the savegame files get put into.
-	//
-	// Note that we match on gamemission rather than on IWAD name.
-	// This ensures that doom1.wad and doom.wad saves are stored
-	// in the same place.
+    // Determine the IWAD name to use for savegames.
+    // This determines the directory the savegame files get put into.
+    //
+    // Note that we match on gamemission rather than on IWAD name.
+    // This ensures that doom1.wad and doom.wad saves are stored
+    // in the same place.
 
-	for (i=0; i<arrlen(iwads); ++i)
-	{
-		if (gamemission == iwads[i].mission)
-		{
-			return iwads[i].name;
-		}
-	}
+    for (i=0; i<arrlen(iwads); ++i)
+    {
+        if (gamemission == iwads[i].mission)
+        {
+            return iwads[i].name;
+        }
+    }
 
-	// Default fallback:
+    // Default fallback:
 
-	return "unknown.wad";
+    return "unknown.wad";
 }
 
 char *D_SuggestIWADName(GameMission_t mission, GameMode_t mode)
 {
-	int i;
+    int i;
 
-	for (i = 0; i < arrlen(iwads); ++i)
-	{
-		if (iwads[i].mission == mission && iwads[i].mode == mode)
-		{
-			return iwads[i].name;
-		}
-	}
+    for (i = 0; i < arrlen(iwads); ++i)
+    {
+        if (iwads[i].mission == mission && iwads[i].mode == mode)
+        {
+            return iwads[i].name;
+        }
+    }
 
-	return "unknown.wad";
+    return "unknown.wad";
 }
 
 char *D_SuggestGameName(GameMission_t mission, GameMode_t mode)
 {
-	int i;
+    int i;
 
-	for (i = 0; i < arrlen(iwads); ++i)
-	{
-		if (iwads[i].mission == mission
-		 && (mode == indetermined || iwads[i].mode == mode))
-		{
-			return iwads[i].description;
-		}
-	}
+    for (i = 0; i < arrlen(iwads); ++i)
+    {
+        if (iwads[i].mission == mission
+         && (mode == indetermined || iwads[i].mode == mode))
+        {
+            return iwads[i].description;
+        }
+    }
 
-	return "Unknown game?";
+    return "Unknown game?";
 }
 

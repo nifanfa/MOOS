@@ -44,11 +44,11 @@ plat_t*		activeplats[MAXPLATS];
 //
 void T_PlatRaise(plat_t* plat)
 {
-	result_e	res;
+    result_e	res;
 	
-	switch(plat->status)
-	{
-	  case up:
+    switch(plat->status)
+    {
+      case up:
 	res = T_MovePlane(plat->sector,
 			  plat->speed,
 			  plat->high,
@@ -95,7 +95,7 @@ void T_PlatRaise(plat_t* plat)
 	}
 	break;
 	
-	  case	down:
+      case	down:
 	res = T_MovePlane(plat->sector,plat->speed,plat->low,false,0,-1);
 
 	if (res == pastdest)
@@ -106,7 +106,7 @@ void T_PlatRaise(plat_t* plat)
 	}
 	break;
 	
-	  case	waiting:
+      case	waiting:
 	if (!--plat->count)
 	{
 	    if (plat->sector->floorheight == plat->low)
@@ -115,9 +115,9 @@ void T_PlatRaise(plat_t* plat)
 		plat->status = down;
 	    S_StartSound(&plat->sector->soundorg,sfx_pstart);
 	}
-	  case	in_stasis:
+      case	in_stasis:
 	break;
-	}
+    }
 }
 
 
@@ -131,28 +131,28 @@ EV_DoPlat
   plattype_e	type,
   int		amount )
 {
-	plat_t*	plat;
-	int		secnum;
-	int		rtn;
-	sector_t*	sec;
+    plat_t*	plat;
+    int		secnum;
+    int		rtn;
+    sector_t*	sec;
 	
-	secnum = -1;
-	rtn = 0;
+    secnum = -1;
+    rtn = 0;
 
-	
-	//	Activate all <type> plats that are in_stasis
-	switch(type)
-	{
-	  case perpetualRaise:
+    
+    //	Activate all <type> plats that are in_stasis
+    switch(type)
+    {
+      case perpetualRaise:
 	P_ActivateInStasis(line->tag);
 	break;
 	
-	  default:
+      default:
 	break;
-	}
+    }
 	
-	while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
-	{
+    while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+    {
 	sec = &sectors[secnum];
 
 	if (sec->specialdata)
@@ -239,17 +239,17 @@ EV_DoPlat
 	    break;
 	}
 	P_AddActivePlat(plat);
-	}
-	return rtn;
+    }
+    return rtn;
 }
 
 
 
 void P_ActivateInStasis(int tag)
 {
-	int		i;
+    int		i;
 	
-	for (i = 0;i < MAXPLATS;i++)
+    for (i = 0;i < MAXPLATS;i++)
 	if (activeplats[i]
 	    && (activeplats[i])->tag == tag
 	    && (activeplats[i])->status == in_stasis)
@@ -262,9 +262,9 @@ void P_ActivateInStasis(int tag)
 
 void EV_StopPlat(line_t* line)
 {
-	int		j;
+    int		j;
 	
-	for (j = 0;j < MAXPLATS;j++)
+    for (j = 0;j < MAXPLATS;j++)
 	if (activeplats[j]
 	    && ((activeplats[j])->status != in_stasis)
 	    && ((activeplats[j])->tag == line->tag))
@@ -277,21 +277,21 @@ void EV_StopPlat(line_t* line)
 
 void P_AddActivePlat(plat_t* plat)
 {
-	int		i;
-	
-	for (i = 0;i < MAXPLATS;i++)
+    int		i;
+    
+    for (i = 0;i < MAXPLATS;i++)
 	if (activeplats[i] == NULL)
 	{
 	    activeplats[i] = plat;
 	    return;
 	}
-	I_Error ("P_AddActivePlat: no more plats!");
+    I_Error ("P_AddActivePlat: no more plats!");
 }
 
 void P_RemoveActivePlat(plat_t* plat)
 {
-	int		i;
-	for (i = 0;i < MAXPLATS;i++)
+    int		i;
+    for (i = 0;i < MAXPLATS;i++)
 	if (plat == activeplats[i])
 	{
 	    (activeplats[i])->sector->specialdata = NULL;
@@ -300,5 +300,5 @@ void P_RemoveActivePlat(plat_t* plat)
 	    
 	    return;
 	}
-	I_Error ("P_RemoveActivePlat: can't find plat!");
+    I_Error ("P_RemoveActivePlat: can't find plat!");
 }

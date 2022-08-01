@@ -3,10 +3,10 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>5a234b92-758c-4392-9f43-ae361e3158eb</SharedGUID>
+    <SharedGUID>066034bc-37fe-4605-8bdb-c525ec29dbe4</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Framework</Import_RootNamespace>
+    <Import_RootNamespace>MOOS</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Animation.cs" />
@@ -53,7 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Desktop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Doom.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\FConsole.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GUI\FileViewer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\ImageViewer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Lockscreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\MessageBox.cs" />
@@ -89,6 +88,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PageTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
+    <Compile Include="..\Kernel\Misc\SectionHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\USB.cs" />

@@ -1,11 +1,11 @@
-﻿using System.Drawing;
-using nifanfa.CosmosDrawString;
+﻿using nifanfa.CosmosDrawString;
+using System.Drawing;
 
 namespace CosmosKernel1
 {
-    internal class LogView : App
+    class LogView : App
     {
-        private int textEachLine;
+        int textEachLine;
         public string text = string.Empty;
 
         public LogView(uint width, uint height, uint x = 0, uint y = 0) : base(width, height, x, y)
@@ -17,7 +17,7 @@ namespace CosmosKernel1
 
         public override void _Update()
         {
-            Kernel.vMWareSVGAII.FillRectangle(Color.Black, (int)x, (int)y, (int)width, (int)height);
+            Kernel.vMWareSVGAII.DrawFillRectangle(x, y, width, height, (uint)Color.Black.ToArgb());
 
             string s = string.Empty;
             int i = 0;
@@ -38,7 +38,7 @@ namespace CosmosKernel1
                 }
             }
 
-            Kernel.vMWareSVGAII._DrawACSIIString(s, Color.White.ToArgb(), x, y);
+            Kernel.vMWareSVGAII._DrawACSIIString(s, (uint)Color.White.ToArgb(), x, y);
         }
     }
 }

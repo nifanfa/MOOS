@@ -2,11 +2,11 @@
 
 namespace System.Reflection.PortableExecutable
 {
-	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct NtHeaders64
-	{
-		public uint Signature;
-		public FileHeader FileHeader;
-		public OptionalHeaders64 OptionalHeader;
-	}
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    struct NtHeaders64
+    {
+        public uint Signature;
+        public FileHeader FileHeader;
+        public OptionalHeaders64 OptionalHeader;
+    }
 }
