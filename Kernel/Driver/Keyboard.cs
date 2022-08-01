@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MOOS
 {
@@ -8,16 +9,33 @@ namespace MOOS
     {
         public static ConsoleKeyInfo KeyInfo;
 
-        public static event OnKeyHandler OnKeyChanged;
+        public static event OnKeyHandler OnKeyChanged
+        {
+            add
+            {
+                _KeyKeyChangeds.Add(value);
+            }
+
+            remove
+            {
+                _KeyKeyChangeds.Remove(value);
+            }
+        }
+
+        static List<OnKeyHandler> _KeyKeyChangeds;
+        static List<OnKeyHandler> KeyKeyChangeds { get { return _KeyKeyChangeds; } }
 
         public static void Initialize() 
         {
-            OnKeyChanged = null;
+            _KeyKeyChangeds = new List<OnKeyHandler>();
         }
 
         internal static void InvokeOnKeyChanged(ConsoleKeyInfo info) 
         {
-            OnKeyChanged?.Invoke(info);
+            for (int i = 0; i < KeyKeyChangeds.Count; i++)
+            {
+                KeyKeyChangeds[i]?.Invoke(info);
+            }
         }
 
         public static void CleanKeyInfo(bool NoModifiers = false)
