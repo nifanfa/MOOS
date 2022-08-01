@@ -407,12 +407,14 @@ namespace MOOS.Graph
 			//Y.Dispose();
 		}
 
-		public void DrawRectangle(Color color, int X, int Y, int Width, int Height)
+		public virtual void DrawRectangle(Color Color,int X, int Y, int Width, int Height, int Weight = 1)
 		{
-			DrawLine(color, X, Y, X + Width, Y);
-			DrawLine(color, X, Y + Height, X + Width, Y + Height);
-			DrawLine(color, X, Y, X, Y + Height);
-			DrawLine(color, X + Width, Y, X + Width, Y + Height);
+			FillRectangle(Color,X, Y, Width, Weight);
+
+			FillRectangle(Color,X, Y, Weight, Height);
+			FillRectangle(Color,X + (Width - Weight), Y, Weight, Height);
+
+			FillRectangle(Color,X, Y + (Height - Weight), Width, Weight);
 		}
 
 		public Image Save()
