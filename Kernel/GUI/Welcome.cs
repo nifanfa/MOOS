@@ -16,7 +16,7 @@ namespace MOOS.GUI
 #else
 			Title = "Welcome";
 #endif
-			img = new PNG(File.Instance.ReadAllBytes("Images/Banner.png"));
+			img = new PNG(File.ReadAllBytes("Images/Banner.png"));
 		}
 
 		public override void OnDraw()

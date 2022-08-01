@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Kernel.FS
 {
-	public unsafe class FAT32 : File
+	public unsafe class FAT32 : FileSystem
 	{
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
 		struct FAT32_DBR

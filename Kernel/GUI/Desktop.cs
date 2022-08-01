@@ -30,14 +30,14 @@ namespace MOOS.GUI
 		public static void Initialize()
 		{
 			IndexClicked = -1;
-			FileIcon = new PNG(File.Instance.ReadAllBytes("Images/file.png"));
-			ImageIcon = new PNG(File.Instance.ReadAllBytes("Images/Image.png"));
-			GameIcon = new PNG(File.Instance.ReadAllBytes("Images/Game.png"));
-			AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
-			AudioIcon = new PNG(File.Instance.ReadAllBytes("Images/Audio.png"));
-			BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
-			FolderIcon = new PNG(File.Instance.ReadAllBytes("Images/folder.png"));
-			DoomIcon = new PNG(File.Instance.ReadAllBytes("Images/Doom1.png"));
+			FileIcon = new PNG(File.ReadAllBytes("Images/file.png"));
+			ImageIcon = new PNG(File.ReadAllBytes("Images/Image.png"));
+			GameIcon = new PNG(File.ReadAllBytes("Images/Game.png"));
+			AppIcon = new PNG(File.ReadAllBytes("Images/App.png"));
+			AudioIcon = new PNG(File.ReadAllBytes("Images/Audio.png"));
+			BuiltInAppIcon = new PNG(File.ReadAllBytes("Images/BApp.png"));
+			FolderIcon = new PNG(File.ReadAllBytes("Images/folder.png"));
+			DoomIcon = new PNG(File.ReadAllBytes("Images/Doom1.png"));
 #if Chinese
 			Prefix = " 管理员@Moos: ";
 #else
@@ -83,7 +83,7 @@ namespace MOOS.GUI
 		{
 			const int BarHeight = 35;
 
-			List<FileInfo> names = File.Instance.GetFiles(Dir);
+			List<FileInfo> names = File.GetFiles(Dir);
 			int Devide = 60;
 			int X = Devide;
 			int Y = Devide + BarHeight;
@@ -265,7 +265,7 @@ namespace MOOS.GUI
 			string path = Dir + devider + name;
 			if (name.ToLower().EndsWith(".png"))
 			{
-				byte[] buffer = File.Instance.ReadAllBytes(path);
+				byte[] buffer = File.ReadAllBytes(path);
 				PNG png = new(buffer);
 				buffer.Dispose();
 				imageViewer.SetImage(png);
@@ -278,13 +278,13 @@ namespace MOOS.GUI
 			} else if (name.ToLower().EndsWith(".exe"))
 			{
 				//TO-DO disposing
-				byte[] buffer = File.Instance.ReadAllBytes(path);
+				byte[] buffer = File.ReadAllBytes(path);
 				Process.Start(buffer);
 			} else if (name.ToLower().EndsWith(".wav"))
 			{
 				if (Audio.HasAudioDevice)
 				{
-					byte[] buffer = File.Instance.ReadAllBytes(path);
+					byte[] buffer = File.ReadAllBytes(path);
 					WAV.Decode(buffer, out byte[] pcm);
 					Audio.Play(pcm);
 					pcm.Dispose();
@@ -303,7 +303,7 @@ namespace MOOS.GUI
 				}
 			} else if (name.ToLower().EndsWith(".nes"))
 			{
-				nesemu.OpenROM(File.Instance.ReadAllBytes(path));
+				nesemu.OpenROM(File.ReadAllBytes(path));
 				WindowManager.MoveToEnd(nesemu);
 				nesemu.Visible = true;
 			}
