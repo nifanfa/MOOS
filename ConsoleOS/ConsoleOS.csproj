@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -55,19 +55,19 @@
 
 	<Target Name="RunQemu" AfterTargets="BuildISO" Condition="$(vm) == 'qemu'">
 		<Error Text="Please install QEMU in order to debug MOOS! https://www.qemu.org/download/#windows" Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')"></Error>
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel whpx -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime"></Exec>
 	</Target>
 
 	<Target Name="RunQemuUSB" AfterTargets="BuildISO" Condition="$(vm) == 'qemuusb'">
 		<Error Text="Please install QEMU in order to debug MOOS! https://www.qemu.org/download/#windows" Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')"></Error>
 
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel whpx -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime -device usb-ehci,id=ehci -device usb-kbd,bus=ehci.0 -device usb-mouse,bus=ehci.0"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime -device usb-ehci,id=ehci -device usb-kbd,bus=ehci.0 -device usb-mouse,bus=ehci.0"></Exec>
 	</Target>
 
 	<Target Name="RunQemuNET" AfterTargets="BuildISO" Condition="$(vm) == 'qemutap'">
 		<Error Text="Please install QEMU in order to debug MOOS! https://www.qemu.org/download/#windows" Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')"></Error>
 
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel whpx -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime -net nic,model=e1000 -net tap,ifname=tap"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive format=raw,id=disk,file=$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime -net nic,model=e1000 -net tap,ifname=tap"></Exec>
 	</Target>
 
 	<Target Name="RunVMware" AfterTargets="BuildISO" Condition="$(vm) == 'vmware'">
