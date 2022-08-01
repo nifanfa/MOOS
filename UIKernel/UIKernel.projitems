@@ -16,7 +16,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DesktopControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DesktopDocker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\DockerItem.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\DesktopExtentions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\Controls\IconFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\DesktopIcons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Desktops\DesktopManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Diagnostics\Debug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Globalization\CultureInfo.cs" />

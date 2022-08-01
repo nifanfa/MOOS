@@ -160,6 +160,47 @@ namespace System
             return true;
         }
 
+        public bool EndsWith(char value)
+        {
+            int thisLen = Length;
+            if (thisLen != 0)
+            {
+                if (this[thisLen - 1] == value)
+                {
+                    thisLen.Dispose();
+                    return true;
+                }
+            }
+            thisLen.Dispose();
+            return false;
+        }
+
+        public bool EndsWith(string value)
+        {
+            if (value.Length > Length)
+            {
+                value.Dispose();
+                return false;
+            }
+
+            if (value == this)
+            {
+                value.Dispose();
+                return true;
+            }
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (value[i] != this[Length - value.Length + i])
+                {
+                    value.Dispose();
+                    return false;
+                }
+            }
+            value.Dispose();
+            return true;
+        }
+
         /* ==================================== AvalonTM  ========================================= */
         public string Remove(int index)
         {

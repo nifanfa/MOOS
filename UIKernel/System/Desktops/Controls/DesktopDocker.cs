@@ -33,18 +33,18 @@ namespace System.Desktops.Controls
             RDocker = new PNG(File.Instance.ReadAllBytes("Images/R_docker.png"));
 
             DockerItem item = new DockerItem();
-            item.Icon = DesktopExtentions.AppIcon;
+            item.Icon = DesktopIcons.AppIcon;
             item.Name = "Moos";
             items.Add(item);
 
             item = new DockerItem();
-            item.Icon = DesktopExtentions.AppTerminal;
+            item.Icon = DesktopIcons.AppTerminal;
             item.Name = "Terminal";
             item.Command = new ICommand(onTermina);
             items.Add(item);
 
             item = new DockerItem();
-            item.Icon = DesktopExtentions.BuiltInAppIcon;
+            item.Icon = DesktopIcons.BuiltInAppIcon;
             item.Name = "NativeApp";
             items.Add(item);
           
