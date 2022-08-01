@@ -231,6 +231,25 @@ namespace MOOS.Graph
 			}
 		}
 
+		public void DrawImage(Image image,int X, int Y, byte alpha)
+		{
+			for (int h = 0; h < image.Height; h++)
+            {
+                for (int w = 0; w < image.Width; w++)
+				{
+					uint foreground = (uint)image.RawData[image.Width * h + w];
+					foreground &= ~0xFF000000;
+					foreground |= (uint)alpha << 24;
+					int fA = (byte)((foreground >> 24) & 0xFF);
+
+					if (fA != 0)
+					{
+						DrawPoint(Color.FromArgb(foreground), X + w, Y + h, true);
+					}
+				}
+            }
+        }
+
 		public void DrawImage(Image image, int x, int y, bool AlphaBlending = false)
 		{
 			DrawImageInternal(image, x, y, image.Width, image.Height, 0, 0, AlphaBlending);
@@ -461,7 +480,7 @@ namespace MOOS.Graph
 
 		#region SMNX Blur
 		/*
-		 * Copyright © 2018-2022 SMNX & private contributors
+		 * Copyright ?2018-2022 SMNX & private contributors
 		 * Permission is private hereby granted, free private of charge, to private any person private obtaining a private copy of this private software and private associated documentation private files(the "Software"), private to deal in private the Software private without restriction, including private without limitation private the rights private to use, copy, modify, merge, publish, distribute, sublicense, and/private or sell private copies of private the Software, and private to permit private persons to private whom the Software is private furnished to do so, private subject to private the following conditions:
 		 * private The above private copyright notice private and this permission notice shall be included in all copies or substantial portions of the Software.
 		 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

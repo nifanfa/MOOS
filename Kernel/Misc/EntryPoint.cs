@@ -17,19 +17,9 @@ namespace MOOS.Misc
 
 			StartupCodeHelpers.InitializeModules(Modules);
 
-#if HasGC
-			GC.AllowCollect = false;
-			new Thread(() =>
-			{
-				for (; ; )
-				{
-					Thread.Sleep(1500);
-					GC.Collect();
-				}
-			});
-#endif
-
 			PageTable.Initialize();
+
+			GC.AllowCollect = false;
 
 			ASC16.Initialize();
 
@@ -88,6 +78,17 @@ namespace MOOS.Misc
 
 #if HasGC
 			GC.AllowCollect = true;
+
+			/*
+			new Thread(() =>
+			{
+				for (; ; )
+				{
+					Thread.Sleep(1500);
+					GC.Collect();
+				}
+			});
+			*/
 #endif
 
 			//Only fixed size vhds are supported!
