@@ -240,7 +240,7 @@ namespace MOOS
             {
                 int X = (Framebuffer.Graphics.Width / 2) - ((Width * 8) / 2) + (CursorX * 8);
                 int Y = (Framebuffer.Graphics.Height / 2) - ((Height * 16) / 2) + (CursorY * 16);
-                Framebuffer.Graphics.FillRectangle(Color.Black,X, Y, 8, 16);
+                Framebuffer.Graphics.FillRectangle(ColorsFramebuffer[(int)BackgroundColor], X, Y, 8, 16);
                 ASC16.DrawChar(ColorsFramebuffer[(int)ForegroundColor],chr, X, Y);
             }
         }
