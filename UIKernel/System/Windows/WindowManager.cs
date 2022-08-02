@@ -26,7 +26,7 @@ namespace System.Windows
             MouseHandled = false;
         }
 
-        public static void MoveToEnd(Window window)
+        public static void MovetoTop(Window window)
         {
             Childrens.Insert(0, window, true);
             FocusWindow = window;
@@ -34,7 +34,7 @@ namespace System.Windows
 
         public static void DrawAll()
         {
-            for (int i = Childrens.Count - 1; i >= 0; i--)
+            for (int i = 0;  i < Childrens.Count; i++)
             {
                 if (Childrens[i].Visible)
                     Childrens[i].OnDraw();
@@ -43,7 +43,7 @@ namespace System.Windows
 
         public static void UpdateAll()
         {
-            for (int i = Childrens.Count - 1; i >= 0; i--)
+            for (int i = 0 ; i < Childrens.Count; i++)
             {
                 if (Childrens[i].Visible)
                     Childrens[i].OnUpdate();

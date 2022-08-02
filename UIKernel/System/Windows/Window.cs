@@ -80,21 +80,14 @@ namespace System.Windows
         public void ShowDialog()
         {
             onWindowStartupLocation();
-            WindowManager.MoveToEnd(this);
+            WindowManager.MovetoTop(this);
+            OnLoaded();
             this.Visible = true;
         }
 
-        public void Close()
-        {
-            this.Visible = false;
-
-            this.OnClose();
-            if (Content != null)
-            {
-                Content.Dispose();
-            }
-            WindowManager.Childrens.Remove(this);
-            this.Dispose();
+        public virtual void OnLoaded()
+        { 
+        
         }
 
         void onWindowStartupLocation()
@@ -133,6 +126,7 @@ namespace System.Windows
 
         public virtual void OnInput()
         {
+
             if (Control.MouseButtons == MouseButtons.Left)
             {
                 if (
@@ -141,16 +135,20 @@ namespace System.Windows
                     Control.MousePosition.Y > CloseButtonY && Control.MousePosition.Y < CloseButtonY + WindowManager.CloseButton.Height
                 )
                 {
-                    this.Visible = false;
+                    this.OnClose();
                     return;
                 }
                 if (!WindowManager.HasWindowMoving && !Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
                 {
-                    WindowManager.MoveToEnd(this);
-                    Move = true;
-                    WindowManager.HasWindowMoving = true;
-                    OffsetX = Control.MousePosition.X - X;
-                    OffsetY = Control.MousePosition.Y - Y;
+                    WindowManager.MovetoTop(this);
+
+                    if (WindowManager.FocusWindow == this)
+                    {
+                        Move = true;
+                        WindowManager.HasWindowMoving = true;
+                        OffsetX = Control.MousePosition.X - X;
+                        OffsetY = Control.MousePosition.Y - Y;
+                    }
                 }
             }
             else
@@ -204,7 +202,14 @@ namespace System.Windows
 
         public virtual void OnClose()
         {
-            this.Dispose();
+            this.Visible = false;
+
+            if (Content != null)
+            {
+                Content.Dispose();
+            }
+            WindowManager.Childrens.Remove(this);
         }
+
     }
 }

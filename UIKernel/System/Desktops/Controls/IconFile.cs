@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Explorers;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -21,6 +22,7 @@ namespace System.Desktops.Controls
         public string FilePath { set; get; }
         public Brush FocusBackground { set; get; }
         public FileInfo FileInfo { get; set; }
+        public ExplorerManager OwnerWindow { get;  set; }
 
         bool _isFocus;
         int offsetX, offsetY;
@@ -58,6 +60,10 @@ namespace System.Desktops.Controls
             {
                 icon = DesktopIcons.AudioIcon;
             }
+            else if (ext.EndsWith(".nes"))
+            {
+                icon = DesktopIcons.GameIcon;
+            }
             else if (isDirectory)
             {
                 icon = DesktopIcons.FolderIcon;
@@ -72,8 +78,16 @@ namespace System.Desktops.Controls
         public override void Update()
         {
             base.Update();
+            int _x = X;
+            int _y = Y;
 
-            if (Control.MousePosition.X > (X - offsetX) && Control.MousePosition.X < ((X- offsetX) + Width) && Control.MousePosition.Y > Y && Control.MousePosition.Y < (Y + Height))
+            if (OwnerWindow != null)
+            {
+                _x = OwnerWindow.X + X;
+                _y = OwnerWindow.Y + Y;
+            }
+
+            if (!WindowManager.HasWindowMoving && Control.MousePosition.X > (_x - offsetX) && Control.MousePosition.X < ((_x - offsetX) + Width) && Control.MousePosition.Y > _y && Control.MousePosition.Y < (_y + Height))
             {
                 _isFocus = true;
 
@@ -127,13 +141,22 @@ namespace System.Desktops.Controls
         {
             base.Draw();
 
-            if (_isFocus)
+            int _x = X;
+            int _y = Y;
+
+            if (OwnerWindow != null)
             {
-                Framebuffer.Graphics.FillRectangle(Color.FromArgb(FocusBackground.Value), (X - offsetX), (Y - offsetY), (Width + (offsetX*2)), (Height + ((WindowManager.font.FontSize * 3) + offsetX)));
+                _x = OwnerWindow.X + X;
+                _y = OwnerWindow.Y + Y;
             }
 
-            Framebuffer.Graphics.DrawImage(icon, X, Y, true);
-            WindowManager.font.DrawString(X, (Y + icon.Height), Content, Foreground.Value, (icon.Width + 8), (WindowManager.font.FontSize * 3));
+            if (_isFocus)
+            {
+                Framebuffer.Graphics.FillRectangle(Color.FromArgb(FocusBackground.Value), (_x- offsetX), (_y - offsetY), (Width + (offsetX*2)), (Height + ((WindowManager.font.FontSize * 3) + offsetX)));
+            }
+
+            Framebuffer.Graphics.DrawImage(icon, _x, _y, true);
+            WindowManager.font.DrawString(_x, (_y + icon.Height), Content, Foreground.Value, (icon.Width + 8), (WindowManager.font.FontSize * 3));
         }
     }
 }

@@ -161,7 +161,7 @@ namespace MOOS.GUI
 
 		private void Console_OnWrite(char chr)
 		{
-			WindowManager.MoveToEnd(Program.FConsole);
+			WindowManager.MovetoTop(Program.FConsole);
 			if (Program.FConsole.Visible == false)
 			{
 				Program.FConsole.Visible = true;

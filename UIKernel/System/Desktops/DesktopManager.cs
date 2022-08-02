@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Desktops.Controls;
 using System.Diagnostics;
 using System.Drawing;
+using System.Explorers;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -27,10 +28,10 @@ namespace System.Desktops
         public static string Prefix;
         public static string Dir;
         public static bool IsAtRoot => Dir.Length < 1;
-        public static Dictionary<int, string> BuiltInAppNames;
-        static ICommand IconClickCommand { get; set; }
-        static ICommand IconNativeClickCommand { get; set; }
-
+        static Dictionary<int, string> BuiltInAppNames;
+        public static ICommand IconClickCommand { get; set; }
+        public static ICommand IconNativeClickCommand { get; set; }
+        public static ICommand IconDirectoryClickCommand { get; set; }
         public static void Initialize()
         {
 #if Chinese
@@ -115,6 +116,7 @@ namespace System.Desktops
 
             IconClickCommand = new ICommand(onDesktopIconClick);
             IconNativeClickCommand = new ICommand(onDesktopNativeOSClick);
+            IconDirectoryClickCommand = new ICommand(onDesktopDirectoryClick);
 
             List<FileInfo> files = File.GetFiles(Dir);
 
@@ -168,11 +170,15 @@ namespace System.Desktops
                 icon.FileInfo = files[i];
                 icon.X = X;
                 icon.Y = Y;
-                icon.Command = IconClickCommand;
 
                 if (files[i].Attribute == FileAttribute.Directory)
                 {
                     icon.isDirectory = true;
+                    icon.Command = IconDirectoryClickCommand;
+                }
+                else
+                {
+                    icon.Command = IconClickCommand;
                 }
 
                 icon.onLoadIconExtention();
@@ -183,6 +189,19 @@ namespace System.Desktops
             }
 
             files.Dispose();
+        }
+
+        static void onDesktopDirectoryClick(object obj)
+        {
+            string dir = obj as string;
+            Debug.WriteLine($"[Directory] {dir}");
+
+            ExplorerManager explorer = new ExplorerManager();
+            explorer.Title = dir;
+            explorer.Dir = dir;
+            explorer.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            explorer.ShowDialog();
+
         }
 
         static void onDesktopNativeOSClick(object obj)

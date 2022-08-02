@@ -24,7 +24,7 @@ namespace MOOS.GUI
 
 			if (image != null)
 			{
-				Framebuffer.Graphics.DrawImage(image, X + (Width / 2) - (image.Width / 2), Y + (Height / 2) - (image.Height / 2));
+				Framebuffer.Graphics.DrawImage(image, X + (Width / 2) - (image.Width / 2), Y + (Height / 2) - (image.Height / 2), true);
 			}
 		}
 
