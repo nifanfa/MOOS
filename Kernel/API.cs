@@ -1,7 +1,6 @@
 using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
 using MOOS.FS;
-using MOOS.GUI;
 using MOOS.Misc;
 using System;
 using System.Diagnostics;
@@ -9,6 +8,10 @@ using System.Drawing;
 using System.Runtime;
 using static IDT;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
+
+#if HasGUI
+using MOOS.GUI;
+#endif
 
 namespace MOOS
 {
