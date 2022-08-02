@@ -23,12 +23,9 @@ namespace System.Desktops.Controls
         public FileInfo FileInfo { get; set; }
 
         bool _isFocus;
-        bool _clicked;
         int offsetX, offsetY;
-        int _clickCount = 0;
-        bool _prevClick;
-        ulong _timer = 0;
-
+        int _clickCount;
+        ulong _timer;
         public IconFile()
         {
             Foreground = Brushes.White;
@@ -79,69 +76,50 @@ namespace System.Desktops.Controls
             if (Control.MousePosition.X > (X - offsetX) && Control.MousePosition.X < ((X- offsetX) + Width) && Control.MousePosition.Y > Y && Control.MousePosition.Y < (Y + Height))
             {
                 _isFocus = true;
-                if (Control.MouseButtons.HasFlag(MouseButtons.Left) && !WindowManager.HasWindowMoving && !WindowManager.MouseHandled)
-                {
-                    _isFocus = true;
 
+                if (Control.Clicked)
+                {
                     if (Command != null)
                     {
-                        if (!_clicked && !_prevClick)
+                        if (_clickCount >= 1) //Double Click
                         {
-                            _prevClick = true;
+                            _clickCount = 0;
 
-                            if (_clickCount > 1) //Double Click
+                            if (isDirectory)
                             {
-                                _clicked = true;
-                                _clickCount = 0;
-
-                                if (isDirectory)
+                                Command.Execute.Invoke(FilePath);
+                            }
+                            else
+                            {
+                                if (Key == 0)
                                 {
                                     Command.Execute.Invoke(FilePath);
                                 }
                                 else
                                 {
-                                    if (Key == 0)
-                                    {
-                                        Command.Execute.Invoke(FilePath);
-                                    }
-                                    else
-                                    {
-                                        Command.Execute.Invoke(Key);
-                                    }
+                                    Command.Execute.Invoke(Key);
                                 }
                             }
                         }
                     }
+
+                    _clickCount++;
+                    _timer = Timer.Ticks + 500; //500ms
                 }
 
-                if (Control.MouseButtons == MouseButtons.None && _prevClick)
-                {
-                    _prevClick = false;
-                    _clicked = false;
-                    _clickCount++;
-                    _timer = (Timer.Ticks + 500); //500ms
-                }
             }
             else
             {
                 _isFocus = false;
-            }
-
-            if (Control.MouseButtons == MouseButtons.None)
-            {
-                _clicked = false;
+                _clickCount = 0;
             }
 
             if (_clickCount > 0)
             {
                 if (Timer.Ticks > _timer)
                 {
-                    _clicked = false;
-                    _prevClick = false;
                     _clickCount = 0;
-                    _timer = 0;
                 }
-
             }
         }
 
@@ -151,10 +129,10 @@ namespace System.Desktops.Controls
 
             if (_isFocus)
             {
-                Framebuffer.Graphics.AFillRectangle((X - offsetX), (Y - offsetY), (Width + (offsetX*2)), (Height + ((WindowManager.font.FontSize * 3) + offsetX)), FocusBackground.Value);
+                Framebuffer.Graphics.FillRectangle(Color.FromArgb(FocusBackground.Value), (X - offsetX), (Y - offsetY), (Width + (offsetX*2)), (Height + ((WindowManager.font.FontSize * 3) + offsetX)));
             }
 
-            Framebuffer.Graphics.DrawImage(X, Y, icon);
+            Framebuffer.Graphics.DrawImage(icon, X, Y, true);
             WindowManager.font.DrawString(X, (Y + icon.Height), Content, Foreground.Value, (icon.Width + 8), (WindowManager.font.FontSize * 3));
         }
     }

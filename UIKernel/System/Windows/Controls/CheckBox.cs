@@ -1,6 +1,7 @@
 ﻿using MOOS;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -31,9 +32,9 @@ namespace System.Windows.Controls
            
         }
 
-        public override void Update()
+        public override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
 
 
             if (IsFocus)
@@ -54,16 +55,16 @@ namespace System.Windows.Controls
             }
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
-            Framebuffer.Graphics.FillRectangle((X + (Width/2)) - (_width/2), (Y + (Height / 2)) - (_height / 2), _width, _height, Background.Value);
-            Framebuffer.Graphics.DrawRectangle((X + (Width / 2)) - (_width / 2), (Y + (Height / 2)) - (_height / 2), _width + 1, _height + 1, _border.Value);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Background.Value), (X + (Width/2)) - (_width/2), (Y + (Height / 2)) - (_height / 2), _width, _height);
+            Framebuffer.Graphics.DrawRectangle(Color.FromArgb(_border.Value),(X + (Width / 2)) - (_width / 2), (Y + (Height / 2)) - (_height / 2), _width + 1, _height + 1);
 
             if (IsChecked)
             {
-                Framebuffer.Graphics.FillRectangle(((X + (Width / 2)) - (_width / 2)) + 2, ((Y + (Height / 2)) - (_height / 2)) + 2, _width - 3, _height - 3, _checked.Value);
+                Framebuffer.Graphics.FillRectangle(Color.FromArgb(_checked.Value), ((X + (Width / 2)) - (_width / 2)) + 2, ((Y + (Height / 2)) - (_height / 2)) + 2, _width - 3, _height - 3);
             }
         }
     }

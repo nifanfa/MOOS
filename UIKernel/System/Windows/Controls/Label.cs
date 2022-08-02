@@ -24,14 +24,14 @@ namespace System.Windows.Controls
             VerticalContentAlignment = VerticalAlignment.Stretch;
         }
 
-        public override void Update()
+        public override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
             if (!string.IsNullOrEmpty(Content))
             {

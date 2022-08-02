@@ -1,35 +1,35 @@
 #if HasGUI
-using MOOS.FS;
-using MOOS.Misc;
 using System.Drawing;
 using System.Windows;
+using MOOS.FS;
+using MOOS.Misc;
 
 namespace MOOS.GUI
 {
-    internal class Welcome : Window
-    {
-        public Image img;
+	internal class Welcome : Window
+	{
+		public Image img;
 
-        public Welcome(int X, int Y) : base(X, Y, 280, 225)
-        {
+		public Welcome(int X, int Y) : base(X, Y, 280, 225)
+		{
 #if Chinese
-            this.Title = "欢迎";
+			this.Title = "欢迎";
 #else
-            this.Title = "Welcome";
+			Title = "Welcome";
 #endif
-            img = new PNG(File.ReadAllBytes("Images/Banner.png"));
-        }
+			img = new PNG(File.ReadAllBytes("Images/Banner.png"));
+		}
 
-        public override void Draw()
-        {
-            base.Draw();
-            Framebuffer.Graphics.DrawImage(X, Y, img);
+		public override void OnDraw()
+		{
+			base.OnDraw();
+			Framebuffer.Graphics.DrawImage(img, X, Y);
 #if Chinese
-            WindowManager.font.DrawString(X, Y + img.Height, "欢迎使用Moos(原Mosa)操作系统!\n这个项目的目标是实现一款麻雀虽小但五脏俱全的操作系统.\n源码: https://github.com/nifanfa/Moos!", Width);
+			WindowManager.font.DrawString(X, Y + img.Height, "欢迎使用Moos(原Mosa)操作系统!\n这个项目的目标是实现一款麻雀虽小但五脏俱全的操作系统.\n源码: https://github.com/nifanfa/Moos!", Width);
 #else
-            WindowManager.font.DrawString(X, Y + img.Height, "Welcome to Moos!\nThis project is aim to show how to make asimple but powerful operating system.\nCheck out: https://github.com/nifanfa/Moos!",0xFF000000, Width);
+			WindowManager.font.DrawString(X, Y + img.Height, "Welcome to Moos!\nThis project is aim to show how to make asimple but powerful operating system.\nCheck out: https://github.com/nifanfa/Moos!",0xFFFFFFF, Width);
 #endif
-        }
-    }
+		}
+	}
 }
 #endif

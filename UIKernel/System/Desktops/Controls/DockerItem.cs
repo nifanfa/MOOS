@@ -103,7 +103,7 @@ namespace System.Desktops.Controls
             if (Icon != null)
             {
                 //Framebuffer.Graphics.FillRectangle((X - (Width/2)), Y, Width, Height , Background.Value);
-                Framebuffer.Graphics.DrawImage((X - (Icon.Width / 3)),( (Y + (Height / 2)) - (Icon.Height/2)), Icon);
+                Framebuffer.Graphics.DrawImage(Icon, (X - (Icon.Width / 3)),( (Y + (Height / 2)) - (Icon.Height/2)), true);
             }
         }
     }

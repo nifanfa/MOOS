@@ -1,6 +1,7 @@
 ﻿using MOOS;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -78,15 +79,15 @@ namespace System.Windows.Controls
             }
         }
 
-        public override void Update()
+        public override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
         }
 
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
             int pos = 1;
             int w = 0, h = 0;
@@ -94,7 +95,7 @@ namespace System.Windows.Controls
             int fnt = 0;
             int _w = (pos * fnt);
 
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, Background.Value);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Background.Value), X, Y, Width, Height);
 
             if (!string.IsNullOrEmpty(Text))
             {
@@ -139,7 +140,8 @@ namespace System.Windows.Controls
 
                                 if (Height != -1 && h >= Height)
                                 {
-                                    Framebuffer.Graphics.Copy(X, Y, X, Y + WindowManager.font.FontSize, Width, Width - (WindowManager.font.FontSize));
+                                    Framebuffer.Graphics.CopyFromScreen(X, Y, X, Y + WindowManager.font.FontSize, new Size(Width, Height - WindowManager.font.FontSize));
+
                                     h -= WindowManager.font.FontSize;
                                 }
                             }
@@ -152,7 +154,7 @@ namespace System.Windows.Controls
             {
                 if (isShowFlicker)
                 {
-                    Framebuffer.Graphics.DrawLine((X + _w + (WindowManager.font.FontSize/2)), Y + 5, (X + _w + (WindowManager.font.FontSize)/2), (Y + Height) - 5, 0xFF000000);
+                    Framebuffer.Graphics.DrawLine(Color.FromArgb(0xFF000000), (X + _w + (WindowManager.font.FontSize/2)), Y + 5, (X + _w + (WindowManager.font.FontSize)/2), (Y + Height) - 5);
                 }
 
                 if (DateTime.Now.Ticks >= Flicker.Ticks)

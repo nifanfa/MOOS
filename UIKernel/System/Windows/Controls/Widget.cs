@@ -1,6 +1,7 @@
 
 using MOOS;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -15,7 +16,7 @@ namespace System.Windows.Controls
         public int Height { set; get; }
     }
 
-    public class Widget
+    public class Widget 
     {
         Cursor _cursor;
         Brush _background;
@@ -103,7 +104,7 @@ namespace System.Windows.Controls
             Cursor = new Cursor(CursorState.None);
         }
 
-        public virtual void Draw()
+        public virtual void OnDraw()
         {
             if (this.Parent == null)
             {
@@ -127,7 +128,7 @@ namespace System.Windows.Controls
             }
         }
 
-        public virtual void Update()
+        public virtual void OnUpdate()
         {
             if (Control.MouseButtons == MouseButtons.Left)
             {
@@ -163,7 +164,7 @@ namespace System.Windows.Controls
 
         public void DrawBorder()
         {
-            Framebuffer.Graphics.DrawRectangle(X - (int)(BorderThickness.Left - 1), Y - (int)(BorderThickness.Top - 1), Width + (int)(BorderThickness.Right), Height + (int)(BorderThickness.Bottom), BorderBrush.Value);
+            Framebuffer.Graphics.DrawRectangle(Color.FromArgb(BorderBrush.Value), X - (int)(BorderThickness.Left - 1), Y - (int)(BorderThickness.Top - 1), Width + (int)(BorderThickness.Right), Height + (int)(BorderThickness.Bottom));
         }
 
         public void onMouseFocus()

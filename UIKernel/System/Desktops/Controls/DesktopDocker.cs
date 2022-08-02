@@ -112,11 +112,11 @@ namespace System.Desktops.Controls
             int _x = (X + Framebuffer.Width) - ((Framebuffer.Width / 2) + (Width / 2));
             int _y = (Y + (Framebuffer.Height - Height) - 2);
 
-            Framebuffer.Graphics.DrawImage((_x - LDocker.Width), (_y - 1), LDocker);
-            Framebuffer.Graphics.DrawImage(((_x + Width) + (RDocker.Width/2)) - (RDocker.Width / 2), (_y - 1), RDocker);
-            Framebuffer.Graphics.AFillRectangle(_x, _y, Width, Height, Background.Value);
-            Framebuffer.Graphics.DrawLine(_x, _y, ((_x +Width) - (RDocker.Width/2)) + (RDocker.Width / 2), _y , _borderColor.Value);
-            Framebuffer.Graphics.DrawLine(_x , (_y + Height), ((_x + Width) - (RDocker.Width / 2)) + (RDocker.Width / 2), (_y + Height), _borderColor.Value);
+            Framebuffer.Graphics.DrawImage(LDocker, (_x - LDocker.Width), (_y - 1));
+            Framebuffer.Graphics.DrawImage(RDocker,((_x + Width) + (RDocker.Width/2)) - (RDocker.Width / 2), (_y - 1));
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Background.Value),_x, _y, Width, Height) ;
+            Framebuffer.Graphics.DrawLine(Color.FromArgb(_borderColor.Value), _x, _y, ((_x +Width) - (RDocker.Width/2)) + (RDocker.Width / 2), _y );
+            Framebuffer.Graphics.DrawLine(Color.FromArgb(_borderColor.Value),_x , (_y + Height), ((_x + Width) - (RDocker.Width / 2)) + (RDocker.Width / 2), (_y + Height));
 
             for (int i = 0; i < items.Count; i++)
             {

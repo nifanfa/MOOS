@@ -55,7 +55,7 @@ namespace MOOS.Misc
 
                     if (X != -1 && Y != -1)
                     {
-                        g.DrawPoint(X + w, Y + h, _color, true);
+                        g.DrawPoint(_color, new Point( X + w, Y + h), true);
                     }
 
                     if ((_color & 0xFF000000) == 0)

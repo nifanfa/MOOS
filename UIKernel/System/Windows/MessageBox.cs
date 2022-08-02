@@ -27,7 +27,7 @@ namespace System.Windows
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
             if (this._message != null)
             {
@@ -39,7 +39,7 @@ namespace System.Windows
                 this.Width = 400;
             }
 
-            base.Draw();
+            base.OnDraw();
 
             if (this._message != null)
             {

@@ -54,6 +54,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\FConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\FileViewer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\ImageViewer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GUI\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Monitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\NESEmu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\NotificationManager.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Welcome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Widgets\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Widgets\Widget.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GUI\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Allocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ASC16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Audio.cs" />

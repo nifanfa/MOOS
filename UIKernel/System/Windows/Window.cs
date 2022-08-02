@@ -3,6 +3,7 @@ using MOOS.GUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -86,6 +87,12 @@ namespace System.Windows
         public void Close()
         {
             this.Visible = false;
+
+            this.OnClose();
+            if (Content != null)
+            {
+                Content.Dispose();
+            }
             WindowManager.Childrens.Remove(this);
             this.Dispose();
         }
@@ -162,29 +169,29 @@ namespace System.Windows
         private int CloseButtonX => X + Width + 2 - (BarHeight / 2) - (WindowManager.CloseButton.Width / 2);
         private int CloseButtonY => Y - BarHeight + (BarHeight / 2) - (WindowManager.CloseButton.Height / 2);
 
-        public override void Update()
+        public override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
 
             if (Content != null)
             {
-                Content.Update();
+                Content.OnUpdate();
             }
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
             //WindowBar
-            Framebuffer.Graphics.FillRectangle(X, Y - BarHeight, Width, BarHeight, 0xFFFFFFFF);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFFFFFFFF), X, Y - BarHeight, Width, BarHeight);
             WindowManager.font.DrawString(X + (Width / 2) - ((WindowManager.font.MeasureString(Title)) / 2), Y - BarHeight + (BarHeight / 4), Title, 0xFF000000);
 
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, Background.Value);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Background.Value), X, Y, Width, Height);
 
             if (Content != null)
             {
-                Content.Draw();
+                Content.OnDraw();
             }
 
             if (BorderBrush != null)
@@ -192,7 +199,12 @@ namespace System.Windows
                 DrawBorder();
             }
 
-            Framebuffer.Graphics.DrawImage(CloseButtonX, CloseButtonY, WindowManager.CloseButton);
+            Framebuffer.Graphics.DrawImage(WindowManager.CloseButton, CloseButtonX, CloseButtonY);
+        }
+
+        public virtual void OnClose()
+        {
+            this.Dispose();
         }
     }
 }

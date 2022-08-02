@@ -1,6 +1,7 @@
 ﻿using MOOS;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Media;
 
 namespace System.Windows.Controls
@@ -71,26 +72,26 @@ namespace System.Windows.Controls
             }
         }
 
-        public override void Update()
+        public override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
             int yb = (Y + (_height + (_height / 2)));
 
-            Framebuffer.Graphics.FillRectangle(X, yb, Width, _height, Foreground.Value);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Foreground.Value), X, yb, Width, _height);
 
-            Framebuffer.Graphics.DrawRectangle(X - 1, yb - 1, Width + 1, _height+1, _border.Value);
+            Framebuffer.Graphics.DrawRectangle(Color.FromArgb(_border.Value), X - 1, yb - 1, Width + 1, _height+1);
 
             int _xs = X + ((int)Value * (int)(Width / Maximum)) - (_slideW/2);
 
-            Framebuffer.Graphics.FillRectangle(_xs, Y, _slideW, _slideH, Foreground.Value);
-            Framebuffer.Graphics.DrawRectangle(_xs - 1, Y - 1, _slideW + 1, _slideH + 1, _border.Value);
-            Framebuffer.Graphics.DrawRectangle(_xs - 2, Y - 2, _slideW + 3, _slideH + 3, _border.Value);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Foreground.Value), _xs, Y, _slideW, _slideH);
+            Framebuffer.Graphics.DrawRectangle(Color.FromArgb(_border.Value), _xs - 1, Y - 1, _slideW + 1, _slideH + 1);
+            Framebuffer.Graphics.DrawRectangle(Color.FromArgb(_border.Value), _xs - 2, Y - 2, _slideW + 3, _slideH + 3);
 
             if (BorderBrush != null)
             {

@@ -204,17 +204,16 @@ unsafe class Program
         //rightmenu = new RightMenu();
         rightClicked = false;
 
-        
-        #region Animation of entering Desktop
-        Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), DesktopManager.Wallpaper, false);
-        DesktopManager.Update();
-        DesktopManager.Draw();
-        WindowManager.DrawAll();
-        Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, DesktopManager.Cursor);
-        Image _screen = Framebuffer.Graphics.Save();
-        Framebuffer.Graphics.Clear(0x0);
 
-        var SizedScreens = new Image[60];
+        #region Animation of entering Desktop
+        Framebuffer.Graphics.DrawImage(DesktopManager.Wallpaper, (Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), false);
+        DesktopManager.Update();
+        WindowManager.DrawAll();
+        Framebuffer.Graphics.DrawImage(DesktopManager.Cursor, Control.MousePosition.X, Control.MousePosition.Y, true);
+        Image _screen = Framebuffer.Graphics.Save();
+        Framebuffer.Graphics.Clear(Color.FromArgb(0x0));
+
+        Image[] SizedScreens = new Image[60];
         int startat = 40;
         for (int i = startat; i < SizedScreens.Length; i++)
         {
@@ -224,7 +223,7 @@ unsafe class Program
                 );
         }
 
-        Animation ani = new Animation()
+        Animation ani = new()
         {
             Value = startat + 1,
             MinimumValue = startat + 1,
@@ -232,25 +231,27 @@ unsafe class Program
             ValueChangesInPeriod = 1,
             PeriodInMS = 16
         };
+
         Animator.AddAnimation(ani);
         while (ani.Value < SizedScreens.Length - 1)
         {
             int i = ani.Value;
             Image img = SizedScreens[i];
-            Framebuffer.Graphics.Clear(0x0);
-            Framebuffer.Graphics.ADrawImage(
-                (Framebuffer.Graphics.Width / 2) - (img.Width / 2),
-                (Framebuffer.Graphics.Height / 2) - (img.Height / 2),
-                img, (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
+            Framebuffer.Graphics.Clear(Color.FromArgb(0x0));
+            Framebuffer.Graphics.DrawImage(img, (Framebuffer.Graphics.Width / 2) - (img.Width / 2), (Framebuffer.Graphics.Height / 2) - (img.Height / 2), (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
             Framebuffer.Update();
         }
-        Animator.DisposeAnimation(ani);
+        ani.Dispose();
 
         _screen.Dispose();
-        for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
+        for (int i = 0; i < SizedScreens.Length; i++)
+        {
+            SizedScreens[i]?.Dispose();
+        }
+
         SizedScreens.Dispose();
         #endregion
-        
+
 
         NotificationManager.Initialize();
 
@@ -286,7 +287,10 @@ unsafe class Program
             }
             #endregion
             */
+
+            Control.OnUpdate();
             WindowManager.InputAll();
+            NotificationManager.Update();
 
             //UIKernel
             DesktopManager.Update();
@@ -295,8 +299,8 @@ unsafe class Program
             WindowManager.DrawAll();
             CursorManager.Update();
 
-            Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, CursorManager.GetCursor);
-
+            //Mouse
+            Framebuffer.Graphics.DrawImage(CursorManager.GetCursor, Control.MousePosition.X, Control.MousePosition.Y, true);
             Framebuffer.Update();
 
             FPSMeter.Update();

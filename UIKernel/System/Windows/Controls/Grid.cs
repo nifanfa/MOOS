@@ -21,19 +21,19 @@ namespace System.Windows.Controls
             Grids = new List<GridCollection>();
         }
 
-        public override void Update()
+        public override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
 
             for (int i = 0; i < Children.Count; i++)
             {
-                Children[i].Update();
+                Children[i].OnUpdate();
             }
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
             if (RowDefinitions.Count == 0)
             {
@@ -155,7 +155,7 @@ namespace System.Windows.Controls
                             Children[c].Pos.Position.Height = GetGridRowSpan(Children[c].GridRow, Children[c].GridRowSpan);
                         }
 
-                        Children[c].Draw();
+                        Children[c].OnDraw();
                     }
                 }
             }

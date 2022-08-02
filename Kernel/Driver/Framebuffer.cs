@@ -25,13 +25,13 @@ namespace MOOS
         /// Since you enabled TripleBuffered you have to call Framebuffer.Graphics.Update() in order to make it display. 
         /// This is optimized for real hardware
         /// </summary>
-        public static bool TripleBuffered 
+        public static bool TripleBuffered
         {
-            get 
+            get
             {
                 return _TripleBuffered;
             }
-            set 
+            set
             {
                 if (Graphics == null) return;
                 if (_TripleBuffered == value) return;
@@ -50,19 +50,19 @@ namespace MOOS
         {
             if (TripleBuffered)
             {
-                for(int i = 0; i < Width * Height; i++) 
+                for (int i = 0; i < Width * Height; i++)
                 {
-                    if(FirstBuffer[i] != SecondBuffer[i]) 
+                    if (FirstBuffer[i] != SecondBuffer[i])
                     {
                         VideoMemory[i] = FirstBuffer[i];
                     }
                 }
                 Native.Movsd(SecondBuffer, FirstBuffer, (ulong)(Width * Height));
             }
-            if(Graphics != null) Graphics.Update();
+            if (Graphics != null) Graphics.Update();
         }
 
-        public static void Initialize(ushort XRes, ushort YRes,uint* FB)
+        public static void Initialize(ushort XRes, ushort YRes, uint* FB)
         {
             Width = XRes;
             Height = YRes;

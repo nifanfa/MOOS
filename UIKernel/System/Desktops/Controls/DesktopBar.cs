@@ -1,6 +1,7 @@
 ﻿using MOOS;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Media;
 
 namespace System.Desktops.Controls
@@ -27,8 +28,8 @@ namespace System.Desktops.Controls
         {
             base.Draw();
 
-            Framebuffer.Graphics.AFillRectangle(X, Y, Width, Height, Background.Value);
-            Framebuffer.Graphics.AFillRectangle(X, Y + Height, Width, 2, backgroundLine.Value);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Background.Value), X, Y, Width, Height, true);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(backgroundLine.Value), X, Y + Height, Width, 2, true);
         }
     }
 }

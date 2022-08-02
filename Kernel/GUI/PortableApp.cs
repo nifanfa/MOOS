@@ -13,16 +13,17 @@ namespace MOOS.GUI
             ScreenBuf = new Image(Width, Height);
         }
 
-        public override void Update()
+        public override void OnInput()
         {
-            base.Update();
+            if (!IsFocus) return;
+            base.OnInput();
 
             //TO-DO...
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
             Framebuffer.Graphics.DrawImage(ScreenBuf, X, Y);
         }

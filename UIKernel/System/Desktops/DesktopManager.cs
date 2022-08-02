@@ -313,7 +313,7 @@ namespace System.Desktops
 
         public static void Draw()
         {
-            Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), DesktopManager.Wallpaper, false);
+            Framebuffer.Graphics.DrawImage(DesktopManager.Wallpaper, (Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2));
 
             for (int i = 0; i < icons.Count; i++)
             {

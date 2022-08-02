@@ -366,9 +366,15 @@ namespace MOOS.Graph
 		{
 			return X > 0 && Y > 0 && X < Width && Y < Height ? Color.FromArgb(VideoMemory[(Width * Y) + X]) : Color.Black;
 		}
+
 		public void DrawPoint(Color color, Point point, bool alphaBlending = false)
 		{
 			DrawPoint(color, point.X, point.Y, alphaBlending);
+		}
+
+		public void DrawPoint(uint color, Point point, bool alphaBlending = false)
+		{
+			DrawPoint(Color.FromArgb(color), point.X, point.Y, alphaBlending);
 		}
 
 		public void DrawPoint(Color color, int X, int Y, bool alphaBlending = false)

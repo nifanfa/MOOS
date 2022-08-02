@@ -1,5 +1,7 @@
 ﻿#if HasGUI
 using MOOS.FS;
+using System.Drawing;
+using System.Windows;
 
 namespace MOOS.GUI
 {
@@ -20,7 +22,7 @@ namespace MOOS.GUI
 		public override void OnDraw()
 		{
 			base.OnDraw();
-			WindowManager.font.DrawString(X, Y, FileContents, Width);
+			WindowManager.font.DrawString(X, Y, FileContents, 0xFF000000, Width);
 		}
 	}
 }

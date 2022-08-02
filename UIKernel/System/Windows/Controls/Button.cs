@@ -1,6 +1,7 @@
 #if HasGUI
 using MOOS;
 using System;
+using System.Drawing;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -26,9 +27,9 @@ namespace System.Windows.Controls
             CommandParameter = string.Empty;
         }
 
-        public override void Update()
+        public override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
 
             if (MouseEnter)
             {
@@ -61,11 +62,11 @@ namespace System.Windows.Controls
             }
         }
 
-        public override void Draw()
+        public override void OnDraw()
         {
-            base.Draw();
+            base.OnDraw();
 
-            Framebuffer.Graphics.FillRectangle(X, Y, Width, Height, Background.Value);
+            Framebuffer.Graphics.FillRectangle(Color.FromArgb(Background.Value), X, Y, Width, Height);
 
             if (!string.IsNullOrEmpty(Content))
             {
