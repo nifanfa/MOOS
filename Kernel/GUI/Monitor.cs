@@ -36,7 +36,7 @@ namespace MOOS.GUI
 
 				lastCPUUsage = cpuUsage;
 
-				g.CopyFromScreen(-lineWidth, 0, 0, 0, new Size(Width, Height));
+				g.CopyFromScreen(0, 0,-lineWidth, 0, new Size(Width, Height));
 			}
 
 			Framebuffer.Graphics.DrawImage(img, X, Y, false);
