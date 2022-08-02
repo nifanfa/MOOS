@@ -12,13 +12,13 @@ namespace System.Threading
 
         public static void Exit(object obj)
         {
-            Unlock();
+            UnLock();
         }
 
         [DllImport("*")]
         static extern void Lock();
 
         [DllImport("*")]
-        static extern void Unlock();
+        static extern void UnLock();
     }
 }
