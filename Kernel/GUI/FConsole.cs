@@ -35,7 +35,7 @@ namespace MOOS.GUI
             Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
         }
 
-        private void PS2Keyboard_OnKeyChanged(System.ConsoleKeyInfo key)
+        private void PS2Keyboard_OnKeyChanged(object sender, System.ConsoleKeyInfo key)
         {
             if (key.KeyState == System.ConsoleKeyState.Pressed)
             {

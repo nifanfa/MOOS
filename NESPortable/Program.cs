@@ -57,6 +57,9 @@ namespace NES
         [DllImport("GetWindowScreenBuf")]
         public static extern IntPtr GetWindowScreenBuf(IntPtr handle);
 
+        [DllImport("BindOnKeyChangedHandler")]
+        public static extern void BindOnKeyChangedHandler(IntPtr handler);
+
         public static Image ScreenBuf;
 
         [RuntimeExport("Main")]

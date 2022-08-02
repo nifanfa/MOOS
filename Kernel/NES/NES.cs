@@ -159,7 +159,7 @@ namespace NES
             Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChangedHandler;
         }
 
-        public void PS2Keyboard_OnKeyChangedHandler(ConsoleKeyInfo key)
+        public void PS2Keyboard_OnKeyChangedHandler(object sender,ConsoleKeyInfo key)
         {
             ConsoleKey c = key.Key;
             if (key.KeyState == ConsoleKeyState.Pressed)
