@@ -19,6 +19,6 @@ namespace System.Threading
         static extern void Lock();
 
         [DllImport("*")]
-        static extern void UnLock();
+        static extern void Unlock();
     }
 }
