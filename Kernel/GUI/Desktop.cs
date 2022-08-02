@@ -120,67 +120,23 @@ namespace MOOS.GUI
 
                 ClickEvent(names[i].Name, names[i].Attribute == FileAttribute.Directory, X, Y, i + (IsAtRoot ? BuiltInAppNames.Length : 0));
 
-                if (
-                    (
-                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'P' &&
-                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'N' &&
-                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'G'
-                    )
-                    ||
-                    (
-                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'B' &&
-                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'M' &&
-                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'P'
-                    )
-                    )
+                if (names[i].Name.EndsWith(".png")||names[i].Name.EndsWith(".bmp"))
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
                 }
-
-                else if (
-                    names[i].Name[0].ToUpper() == 'D' &&
-                    names[i].Name[1].ToUpper() == 'O' &&
-                    names[i].Name[2].ToUpper() == 'O' &&
-                    names[i].Name[3].ToUpper() == 'M' &&
-                    names[i].Name[4].ToUpper() == '1' &&
-                    names[i].Name[5].ToUpper() == '.' &&
-                    names[i].Name[6].ToUpper() == 'W' &&
-                    names[i].Name[7].ToUpper() == 'A' &&
-                    names[i].Name[8].ToUpper() == 'D'
-                   )
+                else if (names[i].Name == "DOOM1.WAD")
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, DoomIcon);
                 }
-                else if
-                    (
-                    (
-                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'N' &&
-                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'E' &&
-                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'S'
-                    )
-                    )
+                else if(names[i].Name.EndsWith(".nes"))
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, GameIcon);
                 }
-                else if
-                    (
-                    (
-                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'E' &&
-                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'X' &&
-                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'E'
-                    )
-                    )
+                else if(names[i].Name.EndsWith(".exe"))
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, AppIcon);
                 }
-                else if
-                    (
-                    (
-                    names[i].Name[names[i].Name.Length - 3].ToUpper() == 'W' &&
-                    names[i].Name[names[i].Name.Length - 2].ToUpper() == 'A' &&
-                    names[i].Name[names[i].Name.Length - 1].ToUpper() == 'V'
-                    )
-                    )
+                else if(names[i].Name.EndsWith(".wav"))
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, AudioIcon);
                 }
@@ -320,11 +276,7 @@ namespace MOOS.GUI
             string devider = "/";
             string path = Dir + devider + name;
 
-            if (
-                name[name.Length - 3].ToUpper() == 'P' &&
-                name[name.Length - 2].ToUpper() == 'N' &&
-                name[name.Length - 1].ToUpper() == 'G'
-                )
+            if (name.EndsWith(".png"))
             {
                 byte[] buffer = File.ReadAllBytes(path);
                 PNG png = new PNG(buffer);
@@ -334,11 +286,7 @@ namespace MOOS.GUI
                 WindowManager.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
             }
-            else if (
-                name[name.Length - 3].ToUpper() == 'B' &&
-                name[name.Length - 2].ToUpper() == 'M' &&
-                name[name.Length - 1].ToUpper() == 'P'
-                )
+            else if (name.EndsWith(".bmp"))
             {
                 byte[] buffer = File.ReadAllBytes(path);
                 Bitmap png = new Bitmap(buffer);
@@ -348,34 +296,16 @@ namespace MOOS.GUI
                 WindowManager.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
             }
-            else if (
-               name[0].ToUpper() == 'D' &&
-               name[1].ToUpper() == 'O' &&
-               name[2].ToUpper() == 'O' &&
-               name[3].ToUpper() == 'M' &&
-               name[4].ToUpper() == '1' &&
-               name[5].ToUpper() == '.' &&
-               name[6].ToUpper() == 'W' &&
-               name[7].ToUpper() == 'A' &&
-               name[8].ToUpper() == 'D'
-               )
+            else if (name == "DOOM1.WAD")
             {
                 new Doom(300, 250);
             }
-            else if (
-                name[name.Length - 3].ToUpper() == 'E' &&
-                name[name.Length - 2].ToUpper() == 'X' &&
-                name[name.Length - 1].ToUpper() == 'E'
-                )
+            else if (name.EndsWith(".exe"))
             {
                 byte[] buffer = File.ReadAllBytes(path);
                 Process.Start(buffer);
             }
-            else if (
-                name[name.Length - 3].ToUpper() == 'W' &&
-                name[name.Length - 2].ToUpper() == 'A' &&
-                name[name.Length - 1].ToUpper() == 'V'
-                )
+            else if (name.EndsWith(".wav"))
             {
                 if (Audio.HasAudioDevice)
                 {

@@ -388,13 +388,11 @@ namespace System
 		{
 			if (value.Length > Length)
 			{
-				value.Dispose();
 				return false;
 			}
 
 			if (value == this)
 			{
-				value.Dispose();
 				return true;
 			}
 
@@ -402,31 +400,35 @@ namespace System
 			{
 				if (value[i] != this[Length - value.Length + i])
 				{
-					value.Dispose();
 					return false;
 				}
 			}
-			value.Dispose();
 			return true;
 		}
 
 		public string ToUpper()
 		{
-			string output = "";
-			for (int i = 0; i < Length; i++)
+			fixed (char* pthis = this)
 			{
-				output += this[i].ToUpper();
+				string output = new string(pthis, 0, this.Length);
+				for (int i = 0; i < this.Length; i++)
+				{
+					output[i] = pthis[i].ToUpper();
+				}
+				return output;
 			}
-			return output;
 		}
 		public string ToLower()
 		{
-			string output = "";
-			for (int i = 0; i < Length; i++)
-			{
-				output += this[i].ToLower();
+			fixed(char* pthis = this)
+            {
+				string output = new string(pthis, 0, this.Length);
+				for(int i = 0; i < this.Length; i++)
+                {
+					output[i] = pthis[i].ToLower();
+                }
+				return output;
 			}
-			return output;
 		}
 	}
 }
