@@ -8,7 +8,7 @@ namespace MOOS
     {
         public static ConsoleKeyInfo KeyInfo;
 
-        public static event OnKeyHandler OnKeyChanged;
+        public static EventHandler<ConsoleKeyInfo> OnKeyChanged;
 
         public static void Initialize() 
         {
@@ -17,7 +17,7 @@ namespace MOOS
 
         internal static void InvokeOnKeyChanged(ConsoleKeyInfo info) 
         {
-            OnKeyChanged?.Invoke(info);
+            OnKeyChanged?.Invoke(null, info);
         }
 
         public static void CleanKeyInfo(bool NoModifiers = false)

@@ -174,10 +174,12 @@ namespace NES
             bolStartFrame = true;
             bolReset = true;
 
-            //Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChangedHandler;
+            var handler = (EventHandler<ConsoleKeyInfo>)PS2Keyboard_OnKeyChangedHandler;
+
+            Program.BindOnKeyChangedHandler(handler);
         }
 
-        public void PS2Keyboard_OnKeyChangedHandler(ConsoleKeyInfo key)
+        public void PS2Keyboard_OnKeyChangedHandler(object sender,ConsoleKeyInfo key)
         {
             ConsoleKey c = key.Key;
             if (key.KeyState == ConsoleKeyState.Pressed)

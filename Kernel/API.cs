@@ -74,6 +74,8 @@ namespace MOOS
                     return (delegate*<int, int, int, int, string, IntPtr>)&API_CreateWindow;
                 case "GetWindowScreenBuf":
                     return (delegate*<IntPtr, IntPtr>)&API_GetWindowScreenBuf;
+                case "BindOnKeyChangedHandler":
+                    return (delegate*<EventHandler<ConsoleKeyInfo>, void>)&API_BindOnKeyChangedHandler;
 #endif
             }
             Panic.Error($"System call \"{name}\" is not found");
@@ -94,6 +96,12 @@ namespace MOOS
             return papp.ScreenBuf;
         }
 #endif
+
+        public static void API_BindOnKeyChangedHandler(EventHandler<ConsoleKeyInfo> handler)
+        {
+            Keyboard.OnKeyChanged = handler;
+
+        }
 
         public static void API_StartThread(delegate* <void> func)
         {

@@ -72,7 +72,7 @@ namespace MOOS.GUI
             })).Start(1);
         }
 
-        private void PS2Keyboard_OnKeyChanged(ConsoleKeyInfo key)
+        private void PS2Keyboard_OnKeyChanged(object sender, ConsoleKeyInfo key)
         {
             addKeyToQueue(key.KeyState != ConsoleKeyState.Released ? 1 : 0, (byte)key.Key);
         }
