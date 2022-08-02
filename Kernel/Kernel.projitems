@@ -50,6 +50,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Graph\VMWareSVGAIIGraphics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Calculator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Clock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GUI\Desktop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Doom.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\FConsole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\FileViewer.cs" />
