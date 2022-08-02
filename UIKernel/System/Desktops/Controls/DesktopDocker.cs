@@ -29,8 +29,8 @@ namespace System.Desktops.Controls
             Height = 49;
             items = new List<DockerItem>();
 
-            LDocker = new PNG(File.Instance.ReadAllBytes("Images/L_docker.png"));
-            RDocker = new PNG(File.Instance.ReadAllBytes("Images/R_docker.png"));
+            LDocker = new PNG(File.Instance.ReadAllBytes("sys/media/L_docker.png"));
+            RDocker = new PNG(File.Instance.ReadAllBytes("sys/media/R_docker.png"));
 
             DockerItem item = new DockerItem();
             item.Icon = DesktopIcons.AppIcon;

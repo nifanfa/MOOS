@@ -47,7 +47,7 @@ namespace System.Windows
             }
         }
 
-        public void SetText(string text, string title  = "MessageBox") 
+        void SetText(string text, string title  = "MessageBox") 
         {
             this.Title = title;
             if (this._message != null) this._message.Dispose();

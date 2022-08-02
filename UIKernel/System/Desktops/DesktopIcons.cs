@@ -20,15 +20,15 @@ namespace System.Desktops
 
         public static void Initialize()
         {
-            FileIcon = new PNG(File.ReadAllBytes("Images/file.png"));
-            ImageIcon = new PNG(File.ReadAllBytes("Images/Image.png"));
-            GameIcon = new PNG(File.ReadAllBytes("Images/Game.png"));
-            AppIcon = new PNG(File.Instance.ReadAllBytes("Images/App.png"));
-            AudioIcon = new PNG(File.ReadAllBytes("Images/Audio.png"));
-            BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("Images/BApp.png"));
-            FolderIcon = new PNG(File.ReadAllBytes("Images/folder.png"));
-            DoomIcon = new PNG(File.ReadAllBytes("Images/Doom1.png"));
-            AppTerminal = new PNG(File.Instance.ReadAllBytes("Images/Terminal.png"));
+            FileIcon = new PNG(File.ReadAllBytes("sys/media/file.png"));
+            ImageIcon = new PNG(File.ReadAllBytes("sys/media/Image.png"));
+            GameIcon = new PNG(File.ReadAllBytes("sys/media/Game.png"));
+            AppIcon = new PNG(File.Instance.ReadAllBytes("sys/media/App.png"));
+            AudioIcon = new PNG(File.ReadAllBytes("sys/media/Audio.png"));
+            BuiltInAppIcon = new PNG(File.Instance.ReadAllBytes("sys/media/BApp.png"));
+            FolderIcon = new PNG(File.ReadAllBytes("sys/media/folder.png"));
+            DoomIcon = new PNG(File.ReadAllBytes("sys/media/Doom1.png"));
+            AppTerminal = new PNG(File.Instance.ReadAllBytes("sys/media/Terminal.png"));
         }
     }
 }

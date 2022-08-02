@@ -128,7 +128,7 @@ namespace MOOS.GUI
 				Framebuffer.Graphics.FillRectangle(Color.FromArgb(0xFF111111), Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide);
 				Framebuffer.Graphics.DrawRectangle(Color.FromArgb(0xFF222222), Framebuffer.Width - v.X, v.Y + y, v.SWidth + Devide, v.SHeight + Devide);
 				Framebuffer.Graphics.FillRectangle(Color.FromArgb(v.NotificationLevel == NotificationLevel.None ? 0xFF80B000 : 0xFFE74C3C), Framebuffer.Width - v.X, v.Y + y, 5, v.SHeight + Devide);
-				WindowManager.font.DrawString(Framebuffer.Width - v.X + (Devide / 2), v.Y + y + (Devide / 2), v.Message);
+				WindowManager.font.DrawString(Framebuffer.Width - v.X + (Devide / 2), v.Y + y + (Devide / 2), v.Message, 0xFFFFFFFF);
 
 				y += v.SHeight + Devide;
 				y += Devide;

@@ -290,13 +290,13 @@ unsafe class Program
 
             Control.OnUpdate();
             WindowManager.InputAll();
-            NotificationManager.Update();
 
             //UIKernel
             DesktopManager.Update();
             DesktopManager.Draw();
             WindowManager.UpdateAll();
             WindowManager.DrawAll();
+            NotificationManager.Update();
             CursorManager.Update();
 
             //Mouse

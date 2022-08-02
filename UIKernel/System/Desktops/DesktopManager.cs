@@ -27,32 +27,36 @@ namespace System.Desktops
 
         public static string Prefix;
         public static string Dir;
+        public static string User;
+
         public static bool IsAtRoot => Dir.Length < 1;
         static Dictionary<int, string> BuiltInAppNames;
         public static ICommand IconClickCommand { get; set; }
         public static ICommand IconNativeClickCommand { get; set; }
         public static ICommand IconDirectoryClickCommand { get; set; }
+
         public static void Initialize()
         {
-#if Chinese
-			Prefix = " 管理员@Moos: ";
-#else
-            Prefix = " root@Moos: ";
-#endif
-
+            User = "moos";
             Dir = "";
+
+#if Chinese
+			Prefix = $" 管理员@{User}: ";
+#else
+            Prefix = $" root@{User}: ";
+#endif
 
             //Sized width to 512
             //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
-            Cursor = new PNG(File.ReadAllBytes("Images/Cursor.png"));
-            CursorMoving = new PNG(File.ReadAllBytes("Images/Grab.png"));
+            Cursor = new PNG(File.ReadAllBytes("sys/media/Cursor.png"));
+            CursorMoving = new PNG(File.ReadAllBytes("sys/media/Grab.png"));
             //Image from unsplash
-            Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper1.png"));
+            Wallpaper = new PNG(File.ReadAllBytes("sys/media/Wallpaper1.png"));
 
             BitFont.Initialize();
 
             string CustomCharset = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-            BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.ReadAllBytes("Song.btf"), 16));
+            BitFont.RegisterBitFont(new BitFontDescriptor("Song", CustomCharset, File.ReadAllBytes("sys/fonts/Song.btf"), 16));
 
             Image wall = Wallpaper;
             Wallpaper = wall.ResizeImage(Framebuffer.Width, Framebuffer.Height);
@@ -118,7 +122,7 @@ namespace System.Desktops
             IconNativeClickCommand = new ICommand(onDesktopNativeOSClick);
             IconDirectoryClickCommand = new ICommand(onDesktopDirectoryClick);
 
-            List<FileInfo> files = File.GetFiles(Dir);
+            List<FileInfo> files = File.GetFiles($"home/{User}/Desktop");
 
             if (IsAtRoot)
             {

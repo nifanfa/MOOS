@@ -34,10 +34,10 @@ namespace System.Windows
         {
             //Sized width to 512
             //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
-            CursorNormal = new PNG(File.Instance.ReadAllBytes("Images/Cursor.png"));
-            CursorMoving = new PNG(File.Instance.ReadAllBytes("Images/Grab.png"));
-            CursorTextSelect = new PNG(File.Instance.ReadAllBytes("Images/CursorTextSelect.png"));
-            CursorHand = new PNG(File.Instance.ReadAllBytes("Images/CursorHand.png"));
+            CursorNormal = new PNG(File.Instance.ReadAllBytes("sys/media/Cursor.png"));
+            CursorMoving = new PNG(File.Instance.ReadAllBytes("sys/media/Grab.png"));
+            CursorTextSelect = new PNG(File.Instance.ReadAllBytes("sys/media/CursorTextSelect.png"));
+            CursorHand = new PNG(File.Instance.ReadAllBytes("sys/media/CursorHand.png"));
             State = new Cursor(CursorState.Normal); 
         }
 
