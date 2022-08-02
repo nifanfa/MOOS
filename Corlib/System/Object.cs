@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace System
 {
+    [Serializable]
     public unsafe class Object
     {
         // The layout of object is a contract with the compiler.
@@ -26,16 +27,32 @@ namespace System
             return m_pEEType->BaseSize - (uint)sizeof(ObjHeader) - (uint)sizeof(EEType*);
         }
 
+        //[NonVersionable]
         public Object() { }
+        //[NonVersionable]
         ~Object() { }
 
         public virtual bool Equals(object o)
         {
-            return false;//  return RuntimeHelpers.Equals(this, o);
+           return RuntimeHelpers.Equals(this, o);
         }
 
+        public static bool Equals(object left, object right)
+        {
+            if (left == right)
+                return true;
+
+            if (left == null || right == null)
+                return false;
+
+            return left.Equals(right);
+        }
+
+
         public virtual int GetHashCode()
-            => 0;
+        {
+            return 0;
+        }
 
         public virtual string ToString()
             => "System.Object";

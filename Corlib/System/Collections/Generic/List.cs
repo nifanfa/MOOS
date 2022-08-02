@@ -1,3 +1,6 @@
+using Internal.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
+
 namespace System.Collections.Generic
 {
 	public class List<T>
@@ -71,11 +74,11 @@ namespace System.Collections.Generic
 			return array;
 		}
 
-		public int IndexOf(T item)
+        public int IndexOf(T item)
 		{
-			for (int i = 0; i < Count; i++)
-			{
-				if (this[i].Equals(item))
+            for (int i = 0; i < Count; i++)
+            {
+                if (this[i] == item)
 				{
 					return i;
 				}

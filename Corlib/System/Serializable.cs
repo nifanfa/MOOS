@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace System
 {
-    /*
+    
     /// <summary>
 	/// Indicates that a class can be serialized. This class cannot be inherited.
 	/// </summary>
@@ -16,5 +16,5 @@ namespace System
         public SerializableAttribute()
         {
         }
-    }*/
+    }
 }

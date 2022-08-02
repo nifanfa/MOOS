@@ -8,14 +8,30 @@ namespace System.Collections.Generic
         {
             get
             {
-                return Values[Keys.IndexOf(key)];
+                //return Values[Keys.IndexOf(key)];
+                return Values[IndexOf(key)];
             }
             set
             {
-                Values[Keys.IndexOf(key)] = value;
+                //Values[Keys.IndexOf(key)] = value;
+                Values[IndexOf(key)] = value;
             }
         }
 
+        //improvised
+        int IndexOf(TKey key)
+        {
+            for (int i = 0; i < Keys.Count; i++)
+            {
+                if (Keys[i].ToString() == key.ToString())
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+            
+            
         public int Count { get { return Values.Count; } }
 
         public void Remove(TKey key)
