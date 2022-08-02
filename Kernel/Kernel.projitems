@@ -57,7 +57,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Lockscreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Monitor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GUI\NESEmu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\Paint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GUI\PortableApp.cs" />
@@ -94,14 +93,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\USB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\WAV.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\CPU.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\GameRender.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\Input.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\Mappers.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\Memory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\NES.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\PPU.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NES\Registers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\ARP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\Ethernet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\IPv4.cs" />

@@ -24,7 +24,6 @@ namespace MOOS.GUI
         public static string Dir;
         public static ImageViewer imageViewer;
         public static MessageBox msgbox;
-        public static NESEmu nesemu;
 
         public static bool IsAtRoot 
         {
@@ -50,13 +49,10 @@ namespace MOOS.GUI
             Dir = "";
             imageViewer = new ImageViewer(400,400);
             msgbox = new MessageBox(100,300);
-            nesemu = new(150, 350);
             imageViewer.Visible = false;
             msgbox.Visible = false;
-            nesemu.Visible = false;
             WindowManager.Windows.Add(msgbox);
             WindowManager.Windows.Add(imageViewer);
-            WindowManager.Windows.Add(nesemu);
 
             BuiltInAppNames = new string[]
             {
@@ -328,17 +324,6 @@ namespace MOOS.GUI
                     msgbox.Visible = true;
                 }
             }
-            else if (
-                name[name.Length - 3].ToUpper() == 'N' &&
-                name[name.Length - 2].ToUpper() == 'E' &&
-                name[name.Length - 1].ToUpper() == 'S'
-                )
-            {
-                nesemu.OpenROM(File.ReadAllBytes(path));
-                WindowManager.MoveToEnd(nesemu);
-                nesemu.Visible = true;
-            }
-
 #if Chinese
             else if (name == "计算器")
 #else
