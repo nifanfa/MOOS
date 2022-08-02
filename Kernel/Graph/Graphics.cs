@@ -1,3 +1,5 @@
+//#define AllowNonAntiAliased
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -82,6 +84,7 @@ namespace MOOS.Graph
 			ys.Dispose();
 		}
 
+#if AllowNonAntiAliased
 		public void DrawBezier(Color color, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
 		{
 			for (double t = 0.0; t <= 1.0; t += 0.001)
@@ -100,7 +103,9 @@ namespace MOOS.Graph
 			y4.Dispose();
 			color.Dispose();
 		}
+#endif
 
+#if AllowNonAntiAliased
 		public void DrawBezier(Color color, Point pt1, Point pt2, Point pt3, Point pt4)
 		{
 			for (double t = 0.0; t <= 1.0; t += 0.001)
@@ -115,11 +120,13 @@ namespace MOOS.Graph
 			pt4.Dispose();
 			color.Dispose();
 		}
+#endif
 
 		// TODO: DrawBeziers
 		// TODO: DrawClosedCurve
 		// TODO: DrawCurve
 
+#if AllowNonAntiAliased
 		public void DrawEllipse(Color color, int x, int y, int width, int height)
 		{
 			int a = 2 * width;
@@ -147,12 +154,16 @@ namespace MOOS.Graph
 				{ _x--; err += dx += b1; }
 			}
 		}
+#endif
 
+#if AllowNonAntiAliased
 		public void DrawEllipse(Color color, Rectangle rect)
 		{
 			DrawEllipse(color, rect.X, rect.Y, rect.Width, rect.Height);
 		}
+#endif
 
+#if AllowNonAntiAliased
 		public void FillEllipse(Color color, int x, int y, int height, int width)
 		{
 			int hh = height * height;
@@ -189,11 +200,14 @@ namespace MOOS.Graph
 				}
 			}
 		}
+#endif
 
+#if AllowNonAntiAliased
 		public void FillEllipse(Color color, Rectangle rect)
 		{
 			FillEllipse(color, rect.X, rect.Y, rect.Width, rect.Height);
 		}
+#endif
 
 		private void DrawImageInternal(Image image, int X, int Y, int cutWidth, int cutHeight, int startX, int startY, bool AlphaBlending)
 		{
@@ -410,9 +424,9 @@ namespace MOOS.Graph
 
 		}
 		#endregion
-	}
+		}
 
-	public void DrawLine(Color color, int x1, int y1, int x2, int y2)
+		public void DrawLine(Color color, int x1, int y1, int x2, int y2)
 		{
 			DrawLineInternal(color, x1, y1, x2, y2);
 		}
@@ -499,6 +513,8 @@ namespace MOOS.Graph
 			}
 			return image;
 		}
+
+#if AllowNonAntiAliased
 		public void DrawCircle(Color color, int x, int y, int radius)
 		{
 			int _x = -radius, _y = 0, err = 2 - (2 * radius);
@@ -520,6 +536,9 @@ namespace MOOS.Graph
 				}
 			} while (_x < 0);
 		}
+#endif
+
+#if AllowNonAntiAliased
 		public void FillCircle(Color color, int x, int y, int radius)
 		{
 			int _x = radius;
@@ -552,6 +571,7 @@ namespace MOOS.Graph
 				}
 			}
 		}
+#endif
 
 		#region SMNX Blur
 		/*
