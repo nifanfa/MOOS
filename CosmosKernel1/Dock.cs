@@ -15,7 +15,7 @@ namespace CosmosKernel1
         {
             Width = (uint)(Kernel.apps.Count * Kernel.programlogo.Width + Kernel.apps.Count * Devide);
 
-            Kernel.vMWareSVGAII.DrawFillRectangle(0, 0, Kernel.screenWidth, 20, (uint)Kernel.avgCol.ToArgb());
+            Kernel.vMWareSVGAII.DrawFilledRectangle(Kernel.avgCol,0, 0, Kernel.screenWidth, 20);
             string text = "PowerOFF";
             uint strX = 2;
             uint strY = (20 - 16) / 2;
@@ -28,7 +28,7 @@ namespace CosmosKernel1
                 }
             }
 
-            Kernel.vMWareSVGAII.DrawFillRectangle((Kernel.screenWidth - Width) / 2, Kernel.screenHeight - Height, Width, Height, (uint)Kernel.avgCol.ToArgb());
+            Kernel.vMWareSVGAII.DrawFilledRectangle(Kernel.avgCol,(Kernel.screenWidth - Width) / 2, Kernel.screenHeight - Height, Width, Height);
 
             for (int i = 0; i < Kernel.apps.Count; i++)
             {

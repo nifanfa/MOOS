@@ -51,9 +51,12 @@ namespace MOOS
                 Animation v = Animations[i];
                 if(!v.Stopped)
                 {
-                    if((Timer.Ticks % (ulong)v.PeriodInMS) == 0)
+                    if(v.PeriodInMS != 0)
                     {
-                        v.Value = Math.Clamp(v.Value + v.ValueChangesInPeriod, v.MinimumValue, v.MaximumValue);
+                        if ((Timer.Ticks % (ulong)v.PeriodInMS) == 0)
+                        {
+                            v.Value = Math.Clamp(v.Value + v.ValueChangesInPeriod, v.MinimumValue, v.MaximumValue);
+                        }
                     }
                 }
             }
