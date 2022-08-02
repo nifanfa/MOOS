@@ -75,7 +75,7 @@ namespace System.Collections.Generic
 		{
 			for (int i = 0; i < Count; i++)
 			{
-				if (this[i] == item)
+				if (this[i].Equals(item))
 				{
 					return i;
 				}

@@ -45,6 +45,7 @@ namespace System
         public extern String(char[] buf);
         public extern unsafe String(char* ptr, int index, int length);
         public extern unsafe String(char[] buf, int index, int length);
+        public extern String(char c, int count);
 #pragma warning restore 824
 
 

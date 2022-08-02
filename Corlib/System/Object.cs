@@ -1,5 +1,6 @@
 using Internal.Runtime;
 using Internal.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace System
@@ -29,7 +30,9 @@ namespace System
         ~Object() { }
 
         public virtual bool Equals(object o)
-            => false;
+        {
+            return false;//  return RuntimeHelpers.Equals(this, o);
+        }
 
         public virtual int GetHashCode()
             => 0;

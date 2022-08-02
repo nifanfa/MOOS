@@ -176,6 +176,7 @@ namespace Internal.Runtime.CompilerHelpers
                 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 };
         }
 
+
         private static unsafe void RunEagerClassConstructors(IntPtr cctorTableStart, IntPtr cctorTableEnd)
         {
             for (IntPtr* tab = (IntPtr*)cctorTableStart; tab < (IntPtr*)cctorTableEnd; tab++)
