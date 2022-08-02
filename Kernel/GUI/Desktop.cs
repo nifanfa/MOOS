@@ -272,7 +272,7 @@ namespace MOOS.GUI
 				png.Dispose();
 				WindowManager.MoveToEnd(imageViewer);
 				imageViewer.Visible = true;
-			} else if (name == "DOOM1.wad")
+			} else if (name == "DOOM1.WAD")
 			{
 				_ = new Doom(300, 250);
 			} else if (name.ToLower().EndsWith(".exe"))
