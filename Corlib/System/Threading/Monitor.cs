@@ -12,7 +12,7 @@ namespace System.Threading
 
         public static void Exit(object obj)
         {
-            UnLock();
+            Unlock();
         }
 
         [DllImport("*")]
