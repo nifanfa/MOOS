@@ -7,7 +7,7 @@ namespace Internal.Runtime.CompilerHelpers
 {
     unsafe class StartupCodeHelpers
     {
-        
+
 
         [RuntimeExport("__current_exception_context")]
         public static void __current_exception_context()
