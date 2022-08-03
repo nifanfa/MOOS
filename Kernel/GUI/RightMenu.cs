@@ -41,15 +41,18 @@ namespace MOOS.GUI
 						int i;
 						for (i = DesktopManager.Dir.Length - 1; i >= 0; i--)
 						{
+							/*
 							if (
-								DesktopManager.Dir[i] == '\\' ||
-								DesktopManager.Dir[i] == '/'
+								//DesktopManager.Dir[i] == '\\' ||
+								//DesktopManager.Dir[i] == '/'
 								)
 							{
-								DesktopManager.Dir[i] = '\0';
-							}
+								//DesktopManager.Dir[i] = '\0';
+								//DesktopManager.Dir[i]
+
+                            }*/
 						}
-						DesktopManager.Dir.Length = i + 1;
+						//DesktopManager.Dir.Length = i + 1;
 					}
 					Visible = false;
 				}

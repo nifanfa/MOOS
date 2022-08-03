@@ -1,5 +1,14 @@
 
 namespace System
 {
-    public abstract class ValueType { }
+    /// <summary>
+	///
+	/// </summary>
+	public class ValueType : Object
+    {
+        public override string ToString()
+        {
+            return GetType().ToString();
+        }
+    }
 }

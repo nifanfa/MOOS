@@ -45,7 +45,7 @@ namespace MOOS.GUI
 				{
 					if (Data.Length != 0)
 					{
-						Data.Length -= 1;
+                        Data = Data.Substring(0, Data.Length - 1);
 					}
 				} else if (key.KeyChar != '\0')
 				{
@@ -61,8 +61,8 @@ namespace MOOS.GUI
 				{
 					if (Cmd.Length != 0)
 					{
-						Cmd.Length -= 1;
-					}
+                        Cmd = Cmd.Substring(0, Cmd.Length - 1);
+                    }
 
 					// when a command is invoked
 					switch (Cmd)
@@ -120,8 +120,8 @@ namespace MOOS.GUI
 				{
 					if (Cmd.Length != 0)
 					{
-						Cmd.Length -= 1;
-					}
+                        Cmd = Cmd.Substring(0, Cmd.Length - 1);
+                    }
 				}
 			}
 		}

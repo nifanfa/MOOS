@@ -1,23 +1,25 @@
 namespace System.Runtime.InteropServices
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
     public sealed class StructLayoutAttribute : Attribute
     {
-        public StructLayoutAttribute(LayoutKind layoutKind)
+        private readonly LayoutKind lkind;
+        public int Pack = 8;
+        public int Size = 0;
+
+        public StructLayoutAttribute(short layoutKind)
         {
-            Value = layoutKind;
+            lkind = (LayoutKind)layoutKind;
         }
 
-        public LayoutKind Value { get; }
+        public StructLayoutAttribute(LayoutKind layoutKind)
+        {
+            lkind = layoutKind;
+        }
 
-        public int Pack;
-        public int Size;
-        public CharSet CharSet;
-    }
-
-    public enum LayoutKind
-    {
-        Sequential = 0,
-        Explicit = 2,
-        Auto = 3,
+        public LayoutKind Value
+        {
+            get { return lkind; }
+        }
     }
 }

@@ -8,6 +8,7 @@ using MOOS.GUI;
 using MOOS.Misc;
 using System;
 using System.Desktops;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -143,6 +144,7 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
+
 #if NETWORK
         //Install openVPN's windows tap driver
         //You can download it here: http://swupdate.openvpn.org/community/releases/openvpn-2.2.2-install.exe
@@ -251,7 +253,6 @@ unsafe class Program
 
         SizedScreens.Dispose();
         #endregion
-
 
         NotificationManager.Initialize();
 

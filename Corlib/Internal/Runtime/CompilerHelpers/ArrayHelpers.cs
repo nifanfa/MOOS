@@ -1,14 +1,14 @@
  // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Internal.Runtime.CompilerServices;
 using System;
 using System.Runtime;
-
+using System.Runtime.CompilerServices;
 using Debug = System.Diagnostics.Debug;
 
 namespace Internal.Runtime.CompilerHelpers
 {
+    
     /// <summary>
     /// Array helpers for generated code.
     /// </summary>
@@ -76,7 +76,7 @@ namespace Internal.Runtime.CompilerHelpers
                     //return Array.CreateInstance(Type.GetTypeFromHandle(elementTypeHandle), length);
                 }
 
-                return Array.NewMultiDimArray(eeType, pDimensions, rank);
+                return null;// Array.NewMultiDimArray(eeType, pDimensions, rank);
             }
         }
     }

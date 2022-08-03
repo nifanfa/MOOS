@@ -7,6 +7,18 @@ namespace System
         public object m_helperObject;
         public IntPtr m_extraFunctionPointerOrData;
         public IntPtr m_functionPointer;
+        protected IntPtr methodPointer;
+        protected object instance = null;
+
+        internal Delegate()
+        {
+        }
+
+        internal Delegate(object instance, IntPtr methodPointer)
+        {
+            this.instance = instance;
+            this.methodPointer = methodPointer;
+        }
 
         public static Delegate? Combine(Delegate? a, Delegate? b)
         {

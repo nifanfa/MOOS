@@ -1,6 +1,7 @@
 ﻿#if HasGUI
 using MOOS.FS;
 using System.Drawing;
+using System.Text;
 using System.Windows;
 
 namespace MOOS.GUI
@@ -14,7 +15,7 @@ namespace MOOS.GUI
 			byte[] data = File.ReadAllBytes(path);
 			fixed (byte* dataPtr = data)
 			{
-				FileContents = string.FromASCII((System.IntPtr)dataPtr, data.Length);
+				FileContents = Encoding.ASCII.GetString(data);
 			}
 			data.Dispose();
 		}

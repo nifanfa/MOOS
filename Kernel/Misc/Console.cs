@@ -279,7 +279,7 @@ namespace MOOS
                     case ConsoleKey.Delete:
                     case ConsoleKey.Backspace:
                         if (s.Length == 0) continue;
-                        s.Length -= 1;
+                        s = s.Substring(0, s.Length - 1);
                         break;
                     default:
                         string cache1 = key.KeyChar.ToString();

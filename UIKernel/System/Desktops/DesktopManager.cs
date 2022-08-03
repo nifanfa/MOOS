@@ -30,7 +30,7 @@ namespace System.Desktops
         public static string User;
 
         public static bool IsAtRoot => Dir.Length < 1;
-        static Dictionary<int, string> BuiltInAppNames;
+        //static Dictionary<int, string> BuiltInAppNames;
         public static ICommand IconClickCommand { get; set; }
         public static ICommand IconNativeClickCommand { get; set; }
         public static ICommand IconDirectoryClickCommand { get; set; }
@@ -71,7 +71,7 @@ namespace System.Desktops
             docker = new DesktopDocker();
             barMenu = new List<DesktopControl>();
             icons = new List<IconFile>();
-            BuiltInAppNames = new Dictionary<int, string>();
+            //BuiltInAppNames = new Dictionary<int, string>();
 
             //Bar Elements
             DesktopBarItem item = new DesktopBarItem();
@@ -87,6 +87,7 @@ namespace System.Desktops
             clock.Y = 0;
             clock.Command = new ICommand(onItemClock);
             barMenu.Add(clock);
+            Debug.WriteLine($"[DesktopBarItem] {item.ToString()}");
 
             onLoadIcons();
         }
@@ -98,7 +99,7 @@ namespace System.Desktops
             int X = 5;
             int Y = BarHeight;
             string devider = "/";
-
+            /*
             BuiltInAppNames.Clear();
 
 #if Chinese
@@ -117,13 +118,14 @@ namespace System.Desktops
             BuiltInAppNames.Add(5, "Console");
             BuiltInAppNames.Add(6, "Monitor");
 #endif
-
+            */
             IconClickCommand = new ICommand(onDesktopIconClick);
             IconNativeClickCommand = new ICommand(onDesktopNativeOSClick);
             IconDirectoryClickCommand = new ICommand(onDesktopDirectoryClick);
 
             List<FileInfo> files = File.GetFiles($"home/{User}/Desktop");
 
+            /*
             if (IsAtRoot)
             {
                 for (int i = 0; i < BuiltInAppNames.Count; i++)
@@ -153,6 +155,7 @@ namespace System.Desktops
                     }
                 }
             }
+            */
 
             for (int i = 0; i < files.Count; i++)
             {

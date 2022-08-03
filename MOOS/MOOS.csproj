@@ -8,7 +8,6 @@
 
 		<Optimize>true</Optimize>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		
@@ -17,9 +16,10 @@
 		<IlcSystemModule>MOOS</IlcSystemModule>
 		<EntryPointSymbol>Entry</EntryPointSymbol>
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
-		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+		<!--Make the code faster!-->
+		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
 	</PropertyGroup>
-	
+
 	<!--CustomizeReferences-->
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
 		<ItemGroup>
