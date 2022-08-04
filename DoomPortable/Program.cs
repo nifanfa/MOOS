@@ -78,7 +78,7 @@ namespace NES
         [RuntimeExport("Main")]
         public static void Main()
         {
-            var handle = CreateWindow(400, 300, 640, 400, "Doom Portable");
+            var handle = CreateWindow(200, 300, 640, 400, "Doom Portable");
             var screenBufHandle = GetWindowScreenBuf(handle);
             ScreenBuf = Unsafe.As<IntPtr, Image>(ref screenBufHandle);
 
