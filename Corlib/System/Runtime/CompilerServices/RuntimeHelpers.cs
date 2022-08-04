@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace System.Runtime.CompilerServices
@@ -19,6 +20,8 @@ namespace System.Runtime.CompilerServices
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern T UnsafeCast<T>(object o) where T : class;
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern IEnumerable<Assembly> GetAssemblies();
 
         // TODO: Implement?
         [Intrinsic]

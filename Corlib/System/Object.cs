@@ -2,6 +2,7 @@ using Internal.Runtime;
 using Internal.Runtime.CompilerServices;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace System
 {
@@ -54,6 +55,14 @@ namespace System
             return 0;
         }
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        protected extern object MemberwiseClone();
+
+        [NonVersionable]
+        public static bool ReferenceEquals(object left, object right)
+        {
+            return (left == right);
+        }
         /// <summary>
         /// Gets the <see cref="Type"/> of the current instance.
         /// </summary>

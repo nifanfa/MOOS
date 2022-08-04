@@ -59,6 +59,13 @@ namespace System
             return !(a._value == b._value);
         }
 
+        [Intrinsic]
+        //[NonVersionable]
+        public unsafe int ToInt32()
+        {
+            return (int)_value;
+        }
+
         public override string ToString()
         {
             return ((UIntPtr)this).ToString();
