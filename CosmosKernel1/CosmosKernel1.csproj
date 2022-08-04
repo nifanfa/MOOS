@@ -48,10 +48,10 @@
 	<Import Project="..\CosmosCompatible\CosmosCompatible.projitems" Label="Shared" />
 
 	<Target Name="BuildISO" AfterTargets="Publish">
-		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\Trampoline.asm&quot; -o &quot;$(MSBuildStartupDirectory)\Tools\Trampoline&quot;"></Exec>
-		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\EntryPoint.asm&quot; -o &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)Loader&quot;"></Exec>
-		<Exec Command="cmd.exe /c copy /b &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)Loader&quot;+&quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)&quot; &quot;$(MSBuildStartupDirectory)\Tools\grub2\boot\kernel&quot;"></Exec>
-		<Delete Files="&quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)Loader&quot;"></Delete>
+		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\Trampoline.asm&quot; -o &quot;$(MSBuildStartupDirectory)\Tools\trampoline.o&quot;"></Exec>
+		<Exec WorkingDirectory="$(MSBuildStartupDirectory)\Tools\" Command="&quot;$(MSBuildStartupDirectory)\Tools\nasm.exe&quot; -fbin &quot;$(MSBuildStartupDirectory)\Tools\EntryPoint.asm&quot; -o &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)loader.o&quot;"></Exec>
+		<Exec Command="cmd.exe /c copy /b &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)loader.o&quot;+&quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)&quot; &quot;$(MSBuildStartupDirectory)\Tools\grub2\boot\kernel.bin&quot;"></Exec>
+		<Delete Files="&quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)loader.o&quot;"></Delete>
 		<Exec Command="&quot;$(MSBuildStartupDirectory)\Tools\mkisofs.exe&quot; -relaxed-filenames -J -R -o &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table &quot;$(MSBuildStartupDirectory)\Tools\grub2&quot;"></Exec>
 	</Target>
 
