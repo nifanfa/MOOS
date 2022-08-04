@@ -1,31 +1,17 @@
 namespace System.Runtime.CompilerServices
 {
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
-    [Serializable]
     public sealed class MethodImplAttribute : Attribute
     {
-        private readonly MethodImplOptions options;
+        public MethodImplAttribute(MethodImplOptions methodImplOptions) { }
+    }
 
-        public MethodImplAttribute()
-        {
-        }
-
-        public MethodImplAttribute(short options)
-        {
-            this.options = (MethodImplOptions)options;
-        }
-
-        public MethodImplAttribute(MethodImplOptions options)
-        {
-            this.options = options;
-        }
-
-        public MethodImplOptions Value
-        {
-            get
-            {
-                return options;
-            }
-        }
+    public enum MethodImplOptions
+    {
+        Unmanaged = 0x0004,
+        NoInlining = 0x0008,
+        NoOptimization = 0x0040,
+        AggressiveInlining = 0x0100,
+        AggressiveOptimization = 0x200,
+        InternalCall = 0x1000,
     }
 }

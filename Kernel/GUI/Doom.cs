@@ -45,7 +45,7 @@ namespace MOOS.GUI
 		#endregion
 
 		Thread _thread;
-		public Doom(int X, int Y) : base(X, Y, 640, 400)
+		public Doom(int X, int Y, string file) : base(X, Y, 640, 400)
 		{
 #if Chinese
 			Title = "毁灭战士";
@@ -56,7 +56,7 @@ namespace MOOS.GUI
 			di = new Image(640, 400);
 			dg = Graphics.FromImage(di);
 
-			gb = File.ReadAllBytes("DOOM1.WAD");
+			gb = File.ReadAllBytes(file);
 
 			Keyboard.OnKeyChanged += PS2Keyboard_OnKeyChanged;
 

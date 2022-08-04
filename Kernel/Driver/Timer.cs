@@ -54,7 +54,7 @@ namespace MOOS.Driver
                 }
             }
         }
-        
+
         public static void Sleep(ulong millisecond)
         {
             ulong T = Ticks;

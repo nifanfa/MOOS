@@ -1,149 +1,67 @@
 using System.Runtime.CompilerServices;
-using System.Runtime.Versioning;
 
 namespace System
 {
-    [Serializable]
-    public struct UIntPtr
+    public unsafe struct UIntPtr
     {
-        private readonly unsafe void* _value; // Do not rename (binary serialization)
+        void* _value;
 
+        public UIntPtr(void* value) { _value = value; }
+        public UIntPtr(int value) { _value = (void*)value; }
+        public UIntPtr(uint value) { _value = (void*)value; }
+        public UIntPtr(long value) { _value = (void*)value; }
+        public UIntPtr(ulong value) { _value = (void*)value; }
+
+        [Intrinsic]
         public static readonly UIntPtr Zero;
 
-        [NonVersionable]
-        public unsafe UIntPtr(uint value)
+        public bool Equals(UIntPtr ptr)
+            => _value == ptr._value;
+
+        public static explicit operator UIntPtr(int value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(uint value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(long value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(ulong value) => new UIntPtr(value);
+
+        public static explicit operator UIntPtr(void* value) => new UIntPtr(value);
+
+        public static explicit operator void*(UIntPtr value) => value._value;
+
+        public static explicit operator int(UIntPtr value)
         {
-            _value = (void*)value;
+            var l = (long)value._value;
+
+            return checked((int)l);
         }
 
-        [NonVersionable]
-        public unsafe UIntPtr(ulong value)
+        public static explicit operator long(UIntPtr value) => (long)value._value;
+
+        public static explicit operator ulong(UIntPtr value) => (ulong)value._value;
+
+        public static explicit operator UIntPtr(IntPtr ptr) => new UIntPtr() { _value = (void*)ptr };
+
+        public static UIntPtr operator +(UIntPtr a, uint b)
+            => new UIntPtr((byte*)a._value + b);
+
+        public static UIntPtr operator +(UIntPtr a, ulong b)
+            => new UIntPtr((byte*)a._value + b);
+
+        public static bool operator ==(UIntPtr a, UIntPtr b)
         {
-            _value = (void*)((uint)value);
+            return a._value == b._value;
         }
 
-        [NonVersionable]
-        public unsafe UIntPtr(void* value)
+        public static bool operator !=(UIntPtr a, UIntPtr b)
         {
-            _value = value;
+            return !(a._value == b._value);
         }
 
-        public unsafe override bool Equals(Object obj)
+        public override string ToString()
         {
-            if (obj is UIntPtr)
-            {
-                return (_value == ((UIntPtr)obj)._value);
-            }
-            return false;
-        }
-
-        public unsafe override int GetHashCode()
-        {
-            return ((int)_value);
-        }
-
-        [NonVersionable]
-        public unsafe uint ToUInt32()
-        {
-            return ((uint)_value);
-        }
-
-        [NonVersionable]
-        public unsafe ulong ToUInt64()
-        {
-            return (ulong)_value;
-        }
-
-        [NonVersionable]
-        public static explicit operator UIntPtr(uint value)
-        {
-            return new UIntPtr(value);
-        }
-
-        [NonVersionable]
-        public static explicit operator UIntPtr(ulong value)
-        {
-            return new UIntPtr(value);
-        }
-
-        [NonVersionable]
-        public static unsafe explicit operator UIntPtr(void* value)
-        {
-            return new UIntPtr(value);
-        }
-
-        [NonVersionable]
-        public static unsafe explicit operator void*(UIntPtr value)
-        {
-            return value._value;
-        }
-
-        [NonVersionable]
-        public static unsafe explicit operator uint(UIntPtr value)
-        {
-            return (uint)value._value;
-        }
-
-        [NonVersionable]
-        public static unsafe explicit operator ulong(UIntPtr value)
-        {
-            return (ulong)value._value;
-        }
-
-        [NonVersionable]
-        public static unsafe bool operator ==(UIntPtr value1, UIntPtr value2)
-        {
-            return value1._value == value2._value;
-        }
-
-        [NonVersionable]
-        public static unsafe bool operator !=(UIntPtr value1, UIntPtr value2)
-        {
-            return value1._value != value2._value;
-        }
-
-        [NonVersionable]
-        public static UIntPtr Add(UIntPtr pointer, int offset)
-        {
-            return pointer + offset;
-        }
-
-        [NonVersionable]
-        public static unsafe UIntPtr operator +(UIntPtr pointer, int offset)
-        {
-            return new UIntPtr((ulong)((long)pointer._value + offset));
-        }
-
-        [NonVersionable]
-        public static UIntPtr Subtract(UIntPtr pointer, int offset)
-        {
-            return pointer - offset;
-        }
-
-        [NonVersionable]
-        public static unsafe UIntPtr operator -(UIntPtr pointer, int offset)
-        {
-            return new UIntPtr((ulong)((long)pointer._value - offset));
-        }
-
-        public static unsafe int Size
-        {
-            [NonVersionable]
-            get
-            {
-                return sizeof(void*);
-            }
-        }
-
-        [NonVersionable]
-        public unsafe void* ToPointer()
-        {
-            return _value;
-        }
-
-        public unsafe override string ToString()
-        {
-            return ((long)_value).ToString();
+            return ((ulong)_value).ToString();
         }
     }
 }

@@ -75,8 +75,7 @@ namespace NES
                 byte byteNumCHRBanks = temp[5];
 
                 memory.memPRG = new List<byte[]>(byteNumPRGBanks);
-                //memory.memPRG.Count = byteNumPRGBanks;
-
+                memory.memPRG.Count = byteNumPRGBanks;
                 if (byteNumPRGBanks == 0x01)
                 {
                     fixed (byte* p = memory.memCPU)
@@ -112,7 +111,7 @@ namespace NES
                 if (byteNumCHRBanks != 0)
                 {
                     memory.memCHR = new List<byte[]>(byteNumCHRBanks);
-                    //memory.memCHR.Count = byteNumCHRBanks;
+                    memory.memCHR.Count = byteNumCHRBanks;
 
 
                     for (int x = 0; x < memory.memCHR.Count; x++)

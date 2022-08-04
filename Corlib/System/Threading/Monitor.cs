@@ -1,3 +1,4 @@
+using Internal.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace System.Threading

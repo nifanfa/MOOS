@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
-
     public static class InteropHelpers
     {
         [StructLayout(LayoutKind.Sequential)]

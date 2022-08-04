@@ -18,7 +18,7 @@ namespace System.Windows.Media
 
             if (hex[0] == '#')
             {
-                hex = hex.Substring(1);
+                hex = hex.Remove(0);
             }
 
             int i = hex.Length > 1 && hex[0] == '0' && (hex[1] == 'x' || hex[1] == 'X') ? 2 : 0;

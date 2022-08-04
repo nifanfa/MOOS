@@ -1,7 +1,5 @@
 namespace System.Runtime.InteropServices
 {
-    [Serializable]
-    [ComVisible(true)]
     public enum CallingConvention
     {
         Winapi = 1,

@@ -8,7 +8,6 @@ using MOOS.GUI;
 using MOOS.Misc;
 using System;
 using System.Desktops;
-using System.Diagnostics;
 using System.Drawing;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -144,7 +143,6 @@ unsafe class Program
         Console.WriteLine("Hello, World!");
         Console.WriteLine("Use Native AOT (Core RT) Technology.");
 
-
 #if NETWORK
         //Install openVPN's windows tap driver
         //You can download it here: http://swupdate.openvpn.org/community/releases/openvpn-2.2.2-install.exe
@@ -210,6 +208,8 @@ unsafe class Program
         #region Animation of entering Desktop
         Framebuffer.Graphics.DrawImage(DesktopManager.Wallpaper, (Framebuffer.Width / 2) - (DesktopManager.Wallpaper.Width / 2), (Framebuffer.Height / 2) - (DesktopManager.Wallpaper.Height / 2), false);
         DesktopManager.Update();
+        DesktopManager.Draw();
+        WindowManager.UpdateAll();
         WindowManager.DrawAll();
         Framebuffer.Graphics.DrawImage(DesktopManager.Cursor, Control.MousePosition.X, Control.MousePosition.Y, true);
         Image _screen = Framebuffer.Graphics.Save();
@@ -253,6 +253,7 @@ unsafe class Program
 
         SizedScreens.Dispose();
         #endregion
+
 
         NotificationManager.Initialize();
 

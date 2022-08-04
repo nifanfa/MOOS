@@ -30,7 +30,7 @@ namespace System.Desktops
         public static string User;
 
         public static bool IsAtRoot => Dir.Length < 1;
-        //static Dictionary<int, string> BuiltInAppNames;
+        static Dictionary<int, string> BuiltInAppNames;
         public static ICommand IconClickCommand { get; set; }
         public static ICommand IconNativeClickCommand { get; set; }
         public static ICommand IconDirectoryClickCommand { get; set; }
@@ -71,7 +71,7 @@ namespace System.Desktops
             docker = new DesktopDocker();
             barMenu = new List<DesktopControl>();
             icons = new List<IconFile>();
-            //BuiltInAppNames = new Dictionary<int, string>();
+            BuiltInAppNames = new Dictionary<int, string>();
 
             //Bar Elements
             DesktopBarItem item = new DesktopBarItem();
@@ -87,7 +87,6 @@ namespace System.Desktops
             clock.Y = 0;
             clock.Command = new ICommand(onItemClock);
             barMenu.Add(clock);
-            Debug.WriteLine($"[DesktopBarItem] {item.ToString()}");
 
             onLoadIcons();
         }
@@ -99,7 +98,7 @@ namespace System.Desktops
             int X = 5;
             int Y = BarHeight;
             string devider = "/";
-            /*
+
             BuiltInAppNames.Clear();
 
 #if Chinese
@@ -118,14 +117,15 @@ namespace System.Desktops
             BuiltInAppNames.Add(5, "Console");
             BuiltInAppNames.Add(6, "Monitor");
 #endif
-            */
+
             IconClickCommand = new ICommand(onDesktopIconClick);
             IconNativeClickCommand = new ICommand(onDesktopNativeOSClick);
             IconDirectoryClickCommand = new ICommand(onDesktopDirectoryClick);
 
-            List<FileInfo> files = File.GetFiles($"home/{User}/Desktop");
+            string dirDesktop = $"home/{User}/Desktop";
 
-            /*
+            List<FileInfo> files = File.GetFiles(dirDesktop);
+
             if (IsAtRoot)
             {
                 for (int i = 0; i < BuiltInAppNames.Count; i++)
@@ -141,8 +141,8 @@ namespace System.Desktops
                         IconFile icon = new IconFile();
                         icon.Key = (i + 1);
                         icon.Content = BuiltInAppNames[icon.Key];
-                        icon.Path = Dir + devider;
-                        icon.FilePath = Dir + devider + icon.Content;
+                        icon.Path = dirDesktop + devider;
+                        icon.FilePath = dirDesktop + devider + icon.Content;
                         icon.FileInfo = null;
                         icon.X = X;
                         icon.Y = Y;
@@ -155,7 +155,6 @@ namespace System.Desktops
                     }
                 }
             }
-            */
 
             for (int i = 0; i < files.Count; i++)
             {
@@ -172,8 +171,8 @@ namespace System.Desktops
 
                 IconFile icon = new IconFile();
                 icon.Content = files[i].Name;
-                icon.Path = Dir + devider;
-                icon.FilePath = Dir + devider + icon.Content;
+                icon.Path = dirDesktop + devider;
+                icon.FilePath = dirDesktop + devider + icon.Content;
                 icon.FileInfo = files[i];
                 icon.X = X;
                 icon.Y = Y;
@@ -274,7 +273,7 @@ namespace System.Desktops
             }
             else if (file.EndsWith("doom1.wad"))
             {
-                frm = new Doom(300, 250);
+                frm = new Doom(300, 250, file);
                 frm.ShowDialog();
             }
             else if (file.EndsWith(".exe"))

@@ -45,7 +45,7 @@ namespace System.Collections.Generic
         {
             if (list.Count == 0) return default;
 
-            list.RemoveAt(list.Count);
+            list.Count--;
             return list[list.Count];
         }
     }

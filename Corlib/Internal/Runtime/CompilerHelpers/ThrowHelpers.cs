@@ -1,6 +1,5 @@
-
-using Internal.TypeSystem;
 using System.Runtime.InteropServices;
+using Internal.TypeSystem;
 
 namespace Internal.Runtime.CompilerHelpers
 {

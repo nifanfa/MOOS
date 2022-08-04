@@ -268,11 +268,10 @@ namespace System
 			_fsin(&x);
 			return x;
 		}
-		/*
 		public static (float Sin, float Cos) SinCos(float x)
 		{
 			return (Sin(x), Cos(x));
-		}*/
+		}
 		public static float Sinh(float x)
 		{
 			return 0.5F * (Exp(x) - Exp(-x));

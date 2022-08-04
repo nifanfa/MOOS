@@ -28,7 +28,7 @@ namespace System.Windows
 
         public static void MovetoTop(Window window)
         {
-            Childrens.Insert(0, window);
+            Childrens.Insert(0, window, true);
             FocusWindow = window;
         }
 

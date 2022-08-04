@@ -1,7 +1,7 @@
 using Internal.Runtime;
+using Internal.Runtime.CompilerServices;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
 namespace System
 {
@@ -27,9 +27,9 @@ namespace System
             return m_pEEType->BaseSize - (uint)sizeof(ObjHeader) - (uint)sizeof(EEType*);
         }
 
-        [NonVersionable]
+        //[NonVersionable]
         public Object() { }
-        [NonVersionable]
+        //[NonVersionable]
         ~Object() { }
 
         public virtual bool Equals(object o)
@@ -51,7 +51,7 @@ namespace System
 
         public virtual int GetHashCode()
         {
-            return RuntimeHelpers.GetHashCode(this);
+            return 0;
         }
 
         /// <summary>
@@ -64,34 +64,11 @@ namespace System
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern Type GetType();
 
-        /// <summary>
-        /// Creates a shallow copy of the current <see cref="Object"/>.
-        /// </summary>
-        /// <returns>
-        /// A shallow copy of the current System.Object.
-        /// </returns>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        protected extern object MemberwiseClone();
-
-        /// <summary>
-        /// Determines whether the specified <see cref="Object"/> instances are the same instance.
-        /// </summary>
-        /// <param name="left">The first <see cref="Object"/> to compare.</param>
-        /// <param name="right">The second <see cref="Object"/> to compare.</param>
-        /// <returns>
-        /// true if left is the same instance as right or if both are null references;
-        /// otherwise, false.
-        /// </returns>
-        [NonVersionable]
-        public static bool ReferenceEquals(object left, object right)
-        {
-            return (left == right);
-        }
-
         public virtual string ToString()
         {
             return GetType().ToString();
         }
+
 
         public virtual void Dispose()
         {

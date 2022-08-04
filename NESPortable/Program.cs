@@ -30,7 +30,7 @@ namespace NES
         [RuntimeExport("Lock")]
         public static void Lock() => ALock();
 
-        [RuntimeExport("UnLock")]
+        [RuntimeExport("Unlock")]
         public static void Unlock() => AUnlock();
 
         [DllImport("DebugWrite")]

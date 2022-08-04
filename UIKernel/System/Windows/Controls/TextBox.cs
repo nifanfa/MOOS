@@ -65,7 +65,7 @@ namespace System.Windows.Controls
                         case ConsoleKey.Backspace:
                             if (Text.Length > 0)
                             {
-                                Text = Text.Substring(0, Text.Length -1);
+                                Text.Length -= 1;
                             }
                             break;
                         case ConsoleKey.Enter:

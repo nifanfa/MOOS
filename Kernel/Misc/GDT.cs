@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+using Internal.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 

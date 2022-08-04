@@ -2,11 +2,11 @@
  * Copyright(c) 2022 nifanfa, This code is part of the Moos licensed under the MIT licence.
  */
 
+using Internal.Runtime.CompilerServices;
 using MOOS.Driver;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace MOOS.Misc
