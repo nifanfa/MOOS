@@ -10,8 +10,6 @@ namespace NES
 {
     public static unsafe class Program
     {
-        //Warning: This program doesn't have input support!
-
         [RuntimeExport("malloc")]
         public static nint malloc(ulong size) => Allocate(size);
 
