@@ -77,6 +77,8 @@ namespace MOOS
                 case "BindOnKeyChangedHandler":
                     return (delegate*<EventHandler<ConsoleKeyInfo>, void>)&API_BindOnKeyChangedHandler;
 #endif
+                case "Calloc":
+                    return (delegate*<ulong, ulong, void*>)&API_Calloc;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
@@ -96,6 +98,11 @@ namespace MOOS
             return papp.ScreenBuf;
         }
 #endif
+
+        public static void* API_Calloc(ulong num, ulong size)
+        {
+            return stdlib.calloc(num, size);
+        }
 
         public static void API_BindOnKeyChangedHandler(EventHandler<ConsoleKeyInfo> handler)
         {

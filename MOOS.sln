@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosKernel1", "CosmosKern
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CosmosCompatible", "CosmosCompatible\CosmosCompatible.shproj", "{86E84B0F-9EDE-4F25-AD24-75B350D6CB26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoomPortable", "DoomPortable\DoomPortable.csproj", "{3E46C530-72B4-443E-A541-BA8008049BF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,18 @@ Global
 		{2D5FCE45-0D99-421F-ADDA-A248917B4E88}.Release|x64.Build.0 = Release|Any CPU
 		{2D5FCE45-0D99-421F-ADDA-A248917B4E88}.Release|x86.ActiveCfg = Release|Any CPU
 		{2D5FCE45-0D99-421F-ADDA-A248917B4E88}.Release|x86.Build.0 = Release|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Debug|x64.Build.0 = Debug|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Debug|x86.Build.0 = Debug|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Release|x64.ActiveCfg = Release|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Release|x64.Build.0 = Release|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Release|x86.ActiveCfg = Release|Any CPU
+		{3E46C530-72B4-443E-A541-BA8008049BF6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +159,7 @@ Global
 		Kernel\Kernel.projitems*{2d5fce45-0d99-421f-adda-a248917b4e88}*SharedItemsImports = 5
 		Corlib\Corlib.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
 		Kernel\Kernel.projitems*{3880e378-077b-4f24-ad1e-9e157679c9ba}*SharedItemsImports = 5
+		Corlib\Corlib.projitems*{3e46c530-72b4-443e-a541-ba8008049bf6}*SharedItemsImports = 5
 		Corlib\Corlib.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
 		Kernel\Kernel.projitems*{479ee355-d81e-4162-aa5c-38f30c1abdb4}*SharedItemsImports = 5
 		Corlib\Corlib.projitems*{4937d3a9-2f20-43ba-a794-89067f060502}*SharedItemsImports = 5
