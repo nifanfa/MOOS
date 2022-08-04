@@ -330,7 +330,7 @@ Skip:
 
 align 4096
 Trampoline:
-incbin 'Trampoline'
+incbin 'trampoline.o'
 
 align 4096
 
