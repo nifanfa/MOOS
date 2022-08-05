@@ -30,8 +30,6 @@ namespace System.Collections.Generic
 
         public void Add(T t)
         {
-            if (Count + 1 >= _value.Length) Array.Resize(ref _value, _value.Length + 1);
-
             _value[Count] = t;
             Count++;
         }
