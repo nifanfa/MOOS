@@ -73,10 +73,12 @@ namespace System
 			for (int i = 0; i < rank; i++)
 			{
 				int length = pLengths[i];
+				/*
 				if (length > MaxLength)
 				{
 					ThrowHelpers.ThrowArgumentOutOfRangeException("length");
 				}
+				*/
 
 				totalLength *= (ulong)length;
 			}
@@ -107,10 +109,12 @@ namespace System
 		public static void Resize<T>(ref T[]? array, int newSize)
 #nullable disable
 		{
+			/*
 			if (newSize < 0)
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("newSize");
 			}
+			*/
 
 
 #nullable enable
@@ -133,10 +137,12 @@ namespace System
 
 		public static Array CreateInstance<T>(uint length)
 		{
+			/*
 			if (length < MaxLength)
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("length");
 			}
+			*/
 			return new T[length];
 		}
 
@@ -162,6 +168,7 @@ namespace System
 
 		public static void Copy(Array sourceArray, ref Array destinationArray, int startIndex, int count)
 		{
+			/*
 			if (sourceArray == null)
 			{
 				ThrowHelpers.ThrowArgumentException("sourceArray");
@@ -182,6 +189,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("count");
 			}
+			*/
 
 			int x = 0;
 			object[] temp = new object[count];
@@ -195,6 +203,7 @@ namespace System
 
 		public static void Copy<T>(T[] sourceArray, ref T[] destinationArray, int startIndex, int count)
 		{
+			/*
 			if (sourceArray == null)
 			{
 				ThrowHelpers.ThrowArgumentException("sourceArray");
@@ -215,6 +224,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("count");
 			}
+			*/
 
 			int x = 0;
 			T[] temp = new T[count];
@@ -231,10 +241,12 @@ namespace System
 #nullable disable
 		{
 			int iindex = (int)index;
+			/*
 			if (index != iindex)
 			{
 				ThrowHelpers.ThrowArgumentException("index");
 			}
+			*/
 
 			return GetValue(iindex);
 		}
@@ -246,6 +258,7 @@ namespace System
 			int iindex1 = (int)index1;
 			int iindex2 = (int)index2;
 
+			/*
 			if (index1 != iindex1)
 			{
 				ThrowHelpers.ThrowArgumentException("index1");
@@ -255,6 +268,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentException("index2");
 			}
+			*/
 
 			return GetValue(iindex1, iindex2);
 		}
@@ -267,6 +281,7 @@ namespace System
 			int iindex2 = (int)index2;
 			int iindex3 = (int)index3;
 
+			/*
 			if (index1 != iindex1)
 			{
 				ThrowHelpers.ThrowArgumentException("index1");
@@ -281,6 +296,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentException("index3");
 			}
+			*/
 
 			return GetValue(iindex1, iindex2, iindex3);
 		}
@@ -291,10 +307,12 @@ namespace System
 		{
 			int iindex = (int)index;
 
+			/*
 			if (index != iindex)
 			{
 				ThrowHelpers.ThrowArgumentException("index");
 			}
+			*/
 
 			SetValue(value, iindex);
 		}
@@ -306,6 +324,7 @@ namespace System
 			int iindex1 = (int)index1;
 			int iindex2 = (int)index2;
 
+			/*
 			if (index1 != iindex1)
 			{
 				ThrowHelpers.ThrowArgumentException("index1");
@@ -315,6 +334,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentException("index2");
 			}
+			*/
 
 			SetValue(value, iindex1, iindex2);
 		}
@@ -327,6 +347,7 @@ namespace System
 			int iindex2 = (int)index2;
 			int iindex3 = (int)index3;
 
+			/*
 			if (index1 != iindex1)
 			{
 				ThrowHelpers.ThrowArgumentException("index1");
@@ -341,6 +362,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentException("index3");
 			}
+			*/
 
 			SetValue(value, iindex1, iindex2, iindex3);
 		}
@@ -377,10 +399,12 @@ namespace System
 
 		public static void Fill<T>(T[] array, T value)
 		{
+			/*
 			if (array == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("array");
 			}
+			*/
 
 			for (int i = 0; i < array.Length; i++)
 			{
@@ -390,6 +414,7 @@ namespace System
 
 		public static void Fill<T>(T[] array, T value, int startIndex, int count)
 		{
+			/*
 			if (array == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("array");
@@ -404,6 +429,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("count, array.Length - count, startIndex");
 			}
+			*/
 
 			for (int i = startIndex; i < startIndex + count; i++)
 			{
@@ -426,6 +452,7 @@ namespace System
 		public static int IndexOf(Array array, object? value, int startIndex)
 #nullable disable
 		{
+			/*
 			if (array == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("array");
@@ -435,6 +462,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex, array.Length");
 			}
+			*/
 
 			for (int i = startIndex; i < array.Length; i++)
 			{
@@ -456,6 +484,7 @@ namespace System
 
 		public static int IndexOf<T>(T[] array, T value, int startIndex)
 		{
+			/*
 			if (array == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("array");
@@ -465,6 +494,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex, array.Length");
 			}
+			*/
 
 			for (int i = startIndex; i < startIndex + array.Length; i++)
 			{
@@ -493,6 +523,7 @@ namespace System
 		//
 		public static void Reverse(ref Array array, int index, int length)
 		{
+			/*
 			if (array == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("array");
@@ -512,6 +543,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("length, index");
 			}
+			*/
 
 			if (length <= 1)
 			{
@@ -528,16 +560,19 @@ namespace System
 		}
 		public static int LastIndexOf(Array array, object value, int startIndex, int count)
 		{
+			/*
 			if (array == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("array");
 			}
+			*/
 
 			if (array.Length == 0)
 			{
 				return -1;
 			}
 
+			/*
 			if (startIndex < 0 || startIndex >= array.Length)
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
@@ -552,6 +587,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("endIndex", SR.ArgumentOutOfRange_EndIndexStartIndex);
 			}
+			*/
 
 			int endIndex = startIndex - count + 1;
 			if (value == null)
@@ -584,6 +620,7 @@ namespace System
 
 		public static void Reverse<T>(ref T[] array, int index, int length)
 		{
+			/*
 			if (array == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("array");
@@ -603,6 +640,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentNullException("array.Length, index, length");
 			}
+			*/
 
 			if (length <= 1)
 			{
