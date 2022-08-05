@@ -29,7 +29,7 @@ namespace MOOS.GUI
         Chart CPUUsage;
         Chart RAMUsage;
 
-        public Monitor(int X, int Y) : base(X, Y, 200, 120)
+        public Monitor(int X, int Y) : base(X, Y, 200-1, 120)
         {
             this.Title = "System Monitor";
 
