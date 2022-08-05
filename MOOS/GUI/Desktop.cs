@@ -19,6 +19,7 @@ namespace MOOS.GUI
         private static Image BuiltInAppIcon;
         private static Image FolderIcon;
         private static Image DoomIcon;
+        private static Image StartIcon;
 
         public static string Prefix;
         public static string Dir;
@@ -41,12 +42,14 @@ namespace MOOS.GUI
             BuiltInAppIcon = new PNG(File.ReadAllBytes("Images/BApp.png"));
             FolderIcon = new PNG(File.ReadAllBytes("Images/folder.png"));
             DoomIcon = new PNG(File.ReadAllBytes("Images/Doom1.png"));
+            StartIcon = new PNG(File.ReadAllBytes("Images/Start.png"));
 #if Chinese
             Prefix = " 管理员@Moos: ";
 #else
             Prefix = " root@Moos: ";
 #endif
             Dir = "";
+
             imageViewer = new ImageViewer(400,400);
             msgbox = new MessageBox(100,300);
             imageViewer.Visible = false;
@@ -79,14 +82,15 @@ namespace MOOS.GUI
 
         public static string[] BuiltInAppNames;
 
+        const int BarHeight = 40;
+
         public static void Update()
         {
-            const int BarHeight = 35;
 
             List<FileInfo> names = File.GetFiles(Dir);
             int Devide = 60;
             int X = Devide;
-            int Y = Devide + BarHeight;
+            int Y = Devide;
 
             if(IsAtRoot)
             {
@@ -94,7 +98,7 @@ namespace MOOS.GUI
                 {
                     if (Y + FileIcon.Height + Devide > Framebuffer.Graphics.Height - Devide)
                     {
-                        Y = Devide + BarHeight;
+                        Y = Devide;
                         X += FileIcon.Width + Devide;
                     }
 
@@ -110,7 +114,7 @@ namespace MOOS.GUI
             {
                 if (Y + FileIcon.Height + Devide > Framebuffer.Graphics.Height - Devide)
                 {
-                    Y = Devide + BarHeight;
+                    Y = Devide;
                     X += FileIcon.Width + Devide;
                 }
 
@@ -153,21 +157,6 @@ namespace MOOS.GUI
                 names[i].Dispose();
             }
             names.Dispose();
-
-            Framebuffer.Graphics.FillRectangle(0, 0, Framebuffer.Graphics.Width, BarHeight, 0xFF111111);
-            //BitFont.DrawString("Song", 0xFFFFFFFF, CurrentDirectory, 0, (BarHeight / 2) - (16 / 2));
-            
-            string pre = Prefix + Dir;
-            WindowManager.font.DrawString(0, (BarHeight / 2) - (WindowManager.font.FontSize / 2), pre, Framebuffer.Graphics.Width);
-            pre.Dispose();
-
-#if Chinese
-            string Result = $"FPS:{FPSMeter.FPS} | 处理器使用率:{ThreadPool.CPUUsage}% | 线程数量: {ThreadPool.ThreadCount} | 内存: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
-#else
-            string Result = $"FPS:{FPSMeter.FPS} | CPU Usage:{ThreadPool.CPUUsage}% | ThreadCount: {ThreadPool.ThreadCount} | Memory: {(Allocator.MemoryInUse / 1024)}/{((Allocator.NumPages * Allocator.PageSize) / 1024)}kbytes";
-#endif
-            //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
-            WindowManager.font.DrawString(Framebuffer.Graphics.Width - WindowManager.font.MeasureString(Result) - WindowManager.font.FontSize, (BarHeight / 2) - (WindowManager.font.FontSize / 2), Result);
 
             if (Control.MouseButtons.HasFlag(MouseButtons.Left) && !WindowManager.HasWindowMoving && !WindowManager.MouseHandled) 
             {
@@ -225,7 +214,24 @@ namespace MOOS.GUI
                 LastPoint.Y = -1;
             }
 
+            DrawTaskBar();
+        }
+
+        private static void DrawTaskBar()
+        {
+            Framebuffer.Graphics.FillRectangle(0, Framebuffer.Height - BarHeight, Framebuffer.Width, BarHeight, 0xFF222222);
+            Framebuffer.Graphics.DrawImage(4, Framebuffer.Height - BarHeight + 4, StartIcon);
+
+#if Chinese
+            string Result = $"FPS:{FPSMeter.FPS} | 处理器使用率:{ThreadPool.CPUUsage}% | 已用内存: {(Allocator.MemoryInUse / 1024)}kbytes | {RTC.Hour}:{RTC.Minute}";
+#else
+            string Result = $"FPS:{FPSMeter.FPS} | CPU Usage:{ThreadPool.CPUUsage}% | Used Memory: {(Allocator.MemoryInUse / 1024)}kbytes | {RTC.Hour}:{RTC.Minute}";
+#endif
+            //BitFont.DrawString("Song", 0xFFFFFFFF, Result, Framebuffer.Graphics.Width - BitFont.MeasureString("Song", Result) - 16, (BarHeight / 2) - (16 / 2));
+            WindowManager.font.DrawString(Framebuffer.Graphics.Width - WindowManager.font.MeasureString(Result) - WindowManager.font.FontSize, Framebuffer.Height - BarHeight + (BarHeight / 2) - (WindowManager.font.FontSize / 2), Result);
+
             Result.Dispose();
+
         }
 
         public static Point LastPoint;
