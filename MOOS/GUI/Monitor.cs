@@ -62,6 +62,7 @@ namespace MOOS.GUI
             Framebuffer.Graphics.DrawImage(X + aX, Y + this.Height - chart.graphics.Height, chart.image, true);
             Framebuffer.Graphics.DrawRectangle(X + aX, Y, chart.graphics.Width, this.Height, 0xFF333333);
             aX += chart.graphics.Width;
+            aX -= 1;
         }
 
         private void DrawLineChart(int value,ref int lastValue, Graphics graphics,uint Color)
