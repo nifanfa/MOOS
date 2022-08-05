@@ -14,14 +14,9 @@ namespace System.Runtime.CompilerServices
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern int GetHashCode(object o);
         
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public new static extern bool Equals(object o1, object o2);
         
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern T UnsafeCast<T>(object o) where T : class;
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern IEnumerable<Assembly> GetAssemblies();
 
         // TODO: Implement?
         [Intrinsic]

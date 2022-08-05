@@ -20,6 +20,7 @@ namespace System.Windows
 
     public class Window : Widget
     {
+        public int Index { set; get;}
         public string Title { set; get; }
         public WindowStartupLocation WindowStartupLocation { get; set; }
         public Widget Focus { set; get; }
@@ -61,7 +62,7 @@ namespace System.Windows
             Background = Brushes.White;
             this.WindowStartupLocation = WindowStartupLocation.Manual;
             Focus = this;
-            WindowManager.Childrens.Add(this);
+            WindowManager.Insert(this);
         }
 
         public Window(int x, int y, int width, int height)
@@ -74,7 +75,7 @@ namespace System.Windows
             Background = Brushes.White;
             this.WindowStartupLocation = WindowStartupLocation.Manual;
             Focus = this;
-            WindowManager.Childrens.Add(this);
+            WindowManager.Insert(this);
         }
 
         public void ShowDialog()
@@ -122,7 +123,6 @@ namespace System.Windows
         bool Move;
         int OffsetX;
         int OffsetY;
-        public int Index { get => WindowManager.Childrens.IndexOf(this); }
 
         public virtual void OnInput()
         {
@@ -135,19 +135,27 @@ namespace System.Windows
                     Control.MousePosition.Y > CloseButtonY && Control.MousePosition.Y < CloseButtonY + WindowManager.CloseButton.Height
                 )
                 {
-                    this.OnClose();
-                    return;
+                    if (Control.Clicked)
+                    {
+                        this.OnClose();
+                        return;
+                    }
+
                 }
+
                 if (!WindowManager.HasWindowMoving && !Move && Control.MousePosition.X > X && Control.MousePosition.X < X + Width && Control.MousePosition.Y > Y - BarHeight && Control.MousePosition.Y < Y)
                 {
-                    WindowManager.MovetoTop(this);
-
-                    if (WindowManager.FocusWindow == this)
+                    if (WindowManager.Childrens[(WindowManager.Childrens.Count-1)].Index == Index)
                     {
-                        Move = true;
-                        WindowManager.HasWindowMoving = true;
-                        OffsetX = Control.MousePosition.X - X;
-                        OffsetY = Control.MousePosition.Y - Y;
+                        WindowManager.MovetoTop(this);
+
+                        if (WindowManager.FocusWindow == this)
+                        {
+                            Move = true;
+                            WindowManager.HasWindowMoving = true;
+                            OffsetX = Control.MousePosition.X - X;
+                            OffsetY = Control.MousePosition.Y - Y;
+                        }
                     }
                 }
             }
@@ -162,6 +170,7 @@ namespace System.Windows
                 X = Control.MousePosition.X - OffsetX;
                 Y = Control.MousePosition.Y - OffsetY;
             }
+
         }
 
         private int CloseButtonX => X + Width + 2 - (BarHeight / 2) - (WindowManager.CloseButton.Width / 2);
@@ -208,7 +217,7 @@ namespace System.Windows
             {
                 Content.Dispose();
             }
-            WindowManager.Childrens.Remove(this);
+            WindowManager.Remove(this);
         }
 
     }

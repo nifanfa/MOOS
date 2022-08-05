@@ -19,7 +19,6 @@ namespace System.Windows.Controls
         int _width = 24;
         Brush _border;
         Brush _checked;
-        bool _clicked;
         public CheckBox()
         {
             HorizontalAlignment = HorizontalAlignment.Center;
@@ -39,20 +38,13 @@ namespace System.Windows.Controls
 
             if (IsFocus)
             {
-                if (Control.MouseButtons == MouseButtons.Left)
+                if (Control.Clicked)
                 {
-                    if (!_clicked)
-                    {
-                        _clicked = true;
-                        IsChecked = !IsChecked;
-                    }
+                    IsChecked = !IsChecked;
+
                 }
             }
-            
-            if (Control.MouseButtons == MouseButtons.None)
-            {
-                _clicked = false;
-            }
+
         }
 
         public override void OnDraw()

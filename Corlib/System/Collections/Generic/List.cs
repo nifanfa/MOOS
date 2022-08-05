@@ -15,11 +15,13 @@ namespace System.Collections.Generic
 			size = initsize;
 			_value = new T[initsize];
 		}
+
 		public List(T[] array)
 		{
 			size = array.Length;
 			_value = array;
 		}
+
 		public T this[int index]
 		{
 			get => _value[index];
@@ -87,6 +89,7 @@ namespace System.Collections.Generic
 
 			return -1;
 		}
+
 		public bool Remove(T item)
 		{
 			int at = IndexOf(item);

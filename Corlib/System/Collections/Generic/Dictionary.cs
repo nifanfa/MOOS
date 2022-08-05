@@ -30,14 +30,13 @@ namespace System.Collections.Generic
             }
             return -1;
         }
-            
-            
+
         public int Count { get { return Values.Count; } }
 
         public void Remove(TKey key)
         {
-            Values.Remove(Values[Keys.IndexOf(key)]);
-            Keys.Remove(key);
+            Values.RemoveAt(IndexOf(key));
+            Keys.RemoveAt(IndexOf(key));
         }
 
         public Dictionary()
@@ -77,6 +76,7 @@ namespace System.Collections.Generic
             Keys.Dispose();
             base.Dispose();
         }
+
 
         public List<TKey> Keys;
         public List<TValue> Values;

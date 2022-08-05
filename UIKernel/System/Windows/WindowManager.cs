@@ -10,13 +10,14 @@ namespace System.Windows
 {
     public static class WindowManager
     {
-        public static List<Window> Childrens;
+        public static List<Window> Childrens { private set; get; }
         public static IFont font;
         public static Image CloseButton;
-
+        static int indexs;
 
         public static void Initialize()
         {
+            indexs = 0;
             Childrens = new List<Window>();
             //PNG yehei = new PNG(File.Instance.ReadAllBytes("sys/media/M+.png"));
             PNG yehei = new PNG(File.Instance.ReadAllBytes("sys/media/Yahei.png"));
@@ -26,9 +27,23 @@ namespace System.Windows
             MouseHandled = false;
         }
 
+        public static void Remove(Window window)
+        {
+            Childrens.Remove(window);
+        }
+
+        public static void Insert(Window window)
+        {
+            indexs++;
+            window.Index = indexs;
+            Childrens.Add(window);
+        }
+
         public static void MovetoTop(Window window)
         {
-            Childrens.Insert(0, window, true);
+            //*Childrens.Remove(window);
+            //Childrens.Add(window);
+            Childrens.Insert((Childrens.Count-1), window, true);
             FocusWindow = window;
         }
 
@@ -67,7 +82,6 @@ namespace System.Windows
             get => HasWindowMoving;
             set => HasWindowMoving = value;
         }
-
     }
 }
 #endif

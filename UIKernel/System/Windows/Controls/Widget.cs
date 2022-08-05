@@ -130,7 +130,7 @@ namespace System.Windows.Controls
 
         public virtual void OnUpdate()
         {
-            if (Control.MouseButtons == MouseButtons.Left)
+            if (Control.Clicked)
             {
                 if (!WindowManager.HasWindowMoving && Control.MousePosition.X > X && Control.MousePosition.X < (X + Width) && Control.MousePosition.Y > Y && Control.MousePosition.Y < (Y + Height))
                 {
@@ -147,7 +147,7 @@ namespace System.Windows.Controls
             else
             {
                 MouseEnter = false;
-                if (Control.MouseButtons == MouseButtons.Left)
+                if (Control.Clicked)
                 {
                     _isFocus = false;
                 }

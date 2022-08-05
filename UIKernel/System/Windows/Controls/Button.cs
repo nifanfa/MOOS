@@ -15,8 +15,6 @@ namespace System.Windows.Controls
         public static object CommandProperty { get;  set; }
         public object CommandParameter { get; set; }
 
-        bool clicked;
-
         public Button()
         {
             X = 0;
@@ -37,16 +35,11 @@ namespace System.Windows.Controls
 
                 if (IsFocus)
                 {
-                    if (Control.MouseButtons == MouseButtons.Left)
+                    if (Control.Clicked)
                     {
                         if (Command != null && Command.Source != null)
                         {
-                            if (!clicked)
-                            {
-                                clicked = true;
-
-                                Command.Source.Execute.Invoke(CommandParameter);
-                            }
+                            Command.Source.Execute.Invoke(CommandParameter);
                         }
                     }
                 }
@@ -56,10 +49,6 @@ namespace System.Windows.Controls
                 this.onMouseLostFocus();
             }
 
-            if (Control.MouseButtons == MouseButtons.None)
-            {
-                clicked = false;
-            }
         }
 
         public override void OnDraw()

@@ -35,7 +35,7 @@ namespace System
 
         public virtual bool Equals(object o)
         {
-            return RuntimeHelpers.Equals(this, o);
+            return false;
         }
 
         public static bool Equals(object left, object right)
@@ -64,14 +64,9 @@ namespace System
             return (left == right);
         }
 
-        public Type GetType()
-        { 
-            return null;
-        }
-
         public virtual string ToString()
         {
-            return GetType().ToString();
+            return "Object";
         }
 
 
@@ -83,12 +78,12 @@ namespace System
         /*
         public static bool operator !=(object a, object b)
         {
-            return !(a.ToString() == b.ToString());
+            return !(a == b); // ???
         }
 
         public static  bool operator ==(object a, object b)
         {
-            return (a.ToString() == b.ToString());
+            return (a == b); // ???
         }
         */
 
