@@ -116,6 +116,5 @@ namespace System.Collections.Generic
         {
             Count = 0;
         }
-
     }
 }
