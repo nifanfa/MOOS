@@ -36,7 +36,8 @@ namespace System.Collections.Generic
 
         public void Insert(int index, T item, bool internalMove = false)
         {
-            if (index == IndexOf(item)) return;
+            //Broken
+            //if (index == IndexOf(item)) return;
 
             if (!internalMove)
                 Count++;
