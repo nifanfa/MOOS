@@ -145,7 +145,7 @@ unsafe class Program
         Cursor = new PNG(File.ReadAllBytes("Images/Cursor.png"));
         CursorMoving = new PNG(File.ReadAllBytes("Images/Grab.png"));
         //Image from unsplash
-        Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper1.png"));
+        Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper2.png"));
 
         BitFont.Initialize();
 
@@ -235,7 +235,7 @@ unsafe class Program
         FConsole = new FConsole(350, 300);
         FConsole.Visible = false;
 
-        var welcome = new Welcome(400, 250);
+        var welcome = new Welcome(500, 250);
 
         rightmenu = new RightMenu();
         rightClicked = false;
@@ -321,8 +321,8 @@ unsafe class Program
 
             Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
             Desktop.Update();
+            WindowManager.DrawAll(); 
             NotificationManager.Update();
-            WindowManager.DrawAll();
             /*
             ASC16.DrawString("FPS: ", 10, 10, 0xFFFFFFFF);
             ASC16.DrawString(((ulong)FPSMeter.FPS).ToString(), 42, 10, 0xFFFFFFFF);

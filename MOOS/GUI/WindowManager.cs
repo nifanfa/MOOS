@@ -2,6 +2,7 @@
 using MOOS.FS;
 using MOOS.Misc;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -26,6 +27,7 @@ namespace MOOS.GUI
 
         public static void MoveToEnd(Window window)
         {
+            Debug.WriteLine($"Move {window.Title} to end");
             Windows.Insert(0, window, true);
         }
 
