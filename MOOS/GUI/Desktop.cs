@@ -220,7 +220,7 @@ namespace MOOS.GUI
         private static void DrawTaskBar()
         {
             Framebuffer.Graphics.FillRectangle(0, Framebuffer.Height - BarHeight, Framebuffer.Width, BarHeight, 0xFF222222);
-            Framebuffer.Graphics.DrawImage(4, Framebuffer.Height - BarHeight + 4, StartIcon);
+            Framebuffer.Graphics.DrawImage(12, Framebuffer.Height - BarHeight + 4, StartIcon);
 
 #if Chinese
             string Result = $"FPS:{FPSMeter.FPS} | 处理器使用率:{ThreadPool.CPUUsage}% | 已用内存: {(Allocator.MemoryInUse / 1024)}kbytes | {RTC.Hour}:{RTC.Minute}";
