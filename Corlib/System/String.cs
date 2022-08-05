@@ -309,10 +309,12 @@ namespace System
 			}
 			// Usually one uses the extension method with non-null values
 			// so all we need to worry about is startIndex compared to value.Length.
+			/*
 			if ((startIndex < 0) || (startIndex >= Length))
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex");
 			}
+			*/
 
 			string substring = "";
 			for (int i = startIndex; i < Length; i++)
@@ -329,10 +331,12 @@ namespace System
 			}
 			// Usually one uses the extension method with non-null values
 			// so all we need to worry about is startIndex compared to value.Length.
+			/*
 			if ((startIndex < 0) || (startIndex >= Length) || (endIndex >= Length) || (endIndex <= startIndex))
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex");
 			}
+			*/
 
 			string substring = "";
 			for (int i = startIndex; i < endIndex; i++)

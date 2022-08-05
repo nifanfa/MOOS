@@ -342,6 +342,7 @@ namespace System
 		// Converts an array of bytes into a String.  
 		public static string ToString(byte[] value, int startIndex, int length)
 		{
+			/*
 			if (value == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("value");
@@ -361,17 +362,20 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentException("value.Length, length, startIndex", SR.Arg_ArrayPlusOffTooSmall);
 			}
+			*/
 
 			if (length == 0)
 			{
 				return string.Empty;
 			}
 
+			/*
 			if (length > (int.MaxValue / 3))
 			{
 				// (Int32.MaxValue / 3) == 715,827,882 Bytes == 699 MB
 				ThrowHelpers.ThrowArgumentOutOfRangeException("length", string.Format(SR.ArgumentOutOfRange_LengthTooLarge, int.MaxValue / 3));
 			}
+			*/
 
 			int chArrayLength = length * 3;
 
@@ -392,10 +396,12 @@ namespace System
 		// Converts an array of bytes into a String.  
 		public static string ToString(byte[] value)
 		{
+			/*
 			if (value == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("value");
 			}
+			*/
 
 			return ToString(value, 0, value.Length);
 		}
@@ -403,10 +409,12 @@ namespace System
 		// Converts an array of bytes into a String.  
 		public static string ToString(byte[] value, int startIndex)
 		{
+			/*
 			if (value == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("value");
 			}
+			*/
 
 			return ToString(value, startIndex, value.Length - startIndex);
 		}
@@ -422,6 +430,7 @@ namespace System
 		// Converts an array of bytes into a boolean.  
 		public static bool ToBoolean(byte[] value, int startIndex)
 		{
+			/*
 			if (value == null)
 			{
 				ThrowHelpers.ThrowArgumentNullException("value");
@@ -436,6 +445,7 @@ namespace System
 			{
 				ThrowHelpers.ThrowArgumentOutOfRangeException("startIndex", SR.ArgumentOutOfRange_Index);
 			}
+			*/
 
 			return value[startIndex] != 0;
 		}
