@@ -45,8 +45,8 @@ namespace MOOS.GUI
 
             if ((Timer.Ticks % 10) == 0)
             {
-                DrawLineChart((int)ThreadPool.CPUUsage, ref CPUUsage.lastValue, CPUUsage.graphics, 0xFFFF0000);
-                DrawLineChart((int)(Allocator.MemoryInUse * 100 / Allocator.MemorySize), ref RAMUsage.lastValue, RAMUsage.graphics, 0xFF00FF00);
+                DrawLineChart((int)ThreadPool.CPUUsage, ref CPUUsage.lastValue, CPUUsage.graphics, 0xFF5DADE2);
+                DrawLineChart((int)(Allocator.MemoryInUse * 100 / Allocator.MemorySize), ref RAMUsage.lastValue, RAMUsage.graphics, 0xFF58D68D);
             }
 
             int aX = 0;
