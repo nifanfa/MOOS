@@ -72,7 +72,6 @@ namespace NES
             nes.openROM(data);
             for(; ; ) 
             {
-                //Debug.WriteLine("Running");
                 nes.runGame();
             }
         }
