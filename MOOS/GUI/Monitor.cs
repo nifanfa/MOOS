@@ -27,12 +27,7 @@ namespace MOOS.GUI
 
         public override void OnDraw()
         {
-            int w = Width;
-
-            Width = w + 1;
             base.OnDraw();
-            Width = w;
-
 
             if((Timer.Ticks % 10) == 0)
             {
@@ -47,6 +42,8 @@ namespace MOOS.GUI
             }
 
             Framebuffer.Graphics.DrawImage(X, Y, img, true);
+
+            base.DrawBorder();
         }
     }
 }
