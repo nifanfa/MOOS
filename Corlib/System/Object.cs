@@ -1,5 +1,6 @@
 using Internal.Runtime;
 using Internal.Runtime.CompilerServices;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -28,9 +29,7 @@ namespace System
             return m_pEEType->BaseSize - (uint)sizeof(ObjHeader) - (uint)sizeof(EEType*);
         }
 
-        //[NonVersionable]
         public Object() { }
-        //[NonVersionable]
         ~Object() { }
 
         public virtual bool Equals(object o)
@@ -38,35 +37,14 @@ namespace System
             return false;
         }
 
-        public static bool Equals(object left, object right)
-        {
-            if (left == right)
-                return true;
-
-            if (left == null || right == null)
-                return false;
-
-            return left.Equals(right);
-        }
-
-
         public virtual int GetHashCode()
         {
             return 0;
         }
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        protected extern object MemberwiseClone();
-
-        [NonVersionable]
-        public static bool ReferenceEquals(object left, object right)
-        {
-            return (left == right);
-        }
-
         public virtual string ToString()
         {
-            return "Object";
+            return "System.Object";
         }
 
 
@@ -75,18 +53,8 @@ namespace System
             var obj = this;
             free(Unsafe.As<object, IntPtr>(ref obj));
         }
-        /*
-        public static bool operator !=(object a, object b)
-        {
-            return !(a == b); // ???
-        }
-
-        public static  bool operator ==(object a, object b)
-        {
-            return (a == b); // ???
-        }
-        */
-
+       
+       
         public static implicit operator bool(object obj)=> obj != null;
 
         public static implicit operator IntPtr(object obj) => Unsafe.As<object, IntPtr>(ref obj);

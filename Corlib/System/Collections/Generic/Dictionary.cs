@@ -8,13 +8,13 @@ namespace System.Collections.Generic
         {
             get
             {
-                //return Values[Keys.IndexOf(key)];
-                return Values[IndexOf(key)];
+                return Values[Keys.IndexOf(key)];
+                //return Values[IndexOf(key)];
             }
             set
             {
-                //Values[Keys.IndexOf(key)] = value;
-                Values[IndexOf(key)] = value;
+                Values[Keys.IndexOf(key)] = value;
+               // Values[IndexOf(key)] = value;
             }
         }
 
@@ -35,8 +35,8 @@ namespace System.Collections.Generic
 
         public void Remove(TKey key)
         {
-            Values.RemoveAt(IndexOf(key));
-            Keys.RemoveAt(IndexOf(key));
+            Values.RemoveAt(Keys.IndexOf(key));
+            Keys.RemoveAt(Keys.IndexOf(key));
         }
 
         public Dictionary()
