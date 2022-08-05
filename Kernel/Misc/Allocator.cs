@@ -67,6 +67,14 @@ abstract unsafe class Allocator
         }
     }
 
+    public static ulong MemorySize
+    {
+        get
+        {
+            return NumPages * PageSize;
+        }
+    }
+
     public const ulong PageSignature = 0x2E61666E6166696E;
 
     /*
