@@ -35,7 +35,7 @@ namespace System
 
         public virtual bool Equals(object o)
         {
-           return RuntimeHelpers.Equals(this, o);
+            return RuntimeHelpers.Equals(this, o);
         }
 
         public static bool Equals(object left, object right)
@@ -63,15 +63,11 @@ namespace System
         {
             return (left == right);
         }
-        /// <summary>
-        /// Gets the <see cref="Type"/> of the current instance.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="Type"/> instance that represents the exact runtime type of the current
-        /// instance.
-        /// </returns>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern Type GetType();
+
+        public Type GetType()
+        { 
+            return null;
+        }
 
         public virtual string ToString()
         {
@@ -84,6 +80,17 @@ namespace System
             var obj = this;
             free(Unsafe.As<object, IntPtr>(ref obj));
         }
+        /*
+        public static bool operator !=(object a, object b)
+        {
+            return !(a.ToString() == b.ToString());
+        }
+
+        public static  bool operator ==(object a, object b)
+        {
+            return (a.ToString() == b.ToString());
+        }
+        */
 
         public static implicit operator bool(object obj)=> obj != null;
 
