@@ -10,40 +10,70 @@ namespace MOOS.GUI
 {
     internal class Monitor : Window
     {
-        public Image img;
-        public Graphics g;
-
-        public Monitor(int X, int Y) : base(X, Y, 200, 200)
+        class Chart
         {
-            this.Title = "System Monitor";
-            img = new Image(this.Width, this.Height);
-            g = Graphics.FromImage(img);
-            g.Clear(0xFF222222);
+            public Image image;
+            public Graphics graphics;
+            public int lastValue;
+            public string name;
+
+            public Chart(int Width,int Height,string Name)
+            {
+                image = new Image(Width, Height);
+                graphics = Graphics.FromImage(image);
+                lastValue = 100;
+                name = Name;
+            }
         }
 
-        int lastCPUUsage;
+        Chart CPUUsage;
+        Chart RAMUsage;
 
-        const int lineWidth = 5;
+        public Monitor(int X, int Y) : base(X, Y, 200, 120)
+        {
+            this.Title = "System Monitor";
+
+            CPUUsage = new Chart(100, 100,"CPU");
+            RAMUsage = new Chart(100, 100,"RAM");
+        }
+
+        const int LineWidth = 5;
 
         public override void OnDraw()
         {
             base.OnDraw();
 
-            if((Timer.Ticks % 10) == 0)
+            if ((Timer.Ticks % 10) == 0)
             {
-                int cpuUsage = (int)(100 -ThreadPool.CPUUsage);
-
-                g.FillRectangle(Width - lineWidth, 0, lineWidth, Height, 0xFF222222);
-                g.DrawLine(Width - lineWidth, (Height / 100) * lastCPUUsage, Width, (Height / 100) * cpuUsage, 0xFFFF0000);
-
-                lastCPUUsage = cpuUsage;
-
-                g.Copy(-lineWidth, 0, 0, 0, Width, Height);
+                DrawLineChart((int)ThreadPool.CPUUsage, ref CPUUsage.lastValue, CPUUsage.graphics, 0xFFFF0000);
+                DrawLineChart((int)(Allocator.MemoryInUse * 100 / Allocator.MemorySize), ref RAMUsage.lastValue, RAMUsage.graphics, 0xFF00FF00);
             }
 
-            Framebuffer.Graphics.DrawImage(X, Y, img, true);
+            int aX = 0;
+            Render(ref aX,CPUUsage);
+            Render(ref aX,RAMUsage);
 
             base.DrawBorder();
+        }
+
+        private void Render(ref int aX,Chart chart)
+        {
+            WindowManager.font.DrawString(X + aX + (chart.graphics.Width / 2) - (WindowManager.font.MeasureString(chart.name) / 2), Y, chart.name);
+            Framebuffer.Graphics.DrawImage(X + aX, Y + this.Height - chart.graphics.Height, chart.image, true);
+            Framebuffer.Graphics.DrawRectangle(X + aX, Y, chart.graphics.Width, this.Height, 0xFF333333);
+            aX += chart.graphics.Width;
+        }
+
+        private void DrawLineChart(int value,ref int lastValue, Graphics graphics,uint Color)
+        {
+            int val = (100 - value);
+
+            graphics.FillRectangle(graphics.Width - LineWidth, 0, LineWidth, graphics.Height, 0xFF222222);
+            graphics.DrawLine(graphics.Width - LineWidth, (graphics.Height / 100) * lastValue, graphics.Width, (graphics.Height / 100) * val, Color);
+
+            lastValue = val;
+
+            graphics.Copy(-LineWidth, 0, 0, 0, graphics.Width, graphics.Height);
         }
     }
 }
