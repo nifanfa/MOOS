@@ -48,44 +48,15 @@ namespace System
 #pragma warning restore CS0824 // Constructor is marked external
 
 
-		public static unsafe string FromASCII(IntPtr ptr, int length)
+		public static unsafe string FromASCII(nint ptr, int length)
 		{
-			char[] buf = new char[length];
-			byte* _ptr = (byte*)ptr;
-
-			for (int i = 0; i < length; i++)
-			{
-				char c = (char)_ptr[i];
-				buf[i] = c;
-			}
-
-			string s = new(buf);
-			buf.Dispose();
-
-			return s;
-		}
-
-		public static unsafe string FromASCII(IntPtr ptr, int length, byte ignore)
-		{
-			char[] buf = new char[length];
-			byte* _ptr = (byte*)ptr;
-
-			int len = 0;
-
-			for (int i = 0; i < length; i++)
-			{
-				if (_ptr[i] != ignore)
-				{
-					char c = (char)_ptr[i];
-					buf[i] = c;
-					len++;
-				}
-			}
-
-			string s = new(buf, 0, len);
-			buf.Dispose();
-
-			return s;
+			byte* p = (byte*)ptr;
+			char* newp = stackalloc char[length];
+			for(int i = 0; i < length; i++)
+            {
+				newp[i] = (char)p[i];
+            }
+			return new string(newp, 0, length);
 		}
 
 		private static unsafe string Ctor(char* ptr)
