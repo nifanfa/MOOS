@@ -27,7 +27,6 @@ namespace MOOS.GUI
 
         public static void MoveToEnd(Window window)
         {
-            Debug.WriteLine($"Move {window.Title} to end");
             Windows.Insert(0, window, true);
         }
 
