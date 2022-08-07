@@ -41,6 +41,11 @@ namespace MOOS.FS
             File.Instance = this;
         }
 
+        public static ulong SizeToSec(ulong size)
+        {
+            return ((size - (size % 512)) / 512) + ((size % 512) != 0 ? 1ul : 0);
+        }
+
         public abstract List<FileInfo> GetFiles(string Directory);
         public abstract void Delete(string Name);
         public abstract byte[] ReadAllBytes(string Name);
