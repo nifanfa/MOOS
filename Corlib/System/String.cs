@@ -97,6 +97,20 @@ namespace System
 		}
 		[DllImport("*")]
 		private static extern unsafe void memcpy(byte* dest, byte* src, ulong count);
+
+		public int LastIndexOf(char j)
+		{
+			for (int i = Length - 1; i >= 0; i--)
+			{
+				if (this[i] == j)
+				{
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
 		private static unsafe string Ctor(char[] ptr, int index, int length)
 		{
 			fixed (char* _ptr = ptr)
