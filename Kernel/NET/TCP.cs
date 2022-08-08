@@ -1,6 +1,5 @@
-//https://github.com/pdoane/osdev/blob/master/net/tcp.c
-
 using MOOS.Driver;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -11,11 +10,11 @@ namespace MOOS.NET
     {
         public TCPStatus State;
 
-        public bool Connected => State != TCPStatus.SynSent;
+        public bool Connected => State != TCPStatus.SynSent && State != TCPStatus.Closed;
 
-        public byte[] LocalAddr = new byte[4];
-        public byte[] NextAddr = new byte[4];
-        public byte[] RemoteAddr = new byte[4];
+        public IPAddress LocalAddr;
+        public IPAddress NextAddr;
+        public IPAddress RemoteAddr;
 
         public ushort LocalPort;
         public ushort RemotePort;
@@ -30,7 +29,10 @@ namespace MOOS.NET
 
         public uint RcvNxt;                        
         public uint RcvWnd;                        
-        public uint RcvUP;                         
+        public uint RcvUP;
+
+        public bool PacketSent;
+        public uint PacketAck;
 
         public void Send(byte[] buffer)
         {
@@ -52,7 +54,7 @@ namespace MOOS.NET
         
         public static TcpClient Connect(IPAddress address,ushort port) 
         {
-            return TCP.Connect(address.Address, port, port);
+            return TCP.Connect(address, port, port);
         }
 
         public event Network.OnDataHandler OnData;
@@ -106,15 +108,15 @@ namespace MOOS.NET
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct TCPHeader
         {
-            public ushort srcPort;
-            public ushort dstPort;
-            public uint seq;
-            public uint ack;
-            public byte off;
-            public byte flags;
-            public ushort windowSize;
-            public ushort checksum;
-            public ushort urgent;
+            public ushort SourcePort;
+            public ushort DestPort;
+            public uint Seq;
+            public uint Ack;
+            public byte Off;
+            public byte Flags;
+            public ushort WindowSize;
+            public ushort Checksum;
+            public ushort Urgent;
         }
 
         private const ushort TCP_WINDOW_SIZE = 8192;
@@ -122,13 +124,13 @@ namespace MOOS.NET
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct ChecksumHeader
         {
-            public fixed byte src[4];
-            public uint bits1;
-            public fixed byte dst[4];
-            public uint bits2;
-            public byte reserved;
-            public byte protocol;
-            public ushort len;
+            public uint Source;
+            public uint Bits1;
+            public uint Dest;
+            public uint Bits2;
+            public byte Reserved;
+            public byte Protocol;
+            public ushort Length;
         }
 
         public static List<TcpClient> Clients;
@@ -136,16 +138,22 @@ namespace MOOS.NET
         internal static void HandlePacket(byte* buffer, int length)
         {
             TCPHeader* hdr = (TCPHeader*)buffer;
-            buffer += hdr->off >> 2;
-            length -= hdr->off >> 2;
+            buffer += hdr->Off >> 2;
+            length -= hdr->Off >> 2;
             length -= 4;
 
-            Swap(hdr);
+            Ethernet.SwapLeftRight(ref hdr->SourcePort);
+            Ethernet.SwapLeftRight(ref hdr->DestPort);
+            Ethernet.SwapLeftRight32(ref hdr->Seq);
+            Ethernet.SwapLeftRight32(ref hdr->Ack);
+            Ethernet.SwapLeftRight(ref hdr->WindowSize);
+            Ethernet.SwapLeftRight(ref hdr->Checksum);
+            Ethernet.SwapLeftRight(ref hdr->Urgent);
 
             TcpClient currConn = null;
             for(int i = 0; i < Clients.Count; i++) 
             {
-                if (Clients[i].LocalPort == hdr->dstPort) 
+                if (Clients[i].LocalPort == hdr->DestPort) 
                 {
                     currConn = Clients[i];
                     break;
@@ -158,316 +166,129 @@ namespace MOOS.NET
                 return;
             }
 
-            if (currConn.State == TCPStatus.Closed)
+            if (currConn.State == TCPStatus.SynSent)
             {
-                return;
+                HandleSynSent(currConn, hdr);
             }
-
-            if (currConn.State == TCPStatus.Listen)
+            else if (currConn.State == TCPStatus.Established)
             {
-            }
-            else if (currConn.State == TCPStatus.SynSent)
-            {
-                RecvSynSent(currConn, hdr);
-            }
-            else
-            {
-                RecvGeneral(currConn, hdr, buffer, length);
+                HandleTCPPacket(currConn, hdr, buffer, length);
             }
         }
 
-        private static void RecvGeneral(TcpClient conn, TCPHeader* hdr, byte* buffer, int length)
+        private static void HandleTCPPacket(TcpClient conn, TCPHeader* hdr, byte* buffer, int length)
         {
+            uint flags = hdr->Flags;
 
-            uint flags = hdr->flags;
-
-            if ((flags & (byte)TCPFlags.TCP_RST) != 0)
+            if (conn.RcvNxt <= hdr->Seq && (hdr->Seq + length) < (conn.RcvNxt + conn.RcvWnd))
             {
-                SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
-                RecvRst(conn, hdr);
-                return;
-            }
-
-            if ((flags & (byte)TCPFlags.TCP_SYN) != 0)
-            {
-                SendPacket(conn, 0, (byte)TCPFlags.TCP_RST | (byte)TCPFlags.TCP_ACK, null, 0);
-                Console.WriteLine("Error: connection reset");
-            }
-
-            if ((~flags & (byte)TCPFlags.TCP_ACK) != 0)
-            {
-                return;
-            }
-
-            RecvAck(conn, hdr);
-
-
-            if (length != 0 && (flags & (byte)TCPFlags.TCP_PSH) != 0)
-            {
-                RecvData(conn, hdr->seq, buffer, length);
-            }
-
-            if ((flags & (byte)TCPFlags.TCP_FIN) != 0)
-            {
-                RecvFin(conn, hdr);
-            }
-        }
-
-        private static void RecvFin(TcpClient conn, TCPHeader* hdr)
-        {
-
-            conn.RcvNxt = hdr->seq + 1;
-            SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
-
-            switch (conn.State)
-            {
-                case TCPStatus.SynReceived:
-                case TCPStatus.Established:
-                    conn.State = TCPStatus.CloseWait;
-                    break;
-
-                case TCPStatus.FinWait1:
-                    if ((hdr->ack - conn.SndNxt) >= 0)
+                if (BitHelpers.IsBitSet(flags, 4))
+                {
+                    if (conn.SndUna < hdr->Ack && hdr->Ack <= conn.SndNxt)
                     {
+                        conn.SndUna = hdr->Ack;
 
-                        conn.State = TCPStatus.TimeWait;
+                        if (conn.SndWl1 < hdr->Seq || (conn.SndWl1 == hdr->Seq && conn.SndWl2 <= hdr->Ack))
+                        {
+                            conn.SndWnd = hdr->WindowSize;
+                            conn.SndWl1 = hdr->Seq;
+                            conn.SndWl2 = hdr->Ack;
+                        }
                     }
-                    else
-                    {
-                        conn.State = TCPStatus.Closing;
-                    }
-                    break;
+                }
 
-                case TCPStatus.FinWait2:
-                    conn.State = TCPStatus.TimeWait;
-                    break;
+                if (hdr->Ack < conn.SndUna)
+                {
+                    return;
+                }
 
-                case TCPStatus.CloseWait:
-                case TCPStatus.Closing:
-                case TCPStatus.LastAcknowledge:
-                    break;
+                if (hdr->Ack > conn.SndNxt)
+                {
+                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
+                    return;
+                }
 
-                case TCPStatus.TimeWait:
-                    break;
-            }
-        }
-
-        private static void RecvData(TcpClient conn, uint seq, byte* buffer, int length)
-        {
-            switch (conn.State)
-            {
-                case TCPStatus.SynReceived:
-                    break;
-
-                case TCPStatus.Established:
-                case TCPStatus.FinWait1:
-                case TCPStatus.FinWait2:
-
-                    if (conn.RcvNxt == seq)
-                    {
-                        conn._OnData(buffer, length);
-                        conn.RcvNxt += (uint)length;
-                    }
+                if (BitHelpers.IsBitSet(flags, 3))
+                {
+                    conn.RcvNxt += (uint)length;
+                    
+                    conn._OnData(buffer, length);
 
                     SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private static void RecvAck(TcpClient conn, TCPHeader* hdr)
-        {
-            switch (conn.State)
-            {
-                case TCPStatus.SynReceived:
-                    if (conn.SndUna <= hdr->ack && hdr->ack <= conn.SndNxt)
-                    {
-                        conn.SndWnd = hdr->windowSize;
-                        conn.SndWl1 = hdr->seq;
-                        conn.SndWl2 = hdr->ack;
-                        conn.State = TCPStatus.Established;
-                    }
-                    else
-                    {
-                        SendPacket(conn, hdr->ack, (byte)TCPFlags.TCP_RST, null, 0);
-                    }
-                    break;
-
-                case TCPStatus.Established:
-                case TCPStatus.FinWait1:
-                case TCPStatus.FinWait2:
-                case TCPStatus.CloseWait:
-                case TCPStatus.Closing:
-                    if (hdr->seq == PacketAck) PacketSent = true;
-                    if ((conn.SndUna - hdr->ack) <= 0 && (hdr->ack - conn.SndNxt) <= 0)
-                    {
-                        conn.SndUna = hdr->ack;
-
-                        if ((conn.SndWl1 - hdr->seq) < 0 ||
-                            (conn.SndWl1 == hdr->seq && (conn.SndWl2 - hdr->ack) <= 0))
-                        {
-                            conn.SndWnd = hdr->windowSize;
-                            conn.SndWl1 = hdr->seq;
-                            conn.SndWl2 = hdr->ack;
-                        }
-
-                    }
-
-                    if ((hdr->ack - conn.SndUna) <= 0)
-                    {
-                    }
-
-                    if ((hdr->ack - conn.SndNxt) > 0)
-                    {
-                        SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
-                        return;
-                    }
-
-                    if ((hdr->ack - conn.SndNxt) >= 0)
-                    {
-                        if (conn.State == TCPStatus.FinWait1)
-                        {
-                            conn.State = TCPStatus.FinWait2;
-                        }
-                        else if (conn.State == TCPStatus.Closing)
-                        {
-                            conn.State = TCPStatus.TimeWait;
-                        }
-                    }
-
-                    break;
-
-                case TCPStatus.LastAcknowledge:
-                    if ((hdr->ack - conn.SndNxt) >= 0)
-                    {
-
-                    }
-                    break;
-
-                case TCPStatus.TimeWait:
-                    break;
-            }
-        }
-
-        private static void RecvRst(TcpClient conn, TCPHeader* hdr)
-        {
-            switch (conn.State)
-            {
-                case TCPStatus.SynReceived:
-
-                    Console.WriteLine("Error: tcp connection refused");
-                    break;
-
-                case TCPStatus.Established:
-                case TCPStatus.FinWait1:
-                case TCPStatus.FinWait2:
-                case TCPStatus.CloseWait:
-
-                    Console.WriteLine("Error: tcp reset");
-                    break;
-
-                case TCPStatus.Closing:
-                case TCPStatus.LastAcknowledge:
-                case TCPStatus.TimeWait:
-                    break;
-            }
-        }
-
-        private const byte TCP_CONN_RESET = 1;
-        private const byte TCP_CONN_REFUSED = 2;
-        private const byte TCP_CONN_CLOSING = 3;
-
-        private static void RecvSynSent(TcpClient conn, TCPHeader* hdr)
-        {
-            byte flags = hdr->flags;
-
-            if ((flags & (byte)TCPFlags.TCP_ACK) != 0)
-            {
-                if ((hdr->ack - conn.ISS) <= 0 || (hdr->ack - conn.SndNxt) > 0)
+                    return;
+                }
+                if (BitHelpers.IsBitSet(flags, 0))
                 {
-                    if ((~flags & (byte)TCPFlags.TCP_RST) != 0)
-                    {
-                        SendPacket(conn, hdr->ack, (byte)TCPFlags.TCP_RST, null, 0);
-                    }
+                    conn.RcvNxt++;
 
-                    Console.WriteLine("Bad ACK");
+                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
+
                     return;
                 }
             }
-
-            if ((flags & (byte)TCPFlags.TCP_RST) != 0)
+            else if (BitHelpers.IsBitSet(flags,2))
             {
-                if ((flags & (byte)TCPFlags.TCP_ACK) != 0)
-                {
-                    Console.WriteLine("TCP Reset");
-                }
-
-                return;
+                conn.State = TCPStatus.Closed;
+                Console.WriteLine($"Error: TCP rst flags:{flags}");
             }
-
-            if ((flags & (byte)TCPFlags.TCP_SYN) != 0)
+            else if (BitHelpers.IsBitSet(flags, 0))
             {
+                conn.State = TCPStatus.Closed;
+            }
+        }
+        
+        private static void HandleSynSent(TcpClient conn, TCPHeader* hdr)
+        {
+            byte flags = hdr->Flags;
 
-                conn.RcvNxt = hdr->seq + 1;
+            if (BitHelpers.IsBitSet(flags, 1) && BitHelpers.IsBitSet(flags, 4))
+            {
+                conn.RcvNxt = hdr->Seq + 1;
 
-                if ((flags & (byte)TCPFlags.TCP_ACK) != 0)
+                if (BitHelpers.IsBitSet(flags, 4))
                 {
-                    conn.SndUna = hdr->ack;
-                    conn.SndWnd = hdr->windowSize;
-                    conn.SndWl1 = hdr->seq;
-                    conn.SndWl2 = hdr->ack;
+                    conn.SndUna = hdr->Ack;
+                    conn.SndWnd = hdr->WindowSize;
+                    conn.SndWl1 = hdr->Seq;
+                    conn.SndWl2 = hdr->Ack;
 
+                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
 
                     conn.State = TCPStatus.Established;
-                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK, null, 0);
                     Console.WriteLine("Connection established");
-
-
-
                 }
-                else
-                {
-                    Console.WriteLine("No response");
+            }
+            else
+            {
+                conn.State = TCPStatus.Closed;
 
-                    conn.State = TCPStatus.SynReceived;
-
-                    --conn.SndNxt;
-                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_SYN | (byte)TCPFlags.TCP_ACK, null, 0);
-                }
+                Console.WriteLine("Connection failed");
             }
         }
 
-        public static TcpClient Connect(byte[] addr, ushort port, ushort localPort)
+        public static TcpClient Connect(IPAddress addr, ushort port, ushort localPort)
         {
             TcpClient conn = new();
 
-            conn.LocalAddr[0] = Network.IP[0];
-            conn.LocalAddr[1] = Network.IP[1];
-            conn.LocalAddr[2] = Network.IP[2];
-            conn.LocalAddr[3] = Network.IP[3];
+            conn.LocalAddr = Network.IP;
 
-            conn.NextAddr[0] = addr[0];
-            conn.NextAddr[1] = addr[1];
-            conn.NextAddr[2] = addr[2];
-            conn.NextAddr[3] = addr[3];
+            conn.NextAddr = addr;
 
-            conn.RemoteAddr[0] = addr[0];
-            conn.RemoteAddr[1] = addr[1];
-            conn.RemoteAddr[2] = addr[2];
-            conn.RemoteAddr[3] = addr[3];
+            conn.RemoteAddr = addr;
 
             conn.LocalPort = localPort;
             conn.RemotePort = port;
 
-            conn.SndUna = 0;
-            conn.SndNxt = 0;
+            var rnd = new Random();
+            uint seq = (uint)rnd.Next(0, int.MaxValue);
+
+            conn.SndUna = seq;
+            conn.SndNxt = seq;
             conn.SndWnd = TCP_WINDOW_SIZE;
             conn.SndUP = 0;
             conn.SndWl1 = 0;
             conn.SndWl2 = 0;
-            conn.ISS = 0;
+            conn.ISS = seq;
 
             conn.RcvNxt = 0;
             conn.RcvWnd = TCP_WINDOW_SIZE;
@@ -485,6 +306,7 @@ namespace MOOS.NET
             }
             if (conn.State == TCPStatus.SynSent)
             {
+                conn.State = TCPStatus.Closed;
                 Console.WriteLine("Connection timeout");
             }
 
@@ -501,17 +323,17 @@ namespace MOOS.NET
             byte* buffer = (byte*)Allocator.Allocate(TCP_WINDOW_SIZE);
 
             TCPHeader* hdr = (TCPHeader*)buffer;
-            hdr->srcPort = conn.LocalPort;
 
-            hdr->dstPort = conn.RemotePort;
-            hdr->seq = seq;
-            hdr->ack = ((flags & (byte)TCPFlags.TCP_ACK) != 0) ? conn.RcvNxt : 0;
-            hdr->off = 0;
-            hdr->flags = flags;
-            hdr->windowSize = TCP_WINDOW_SIZE;
-            hdr->checksum = 0;
-            hdr->urgent = 0;
-            Swap(hdr);
+            hdr->SourcePort = Ethernet.SwapLeftRight(conn.LocalPort);
+            hdr->DestPort = Ethernet.SwapLeftRight(conn.RemotePort);
+            hdr->Seq = Ethernet.SwapLeftRight32(seq);
+            hdr->Ack = Ethernet.SwapLeftRight32(((flags & (byte)TCPFlags.TCP_ACK) != 0) ? conn.RcvNxt : 0);
+            hdr->WindowSize = Ethernet.SwapLeftRight(TCP_WINDOW_SIZE);
+            hdr->Checksum = Ethernet.SwapLeftRight(0);
+            hdr->Urgent = Ethernet.SwapLeftRight(0);
+
+            hdr->Off = 0;
+            hdr->Flags = flags;
 
             byte* p = buffer + sizeof(TCPHeader);
 
@@ -528,7 +350,7 @@ namespace MOOS.NET
                 *p++ = 0;
             }
 
-            hdr->off = (byte)((p - buffer) << 2);
+            hdr->Off = (byte)((p - buffer) << 2);
 
             if (data != null)
             {
@@ -538,76 +360,38 @@ namespace MOOS.NET
             byte* end = p + count;
 
             ChecksumHeader* phdr = (ChecksumHeader*)(buffer - sizeof(ChecksumHeader));
-            phdr->src[0] = conn.LocalAddr[0];
-            phdr->src[1] = conn.LocalAddr[1];
-            phdr->src[2] = conn.LocalAddr[2];
-            phdr->src[3] = conn.LocalAddr[3];
-            phdr->dst[0] = conn.RemoteAddr[0];
-            phdr->dst[1] = conn.RemoteAddr[1];
-            phdr->dst[2] = conn.RemoteAddr[2];
-            phdr->dst[3] = conn.RemoteAddr[3];
+            phdr->Source = conn.LocalAddr.AddressV4;
+            phdr->Dest = conn.RemoteAddr.AddressV4;
 
-            phdr->reserved = 0;
-            phdr->protocol = (byte)IPv4.IPv4Protocol.TCP;
-            phdr->len = Ethernet.SwapLeftRight((ushort)((uint)end - (uint)buffer));
+            phdr->Reserved = 0;
+            phdr->Protocol = (byte)IPv4.IPv4Protocol.TCP;
+            phdr->Length = Ethernet.SwapLeftRight((ushort)((uint)end - (uint)buffer));
 
-            ushort checksum = TCPChecksum(buffer - sizeof(ChecksumHeader), end);
-            hdr->checksum = Ethernet.SwapLeftRight(checksum);
+            ushort checksum = CalculateChecksum(buffer - sizeof(ChecksumHeader), end);
+            hdr->Checksum = Ethernet.SwapLeftRight(checksum);
 
-            IPv4.SendPacket(new byte[]
-            {
-                conn.RemoteAddr [0],
-                conn.RemoteAddr [1],
-                conn.RemoteAddr [2],
-                conn.RemoteAddr [3]
-            }, (byte)IPv4.IPv4Protocol.TCP, buffer, (int)end - (int)buffer);
+            IPv4.SendPacket(conn.RemoteAddr, (byte)IPv4.IPv4Protocol.TCP, buffer, (int)end - (int)buffer);
 
-            Allocator.Free((System.IntPtr)buffer);
-
-            conn.SndNxt += count;
-            if ((flags & ((byte)TCPFlags.TCP_SYN | (byte)TCPFlags.TCP_FIN)) != 0)
-            {
-                ++conn.SndNxt;
-            }
+            Allocator.Free((nint)buffer);
         }
 
-        private static void Swap(TCPHeader* hdr)
-        {
-            hdr->srcPort = Ethernet.SwapLeftRight(hdr->srcPort);
-            hdr->dstPort = Ethernet.SwapLeftRight(hdr->dstPort);
+        const int MSS = 536;
 
-            hdr->seq = Ethernet.SwapLeftRight32(hdr->seq);
-            hdr->ack = Ethernet.SwapLeftRight32(hdr->ack);
-
-            hdr->windowSize = Ethernet.SwapLeftRight(hdr->windowSize);
-            hdr->checksum = Ethernet.SwapLeftRight(hdr->checksum);
-            hdr->urgent = Ethernet.SwapLeftRight(hdr->urgent);
-        }
-
-        private static bool PacketSent = false;
-        private static uint PacketAck = 0;
-
-        public static void Send(TcpClient conn, byte* data, int count)
+        public static void Send(TcpClient conn, byte* data, int length)
         {
             if (conn.Connected)
             {
-                PacketSent = false;
-                PacketAck = conn.RcvNxt;
-                uint sndNxt = conn.SndNxt;
-                while(conn != null)
+                for (int i = 0; i < length; i += MSS)
                 {
-                    if (conn == null) break;
-                    SendPacket(conn, sndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
-                    Timer.Sleep(1000);
-                    if (PacketSent || conn == null) break;
-                    Console.WriteLine("Packet may not accpeted. resending");
+                    int count = i + MSS > length ? length % MSS : MSS;
+
+                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
+                    conn.SndNxt += (uint)count;
                 }
-                if (conn != null)
-                    Console.WriteLine("Packet sent");
             }
         }
 
-        private static ushort TCPChecksum(byte* data, byte* end)
+        private static ushort CalculateChecksum(byte* data, byte* end)
         {
             uint len = (uint)(end - data);
             ushort* p = (ushort*)data;
@@ -620,7 +404,7 @@ namespace MOOS.NET
                 len -= 2;
             }
 
-            if ((len) != 0)
+            if (len != 0)
             {
                 sum += *(byte*)p;
             }

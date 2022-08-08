@@ -23,7 +23,7 @@ namespace MOOS
 
         public static List<UdpClient> Clients;
 
-        public static void SendPacket(byte[] DestIP, ushort SourcePort, ushort DestPort, byte[] Data)
+        public static void SendPacket(IPAddress DestIP, ushort SourcePort, ushort DestPort, byte[] Data)
         {
             int PacketLen = (sizeof(UDPHeader) + Data.Length);
             byte* Buffer = (byte*)Allocator.Allocate((ulong)PacketLen);
@@ -67,7 +67,6 @@ namespace MOOS
                 }
             }
 
-            //Do something
             Buffer.Dispose();
         }
     }
@@ -100,7 +99,7 @@ namespace MOOS
 
         public void Send(byte[] buffer)
         {
-            UDP.SendPacket(iPAddress.Address, Port, Port, buffer);
+            UDP.SendPacket(iPAddress, Port, Port, buffer);
         }
     }
 }

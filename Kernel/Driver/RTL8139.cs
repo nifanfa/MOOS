@@ -11,9 +11,9 @@ namespace MOOS.NET
         public static ushort IOBase = 0;
         public static uint RX = 0;
         public static byte IRQ = 0;
-        public static byte[] MAC = null;
-        public static byte[] TSAD = null;
-        public static byte[] TSD = null;
+        public static MACAddress MAC;
+        public static byte[] TSAD;
+        public static byte[] TSD;
         private static ushort CurrentPointer = 0;
         private static int TXIndex = 0;
 
@@ -51,25 +51,15 @@ namespace MOOS.NET
             Console.Write("[RTL8139] IRQ:");
             Console.WriteLine(((ulong)dev.IRQ).ToStringHex());
 
-            MAC = new byte[6];
-            MAC[0] = In8((ushort)(IOBase + 0));
-            MAC[1] = In8((ushort)(IOBase + 1));
-            MAC[2] = In8((ushort)(IOBase + 2));
-            MAC[3] = In8((ushort)(IOBase + 3));
-            MAC[4] = In8((ushort)(IOBase + 4));
-            MAC[5] = In8((ushort)(IOBase + 5));
-            Console.Write("[RTL8139] MAC:");
-            Console.Write(((ulong)MAC[0]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[1]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[2]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[3]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[4]).ToStringHex());
-            Console.Write(":");
-            Console.WriteLine(((ulong)MAC[5]).ToStringHex());
+            MAC = new MACAddress(
+                In8((ushort)(IOBase + 0)),
+                In8((ushort)(IOBase + 1)),
+                In8((ushort)(IOBase + 2)),
+                In8((ushort)(IOBase + 3)),
+                In8((ushort)(IOBase + 4)),
+                In8((ushort)(IOBase + 5))
+            );
+            Console.WriteLine($"[RTL8139] MAC: {MAC}");
 
             Network.MAC = MAC;
             IRQ = dev.IRQ;

@@ -13,8 +13,7 @@ namespace MOOS.Driver
         public static uint BAR0;
         public static uint RXDescs;
         public static uint TXDescs;
-
-        public static byte[] MAC;
+        public static MACAddress MAC;
         public static int IRQ;
 
         public static bool FullDuplex
@@ -175,42 +174,33 @@ namespace MOOS.Driver
                 }
             }
 
-            MAC = new byte[6];
-
             //Must be set
             if (!HasEEPROM)
             {
-                MAC[0] = In8((byte*)(BAR0 + 0x5400));
-                MAC[1] = In8((byte*)(BAR0 + 0x5401));
-                MAC[2] = In8((byte*)(BAR0 + 0x5402));
-                MAC[3] = In8((byte*)(BAR0 + 0x5403));
-                MAC[4] = In8((byte*)(BAR0 + 0x5404));
-                MAC[5] = In8((byte*)(BAR0 + 0x5405));
+                MAC = new MACAddress(
+                    In8((byte*)(BAR0 + 0x5400)),
+                    In8((byte*)(BAR0 + 0x5401)),
+                    In8((byte*)(BAR0 + 0x5402)),
+                    In8((byte*)(BAR0 + 0x5403)),
+                    In8((byte*)(BAR0 + 0x5404)),
+                    In8((byte*)(BAR0 + 0x5405))
+                    );
                 Console.WriteLine("[Intel8254X] This controller has no EEPROM");
             }
             else
             {
-                MAC[0] = (byte)(ReadROM(0) & 0xFF);
-                MAC[1] = (byte)(ReadROM(0) >> 8);
-                MAC[2] = (byte)(ReadROM(1) & 0xFF);
-                MAC[3] = (byte)(ReadROM(1) >> 8);
-                MAC[4] = (byte)(ReadROM(2) & 0xFF);
-                MAC[5] = (byte)(ReadROM(2) >> 8);
+                MAC = new MACAddress(
+                    (byte)(ReadROM(0) & 0xFF),
+                    (byte)(ReadROM(0) >> 8),
+                    (byte)(ReadROM(1) & 0xFF),
+                    (byte)(ReadROM(1) >> 8),
+                    (byte)(ReadROM(2) & 0xFF),
+                    (byte)(ReadROM(2) >> 8)
+                );
                 Console.WriteLine("[Intel8254X] EEPROM on this controller");
             }
 
-            Console.Write("[Intel8254X] MAC:");
-            Console.Write(((ulong)MAC[0]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[1]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[2]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[3]).ToStringHex());
-            Console.Write(":");
-            Console.Write(((ulong)MAC[4]).ToStringHex());
-            Console.Write(":");
-            Console.WriteLine(((ulong)MAC[5]).ToStringHex());
+            Console.WriteLine($"[Intel8254X] MAC: {MAC}");
 
             Linkup();
             for (int i = 0; i < 0x80; i++)
