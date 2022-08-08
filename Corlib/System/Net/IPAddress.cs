@@ -1,21 +1,35 @@
 namespace System.Net
 {
-    public class IPAddress
+    public unsafe class IPAddress
     {
-        public byte[] Address;
+        public uint AddressV4;
 
-        public static IPAddress Parse(params byte[] IP)
+        public static IPAddress Parse(params byte[] IPAddressV4)
         {
-            return new IPAddress()
+            var IP = new IPAddress();
+            fixed(uint* p = &IP.AddressV4)
             {
-                Address = new byte[]
-                {
-                    IP[0],
-                    IP[1],
-                    IP[2],
-                    IP[3]
-                }
-            };
+                ((byte*)p)[0] = IPAddressV4[0];
+                ((byte*)p)[1] = IPAddressV4[1];
+                ((byte*)p)[2] = IPAddressV4[2];
+                ((byte*)p)[3] = IPAddressV4[3];
+            }
+            return IP;
+        }
+
+        public bool Equals(IPAddress b)
+        {
+            return this.AddressV4 == b.AddressV4;
+        }
+
+        public static bool operator ==(IPAddress a, IPAddress b)
+        {
+            return a.AddressV4 == b.AddressV4;
+        }
+
+        public static bool operator !=(IPAddress a, IPAddress b)
+        {
+            return !(a.AddressV4 == b.AddressV4);
         }
     }
 }

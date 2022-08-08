@@ -1,5 +1,6 @@
 using MOOS;
 using System;
+using System.Net;
 using System.Runtime.InteropServices;
 
 namespace MOOS.NET
@@ -17,8 +18,8 @@ namespace MOOS.NET
             public byte TimeToLive;
             public byte Protocol;
             public ushort HeaderChecksum;
-            public fixed byte SourceIP[4];
-            public fixed byte DestIP[4];
+            public uint SourceIP;
+            public uint DestIP;
         }
 
         public enum IPv4Protocol
@@ -35,10 +36,7 @@ namespace MOOS.NET
             length -= sizeof(IPv4Header);
 
             if (
-                hdr->DestIP[0] == Network.IP[0] &&
-                hdr->DestIP[1] == Network.IP[1] &&
-                hdr->DestIP[2] == Network.IP[2] &&
-                hdr->DestIP[3] == Network.IP[3]
+                hdr->DestIP == Network.IP.AddressV4
                 )
             {
                 if (hdr->Protocol == (byte)IPv4Protocol.ICMP)
@@ -51,14 +49,10 @@ namespace MOOS.NET
                         *(ushort*)(p + 2) = 0;
                         *(ushort*)(p + 2) = CalculateChecksum(p, length);
 
-                        byte[] srcIP = new byte[]
-                        {
-                            hdr->SourceIP[0],
-                            hdr->SourceIP[1],
-                            hdr->SourceIP[2],
-                            hdr->SourceIP[3]
-                        };
+                        IPAddress srcIP = new IPAddress();
+                        srcIP.AddressV4 = hdr->SourceIP;
                         SendPacket(srcIP, 1, p, length);
+                        srcIP.Dispose();
                         Allocator.Free((IntPtr)p);
                     }
                 }
@@ -73,35 +67,26 @@ namespace MOOS.NET
             }
         }
 
-        public static bool IsSameSubnet(byte[] ip1, byte[] ip2)
+        public static bool IsSameSubnet(IPAddress ip1, IPAddress ip2)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                if ((ip1[i] & Network.Mask[i]) != (ip2[i] & Network.Mask[i])) return false;
-            }
+            if ((ip1.AddressV4 & Network.Mask.AddressV4) != (ip2.AddressV4 & Network.Mask.AddressV4)) return false;
 
             return true;
         }
 
-        public static void SendPacket(byte[] DestIP, byte Protocol, byte* Data, int Length)
+        public static void SendPacket(IPAddress DestIP, byte Protocol, byte* Data, int Length)
         {
             IPv4Header* hdr = (IPv4Header*)Allocator.Allocate((ulong)(sizeof(IPv4Header) + Length));
             hdr->VersionAndIHL = 0x45;
             hdr->TotalLength = Ethernet.SwapLeftRight((uint)(sizeof(IPv4Header) + Length));
             hdr->TimeToLive = 255;
             hdr->Protocol = Protocol;
-            hdr->SourceIP[0] = Network.IP[0];
-            hdr->SourceIP[1] = Network.IP[1];
-            hdr->SourceIP[2] = Network.IP[2];
-            hdr->SourceIP[3] = Network.IP[3];
+            hdr->SourceIP = Network.IP.AddressV4;
 
-            hdr->DestIP[0] = DestIP[0];
-            hdr->DestIP[1] = DestIP[1];
-            hdr->DestIP[2] = DestIP[2];
-            hdr->DestIP[3] = DestIP[3];
+            hdr->DestIP = DestIP.AddressV4;
             hdr->HeaderChecksum = CalculateChecksum((byte*)hdr, sizeof(IPv4Header));
             Native.Movsb(((byte*)hdr) + sizeof(IPv4Header), Data, (ulong)Length);
-            byte[] MAC = ARP.Lookup(IsSameSubnet(DestIP, Network.IP) ? DestIP : Network.Gateway);
+            MACAddress MAC = ARP.Lookup(IsSameSubnet(DestIP, Network.IP) ? DestIP : Network.Gateway);
             Ethernet.SendPacket(MAC, (ushort)Ethernet.EthernetType.IPv4, hdr, sizeof(IPv4Header) + Length);
             Allocator.Free((IntPtr)hdr);
         }

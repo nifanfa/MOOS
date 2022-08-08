@@ -9,5 +9,7 @@
 		{
 			return ((long)this).ToString();
 		}
+
+		public static implicit operator uint(int value)=>(uint)value;
 	}
 }

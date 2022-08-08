@@ -6,11 +6,11 @@ namespace MOOS.NET
 {
     public static class Network
     {
-        public static byte[] MAC;
-        public static byte[] IP;
-        public static byte[] Mask;
-        public static byte[] Boardcast;
-        public static byte[] Gateway;
+        public static MACAddress MAC;
+        public static IPAddress IP;
+        public static IPAddress Mask;
+        public static MACAddress Boardcast;
+        public static IPAddress Gateway;
 
         public static NIC Controller;
 
@@ -19,21 +19,21 @@ namespace MOOS.NET
         public static void Initialise(IPAddress IPAddress, IPAddress GatewayAddress, IPAddress SubnetMask)
         {
             Controller = null;
-            Boardcast = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
-            Gateway = GatewayAddress.Address;
-            Mask = SubnetMask.Address;
-            IP = IPAddress.Address;
+            Boardcast = new MACAddress(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF);
+            Gateway = GatewayAddress;
+            Mask = SubnetMask;
+            IP = IPAddress;
             UDP.Clients = new();
             ARP.Initialise();
             TCP.Clients = new();
 
-            MAC = null;
+            MAC = default;
 
             RTL8139.Initialise();
             Intel8254X.Initialize();
 
             if (Controller == null) Panic.Error("No compatible network controller on this device!");
-            if (MAC == null) Panic.Error("NIC didn't set Network.MAC");
+            if (MAC == default) Panic.Error("NIC didn't set Network.MAC");
 
             ARP.Require(Network.Gateway);
         }

@@ -68,6 +68,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PageTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NET\MACAddress.cs" />
     <Compile Include="..\Kernel\Misc\SectionHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
