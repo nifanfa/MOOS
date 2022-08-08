@@ -1,3 +1,4 @@
+using Internal.Runtime.CompilerServices;
 using System;
 using System.Runtime.InteropServices;
 
@@ -24,9 +25,9 @@ namespace Internal.Runtime
         Double = 0x0F,
 
         ValueType = 0x10,
-        // Enum = 0x11, // EETypes store enums as their underlying type
+        Enum = 0x11, // EETypes store enums as their underlying type
         Nullable = 0x12,
-        // Unused 0x13,
+        Unused = 0x13,
 
         Class = 0x14,
         Interface = 0x15,
@@ -138,39 +139,39 @@ namespace Internal.Runtime
         private IntPtr _objHeaderContents;
     }
 
-    //    [StructLayout(LayoutKind.Sequential)]
-    //    internal unsafe struct EEInterfaceInfo {
-    //        [StructLayout(LayoutKind.Explicit)]
-    //        private unsafe struct InterfaceTypeUnion {
-    //            [FieldOffset(0)]
-    //            public EEType* _pInterfaceEEType;
-    //            [FieldOffset(0)]
-    //            public EEType** _ppInterfaceEETypeViaIAT;
-    //        }
+        [StructLayout(LayoutKind.Sequential)]
+        internal unsafe struct EEInterfaceInfo {
+            [StructLayout(LayoutKind.Explicit)]
+            private unsafe struct InterfaceTypeUnion {
+                [FieldOffset(0)]
+                public EEType* _pInterfaceEEType;
+               [FieldOffset(0)]
+                public EEType** _ppInterfaceEETypeViaIAT;
+            }
 
-    //        private InterfaceTypeUnion _interfaceType;
+            private InterfaceTypeUnion _interfaceType;
 
-    //        internal EEType* InterfaceType {
-    //            get {
-    //                if ((unchecked((uint)_interfaceType._pInterfaceEEType) & IndirectionConstants.IndirectionCellPointer) != 0) {
-    //#if TARGET_64BIT
-    //                    EEType** ppInterfaceEETypeViaIAT = (EEType**)(((ulong)_interfaceType._ppInterfaceEETypeViaIAT) - IndirectionConstants.IndirectionCellPointer);
-    //#else
-    //                    EEType** ppInterfaceEETypeViaIAT = (EEType**)(((uint)_interfaceType._ppInterfaceEETypeViaIAT) - IndirectionConstants.IndirectionCellPointer);
-    //#endif
-    //                    return *ppInterfaceEETypeViaIAT;
-    //                }
+            internal EEType* InterfaceType {
+                get {
+                    if ((unchecked((uint)_interfaceType._pInterfaceEEType) & IndirectionConstants.IndirectionCellPointer) != 0) {
+    #if TARGET_64BIT
+    /                   EEType** ppInterfaceEETypeViaIAT = (EEType**)(((ulong)_interfaceType._ppInterfaceEETypeViaIAT) - IndirectionConstants.IndirectionCellPointer);
+    #else
+                        EEType** ppInterfaceEETypeViaIAT = (EEType**)(((uint)_interfaceType._ppInterfaceEETypeViaIAT) - IndirectionConstants.IndirectionCellPointer);
+    #endif
+                        return *ppInterfaceEETypeViaIAT;
+                    }
 
-    //                return _interfaceType._pInterfaceEEType;
-    //            }
-    //#if TYPE_LOADER_IMPLEMENTATION
-    //            set
-    //            {
-    //                _interfaceType._pInterfaceEEType = value;
-    //            }
-    //#endif
-    //        }
-    //    }
+                    return _interfaceType._pInterfaceEEType;
+                }
+    #if TYPE_LOADER_IMPLEMENTATION
+                set
+               {
+                    _interfaceType._pInterfaceEEType = value;
+                }
+    #endif
+            }
+        }
 
     //    [StructLayout(LayoutKind.Sequential)]
     //    internal unsafe struct DispatchMap {
@@ -244,29 +245,29 @@ namespace Internal.Runtime
             [FieldOffset(0)]
             public EEType** _ppRelatedParameterTypeViaIAT;
         }
+        /*
+        private static unsafe class OptionalFieldsReader {
+            internal static uint GetInlineField(byte* pFields, EETypeOptionalFieldTag eTag, uint uiDefaultValue) {
+                if (pFields == null)
+                    return uiDefaultValue;
 
-        //private static unsafe class OptionalFieldsReader {
-        //    internal static uint GetInlineField(byte* pFields, EETypeOptionalFieldTag eTag, uint uiDefaultValue) {
-        //        if (pFields == null)
-        //            return uiDefaultValue;
+                bool isLastField = false;
+                while (!isLastField) {
+                    byte fieldHeader = NativePrimitiveDecoder.ReadUInt8(ref pFields);
+                    isLastField = (fieldHeader & 0x80) != 0;
+                   EETypeOptionalFieldTag eCurrentTag = (EETypeOptionalFieldTag)(fieldHeader & 0x7f);
+                    uint uiCurrentValue = NativePrimitiveDecoder.DecodeUnsigned(ref pFields);
 
-        //        bool isLastField = false;
-        //        while (!isLastField) {
-        //            byte fieldHeader = NativePrimitiveDecoder.ReadUInt8(ref pFields);
-        //            isLastField = (fieldHeader & 0x80) != 0;
-        //            EETypeOptionalFieldTag eCurrentTag = (EETypeOptionalFieldTag)(fieldHeader & 0x7f);
-        //            uint uiCurrentValue = NativePrimitiveDecoder.DecodeUnsigned(ref pFields);
+                    // If we found a tag match return the current value.
+                    if (eCurrentTag == eTag)
+                        return uiCurrentValue;
+                }
 
-        //            // If we found a tag match return the current value.
-        //            if (eCurrentTag == eTag)
-        //                return uiCurrentValue;
-        //        }
-
-        //        // Reached end of stream without getting a match. Field is not present so return default value.
-        //        return uiDefaultValue;
-        //    }
-        //}
-
+               // Reached end of stream without getting a match. Field is not present so return default value.
+                return uiDefaultValue;
+            }
+        }
+        */
         ///// <summary>
         ///// Gets a value indicating whether the statically generated data structures use relative pointers.
         ///// </summary>
@@ -306,18 +307,18 @@ namespace Internal.Runtime
             }
         }
 
-        //internal ushort GenericArgumentCount {
-        //	get {
-        //		Debug.Assert(IsGenericTypeDefinition);
-        //		return _usComponentSize;
-        //	}
-        //}
+        internal ushort GenericArgumentCount {
+        	get {
+        		//Debug.Assert(IsGenericTypeDefinition);
+        		return _usComponentSize;
+        	}
+        }
 
-        //internal ushort Flags {
-        //	get {
-        //		return _usFlags;
-        //	}
-        //}
+        internal ushort Flags {
+        	get {
+        		return _usFlags;
+       	    }
+        }
 
         internal uint BaseSize
         {
@@ -327,23 +328,25 @@ namespace Internal.Runtime
             }
         }
 
-        //internal ushort NumVtableSlots {
-        //	get {
-        //		return _usNumVtableSlots;
-        //	}
-        //}
+        internal ushort NumVtableSlots {
+        	get {
+        		return _usNumVtableSlots;
+        	}
+        }
 
-        //internal ushort NumInterfaces {
-        //	get {
-        //		return _usNumInterfaces;
-        //	}
-        //}
+        internal ushort NumInterfaces {
+        	get {
+        		return _usNumInterfaces;
+        	}
+        }
 
-        //internal uint HashCode {
-        //	get {
-        //		return _uHashCode;
-        //	}
-        //}
+        internal uint HashCode
+        {
+            get
+            {
+                return _uHashCode;
+            }
+        }
 
         private EETypeKind Kind
         {
@@ -353,11 +356,11 @@ namespace Internal.Runtime
             }
         }
 
-        //internal bool HasOptionalFields {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.OptionalFieldsFlag) != 0);
-        //	}
-        //}
+        internal bool HasOptionalFields {
+        	get {
+        		return ((_usFlags & (ushort)EETypeFlags.OptionalFieldsFlag) != 0);
+        	}
+        }
 
         //// Mark or determine that a type is generic and one or more of it's type parameters is co- or
         //// contra-variant. This only applies to interface and delegate types.
@@ -368,17 +371,17 @@ namespace Internal.Runtime
         	}
         }
 
-        //internal bool IsFinalizable {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.HasFinalizerFlag) != 0);
-        //	}
-        //}
+        internal bool IsFinalizable {
+        	get {
+        		return ((_usFlags & (ushort)EETypeFlags.HasFinalizerFlag) != 0);
+        	}
+        }
 
-        //internal bool IsNullable {
-        //	get {
-        //		return ElementType == EETypeElementType.Nullable;
-        //	}
-        //}
+        internal bool IsNullable {
+        	get {
+        		return ElementType == EETypeElementType.Nullable;
+        	}
+        }
 
         internal bool IsCloned 
         {
@@ -388,11 +391,11 @@ namespace Internal.Runtime
             }
         }
 
-        //internal bool IsCanonical {
-        //	get {
-        //		return Kind == EETypeKind.CanonicalEEType;
-        //	}
-        //}
+        internal bool IsCanonical {
+        	get {
+        		return Kind == EETypeKind.CanonicalEEType;
+        	}
+        }
 
         internal bool IsString
         {
@@ -453,11 +456,11 @@ namespace Internal.Runtime
             }
         }
 
-        //internal bool IsGeneric {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.IsGenericFlag) != 0);
-        //	}
-        //}
+        internal bool IsGeneric {
+        	get {
+        		return ((_usFlags & (ushort)EETypeFlags.IsGenericFlag) != 0);
+        	}
+        }
 
         internal bool IsGenericTypeDefinition
         {
@@ -476,18 +479,18 @@ namespace Internal.Runtime
         //		return GetField<IatAwareRelativePointer<EEType>>(EETypeField.ETF_GenericDefinition).Value;
         //	}
         //}
+        /*
+        [StructLayout(LayoutKind.Sequential)]
+        private readonly struct GenericComposition {
+        	public readonly ushort Arity;
 
-        //[StructLayout(LayoutKind.Sequential)]
-        //private readonly struct GenericComposition {
-        //	public readonly ushort Arity;
-
-        //	private readonly EETypeRef _genericArgument1;
-        //	public EETypeRef* GenericArguments {
-        //		get {
-        //			return (EETypeRef*)Unsafe.AsPointer(ref Unsafe.AsRef(in _genericArgument1));
-        //		}
-        //	}
-
+        	private readonly EETypeRef _genericArgument1;
+        	public EETypeRef* GenericArguments {
+        		get {
+        			return (EETypeRef*)Unsafe.AsPointer(ref Unsafe.AsRef(in _genericArgument1));
+        		}
+        	}
+        */
         //	public GenericVariance* GenericVariance {
         //		get {
         //			// Generic variance directly follows the last generic argument
@@ -530,17 +533,17 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsPointerType {
-        //	get {
-        //		return ElementType == EETypeElementType.Pointer;
-        //	}
-        //}
+        internal bool IsPointerType {
+        	get {
+        		return ElementType == EETypeElementType.Pointer;
+        	}
+        }
 
-        //internal bool IsByRefType {
-        //	get {
-        //		return ElementType == EETypeElementType.ByRef;
-        //	}
-        //}
+        internal bool IsByRefType {
+        	get {
+        		return ElementType == EETypeElementType.ByRef;
+        	}
+        }
 
         internal bool IsInterface 
         {
@@ -562,11 +565,11 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsDynamicType {
-        //	get {
-        //		return (_usFlags & (ushort)EETypeFlags.IsDynamicTypeFlag) != 0;
-        //	}
-        //}
+        internal bool IsDynamicType {
+        	get {
+        		return (_usFlags & (ushort)EETypeFlags.IsDynamicTypeFlag) != 0;
+        	}
+        }
 
         //internal bool HasDynamicallyAllocatedDispatchMap {
         //	get {
@@ -574,11 +577,11 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsParameterizedType {
-        //	get {
-        //		return Kind == EETypeKind.ParameterizedEEType;
-        //	}
-        //}
+        internal bool IsParameterizedType {
+        	get {
+        		return Kind == EETypeKind.ParameterizedEEType;
+        	}
+        }
 
         //// The parameterized type shape defines the particular form of parameterized type that
         //// is being represented.
@@ -605,11 +608,11 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsICastable {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.ICastableFlag) != 0);
-        //	}
-        //}
+        internal bool IsICastable {
+        	get {
+        		return ((_usFlags & (ushort)EETypeFlags.ICastableFlag) != 0);
+        	}
+        }
 
         ///// <summary>
         ///// Gets the pointer to the method that implements ICastable.IsInstanceOfInterface.
@@ -667,17 +670,17 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsValueType {
-        //	get {
-        //		return ElementType < EETypeElementType.Class;
-        //	}
-        //}
+        internal bool IsValueType {
+        	get {
+        		return ElementType < EETypeElementType.Class;
+        	}
+        }
 
-        //internal bool HasGCPointers {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.HasPointersFlag) != 0);
-        //	}
-        //}
+        internal bool HasGCPointers {
+        	get {
+        		return ((_usFlags & (ushort)EETypeFlags.HasPointersFlag) != 0);
+        	}
+        }
 
         //internal bool IsHFA {
         //	get {
@@ -898,22 +901,22 @@ namespace Internal.Runtime
             }
         }
 
-        //internal unsafe IntPtr* GetVTableStartAddress() {
-        //	byte* pResult;
+        internal unsafe IntPtr* GetVTableStartAddress() {
+        	byte* pResult;
 
-        //	// EETypes are always in unmanaged memory, so 'leaking' the 'fixed pointer' is safe.
-        //	fixed (EEType* pThis = &this)
-        //		pResult = (byte*)pThis;
+        	// EETypes are always in unmanaged memory, so 'leaking' the 'fixed pointer' is safe.
+        	fixed (EEType* pThis = &this)
+        		pResult = (byte*)pThis;
 
-        //	pResult += sizeof(EEType);
-        //	return (IntPtr*)pResult;
-        //}
+        	pResult += sizeof(EEType);
+        	return (IntPtr*)pResult;
+        }
 
-        //private static IntPtr FollowRelativePointer(int* pDist) {
-        //	int dist = *pDist;
-        //	IntPtr result = (IntPtr)((byte*)pDist + dist);
-        //	return result;
-        //}
+        private static IntPtr FollowRelativePointer(int* pDist) {
+        	int dist = *pDist;
+        	IntPtr result = (IntPtr)((byte*)pDist + dist);
+        	return result;
+        }
 
         //internal IntPtr GetSealedVirtualSlot(ushort slotNumber) {
         //	Debug.Assert((RareFlags & EETypeRareFlags.HasSealedVTableEntriesFlag) != 0);
@@ -1158,56 +1161,56 @@ namespace Internal.Runtime
     }
 
     //// Wrapper around EEType pointers that may be indirected through the IAT if their low bit is set.
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal unsafe struct EETypeRef {
-    //	private byte* _value;
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe struct EETypeRef {
+    	private byte* _value;
 
-    //	public EEType* Value {
-    //		get {
-    //			if (((int)_value & IndirectionConstants.IndirectionCellPointer) == 0)
-    //				return (EEType*)_value;
-    //			return *(EEType**)(_value - IndirectionConstants.IndirectionCellPointer);
-    //		}
-    //	}
-    //}
-
-    //// Wrapper around pointers
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal readonly struct Pointer {
-    //	private readonly IntPtr _value;
-
-    //	public IntPtr Value {
-    //		get {
-    //			return _value;
-    //		}
-    //	}
-    //}
+    	public EEType* Value {
+    		get {
+    			if (((int)_value & IndirectionConstants.IndirectionCellPointer) == 0)
+    				return (EEType*)_value;
+    			return *(EEType**)(_value - IndirectionConstants.IndirectionCellPointer);
+    		}
+    	}
+    }
 
     //// Wrapper around pointers
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal unsafe readonly struct Pointer<T> where T : unmanaged {
-    //	private readonly T* _value;
+    [StructLayout(LayoutKind.Sequential)]
+    internal readonly struct Pointer {
+    	private readonly IntPtr _value;
 
-    //	public T* Value {
-    //		get {
-    //			return _value;
-    //		}
-    //	}
-    //}
+    	public IntPtr Value {
+    		get {
+    			return _value;
+    		}
+    	}
+    }
+
+    //// Wrapper around pointers
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe readonly struct Pointer<T> where T : unmanaged {
+    	private readonly T* _value;
+
+    	public T* Value {
+    		get {
+    			return _value;
+    		}
+    	}
+    }
 
     //// Wrapper around pointers that might be indirected through IAT
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal unsafe readonly struct IatAwarePointer<T> where T : unmanaged {
-    //	private readonly T* _value;
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe readonly struct IatAwarePointer<T> where T : unmanaged {
+    	private readonly T* _value;
 
-    //	public T* Value {
-    //		get {
-    //			if (((int)_value & IndirectionConstants.IndirectionCellPointer) == 0)
-    //				return _value;
-    //			return *(T**)((byte*)_value - IndirectionConstants.IndirectionCellPointer);
-    //		}
-    //	}
-    //}
+    	public T* Value {
+    		get {
+    			if (((int)_value & IndirectionConstants.IndirectionCellPointer) == 0)
+    				return _value;
+    			return *(T**)((byte*)_value - IndirectionConstants.IndirectionCellPointer);
+    		}
+    	}
+    }
 
     //// Wrapper around relative pointers
     //[StructLayout(LayoutKind.Sequential)]

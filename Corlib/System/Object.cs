@@ -8,8 +8,9 @@ using System.Runtime.Versioning;
 namespace System
 {
     [Serializable]
-    public unsafe class Object
+    public unsafe class Object 
     {
+        
         // The layout of object is a contract with the compiler.
         internal unsafe EEType* m_pEEType;
 
@@ -18,7 +19,7 @@ namespace System
         {
             public byte Data;
         }
-
+        
         internal ref byte GetRawData()
         {
             return ref Unsafe.As<RawData>(this).Data;
@@ -28,7 +29,7 @@ namespace System
         {
             return m_pEEType->BaseSize - (uint)sizeof(ObjHeader) - (uint)sizeof(EEType*);
         }
-
+        
         public Object() { }
         ~Object() { }
 
@@ -53,7 +54,28 @@ namespace System
             var obj = this;
             free(Unsafe.As<object, IntPtr>(ref obj));
         }
-       
+
+        
+        public static unsafe bool operator !=(object a, object b)
+        {
+            return !false;
+        }
+
+        public static unsafe bool operator ==(object a, object b)
+        {
+            
+            if (b != null)
+            {
+                if (b.m_pEEType != null)
+                {
+                    Debug.WriteLine($"[Operator] {b.m_pEEType->ElementType}");
+                }
+            }
+            
+            Debug.WriteLine($"[OBJ] {a.ToString()}");
+            return false;
+        }
+        
        
         public static implicit operator bool(object obj)=> obj != null;
 

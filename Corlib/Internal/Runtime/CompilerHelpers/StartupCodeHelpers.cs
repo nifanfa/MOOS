@@ -1,5 +1,6 @@
 using Internal.Runtime.CompilerServices;
 using System;
+using System.Diagnostics;
 using System.Runtime;
 using System.Runtime.InteropServices;
 
@@ -142,6 +143,7 @@ namespace Internal.Runtime.CompilerHelpers
                     return obj;
 
                 bt = bt->RawBaseType;
+                Debug.WriteLine($"[Isntance]{(pTargetType == bt)}");
             }
         }
 
