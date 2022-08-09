@@ -19,7 +19,7 @@ namespace MOOS
             Native.Stosb(PML4, 0, 0x1000);
 
             ulong i = 0;
-            //Map the first 4KiB-2MiB
+            //Map the first 4KiB-4GiB
             //Reserve 4KiB for null reference exception
             for (i = (ulong)PageSize.Typical; i < 1024 * 1024 * 1024 * 4UL; i += (ulong)PageSize.Typical)
             {
