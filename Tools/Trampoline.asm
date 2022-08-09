@@ -49,8 +49,6 @@ APMain:
     mov ss, ax
 
     mov rbx,STACKS
-    lock
-    add qword [rbx],1048576
     mov rsp,[rbx]
     mov rbp,rsp
     
