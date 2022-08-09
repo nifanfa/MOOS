@@ -31,5 +31,10 @@ namespace System.Net
         {
             return !(a.AddressV4 == b.AddressV4);
         }
+
+        public override string ToString()
+        {
+            return $"{(AddressV4 >> 0) & 0xFF}.{(AddressV4 >> 8) & 0xFF}.{(AddressV4 >> 16) & 0xFF}.{(AddressV4 >> 24) & 0xFF}";
+        }
     }
 }
