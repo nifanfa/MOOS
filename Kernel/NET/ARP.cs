@@ -28,7 +28,7 @@ namespace MOOS.NET
             Reply = 2
         }
 
-        public struct ARPEntry
+        public class ARPEntry
         {
             public IPAddress IP;
             public MACAddress MAC;
