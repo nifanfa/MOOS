@@ -163,6 +163,8 @@ namespace MOOS.Driver
             Console.Write("[Intel8254X] BAR0: 0x");
             Console.WriteLine(((ulong)BAR0).ToStringHex());
 
+            Reset();
+
             WriteRegister(0x14, 0x1);
             bool HasEEPROM = false;
             for (int i = 0; i < 1024; i++)
@@ -228,6 +230,14 @@ namespace MOOS.Driver
 
             //Literally instance
             Network.Controller = new Intel8254X();
+        }
+
+        public static void Reset()
+        {
+            Console.Write("[Intel8254X] Reseting controller...");
+
+            WriteRegister(0, 1 << 26);
+            while (BitHelpers.IsBitSet(ReadRegister(0), 26)) ;
         }
 
         private static void TXInitialize()
