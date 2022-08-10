@@ -286,7 +286,7 @@ namespace System
 			return strings.ToArray();
 		}
 
-		public string Substring(int startIndex)
+		public unsafe string Substring(int startIndex)
 		{
 			if ((Length == 0) && (startIndex == 0))
 			{
@@ -301,14 +301,20 @@ namespace System
 			}
 			*/
 
+			/*
 			string substring = "";
 			for (int i = startIndex; i < Length; i++)
 			{
 				substring += this[i];
 			}
 			return substring;
+			*/
+			fixed (char* ptr = this)
+			{
+				return new string(ptr, startIndex, Length - startIndex);
+			}
 		}
-		public string Substring(int startIndex, int endIndex)
+		public unsafe string Substring(int startIndex, int endIndex)
 		{
 			if ((Length == 0) && (startIndex == 0))
 			{
@@ -323,12 +329,18 @@ namespace System
 			}
 			*/
 
+			/*
 			string substring = "";
 			for (int i = startIndex; i < endIndex; i++)
 			{
 				substring += this[i];
 			}
 			return substring;
+			*/
+			fixed(char* ptr = this)
+            {
+				return new string(ptr, startIndex, endIndex - startIndex);
+            }
 		}
 #nullable enable
 		public static bool IsNullOrEmpty(string? value)
