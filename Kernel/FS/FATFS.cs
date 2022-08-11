@@ -31,7 +31,8 @@ namespace MOOS.FS
 
         public override List<FileInfo> GetFiles(string Directory)
         {
-            if (Directory.Length != 0 && Directory[Directory.Length - 1] == '/') Directory[Directory.Length - 1] = '\0';
+            if (Directory.Length != 0 && Directory[Directory.Length - 1] == '/') 
+                Directory[Directory.Length - 1] = '\0';
             Info* infos;
             fixed (char* p = Directory)
             infos = get_files(p);
