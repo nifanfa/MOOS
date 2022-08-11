@@ -7,6 +7,9 @@ namespace MOOS.FS
         public string Name;
         public FileAttribute Attribute;
 
+        public ulong Param0;
+        public ulong Param1;
+
         public override void Dispose()
         {
             Name.Dispose();
@@ -41,9 +44,28 @@ namespace MOOS.FS
             File.Instance = this;
         }
 
+        public const int SectorSize = 512;
+
         public static ulong SizeToSec(ulong size)
         {
-            return ((size - (size % 512)) / 512) + ((size % 512) != 0 ? 1ul : 0);
+            return ((size - (size % SectorSize)) / SectorSize) + ((size % SectorSize) != 0 ? 1ul : 0);
+        }
+
+        public static bool IsInDirectory(string fname, string dir)
+        {
+            if (fname.Length < dir.Length) return false;
+            for (int i = 0; i < fname.Length; i++)
+            {
+                if (i < dir.Length)
+                {
+                    if (dir[i] != fname[i]) return false;
+                }
+                else
+                {
+                    if (fname[i] == '/') return false;
+                }
+            }
+            return true;
         }
 
         public abstract List<FileInfo> GetFiles(string Directory);

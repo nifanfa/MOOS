@@ -276,7 +276,7 @@ namespace MOOS.GUI
             ClickLock = true;
 
             string devider = "/";
-            string path = Dir + devider + name;
+            string path = Dir + name;
 
             if (name.EndsWith(".png"))
             {
@@ -382,7 +382,7 @@ namespace MOOS.GUI
 
             else if (isDirectory)
             {
-                string newd = Dir + devider + name;
+                string newd = Dir + name + devider;
                 Dir.Dispose();
                 Dir = newd;
             }
