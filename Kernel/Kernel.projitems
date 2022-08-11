@@ -43,7 +43,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Timer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\VMWareSVGAII.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\Disk.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FS\FAT32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\FATFS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\FileSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\TarFS.cs" />
