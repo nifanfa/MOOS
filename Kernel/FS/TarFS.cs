@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace MOOS.FS
 {
@@ -42,7 +43,8 @@ namespace MOOS.FS
             {
                 sec++;
                 ulong size = mystrtoul(hdr.size, null, 8);
-                string name = string.FromASCII((nint)hdr.name, strings.strlen(hdr.name) - (hdr.name[strings.strlen(hdr.name) - 1] == '/' ? 1 : 0));
+                string name = Encoding.UTF8.GetString(hdr.name);
+                name.Length -= (name[name.Length - 1] == '/' ? 1 : 0);
                 if (IsInDirectory(name, Directory))
                 {
                     FileInfo info = new FileInfo();

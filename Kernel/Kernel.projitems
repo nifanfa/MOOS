@@ -86,7 +86,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)SSE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)stdio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)stdlib.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)strings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VHD.cs" />
   </ItemGroup>
   <ItemGroup>

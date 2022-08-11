@@ -5,6 +5,7 @@ using MOOS.Misc;
 using MOOS.NET;
 using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Text;
 using static Internal.Runtime.CompilerHelpers.InteropHelpers;
 
 public static class IDT
@@ -183,7 +184,7 @@ public static class IDT
             if (irq == 0x80)
             {
                 var pCell = (MethodFixupCell*)stack->rs.rcx;
-                string name = string.FromASCII(pCell->Module->ModuleName, strings.strlen((byte*)pCell->Module->ModuleName));
+                string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
                 stack->rs.rax = (ulong)API.HandleSystemCall(name);
                 name.Dispose();
             }

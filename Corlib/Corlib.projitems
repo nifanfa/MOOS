@@ -108,6 +108,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Single.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\String.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\System.SR.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Text\ASCIIEncoding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Text\Encoding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Text\UTF8Encoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Threading\Monitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\TimeSpan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Tuple.cs" />

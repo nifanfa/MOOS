@@ -2,6 +2,7 @@ using MOOS.FS;
 using MOOS.Misc;
 using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace MOOS
 {
@@ -38,7 +39,7 @@ namespace MOOS
         [RuntimeExport("fopen")]
         public static FILE* fopen(byte* name, byte* mode) 
         {
-            string sname = string.FromASCII((System.IntPtr)name, strings.strlen(name));
+            string sname = Encoding.ASCII.GetString(name);
             FILE file = new FILE();
             byte[] buffer = File.ReadAllBytes(sname);
             if(buffer == null) 

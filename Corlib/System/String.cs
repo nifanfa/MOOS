@@ -47,18 +47,6 @@ namespace System
 		public extern unsafe String(char[] buf, int index, int length);
 #pragma warning restore CS0824 // Constructor is marked external
 
-
-		public static unsafe string FromASCII(nint ptr, int length)
-		{
-			byte* p = (byte*)ptr;
-			char* newp = stackalloc char[length];
-			for(int i = 0; i < length; i++)
-            {
-				newp[i] = (char)p[i];
-            }
-			return new string(newp, 0, length);
-		}
-
 		private static unsafe string Ctor(char* ptr)
 		{
 			int i = 0;
@@ -95,6 +83,7 @@ namespace System
 
 			return s;
 		}
+
 		[DllImport("*")]
 		private static extern unsafe void memcpy(byte* dest, byte* src, ulong count);
 
@@ -430,6 +419,20 @@ namespace System
                 }
 				return output;
 			}
+		}
+
+		public static int strlen(byte* c)
+		{
+			int i = 0;
+			while (c[i] != 0) i++;
+			return i;
+		}
+
+		public static int strlen(char* c)
+		{
+			int i = 0;
+			while (c[i] != 0) i++;
+			return i;
 		}
 	}
 }
