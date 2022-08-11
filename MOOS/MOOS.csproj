@@ -61,7 +61,7 @@
 		<Error Text="Please install QEMU in order to debug MOOS!(do not modify the path) https://www.qemu.org/download/#windows" Condition="!Exists('C:\Program Files\qemu\qemu-system-x86_64.exe')"></Error>
 		<Error Text="Please install Intel Hardware Accelerated Execution Manager (HAXM) in order to speed up QEMU https://github.com/intel/haxm/releases" Condition="!Exists('C:\Program Files\Intel\HAXM\IntelHaxm.sys')"></Error>
 		
-		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -drive id=disk,file=&quot;$(MSBuildStartupDirectory)\Tools\grub2\boot\initrd.vhd&quot;,if=none -device ahci,id=ahci -device ide-hd,drive=disk,bus=ahci.0 -device AC97 -rtc base=localtime"></Exec>
+		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -device AC97 -rtc base=localtime"></Exec>
 	</Target>
 
 	<Target Name="RunQemuUSB" AfterTargets="BuildISO" Condition="$(vm) == 'qemuusb'">
