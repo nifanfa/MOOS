@@ -33,7 +33,6 @@ namespace MOOS.FS
 
         public override List<FileInfo> GetFiles(string Directory)
         {
-            Debug.WriteLine(Directory.Substring(0));
             ulong sec = 0;
             posix_tar_header hdr;
             posix_tar_header* ptr = &hdr;
