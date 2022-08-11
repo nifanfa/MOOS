@@ -63,6 +63,18 @@
     <ClCompile Include="strchr.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="strtoul.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="isdigit.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="isupper.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="isalpha.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="printf.h">

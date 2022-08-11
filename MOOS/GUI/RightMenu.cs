@@ -1,4 +1,5 @@
 #if HasGUI
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace MOOS.GUI
@@ -33,20 +34,20 @@ namespace MOOS.GUI
             {
                 if (Control.MouseButtons.HasFlag(MouseButtons.Left))
                 {
-                    if (IsUnderMouse() && Desktop.Dir.Length > 1)
+                    if (IsUnderMouse() && Desktop.Dir.Length > 0)
                     {
-                        int i;
-                        for (i = Desktop.Dir.Length - 1; i >= 0; i--)
+                        Desktop.Dir.Length--;
+
+                        if (Desktop.Dir.IndexOf('/') != -1)
                         {
-                            if (
-                                Desktop.Dir[i] == '\\' ||
-                                Desktop.Dir[i] == '/'
-                                )
-                            {
-                                Desktop.Dir[i] = '\0';
-                            }
+                            string ndir = $"{Desktop.Dir.Substring(0, Desktop.Dir.LastIndexOf('/'))}/";
+                            Desktop.Dir.Dispose();
+                            Desktop.Dir = ndir;
                         }
-                        Desktop.Dir.Length = i + 1;
+                        else
+                        {
+                            Desktop.Dir = "";
+                        }
                     }
                     this.Visible = false;
                 }

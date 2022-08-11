@@ -95,7 +95,17 @@ namespace System
 			return ret;
 		}
 
-		public int Length => _numComponents;
+		public int Length
+		{
+            get
+            {
+				return _numComponents;
+            }
+            set
+            {
+				_numComponents = value;
+            }
+		}
 
 #nullable enable
 		public object? this[int i]

@@ -22,8 +22,11 @@
     <ClCompile Include="abs.c" />
     <ClCompile Include="atoi.c" />
     <ClCompile Include="fabs.c" />
+    <ClCompile Include="isalpha.c" />
     <ClCompile Include="isspace.c" />
+    <ClCompile Include="isupper.c" />
     <ClCompile Include="memmove.c" />
+    <ClCompile Include="isdigit.c" />
     <ClCompile Include="printf.c" />
     <ClCompile Include="strchr.c" />
     <ClCompile Include="strcmp.c" />
@@ -34,6 +37,7 @@
     <ClCompile Include="strncpy.c" />
     <ClCompile Include="strnicmp.c" />
     <ClCompile Include="strstr.c" />
+    <ClCompile Include="strtoul.c" />
     <ClCompile Include="toupper.c" />
   </ItemGroup>
   <ItemGroup>

@@ -93,7 +93,8 @@ namespace MOOS.Misc
             Console.WriteLine((Info->Mods[0]).ToString("x2"));
             Console.WriteLine("[Initrd] Initializing Ramdisk");
             new Ramdisk((IntPtr)(Info->Mods[0]));
-            new FATFS();
+            //new FATFS();
+            new TarFS();
 
             KMain();
         }
