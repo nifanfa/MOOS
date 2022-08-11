@@ -371,3 +371,4 @@ Tools/Trampoline
 *.map
 Tools/grub2/boot/kernel.bin
 Tools/trampoline.o
+Tools/grub2/boot/ramdisk.tar
