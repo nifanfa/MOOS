@@ -331,6 +331,8 @@ unsafe class Program
             Framebuffer.Update();
 
             FPSMeter.Update();
+
+            Native.Hlt(); //Save energy
         }
     }
 }
