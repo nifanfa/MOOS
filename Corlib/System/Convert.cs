@@ -4,7 +4,7 @@ namespace System
     {
         public static unsafe string ToString(ulong value, ulong toBase)
         {
-            if (toBase != 0 && toBase <= 16 && (toBase % 2) == 0)
+            if (toBase > 0 && toBase <= 16)
             {
                 char* x = stackalloc char[128];
                 var i = 126;
