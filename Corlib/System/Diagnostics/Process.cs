@@ -13,6 +13,8 @@ namespace System.Diagnostics
                 DOSHeader* doshdr = (DOSHeader*)ptr;
                 NtHeaders64* nthdr = (NtHeaders64*)(ptr + doshdr->e_lfanew);
 
+                if (nthdr->OptionalHeader.FileAlignment != 0x1000) return;
+
                 if (!nthdr->OptionalHeader.BaseRelocationTable.VirtualAddress) return;
                 if (nthdr->OptionalHeader.ImageBase != 0x140000000) return;
 
