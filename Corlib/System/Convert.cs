@@ -2,6 +2,27 @@ namespace System
 {
     public static class Convert
     {
+        public static unsafe string ToString(ulong value, ulong toBase)
+        {
+            char* x = stackalloc char[128];
+            var i = 126;
+
+            x[127] = '\0';
+
+            do
+            {
+                var d = value % toBase;
+                value /= toBase;
+
+                d += 0x30;
+                x[i--] = (char)d;
+            } while (value > 0);
+
+            i++;
+
+            return new string(x + i, 0, 127 - i);
+        }
+
         public static int ToUInt16(bool boolean)
         {
             return boolean ? 1 : 0;
