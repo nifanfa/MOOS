@@ -88,9 +88,15 @@ namespace MOOS.GUI
                             break;
 
                         case "span":
-                            var text = "hello from MOOS!";
-                            var nameSpan = text.AsSpan(6, 9);
-                            for (int i = 0; i < nameSpan.Length; i++) Console.Write(nameSpan[i]);
+                            string test = "hello world from MOOS span test!";
+                            Span<char> span = stackalloc char[test.Length];
+                            test.AsSpan().CopyTo(span);
+                            span = span.Slice(17, 15);
+
+                            for(int i = 0; i < span.Length; i++)
+                            {
+                                Console.Write(span[i]);
+                            }
                             Console.WriteLine();
                             break;
 
