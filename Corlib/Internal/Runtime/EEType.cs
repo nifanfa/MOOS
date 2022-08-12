@@ -1,5 +1,3 @@
-#define TARGET_64BIT
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -155,11 +153,7 @@ namespace Internal.Runtime
     //        internal EEType* InterfaceType {
     //            get {
     //                if ((unchecked((uint)_interfaceType._pInterfaceEEType) & IndirectionConstants.IndirectionCellPointer) != 0) {
-    //#if TARGET_64BIT
     //                    EEType** ppInterfaceEETypeViaIAT = (EEType**)(((ulong)_interfaceType._ppInterfaceEETypeViaIAT) - IndirectionConstants.IndirectionCellPointer);
-    //#else
-    //                    EEType** ppInterfaceEETypeViaIAT = (EEType**)(((uint)_interfaceType._ppInterfaceEETypeViaIAT) - IndirectionConstants.IndirectionCellPointer);
-    //#endif
     //                    return *ppInterfaceEETypeViaIAT;
     //                }
 

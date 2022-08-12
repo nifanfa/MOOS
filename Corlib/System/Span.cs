@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#define TARGET_64BIT
-
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -12,14 +10,12 @@ using System.Text;
 //using EditorBrowsableState = System.ComponentModel.EditorBrowsableState;
 using Internal.Runtime.CompilerServices;
 
+using nuint = System.UInt64;
+using nint = System.Int64;
+
 #pragma warning disable 0809  //warning CS0809: Obsolete member 'Span<T>.Equals(object)' overrides non-obsolete member 'object.Equals(object)'
 
 #pragma warning disable SA1121 // explicitly using type aliases instead of built-in types
-#if TARGET_64BIT
-using nuint = System.UInt64;
-#else
-using nuint = System.UInt32;
-#endif
 
 namespace System
 {
@@ -82,14 +78,10 @@ namespace System
             }
             //if (!typeof(T).IsValueType && array.GetType() != typeof(T[]))
             //    ThrowHelper.ThrowArrayTypeMismatchException();
-#if TARGET_64BIT
+
             // See comment in Span<T>.Slice for how this works.
             //if ((ulong)(uint)start + (ulong)(uint)length > (ulong)(uint)array.Length)
             //    ThrowHelper.ThrowArgumentOutOfRangeException();
-#else
-            //if ((uint)start > (uint)array.Length || (uint)length > (uint)(array.Length - start))
-            //    ThrowHelper.ThrowArgumentOutOfRangeException();
-#endif
 
             _pointer = new ByReference<T>(ref Unsafe.Add(ref MemoryMarshal.GetArrayDataReference(array), start));
             _length = length;
@@ -449,7 +441,6 @@ namespace System
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Span<T> Slice(int start, int length)
         {
-#if TARGET_64BIT
             // Since start and length are both 32-bit, their sum can be computed across a 64-bit domain
             // without loss of fidelity. The cast to uint before the cast to ulong ensures that the
             // extension from 32- to 64-bit is zero-extending rather than sign-extending. The end result
@@ -458,10 +449,6 @@ namespace System
             // We don't use this same mechanism in a 32-bit process due to the overhead of 64-bit arithmetic.
             //if ((ulong)(uint)start + (ulong)(uint)length > (ulong)(uint)_length)
             //    ThrowHelper.ThrowArgumentOutOfRangeException();
-#else
-            //if ((uint)start > (uint)_length || (uint)length > (uint)(_length - start))
-            //    ThrowHelper.ThrowArgumentOutOfRangeException();
-#endif
 
             return new Span<T>(ref Unsafe.Add(ref _pointer.Value, start), length);
         }

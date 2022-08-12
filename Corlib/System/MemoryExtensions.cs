@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#define TARGET_64BIT
-
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -10,11 +8,6 @@ using System.Runtime.InteropServices;
 using Internal.Runtime.CompilerServices;
 
 #pragma warning disable SA1121 // explicitly using type aliases instead of built-in types
-#if TARGET_64BIT
-using nuint = System.UInt64;
-#else
-using nuint = System.UInt32;
-#endif // TARGET_64BIT
 
 namespace System
 {
@@ -156,14 +149,9 @@ namespace System
                 return default;
             }
 
-#if TARGET_64BIT
             // See comment in Span<T>.Slice for how this works.
             //if ((ulong)(uint)start + (ulong)(uint)length > (ulong)(uint)text.Length)
             //    ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.start);
-#else
-            if ((uint)start > (uint)text.Length || (uint)length > (uint)(text.Length - start))
-                ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.start);
-#endif
 
             return new ReadOnlySpan<char>(ref Unsafe.Add(ref text.GetRawStringData(), start), length);
         }
