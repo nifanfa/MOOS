@@ -61,7 +61,10 @@ namespace MOOS.FS
             return list;
         }
 
-        public override void Delete(string Name) { }
+        public override void Delete(string Name)
+        {
+            Panic.Error("Delete is not implemented on TarFS");
+        }
 
         public override byte[] ReadAllBytes(string Name)
         {
@@ -127,8 +130,14 @@ namespace MOOS.FS
             return chksum == sum;
         }
 
-        public override void WriteAllBytes(string Name, byte[] Content) { }
+        public override void WriteAllBytes(string Name, byte[] Content) 
+        {
+            Panic.Error("WriteAllBytes is not implemented on TarFS");
+        }
 
-        public override void Format() { }
+        public override void Format()
+        {
+            Panic.Error("Format is not implemented on TarFS");
+        }
     }
 }
