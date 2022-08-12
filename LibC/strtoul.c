@@ -64,7 +64,7 @@
    * alphabets and digits are each contiguous.
    */
 unsigned long
-mystrtoul(nptr, endptr, base)
+__strtoul(nptr, endptr, base)
 const char* nptr;
 char** endptr;
 int base;

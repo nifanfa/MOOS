@@ -30,7 +30,7 @@ namespace MOOS.FS
         };
 
         [DllImport("*")]
-        static extern ulong mystrtoul(byte* nptr, byte** endptr, int @base);
+        static extern ulong __strtoul(byte* nptr, byte** endptr, int @base);
 
         public override List<FileInfo> GetFiles(string Directory)
         {
@@ -42,7 +42,7 @@ namespace MOOS.FS
             while (Disk.Instance.Read(sec, 1, (byte*)ptr) && hdr.name[0])
             {
                 sec++;
-                ulong size = mystrtoul(hdr.size, null, 8);
+                ulong size = __strtoul(hdr.size, null, 8);
                 string name = Encoding.UTF8.GetString(hdr.name);
                 name.Length -= (name[name.Length - 1] == '/' ? 1 : 0);
                 if (IsInDirectory(name, Directory))
