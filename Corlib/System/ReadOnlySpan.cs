@@ -355,14 +355,9 @@ namespace System
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ReadOnlySpan<T> Slice(int start, int length)
         {
-#if TARGET_64BIT
             // See comment in Span<T>.Slice for how this works.
             //if ((ulong)(uint)start + (ulong)(uint)length > (ulong)(uint)_length)
             //    ThrowHelper.ThrowArgumentOutOfRangeException();
-#else
-            //if ((uint)start > (uint)_length || (uint)length > (uint)(_length - start))
-            //   ThrowHelper.ThrowArgumentOutOfRangeException();
-#endif
 
             return new ReadOnlySpan<T>(ref Unsafe.Add(ref _pointer.Value, start), length);
         }

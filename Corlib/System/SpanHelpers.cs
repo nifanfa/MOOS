@@ -134,15 +134,9 @@ namespace System
                     Unsafe.As<byte, int>(ref Unsafe.Add<byte>(ref b, 16)) = 0;
                     return;
                 case 21:
-#if TARGET_64BIT
                     Unsafe.As<byte, long>(ref b) = 0;
                     Unsafe.As<byte, long>(ref Unsafe.Add<byte>(ref b, 8)) = 0;
-#else
-                    Unsafe.As<byte, int>(ref b) = 0;
-                    Unsafe.As<byte, int>(ref Unsafe.Add<byte>(ref b, 4)) = 0;
-                    Unsafe.As<byte, int>(ref Unsafe.Add<byte>(ref b, 8)) = 0;
-                    Unsafe.As<byte, int>(ref Unsafe.Add<byte>(ref b, 12)) = 0;
-#endif
+
                     Unsafe.As<byte, int>(ref Unsafe.Add<byte>(ref b, 16)) = 0;
                     Unsafe.Add<byte>(ref b, 20) = 0;
                     return;

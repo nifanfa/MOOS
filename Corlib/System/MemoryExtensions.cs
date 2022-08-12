@@ -228,15 +228,10 @@ namespace System
                     ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.start);
                 return default;
             }
-
-#if TARGET_64BIT
+        
             // See comment in Span<T>.Slice for how this works.
             if ((ulong)(uint)start + (ulong)(uint)length > (ulong)(uint)text.Length)
                 ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.start);
-#else
-            if ((uint)start > (uint)text.Length || (uint)length > (uint)(text.Length - start))
-                ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.start);
-#endif
 
             return new ReadOnlyMemory<char>(text, start, length);
         }
