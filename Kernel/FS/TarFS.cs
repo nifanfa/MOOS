@@ -41,6 +41,7 @@ namespace MOOS.FS
             List<FileInfo> list = new List<FileInfo>();
             while (Disk.Instance.Read(sec, 1, (byte*)ptr) && hdr.name[0])
             {
+                if (!Validate(ptr)) Panic.Error("This filesystem is not TAR");
                 sec++;
                 ulong size = __strtoul(hdr.size, null, 8);
                 string name = Encoding.UTF8.GetString(hdr.name);
@@ -98,6 +99,32 @@ namespace MOOS.FS
             }
             Panic.Error($"{Name} is not found!");
             return buffer;
+        }
+
+        private bool Validate(posix_tar_header* hdr) 
+        {
+            uint chksum = 0;
+            for (int i = 7; i >= 0; i--)
+            {
+                if (hdr->chksum[i] >= 0x30)
+                {
+                    uint s = hdr->chksum[i] - 0x30;
+                    int j = 7 - i;
+                    while (j > 2)
+                    {
+                        s *= 8;
+                        j--;
+                    }
+                    chksum += s;
+                }
+                hdr->chksum[i] = 0x20;
+            }
+            uint sum = 0;
+            for (int i = 0; i < 512; i++) 
+            {
+                sum += ((byte*)hdr)[i];
+            }
+            return chksum == sum;
         }
 
         public override void WriteAllBytes(string Name, byte[] Content) { }
