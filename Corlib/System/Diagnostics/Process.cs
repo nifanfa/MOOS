@@ -55,7 +55,7 @@ namespace System.Diagnostics
         static extern void StartThread(delegate*<void> func);
 
         [DllImport("*")]
-        static unsafe extern void memset(byte* ptr, int c, int count);
+        static unsafe extern void memset(byte* ptr, byte c, ulong count);
 
         [DllImport("*")]
         static unsafe extern void memcpy(byte* dest, byte* src, ulong count);

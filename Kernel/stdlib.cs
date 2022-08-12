@@ -57,5 +57,17 @@ namespace MOOS
             Native.Stosb(ptr, 0, num * size);
             return ptr;
         }
+
+        [RuntimeExport("memset")]
+        static unsafe void memset(byte* ptr, byte c, ulong count)
+        {
+            Native.Stosb(ptr, (byte)c, count);
+        }
+
+        [RuntimeExport("memcpy")]
+        static unsafe void memcpy(byte* dest, byte* src, ulong count)
+        {
+            Native.Movsb(dest, src, count);
+        }
     }
 }

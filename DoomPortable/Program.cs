@@ -75,6 +75,19 @@ namespace NES
         [DllImport("Sleep")]
         public static extern void Sleep(ulong ms);
 
+        [RuntimeExport("memset")]
+        static unsafe void memset(byte* ptr, byte c, ulong count)
+        {
+            for (byte* p = ptr; p < ptr + count; p++)
+                *p = (byte)c;
+        }
+
+        [RuntimeExport("memcpy")]
+        static unsafe void memcpy(byte* dest, byte* src, ulong count)
+        {
+            for (ulong i = 0; i < count; i++) dest[i] = src[i];
+        }
+
         [RuntimeExport("Main")]
         public static void Main()
         {

@@ -58,6 +58,19 @@ namespace NES
         [DllImport("BindOnKeyChangedHandler")]
         public static extern void BindOnKeyChangedHandler(IntPtr handler);
 
+        [RuntimeExport("memset")]
+        static unsafe void memset(byte* ptr, byte c, ulong count)
+        {
+            for (byte* p = ptr; p < ptr + count; p++)
+                *p = (byte)c;
+        }
+
+        [RuntimeExport("memcpy")]
+        static unsafe void memcpy(byte* dest, byte* src, ulong count)
+        {
+            for (ulong i = 0; i < count; i++) dest[i] = src[i];
+        }
+
         public static Image ScreenBuf;
 
         [RuntimeExport("Main")]

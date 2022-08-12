@@ -77,7 +77,7 @@ namespace System
         }
 
         [DllImport("*")]
-        public static unsafe extern void memset(byte* ptr, int c, int count);
+        public static unsafe extern void memset(byte* ptr, byte c, ulong count);
 
         [DllImport("*")]
         public static unsafe extern void memcpy(byte* dest, byte* src, ulong count);
