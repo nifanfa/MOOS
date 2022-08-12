@@ -5,13 +5,30 @@ namespace System
 {
     public unsafe struct EETypePtr
     {
-        internal EEType* Value;
+        internal EEType* _value;
 
         public bool IsSzArray 
         {
             get 
             {
-                return Value->IsSzArray;
+                return _value->IsSzArray;
+            }
+        }
+
+        internal bool IsValueType
+        {
+            get
+            {
+                return _value->IsValueType;
+            }
+        }
+
+        // Has internal gc pointers. 
+        internal bool HasPointers
+        {
+            get
+            {
+                return _value->HasGCPointers;
             }
         }
 
@@ -19,7 +36,7 @@ namespace System
         {
             get 
             {
-                return new EETypePtr(Value->RelatedParameterType);
+                return new EETypePtr(_value->RelatedParameterType);
             }
         }
 
@@ -27,7 +44,7 @@ namespace System
         {
             get
             {
-                return Value->ArrayRank;
+                return _value->ArrayRank;
             }
         }
 
@@ -35,18 +52,18 @@ namespace System
         {
             get 
             {
-                return (IntPtr)Value;
+                return (IntPtr)_value;
             }
         }
 
         public EETypePtr(IntPtr value)
         {
-            Value = (EEType*)value;
+            _value = (EEType*)value;
         }
 
         public EETypePtr(EEType* value)
         {
-            Value = value;
+            _value = value;
         }
 
         [Intrinsic]

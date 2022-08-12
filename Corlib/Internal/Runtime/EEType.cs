@@ -1,3 +1,5 @@
+#define TARGET_64BIT
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -667,17 +669,17 @@ namespace Internal.Runtime
         //	}
         //}
 
-        //internal bool IsValueType {
-        //	get {
-        //		return ElementType < EETypeElementType.Class;
-        //	}
-        //}
+        internal bool IsValueType {
+        	get {
+        		return ElementType < EETypeElementType.Class;
+        	}
+        }
 
-        //internal bool HasGCPointers {
-        //	get {
-        //		return ((_usFlags & (ushort)EETypeFlags.HasPointersFlag) != 0);
-        //	}
-        //}
+        internal bool HasGCPointers {
+        	get {
+        		return ((_usFlags & (ushort)EETypeFlags.HasPointersFlag) != 0);
+        	}
+        }
 
         //internal bool IsHFA {
         //	get {

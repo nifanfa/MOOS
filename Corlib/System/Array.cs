@@ -83,7 +83,7 @@ namespace System
 				totalLength *= (ulong)length;
 			}
 
-			object v = StartupCodeHelpers.RhpNewArray(eeType.Value, (int)totalLength);
+			object v = StartupCodeHelpers.RhpNewArray(eeType._value, (int)totalLength);
 			Array ret = Unsafe.As<object, Array>(ref v);
 
 			ref int bounds = ref ret.GetRawMultiDimArrayBounds();
@@ -667,4 +667,12 @@ namespace System
 		}
 	}
 	public class Array<T> : Array { }
+
+	[StructLayout(LayoutKind.Sequential)]
+	internal class RawArrayData
+	{
+		public uint Length; // Array._numComponents padded to IntPtr
+        public uint Padding;
+		public byte Data;
+	}
 }

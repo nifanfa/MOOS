@@ -3,6 +3,7 @@
 using MOOS.Driver;
 using MOOS.Graph;
 using MOOS.Misc;
+using System;
 using System.Drawing;
 
 namespace MOOS.GUI
@@ -84,6 +85,13 @@ namespace MOOS.GUI
                             for (int i = 0; i < ACPI.LocalAPIC_CPUIDs.Count; i++)
                                 Console.WriteLine($" cpu id:{ACPI.LocalAPIC_CPUIDs[i]}");
                             Console.WriteLine($"frequency: {Timer.CPU_Clock/1048576}mhz");
+                            break;
+
+                        case "span":
+                            var text = "hello from MOOS!";
+                            var nameSpan = text.AsSpan(6, 9);
+                            for (int i = 0; i < nameSpan.Length; i++) Console.Write(nameSpan[i]);
+                            Console.WriteLine();
                             break;
 
                         case "null":
