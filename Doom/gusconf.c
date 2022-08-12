@@ -76,7 +76,7 @@ static int SplitLine(char *line, char **fields, unsigned int max_fields)
             do
             {
                 ++p;
-            } while (*p != '\0' && myisspace(*p));
+            } while (*p != '\0' && __isspace(*p));
 
             fields[num_fields] = p;
             ++num_fields;
@@ -95,8 +95,8 @@ static int SplitLine(char *line, char **fields, unsigned int max_fields)
     }
 
     // Strip off trailing whitespace from the end of the line.
-    p = fields[num_fields - 1] + mystrlen(fields[num_fields - 1]);
-    while (p > fields[num_fields - 1] && myisspace(*(p - 1)))
+    p = fields[num_fields - 1] + __strlen(fields[num_fields - 1]);
+    while (p > fields[num_fields - 1] && __isspace(*(p - 1)))
     {
         --p;
         *p = '\0';
@@ -118,11 +118,11 @@ static void ParseLine(gus_config_t *config, char *line)
         return;
     }
 
-    instr_id = myatoi(fields[0]);
-    mapped_id = myatoi(fields[MappingIndex()]);
+    instr_id = __atoi(fields[0]);
+    mapped_id = __atoi(fields[MappingIndex()]);
 
     kfree(config->patch_names[instr_id]);
-    config->patch_names[instr_id] = mystrdup(fields[5]);
+    config->patch_names[instr_id] = __strdup(fields[5]);
     config->mapping[instr_id] = mapped_id;
 }
 

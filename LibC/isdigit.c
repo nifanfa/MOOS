@@ -14,7 +14,7 @@
   * PUBLIC: #endif
   */
 int
-myisdigit(c)
+__isdigit(c)
 int c;
 {
 	/*

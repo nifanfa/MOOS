@@ -1,4 +1,4 @@
-char mytoupper(char c) {
+char __toupper(char c) {
 	if (c >= 'a' && c <= 'z')
 		return (c = c + 'A' - 'a');
 	else

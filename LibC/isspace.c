@@ -14,7 +14,7 @@
   * PUBLIC: #endif
   */
 int
-myisspace(c)
+__isspace(c)
 int c;
 {
 	return (c == '\t' || c == '\n' ||

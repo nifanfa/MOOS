@@ -1,5 +1,5 @@
 int
-mystrncmp(s1, s2, n)
+__strncmp(s1, s2, n)
 register const char* s1, * s2;
 register long n;
 {

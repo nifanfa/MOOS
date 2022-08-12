@@ -1,7 +1,7 @@
 #define NULL 0
 
 char*
-mystrstr(string, substring)
+__strstr(string, substring)
 register char* string;	/* String to search. */
 char* substring;		/* Substring to try to find in string. */
 {

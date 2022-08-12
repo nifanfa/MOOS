@@ -6,7 +6,7 @@
  * See LICENSE for the license.
 */
 
-void* mymemmove(void* dest, const void* src, long n)
+void* __memmove(void* dest, const void* src, long n)
 {
 	char* from = (char*)src;
 	char* to = (char*)dest;

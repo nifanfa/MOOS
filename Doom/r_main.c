@@ -384,8 +384,8 @@ R_PointToDist
     fixed_t	dist;
     fixed_t     frac;
 	
-    dx = myabs(x - viewx);
-    dy = myabs(y - viewy);
+    dx = __abs(x - viewx);
+    dy = __abs(y - viewy);
 	
     if (dy>dx)
     {
@@ -726,13 +726,13 @@ void R_ExecuteSetViewSize (void)
     for (i=0 ; i<viewheight ; i++)
     {
 	dy = ((i-viewheight/2)<<FRACBITS)+FRACUNIT/2;
-	dy = myabs(dy);
+	dy = __abs(dy);
 	yslope[i] = FixedDiv ( (viewwidth<<detailshift)/2*FRACUNIT, dy);
     }
 	
     for (i=0 ; i<viewwidth ; i++)
     {
-	cosadj = myabs(finecosine[xtoviewangle[i]>>ANGLETOFINESHIFT]);
+	cosadj = __abs(finecosine[xtoviewangle[i]>>ANGLETOFINESHIFT]);
 	distscale[i] = FixedDiv (FRACUNIT,cosadj);
     }
     

@@ -1,5 +1,5 @@
 long
-mystrlen(str)
+__strlen(str)
 const char* str;
 {
 	register const char* s;

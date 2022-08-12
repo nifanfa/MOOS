@@ -1,4 +1,4 @@
-int myisupper(int ch)
+int __isupper(int ch)
 {
     return (ch >= 'A' && ch <= 'Z');
 }

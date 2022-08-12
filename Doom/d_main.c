@@ -629,17 +629,17 @@ static char *GetGameName(char *gamename)
             // We need to expand via printf to include the Doom version number
             // We also need to cut off spaces to get the basic name
 
-            gamename_size = mystrlen(deh_sub) + 10;
+            gamename_size = __strlen(deh_sub) + 10;
             gamename = Z_Malloc(gamename_size, PU_STATIC, 0);
             version = G_VanillaVersionCode();
-            while (gamename[0] != '\0' && myisspace((int)gamename[0]))
+            while (gamename[0] != '\0' && __isspace((int)gamename[0]))
             {
-                mymemmove(gamename, gamename + 1, gamename_size - 1);
+                __memmove(gamename, gamename + 1, gamename_size - 1);
             }
 
-            while (gamename[0] != '\0' && myisspace((int)gamename[mystrlen(gamename)-1]))
+            while (gamename[0] != '\0' && __isspace((int)gamename[__strlen(gamename)-1]))
             {
-                gamename[mystrlen(gamename) - 1] = '\0';
+                gamename[__strlen(gamename) - 1] = '\0';
             }
 
             return gamename;
@@ -902,7 +902,7 @@ static void InitGameVersion(void)
     {
         for (i=0; gameversions[i].description != NULL; ++i)
         {
-            if (!strcmp(myargv[p+1], gameversions[i].cmdline))
+            if (!__strcmp(myargv[p+1], gameversions[i].cmdline))
             {
                 gameversion = gameversions[i].version;
                 break;
@@ -1249,7 +1249,7 @@ void D_DoomMain (void)
 	extern int sidemove[2];
 	
 	if (p<myargc-1)
-	    scale = myatoi (myargv[p+1]);
+	    scale = __atoi (myargv[p+1]);
 	if (scale < 10)
 	    scale = 10;
 	if (scale > 400)

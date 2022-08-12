@@ -80,7 +80,7 @@ int base;
 	 */
 	do {
 		c = *s++;
-	} while (myisspace(c));
+	} while (__isspace(c));
 	if (c == '-') {
 		neg = 1;
 		c = *s++;
@@ -98,10 +98,10 @@ int base;
 	cutoff = (unsigned long)ULONG_MAX / (unsigned long)base;
 	cutlim = (unsigned long)ULONG_MAX % (unsigned long)base;
 	for (acc = 0, any = 0;; c = *s++) {
-		if (myisdigit(c))
+		if (__isdigit(c))
 			c -= '0';
-		else if (myisalpha(c))
-			c -= myisupper(c) ? 'A' - 10 : 'a' - 10;
+		else if (__isalpha(c))
+			c -= __isupper(c) ? 'A' - 10 : 'a' - 10;
 		else
 			break;
 		if (c >= base)

@@ -77,7 +77,7 @@ unsigned int W_LumpNameHash(const char *s)
 
     for (i=0; i < 8 && s[i] != '\0'; ++i)
     {
-        result = ((result << 5) ^ result ) ^ mytoupper((int)s[i]);
+        result = ((result << 5) ^ result ) ^ __toupper((int)s[i]);
     }
 
     return result;
@@ -159,7 +159,7 @@ wad_file_t *W_AddFile (char *filename)
 
     newnumlumps = numlumps;
 
-    if (strcasecmp(filename+mystrlen(filename)-3 , "wad" ) )
+    if (strcasecmp(filename+__strlen(filename)-3 , "wad" ) )
     {
     	// single lump file
 
@@ -183,10 +183,10 @@ wad_file_t *W_AddFile (char *filename)
     	// WAD file
         W_Read(wad_file, 0, &header, sizeof(header));
 
-		if (mystrncmp(header.identification,"IWAD",4))
+		if (__strncmp(header.identification,"IWAD",4))
 		{
 			// Homebrew levels?
-			if (mystrncmp(header.identification,"PWAD",4))
+			if (__strncmp(header.identification,"PWAD",4))
 			{
 			I_Error ("Wad file %s doesn't have IWAD "
 				 "or PWAD id\n", filename);
@@ -218,7 +218,7 @@ wad_file_t *W_AddFile (char *filename)
 		lump_p->position = LONG(filerover->filepos);
 		lump_p->size = LONG(filerover->size);
 			lump_p->cache = NULL;
-		mystrncpy(lump_p->name, filerover->name, 8);
+		__strncpy(lump_p->name, filerover->name, 8);
 
 			++lump_p;
 			++filerover;

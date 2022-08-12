@@ -146,7 +146,7 @@ byte *I_ZoneBase (int *size)
 
     if (p > 0)
     {
-        default_ram = myatoi(myargv[p+1]);
+        default_ram = __atoi(myargv[p+1]);
         min_ram = default_ram;
     }
     else
@@ -368,7 +368,7 @@ void I_Error (char *error, ...)
         wchar_t wmsgbuf[512];
 
         MultiByteToWideChar(CP_ACP, 0,
-                            msgbuf, mystrlen(msgbuf) + 1,
+                            msgbuf, __strlen(msgbuf) + 1,
                             wmsgbuf, sizeof(wmsgbuf));
 
         MessageBoxW(NULL, wmsgbuf, L"", MB_OK);

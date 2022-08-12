@@ -413,7 +413,7 @@ R_DrawVisSprite
 	    ( (vis->mobjflags & MF_TRANSLATION) >> (MF_TRANSSHIFT-8) );
     }
 	
-    dc_iscale = myabs(vis->xiscale)>>detailshift;
+    dc_iscale = __abs(vis->xiscale)>>detailshift;
     dc_texturemid = vis->texturemid;
     frac = vis->startfrac;
     spryscale = vis->scale;
@@ -491,7 +491,7 @@ void R_ProjectSprite (mobj_t* thing)
     tx = -(gyt+gxt); 
 
     // too far off the side?
-    if (myabs(tx)>(tz<<2))
+    if (__abs(tx)>(tz<<2))
 	return;
     
     // decide which patch to use for sprite relative to player

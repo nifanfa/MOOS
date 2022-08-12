@@ -250,7 +250,7 @@ static void CheckUninstallStrings(void)
             continue;
         }
 
-        unstr = mystrstr(val, UNINSTALLER_STRING);
+        unstr = __strstr(val, UNINSTALLER_STRING);
 
         if (unstr == NULL)
         {
@@ -258,7 +258,7 @@ static void CheckUninstallStrings(void)
         }
         else
         {
-            path = unstr + mystrlen(UNINSTALLER_STRING);
+            path = unstr + __strlen(UNINSTALLER_STRING);
 
             AddIWADDir(path);
         }
@@ -330,7 +330,7 @@ static void CheckSteamGUSPatches(void)
 
     // Already configured? Don't stomp on the user's choices.
     current_path = M_GetStrVariable("gus_patch_path");
-    if (current_path != NULL && mystrlen(current_path) > 0)
+    if (current_path != NULL && __strlen(current_path) > 0)
     {
         return;
     }
@@ -342,7 +342,7 @@ static void CheckSteamGUSPatches(void)
         return;
     }
 
-    len = mystrlen(install_path) + mystrlen(STEAM_BFG_GUS_PATCHES) + 20;
+    len = __strlen(install_path) + __strlen(STEAM_BFG_GUS_PATCHES) + 20;
     patch_path = kmalloc(len);
 
     kfree(patch_path);
@@ -383,8 +383,8 @@ static boolean DirIsFile(char *path, char *filename)
     size_t path_len;
     size_t filename_len;
 
-    path_len = mystrlen(path);
-    filename_len = mystrlen(filename);
+    path_len = __strlen(path);
+    filename_len = __strlen(filename);
 
     return path_len >= filename_len + 1
         && path[path_len - filename_len - 1] == DIR_SEPARATOR
@@ -401,7 +401,7 @@ static GameMission_t IdentifyIWADByName(char *name, int mask)
     GameMission_t mission;
     char *p;
 
-    p = mystrrchr(name, DIR_SEPARATOR);
+    p = __strrchr(name, DIR_SEPARATOR);
 
     if (p != NULL)
     {

@@ -204,7 +204,7 @@ void F_Ticker (void)
 	return;
 		
     if (finalestage == F_STAGE_TEXT
-     && finalecount>mystrlen (finaletext)*TEXTSPEED + TEXTWAIT)
+     && finalecount>__strlen (finaletext)*TEXTSPEED + TEXTWAIT)
     {
 	finalecount = 0;
 	finalestage = F_STAGE_ARTSCREEN;
@@ -276,7 +276,7 @@ void F_TextWrite (void)
 	    continue;
 	}
 		
-	c = mytoupper(c) - HU_FONTSTART;
+	c = __toupper(c) - HU_FONTSTART;
 	if (c < 0 || c> HU_FONTSIZE)
 	{
 	    cx += 4;
@@ -500,7 +500,7 @@ void F_CastPrint (char* text)
 	c = *ch++;
 	if (!c)
 	    break;
-	c = mytoupper(c) - HU_FONTSTART;
+	c = __toupper(c) - HU_FONTSTART;
 	if (c < 0 || c> HU_FONTSIZE)
 	{
 	    width += 4;
@@ -519,7 +519,7 @@ void F_CastPrint (char* text)
 	c = *ch++;
 	if (!c)
 	    break;
-	c = mytoupper(c) - HU_FONTSTART;
+	c = __toupper(c) - HU_FONTSTART;
 	if (c < 0 || c> HU_FONTSIZE)
 	{
 	    cx += 4;

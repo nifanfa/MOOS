@@ -59,7 +59,7 @@ void M_ExtractFileBase(char *path, char *dest)
     char *filename;
     int length;
 
-    src = path + mystrlen(path) - 1;
+    src = path + __strlen(path) - 1;
 
     // back up until a \ or the start
     while (src != path && *(src - 1) != DIR_SEPARATOR)
@@ -84,7 +84,7 @@ void M_ExtractFileBase(char *path, char *dest)
             break;
         }
 
-	dest[length++] = mytoupper((int)*src++);
+	dest[length++] = __toupper((int)*src++);
     }
 }
 
@@ -102,7 +102,7 @@ void M_ForceUppercase(char *text)
 
     for (p = text; *p != '\0'; ++p)
     {
-        *p = mytoupper(*p);
+        *p = __toupper(*p);
     }
 }
 
@@ -119,8 +119,8 @@ char *M_StrCaseStr(char *haystack, char *needle)
     unsigned int len;
     unsigned int i;
 
-    haystack_len = mystrlen(haystack);
-    needle_len = mystrlen(needle);
+    haystack_len = __strlen(haystack);
+    needle_len = __strlen(needle);
 
     if (haystack_len < needle_len)
     {
@@ -149,12 +149,12 @@ char *M_StringDuplicate(const char *orig)
 {
     char *result;
 
-    result = mystrdup(orig);
+    result = __strdup(orig);
 
     if (result == NULL)
     {
         I_Error("Failed to duplicate string (length %i)\n",
-                mystrlen(orig));
+                __strlen(orig));
     }
 
     return result;
@@ -169,24 +169,24 @@ char *M_StringReplace(const char *haystack, const char *needle,
 {
     char *result, *dst;
     const char *p;
-    size_t needle_len = mystrlen(needle);
+    size_t needle_len = __strlen(needle);
     size_t result_len, dst_len;
 
     // Iterate through occurrences of 'needle' and calculate the size of
     // the new string.
-    result_len = mystrlen(haystack) + 1;
+    result_len = __strlen(haystack) + 1;
     p = haystack;
 
     for (;;)
     {
-        p = mystrstr(p, needle);
+        p = __strstr(p, needle);
         if (p == NULL)
         {
             break;
         }
 
         p += needle_len;
-        result_len += mystrlen(replacement) - needle_len;
+        result_len += __strlen(replacement) - needle_len;
     }
 
     // Construct new string.
@@ -203,12 +203,12 @@ char *M_StringReplace(const char *haystack, const char *needle,
 
     while (*p != '\0')
     {
-        if (!mystrncmp(p, needle, needle_len))
+        if (!__strncmp(p, needle, needle_len))
         {
             M_StringCopy(dst, replacement, dst_len);
             p += needle_len;
-            dst += mystrlen(replacement);
-            dst_len -= mystrlen(replacement);
+            dst += __strlen(replacement);
+            dst_len -= __strlen(replacement);
         }
         else
         {
@@ -233,14 +233,14 @@ boolean M_StringCopy(char *dest, const char *src, size_t dest_size)
     if (dest_size >= 1)
     {
         dest[dest_size - 1] = '\0';
-        mystrncpy(dest, src, dest_size - 1);
+        __strncpy(dest, src, dest_size - 1);
     }
     else
     {
         return false;
     }
 
-    len = mystrlen(dest);
+    len = __strlen(dest);
     return src[len] == '\0';
 }
 
@@ -251,7 +251,7 @@ boolean M_StringConcat(char *dest, const char *src, size_t dest_size)
 {
     size_t offset;
 
-    offset = mystrlen(dest);
+    offset = __strlen(dest);
     if (offset > dest_size)
     {
         offset = dest_size;
@@ -264,16 +264,16 @@ boolean M_StringConcat(char *dest, const char *src, size_t dest_size)
 
 boolean M_StringStartsWith(const char *s, const char *prefix)
 {
-    return mystrlen(s) > mystrlen(prefix)
-        && mystrncmp(s, prefix, mystrlen(prefix)) == 0;
+    return __strlen(s) > __strlen(prefix)
+        && __strncmp(s, prefix, __strlen(prefix)) == 0;
 }
 
 // Returns true if 's' ends with the specified suffix.
 
 boolean M_StringEndsWith(const char *s, const char *suffix)
 {
-    return mystrlen(s) >= mystrlen(suffix)
-        && strcmp(s + mystrlen(s) - mystrlen(suffix), suffix) == 0;
+    return __strlen(s) >= __strlen(suffix)
+        && __strcmp(s + __strlen(s) - __strlen(suffix), suffix) == 0;
 }
 
 // Return a newly-malloced string with all the strings given as arguments
@@ -286,7 +286,7 @@ char *M_StringJoin(const char *s, ...)
     va_list args;
     size_t result_len;
 
-    result_len = mystrlen(s) + 1;
+    result_len = __strlen(s) + 1;
 
     va_start(args, s);
     for (;;)
@@ -297,7 +297,7 @@ char *M_StringJoin(const char *s, ...)
             break;
         }
 
-        result_len += mystrlen(v);
+        result_len += __strlen(v);
     }
     va_end(args);
 
@@ -332,7 +332,7 @@ char *M_StringJoin(const char *s, ...)
 
 char *M_OEMToUTF8(const char *oem)
 {
-    unsigned int len = mystrlen(oem) + 1;
+    unsigned int len = __strlen(oem) + 1;
     wchar_t *tmp;
     char *result;
 

@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmosKernel1", "CosmosKern
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CosmosCompatible", "CosmosCompatible\CosmosCompatible.shproj", "{86E84B0F-9EDE-4F25-AD24-75B350D6CB26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoomPortable", "DoomPortable\DoomPortable.csproj", "{3E46C530-72B4-443E-A541-BA8008049BF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoomPortable", "DoomPortable\DoomPortable.csproj", "{3E46C530-72B4-443E-A541-BA8008049BF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

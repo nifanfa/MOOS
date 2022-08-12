@@ -1,4 +1,4 @@
-int mystricmp(a, b)
+int __stricmp(a, b)
 char* a, * b;
 {
     int     ca, cb;

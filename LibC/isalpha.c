@@ -14,7 +14,7 @@
   * PUBLIC: #endif
   */
 int
-myisalpha(c)
+__isalpha(c)
 int c;
 {
 	/*

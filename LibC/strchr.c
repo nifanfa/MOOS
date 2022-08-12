@@ -18,7 +18,7 @@
    */
 
 char*
-mystrrchr(s, c)
+__strrchr(s, c)
 register const char* s;
 int c;
 {
