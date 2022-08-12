@@ -94,6 +94,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\IsVolatile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\MethodImplAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\RawCalliHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\RuntimeFeature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\RuntimeHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\StaticClassConstructionContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Runtime\CompilerServices\TupleElementNamesAttribute.cs" />
