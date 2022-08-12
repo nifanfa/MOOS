@@ -31,22 +31,31 @@ namespace System
         public static unsafe void Memcpy(byte* dest, byte* src, int len)
         {
             //Debug.Assert(len >= 0, "Negative length in memcpy!");
-            Memmove(dest, src, (nuint)len);
+            __Memmove(dest, src, (nuint)len);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe void Memmove(byte* dest, byte* src, nuint len) =>
+        public static unsafe void __Memmove(byte* dest, byte* src, nuint len) =>
             memcpy(dest, src, (ulong)len);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe void __Memmove(ref byte dest, ref byte src, nuint len)
+        {
+            fixed(byte* pdest = &dest)
+            fixed(byte* psrc = &src)
+            memcpy(pdest, psrc, (ulong)len);
+        }
 
         // This method has different signature for x64 and other platforms and is done for performance reasons.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Memmove<T>(ref T destination, ref T source, nuint elementCount)
         {
+            /*
             if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
             {
                 // Blittable memmove
 
-                Memmove(
+                __Memmove(
                     ref Unsafe.As<T, byte>(ref destination),
                     ref Unsafe.As<T, byte>(ref source),
                     elementCount * (nuint)Unsafe.SizeOf<T>());
@@ -54,12 +63,17 @@ namespace System
             else
             {
                 // Non-blittable memmove
-                //BulkMoveWithWriteBarrier(
-                Memmove(
+                BulkMoveWithWriteBarrier(
                     ref Unsafe.As<T, byte>(ref destination),
                     ref Unsafe.As<T, byte>(ref source),
                     elementCount * (nuint)Unsafe.SizeOf<T>());
             }
+            */
+
+            __Memmove(
+                ref Unsafe.As<T, byte>(ref destination),
+                ref Unsafe.As<T, byte>(ref source),
+                elementCount * (nuint)Unsafe.SizeOf<T>());
         }
 
         [DllImport("*")]
