@@ -1,7 +1,9 @@
+#include "../Kernel/MOOS.h"
+
 #define NULL 0
 
 char*
-__strstr(string, substring)
+strstr_(string, substring)
 register char* string;	/* String to search. */
 char* substring;		/* Substring to try to find in string. */
 {

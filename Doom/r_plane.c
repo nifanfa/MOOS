@@ -417,7 +417,7 @@ void R_DrawPlanes (void)
         lumpnum = firstflat + flattranslation[pl->picnum];
 	ds_source = W_CacheLumpNum(lumpnum, PU_STATIC);
 	
-	planeheight = __abs(pl->height-viewz);
+	planeheight = abs_(pl->height-viewz);
 	light = (pl->lightlevel >> LIGHTSEGSHIFT)+extralight;
 
 	if (light >= LIGHTLEVELS)

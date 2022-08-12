@@ -1,3 +1,5 @@
+#include "../Kernel/MOOS.h"
+
 /*
  *	mymemmove.c: mymemmove compat implementation.
  *
@@ -6,7 +8,7 @@
  * See LICENSE for the license.
 */
 
-void* __memmove(void* dest, const void* src, long n)
+void* memmove_(void* dest, const void* src, long n)
 {
 	char* from = (char*)src;
 	char* to = (char*)dest;

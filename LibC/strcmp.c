@@ -1,5 +1,7 @@
+#include "../Kernel/MOOS.h"
+
 int
-__strcmp(const char* s1, const char* s2)
+strcmp_(const char* s1, const char* s2)
 {
 	while (*s1 == *s2++)
 		if (*s1++ == '\0')

@@ -1,4 +1,6 @@
-int __stricmp(a, b)
+#include "../Kernel/MOOS.h"
+
+int stricmp_(a, b)
 char* a, * b;
 {
     int     ca, cb;

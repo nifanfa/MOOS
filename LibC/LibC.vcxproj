@@ -38,6 +38,7 @@
     <ClCompile Include="strnicmp.c" />
     <ClCompile Include="strstr.c" />
     <ClCompile Include="strtoul.c" />
+    <ClCompile Include="tolower.c" />
     <ClCompile Include="toupper.c" />
   </ItemGroup>
   <ItemGroup>

@@ -197,7 +197,7 @@ void I_InitGraphics (void)
 	
     i = M_CheckParmWithArgs("-scaling", 1);
     if (i > 0) {
-        i = __atoi(myargv[i + 1]);
+        i = atoi_(myargv[i + 1]);
         fb_scaling = i;
     } else {
         fb_scaling = s_Fb.xres / SCREENWIDTH;

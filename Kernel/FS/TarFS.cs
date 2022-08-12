@@ -30,7 +30,7 @@ namespace MOOS.FS
         };
 
         [DllImport("*")]
-        static extern ulong __strtoul(byte* nptr, byte** endptr, int @base);
+        static extern ulong strtoul_(byte* nptr, byte** endptr, int @base);
 
         public override List<FileInfo> GetFiles(string Directory)
         {
@@ -43,7 +43,7 @@ namespace MOOS.FS
             {
                 if (!Validate(ptr)) Panic.Error("This filesystem is not TAR");
                 sec++;
-                ulong size = __strtoul(hdr.size, null, 8);
+                ulong size = strtoul_(hdr.size, null, 8);
                 string name = Encoding.UTF8.GetString(hdr.name);
                 name.Length -= (name[name.Length - 1] == '/' ? 1 : 0);
                 if (IsInDirectory(name, Directory))

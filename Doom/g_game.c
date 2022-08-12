@@ -790,7 +790,7 @@ boolean G_Responder (event_t* ev)
         // Perform a low pass filter on this so that the thermometer 
         // appears to move smoothly.
 
-        testcontrols_mousespeed = __abs(ev->data2);
+        testcontrols_mousespeed = abs_(ev->data2);
     }
 
     // If the next/previous weapon keys are pressed, set the next_weapon
@@ -1855,7 +1855,7 @@ void G_RecordDemo (char *name)
     int maxsize;
 
     usergame = false;
-    demoname_size = __strlen(name) + 5;
+    demoname_size = strlen_(name) + 5;
     demoname = Z_Malloc(demoname_size, PU_STATIC, NULL);
     maxsize = 0x20000;
 
@@ -1869,7 +1869,7 @@ void G_RecordDemo (char *name)
 
     i = M_CheckParmWithArgs("-maxdemo", 1);
     if (i)
-	maxsize = __atoi(myargv[i+1])*1024;
+	maxsize = atoi_(myargv[i+1])*1024;
     demobuffer = Z_Malloc (maxsize,PU_STATIC,NULL); 
     demoend = demobuffer + maxsize;
 	

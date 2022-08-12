@@ -1,3 +1,5 @@
+#include "../Kernel/MOOS.h"
+
 /*-
  * See the file LICENSE for redistribution information.
  *
@@ -14,7 +16,7 @@
   * PUBLIC: #endif
   */
 int
-__isdigit(c)
+isdigit_(c)
 int c;
 {
 	/*

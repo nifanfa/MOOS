@@ -1017,9 +1017,9 @@ int M_StringWidth(char* string)
     int             w = 0;
     int             c;
 	
-    for (i = 0;i < __strlen(string);i++)
+    for (i = 0;i < strlen_(string);i++)
     {
-	c = __toupper(string[i]) - HU_FONTSTART;
+	c = toupper_(string[i]) - HU_FONTSTART;
 	if (c < 0 || c >= HU_FONTSIZE)
 	    w += 4;
 	else
@@ -1041,7 +1041,7 @@ int M_StringHeight(char* string)
     int             height = SHORT(hu_font[0]->height);
 	
     h = height;
-    for (i = 0;i < __strlen(string);i++)
+    for (i = 0;i < strlen_(string);i++)
 	if (string[i] == '\n')
 	    h += height;
 		
@@ -1081,7 +1081,7 @@ M_WriteText
 	    continue;
 	}
 		
-	c = __toupper(c) - HU_FONTSTART;
+	c = toupper_(c) - HU_FONTSTART;
 	if (c < 0 || c>= HU_FONTSIZE)
 	{
 	    cx += 4;
@@ -1293,7 +1293,7 @@ boolean M_Responder (event_t* ev)
                 ch = key;
             }
 
-            ch = __toupper(ch);
+            ch = toupper_(ch);
 
             if (ch != ' '
              && (ch - HU_FONTSTART < 0 || ch - HU_FONTSTART >= HU_FONTSIZE))
@@ -1636,7 +1636,7 @@ void M_Drawer (void)
 	{
 	    int foundnewline = 0;
 
-            for (i = 0; i < __strlen(messageString + start); i++)
+            for (i = 0; i < strlen_(messageString + start); i++)
             {
                 if (messageString[start + i] == '\n')
                 {
@@ -1656,7 +1656,7 @@ void M_Drawer (void)
             if (!foundnewline)
             {
                 M_StringCopy(string, messageString + start, sizeof(string));
-                start += __strlen(string);
+                start += strlen_(string);
             }
 
 	    x = SCREENWIDTH/2 - M_StringWidth(string) / 2;

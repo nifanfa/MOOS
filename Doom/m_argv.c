@@ -99,7 +99,7 @@ char *M_GetExecutableName(void)
 {
     char *sep;
 
-    sep = __strrchr(myargv[0], DIR_SEPARATOR);
+    sep = strrchr_(myargv[0], DIR_SEPARATOR);
 
     if (sep == NULL)
     {

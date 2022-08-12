@@ -1,5 +1,7 @@
+#include "../Kernel/MOOS.h"
+
 int
-__abs(int i)
+abs_(int i)
 {
 	return i < 0 ? -i : i;
 }

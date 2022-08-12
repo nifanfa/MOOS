@@ -45,8 +45,8 @@ P_AproxDistance
 ( fixed_t	dx,
   fixed_t	dy )
 {
-    dx = __abs(dx);
-    dy = __abs(dy);
+    dx = abs_(dx);
+    dy = abs_(dy);
     if (dx < dy)
 	return dx+dy-(dx>>1);
     return dx+dy-(dy>>1);
@@ -917,13 +917,13 @@ P_PathTraverse
     {
 	mapxstep = 1;
 	partial = FRACUNIT - ((x1>>MAPBTOFRAC)&(FRACUNIT-1));
-	ystep = FixedDiv (y2-y1,__abs(x2-x1));
+	ystep = FixedDiv (y2-y1,abs_(x2-x1));
     }
     else if (xt2 < xt1)
     {
 	mapxstep = -1;
 	partial = (x1>>MAPBTOFRAC)&(FRACUNIT-1);
-	ystep = FixedDiv (y2-y1,__abs(x2-x1));
+	ystep = FixedDiv (y2-y1,abs_(x2-x1));
     }
     else
     {
@@ -939,13 +939,13 @@ P_PathTraverse
     {
 	mapystep = 1;
 	partial = FRACUNIT - ((y1>>MAPBTOFRAC)&(FRACUNIT-1));
-	xstep = FixedDiv (x2-x1,__abs(y2-y1));
+	xstep = FixedDiv (x2-x1,abs_(y2-y1));
     }
     else if (yt2 < yt1)
     {
 	mapystep = -1;
 	partial = (y1>>MAPBTOFRAC)&(FRACUNIT-1);
-	xstep = FixedDiv (x2-x1,__abs(y2-y1));
+	xstep = FixedDiv (x2-x1,abs_(y2-y1));
     }
     else
     {

@@ -1,7 +1,9 @@
+#include "../Kernel/MOOS.h"
+
 #define INT_MAX       2147483647
 #define INT_MIN     (-2147483647 - 1)
 
-int __atoi(const char* str)
+int atoi_(const char* str)
 {
     int sign = 1, base = 0, i = 0;
 

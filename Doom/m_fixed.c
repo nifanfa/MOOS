@@ -46,7 +46,7 @@ FixedMul
 
 fixed_t FixedDiv(fixed_t a, fixed_t b)
 {
-    if ((__abs(a) >> 14) >= __abs(b))
+    if ((abs_(a) >> 14) >= abs_(b))
     {
 	return (a^b) < 0 ? INT_MIN : INT_MAX;
     }

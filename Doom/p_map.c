@@ -103,8 +103,8 @@ boolean PIT_StompThing (mobj_t* thing)
 		
     blockdist = thing->radius + tmthing->radius;
     
-    if ( __abs(thing->x - tmx) >= blockdist
-	 || __abs(thing->y - tmy) >= blockdist )
+    if ( abs_(thing->x - tmx) >= blockdist
+	 || abs_(thing->y - tmy) >= blockdist )
     {
 	// didn't hit it
 	return true;
@@ -283,8 +283,8 @@ boolean PIT_CheckThing (mobj_t* thing)
     
     blockdist = thing->radius + tmthing->radius;
 
-    if ( __abs(thing->x - tmx) >= blockdist
-	 || __abs(thing->y - tmy) >= blockdist )
+    if ( abs_(thing->x - tmx) >= blockdist
+	 || abs_(thing->y - tmy) >= blockdist )
     {
 	// didn't hit it
 	return true;	
@@ -1223,8 +1223,8 @@ boolean PIT_RadiusAttack (mobj_t* thing)
 	|| thing->type == MT_SPIDER)
 	return true;	
 		
-    dx = __abs(thing->x - bombspot->x);
-    dy = __abs(thing->y - bombspot->y);
+    dx = abs_(thing->x - bombspot->x);
+    dy = abs_(thing->y - bombspot->y);
     
     dist = dx>dy ? dx : dy;
     dist = (dist - thing->radius) >> FRACBITS;

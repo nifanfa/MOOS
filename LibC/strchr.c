@@ -1,3 +1,5 @@
+#include "../Kernel/MOOS.h"
+
 /* Portable version of mystrrchr().
    This function is in the public domain. */
 
@@ -18,7 +20,7 @@
    */
 
 char*
-__strrchr(s, c)
+strrchr_(s, c)
 register const char* s;
 int c;
 {

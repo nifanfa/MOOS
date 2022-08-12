@@ -1,5 +1,7 @@
+#include "../Kernel/MOOS.h"
+
 int
-__strncmp(s1, s2, n)
+strncmp_(s1, s2, n)
 register const char* s1, * s2;
 register long n;
 {

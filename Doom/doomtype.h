@@ -17,6 +17,7 @@
 //	 separating modules.
 //    
 
+#include "../Kernel/MOOS.h"
 
 #ifndef __DOOMTYPE__
 #define __DOOMTYPE__
@@ -27,8 +28,8 @@
 
 #ifdef _WIN32
 
-#define strcasecmp __stricmp
-#define strncasecmp __strnicmp
+#define strcasecmp stricmp
+#define strncasecmp strnicmp
 
 #else
 
