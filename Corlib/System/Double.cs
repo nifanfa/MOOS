@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 
 namespace System
 {
@@ -18,22 +19,13 @@ namespace System
 		}
 
 		[DllImport("*")]
-		public static extern void double_tostring(byte* buffer, double value);
+		public static extern void dtoa_(double value, byte* buffer);
 
 		public override string ToString()
 		{
-			char* p = stackalloc char[22];
-			byte* buffer = stackalloc byte[22];
-			double_tostring(buffer, this);
-			int length = 0;
-			while (buffer[length] != 0)
-			{
-				p[length] = (char)buffer[length];
-				length++;
-			}
-
-			string s = new(p, 0, length);
-			return s;
+			byte* p = stackalloc byte[22];
+			dtoa_(this, p);
+			return Encoding.ASCII.GetString(p);
 		}
 	}
 }

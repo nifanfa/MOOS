@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="diskio.c" />
-    <ClCompile Include="double_tostring.c" />
+    <ClCompile Include="dtoa.c" />
     <ClCompile Include="fatfs.c" />
     <ClCompile Include="ff.c" />
     <ClCompile Include="ffsystem.c" />

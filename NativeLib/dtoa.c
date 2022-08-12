@@ -1,6 +1,6 @@
 #include "..\LibC\printf.h"
 
-void double_tostring(char* buffer, double value)
+dtoa_(double value, char* buffer)
 {
 	snprintf(buffer, 22, "%lf", value);
 }
