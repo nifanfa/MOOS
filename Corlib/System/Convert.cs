@@ -4,23 +4,31 @@ namespace System
     {
         public static unsafe string ToString(ulong value, ulong toBase)
         {
-            char* x = stackalloc char[128];
-            var i = 126;
-
-            x[127] = '\0';
-
-            do
+            if (toBase != 0 && toBase <= 16 && (toBase % 2) == 0)
             {
-                var d = value % toBase;
-                value /= toBase;
+                char* x = stackalloc char[128];
+                var i = 126;
 
-                d += 0x30;
-                x[i--] = (char)d;
-            } while (value > 0);
+                x[127] = '\0';
 
-            i++;
+                do
+                {
+                    var d = value % toBase;
+                    value /= toBase;
 
-            return new string(x + i, 0, 127 - i);
+                    if (d > 9)
+                        d += 0x37;
+                    else
+                        d += 0x30;
+
+                    x[i--] = (char)d;
+                } while (value > 0);
+
+                i++;
+
+                return new string(x + i, 0, 127 - i);
+            }
+            return null;
         }
 
         public static int ToUInt16(bool boolean)
