@@ -2,7 +2,7 @@
 {
     public class MemoryBlock
     {
-        private uint Base;
+        public uint Base;
         public uint Size;
 
         public MemoryBlock(uint address, uint size)
