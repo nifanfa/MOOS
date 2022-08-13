@@ -2,7 +2,7 @@
 
 namespace Cosmos.HAL
 {
-    internal class PCIDevice
+    public class PCIDevice
     {
         public ushort Bus { get; internal set; }
         public ushort Slot { get; internal set; }

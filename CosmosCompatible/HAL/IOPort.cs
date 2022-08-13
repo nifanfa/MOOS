@@ -1,6 +1,6 @@
 ﻿namespace Cosmos.HAL
 {
-    internal class IOPort
+    public class IOPort
     {
         private ushort Port;
 
