@@ -165,6 +165,7 @@ unsafe class Program
 
         Audio.Initialize();
         AC97.Initialize();
+        ES1371.Initialize();
 
         /*
         for (; ; )
