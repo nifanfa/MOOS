@@ -4,6 +4,7 @@ using System;
 
 namespace MOOS
 {
+    //TO-DO 44.1khz
     public static unsafe class ES1371
     {
         public static uint BAR0;
