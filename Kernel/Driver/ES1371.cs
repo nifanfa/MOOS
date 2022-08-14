@@ -25,7 +25,7 @@ namespace MOOS
             Native.Out32(BAR0 + 0x10, 0xeb403800);
             Native.Out32(BAR0 + 0x0c, 0x0c);
             Native.Out32(BAR0 + 0x38, (uint)Buffer);
-            Native.Out32(BAR0 + 0x3c, Audio.SampleRate / 2);
+            Native.Out32(BAR0 + 0x3c, Audio.SizePerPacket / 4);
             Native.Out32(BAR0 + 0x28, 0x7FFF);
             Native.Out32(BAR0 + 0x20, 0x0020020C);
             Native.Out32(BAR0 + 0x00, 0x00000020);
@@ -41,19 +41,8 @@ namespace MOOS
             {
                 Native.Out32(BAR0 + 0x20, Native.In32(BAR0 + 0x20) & 0xFFFFFDFF);
 
-                if(Audio.Queue.Count > 0)
-                {
-                    byte[] buf = Audio.Queue.Dequeue();
-                    fixed (byte* pbuf = buf)
-                    {
-                        Native.Movsb(Buffer, pbuf, buf.Length);
-                    }
-                    buf.Dispose();
-                }
-                else
-                {
-                    Native.Stosb(Buffer, 0, CacheSize);
-                }
+                Native.Stosb(Buffer, 0, CacheSize);
+                Audio.require(Buffer);
             }
         }
     }

@@ -264,6 +264,9 @@
     <ClCompile Include="am_map.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="m_sound.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deh_str.h">

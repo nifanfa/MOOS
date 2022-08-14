@@ -1,20 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime;
 
 namespace MOOS.Misc
 {
     public static unsafe class Audio
     {
         public const int SampleRate = 44100;
-
-        public static Queue<byte[]> Queue;
-
         public static bool HasAudioDevice;
+
+        const int CacheSize = 1024 * 64;
+
+        public const int SizePerPacket = SampleRate * 2;
 
         public static void Initialize() 
         {
-            Queue = new();
             HasAudioDevice = false;
+
+            cache = (byte*)Allocator.Allocate(CacheSize);
+            bytesWritten = 0;
         }
 
         /// <summary>
@@ -27,18 +32,53 @@ namespace MOOS.Misc
         {
             fixed(byte* ptr_pcm = pcm)
             {
-                //Align down
-                int i = pcm.Length - (pcm.Length % (SampleRate * 2));
-                if (i < 0) return;
-                for (; i >= 0; i -= SampleRate * 2)
+                snd_write(ptr_pcm, pcm.Length);
+            }
+            pcm.Dispose();
+        }
+
+        public static byte* cache;
+        public static int bytesWritten;
+
+        [RuntimeExport("snd_write")]
+        public static int snd_write(byte* buffer, int len)
+        {
+            if (bytesWritten + len > CacheSize)
+            {
+                Native.Movsb(cache + bytesWritten - len, cache + bytesWritten, len);
+                bytesWritten -= len;
+            }
+
+            Native.Movsb(cache + bytesWritten, buffer, len);
+            bytesWritten += len;
+            //Native.Hlt();
+            return len;
+        }
+
+        [RuntimeExport("snd_clear")]
+        public static void snd_clear()
+        {
+            bytesWritten = 0;
+        }
+
+        public static bool require(byte* buffer)
+        {
+            if (bytesWritten > 0)
+            {
+                int size = SizePerPacket > bytesWritten ? bytesWritten : SizePerPacket;
+
+                Native.Movsb(buffer, cache, size);
+                bytesWritten -= size;
+                if(bytesWritten > SizePerPacket)
                 {
-                    byte[] pack = new byte[SampleRate * 2];
-                    fixed (byte* ptr = pack)
-                    {
-                        Native.Movsb(ptr, ptr_pcm + i, (ulong)pack.Length);
-                    }
-                    Queue.Enqueue(pack);
+                    Native.Movsb(cache, cache + size, bytesWritten);
                 }
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

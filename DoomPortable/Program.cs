@@ -91,7 +91,7 @@ namespace NES
         [RuntimeExport("Main")]
         public static void Main()
         {
-            var handle = CreateWindow(200, 300, 640, 400, "Doom Portable");
+            var handle = CreateWindow(200, 300, 320, 200, "Doom Portable");
             var screenBufHandle = GetWindowScreenBuf(handle);
             ScreenBuf = Unsafe.As<IntPtr, Image>(ref screenBufHandle);
 
@@ -139,6 +139,12 @@ namespace NES
         {
             Program.ScreenBuf.RawData[Program.ScreenBuf.Width * y + x] = (int)color;
         }
+
+        [DllImport("SndWrite")]
+        public static extern int SndWrite(byte* buffer, int len);
+
+        [RuntimeExport("snd_write")]
+        public static int snd_write(byte* buffer, int len) => SndWrite(buffer, len);
 
         [DllImport("*")]
         public static extern void addKeyToQueue(int pressed, byte keyCode);

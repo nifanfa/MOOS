@@ -1,13 +1,13 @@
 namespace MOOS
 {
-    internal static class FPSMeter
+    internal class FPSMeter
     {
-        public static int FPS = 0;
+        public int FPS = 0;
 
-        public static int LastS = -1;
-        public static int Tick = 0;
+        public int LastS = -1;
+        public int Tick = 0;
 
-        public static void Update()
+        public void Update()
         {
             if (LastS == -1)
             {

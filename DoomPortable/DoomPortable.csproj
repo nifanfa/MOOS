@@ -32,7 +32,7 @@
 	</Target>
 
 	<ItemGroup>
-		<LinkerArg Include="/filealign:0x1000" />
+		<LinkerArg Include="/filealign:0x10000" />
 	</ItemGroup>
 
 	<ItemGroup>

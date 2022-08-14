@@ -46,6 +46,7 @@
     <ClCompile Include="i_input.c" />
     <ClCompile Include="i_joystick.c" />
     <ClCompile Include="i_main.c" />
+    <ClCompile Include="m_sound.c" />
     <ClCompile Include="i_scale.c" />
     <ClCompile Include="i_sound.c" />
     <ClCompile Include="i_system.c" />

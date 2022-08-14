@@ -42,13 +42,26 @@ namespace MOOS.Graph
 
         public virtual void FillRectangle(int X, int Y, int Width, int Height, uint Color)
         {
-            for (int w = 0; w < Width; w++)
-            {
-                for (int h = 0; h < Height; h++)
+            int _x = 0;
+            int _y = 0;
+            int clip_x = 0;
+            int clip_y = 0;
+
+            if (X < 0) _x = X;
+            if (Y < 0) _y = Y;
+            if (X + Width >= this.Width) clip_x = X - (this.Width - Width - 1);
+            if (Y + Height >= this.Height) clip_y = Y - (this.Height - Height - 1);
+            if (
+                _x! >= -Width &&
+                _y! >= -Height &&
+
+                clip_x < Width &&
+                clip_y < Height
+                )
+                for (int h = 1; h < Height + _y - clip_y + 1; h++)
                 {
-                    DrawPoint(X + w, Y + h, Color);
+                    Native.Stosd(VideoMemory + (this.Width * ((Y - _y) + h) + (X - _x)) + 0, Color, (ulong)(Width + _x - clip_x + 1));
                 }
-            }
         }
 
         public virtual void AFillRectangle(int X, int Y, int Width, int Height, uint Color)

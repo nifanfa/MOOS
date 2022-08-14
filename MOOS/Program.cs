@@ -42,6 +42,8 @@ unsafe class Program
         return ScanCode != 0;
     }
 
+    public static FPSMeter fpsMeter;
+
     /*
      * Minimum system requirement:
      * 1024MiB of RAM
@@ -128,6 +130,8 @@ unsafe class Program
 
         USB.StartPolling();
 
+        fpsMeter = new FPSMeter();
+
         //Use qemu for USB debug
         //VMware won't connect virtual USB HIDs
         if (HID.Mouse == null)
@@ -145,7 +149,7 @@ unsafe class Program
         Cursor = new PNG(File.ReadAllBytes("Images/Cursor.png"));
         CursorMoving = new PNG(File.ReadAllBytes("Images/Grab.png"));
         //Image from unsplash
-        Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper2.png"));
+        Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper1.png"));
 
         BitFont.Initialize();
 
@@ -331,7 +335,7 @@ unsafe class Program
             Framebuffer.Graphics.DrawImage(Control.MousePosition.X, Control.MousePosition.Y, WindowManager.HasWindowMoving ? CursorMoving : Cursor);
             Framebuffer.Update();
 
-            FPSMeter.Update();
+            fpsMeter.Update();
         }
     }
 }

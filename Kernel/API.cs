@@ -79,9 +79,16 @@ namespace MOOS
 #endif
                 case "Calloc":
                     return (delegate*<ulong, ulong, void*>)&API_Calloc;
+                case "SndWrite":
+                    return (delegate*<byte*, int, int>)&API_SndWrite;
             }
             Panic.Error($"System call \"{name}\" is not found");
             return null;
+        }
+
+        public static int API_SndWrite(byte* buffer,int len)
+        {
+            return Audio.snd_write(buffer, len);
         }
 
 #if Kernel && HasGUI

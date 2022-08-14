@@ -139,7 +139,7 @@ namespace Internal.Runtime.CompilerHelpers
             }
         }
 
-        public static void InitializeModules(IntPtr Modules) 
+        public static void InitializeModules(IntPtr Modules, bool KernelInitialization = false) 
         {
             for (int i = 0; ; i++)
             {
@@ -164,13 +164,16 @@ namespace Internal.Runtime.CompilerHelpers
                 }
             }
 
-            DateTime.s_daysToMonth365 = new int[]{
+            if (KernelInitialization)
+            {
+                DateTime.s_daysToMonth365 = new int[]{
                 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 };
-            DateTime.s_daysToMonth366 = new int[]{
+                DateTime.s_daysToMonth366 = new int[]{
                 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 };
 
-            Encoding.UTF8 = new UTF8Encoding();
-            Encoding.ASCII = new ASCIIEncoding();
+                Encoding.UTF8 = new UTF8Encoding();
+                Encoding.ASCII = new ASCIIEncoding();
+            }
         }
 
         private static unsafe void RunEagerClassConstructors(IntPtr cctorTableStart, IntPtr cctorTableEnd)

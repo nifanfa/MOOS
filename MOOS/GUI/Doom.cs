@@ -32,6 +32,7 @@ namespace MOOS.GUI
         [RuntimeExport("DrawPoint")]
         public static void DrawPoint(int x, int y, uint color)
         {
+            if (x == 0 && y == 0) meter.Update();
             dg.DrawPoint(x, y, color);
         }
 
@@ -44,15 +45,21 @@ namespace MOOS.GUI
         public static Graphics dg;
         #endregion
 
+        public static FPSMeter meter;
+        public static Image finalImg;
+
         public Doom(int X, int Y) : base(X, Y, 640, 400)
         {
+            finalImg = new Image(640, 400);
+
+            meter = new FPSMeter();
 #if Chinese
             Title = "毁灭战士";
 #else
             Title = "DOOM Shareware";
 #endif
 
-            di = new Image(640, 400);
+            di = new Image(320, 200);
             dg = Graphics.FromImage(di);
 
             gb = File.ReadAllBytes("DOOM1.WAD");
@@ -69,7 +76,7 @@ namespace MOOS.GUI
             {
                 fixed (byte* ptr = gb)
                     doommain(ptr, gb.Length);
-            })).Start(1);
+            })).Start();
         }
 
         private void PS2Keyboard_OnKeyChanged(object sender, ConsoleKeyInfo key)
@@ -80,7 +87,15 @@ namespace MOOS.GUI
         public override void OnDraw()
         {
             base.OnDraw();
-            Framebuffer.Graphics.DrawImage(X, Y, di, false);
+
+            fixed(int* ptr = finalImg.RawData)
+                Image.Resample(dg.VideoMemory, ptr, 320, 200, 640, 400);
+
+            Framebuffer.Graphics.DrawImage(X, Y, finalImg, false);
+
+            string txt = $"FPS {meter.FPS}:{Program.fpsMeter.FPS}";
+            ASC16.DrawString(txt, X + Width - (txt.Length * 8), Y, meter.FPS >= 24 ? 0xFF00FF00 : 0xFFFF0000);
+            txt.Dispose();
         }
     }
 }

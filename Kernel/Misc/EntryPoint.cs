@@ -23,7 +23,7 @@ namespace MOOS.Misc
         {
             Allocator.Initialize((IntPtr)0x20000000);
 
-            StartupCodeHelpers.InitializeModules(Modules);
+            StartupCodeHelpers.InitializeModules(Modules, true);
 
 #if HasGC
             GC.AllowCollect = false;

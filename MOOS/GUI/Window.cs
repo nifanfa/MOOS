@@ -51,7 +51,7 @@ namespace MOOS.GUI
             WindowManager.MoveToEnd(this);
         }
 
-        public int BarHeight = 40;
+        public int BarHeight = 36;
         public string Title;
 
         bool Move;
