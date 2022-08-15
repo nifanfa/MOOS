@@ -11,12 +11,19 @@ using System.Runtime.InteropServices;
 
 namespace MOOS.Misc
 {
+    [StructLayout(LayoutKind.Sequential,Pack = 1)]
+    public unsafe struct FxArea
+    {
+        public fixed byte value[512];
+    }
+
     public unsafe class Thread
     {
         public bool Terminated;
         public IDT.IDTStackGeneric* Stack;
         public int RunOnWhichCPU;
         public bool IsIdleThread = false;
+        public FxArea* FxArea;
 
         public Thread(delegate*<void> method,ulong stack_size = 16384)
         {
@@ -25,6 +32,9 @@ namespace MOOS.Misc
 
         private void NewThread(delegate*<void> method, ulong stack_size)
         {
+            FxArea = (FxArea*)Allocator.Allocate(sizeof(FxArea));
+            Native.Movsb(FxArea, ThreadPool.DefaultFxArea,sizeof(FxArea));
+
             Stack = (IDT.IDTStackGeneric*)Allocator.Allocate((ulong)sizeof(IDT.IDTStackGeneric));
 
             Stack->irs.cs = 0x08;
@@ -92,6 +102,7 @@ namespace MOOS.Misc
         public static bool Initialized = false;
         public static bool Locked = false;
         public static long Locker = 0;
+        public static FxArea* DefaultFxArea;
 
         private static int Index
         {
@@ -107,6 +118,8 @@ namespace MOOS.Misc
 
         public static void Initialize()
         {
+            DefaultFxArea = (FxArea*)Allocator.Allocate(sizeof(FxArea));
+            Native.Fxsave64(DefaultFxArea);
             Native.Cli();
             //Bootstrap CPU
             if (SMP.ThisCPU == 0)
@@ -216,6 +229,8 @@ namespace MOOS.Misc
                     Threads[Index].RunOnWhichCPU == SMP.ThisCPU
                     )
                 {
+                    //Save FPU
+                    Native.Fxsave64(Threads[Index].FxArea);
                     Native.Movsb(Threads[Index].Stack, stack, (ulong)sizeof(IDT.IDTStackGeneric));
                     break;
                 }
@@ -248,7 +263,9 @@ namespace MOOS.Misc
             }
             TickAll++;
             #endregion
-
+            
+            //Restore FPU
+            Native.Fxrstor64(Threads[Index].FxArea);
             Native.Movsb(stack, Threads[Index].Stack, (ulong)sizeof(IDT.IDTStackGeneric));
         }
     }
