@@ -31,7 +31,7 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 <hr/>
 <br/>
 
-![image](Screenshot2.png)
+![image](Screenshot3.png)
 
 ## Features
 
