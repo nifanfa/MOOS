@@ -91,7 +91,7 @@ namespace NES
         [RuntimeExport("Main")]
         public static void Main()
         {
-            var handle = CreateWindow(200, 300, 320, 200, "Doom Portable");
+            var handle = CreateWindow(200, 300, 640, 400, "Doom Portable");
             var screenBufHandle = GetWindowScreenBuf(handle);
             ScreenBuf = Unsafe.As<IntPtr, Image>(ref screenBufHandle);
 
@@ -102,8 +102,6 @@ namespace NES
 
     internal unsafe class Doom
     {
-        #region Doom
-
         [RuntimeExport("_putchar")]
         public static void _putchar(char c) => Program.Write(c);
 
@@ -137,7 +135,17 @@ namespace NES
         [RuntimeExport("DrawPoint")]
         public static void DrawPoint(int x, int y, uint color)
         {
-            Program.ScreenBuf.RawData[Program.ScreenBuf.Width * y + x] = (int)color;
+            if(x == 0 && y == 0)
+            {
+                fixed(int* dst = Program.ScreenBuf.RawData)
+                {
+                    fixed (int* src = aScreenBuf.RawData)
+                    {
+                        Image.Resample(src, dst, 320, 200, 640, 400);
+                    }
+                }
+            }
+            aScreenBuf.RawData[aScreenBuf.Width * y + x] = (int)color;
         }
 
         [DllImport("SndWrite")]
@@ -149,13 +157,12 @@ namespace NES
         [DllImport("*")]
         public static extern void addKeyToQueue(int pressed, byte keyCode);
 
-        public static byte[] gb;
-
-        public static Image di;
-        #endregion
+        public static Image aScreenBuf;
 
         public Doom(void* ptr,long length)
         {
+            aScreenBuf = new Image(320, 200);
+
             var handler = (EventHandler<ConsoleKeyInfo>)PS2Keyboard_OnKeyChanged;
 
             Program.BindOnKeyChangedHandler(handler);
