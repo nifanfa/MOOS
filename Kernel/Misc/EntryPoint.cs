@@ -91,9 +91,9 @@ namespace MOOS.Misc
 
             //Only fixed size vhds are supported!
             Console.Write("[Initrd] Initrd: 0x");
-            Console.WriteLine((Info->Mods[0]).ToString("x2"));
+            Console.WriteLine((Info->Modules[0]).ToString("x2"));
             Console.WriteLine("[Initrd] Initializing Ramdisk");
-            new Ramdisk((IntPtr)(Info->Mods[0]));
+            new Ramdisk((IntPtr)(Info->Modules[0]));
             //new FATFS();
             new TarFS();
 
