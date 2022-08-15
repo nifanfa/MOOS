@@ -31,7 +31,7 @@ MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT�
 <hr/>
 <br/>
 
-![截图](Screenshot2.png)
+![截图](Screenshot3.png)
 
 ## 特色
 
