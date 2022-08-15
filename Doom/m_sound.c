@@ -39,6 +39,8 @@ struct snd_buffer
 	int16_t* ptr; 
 	size_t len;
 	boolean canPlay;
+	int32_t sep;
+	int32_t vol;
 };
 
 struct snd_buffer buf[NUM_CHANNELS] = { 0 };
@@ -107,6 +109,8 @@ static int I_StartSound(sfxinfo_t* sfxinfo, int channel, int vol, int sep)
 			buf[i].len = expanded_length;
 			buf[i].buf = buffer;
 			buf[i].ptr = buffer;
+			buf[i].sep = sep;
+			buf[i].vol = vol;
 			return i + 1;
 		}
 	}
@@ -146,8 +150,8 @@ static void I_UpdateSound(void)
 
 			for (int j = 0; j < sample_count; ++j) 
 			{
-				cache[j * 2] = buf[i].ptr[j];
-				cache[j * 2 + 1] = buf[i].ptr[j];
+				cache[j * 2] = buf[i].ptr[j] * (((254 - buf[i].sep) * buf[i].vol) / 127) / 256;
+				cache[j * 2 + 1] = buf[i].ptr[j] * (((buf[i].sep) * buf[i].vol) / 127) / 256;
 			}
 
 			size_t bytes = snd_write(cache, sizeof(int16_t) * sample_count * 2);
