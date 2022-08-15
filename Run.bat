@@ -1,4 +1,25 @@
 @echo off
+if "%1" equ "" (
+	goto error
+)
+if not exist "bin\debug\net6.0\win-x64\native\%1.exe" (
+	echo "Please select the project that you want to Run on Visual Studio Solution Explorer and then press Ctrl+B to build the project first!"
+	echo "Make sure the project that you build is what you selected on Visual Studio Dropdown Menu!"
+	pause
+	exit
+)
+::build-iso
+cd Tools
+del /q grub2\boot\ramdisk.tar
+7-Zip\7z.exe a grub2\boot\ramdisk.tar ..\Ramdisk\*
+nasm.exe -fbin Trampoline.asm -o trampoline.o
+nasm.exe -fbin EntryPoint.asm -o loader.o
+copy /b loader.o+..\bin\debug\net6.0\win-x64\native\%1.exe grub2\boot\kernel.bin
+del /q trampoline.o
+del /q loader.o
+mkisofs.exe -relaxed-filenames -J -R -o ..\bin\debug\net6.0\win-x64\native\%1.iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table grub2
+cd..
+::end-build-iso
 if "%2" equ "qemu" (
 	if not exist "C:\Program Files\Intel\HAXM\IntelHaxm.sys" (
 		echo "Please install Intel Hardware Accelerated Execution Manager (HAXM) in order to speed up QEMU https://github.com/intel/haxm/releases"
@@ -16,5 +37,8 @@ if "%2" equ "qemu" (
 		echo "Please install VMWare Player in order to Run MOOS!"
 	)
 ) else (
-	echo Invalid parameters, do not running this batch file manually! 
+	:error
+	echo "Invalid parameters, do not running this batch file manually!" 
+	pause
+	exit
 )
