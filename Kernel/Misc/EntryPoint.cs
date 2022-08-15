@@ -69,6 +69,7 @@ namespace MOOS.Misc
             Serial.Initialise();
 
             PS2Controller.Initialize();
+            VMwareTools.Initialize();
 
             SMBIOS.Initialise();
 

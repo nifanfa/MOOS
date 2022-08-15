@@ -81,7 +81,7 @@ namespace MOOS.Misc
                 Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
             }
 
-            if(HID.Mouse != null)
+            if(!VMwareTools.Available && HID.Mouse != null)
             {
                 HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out MouseButtons buttons);
 

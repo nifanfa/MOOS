@@ -223,7 +223,7 @@ namespace MOOS.GUI
             Framebuffer.Graphics.DrawImage(12, Framebuffer.Height - BarHeight + 4, StartIcon);
 
 #if Chinese
-            string Result = $"FPS:{FPSMeter.FPS} | 处理器使用率:{ThreadPool.CPUUsage}% | 已用内存: {(Allocator.MemoryInUse / 1024)}kbytes | {RTC.Hour}:{(RTC.Minute < 10 ? "0" : "")}{RTC.Minute}";
+            string Result = $"FPS:{Program.fpsMeter.FPS} | 处理器使用率:{ThreadPool.CPUUsage}% | 已用内存: {(Allocator.MemoryInUse / 1024)}kbytes | {RTC.Hour}:{(RTC.Minute < 10 ? "0" : "")}{RTC.Minute}";
 #else
             string Result = $"FPS:{Program.fpsMeter.FPS} | CPU Usage:{ThreadPool.CPUUsage}% | Used Memory: {(Allocator.MemoryInUse / 1024)}kbytes | {RTC.Hour}:{(RTC.Minute < 10 ? "0" : "")}{RTC.Minute}";
 #endif

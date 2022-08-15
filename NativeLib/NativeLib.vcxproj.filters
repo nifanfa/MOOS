@@ -71,6 +71,9 @@
     <MASM Include="mathf.asm">
       <Filter>源文件</Filter>
     </MASM>
+    <MASM Include="vmware.asm">
+      <Filter>源文件</Filter>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lodepng.h">
