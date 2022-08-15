@@ -14,8 +14,11 @@ namespace MOOS.Misc
 
         public const int SizePerPacket = SampleRate * 2;
 
+        public static bool CanTake;
+
         public static void Initialize() 
         {
+            CanTake = true;
             HasAudioDevice = false;
 
             cache = (byte*)Allocator.Allocate(CacheSize);
@@ -43,6 +46,7 @@ namespace MOOS.Misc
         [RuntimeExport("snd_write")]
         public static int snd_write(byte* buffer, int len)
         {
+            CanTake = false;
             if (bytesWritten + len > CacheSize)
             {
                 Native.Movsb(cache + bytesWritten - len, cache + bytesWritten, len);
@@ -51,7 +55,7 @@ namespace MOOS.Misc
 
             Native.Movsb(cache + bytesWritten, buffer, len);
             bytesWritten += len;
-            //Native.Hlt();
+            CanTake = true;
             return len;
         }
 
@@ -63,7 +67,7 @@ namespace MOOS.Misc
 
         public static bool require(byte* buffer)
         {
-            if (bytesWritten > 0)
+            if (CanTake && bytesWritten > 0)
             {
                 int size = SizePerPacket > bytesWritten ? bytesWritten : SizePerPacket;
 
