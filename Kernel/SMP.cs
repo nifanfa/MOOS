@@ -7,9 +7,9 @@ namespace MOOS
 {
     public static unsafe class SMP
     {
+        //https://wiki.osdev.org/Memory_Map_(x86)
         public const ulong BaseAddress = 0x50000;
 
-        //https://wiki.osdev.org/Memory_Map_(x86)
         public const ulong APMain = BaseAddress + 0x0;
         public const ulong Stacks = BaseAddress + 0x8;
         public const ulong SharedGDT = BaseAddress + 0x16;
@@ -18,7 +18,6 @@ namespace MOOS
         public const ulong Trampoline = BaseAddress + 0x10000;
 
         public static ulong NumActivedProcessors = 0;
-
         private const int StackSizeForEachCPU = 1048576;
 
         public static int NumCPU { get => ACPI.LocalAPIC_CPUIDs.Count; }
