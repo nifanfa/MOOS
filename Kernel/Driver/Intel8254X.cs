@@ -225,7 +225,7 @@ namespace MOOS.Driver
             Console.WriteLine("[Intel8254X] Configuration Done");
 
             Network.MAC = MAC;
-            Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
+            Pollings.AddPoll(&OnPoll);
             IRQ = device.IRQ;
 
             //Literally instance
@@ -335,7 +335,7 @@ namespace MOOS.Driver
             return ((ushort)((Temp >> 16) & 0xFFFF));
         }
 
-        public static void OnInterrupt()
+        public static void OnPoll()
         {
             uint Status = ReadRegister(0xC0);
 

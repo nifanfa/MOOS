@@ -91,6 +91,7 @@ namespace MOOS.NET
 
         internal static MACAddress Lookup(IPAddress destIP)
         {
+
             for (; ; )
             {
                 for (int i = 0; i < ARPEntries.Count; i++)
@@ -102,7 +103,6 @@ namespace MOOS.NET
                         return ARPEntries[i].MAC;
                     }
                 }
-                Console.WriteLine("Waitting for ARP reply...");
             }
         }
 

@@ -36,6 +36,9 @@ namespace MOOS.NET
             if (MAC == default) Panic.Error("NIC didn't set Network.MAC");
 
             ARP.Require(Network.Gateway);
+            Console.WriteLine("[Network] Waitting for Gateway response...");
+            MACAddress mACAddress = ARP.Lookup(Network.Gateway);
+            Console.WriteLine("[Network] Network initialized");
         }
     }
 }

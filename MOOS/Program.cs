@@ -1,4 +1,3 @@
-//#define USBDebug
 //#define NETWORK
 
 using Internal.Runtime.CompilerHelpers;
@@ -57,43 +56,6 @@ unsafe class Program
     {
         Animator.Initialize();
 
-#if USBDebug
-        Hub.Initialize();
-        HID.Initialize();
-        EHCI.Initialize();
-        //USB.StartPolling();
-
-        //Use qemu for USB debug
-        //VMware won't connect virtual USB HIDs
-        if (HID.Mouse == null)
-        {
-            Console.WriteLine("USB Mouse not present");
-        }
-        if (HID.Keyboard == null)
-        {
-            Console.WriteLine("USB Keyboard not present");
-        }
-
-        for(; ; )
-        {
-            if (HID.Mouse != null)
-            {
-                HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out var Buttons);
-                if (AxisX != 0 && AxisY != 0)
-                {
-                    Console.WriteLine($"X:{AxisX} Y:{AxisY}");
-                }
-            }
-            if(HID.Keyboard != null) 
-            {
-                HID.GetKeyboardThings(HID.Keyboard, out var ScanCode, out var Key);
-                if(ScanCode != 0)
-                {
-                    Console.WriteLine($"ScanCode:{ScanCode}");
-                }
-            }
-        }
-#else
         Hub.Initialize();
         HID.Initialize();
         EHCI.Initialize();
@@ -142,7 +104,6 @@ unsafe class Program
         {
             Console.WriteLine("USB Keyboard not present");
         }
-#endif
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
@@ -186,12 +147,12 @@ unsafe class Program
         //Select "QEMU with network" from dropdown menu
         //add "#define NETWORK" to the start of this file
         //Run
-        Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
+        Network.Initialise(IPAddress.Parse(192, 168, 136, 2), IPAddress.Parse(192, 168, 136, 1), IPAddress.Parse(255, 255, 255, 0));
         //Make sure this IP is pointing your gateway
-        TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 137, 1), 80);
-        client.OnData += Client_OnData;
-        client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
-        for (; ; ) Native.Hlt();
+        //TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 136, 1), 80);
+        //client.OnData += Client_OnData;
+        //client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
+        //for (; ; ) Native.Hlt();
 #endif
 
         SMain();
