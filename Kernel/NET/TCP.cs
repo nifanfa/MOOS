@@ -19,20 +19,8 @@ namespace MOOS.NET
         public ushort LocalPort;
         public ushort RemotePort;
 
-        public uint SndUna;                         
-        public uint SndNxt;                         
-        public uint SndWnd;                         
-        public uint SndUP;                          
-        public uint SndWl1;                         
-        public uint SndWl2;                         
-        public uint ISS;                            
-
-        public uint RcvNxt;                        
-        public uint RcvWnd;                        
-        public uint RcvUP;
-
-        public bool PacketSent;
-        public uint PacketAck;
+        public uint SndNxt;
+        public uint RcvNxt;      
 
         public void Send(byte[] buffer)
         {
@@ -93,7 +81,8 @@ namespace MOOS.NET
         MSS
     }
 
-    public enum TCPFlags
+    [Flags]
+    public enum TCPFlags : byte
     {
         TCP_FIN = (1 << 0),
         TCP_SYN = (1 << 1),
@@ -113,7 +102,7 @@ namespace MOOS.NET
             public uint Seq;
             public uint Ack;
             public byte Off;
-            public byte Flags;
+            public TCPFlags Flags;
             public ushort WindowSize;
             public ushort Checksum;
             public ushort Urgent;
@@ -140,7 +129,6 @@ namespace MOOS.NET
             TCPHeader* hdr = (TCPHeader*)buffer;
             buffer += hdr->Off >> 2;
             length -= hdr->Off >> 2;
-            //length -= 4;
 
             Ethernet.SwapLeftRight(ref hdr->SourcePort);
             Ethernet.SwapLeftRight(ref hdr->DestPort);
@@ -178,85 +166,39 @@ namespace MOOS.NET
 
         private static void HandleTCPPacket(TcpClient conn, TCPHeader* hdr, byte* buffer, int length)
         {
-            uint flags = hdr->Flags;
+            TCPFlags flags = hdr->Flags;
 
-            if (conn.RcvNxt <= hdr->Seq && (hdr->Seq + length) < (conn.RcvNxt + conn.RcvWnd))
+            if (flags == (TCPFlags.TCP_PSH | TCPFlags.TCP_ACK))
             {
-                if (BitHelpers.IsBitSet(flags, 4))
-                {
-                    if (conn.SndUna < hdr->Ack && hdr->Ack <= conn.SndNxt)
-                    {
-                        conn.SndUna = hdr->Ack;
+                conn.RcvNxt += (uint)length;
+                SendPacket(conn, TCPFlags.TCP_ACK);
 
-                        if (conn.SndWl1 < hdr->Seq || (conn.SndWl1 == hdr->Seq && conn.SndWl2 <= hdr->Ack))
-                        {
-                            conn.SndWnd = hdr->WindowSize;
-                            conn.SndWl1 = hdr->Seq;
-                            conn.SndWl2 = hdr->Ack;
-                        }
-                    }
-                }
-
-                if (hdr->Ack < conn.SndUna)
-                {
-                    return;
-                }
-
-                if (hdr->Ack > conn.SndNxt)
-                {
-                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
-                    return;
-                }
-
-                if (BitHelpers.IsBitSet(flags, 3))
-                {
-                    conn.RcvNxt += (uint)length;
-                    
-                    conn._OnData(buffer, length);
-
-                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
-                    return;
-                }
-                if (BitHelpers.IsBitSet(flags, 0))
-                {
-                    conn.RcvNxt++;
-
-                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
-
-                    return;
-                }
+                conn._OnData(buffer, length);
+                return;
             }
-            else if (BitHelpers.IsBitSet(flags,2))
+            else if(flags == (TCPFlags.TCP_ACK))
+            {
+                SendPacket(conn, TCPFlags.TCP_ACK);
+            }
+            else
             {
                 conn.State = TCPStatus.Closed;
-                Console.WriteLine($"Error: TCP rst flags:{flags}");
-            }
-            else if (BitHelpers.IsBitSet(flags, 0))
-            {
-                conn.State = TCPStatus.Closed;
+                Console.WriteLine($"Error: TCP error flags:{flags}");
             }
         }
         
         private static void HandleSynSent(TcpClient conn, TCPHeader* hdr)
         {
-            byte flags = hdr->Flags;
+            TCPFlags flags = hdr->Flags;
 
-            if (BitHelpers.IsBitSet(flags, 1) && BitHelpers.IsBitSet(flags, 4))
+            if (flags == (TCPFlags.TCP_SYN | TCPFlags.TCP_ACK))
             {
                 conn.RcvNxt = hdr->Seq + 1;
 
-                if (BitHelpers.IsBitSet(flags, 4))
-                {
-                    conn.SndUna = hdr->Ack;
-                    conn.SndWnd = hdr->WindowSize;
-                    conn.SndWl1 = hdr->Seq;
-                    conn.SndWl2 = hdr->Ack;
+                SendPacket(conn, TCPFlags.TCP_ACK);
 
-                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK);
-
-                    conn.State = TCPStatus.Established;
-                    Console.WriteLine("Connection established");
-                }
+                conn.State = TCPStatus.Established;
+                Console.WriteLine("Connection established");
             }
             else
             {
@@ -282,21 +224,12 @@ namespace MOOS.NET
             var rnd = new Random();
             uint seq = (uint)rnd.Next(0, int.MaxValue);
 
-            conn.SndUna = seq;
             conn.SndNxt = seq;
-            conn.SndWnd = TCP_WINDOW_SIZE;
-            conn.SndUP = 0;
-            conn.SndWl1 = 0;
-            conn.SndWl2 = 0;
-            conn.ISS = seq;
-
             conn.RcvNxt = 0;
-            conn.RcvWnd = TCP_WINDOW_SIZE;
-            conn.RcvUP = 0;
 
             Clients.Add(conn);
 
-            SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_SYN);
+            SendPacket(conn, TCPFlags.TCP_SYN);
             conn.State = TCPStatus.SynSent;
 
             ulong t = Timer.Ticks + 3000;
@@ -313,12 +246,12 @@ namespace MOOS.NET
             return conn;
         }
 
-        private static void SendPacket(TcpClient conn, uint seq, byte flags)
+        private static void SendPacket(TcpClient conn, TCPFlags flags)
         {
             SendPacket(conn, conn.SndNxt, flags, null, 0);
         }
 
-        private static void SendPacket(TcpClient conn, uint seq, byte flags, void* data, uint count)
+        private static void SendPacket(TcpClient conn, uint seq, TCPFlags flags, void* data, uint count)
         {
             byte* buffer = (byte*)Allocator.Allocate(TCP_WINDOW_SIZE);
 
@@ -337,7 +270,7 @@ namespace MOOS.NET
 
             byte* p = buffer + sizeof(TCPHeader);
 
-            if ((flags & (byte)TCPFlags.TCP_SYN) != 0)
+            if (flags.HasFlag(TCPFlags.TCP_SYN) != 0)
             {
                 p[0] = (byte)TCPOption.MSS;
                 p[1] = 4;
@@ -385,7 +318,7 @@ namespace MOOS.NET
                 {
                     int count = i + MSS > length ? length % MSS : MSS;
 
-                    SendPacket(conn, conn.SndNxt, (byte)TCPFlags.TCP_ACK | (byte)TCPFlags.TCP_PSH, data, (uint)count);
+                    SendPacket(conn, conn.SndNxt, TCPFlags.TCP_ACK | TCPFlags.TCP_PSH, data, (uint)count);
                     conn.SndNxt += (uint)count;
                 }
             }

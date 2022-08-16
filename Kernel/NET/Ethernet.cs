@@ -32,11 +32,13 @@ namespace MOOS.NET
 
         public static void HandlePacket(byte* Data, int Length)
         {
+            Native.Cli();
             EthernetHeader* hdr = (EthernetHeader*)Data;
             Data += sizeof(EthernetHeader);
             Length -= sizeof(EthernetHeader);
             if (SwapLeftRight(hdr->EthernetType) == (ushort)EthernetType.ARP) ARP.HandlePacket(Data, Length);
             if (SwapLeftRight(hdr->EthernetType) == (ushort)EthernetType.IPv4) IPv4.HandlePacket(Data, Length);
+            Native.Sti();
         }
 
         internal static void SendPacket(MACAddress DestMAC, ushort Type, void* Data, int Length)
