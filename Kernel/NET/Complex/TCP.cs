@@ -10,7 +10,7 @@ namespace MOOS.NET
     {
         public TCPStatus State;
 
-        public bool Connected => State != TCPStatus.SynSent && State != TCPStatus.Closed;
+        public bool Connected => State == TCPStatus.Established;
 
         public IPAddress LocalAddr;
         public IPAddress NextAddr;
@@ -54,6 +54,14 @@ namespace MOOS.NET
             }
             OnData?.Invoke(Data);
             Data.Dispose();
+        }
+
+        public void Close()
+        {
+            if (Connected)
+            {
+                TCP.Close(this);
+            }
         }
     }
 
@@ -163,6 +171,8 @@ namespace MOOS.NET
 
         private static void HandleTCPPacket(TcpClient conn, TCPHeader* hdr, byte* buffer, int length)
         {
+            //RcvNxt->Ack
+
             TCPFlags flags = hdr->Flags;
 
             if (flags == (TCPFlags.TCP_PSH | TCPFlags.TCP_ACK))
@@ -174,6 +184,12 @@ namespace MOOS.NET
             else if(flags == (TCPFlags.TCP_ACK))
             {
                 SendPacket(conn, TCPFlags.TCP_ACK);
+            }
+            else if (flags == (TCPFlags.TCP_FIN | TCPFlags.TCP_ACK))
+            {
+                conn.RcvNxt++;
+                SendPacket(conn, TCPFlags.TCP_ACK);
+                conn.State = TCPStatus.Closed;
             }
             else
             {
@@ -344,6 +360,11 @@ namespace MOOS.NET
                     conn.SndNxt += (uint)count;
                 }
             }
+        }
+
+        public static void Close(TcpClient conn)
+        {
+            SendPacket(conn, TCPFlags.TCP_FIN | TCPFlags.TCP_ACK);
         }
     }
 }
