@@ -22,17 +22,15 @@ namespace MOOS.NET
         public uint SndNxt;
         public uint RcvNxt;      
 
-        public void Send(byte[] buffer)
+        public bool Send(byte[] buffer)
         {
             if (Connected)
             {
                 fixed (byte* p = buffer)
                     TCP.Send(this, p, buffer.Length);
+                return true;
             }
-            else
-            {
-                Console.WriteLine("Connection havn't established yet");
-            }
+            return false;
         }
 
         public TcpClient()
@@ -150,7 +148,6 @@ namespace MOOS.NET
 
             if (currConn == null)
             {
-                Console.WriteLine("TCP connection havn't established yet");
                 return;
             }
 
@@ -171,10 +168,8 @@ namespace MOOS.NET
             if (flags == (TCPFlags.TCP_PSH | TCPFlags.TCP_ACK))
             {
                 conn.RcvNxt += (uint)length;
-                SendPacket(conn, TCPFlags.TCP_ACK);
-
                 conn._OnData(buffer, length);
-                return;
+                SendPacket(conn, TCPFlags.TCP_ACK);
             }
             else if(flags == (TCPFlags.TCP_ACK))
             {
@@ -183,7 +178,7 @@ namespace MOOS.NET
             else
             {
                 conn.State = TCPStatus.Closed;
-                Console.WriteLine($"Error: TCP error flags:{flags}");
+                Console.WriteLine($"Error: TCP error flags: 0b{Convert.ToString((ulong)flags, 2)}");
             }
         }
         
@@ -291,16 +286,8 @@ namespace MOOS.NET
             }
 
             byte* end = p + count;
-
-            ChecksumHeader* phdr = (ChecksumHeader*)(buffer - sizeof(ChecksumHeader));
-            phdr->Source = conn.LocalAddr.AddressV4;
-            phdr->Dest = conn.RemoteAddr.AddressV4;
-
-            phdr->Reserved = 0;
-            phdr->Protocol = (byte)IPv4.IPv4Protocol.TCP;
-            phdr->Length = Ethernet.SwapLeftRight((ushort)((uint)end - (uint)buffer));
-
-            ushort checksum = CalculateChecksum(buffer - sizeof(ChecksumHeader), end);
+            int length = (int)(end - buffer);
+            ushort checksum = CalculateChecksum(conn.LocalAddr.AddressV4, conn.RemoteAddr.AddressV4, buffer, length);
             hdr->Checksum = Ethernet.SwapLeftRight(checksum);
 
             IPv4.SendPacket(conn.RemoteAddr, (byte)IPv4.IPv4Protocol.TCP, buffer, (int)end - (int)buffer);
@@ -308,25 +295,19 @@ namespace MOOS.NET
             Allocator.Free((nint)buffer);
         }
 
-        const int MSS = 536;
-
-        public static void Send(TcpClient conn, byte* data, int length)
+        private static ushort CalculateChecksum(uint srcIP,uint destIP, byte* buffer, int length)
         {
-            if (conn.Connected)
-            {
-                for (int i = 0; i < length; i += MSS)
-                {
-                    int count = i + MSS > length ? length % MSS : MSS;
+            ChecksumHeader* phdr = (ChecksumHeader*)(buffer - sizeof(ChecksumHeader));
+            phdr->Source = srcIP;
+            phdr->Dest = destIP;
 
-                    SendPacket(conn, conn.SndNxt, TCPFlags.TCP_ACK | TCPFlags.TCP_PSH, data, (uint)count);
-                    conn.SndNxt += (uint)count;
-                }
-            }
-        }
+            phdr->Reserved = 0;
+            phdr->Protocol = (byte)IPv4.IPv4Protocol.TCP;
+            phdr->Length = Ethernet.SwapLeftRight((ushort)length);
 
-        private static ushort CalculateChecksum(byte* data, byte* end)
-        {
-            uint len = (uint)(end - data);
+            byte* data = buffer - sizeof(ChecksumHeader);
+            
+            uint len = length + sizeof(ChecksumHeader);
             ushort* p = (ushort*)data;
 
             uint sum = 0;
@@ -347,6 +328,22 @@ namespace MOOS.NET
 
             ushort temp = (ushort)~sum;
             return (ushort)(((temp & 0x00ff) << 8) | ((temp & 0xff00) >> 8)); 
+        }
+
+        const int MSS = 536;
+
+        public static void Send(TcpClient conn, byte* data, int length)
+        {
+            if (conn.Connected)
+            {
+                for (int i = 0; i < length; i += MSS)
+                {
+                    int count = i + MSS > length ? length % MSS : MSS;
+
+                    SendPacket(conn, conn.SndNxt, TCPFlags.TCP_ACK | TCPFlags.TCP_PSH, data, (uint)count);
+                    conn.SndNxt += (uint)count;
+                }
+            }
         }
     }
 }
