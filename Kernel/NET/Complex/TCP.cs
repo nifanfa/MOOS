@@ -144,80 +144,86 @@ namespace MOOS.NET
             Ethernet.SwapLeftRight(ref hdr->Checksum);
             Ethernet.SwapLeftRight(ref hdr->Urgent);
 
-            TcpClient currConn = null;
+            TcpClient conn = null;
             for(int i = 0; i < Clients.Count; i++) 
             {
                 if (Clients[i].LocalPort == hdr->DestPort) 
                 {
-                    currConn = Clients[i];
+                    conn = Clients[i];
                     break;
                 }
             }
 
-            if (currConn == null)
+            if (conn == null)
             {
                 return;
             }
 
-            if (currConn.State == TCPStatus.Closed) return;
-
-            if (currConn.State == TCPStatus.SynSent)
-            {
-                HandleSynSent(currConn, hdr);
-            }
-            else if (currConn.State == TCPStatus.Established)
-            {
-                HandleTCPPacket(currConn, hdr, buffer, length);
-            }
-        }
-
-        private static void HandleTCPPacket(TcpClient conn, TCPHeader* hdr, byte* buffer, int length)
-        {
-            //RcvNxt->Ack
-
-            TCPFlags flags = hdr->Flags;
-            
-            if (flags == (TCPFlags.TCP_FIN | TCPFlags.TCP_ACK))
-            {
-                conn.RcvNxt++;
-                SendPacket(conn, TCPFlags.TCP_ACK);
-                conn.State = TCPStatus.Closed;
-            }
-            else if (flags == (TCPFlags.TCP_PSH | TCPFlags.TCP_ACK))
-            {
-                conn.RcvNxt += (uint)length;
-                conn._OnData(buffer, length);
-                SendPacket(conn, TCPFlags.TCP_ACK);
-            }
-            else if(flags == (TCPFlags.TCP_ACK))
-            {
-                SendPacket(conn, TCPFlags.TCP_ACK);
-            }
-            else
-            {
-                conn.State = TCPStatus.Closed;
-                Console.WriteLine($"Error: TCP error flags: 0b{Convert.ToString((ulong)flags, 2)}");
-            }
-        }
-        
-        private static void HandleSynSent(TcpClient conn, TCPHeader* hdr)
-        {
             TCPFlags flags = hdr->Flags;
 
-            if (flags == (TCPFlags.TCP_SYN | TCPFlags.TCP_ACK))
+            if (conn.State == TCPStatus.SynSent)
             {
-                conn.RcvNxt = hdr->Seq + 1;
+                if (flags == (TCPFlags.TCP_SYN | TCPFlags.TCP_ACK))
+                {
+                    conn.RcvNxt = hdr->Seq + 1;
 
-                SendPacket(conn, TCPFlags.TCP_ACK);
+                    SendPacket(conn, TCPFlags.TCP_ACK);
 
-                conn.State = TCPStatus.Established;
-                Console.WriteLine("Connection established");
+                    conn.State = TCPStatus.Established;
+                    Console.WriteLine("Connection established");
+                }
+                else
+                {
+                    conn.State = TCPStatus.Closed;
+
+                    Console.WriteLine("Connection failed");
+                }
             }
-            else
+            else if (conn.State == TCPStatus.Established)
             {
-                conn.State = TCPStatus.Closed;
-
-                Console.WriteLine("Connection failed");
+                if (flags.HasFlag(TCPFlags.TCP_ACK))
+                {
+                    conn.SndNxt = hdr->Ack;
+                }
+                if (flags.HasFlag(TCPFlags.TCP_PSH))
+                {
+                    conn.RcvNxt += (uint)length;
+                    conn._OnData(buffer, length);
+                    SendPacket(conn, TCPFlags.TCP_ACK);
+                }
+                if (flags.HasFlag(TCPFlags.TCP_FIN))
+                {
+                    conn.RcvNxt++;
+                    SendPacket(conn, TCPFlags.TCP_ACK);
+                    conn.State = TCPStatus.Closed;
+                }
+                if (flags.HasFlag(TCPFlags.TCP_RST))
+                {
+                    conn.State = TCPStatus.Closed;
+                    Console.WriteLine($"Error: TCP error flags: 0b{Convert.ToString((ulong)flags, 2)}");
+                }
+            }
+            else if (conn.State == TCPStatus.FinWait1)
+            {
+                if (flags == TCPFlags.TCP_ACK)
+                {
+                    conn.State = TCPStatus.FinWait2;
+                }
+                else
+                {
+                    conn.RcvNxt++;
+                    SendPacket(conn, TCPFlags.TCP_ACK);
+                    conn.State = TCPStatus.Closed;
+                }
+            }
+            else if (conn.State == TCPStatus.FinWait2)
+            {
+                if (flags.HasFlag(TCPFlags.TCP_FIN)) 
+                {
+                    conn.RcvNxt++;
+                    SendPacket(conn, TCPFlags.TCP_ACK);
+                    conn.State = TCPStatus.Closed;
+                }
             }
         }
 
@@ -367,6 +373,8 @@ namespace MOOS.NET
         public static void Close(TcpClient conn)
         {
             SendPacket(conn, TCPFlags.TCP_FIN | TCPFlags.TCP_ACK);
+            conn.SndNxt++;
+            conn.State = TCPStatus.FinWait1;
         }
     }
 }
