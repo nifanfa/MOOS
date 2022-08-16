@@ -1,4 +1,4 @@
-#define NETWORK
+//#define NETWORK
 
 using Internal.Runtime.CompilerHelpers;
 using MOOS;
