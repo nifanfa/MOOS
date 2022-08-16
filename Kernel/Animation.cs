@@ -30,7 +30,7 @@ namespace MOOS
         public static unsafe void Initialize() 
         {
             Animations = new List<Animation>();
-            Interrupts.EnableInterrupt(0x20, &OnInterrupt);
+            Pollings.AddPoll(&OnInterrupt);
         }
 
         public static void AddAnimation(Animation ani) 
