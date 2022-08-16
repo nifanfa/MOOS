@@ -1,4 +1,4 @@
-//#define NETWORK
+#define NETWORK
 
 using Internal.Runtime.CompilerHelpers;
 using MOOS;
@@ -147,8 +147,7 @@ unsafe class Program
         //Select "QEMU with network" from dropdown menu
         //add "#define NETWORK" to the start of this file
         //Run
-        Network.Initialise(IPAddress.Parse(192, 168, 136, 2), IPAddress.Parse(192, 168, 136, 1), IPAddress.Parse(255, 255, 255, 0));
-        Console.WriteLine($"You can try pinging {Network.IP} on Windows to see if the network is up");
+        Network.Initialise(IPAddress.Parse(192, 168, 1, 188), IPAddress.Parse(192, 168, 1, 1), IPAddress.Parse(255, 255, 255, 0));
         //Make sure this IP is pointing your gateway
         //TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 136, 1), 80);
         //client.OnData += Client_OnData;
