@@ -148,11 +148,12 @@ unsafe class Program
         //add "#define NETWORK" to the start of this file
         //Run
         Network.Initialise(IPAddress.Parse(192, 168, 136, 2), IPAddress.Parse(192, 168, 136, 1), IPAddress.Parse(255, 255, 255, 0));
+        Console.WriteLine($"You can try pinging {Network.IP} on Windows to see if the network is up");
         //Make sure this IP is pointing your gateway
         //TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 136, 1), 80);
         //client.OnData += Client_OnData;
-        //client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
-        //for (; ; ) Native.Hlt();
+        //client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.136.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
+        for (; ; ) Native.Hlt();
 #endif
 
         SMain();
