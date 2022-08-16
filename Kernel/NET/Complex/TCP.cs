@@ -159,6 +159,8 @@ namespace MOOS.NET
                 return;
             }
 
+            if (currConn.State == TCPStatus.Closed) return;
+
             if (currConn.State == TCPStatus.SynSent)
             {
                 HandleSynSent(currConn, hdr);
@@ -174,8 +176,14 @@ namespace MOOS.NET
             //RcvNxt->Ack
 
             TCPFlags flags = hdr->Flags;
-
-            if (flags == (TCPFlags.TCP_PSH | TCPFlags.TCP_ACK))
+            
+            if (flags == (TCPFlags.TCP_FIN | TCPFlags.TCP_ACK))
+            {
+                conn.RcvNxt++;
+                SendPacket(conn, TCPFlags.TCP_ACK);
+                conn.State = TCPStatus.Closed;
+            }
+            else if (flags == (TCPFlags.TCP_PSH | TCPFlags.TCP_ACK))
             {
                 conn.RcvNxt += (uint)length;
                 conn._OnData(buffer, length);
@@ -184,12 +192,6 @@ namespace MOOS.NET
             else if(flags == (TCPFlags.TCP_ACK))
             {
                 SendPacket(conn, TCPFlags.TCP_ACK);
-            }
-            else if (flags == (TCPFlags.TCP_FIN | TCPFlags.TCP_ACK))
-            {
-                conn.RcvNxt++;
-                SendPacket(conn, TCPFlags.TCP_ACK);
-                conn.State = TCPStatus.Closed;
             }
             else
             {
