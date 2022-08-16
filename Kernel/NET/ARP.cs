@@ -106,6 +106,22 @@ namespace MOOS.NET
             }
         }
 
+        public static void Announce()
+        {
+            ARPHeader* hdr = (ARPHeader*)Allocator.Allocate((ulong)(sizeof(ARPHeader)));
+            hdr->SourceMAC = Network.MAC;
+            hdr->DestMAC = default;
+            hdr->SourceIP = Network.IP.AddressV4;
+            hdr->DestIP = Network.IP.AddressV4;
+            hdr->Operation = Ethernet.SwapLeftRight((uint)ARPOperation.Request);
+            hdr->HardwareAddrLen = 6;
+            hdr->ProtocolAddrLen = 4;
+            hdr->HardwareType = Ethernet.SwapLeftRight(1);
+            hdr->Protocol = Ethernet.SwapLeftRight((uint)Ethernet.EthernetType.IPv4);
+            Ethernet.SendPacket(Network.Boardcast, (ushort)Ethernet.EthernetType.ARP, hdr, sizeof(ARPHeader));
+            Allocator.Free((IntPtr)hdr);
+        }
+
         internal static void Require(IPAddress IP)
         {
             ARPHeader* hdr = (ARPHeader*)Allocator.Allocate((ulong)(sizeof(ARPHeader)));

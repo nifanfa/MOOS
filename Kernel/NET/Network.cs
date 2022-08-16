@@ -39,6 +39,7 @@ namespace MOOS.NET
             Console.WriteLine("[Network] Waitting for Gateway response...");
             MACAddress mACAddress = ARP.Lookup(Network.Gateway);
             Console.WriteLine("[Network] Network initialized");
+            ARP.Announce();
         }
     }
 }
