@@ -140,7 +140,7 @@ namespace MOOS.NET
             TCPHeader* hdr = (TCPHeader*)buffer;
             buffer += hdr->Off >> 2;
             length -= hdr->Off >> 2;
-            length -= 4;
+            //length -= 4;
 
             Ethernet.SwapLeftRight(ref hdr->SourcePort);
             Ethernet.SwapLeftRight(ref hdr->DestPort);
