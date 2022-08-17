@@ -151,7 +151,7 @@ namespace Internal.Runtime.CompilerHelpers
 
                 if(header->Signature != ReadyToRunHeaderConstants.Signature) 
                 {
-                    FailFast();
+                    break;
                 }
 
                 for (int k = 0; k < header->NumberOfSections; k++)

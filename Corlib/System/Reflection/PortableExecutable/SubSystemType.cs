@@ -1,6 +1,6 @@
 ﻿namespace System.Reflection.PortableExecutable
 {
-    enum SubSystemType : ushort
+    public enum SubSystemType : ushort
     {
         Unknown = 0,
         Native = 1,

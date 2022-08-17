@@ -3,7 +3,7 @@
 namespace System.Reflection.PortableExecutable
 {
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct DOSHeader
+    public unsafe struct DOSHeader
     {
         public ushort e_magic;              // Magic number
         public ushort e_cblp;               // Bytes on last page of file

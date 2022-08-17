@@ -3,7 +3,7 @@
 namespace System.Reflection.PortableExecutable
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct FileHeader
+    public struct FileHeader
     {
         public ushort Machine;
         public ushort NumberOfSections;

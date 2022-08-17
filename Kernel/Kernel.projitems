@@ -70,7 +70,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Pollings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\MACAddress.cs" />
-    <Compile Include="..\Kernel\Misc\SectionHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\USB.cs" />

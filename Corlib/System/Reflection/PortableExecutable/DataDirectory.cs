@@ -3,7 +3,7 @@
 namespace System.Reflection.PortableExecutable
 {
     [StructLayout(LayoutKind.Sequential)]
-    struct DataDirectory
+    public struct DataDirectory
     {
         public uint VirtualAddress;
         public uint Size;

@@ -3,7 +3,7 @@
 namespace System.Reflection.PortableExecutable
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct OptionalHeaders64
+    public struct OptionalHeaders64
     {
         public ushort Magic;
         public byte MajorLinkerVersion;

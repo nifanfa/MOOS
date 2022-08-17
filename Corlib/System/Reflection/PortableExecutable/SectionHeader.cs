@@ -3,7 +3,7 @@
 namespace System.Reflection.PortableExecutable
 {
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct SectionHeader
+    public unsafe struct SectionHeader
     {
         public fixed byte Name[8];
         public uint PhysicalAddress_VirtualSize;
