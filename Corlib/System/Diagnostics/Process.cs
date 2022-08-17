@@ -13,14 +13,30 @@ namespace System.Diagnostics
                 DOSHeader* doshdr = (DOSHeader*)ptr;
                 NtHeaders64* nthdr = (NtHeaders64*)(ptr + doshdr->e_lfanew);
 
-                if (nthdr->OptionalHeader.FileAlignment < 0x1000) return;
-
                 if (!nthdr->OptionalHeader.BaseRelocationTable.VirtualAddress) return;
                 if (nthdr->OptionalHeader.ImageBase != 0x140000000) return;
 
-                byte* newPtr = (byte*)malloc(nthdr->OptionalHeader.SizeOfImage + 0x1000);
-                memcpy(newPtr, ptr, (ulong)exe.Length);
-                LoadUnfixedPE(newPtr);
+                byte* newPtr = (byte*)malloc(nthdr->OptionalHeader.SizeOfImage);
+                memset(newPtr, 0, nthdr->OptionalHeader.SizeOfImage);
+                memcpy(newPtr, ptr, nthdr->OptionalHeader.SizeOfHeaders);
+
+                DOSHeader* newdoshdr = (DOSHeader*)newPtr;
+                NtHeaders64* newnthdr = (NtHeaders64*)(newPtr + newdoshdr->e_lfanew);
+
+                IntPtr moduleSeg = IntPtr.Zero;
+                SectionHeader* sections = ((SectionHeader*)(newPtr + newdoshdr->e_lfanew + sizeof(NtHeaders64)));
+                for (int i = 0; i < newnthdr->FileHeader.NumberOfSections; i++) 
+                {
+                    if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)((ulong)newPtr + sections[i].VirtualAddress);
+                    memcpy((byte*)((ulong)newPtr + sections[i].VirtualAddress), ptr + sections[i].PointerToRawData, sections[i].SizeOfRawData);
+                }
+                FixImageRelocations(newdoshdr, newnthdr, (long)((ulong)newPtr - newnthdr->OptionalHeader.ImageBase));
+
+                delegate*<void> p = (delegate*<void>)((ulong)newPtr + newnthdr->OptionalHeader.AddressOfEntryPoint);
+                //TO-DO disposing
+                StartupCodeHelpers.InitializeModules(moduleSeg);
+                StartThread(p);
+                //free((IntPtr)ptr);
             }
         }
 
@@ -29,27 +45,6 @@ namespace System.Diagnostics
 
         [DllImport("*")]
         static extern ulong free(nint ptr);
-
-        public static void LoadUnfixedPE(byte* ptr) 
-        {
-            DOSHeader* doshdr = (DOSHeader*)ptr;
-            NtHeaders64* nthdr = (NtHeaders64*)(ptr + doshdr->e_lfanew);
-            ulong orignalBase = nthdr->OptionalHeader.ImageBase;
-            nthdr->OptionalHeader.ImageBase = (ulong)ptr;
-            SectionHeader* sections = ((SectionHeader*)(ptr + doshdr->e_lfanew + sizeof(NtHeaders64)));
-            IntPtr moduleSeg = IntPtr.Zero;
-            for (int i = 0; i < nthdr->FileHeader.NumberOfSections; i++)
-            {
-                if (*(ulong*)sections[i].Name == 0x73656C75646F6D2E) moduleSeg = (IntPtr)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress);
-                memcpy((byte*)(nthdr->OptionalHeader.ImageBase + sections[i].VirtualAddress), ptr + sections[i].PointerToRawData, sections[i].SizeOfRawData);
-            }
-            FixImageRelocations(doshdr, nthdr, (long)(nthdr->OptionalHeader.ImageBase - orignalBase));
-            delegate*<void> p = (delegate*<void>)(nthdr->OptionalHeader.ImageBase + nthdr->OptionalHeader.AddressOfEntryPoint);
-            //TO-DO disposing
-            StartupCodeHelpers.InitializeModules(moduleSeg);
-            StartThread(p);
-            //free((IntPtr)ptr);
-        }
 
         [DllImport("StartThread")]
         static extern void StartThread(delegate*<void> func);
