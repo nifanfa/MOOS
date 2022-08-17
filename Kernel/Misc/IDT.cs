@@ -169,11 +169,11 @@ public static class IDT
     [RuntimeExport("irq_handler")]
     public static unsafe void IRQHandler(int irq, IDTStackGeneric* stack)
     {
-        Native.Cli();
-
         //DEAD
         if(irq == 0xFD) 
         {
+            Native.Cli();
+            Native.Hlt();
             for (; ; ) Native.Hlt();
         }
 
@@ -204,7 +204,6 @@ public static class IDT
             ThreadPool.Schedule(stack);
         }
 
-        Native.Sti();
         Interrupts.EndOfInterrupt((byte)irq);
     }
 }
