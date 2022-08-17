@@ -25,7 +25,7 @@ namespace System.Drawing
             return (uint)RawData[Y * Width + X];
         }
 
-        internal static unsafe void Resample(void* input, void* output, int oldw, int oldh, int neww, int newh)
+        public static unsafe void Resample(void* input, void* output, int oldw, int oldh, int neww, int newh)
         {
             for (int i = 0; i < newh; i++)
             {

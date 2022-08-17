@@ -11,7 +11,7 @@
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 
-		<IlcSystemModule>NESPortable</IlcSystemModule>
+		<IlcSystemModule>Corlib</IlcSystemModule>
 		<EntryPointSymbol>Main</EntryPointSymbol>
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 		<!--Make the code faster!-->
@@ -22,10 +22,10 @@
 		<Exec WorkingDirectory="$(MSBuildStartupDirectory)" Command="dotnet publish -r win-x64 -c debug $(ProjectName)"></Exec>
 	</Target>
 
-	<!--CustomizeReferences-->
+	<!-- The project file pretends this is .NET, but it's not .NET. Remove all assembly references the .NET SDK added. -->
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
 		<ItemGroup>
-			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
+			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" Condition="%(Filename) != 'Corlib'" />
 			<ReferencePath Remove="@(ReferencePath)" />
 		</ItemGroup>
 	</Target>
@@ -38,5 +38,7 @@
 		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
-	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
+	<ItemGroup>
+	  <ProjectReference Include="..\Corlib\Corlib.csproj" />
+	</ItemGroup>
 </Project>
