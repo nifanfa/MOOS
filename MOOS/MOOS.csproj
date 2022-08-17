@@ -39,7 +39,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/fixed /base:0x10000000 /filealign:0x1000 /map:Kernel.map" />
+		<LinkerArg Include="/fixed /base:0x10000000 /map:Kernel.map" />
 	</ItemGroup>
 
 	<ItemGroup>
