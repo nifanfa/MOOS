@@ -25,7 +25,22 @@ namespace MOOS.Driver
             sts = (TD*)Allocator.Allocate((ulong)sizeof(TD));
             cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
 
-            PCIDevice device = PCI.GetDevice(0x0C, 0x03, 0x20);
+            PCIDevice device = null;
+            //For me to debug
+            for (int i = 0; i < PCI.Devices.Count; i++)
+            {
+                if (
+                    PCI.Devices[i] != null &&
+                    PCI.Devices[i].ClassID == 0x0C &&
+                    PCI.Devices[i].SubClassID == 0x03 &&
+                    PCI.Devices[i].ProgIF == 0x20 &&
+                    PCI.Devices[i].Slot == 29
+                    )
+                {
+                    device = PCI.Devices[i];
+                }
+            }
+            if (device == null) device = PCI.GetDevice(0x0C, 0x03, 0x20);
             if (device == null) return;
 
             Console.WriteLine("[EHCI] EHCI controller found!");
@@ -650,12 +665,16 @@ namespace MOOS.Driver
 
         public static bool InitPort(int port,USBDevice parent,int speed)
         {
+            USB.DeviceAddr++;
+            Console.WriteLine($"[EHCI] Next device address is {USB.DeviceAddr}");
+
             USBDevice device = new USBDevice();
             device.USBVersion = 2;
             device.Speed = speed;
-
-            USB.DeviceAddr++;
-            Console.WriteLine($"[EHCI] Next device address is {USB.DeviceAddr}");
+            device.AssignedSloth = USB.DeviceAddr;
+            device.Address = USB.DeviceAddr;
+            device.Port = port;
+            device.Parent = parent;
 
             if (parent == null) 
             {
@@ -685,12 +704,9 @@ namespace MOOS.Driver
                 device.Dispose();
                 return false;
             }
-            device.AssignedSloth = USB.DeviceAddr;
-            device.Address = USB.DeviceAddr;
-            device.Port = port;
 
-            byte* _desc = GetDesc(USB.DeviceAddr, 8, parent, device.Speed);
-            if (_desc == 0)
+            USBDescriptor* _desc = (USBDescriptor*)GetDesc(USB.DeviceAddr, 8, parent, device.Speed);
+            if (_desc == null)
             {
                 Console.WriteLine($"[EHCI] Port {port} Failed to get descriptor");
 
@@ -698,14 +714,14 @@ namespace MOOS.Driver
                 return false;
             }
 
-            if (!(_desc[0] == 0x12 && _desc[1] == 0x1))
+            if (!(_desc->Length == 0x12 && _desc->Type == 0x1))
             {
                 Console.WriteLine($"[EHCI] Port {port} Invalid magic number");
 
                 device.Dispose();
                 return false;
             }
-            byte max_packet_size = _desc[7];
+            byte max_packet_size = _desc->MaxPacketSize;
             Console.WriteLine($"[EHCI] Port {port} Max Packet Size {max_packet_size}");
 
             ConfigDesc* cdesc = (ConfigDesc*)GetConfig(USB.DeviceAddr, (byte)(sizeof(InterfaceDesc) + sizeof(ConfigDesc) + (sizeof(EndPoint) * 2)), parent, device.Speed);
@@ -752,8 +768,6 @@ namespace MOOS.Driver
                 device.Dispose();
                 return false;
             }
-
-            device.Parent = parent;
 
             USB.DriveDevice(device);
 

@@ -48,6 +48,25 @@ namespace MOOS.Misc
         }
     }
 
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct USBDescriptor
+    {
+        public byte Length;
+        public byte Type;
+        public ushort USBVersion;
+        public byte Class;
+        public byte SubClass;
+        public byte Protocol;
+        public byte MaxPacketSize;
+        public ushort VendorID;
+        public ushort ProductID;
+        public ushort DeviceVersion;
+        public byte VendorString;
+        public byte ProductString;
+        public byte SerialString;
+        public byte ConfigurationCount;
+    }
+
     public static unsafe class USB
     {
         public static byte NumDevice;

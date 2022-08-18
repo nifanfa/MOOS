@@ -41,15 +41,22 @@ namespace MOOS.Driver
 
             for(int i = 0; i < desc->PortCount; i++) 
             {
-                (*req).Clean();
-                req->RequestType = 0x23;
-                req->Request = 0x03;
-                req->Value = 8;
-                req->Index = ((ushort)(i + 1));
-                req->Length = 0;
-                b = USB.SendAndReceive(device, req, null);
-                ACPITimer.Sleep(100000);
-
+                if((desc->Characteristic & 0x03) == 0x01)
+                {
+                    (*req).Clean();
+                    req->RequestType = 0x23;
+                    req->Request = 0x03;
+                    req->Value = 8;
+                    req->Index = ((ushort)(i + 1));
+                    req->Length = 0;
+                    b = USB.SendAndReceive(device, req, null);
+                    if (!b)
+                    {
+                        Console.WriteLine($"[USB Hub] Can't set power for Hub port {i}");
+                        continue;
+                    }
+                    ACPITimer.Sleep(100000);
+                }
 
                 (*req).Clean();
                 req->RequestType = 0x23;
@@ -57,7 +64,12 @@ namespace MOOS.Driver
                 req->Value = 4;
                 req->Index = ((ushort)(i + 1));
                 req->Length = 0;
-                b= USB.SendAndReceive(device, req, null);
+                b = USB.SendAndReceive(device, req, null);
+                if (!b)
+                {
+                    Console.WriteLine($"[USB Hub] Can't reset Hub port {i}");
+                    continue;
+                }
                 ACPITimer.Sleep(100000);
 
                 uint status = 0;
