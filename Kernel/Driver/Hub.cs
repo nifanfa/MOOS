@@ -24,14 +24,7 @@ namespace MOOS.Driver
         internal static void Initialize(USBDevice device)
         {
             Desc* desc = (Desc*)Allocator.Allocate((ulong)sizeof(Desc));
-
-            (*req).Clean();
-            req->RequestType = 0xA0;
-            req->Request = 0x06;
-            req->Value = 0x2900;
-            req->Index = 0;
-            req->Length = (ushort)sizeof(Desc);
-            bool b= USB.SendAndReceive(device, req, desc);
+            bool b= USB.SendAndReceive(device, desc,0xA0,0x06,0x2900,0, sizeof(Desc));
             if (!b) 
             {
                 Console.WriteLine("[USB Hub] Can't get Hub descriptor");
@@ -43,13 +36,7 @@ namespace MOOS.Driver
             {
                 if((desc->Characteristic & 0x03) == 0x01)
                 {
-                    (*req).Clean();
-                    req->RequestType = 0x23;
-                    req->Request = 0x03;
-                    req->Value = 8;
-                    req->Index = ((ushort)(i + 1));
-                    req->Length = 0;
-                    b = USB.SendAndReceive(device, req, null);
+                    b = USB.SendAndReceive(device, null, 0x23, 0x03, 8, ((ushort)(i + 1)), 0);
                     if (!b)
                     {
                         Console.WriteLine($"[USB Hub] Can't set power for Hub port {i}");
@@ -58,13 +45,7 @@ namespace MOOS.Driver
                     ACPITimer.Sleep(100000);
                 }
 
-                (*req).Clean();
-                req->RequestType = 0x23;
-                req->Request = 0x03;
-                req->Value = 4;
-                req->Index = ((ushort)(i + 1));
-                req->Length = 0;
-                b = USB.SendAndReceive(device, req, null);
+                b = USB.SendAndReceive(device, null, 0x23, 0x03, 4, ((ushort)(i + 1)), 0);
                 if (!b)
                 {
                     Console.WriteLine($"[USB Hub] Can't reset Hub port {i}");
@@ -75,13 +56,7 @@ namespace MOOS.Driver
                 uint status = 0;
                 for(int k = 0; k < 8; k++) 
                 {
-                    (*req).Clean();
-                    req->RequestType = 0xA3;
-                    req->Request = 0;
-                    req->Value = 0;
-                    req->Index = ((ushort)(i + 1));
-                    req->Length = sizeof(uint);
-                    b = USB.SendAndReceive(device, req, &status);
+                    b = USB.SendAndReceive(device, &status, 0xA3, 0, 0, ((ushort)(i + 1)), sizeof(uint));
                     if (!b)
                     {
                         Console.WriteLine($"[USB Hub] Can't get Hub port {i} status");

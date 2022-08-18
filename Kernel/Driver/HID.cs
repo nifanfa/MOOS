@@ -20,13 +20,7 @@ namespace MOOS.Driver
 
         public static bool GetHIDPacket(USBDevice device, uint devicedesc)
         {
-            (*cmd).Clean();
-            cmd->Request = 1;
-            cmd->RequestType = 0xA1;
-            cmd->Index = 0;
-            cmd->Length = 3;
-            cmd->Value = 0x0100;
-            bool res = USB.SendAndReceive(device, cmd, (void*)devicedesc);
+            bool res = USB.SendAndReceive(device, (void*)devicedesc, 0xA1, 1, 0x0100, 0, 3);
             return res;
         }
 

@@ -72,11 +72,17 @@ namespace MOOS.Misc
         public static byte NumDevice;
         public static byte DeviceAddr;
 
-        public static bool SendAndReceive(USBDevice device, USBRequest* cmd, void* buffer)
+        public static bool SendAndReceive(USBDevice device, void* buffer, int reqType,int req,int value,int index,int length)
         {
+            cmd->RequestType = (byte)reqType;
+            cmd->Request = (byte)req;
+            cmd->Value = (ushort)value;
+            cmd->Index = (ushort)index;
+            cmd->Length = (ushort)length;
+
             if (device.USBVersion == 2)
             {
-                return EHCI.SendAndReceive(device.Address, cmd, buffer, device.Parent,device.Speed);
+                return EHCI.SendAndReceive(device.Address, cmd, buffer, device.Parent, device.Speed);
             }
             else
             {
@@ -137,10 +143,13 @@ namespace MOOS.Misc
             }
         }
 
+        static USBRequest* cmd;
+
         public static void Reset()
         {
             USB.NumDevice = 0;
             USB.DeviceAddr = 0;
+            cmd = (USBRequest*)Allocator.Allocate((ulong)sizeof(USBRequest));
         }
 
         public static void StartPolling()
