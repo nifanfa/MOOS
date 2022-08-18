@@ -126,14 +126,21 @@ namespace MOOS.Misc
 
         public static void StartPolling()
         {
-            Pollings.AddPoll(&Poll);
+            new Thread(&LoopPoll).Start();
         }
 
-        static void Poll()
+        static void LoopPoll()
         {
-            if (USB.NumDevice != 0)
+            for (; ; )
             {
-                USB.OnInterrupt();
+                if (USB.NumDevice != 0)
+                {
+                    USB.OnInterrupt();
+                }
+                else
+                {
+                    ThreadPool.Schedule_Next();
+                }
             }
         }
     }
