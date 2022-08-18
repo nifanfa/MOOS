@@ -53,11 +53,11 @@ namespace MOOS.Misc
         public static byte NumDevice;
         public static byte DeviceAddr;
 
-        public static bool SendAndReceive(USBDevice device, USBRequest* cmd, void* buffer,USBDevice parent)
+        public static bool SendAndReceive(USBDevice device, USBRequest* cmd, void* buffer)
         {
             if (device.USBVersion == 2)
             {
-                return EHCI.SendAndReceive(device.Address, cmd, buffer, parent,device.Speed);
+                return EHCI.SendAndReceive(device.Address, cmd, buffer, device.Parent,device.Speed);
             }
             else
             {

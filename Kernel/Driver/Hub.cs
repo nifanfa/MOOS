@@ -31,7 +31,7 @@ namespace MOOS.Driver
             req->Value = 0x2900;
             req->Index = 0;
             req->Length = (ushort)sizeof(Desc);
-            bool b= USB.SendAndReceive(device, req, desc, null);
+            bool b= USB.SendAndReceive(device, req, desc);
             if (!b) 
             {
                 Console.WriteLine("[USB Hub] Can't get Hub descriptor");
@@ -47,7 +47,7 @@ namespace MOOS.Driver
                 req->Value = 8;
                 req->Index = ((ushort)(i + 1));
                 req->Length = 0;
-                b = USB.SendAndReceive(device, req, null, null);
+                b = USB.SendAndReceive(device, req, null);
                 ACPITimer.Sleep(100000);
 
 
@@ -57,7 +57,7 @@ namespace MOOS.Driver
                 req->Value = 4;
                 req->Index = ((ushort)(i + 1));
                 req->Length = 0;
-                b= USB.SendAndReceive(device, req, null, null);
+                b= USB.SendAndReceive(device, req, null);
                 ACPITimer.Sleep(100000);
 
                 uint status = 0;
@@ -69,7 +69,7 @@ namespace MOOS.Driver
                     req->Value = 0;
                     req->Index = ((ushort)(i + 1));
                     req->Length = sizeof(uint);
-                    b = USB.SendAndReceive(device, req, &status, null);
+                    b = USB.SendAndReceive(device, req, &status);
                     if (!b)
                     {
                         Console.WriteLine($"[USB Hub] Can't get Hub port {i} status");
