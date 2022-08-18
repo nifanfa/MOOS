@@ -140,15 +140,7 @@ unsafe class Program
         */
 
 #if NETWORK
-        //Install openVPN's windows tap driver
-        //You can download it here: http://swupdate.openvpn.org/community/releases/openvpn-2.2.2-install.exe
-        //rename the network adapter to tap in control panel
-        //right click your network connection device. then share the network with tap 
-        //Select "QEMU with network" from dropdown menu
-        //add "#define NETWORK" to the start of this file
-        //Run
         Network.Initialise(IPAddress.Parse(192, 168, 136, 189), IPAddress.Parse(192, 168, 136, 1), IPAddress.Parse(255, 255, 255, 0));
-        //Make sure this IP is pointing your gateway
         //TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 136, 1), 80);
         //client.OnData += Client_OnData;
         //client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.136.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
