@@ -56,7 +56,7 @@ unsafe class Program
     {
         Animator.Initialize();
 
-#if true
+#if false
 //Warning: Initializing USB Controller will disable PS/2 emulation. as for now USB Hub driver is totally unusable. so you should disable it if your mouse or keyboard not work
         Hub.Initialize();
         HID.Initialize();
