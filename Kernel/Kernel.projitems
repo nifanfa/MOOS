@@ -69,6 +69,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PageTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Pollings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NET\IPAddress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\MACAddress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
