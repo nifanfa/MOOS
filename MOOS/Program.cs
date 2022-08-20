@@ -143,6 +143,9 @@ unsafe class Program
         */
 
 #if NETWORK
+        //If you are running MOOS on VMware, please open the windows task manager to get the IP of "VMware Virtual Ethernet Adapter for VMnet8"
+        //The format should be 192.168.XXX.1 which is the gateway ip. Then the first 3 parts of your ip should be the same as the gateway IP
+        // The last part of the IP should be in the range 2 to 255
         Network.Initialise(IPAddress.Parse(192, 168, 136, 189), IPAddress.Parse(192, 168, 136, 1), IPAddress.Parse(255, 255, 255, 0));
         //TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 136, 1), 80);
         //client.OnData += Client_OnData;
