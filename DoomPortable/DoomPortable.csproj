@@ -25,12 +25,12 @@
 	</Target>
 
 	<Target Name="HandleBuild" AfterTargets="AfterBuild" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
-		<Exec WorkingDirectory="$(MSBuildStartupDirectory)" Command="dotnet publish -r win-x64 -c debug $(ProjectName)"></Exec>
+		<Exec Command="dotnet publish -r win-x64"></Exec>
 	</Target>
 
 	<ItemGroup>
-		<NativeLibrary Include="$(MSBuildStartupDirectory)\x64\Debug\LibC.lib" />
-		<NativeLibrary Include="$(MSBuildStartupDirectory)\x64\Debug\Doom.lib" />
+		<NativeLibrary Include="..\x64\Debug\LibC.lib" />
+		<NativeLibrary Include="..\x64\Debug\Doom.lib" />
 	</ItemGroup>
 
 	<!-- The project file pretends this is .NET, but it's not .NET. Remove all assembly references the .NET SDK added. -->

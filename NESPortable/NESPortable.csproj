@@ -25,7 +25,7 @@
 	</Target>
 
 	<Target Name="HandleBuild" AfterTargets="AfterBuild" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
-		<Exec WorkingDirectory="$(MSBuildStartupDirectory)" Command="dotnet publish -r win-x64 -c debug $(ProjectName)"></Exec>
+		<Exec Command="dotnet publish -r win-x64"></Exec>
 	</Target>
 
 	<!-- The project file pretends this is .NET, but it's not .NET. Remove all assembly references the .NET SDK added. -->
