@@ -2,7 +2,7 @@
 if "%1" equ "" (
 	goto error
 )
-if not exist "bin\debug\net6.0\win-x64\native\%1.exe" (
+if not exist "bin\debug\net6.0\win-x64\native\%1.mue" (
 	echo "Please select the project that you want to Run on Visual Studio Solution Explorer and then press Ctrl+B to build the project first!"
 	echo "Make sure the project that you build is what you selected on Visual Studio Dropdown Menu!"
 	pause
@@ -14,7 +14,7 @@ del /q grub2\boot\ramdisk.tar
 7-Zip\7z.exe a grub2\boot\ramdisk.tar ..\Ramdisk\*
 nasm.exe -fbin Trampoline.asm -o trampoline.o
 nasm.exe -fbin EntryPoint.asm -o loader.o
-copy /b loader.o+..\bin\debug\net6.0\win-x64\native\%1.exe grub2\boot\kernel.bin
+copy /b loader.o+..\bin\debug\net6.0\win-x64\native\%1.mue grub2\boot\kernel.bin
 del /q trampoline.o
 del /q loader.o
 mkisofs.exe -relaxed-filenames -J -R -o ..\bin\debug\net6.0\win-x64\native\%1.iso -b boot/grub/i386-pc/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table grub2

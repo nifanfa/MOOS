@@ -18,6 +18,12 @@
 		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
 	</PropertyGroup>
 
+	<Target Name="RenameExt" AfterTargets="CopyNativeBinary">
+		<!--.MUE(MOOS User Executable)-->
+		<Copy SourceFiles="$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)" DestinationFiles="$(NativeOutputPath)$(TargetName).mue"></Copy>
+		<Delete Files="$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)"></Delete>
+	</Target>
+
 	<Target Name="HandleBuild" AfterTargets="AfterBuild" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
 		<Exec WorkingDirectory="$(MSBuildStartupDirectory)" Command="dotnet publish -r win-x64 -c debug $(ProjectName)"></Exec>
 	</Target>

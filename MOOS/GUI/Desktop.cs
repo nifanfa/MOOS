@@ -132,7 +132,7 @@ namespace MOOS.GUI
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, GameIcon);
                 }
-                else if(names[i].Name.EndsWith(".exe"))
+                else if(names[i].Name.EndsWith(".mue"))
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, AppIcon);
                 }
@@ -302,7 +302,7 @@ namespace MOOS.GUI
             {
                 new Doom(300, 250);
             }
-            else if (name.EndsWith(".exe"))
+            else if (name.EndsWith(".mue"))
             {
                 byte[] buffer = File.ReadAllBytes(path);
                 Process.Start(buffer);
