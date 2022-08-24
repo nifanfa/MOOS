@@ -1,0 +1,6 @@
+[submodule "NESPortable"]
+	path = NESPortable
+	url = https://github.com/nifanfa/NESPortable.git
+[submodule "DoomPortable"]
+	path = DoomPortable
+	url = https://github.com/nifanfa/DoomPortable.git
