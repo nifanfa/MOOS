@@ -124,7 +124,7 @@ namespace MOOS.GUI
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
                 }
-                else if (names[i].Name == "DOOM1.WAD")
+                else if (names[i].Name == "DoomPortable.mue")
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, DoomIcon);
                 }
@@ -297,10 +297,6 @@ namespace MOOS.GUI
                 png.Dispose();
                 WindowManager.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
-            }
-            else if (name == "DOOM1.WAD")
-            {
-                new Doom(300, 250);
             }
             else if (name.EndsWith(".mue"))
             {
