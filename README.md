@@ -37,7 +37,7 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 
 | Feature | Working in VM | Working on hardware | Information |
 | ------- | ------------- | ------------------- | ----------- |
-| EXE Running | 🟩 | 🟩 |
+| Applications .mue (MOOS User Executable) | 🟩 | 🟩 |
 | Error Throwing / Catching | 🟥 | 🟥 | 
 | GC | 🟨 | ⬜ | Not safe |
 | Multiprocessor | 🟩 | 🟩 |
