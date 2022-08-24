@@ -44,8 +44,17 @@ namespace System
         }
 
         public static implicit operator bool(object obj)=> obj != null;
+        
+        public static T FromHandle<T>(IntPtr handle) where T : class
+        {
+            return Unsafe.As<IntPtr, T>(ref handle);
+        }
 
-        public static implicit operator IntPtr(object obj) => Unsafe.As<object, IntPtr>(ref obj);
+        public IntPtr GetHandle()
+        {
+            object _this = this;
+            return Unsafe.As<object, IntPtr>(ref _this);
+        }
 
         [DllImport("*")]
         static extern ulong free(nint ptr);

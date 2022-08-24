@@ -96,13 +96,13 @@ namespace MOOS
         {
             PortableApp papp = new PortableApp(X, Y, Width, Height);
             papp.Title = Title;
-            return papp;
+            return papp.GetHandle();
         }
 
         public static IntPtr API_GetWindowScreenBuf(IntPtr handle)
         {
             PortableApp papp = Unsafe.As<IntPtr, PortableApp>(ref handle);
-            return papp.ScreenBuf;
+            return papp.ScreenBuf.GetHandle();
         }
 #endif
 
