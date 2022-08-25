@@ -101,7 +101,7 @@ namespace MOOS
 
         public static IntPtr API_GetWindowScreenBuf(IntPtr handle)
         {
-            PortableApp papp = Unsafe.As<IntPtr, PortableApp>(ref handle);
+            PortableApp papp = object.FromHandle<PortableApp>(handle);
             return papp.ScreenBuf.GetHandle();
         }
 #endif
