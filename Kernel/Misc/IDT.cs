@@ -72,7 +72,7 @@ public static class IDT
     public static unsafe void ExceptionHandler(int code, void* stack)
     {
         Panic.Error($"CPU{SMP.ThisCPU} KERNEL PANIC!!!", true);
-        InterruptReturnStack* irs;
+        InterruptReturnStack* irs = (InterruptReturnStack*)stack;
         switch (code) 
         {
             case 8:
@@ -85,11 +85,7 @@ public static class IDT
             case 21:
             case 29:
             case 30:
-                irs = (InterruptReturnStack*)(((byte*)stack) + sizeof(RegistersStack));
-                break;
-
-            default:
-                irs = (InterruptReturnStack*)(((byte*)stack) + sizeof(RegistersStack) + sizeof(ulong));
+                irs = (InterruptReturnStack*)((ulong)stack + sizeof(ulong));
                 break;
         }
         Console.WriteLine($"RIP: 0x{irs->rip.ToString("x2")}");

@@ -40,16 +40,9 @@ isr MACRO num
 	PUBLIC isr&num
 
 	isr&num PROC
-		cli	;prevent ThreadPool from switching thread
-		push num ;push errorCode
-		pushaq
 		mov rcx, num
 		mov rdx, rsp
 		call exception_handler
-		popaq
-		add rsp,8 ;clean errorcode
-		cli
-		hlt
 		jmp $
 	isr&num ENDP
 ENDM
