@@ -159,22 +159,6 @@ namespace MOOS.Misc
         [DllImport("*")]
         public static extern void Schedule_Next();
 
-        public static void TestThread()
-        {
-            Console.WriteLine("Non-Loop Thread Test!");
-            return;
-        }
-
-        public static void A()
-        {
-            for (; ; ) Console.WriteLine("Thread A");
-        }
-
-        public static void B()
-        {
-            for (; ; ) Console.WriteLine("Thread B");
-        }
-
         public static void IdleThread()
         {
             for (; ; ) Schedule_Next();
