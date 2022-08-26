@@ -69,7 +69,7 @@ public static class IDT
 
     //interrupts_asm.asm line 39
     [RuntimeExport("exception_handler")]
-    public static unsafe void ExceptionHandler(int code, IDTStackGeneric* stack)
+    public static unsafe void ExceptionHandler(int code, void* stack)
     {
         Panic.Error($"CPU{SMP.ThisCPU} KERNEL PANIC!!!", true);
         InterruptReturnStack* irs;
@@ -92,11 +92,11 @@ public static class IDT
                 irs = (InterruptReturnStack*)(((byte*)stack) + sizeof(RegistersStack) + sizeof(ulong));
                 break;
         }
-        Console.WriteLine($"RIP: 0x{stack->irs.rip.ToString("x2")}");
-        Console.WriteLine($"Code Segment: 0x{stack->irs.cs.ToString("x2")}");
-        Console.WriteLine($"RFlags: 0x{stack->irs.rflags.ToString("x2")}");
-        Console.WriteLine($"RSP: 0x{stack->irs.rsp.ToString("x2")}");
-        Console.WriteLine($"Stack Segment: 0x{stack->irs.ss.ToString("x2")}");
+        Console.WriteLine($"RIP: 0x{irs->rip.ToString("x2")}");
+        Console.WriteLine($"Code Segment: 0x{irs->cs.ToString("x2")}");
+        Console.WriteLine($"RFlags: 0x{irs->rflags.ToString("x2")}");
+        Console.WriteLine($"RSP: 0x{irs->rsp.ToString("x2")}");
+        Console.WriteLine($"Stack Segment: 0x{irs->ss.ToString("x2")}");
         switch (code)
         {
             case 0: Console.WriteLine("DIVIDE BY ZERO"); break;
