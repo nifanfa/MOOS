@@ -173,6 +173,8 @@ namespace Internal.Runtime.CompilerHelpers
 
                 Encoding.UTF8 = new UTF8Encoding();
                 Encoding.ASCII = new ASCIIEncoding();
+
+                Random.Shared = new Random();
             }
         }
 

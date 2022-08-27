@@ -34,7 +34,9 @@ namespace System
 {
 	public class Random
 	{
-		private uint x;
+		public static Random Shared;
+
+        private uint x;
 		private uint y;
 		private uint z;
 		private uint c;
