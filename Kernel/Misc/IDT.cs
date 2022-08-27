@@ -165,26 +165,6 @@ public static class IDT
     [RuntimeExport("irq_handler")]
     public static unsafe void IRQHandler(int irq, IDTStackGeneric* stack)
     {
-        //DEAD
-        if(irq == 0xFD) 
-        {
-            Native.Cli();
-            Native.Hlt();
-            for (; ; ) Native.Hlt();
-        }
-
-        //System calls
-        if (irq == 0x80)
-        {
-            lock (null)
-            {
-                var pCell = (MethodFixupCell*)stack->rs.rcx;
-                string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
-                stack->rs.rax = (ulong)API.HandleSystemCall(name);
-                name.Dispose();
-            }
-        }
-
         //For main processor
         if (SMP.ThisCPU == 0)
         {
@@ -198,10 +178,28 @@ public static class IDT
             }
             Interrupts.HandleInterrupt(irq);
         }
-
-        if (irq == 0x20)
+        else
         {
-            ThreadPool.Schedule(stack);
+            switch (irq)
+            {
+                case 0xFD:
+                    Native.Cli();
+                    Native.Hlt();
+                    for (; ; ) Native.Hlt();
+                case 0x80:
+                    lock (null)
+                    {
+                        var pCell = (MethodFixupCell*)stack->rs.rcx;
+                        string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
+                        stack->rs.rax = (ulong)API.HandleSystemCall(name);
+                        name.Dispose();
+                    }
+                    break;
+                case 0x20:
+                    ThreadPool.Schedule(stack);
+                    break;
+
+            }
         }
 
         Interrupts.EndOfInterrupt((byte)irq);
