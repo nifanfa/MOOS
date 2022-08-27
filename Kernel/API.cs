@@ -95,7 +95,7 @@ namespace MOOS
         public static IntPtr API_CreateWindow(int X, int Y, int Width, int Height, string Title)
         {
             PortableApp papp = new PortableApp(X, Y, Width, Height);
-            papp.Title = Title;
+            papp.Title = Title + $"(CPU{SMP.ThisCPU})";
             return papp.GetHandle();
         }
 
