@@ -165,45 +165,30 @@ public static class IDT
     [RuntimeExport("irq_handler")]
     public static unsafe void IRQHandler(int irq, IDTStackGeneric* stack)
     {
-        //DEAD
-        if(irq == 0xFD) 
+        if (SMP.ThisCPU == 0) Interrupts.HandleInterrupt(irq);
+        switch (irq)
         {
-            Native.Cli();
-            Native.Hlt();
-            for (; ; ) Native.Hlt();
+            //dead
+            case 0xFD:
+                Native.Cli();
+                Native.Hlt();
+                for (; ; ) Native.Hlt();
+            case 0x20:
+                ThreadPool.Schedule(stack);
+                if (SMP.ThisCPU == 0 && stack->rs.rdx != 0x61666E6166696E)
+                    Timer.OnInterrupt();
+                break;
+            //system call
+            case 0x80:
+                lock (null)
+                {
+                    var pCell = (MethodFixupCell*)stack->rs.rcx;
+                    string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
+                    stack->rs.rax = (ulong)API.HandleSystemCall(name);
+                    name.Dispose();
+                }
+                break;
         }
-
-        //System calls
-        if (irq == 0x80)
-        {
-            lock (null)
-            {
-                var pCell = (MethodFixupCell*)stack->rs.rcx;
-                string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
-                stack->rs.rax = (ulong)API.HandleSystemCall(name);
-                name.Dispose();
-            }
-        }
-
-        //For main processor
-        if (SMP.ThisCPU == 0)
-        {
-            switch (irq)
-            {
-                case 0x20:
-                    //misc.asm Schedule_Next
-                    if (stack->rs.rdx != 0x61666E6166696E)
-                        Timer.OnInterrupt();
-                    break;
-            }
-            Interrupts.HandleInterrupt(irq);
-        }
-
-        if (irq == 0x20)
-        {
-            ThreadPool.Schedule(stack);
-        }
-
         Interrupts.EndOfInterrupt((byte)irq);
     }
 }
