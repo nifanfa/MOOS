@@ -119,7 +119,9 @@ namespace MOOS
 
         public static void API_StartThread(delegate* <void> func)
         {
-            new Thread(func).Start();
+            Random random = new Random();
+            new Thread(func).Start(random.Next(0, SMP.NumCPU - 1));
+            random.Dispose();
         }
 
         public static void API_Error(string s,bool skippable)
