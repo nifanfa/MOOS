@@ -176,10 +176,13 @@ public static class IDT
         //System calls
         if (irq == 0x80)
         {
-            var pCell = (MethodFixupCell*)stack->rs.rcx;
-            string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
-            stack->rs.rax = (ulong)API.HandleSystemCall(name);
-            name.Dispose();
+            lock (null)
+            {
+                var pCell = (MethodFixupCell*)stack->rs.rcx;
+                string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
+                stack->rs.rax = (ulong)API.HandleSystemCall(name);
+                name.Dispose();
+            }
         }
 
         //For main processor
