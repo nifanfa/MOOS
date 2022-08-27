@@ -185,11 +185,13 @@ public static class IDT
         //For main processor
         if (SMP.ThisCPU == 0)
         {
-            if(irq == 0x20)
+            switch (irq)
             {
-                //misc.asm Schedule_Next
-                if (stack->rs.rdx != 0x61666E6166696E)
-                    Timer.OnInterrupt();
+                case 0x20:
+                    //misc.asm Schedule_Next
+                    if (stack->rs.rdx != 0x61666E6166696E)
+                        Timer.OnInterrupt();
+                    break;
             }
             Interrupts.HandleInterrupt(irq);
         }
