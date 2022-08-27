@@ -176,7 +176,7 @@ public static class IDT
         //System calls
         if (irq == 0x80)
         {
-            //lock (null)
+            lock (null)
             {
                 var pCell = (MethodFixupCell*)stack->rs.rcx;
                 string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
