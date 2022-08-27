@@ -174,6 +174,8 @@ public static class IDT
                     //misc.asm Schedule_Next
                     if (stack->rs.rdx != 0x61666E6166696E)
                         Timer.OnInterrupt();
+                    else
+                        ThreadPool.Schedule(stack);
                     break;
             }
             Interrupts.HandleInterrupt(irq);
