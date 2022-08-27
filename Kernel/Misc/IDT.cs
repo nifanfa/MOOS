@@ -173,24 +173,23 @@ public static class IDT
             for (; ; ) Native.Hlt();
         }
 
+        //System calls
+        if (irq == 0x80)
+        {
+            var pCell = (MethodFixupCell*)stack->rs.rcx;
+            string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
+            stack->rs.rax = (ulong)API.HandleSystemCall(name);
+            name.Dispose();
+        }
+
         //For main processor
         if (SMP.ThisCPU == 0)
         {
-            //System calls
-            if (irq == 0x80)
+            if(irq == 0x20)
             {
-                var pCell = (MethodFixupCell*)stack->rs.rcx;
-                string name = Encoding.ASCII.GetString((byte*)pCell->Module->ModuleName);
-                stack->rs.rax = (ulong)API.HandleSystemCall(name);
-                name.Dispose();
-            }
-            switch (irq)
-            {
-                case 0x20:
-                    //misc.asm Schedule_Next
-                    if (stack->rs.rdx != 0x61666E6166696E)
-                        Timer.OnInterrupt();
-                    break;
+                //misc.asm Schedule_Next
+                if (stack->rs.rdx != 0x61666E6166696E)
+                    Timer.OnInterrupt();
             }
             Interrupts.HandleInterrupt(irq);
         }
