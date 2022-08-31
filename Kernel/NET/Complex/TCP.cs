@@ -187,7 +187,7 @@ namespace MOOS.NET
                 }
                 if (flags.HasFlag(TCPFlags.TCP_PSH))
                 {
-                    conn.RcvNxt += (uint)length;
+                    conn.RcvNxt = (uint)(hdr->Seq + length);
                     conn._OnData(buffer, length);
                     SendPacket(conn, TCPFlags.TCP_ACK);
                 }
