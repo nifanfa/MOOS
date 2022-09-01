@@ -372,7 +372,7 @@ namespace MOOS.NET
 
         public static void Close(TcpClient conn)
         {
-            SendPacket(conn, TCPFlags.TCP_FIN);
+            SendPacket(conn, TCPFlags.TCP_FIN | TCPFlags.TCP_ACK);
             conn.SndNxt++;
             conn.State = TCPStatus.FinWait1;
         }
