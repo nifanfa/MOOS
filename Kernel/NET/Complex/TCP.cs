@@ -165,6 +165,7 @@ namespace MOOS.NET
             {
                 if (flags == (TCPFlags.TCP_SYN | TCPFlags.TCP_ACK))
                 {
+                    conn.SndNxt = hdr->Ack;
                     conn.RcvNxt = hdr->Seq + 1;
 
                     SendPacket(conn, TCPFlags.TCP_ACK);
@@ -187,7 +188,7 @@ namespace MOOS.NET
                 }
                 if (flags.HasFlag(TCPFlags.TCP_PSH))
                 {
-                    conn.RcvNxt = (uint)(hdr->Seq + length);
+                    conn.RcvNxt = (uint)(hdr->Seq + length - 1);
                     conn._OnData(buffer, length);
                     SendPacket(conn, TCPFlags.TCP_ACK);
                 }
