@@ -29,18 +29,6 @@ unsafe class Program
     static Image CursorMoving;
     public static Image Wallpaper;
 
-    static bool USBMouseTest()
-    {
-        HID.GetMouseThings(HID.Mouse, out sbyte AxisX, out sbyte AxisY, out var Buttons);
-        return Buttons != MouseButtons.None;
-    }
-
-    static bool USBKeyboardTest()
-    {
-        HID.GetKeyboardThings(HID.Keyboard, out var ScanCode, out var Key);
-        return ScanCode != 0;
-    }
-
     public static FPSMeter fpsMeter;
 
     /*
@@ -56,57 +44,7 @@ unsafe class Program
     {
         Animator.Initialize();
 
-#if false
-//Warning: Initializing USB Controller will disable PS/2 emulation. as for now USB Hub driver is totally unusable. so you should disable it if your mouse or keyboard not work
-        Hub.Initialize();
-        HID.Initialize();
-        EHCI.Initialize();
-
-        if (HID.Mouse != null)
-        {
-            Console.Write("[Warning] Press please press Mouse any key to validate USB Mouse ");
-            bool res = Console.Wait(&USBMouseTest,2000);
-            Console.WriteLine();
-            if (!res) 
-            {
-                lock (null)
-                {
-                    USB.NumDevice--;
-                    HID.Mouse = null;
-                }
-            }
-        }
-
-        if (HID.Keyboard != null)
-        {
-            Console.Write("[Warning] Press please press any key to validate USB keyboard ");
-            bool res = Console.Wait(&USBKeyboardTest, 2000);
-            Console.WriteLine();
-            if (!res)
-            {
-                lock (null)
-                {
-                    USB.NumDevice--;
-                    HID.Keyboard = null;
-                }
-            }
-        }
-
-        USB.StartPolling();
-#endif
-
         fpsMeter = new FPSMeter();
-
-        //Use qemu for USB debug
-        //VMware won't connect virtual USB HIDs
-        if (HID.Mouse == null)
-        {
-            Console.WriteLine("USB Mouse not present");
-        }
-        if (HID.Keyboard == null)
-        {
-            Console.WriteLine("USB Keyboard not present");
-        }
 
         //Sized width to 512
         //https://gitlab.com/Enthymeme/hackneyed-x11-cursors/-/blob/master/theme/right-handed-white.svg
@@ -146,10 +84,10 @@ unsafe class Program
         //If you are running MOOS on VMware, please open the windows task manager to get the IP of "VMware Virtual Ethernet Adapter for VMnet8"
         //The format should be 192.168.XXX.1 which is the gateway ip. Then the first 3 parts of your ip should be the same as the gateway IP
         // The last part of the IP should be in the range 2 to 255
-        Network.Initialise(IPAddress.Parse(192, 168, 136, 189), IPAddress.Parse(192, 168, 136, 1), IPAddress.Parse(255, 255, 255, 0));
-        //TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 136, 1), 80);
-        //client.OnData += Client_OnData;
-        //client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.136.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
+        Network.Initialise(IPAddress.Parse(192, 168, 217, 189), IPAddress.Parse(192, 168, 217, 1), IPAddress.Parse(255, 255, 255, 0));
+        UdpClient client = new UdpClient(IPAddress.Parse(192,168, 217, 1), 54188);
+        client.OnData += Client_OnData;
+        client.Send(ToASCII("hello world"));
         for (; ; ) Native.Hlt();
 #endif
 

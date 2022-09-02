@@ -60,10 +60,6 @@ namespace MOOS.NET
                 {
                     UDP.HandlePacket(data, length);
                 }
-                else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
-                {
-                    TCP.HandlePacket(data, length);
-                }
             }
         }
 

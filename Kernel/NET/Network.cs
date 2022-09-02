@@ -25,7 +25,6 @@ namespace MOOS.NET
             IP = IPAddress;
             UDP.Clients = new();
             ARP.Initialise();
-            TCP.Clients = new();
 
             MAC = default;
 

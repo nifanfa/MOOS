@@ -42,9 +42,9 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 | GC | 🟨 | ⬜ | Not safe |
 | Multiprocessor | 🟩 | 🟩 |
 | Multithreading | 🟩 | 🟩 |
-| EHCI(USB2.0) | 🟩 | 🟩 |
-| USB Keyboard | 🟨 | ⬜ |
-| USB Mouse | 🟩 | ⬜ |
+| EHCI(USB2.0) | 🟥 | 🟥 |
+| USB Keyboard | 🟥 | 🟥 |
+| USB Mouse | 🟥 | 🟥 |
 | USB HUB | 🟥 | 🟥 |
 | PS2 Keyboard/Mouse(USB Compatible) | 🟩 | 🟩 |
 | Nintendo Family Computer Emulator | 🟩 | 🟩 |
@@ -60,7 +60,7 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 | ACPI | 🟩 | 🟩 |
 | IPv4 | 🟩 | 🟩 |
 | IPv6 | 🟥 | 🟥 |
-| TCP(WIP) | 🟨 | 🟥 | Network can't receive large packages  |
+| TCP(WIP) | 🟥 | 🟥 |
 | UDP | 🟩 | ⬜ |
 | Lan | 🟩 | 🟩 |
 | Wan | 🟩 | 🟩 |
