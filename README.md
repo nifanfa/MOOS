@@ -23,7 +23,7 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 ### Build requirements
 - VMware Workstation Player - https://www.vmware.com/products/workstation-player.html
 - Visual studio 2022 - https://visualstudio.microsoft.com/
-- QEMU - https://www.qemu.org/download or VMWare ( Note, USB Does not work with VMWare )
+- QEMU - https://www.qemu.org/download or VMWare ( Note - USB Does not work with VMWare and you need x64 if you want to run VMware, 32 bit is not supported )
 - Windows 10-11 x64 or x86
 - 4GB of RAM but 8GB is recommended
 
@@ -69,5 +69,5 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 | ----- | ------- |
 | 🟩 | Yes |
 | 🟥 | No |
-| 🟨 | W.I.P / Partially |
+| 🟨 | W.I.P / Partially / Buggy |
 | ⬜ | Unknown |
