@@ -25,7 +25,7 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 - Visual studio 2022 - https://visualstudio.microsoft.com/
 - QEMU - https://www.qemu.org/download or VMWare ( Note, USB Does not work with VMWare )
 - Windows 10-11 x64 or x86
-- 8GB Ram
+- 4GB of RAM but 8GB is recommended
 
 <br/>
 <hr/>
