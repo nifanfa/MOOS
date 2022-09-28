@@ -18,7 +18,7 @@
 MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT技术编译的C# 64位操作系统。
 
 ## 编译
-关于编译MOOS的信息，请阅读 [编译维基页面](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS)。
+关于编译MOOS的信息，请阅读 [编译维基页面](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS%3F)。
 
 ### 编译要求
 - VMware Workstation Player - https://www.vmware.com/products/workstation-player.html
