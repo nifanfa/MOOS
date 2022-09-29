@@ -15,7 +15,8 @@
 
 # MOOS
 
-MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT技术编译的C# 64位操作系统。
+MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT技术编译的C# 64位操作系统。  
+作者QQ: 3244735564  
 
 ## 编译
 关于编译MOOS的信息，请阅读 [编译维基页面](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS%3F)。
