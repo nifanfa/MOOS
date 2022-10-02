@@ -1,3 +1,5 @@
+//This driver is only for AHCI 1.0
+
 using MOOS.FS;
 using MOOS.Misc;
 using System;
