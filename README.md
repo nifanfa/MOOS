@@ -67,3 +67,8 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 | 🟥 | No |
 | 🟨 | W.I.P / Partially / Buggy |
 | ⬜ | Unknown |
+
+## Contact me 联系方式
+Email: nifanfa@foxmail.com (i hardly use that so it may took a few month to check your reply)  
+QQ: 3244735564  
+Discord: https://discord.gg/uJstXbx8Pt  
