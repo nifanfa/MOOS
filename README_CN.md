@@ -43,6 +43,10 @@ MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT�
 | GC | 🟨 | ⬜ | Not safe |
 | 多处理器 | 🟩 | 🟩 |
 | 多线程 | 🟩 | 🟩 |
+| EHCI (USB2.0) | 🟩 | 🟩 |
+| USB键盘 | 🟨 | ⬜ |
+| USB鼠标 | 🟩 | ⬜ |
+| USB HUB | 🟥 | 🟥 |
 | PS2 鼠标/键盘(USB 兼容) | 🟩 | 🟩 |
 | 红白机模拟器 | 🟩 | 🟩 |
 | DOOM(doomgeneric) | 🟩 | 🟩 |
@@ -57,6 +61,7 @@ MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT�
 | ACPI | 🟩 | 🟩 |
 | IPv4 | 🟩 | 🟩 |
 | IPv6 | 🟥 | 🟥 |
+| TCP(WIP) | 🟨 | 🟥 |
 | UDP | 🟩 | ⬜ |
 | Lan | 🟩 | 🟩 |
 | Wan | 🟩 | 🟩 |

@@ -15,9 +15,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\AC97.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPITimer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\EHCI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\ES1371.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Framebuffer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\HID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\HPET.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\Hub.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\IDE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Intel8254X.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\IOAPIC.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)NET\MACAddress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Misc\USB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\WAV.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\ARP.cs" />
@@ -77,6 +81,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)NET\IPv4.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\Network.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\NIC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NET\Complex\TCP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\UDP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SMP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SSE.cs" />
@@ -86,5 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)NET\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)NET\Complex\" />
   </ItemGroup>
 </Project>
