@@ -39,10 +39,10 @@ namespace Internal.Runtime.CompilerHelpers
         static void RhpPinvokeReturn(IntPtr frame) { }
 
         [DllImport("*")]
-        static unsafe extern void memset(byte* ptr, byte c, ulong count);
+        public static unsafe extern void memset(byte* ptr, byte c, ulong count);
 
         [DllImport("*")]
-        static unsafe extern void memcpy(byte* dest, byte* src, ulong count);
+        public static unsafe extern void memcpy(byte* dest, byte* src, ulong count);
 
         [RuntimeExport("RhpNewFast")]
         static unsafe object RhpNewFast(EEType* pEEType)
@@ -63,6 +63,9 @@ namespace Internal.Runtime.CompilerHelpers
 
         [DllImport("*")]
         public static extern nint malloc(ulong size);
+
+        [DllImport("*")]
+        public static extern ulong free(nint ptr);
 
         [RuntimeExport("RhpNewArray")]
         internal static unsafe object RhpNewArray(EEType* pEEType, int length)

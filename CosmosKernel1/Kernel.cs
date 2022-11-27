@@ -23,7 +23,7 @@ namespace CosmosKernel1
 {
     public class Kernel : Sys.Kernel
     {
-        static extern void Main();
+        static void Main() { }
 
         [RuntimeExport("KMain")]
         static void KMain()

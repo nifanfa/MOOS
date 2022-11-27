@@ -2,14 +2,17 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<BaseOutputPath>..\bin</BaseOutputPath>
 
 		<Optimize>true</Optimize>
+		<SelfContained>false</SelfContained>
+
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 
 		<DefineConstants>Kernel;HasGC;UseAPIC;</DefineConstants>
 
@@ -17,7 +20,7 @@
 		<EntryPointSymbol>Entry</EntryPointSymbol>
 		<LinkerSubsystem>NATIVE</LinkerSubsystem>
 		<!--Make the code faster!-->
-		<IlcOptimizationPreference>Size</IlcOptimizationPreference>
+		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
 	</PropertyGroup>
 
 	<Target Name="RenameExt" AfterTargets="CopyNativeBinary">
