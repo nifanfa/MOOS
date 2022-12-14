@@ -11,7 +11,7 @@
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 
-		<DefineConstants>Kernel;HasGC;UseAPIC;</DefineConstants>
+		<DefineConstants>Kernel;UseAPIC;</DefineConstants>
 
 		<IlcSystemModule>ConsoleOS</IlcSystemModule>
 		<EntryPointSymbol>Entry</EntryPointSymbol>
@@ -23,7 +23,7 @@
 	<!--CustomizeReferences-->
 	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="FindReferenceAssembliesForReferences">
 		<ItemGroup>
-			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
+			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" Condition="%(Filename) != 'Corlib'" />
 			<ReferencePath Remove="@(ReferencePath)" />
 		</ItemGroup>
 	</Target>
@@ -34,16 +34,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<LinkerArg Include="/fixed /base:0x10000000 /filealign:0x1000 /map:Kernel.map" />
+		<LinkerArg Include="/fixed /base:0x10000000 /map:Kernel.map" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.2.22152.2" />
 	</ItemGroup>
 
 	<Import Project="..\Kernel\Kernel.projitems" Label="Shared" />
-
-	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
 
 	<Target Name="BuildISO" AfterTargets="Publish">
 		<Delete Files="$(MSBuildStartupDirectory)\Tools\grub2\boot\ramdisk.tar"></Delete>
@@ -62,5 +60,7 @@
 
 		<Exec Command="&quot;C:\\Program Files\\qemu\\qemu-system-x86_64.exe&quot; -accel hax -m 1024 -smp 2 -k en-gb -boot d -cdrom &quot;$(MSBuildProjectDirectory)\$(NativeOutputPath)$(TargetName).iso&quot; -d guest_errors -serial stdio -device AC97 -rtc base=localtime"></Exec>
 	</Target>
-	
+
+	<Import Project="..\Corlib\Corlib.projitems" Label="Shared" />
+
 </Project>

@@ -1,4 +1,4 @@
-[![Language switcher](https://img.shields.io/badge/Language%20%2F%20%E8%AF%AD%E8%A8%80-Chinese%20%2F%20%E4%B8%AD%E5%9B%BD-yellow)](https://github.com/nifanfa/MOOS/blob/master/README.md)
+[![Language switcher](https://img.shields.io/badge/Language%20%2F%20%E8%AF%AD%E8%A8%80-Chinese%20%2F%20%E4%B8%AD%E5%9B%BD-yellow)](https://github.com/nifanfa/MOOS/blob/main/README.md)
 
 <p align="center">
     <img width=300 src="MOOS-Logo.svg"/>
@@ -15,10 +15,11 @@
 
 # MOOS
 
-MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT技术编译的C# 64位操作系统。
+MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT技术编译的C# 64位操作系统。  
+作者QQ: 3244735564  
 
 ## 编译
-关于编译MOOS的信息，请阅读 [编译维基页面](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS)。
+关于编译MOOS的信息，请阅读 [编译维基页面](https://github.com/nifanfa/MOOS/wiki/How-do-you-build-or-compile-MOOS%3F)。
 
 ### 编译要求
 - VMware Workstation Player - https://www.vmware.com/products/workstation-player.html
@@ -31,13 +32,13 @@ MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT�
 <hr/>
 <br/>
 
-![截图](Screenshot2.png)
+![截图](Screenshot3.png)
 
 ## 特色
 
 | Feature | Working in VM | Working on hardware | Information |
 | ------- | ------------- | ------------------- | ----------- |
-| 应用程序(.exe) | 🟩 | 🟩 |
+| 应用程序 .mue(MOOS用户可执行文件) | 🟩 | 🟩 |
 | 抛出/捕获错误 | 🟥 | 🟥 | 
 | GC | 🟨 | ⬜ | Not safe |
 | 多处理器 | 🟩 | 🟩 |
@@ -60,7 +61,7 @@ MOOS ( **M**y **O**wn **O**perating **S**ystem )是一个使用.NET Native AOT�
 | ACPI | 🟩 | 🟩 |
 | IPv4 | 🟩 | 🟩 |
 | IPv6 | 🟥 | 🟥 |
-| TCP(WIP) | 🟨 | 🟥 | 无法接收大包  |
+| TCP(WIP) | 🟨 | 🟥 |
 | UDP | 🟩 | ⬜ |
 | Lan | 🟩 | 🟩 |
 | Wan | 🟩 | 🟩 |

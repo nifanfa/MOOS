@@ -39,11 +39,10 @@ namespace MOOS
 
             for(int i = 0; i < NumDescriptors; i++)
             {
-                ulong ptr = (ulong)Allocator.Allocate(Audio.SampleRate*2);
+                ulong ptr = (ulong)Allocator.Allocate(Audio.SizePerPacket);
                 if (ptr > 0xFFFFFFFF) Panic.Error("Invalid buf");
                 BufferDescriptors[i].Address = (uint)ptr;
-                //48Khz dual channel
-                BufferDescriptors[i].SampleRate = Audio.SampleRate;
+                BufferDescriptors[i].Size = Audio.SizePerPacket / 2;
                 BufferDescriptors[i].Arribute = 1 << 15;
             }
 
@@ -75,13 +74,7 @@ namespace MOOS
                 Index++;
                 Index %= (byte)NumDescriptors;
 
-                if(Audio.Queue.Count > 0)
-                {
-                    byte[] buffer = Audio.Queue.Dequeue();
-                    fixed (byte* ptr = buffer)
-                        Native.Movsb((void*)BufferDescriptors[Index].Address, ptr, Audio.SampleRate * 2);
-                    buffer.Dispose();
-                }
+                Audio.require((byte*)BufferDescriptors[Index].Address);
 
                 Out8((ushort)(NABM + 0x15), Index);
             }
@@ -93,7 +86,7 @@ namespace MOOS
         struct BufferDescriptor
         {
             public uint Address;
-            public ushort SampleRate;
+            public ushort Size;
             public ushort Arribute;
         }
     }

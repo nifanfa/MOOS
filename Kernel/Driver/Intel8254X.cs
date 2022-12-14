@@ -225,7 +225,9 @@ namespace MOOS.Driver
             Console.WriteLine("[Intel8254X] Configuration Done");
 
             Network.MAC = MAC;
-            Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
+            //This may not work on vmware
+            //Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
+            Interrupts.EnableInterrupt(0x20, &OnInterrupt);
             IRQ = device.IRQ;
 
             //Literally instance

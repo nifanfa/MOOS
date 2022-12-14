@@ -127,16 +127,22 @@ namespace NES
             Program.ScreenBuf.RawData[Program.ScreenBuf.Width * y + x] = (int)color;
         }
 
+        [DllImport("SndWrite")]
+        public static extern int SndWrite(byte* buffer, int len);
+
+        [RuntimeExport("snd_write")]
+        public static int snd_write(byte* buffer, int len) => SndWrite(buffer, len);
+
         [DllImport("*")]
         public static extern void addKeyToQueue(int pressed, byte keyCode);
 
-        public static byte[] gb;
-
-        public static Image di;
         #endregion
+        public static Image aScreenBuf;
 
         public Doom(void* ptr,long length)
         {
+            aScreenBuf = new Image(320, 200);
+
             var handler = (EventHandler<ConsoleKeyInfo>)PS2Keyboard_OnKeyChanged;
 
             Program.BindOnKeyChangedHandler(handler);

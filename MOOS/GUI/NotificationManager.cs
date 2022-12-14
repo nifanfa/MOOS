@@ -61,11 +61,15 @@ namespace MOOS.GUI
             Add(new Nofity(Audio.HasAudioDevice ? "信息: 声卡可用" : "警告: 此设备上没有可用的声卡", Audio.HasAudioDevice ? NotificationLevel.None : NotificationLevel.Error));
             Add(new Nofity(HID.Mouse ? "信息: USB鼠标可用" : "警告: 此设备上没有USB鼠标", HID.Mouse ? NotificationLevel.None : NotificationLevel.Error));
             Add(new Nofity(HID.Keyboard ? "信息: USB键盘可用" : "警告: 此设备上没有USB键盘", HID.Keyboard ? NotificationLevel.None : NotificationLevel.Error));
+            if (VMwareTools.Available)
+                Add(new Nofity("VMware Tools 正在运行", NotificationLevel.None));
 #else
             Add(new Nofity("Welcome to MOOS"));
             Add(new Nofity(Audio.HasAudioDevice ? "Info: Audio controller available" : "Warn: No audio controller found on this PC", Audio.HasAudioDevice ? NotificationLevel.None : NotificationLevel.Error));
             Add(new Nofity(HID.Mouse ? "Info: USB mouse available" : "Warn: No USB mouse found on this PC", HID.Mouse ? NotificationLevel.None : NotificationLevel.Error));
             Add(new Nofity(HID.Keyboard ? "Info: USB keyboard available" : "Warn: No USB keyboard found on this PC", HID.Keyboard ? NotificationLevel.None : NotificationLevel.Error));
+            if (VMwareTools.Available)
+                Add(new Nofity("VMware Tools is working", NotificationLevel.None));
 #endif
         }
 

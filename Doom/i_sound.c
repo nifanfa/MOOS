@@ -67,6 +67,7 @@ extern sound_module_t sound_sdl_module;
 extern sound_module_t sound_pcsound_module;
 extern music_module_t music_sdl_module;
 extern music_module_t music_opl_module;
+extern sound_module_t _sound_module;
 
 // For OPL module:
 
@@ -95,6 +96,7 @@ static sound_module_t *sound_modules[] =
     &sound_sdl_module,
     &sound_pcsound_module,
 #endif
+    & _sound_module,
     NULL,
 };
 
