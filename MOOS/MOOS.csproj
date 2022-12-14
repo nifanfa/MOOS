@@ -39,7 +39,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.2.22152.2" />
+		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
 
 	<Import Project="..\Kernel\Kernel.projitems" Label="Shared" />
