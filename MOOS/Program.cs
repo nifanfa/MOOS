@@ -145,7 +145,7 @@ unsafe class Program
         Cursor = new PNG(File.ReadAllBytes("Images/Cursor.png"));
         CursorMoving = new PNG(File.ReadAllBytes("Images/Grab.png"));
         //Image from unsplash
-        Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper2.png"));
+        Wallpaper = new PNG(File.ReadAllBytes("Images/Wallpaper1.png"));
 
         BitFont.Initialize();
 
@@ -165,6 +165,7 @@ unsafe class Program
 
         Audio.Initialize();
         AC97.Initialize();
+        ES1371.Initialize();
 
         /*
         for (; ; )
@@ -230,7 +231,7 @@ unsafe class Program
         Wallpaper = wall.ResizeImage(Framebuffer.Width, Framebuffer.Height);
         wall.Dispose();
 
-        Lockscreen.Initialize();
+        //Lockscreen.Run();
 
         FConsole = new FConsole(350, 300);
         FConsole.Visible = false;

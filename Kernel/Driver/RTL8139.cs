@@ -83,6 +83,7 @@ namespace MOOS.NET
                 ushort* t = (ushort*)(RX + CurrentPointer);
                 ushort length = *(t + 1);
                 t += 2;
+                length -= 4;
 
                 Ethernet.HandlePacket((byte*)t, length);
 

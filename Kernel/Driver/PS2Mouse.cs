@@ -73,6 +73,7 @@ namespace MOOS
         public static void OnInterrupt()
         {
             byte D = In8(Data);
+            if (VMwareTools.Available) return;
 
             if (Phase == 0)
             {

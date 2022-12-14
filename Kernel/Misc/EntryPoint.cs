@@ -25,10 +25,6 @@ namespace MOOS.Misc
 
             StartupCodeHelpers.InitializeModules(Modules);
 
-#if HasGC
-            GC.AllowCollect = false;
-#endif
-
             PageTable.Initialise();
 
             ASC16.Initialise();
@@ -69,6 +65,7 @@ namespace MOOS.Misc
             Serial.Initialise();
 
             PS2Controller.Initialize();
+            VMwareTools.Initialize();
 
             SMBIOS.Initialise();
 
@@ -83,10 +80,6 @@ namespace MOOS.Misc
             Native.Movsb((byte*)SMP.Trampoline, (byte*)Trampoline, 512);
 
             SMP.Initialize((uint)SMP.Trampoline);
-
-#if HasGC
-            GC.AllowCollect = true;
-#endif
 
             //Only fixed size vhds are supported!
             Console.Write("[Initrd] Initrd: 0x");

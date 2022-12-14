@@ -124,7 +124,7 @@ namespace MOOS.GUI
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, IamgeIcon);
                 }
-                else if (names[i].Name == "DOOM1.WAD")
+                else if (names[i].Name == "DoomPortable.mue")
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, DoomIcon);
                 }
@@ -132,7 +132,7 @@ namespace MOOS.GUI
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, GameIcon);
                 }
-                else if(names[i].Name.EndsWith(".exe"))
+                else if(names[i].Name.EndsWith(".mue"))
                 {
                     Framebuffer.Graphics.DrawImage(X, Y, AppIcon);
                 }
@@ -219,7 +219,7 @@ namespace MOOS.GUI
 
         private static void DrawTaskBar()
         {
-            Framebuffer.Graphics.FillRectangle(0, Framebuffer.Height - BarHeight, Framebuffer.Width, BarHeight, 0xFF222222);
+            Framebuffer.Graphics.AFillRectangle(0, Framebuffer.Height - BarHeight, Framebuffer.Width, BarHeight, 0xDD222222);
             Framebuffer.Graphics.DrawImage(12, Framebuffer.Height - BarHeight + 4, StartIcon);
 
 #if Chinese
@@ -298,37 +298,10 @@ namespace MOOS.GUI
                 WindowManager.MoveToEnd(imageViewer);
                 imageViewer.Visible = true;
             }
-            else if (name == "DOOM1.WAD")
-            {
-                new Doom(300, 250);
-            }
-            else if (name.EndsWith(".exe"))
+            else if (name.EndsWith(".mue"))
             {
                 byte[] buffer = File.ReadAllBytes(path);
                 Process.Start(buffer);
-            }
-            else if (name.EndsWith(".wav"))
-            {
-                if (Audio.HasAudioDevice)
-                {
-                    byte[] buffer = File.ReadAllBytes(path);
-                    WAV.Decode(buffer, out var pcm);
-                    Audio.Play(pcm);
-                    pcm.Dispose();
-                    buffer.Dispose();
-                }
-                else
-                {
-                    msgbox.X = itemX + 75;
-                    msgbox.Y = itemY + 75;
-#if Chinese
-                msgbox.SetText("声卡不可用!");
-#else
-                    msgbox.SetText("Audio controller is unavailable!");
-#endif
-                    WindowManager.MoveToEnd(msgbox);
-                    msgbox.Visible = true;
-                }
             }
 #if Chinese
             else if (name == "计算器")

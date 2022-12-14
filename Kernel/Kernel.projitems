@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\ACPITimer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\EHCI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\ES1371.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Framebuffer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\HID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\HPET.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\SMBIOS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Timer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\VMWareSVGAII.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Driver\VMwareTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\Disk.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\FAT32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FS\FATFS.cs" />
@@ -59,7 +61,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\CPUID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\EntryPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\FPSMeter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Misc\GC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\GDT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\IDT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\IFont.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PageTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\MACAddress.cs" />
-    <Compile Include="..\Kernel\Misc\SectionHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\USB.cs" />

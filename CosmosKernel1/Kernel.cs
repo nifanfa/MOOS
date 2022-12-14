@@ -88,8 +88,7 @@ namespace CosmosKernel1
             screenHeight = (uint)vMWareSVGAII.Height;
 
             //Who ever need .bmp
-            //bootBitmap = new Bitmap(File.ReadAllBytes("boot.png"));
-            bootBitmap = new PNG(File.ReadAllBytes("boot.png"));
+            bootBitmap = new PNG(File.ReadAllBytes("CGS/boot.png"));
             bootBitmap = bootBitmap.ResizeImage((int)screenWidth, (int)screenHeight);
 
             vMWareSVGAII.Clear(0x0);
@@ -99,11 +98,10 @@ namespace CosmosKernel1
             Timer.Sleep(1000);
 
             //Who ever need .bmp
-            //bitmap = new Bitmap(File.ReadAllBytes("timg.png"));
-            bitmap = new PNG(File.ReadAllBytes("timg.png"));
+            bitmap = new PNG(File.ReadAllBytes("CGS/timg.png"));
             bitmap = bitmap.ResizeImage((int)screenWidth, (int)screenHeight);
 
-            programlogo = new Bitmap(File.ReadAllBytes("program.bmp"));
+            programlogo = new Bitmap(File.ReadAllBytes("CGS/program.bmp"));
 
             uint r = 0;
             uint g = 0;

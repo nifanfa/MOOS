@@ -36,6 +36,7 @@
     <MASM Include="interrupts_asm.asm" />
     <MASM Include="mathf.asm" />
     <MASM Include="misc.asm" />
+    <MASM Include="vmware.asm" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="diskio.h" />

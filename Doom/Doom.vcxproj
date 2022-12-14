@@ -61,6 +61,7 @@
     <ClCompile Include="m_menu.c" />
     <ClCompile Include="m_misc.c" />
     <ClCompile Include="m_random.c" />
+    <ClCompile Include="m_sound.c" />
     <ClCompile Include="p_ceilng.c" />
     <ClCompile Include="p_doors.c" />
     <ClCompile Include="p_enemy.c" />

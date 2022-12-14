@@ -12,7 +12,7 @@ namespace MOOS.GUI
         static IFont lsfont;
         static string[] mon;
 
-        public static void Initialize()
+        public static void Run()
         {
             mon = new string[12]
             {

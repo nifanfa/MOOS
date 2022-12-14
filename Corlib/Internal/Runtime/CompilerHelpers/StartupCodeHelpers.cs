@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Internal.Runtime.CompilerHelpers
 {
-    unsafe class StartupCodeHelpers
+    public unsafe class StartupCodeHelpers
     {
         [RuntimeExport("__imp_GetCurrentThreadId")]
         public static int __imp_GetCurrentThreadId() => 0;
