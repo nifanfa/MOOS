@@ -23,7 +23,7 @@ namespace MOOS.Misc
             public uint Subchunk2Size;
         }
 
-        public static void Decode(byte[] WAV, out byte[] PCM)
+        public static void Decode(byte[] WAV, out byte[] PCM,out Header header)
         {
             fixed (byte* PWAV = WAV)
             {
@@ -32,6 +32,7 @@ namespace MOOS.Misc
                 if(hdr->AudioFormat != 1) 
                 {
                     PCM = null;
+                    header = default;
                     return;
                 }
                 PCM = new byte[hdr->Subchunk2Size];
@@ -39,6 +40,7 @@ namespace MOOS.Misc
                 {
                     Native.Movsb(PPCM, PWAV + sizeof(Header), (ulong)PCM.Length);
                 }
+                header = *hdr;
             }
         }
     }

@@ -25,6 +25,7 @@ namespace MOOS.GUI
         public static string Dir;
         public static ImageViewer imageViewer;
         public static MessageBox msgbox;
+        public static WAVPlayer wavplayer;
 
         public static bool IsAtRoot 
         {
@@ -52,10 +53,12 @@ namespace MOOS.GUI
 
             imageViewer = new ImageViewer(400,400);
             msgbox = new MessageBox(100,300);
+            wavplayer = new WAVPlayer(450, 200);
             imageViewer.Visible = false;
             msgbox.Visible = false;
-            WindowManager.Windows.Add(msgbox);
-            WindowManager.Windows.Add(imageViewer);
+            wavplayer.Visible = false;
+            //WindowManager.Windows.Add(msgbox);
+            //WindowManager.Windows.Add(imageViewer);
 
             BuiltInAppNames = new string[]
             {
@@ -302,6 +305,27 @@ namespace MOOS.GUI
             {
                 byte[] buffer = File.ReadAllBytes(path);
                 Process.Start(buffer);
+            }
+            else if (name.EndsWith(".wav"))
+            {
+                if (Audio.HasAudioDevice)
+                {
+                    wavplayer.Visible = true;
+                    byte[] buffer = File.ReadAllBytes(path);
+                    wavplayer.Play(buffer);
+                }
+                else
+                {
+                    msgbox.X = itemX + 75;
+                    msgbox.Y = itemY + 75;
+#if Chinese
+                msgbox.SetText("声卡不可用!");
+#else
+                    msgbox.SetText("Audio controller is unavailable!");
+#endif
+                    WindowManager.MoveToEnd(msgbox);
+                    msgbox.Visible = true;
+                }
             }
 #if Chinese
             else if (name == "计算器")
