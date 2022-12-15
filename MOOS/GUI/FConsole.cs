@@ -37,7 +37,7 @@ namespace MOOS.GUI
 
         private void PS2Keyboard_OnKeyChanged(object sender, System.ConsoleKeyInfo key)
         {
-            if (key.KeyState == System.ConsoleKeyState.Pressed)
+            if (key.KeyState == System.ConsoleKeyState.Pressed && Program.FConsole.Visible)
             {
                 if (key.Key == System.ConsoleKey.Backspace)
                 {
