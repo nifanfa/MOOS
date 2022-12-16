@@ -312,7 +312,12 @@ namespace MOOS.GUI
                 {
                     wavplayer.Visible = true;
                     byte[] buffer = File.ReadAllBytes(path);
-                    wavplayer.Play(buffer);
+                    unsafe
+                    {
+                        //name will be disposed after this loop so create a new one
+                        fixed (char* ptr = name)
+                            wavplayer.Play(buffer, new string(ptr));
+                    }
                 }
                 else
                 {
