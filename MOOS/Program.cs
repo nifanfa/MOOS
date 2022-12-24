@@ -241,7 +241,7 @@ unsafe class Program
         rightmenu = new RightMenu();
         rightClicked = false;
 
-#region Animation of entering Desktop
+        #region Animation of entering Desktop
         Framebuffer.Graphics.DrawImage((Framebuffer.Width / 2) - (Wallpaper.Width / 2), (Framebuffer.Height / 2) - (Wallpaper.Height / 2), Wallpaper, false);
         Desktop.Update();
         WindowManager.DrawAll();
@@ -249,40 +249,50 @@ unsafe class Program
         Image _screen = Framebuffer.Graphics.Save();
         Framebuffer.Graphics.Clear(0x0);
 
+        int startAt = 20;
+
         var SizedScreens = new Image[60];
-        int startat = 40;
-        for (int i = startat; i < SizedScreens.Length; i++)
+        for (int i = 0; i < SizedScreens.Length; i++)
         {
+            if (i < startAt) continue;
+
             SizedScreens[i] = _screen.ResizeImage(
-                (int)(_screen.Width * (i / ((float)SizedScreens.Length))),
-                (int)(_screen.Height * (i / ((float)SizedScreens.Length)))
+                //(int)(_screen.Width * (i / ((float)SizedScreens.Length))),
+                (int)(_screen.Width * (Math.Sin(Math.PI * 90 / 180 * (i / ((float)SizedScreens.Length))))),
+                //(int)(_screen.Height * (i / ((float)SizedScreens.Length)))
+                (int)(_screen.Height * (Math.Sin(Math.PI * 90 / 180 * (i / ((float)SizedScreens.Length)))))
                 );
         }
 
-        Animation ani = new Animation()
+        Animation EA = new Animation()
         {
-            Value = startat + 1,
-            MinimumValue = startat + 1,
+            MinimumValue = 0,
             MaximumValue = SizedScreens.Length - 1,
-            ValueChangesInPeriod = 1,
-            PeriodInMS = 16
+            PeriodInMS = 17,
         };
-        Animator.AddAnimation(ani);
-        while(ani.Value < SizedScreens.Length - 1)
+        Animator.AddAnimation(EA);
+
+        while (EA.Value < EA.MaximumValue)
         {
-            int i = ani.Value;
-            Image img = SizedScreens[i];
+            if (EA.Value < startAt) continue;
+
+            var img = SizedScreens[EA.Value];
             Framebuffer.Graphics.Clear(0x0);
             Framebuffer.Graphics.ADrawImage(
                 (Framebuffer.Graphics.Width / 2) - (img.Width / 2),
                 (Framebuffer.Graphics.Height / 2) - (img.Height / 2),
-                img, (byte)(255 * (i / (float)(SizedScreens.Length - startat))));
+                img,
+                (byte)(((EA.Value - startAt) / (float)(EA.MaximumValue - startAt)) * 255f));
             Framebuffer.Update();
         }
-        Animator.DisposeAnimation(ani);
+        EA.Dispose();
+        Animator.DisposeAnimation(EA);
 
-        _screen.Dispose();
-        for (int i = 0; i < SizedScreens.Length; i++) SizedScreens[i]?.Dispose();
+        for (int i = 0; i < SizedScreens.Length; i++)
+        {
+            if (i < startAt) continue;
+            SizedScreens[i].Dispose();
+        }
         SizedScreens.Dispose();
         #endregion
 
