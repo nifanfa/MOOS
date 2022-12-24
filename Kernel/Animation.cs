@@ -51,6 +51,7 @@ namespace MOOS
                 Animation v = Animations[i];
                 if(!v.Stopped)
                 {
+                    if (v.PeriodInMS == 0) continue;
                     if((Timer.Ticks % (ulong)v.PeriodInMS) == 0)
                     {
                         v.Value = Math.Clamp(v.Value + v.ValueChangesInPeriod, v.MinimumValue, v.MaximumValue);
