@@ -175,13 +175,7 @@ unsafe class Program
         */
 
 #if NETWORK
-        //Install openVPN's windows tap driver
-        //You can download it here: http://swupdate.openvpn.org/community/releases/openvpn-2.2.2-install.exe
-        //rename the network adapter to tap in control panel
-        //right click your network connection device. then share the network with tap 
-        //Select "QEMU with network" from dropdown menu
-        //add "#define NETWORK" to the start of this file
-        //Run
+        //Replace all 137 to the third IP part to the IP Address of "VMware Virtual Ethernet Adapter for VMnet8"'s
         Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
         //Make sure this IP is pointing your gateway
         TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 137, 1), 80);
