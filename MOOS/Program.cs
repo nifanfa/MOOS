@@ -266,9 +266,10 @@ unsafe class Program
         };
         Animator.AddAnimation(EA);
 
+        int last = -1;
         while (EA.Value < EA.MaximumValue)
         {
-            if (EA.Value < startAt) continue;
+            if (EA.Value < startAt || last == EA.Value) continue;
 
             var img = SizedScreens[EA.Value];
             Framebuffer.Graphics.Clear(0x0);
@@ -278,6 +279,7 @@ unsafe class Program
                 img,
                 (byte)(((EA.Value - startAt) / (float)(EA.MaximumValue - startAt)) * 255f));
             Framebuffer.Update();
+            last = EA.Value;
         }
         EA.Dispose();
         Animator.DisposeAnimation(EA);
