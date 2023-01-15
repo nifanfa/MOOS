@@ -175,13 +175,17 @@ unsafe class Program
         */
 
 #if NETWORK
-        //Replace all 137 to the third IP part to the IP Address of "VMware Virtual Ethernet Adapter for VMnet8"'s
-        Network.Initialise(IPAddress.Parse(192, 168, 137, 188), IPAddress.Parse(192, 168, 137, 1), IPAddress.Parse(255, 255, 255, 0));
+        //Replace all 137 to the third IP part to the IP Address of "VMware Virtual Ethernet Adapter for VMnet1"'s
+        Network.Initialise(IPAddress.Parse(192, 168, 81, 188), IPAddress.Parse(192, 168, 81, 1), IPAddress.Parse(255, 255, 255, 0));
         //Make sure this IP is pointing your gateway
-        TcpClient client = TcpClient.Connect(IPAddress.Parse(192,168, 137, 1), 80);
+        TcpClient client = TcpClient.Connect(IPAddress.Parse(192, 168, 81, 1), 54188);
         client.OnData += Client_OnData;
-        client.Send(ToASCII("GET / HTTP/1.1\r\nHost: 192.168.137.1\r\nUser-Agent: Mozilla/4.0 (compatible; MOOS Operating System)\r\n\r\n"));
-        for (; ; ) Native.Hlt();
+        client.Send(ToASCII("Hello From MOOS"));
+        for (; ; )
+        {
+            string s = Console.ReadLine();
+            client.Send(ToASCII(s));
+        }
 #endif
 
         SMain();

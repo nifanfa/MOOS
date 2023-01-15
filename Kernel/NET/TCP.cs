@@ -135,12 +135,11 @@ namespace MOOS.NET
 
         public static List<TcpClient> Clients;
 
-        internal static void HandlePacket(byte* buffer, int length)
+        internal static void HandlePacket(byte* buffer, IPv4.IPv4Header* ipv4_hdr)
         {
             TCPHeader* hdr = (TCPHeader*)buffer;
             buffer += hdr->Off >> 2;
-            length -= hdr->Off >> 2;
-            length -= 4;
+            int length = ipv4_hdr->TotalLength - sizeof(IPv4.IPv4Header) - (hdr->Off >> 2);
 
             Ethernet.SwapLeftRight(ref hdr->SourcePort);
             Ethernet.SwapLeftRight(ref hdr->DestPort);
@@ -328,7 +327,7 @@ namespace MOOS.NET
             hdr->DestPort = Ethernet.SwapLeftRight(conn.RemotePort);
             hdr->Seq = Ethernet.SwapLeftRight32(seq);
             hdr->Ack = Ethernet.SwapLeftRight32(((flags & (byte)TCPFlags.TCP_ACK) != 0) ? conn.RcvNxt : 0);
-            hdr->WindowSize = Ethernet.SwapLeftRight(TCP_WINDOW_SIZE);
+            hdr->WindowSize = Ethernet.SwapLeftRight(conn.SndWnd);
             hdr->Checksum = Ethernet.SwapLeftRight(0);
             hdr->Urgent = Ethernet.SwapLeftRight(0);
 
@@ -363,6 +362,8 @@ namespace MOOS.NET
             phdr->Source = conn.LocalAddr.AddressV4;
             phdr->Dest = conn.RemoteAddr.AddressV4;
 
+            phdr->Bits1 = 0;
+            phdr->Bits2 = 0;
             phdr->Reserved = 0;
             phdr->Protocol = (byte)IPv4.IPv4Protocol.TCP;
             phdr->Length = Ethernet.SwapLeftRight((ushort)((uint)end - (uint)buffer));

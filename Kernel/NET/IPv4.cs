@@ -35,6 +35,8 @@ namespace MOOS.NET
             data += sizeof(IPv4Header);
             length -= sizeof(IPv4Header);
 
+            Ethernet.SwapLeftRight(ref hdr->TotalLength);
+
             if (
                 hdr->DestIP == Network.IP.AddressV4
                 )
@@ -62,7 +64,7 @@ namespace MOOS.NET
                 }
                 else if (hdr->Protocol == (byte)IPv4Protocol.TCP)
                 {
-                    TCP.HandlePacket(data, length);
+                    TCP.HandlePacket(data, hdr);
                 }
             }
         }
