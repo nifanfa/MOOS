@@ -177,15 +177,7 @@ unsafe class Program
 #if NETWORK
         //Replace all 137 to the third IP part to the IP Address of "VMware Virtual Ethernet Adapter for VMnet1"'s
         Network.Initialise(IPAddress.Parse(192, 168, 81, 188), IPAddress.Parse(192, 168, 81, 1), IPAddress.Parse(255, 255, 255, 0));
-        //Make sure this IP is pointing your gateway
-        TcpClient client = TcpClient.Connect(IPAddress.Parse(192, 168, 81, 1), 54188);
-        client.OnData += Client_OnData;
-        client.Send(ToASCII("Hello From MOOS"));
-        for (; ; )
-        {
-            string s = Console.ReadLine();
-            client.Send(ToASCII(s));
-        }
+        //Now do something...
 #endif
 
         SMain();

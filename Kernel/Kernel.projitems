@@ -81,7 +81,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)NET\IPv4.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\Network.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\NIC.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\TCP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NET\UDP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SMP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SSE.cs" />
