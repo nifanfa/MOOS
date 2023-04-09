@@ -25,7 +25,7 @@
 	</Target>
 
 	<Target Name="HandleBuild" AfterTargets="AfterBuild" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
-		<Exec Command="dotnet publish -r win-x64"></Exec>
+		<Exec Command="dotnet publish -r win-x64 -p:EmitLegacyAssetsFileItems=true"></Exec>
 	</Target>
 
 	<ItemGroup>

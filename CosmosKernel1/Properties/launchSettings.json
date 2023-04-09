@@ -3,7 +3,7 @@
     "QEMU": {
       "commandName": "Executable",
       "executablePath": "cmd.exe",
-      "commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug CosmosKernel1",
+      "commandLineArgs": "/c dotnet publish -p:vm=qemu -r win-x64 -c debug CosmosKernel1 -p:EmitLegacyAssetsFileItems=true",
       "workingDirectory": "..\\"
     }
   }
