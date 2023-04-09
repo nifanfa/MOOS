@@ -41,6 +41,7 @@
 		</ItemGroup>
 	</Target>
 
+	<!--Warning: This package is modified(/packages). Using official one may cause it fail to compile!-->
 	<ItemGroup>
 		<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
 	</ItemGroup>
