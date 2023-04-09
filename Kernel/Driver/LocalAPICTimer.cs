@@ -23,7 +23,7 @@ namespace MOOS.Driver
             uint T0 = 0xFFFFFFFF;
             LocalAPIC.WriteRegister(0x380, T0);
             //0.1 second
-            ACPITimer.Sleep(100000);
+            ACPITimer.SleepMicroseconds(100000);
             LocalAPIC.WriteRegister(0x320, 0x10000);
             ulong Freq = (T0 - Ticks) * 16;
             Freq = Freq * 1000000 / 100000;

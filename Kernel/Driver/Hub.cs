@@ -48,7 +48,7 @@ namespace MOOS.Driver
                 req->Index = ((ushort)(i + 1));
                 req->Length = 0;
                 b = USB.SendAndReceive(device, req, null, null);
-                ACPITimer.Sleep(100000);
+                ACPITimer.SleepMicroseconds(100000);
 
 
                 (*req).Clean();
@@ -58,7 +58,7 @@ namespace MOOS.Driver
                 req->Index = ((ushort)(i + 1));
                 req->Length = 0;
                 b= USB.SendAndReceive(device, req, null, null);
-                ACPITimer.Sleep(100000);
+                ACPITimer.SleepMicroseconds(100000);
 
                 uint status = 0;
                 for(int k = 0; k < 8; k++) 
@@ -77,7 +77,7 @@ namespace MOOS.Driver
                     }
 
                     if (status != 0) break;
-                    ACPITimer.Sleep(100000);
+                    ACPITimer.SleepMicroseconds(100000);
                 }
 
                 int speed = (int)((status & ((3 << 9))) >> 9);

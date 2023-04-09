@@ -181,6 +181,18 @@ abstract unsafe class Allocator
         return newptr;
     }
 
+    public static T* ClearAllocate<T>(int num) where T : struct
+    {
+        return (T*)ClearAllocate(num, sizeof(T));
+    }
+
+    public static IntPtr ClearAllocate(int num, int size)
+    {
+        IntPtr ptr = Allocate((ulong)(num * size));
+        ZeroFill(ptr, (ulong)(num * size));
+        return ptr;
+    }
+
     internal static unsafe void MemoryCopy(IntPtr dst, IntPtr src, ulong size)
     {
         Native.Movsb((void*)dst, (void*)src, size);

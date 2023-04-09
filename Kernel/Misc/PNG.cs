@@ -1,4 +1,4 @@
-using MOOS.NET;
+using MOOS;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
@@ -31,7 +31,7 @@ namespace MOOS.Misc
                         {
                             for (int y = 0; y < h; y++)
                             {
-                                RawData[y * w + x] = (int)((_out[y * w + x] & 0xFF000000) | (Ethernet.SwapLeftRight32(_out[y * w + x] & 0x00FFFFFF)) >> 8);
+                                RawData[y * w + x] = (int)((_out[y * w + x] & 0xFF000000) | (NETv4.SwapLeftRight(_out[y * w + x] & 0x00FFFFFF)) >> 8);
                             }
                         }
                     }

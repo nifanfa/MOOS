@@ -9,14 +9,14 @@ namespace System.Collections.Generic
             list = new List<T>(initsize);
         }
 
-        public T Tail 
+        public T Tail
         {
-            get 
+            get
             {
                 if (Count == 0) return default;
-                else 
+                else
                 {
-                    return list[list.Count - 1];
+                    return list[Count - 1];
                 }
             }
         }
@@ -33,8 +33,11 @@ namespace System.Collections.Generic
             }
         }
 
-        public int Count => list.Count;
-
+        public int Count
+        {
+            get => list.Count;
+            set => list.Count = value;
+        }
 
         public void Enqueue(T item)
         {
@@ -43,10 +46,15 @@ namespace System.Collections.Generic
 
         public T Dequeue()
         {
-            if (list.Count == 0) return default;
+            if (Count == 0) return default;
 
-            list.Count--;
-            return list[list.Count];
+            T res = list[0];
+            for (int i = 1; i < Count; i++)
+            {
+                list[i - 1] = list[i];
+            }
+            Count--;
+            return res;
         }
     }
 }

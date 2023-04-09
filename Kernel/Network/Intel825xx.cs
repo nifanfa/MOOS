@@ -1,47 +1,27 @@
 //Reference: https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
 
-using MOOS.Misc;
-using MOOS.NET;
-using System;
-using System.Runtime.InteropServices;
 using static MOOS.Misc.MMIO;
+using System.Runtime.InteropServices;
+using System;
+using static MOOS.NETv4;
+using static MOOS.Misc.Interrupts;
+using MOOS.Misc;
+using MOOS.Driver;
 
-namespace MOOS.Driver
+namespace MOOS
 {
-    public unsafe class Intel8254X : NIC
+    internal unsafe class Intel825xx
     {
-        public static uint BAR0;
-        public static uint RXDescs;
-        public static uint TXDescs;
-        public static MACAddress MAC;
-        public static int IRQ;
+        public static uint IOBase;
 
-        public static bool FullDuplex
-        {
-            get
-            {
-                return (ReadRegister(8) & (1 << 0)) != 0;
-            }
-        }
-        public static int Speed
-        {
-            get
-            {
-                if ((ReadRegister(8) & (3 << 6)) == 0)
-                {
-                    return 10;
-                }
-                if ((ReadRegister(8) & (2 << 6)) != 0)
-                {
-                    return 1000;
-                }
-                if ((ReadRegister(8) & (1 << 6)) != 0)
-                {
-                    return 100;
-                }
-                return 0;
-            }
-        }
+        public static RXDescriptor* RXDescs;
+        public static TXDescriptor* TXDescs;
+
+        public static uint RXCurrentIndex = 0;
+        public static uint TXCurrentIndex = 0;
+
+        const int NumRX = 32;
+        const int NumTX = 32;
 
         public static void Initialize()
         {
@@ -156,12 +136,12 @@ namespace MOOS.Driver
 
             if (device == null) return;
 
-            Console.WriteLine("[Intel8254X] Intel 8254X Series Gigabit Ethernet Controller Found");
+            RXCurrentIndex = 0;
+            TXCurrentIndex = 0;
+
             device.WriteRegister(0x04, 0x04 | 0x02 | 0x01);
 
-            BAR0 = (uint)(device.Bar0 & (~0xF));
-            Console.Write("[Intel8254X] BAR0: 0x");
-            Console.WriteLine(((ulong)BAR0).ToStringHex());
+            IOBase = (uint)(device.Bar0 & (~0xF));
 
             Reset();
 
@@ -176,22 +156,21 @@ namespace MOOS.Driver
                 }
             }
 
-            //Must be set
             if (!HasEEPROM)
             {
-                MAC = new MACAddress(
-                    In8((byte*)(BAR0 + 0x5400)),
-                    In8((byte*)(BAR0 + 0x5401)),
-                    In8((byte*)(BAR0 + 0x5402)),
-                    In8((byte*)(BAR0 + 0x5403)),
-                    In8((byte*)(BAR0 + 0x5404)),
-                    In8((byte*)(BAR0 + 0x5405))
+                NETv4.MAC = new MACAddress(
+                    In8((byte*)(IOBase + 0x5400)),
+                    In8((byte*)(IOBase + 0x5401)),
+                    In8((byte*)(IOBase + 0x5402)),
+                    In8((byte*)(IOBase + 0x5403)),
+                    In8((byte*)(IOBase + 0x5404)),
+                    In8((byte*)(IOBase + 0x5405))
                     );
-                Console.WriteLine("[Intel8254X] This controller has no EEPROM");
+                Console.Write("[Intel825xx] This controller has no EEPROM\n");
             }
             else
             {
-                MAC = new MACAddress(
+                NETv4.MAC = new MACAddress(
                     (byte)(ReadROM(0) & 0xFF),
                     (byte)(ReadROM(0) >> 8),
                     (byte)(ReadROM(1) & 0xFF),
@@ -199,89 +178,64 @@ namespace MOOS.Driver
                     (byte)(ReadROM(2) & 0xFF),
                     (byte)(ReadROM(2) >> 8)
                 );
-                Console.WriteLine("[Intel8254X] EEPROM on this controller");
+                Console.Write("[Intel825xx] EEPROM on this controller\n");
             }
-
-            Console.WriteLine($"[Intel8254X] MAC: {MAC}");
 
             Linkup();
             for (int i = 0; i < 0x80; i++)
                 WriteRegister((ushort)(0x5200 + i * 4), 0);
 
-            Console.Write("[Intel8254X] IRQ: ");
-            Console.WriteLine(((ulong)device.IRQ).ToString("x2"));
-
-            RXInitialize();
-            TXInitialize();
+            RXsetup();
+            TXsetup();
 
             WriteRegister(0x00D0, 0x1F6DC);
             ReadRegister(0xC0);
 
-            Console.Write("[Intel8254X] Speed: ");
-            Console.Write(((ulong)Speed).ToString());
-            Console.Write(' ');
-            Console.Write("FullDuplex: ");
-            Console.WriteLine(FullDuplex?"Yes":"No");
-            Console.WriteLine("[Intel8254X] Configuration Done");
-
-            Network.MAC = MAC;
-            //This may not work on vmware
-            //Interrupts.EnableInterrupt(device.IRQ, &OnInterrupt);
+            Console.Write("[Intel825xx] Configuration Done \n");
+            
+            //Bug. IRQ of device doesn't work
             Interrupts.EnableInterrupt(0x20, &OnInterrupt);
-            IRQ = device.IRQ;
 
-            //Literally instance
-            Network.Controller = new Intel8254X();
+            NETv4.Sender = &Send;
         }
 
         public static void Reset()
         {
-            Console.Write("[Intel8254X] Reseting controller...");
+            Console.Write("[Intel825xx] Reseting controller...\n");
 
             WriteRegister(0, 1 << 26);
             while (BitHelpers.IsBitSet(ReadRegister(0), 26)) ;
         }
 
-        private static void TXInitialize()
+        private static void TXsetup()
         {
-            TXDescs = (uint)Allocator.Allocate(8 * 16);
+            TXDescs = Allocator.ClearAllocate<TXDescriptor>(NumTX);
 
-            for (int i = 0; i < 8; i++)
-            {
-                TXDesc* desc = (TXDesc*)(TXDescs + (i * 16));
-                desc->addr = (ulong)Allocator.Allocate(65536);
-                desc->cmd = 0;
-            }
-
-            WriteRegister(0x3800, TXDescs);
-            WriteRegister(0x3804, 0);
-            WriteRegister(0x3808, 8 * 16);
+            WriteRegister(0x3800, (uint)(ulong)TXDescs);
+            WriteRegister(0x3804, (uint)(((ulong)TXDescs) >> 32));
+            WriteRegister(0x3808, (uint)(NumTX * sizeof(TXDescriptor)));
             WriteRegister(0x3810, 0);
             WriteRegister(0x3818, 0);
 
             WriteRegister(0x0400, (1 << 1) | (1 << 3));
         }
 
-        public static uint RXCurr = 0;
-        public static uint TXCurr = 0;
-
-        private static void RXInitialize()
+        private static void RXsetup()
         {
-            RXDescs = (uint)Allocator.Allocate(32 * 16);
+            RXDescs = Allocator.ClearAllocate<RXDescriptor>(NumRX);
 
-            for (uint i = 0; i < 32; i++)
+            for (uint i = 0; i < NumRX; i++)
             {
-                RXDesc* desc = (RXDesc*)(RXDescs + (i * 16));
+                RXDescriptor* desc = &RXDescs[i];
                 desc->addr = (ulong)(void*)Allocator.Allocate(2048 + 16);
-                desc->status = 0;
             }
 
-            WriteRegister(0x2800, RXDescs);
-            WriteRegister(0x2804, 0);
+            WriteRegister(0x2800, (uint)(ulong)RXDescs);
+            WriteRegister(0x2804, (uint)(((ulong)RXDescs) >> 32));
 
-            WriteRegister(0x2808, 32 * 16);
+            WriteRegister(0x2808, (uint)(NumRX * sizeof(RXDescriptor)));
             WriteRegister(0x2810, 0);
-            WriteRegister(0x2818, 32 - 1);
+            WriteRegister(0x2818, NumRX - 1);
 
             WriteRegister(0x0100,
                      (1 << 1) |
@@ -297,7 +251,7 @@ namespace MOOS.Driver
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct RXDesc
+        public struct RXDescriptor
         {
             public ulong addr;
             public ushort length;
@@ -308,7 +262,7 @@ namespace MOOS.Driver
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct TXDesc
+        public struct TXDescriptor
         {
             public ulong addr;
             public ushort length;
@@ -321,12 +275,12 @@ namespace MOOS.Driver
 
         public static void WriteRegister(ushort Reg, uint Val)
         {
-            Out32((uint*)(BAR0 + Reg), Val);
+            Out32((uint*)(IOBase + Reg), Val);
         }
 
         public static uint ReadRegister(ushort Reg)
         {
-            return In32((uint*)(BAR0 + Reg));
+            return In32((uint*)(IOBase + Reg));
         }
 
         public static ushort ReadROM(uint Addr)
@@ -343,25 +297,18 @@ namespace MOOS.Driver
 
             if ((Status & 0x04) != 0)
             {
-                //Console.WriteLine("[Intel8254X] Linking Up");
                 Linkup();
-            }
-            if ((Status & 0x10) != 0)
-            {
-                //Console.WriteLine("[Intel8254X] Good Threshold");
             }
 
             if ((Status & 0x80) != 0)
             {
-                //Console.WriteLine("[Intel8254X] Packet Received");
-                uint _RXCurr = RXCurr;
-                RXDesc* desc = (RXDesc*)(RXDescs + (RXCurr * 16));
+                uint _RXCurr = RXCurrentIndex;
+                RXDescriptor* desc = &RXDescs[RXCurrentIndex];
                 while ((desc->status & 0x1) != 0)
                 {
-                    Ethernet.HandlePacket((byte*)desc->addr, desc->length);
-                    //desc->addr;
+                    NETv4.OnData((byte*)desc->addr);
                     desc->status = 0;
-                    RXCurr = (RXCurr + 1) % 32;
+                    RXCurrentIndex = (RXCurrentIndex + 1) % NumRX;
                     WriteRegister(0x2818, _RXCurr);
                 }
             }
@@ -371,23 +318,25 @@ namespace MOOS.Driver
         {
             WriteRegister(0, ReadRegister(0) | 0x40);
 
-            Console.Write("[Intel8254X] Waiting for network connection ");
-            Console.Wait((uint*)(BAR0 + 0x08), 1);
-            Console.WriteLine();
+            Console.Write("[Intel825xx] Waiting for network connection \n");
+            while (!BitHelpers.IsBitSet(*(uint*)(IOBase + 0x08), 1)) ;
         }
 
-        public override void Send(byte* Buffer, int Length)
+        public static void Send(byte* Buffer, int Length)
         {
-            TXDesc* desc = (TXDesc*)(TXDescs + (TXCurr * 16));
-            Native.Movsb((void*)desc->addr, Buffer, (ulong)Length);
+            TXDescriptor* desc = &TXDescs[TXCurrentIndex];
+            desc->addr = (ulong)Buffer;
             desc->length = (ushort)Length;
             desc->cmd = (1 << 0) | (1 << 1) | (1 << 3);
             desc->status = 0;
 
-            byte _TXCurr = (byte)TXCurr;
-            TXCurr = (TXCurr + 1) % 8;
-            WriteRegister(0x3818, TXCurr);
-            while ((desc->status & 0xff) == 0) ;
+            TXCurrentIndex = (TXCurrentIndex + 1) % NumTX;
+            WriteRegister(0x3818, TXCurrentIndex);
+            for (; ; )
+            {
+                if (desc->status != 0) break;
+                ACPITimer.Sleep(1);
+            }
         }
     }
 }

@@ -22,7 +22,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\HPET.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Hub.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\IDE.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Driver\Intel8254X.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\IOAPIC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Keyboard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\LocalAPIC.cs" />
@@ -37,7 +36,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Driver\PS2Mouse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Ramdisk.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\RTC.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Driver\RTL8139.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\SATA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\Serial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Driver\SMBIOS.cs" />
@@ -70,26 +68,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PageTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Panic.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\MACAddress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\PNG.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Threading.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\USB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\VendorID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\WAV.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\ARP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\Ethernet.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\IPv4.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\Network.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\NIC.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NET\UDP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\Intel825xx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\NETv4.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\RTL8111.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SMP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SSE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)stdio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)stdlib.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)strings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VHD.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)NET\README.md" />
   </ItemGroup>
 </Project>

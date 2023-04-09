@@ -8,16 +8,15 @@ using MOOS.FS;
 using MOOS.Graph;
 using MOOS.GUI;
 using MOOS.Misc;
-using MOOS.NET;
 using MOOS.GUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static MOOS.NETv4;
 
 unsafe class Program
 {
@@ -175,9 +174,34 @@ unsafe class Program
         */
 
 #if NETWORK
-        //Replace all 137 to the third IP part to the IP Address of "VMware Virtual Ethernet Adapter for VMnet1"'s
-        Network.Initialise(IPAddress.Parse(192, 168, 81, 188), IPAddress.Parse(192, 168, 81, 1), IPAddress.Parse(255, 255, 255, 0));
-        //Now do something...
+        NETv4.Initialize();
+        Intel825xx.Initialize();
+        RTL8111.Initialize();
+#if true
+        Console.Write("Trying to get ip config from DHCP server...\n");
+        bool ares = NETv4.DHCPDiscover();
+        if (!ares)
+        {
+            Console.Write("DHCP discovery failed\n");
+            for (; ; ) Native.Hlt();
+        }
+#else
+            NETv4.Configure(new NETv4.IPAddress(192, 168, 1, 65), new NETv4.IPAddress(192, 168, 1, 1), new NETv4.IPAddress(255, 255, 255, 0));
+#endif
+        Console.Write("Network initialized.\n");
+
+        //Only single client is supported now!
+        TCPListener tc = new TCPListener(54188);
+        tc.Listen();
+        while (tc.Status != TCPStatus.Established) Native.Hlt();
+        string s = "hello world";
+        fixed (char* c = s)
+            tc.Send((byte*)c, s.Length * 2);
+        tc.Close();
+        while (tc.Status != TCPStatus.Closed) Native.Hlt();
+        tc.Remove();
+
+        for (; ; ) ;
 #endif
 
         SMain();

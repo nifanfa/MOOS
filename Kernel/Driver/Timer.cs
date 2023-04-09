@@ -23,7 +23,7 @@ namespace MOOS.Driver
         private static ulong EstimateCPUSpeed()
         {
             ulong prev = Native.Rdtsc();
-            ACPITimer.Sleep(100000);
+            ACPITimer.SleepMicroseconds(100000);
             ulong next = Native.Rdtsc();
             ulong cpuclock = 0;
             if (next > prev) 
