@@ -174,6 +174,8 @@ unsafe class Program
         */
 
 #if NETWORK
+        //Looks it doesn't work on GUI mode. stackover flow?
+
         NETv4.Initialize();
         Intel825xx.Initialize();
         RTL8111.Initialize();
