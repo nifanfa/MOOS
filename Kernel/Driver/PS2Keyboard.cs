@@ -103,6 +103,9 @@ namespace MOOS
             }
 
             Keyboard.InvokeOnKeyChanged(Keyboard.KeyInfo);
+
+            //This is for some kind of PC that have PS2 emulation but doesn't have PS2 mouse emulation
+            Kbd2Mouse.OnKeyChanged(Keyboard.KeyInfo);
         }
 
         private static void SetIfKeyModifier(byte scanCode, byte pressedScanCode, ConsoleModifiers modifier)

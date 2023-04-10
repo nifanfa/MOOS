@@ -49,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)FS\TarFS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Graph\Graphics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Graph\VMWareSVGAIIGraphics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Kbd2Mouse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Allocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\ASC16.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Misc\Audio.cs" />
