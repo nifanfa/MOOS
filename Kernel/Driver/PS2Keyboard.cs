@@ -62,6 +62,8 @@ namespace MOOS
 
         public static void ProcessKey(byte b)
         {
+            if (b >= keys.Length && (b - 0x80) >= keys.Length) return;
+
             Keyboard.KeyInfo.ScanCode = b;
             Keyboard.KeyInfo.KeyState = b > 0x80 ? ConsoleKeyState.Released : ConsoleKeyState.Pressed;
 
@@ -95,7 +97,7 @@ namespace MOOS
             {
                 Keyboard.KeyInfo.Key = keys[b];
             }
-            else if (b >= 0x80 && (b - 0x80) < keys.Length)
+            else
             {
                 Keyboard.KeyInfo.Key = keys[b - 0x80];
             }
