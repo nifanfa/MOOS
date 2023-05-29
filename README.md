@@ -51,7 +51,7 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 | Nintendo Family Computer Emulator | 🟩 | 🟩 |
 | DOOM(doomgeneric) | 🟩 | 🟩 |
 | Intel® Gigabit Ethernet Network | 🟩 | 🟩 |
-| Realtek RTL8139 | 🟩 | ⬜ |
+| Realtek RTL8111E | 🟩 | 🟩 |
 | ExFAT | 🟩 | 🟩 |
 | I/O APIC | 🟩 | 🟩 |
 | Local APIC | 🟩 | 🟩 |
@@ -61,8 +61,10 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 | ACPI | 🟩 | 🟩 |
 | IPv4 | 🟩 | 🟩 |
 | IPv6 | 🟥 | 🟥 |
-| TCP(WIP) | 🟨 | 🟥 |
-| UDP | 🟩 | ⬜ |
+| TCP | 🟩 | 🟩 |
+| UDP | 🟩 | 🟩 |
+| DNS | 🟩 | 🟩 |
+| DHCP | 🟩 | 🟩 |
 | Lan | 🟩 | 🟩 |
 | Wan | 🟩 | 🟩 |
 
