@@ -52,7 +52,7 @@ For information on compiling MOOS, please read the [build wiki page](https://git
 | DOOM(doomgeneric) | 🟩 | 🟩 |
 | Intel® Gigabit Ethernet Network | 🟩 | 🟩 |
 | Realtek RTL8111E | 🟩 | 🟩 |
-| ExFAT | 🟩 | 🟩 |
+| ExFAT | 🟩 | ⬜ |
 | I/O APIC | 🟩 | 🟩 |
 | Local APIC | 🟩 | 🟩 |
 | SATA | 🟩 | ⬜ |
