@@ -18,6 +18,9 @@
 		<IlcOptimizationPreference>Speed</IlcOptimizationPreference>
 	</PropertyGroup>
 
+	<Target Name="PrepareForILLink">
+	</Target>
+
 	<Target Name="RenameExt" AfterTargets="CopyNativeBinary">
 		<!--.MUE(MOOS User Executable)-->
 		<Copy SourceFiles="$(NativeOutputPath)$(TargetName)$(NativeBinaryExt)" DestinationFiles="$(NativeOutputPath)$(TargetName).mue"></Copy>
