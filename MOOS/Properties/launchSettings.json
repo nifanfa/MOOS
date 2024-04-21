@@ -23,6 +23,12 @@
       "executablePath": "cmd.exe",
       "commandLineArgs": "/c dotnet publish -p:vm=qemutap -r win-x64 -c debug MOOS -p:EmitLegacyAssetsFileItems=true",
       "workingDirectory": "..\\"
+    },
+    "VMware Workstation": {
+      "commandName": "Executable",
+      "executablePath": "cmd.exe",
+      "commandLineArgs": "/c dotnet publish -p:vm=vmwareworkstation -r win-x64 -c debug MOOS -p:EmitLegacyAssetsFileItems=true",
+      "workingDirectory": "..\\"
     }
   }
 }
