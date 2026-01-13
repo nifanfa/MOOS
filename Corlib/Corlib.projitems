@@ -71,6 +71,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)System\ObsoleteAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\ParamArrayAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Random.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\DefaultMemberAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\DOSHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SubSystemType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)System\Reflection\PortableExecutable\SectionHeader.cs" />
