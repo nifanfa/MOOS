@@ -1,5 +1,12 @@
 # Warning  
-The package "microsoft.dotnet.ilcompiler.7.0.0-alpha.1.22074.1.nupkg" is modified. Using official one may cause it fail to compile!  
+The following packages are modified. Using the official packages may cause compilation to fail:
+
+- `microsoft.dotnet.ilcompiler.7.0.0-alpha.1.22074.1.nupkg`
+- `runtime.win-x64.microsoft.dotnet.ilcompiler.7.0.0-alpha.1.22074.1.nupkg`
+
+## UEFI linker changes
+
+Package: `microsoft.dotnet.ilcompiler.7.0.0-alpha.1.22074.1.nupkg`
   
 build\Microsoft.NETCore.Native.Windows.props  
 ```diff
@@ -128,3 +135,30 @@ The .NET Foundation licenses this file to you under the MIT license.
   </Target>
 </Project>
 ```
+
+## Visual Studio 2019 or later autodetection
+
+Packages:
+
+- `microsoft.dotnet.ilcompiler.7.0.0-alpha.1.22074.1.nupkg`
+- `runtime.win-x64.microsoft.dotnet.ilcompiler.7.0.0-alpha.1.22074.1.nupkg`
+
+`build\findvcvarsall.bat`
+```diff
+-    -version [16^,18^) ^
++    -version [16^,19^) ^
+```
+
+This changes the `vswhere` range from Visual Studio major versions 16-17 to 16-18, covering Visual Studio 2019, 2022, and 2026.
+
+`build\Microsoft.NETCore.Native.Windows.props`
+```diff
+-    ... install Visual Studio 2019 or Visual Studio 2022 ...
++    ... install Visual Studio 2019 or later ...
+```
+
+## NuGet cache
+
+These packages keep their original package IDs and versions even though their contents are modified. NuGet normally treats an installed package version as immutable, so an existing user-wide cache can continue to use the old files.
+
+The repository `nuget.config` sets `globalPackagesFolder` to `obj\packages`. This isolates the repository from `%USERPROFILE%\.nuget\packages` and ensures the checked-in packages are extracted into a repository-local, Git-ignored cache. If either `.nupkg` is modified again without changing its version, delete `obj\packages` before restoring.

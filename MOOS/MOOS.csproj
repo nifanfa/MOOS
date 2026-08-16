@@ -10,6 +10,7 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+		<EmitLegacyAssetsFileItems>true</EmitLegacyAssetsFileItems>
 
 		<DefineConstants>Kernel;UseAPIC;HasGUI</DefineConstants>
 

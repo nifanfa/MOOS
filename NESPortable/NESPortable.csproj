@@ -10,6 +10,7 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+		<EmitLegacyAssetsFileItems>true</EmitLegacyAssetsFileItems>
 
 		<IlcSystemModule>NESPortable</IlcSystemModule>
 		<EntryPointSymbol>Main</EntryPointSymbol>
